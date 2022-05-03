@@ -321,17 +321,160 @@ public static class EXP_DAT
         reader.Write(12, (byte)uVar8);
         reader.Write(13, (byte)uVar7);
         reader.Write(15, bVar9);
-        outFile += "_" + DAT_C3329.ToString("D2") + ".lzss";
+        outFile += "_" + DAT_C3329.ToString("D2") + ".tim";
         File.WriteAllBytes(outFile, aVar6);
     }
 
     private static void FUN_2B270(BufferedBinaryReader reader, string outFile)
     {
+        uint uVar1;
+        int pbVar2;
+        uint uVar3;
+        int pbVar4;
+        int iVar5;
+        byte[] aVar6;
+        int pbVar6;
+        uint uVar7;
+        uint uVar8;
+        byte bVar9;
+        uint uVar10;
+        bool bVar11;
+        bool bVar12;
 
+        iVar5 = 0x800;
+
+        if (reader.ReadInt32(4) < 0x801)
+            iVar5 = reader.ReadInt32(4);
+
+        pbVar6 = 0;
+        aVar6 = new byte[iVar5];
+        uVar8 = 0;
+        uVar7 = 0;
+        uVar10 = 0;
+        pbVar4 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+        bVar11 = false;
+        bVar12 = false;
+
+        if (reader.ReadByte(14) == 1) bVar11 = true;
+        if (reader.ReadByte(14) == 2) bVar12 = true;
+
+        do
+        {
+            if (bVar11)
+            {
+                bVar11 = false;
+                goto LAB_2B1C4;
+            }
+
+            if (bVar12)
+            {
+                bVar12 = false;
+                LAB_2B204:
+                uVar3 = 0;
+                uVar1 = (uint)reader.ReadByte(pbVar4) >> 4;
+                pbVar2 = pbVar6 + -(int)((reader.ReadByte(pbVar4) & 0xfU) << 8 | uVar10);
+
+                if (uVar1 != 0xfffffffe)
+                {
+                    do
+                    {
+                        bVar9 = aVar6[pbVar2];
+                        pbVar2++;
+                        uVar3++;
+                        aVar6[pbVar6] = bVar9;
+                        pbVar6++;
+                    } while (uVar3 < uVar1 + 2);
+                }
+
+                bVar9 = (byte)uVar10;
+                uVar7 >>= 1;
+                iVar5--;
+                pbVar4++;
+                continue;
+            }
+
+            bVar9 = (byte)uVar10;
+
+            if (uVar8 == 0)
+            {
+                uVar7 = reader.ReadByte(pbVar4);
+                pbVar4++;
+                iVar5--;
+                uVar8 = 8;
+
+                if (iVar5 == 0)
+                {
+                    reader.Write(14, 1);
+                    goto LAB_2B25C;
+                }
+            }
+
+            LAB_2B1C4:
+            uVar8--;
+
+            if ((uVar7 & 1) == 0)
+            {
+                bVar9 = reader.ReadByte(pbVar4);
+                uVar10 = bVar9;
+                iVar5--;
+                pbVar4++;
+
+                if (iVar5 == 0)
+                {
+                    reader.Write(14, 2);
+                    goto LAB_2B25C;
+                }
+
+                LAB_2B204:
+                uVar3 = 0;
+                uVar1 = (uint)reader.ReadByte(pbVar4) >> 4;
+                pbVar2 = pbVar6 + -(int)((reader.ReadByte(pbVar4) & 0xfU) << 8 | uVar10);
+
+                if (uVar1 != 0xfffffffe)
+                {
+                    do
+                    {
+                        bVar9 = aVar6[pbVar2];
+                        pbVar2++;
+                        uVar3++;
+                        aVar6[pbVar6] = bVar9;
+                        pbVar6++;
+                    } while (uVar3 < uVar1 + 2);
+                }
+            }
+            else
+            {
+                aVar6[pbVar6] = reader.ReadByte(pbVar4);
+                pbVar6++;
+            }
+
+            bVar9 = (byte)uVar10;
+            uVar7 >>= 1;
+            iVar5--;
+            pbVar4++;
+        } while (iVar5 != 0);
+
+        reader.Write(14, 0);
+        LAB_2B25C:
+        //write ram address
+        reader.Write(12, (byte)uVar8);
+        reader.Write(13, (byte)uVar7);
+        reader.Write(15, bVar9);
+        outFile += "_" + DAT_C3329.ToString("D2") + ".tim";
+
+        using (BinaryWriter writer = new BinaryWriter(File.Open(outFile, FileMode.Create)))
+        {
+            writer.Write(reader.ReadInt16(8));
+            writer.Write(reader.ReadInt16(10));
+            writer.Write(reader.ReadInt16(12));
+            writer.Write(reader.ReadInt16(14));
+            writer.Write((long)0);
+            writer.Write(aVar6);
+        }
     }
 
     private static void FUN_2B3DC(BufferedBinaryReader reader, string outFile)
     {
-
+        return;
     }
 }

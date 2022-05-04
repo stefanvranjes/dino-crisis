@@ -4,7 +4,35 @@ using UnityEngine;
 
 public static class Utilities
 {
-    
+    public static int LeadingZeros(int x)
+    {
+        if ((x & 0x80000000) != 0)
+            x ^= -1;
+
+        if (x == 0) return 32;
+
+        const int numIntBits = sizeof(int) * 8; //compile time constant
+                                                //do the smearing
+        x |= x >> 1;
+        x |= x >> 2;
+        x |= x >> 4;
+        x |= x >> 8;
+        x |= x >> 16;
+        //count the ones
+        x -= x >> 1 & 0x55555555;
+        x = (x >> 2 & 0x33333333) + (x & 0x33333333);
+        x = (x >> 4) + x & 0x0f0f0f0f;
+        x += x >> 8;
+        x += x >> 16;
+        return numIntBits - (x & 0x0000003f); //subtract # of 1s from 32
+    }
+
+    public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
+    {
+        if (val.CompareTo(min) < 0) return min;
+        else if (val.CompareTo(max) > 0) return max;
+        else return val;
+    }
 }
 
 public class BufferedBinaryReader : IDisposable

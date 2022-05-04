@@ -19,6 +19,7 @@ public class IMP_TMD : ScriptedImporter
                 TmdScriptableObject tmd = ScriptableObject.CreateInstance("TmdScriptableObject") as TmdScriptableObject;
 
                 tmd.QUAD_COUNT = reader.ReadUInt16(10);
+                tmd.CMDS = new byte[tmd.QUAD_COUNT];
                 tmd.VERTS = new Vector3[tmd.QUAD_COUNT * 4];
                 tmd.UVS = new Vector2[tmd.QUAD_COUNT * 4];
                 tmd.CLRS = new Color[tmd.QUAD_COUNT * 4];
@@ -53,7 +54,7 @@ public class IMP_TMD : ScriptedImporter
                     uv4.y = pageY + uv4.y - grid.VRAM_Y;
                     tmd.UVS[i * 4 + 3] = new Vector2(uv4.x / (float)(mainT.width - 1), 1f - uv4.y / (float)(mainT.height - 1));
                     tmd.CLRS[i * 4] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
-                    reader.Seek(1, SeekOrigin.Current);
+                    tmd.CMDS[i] = reader.ReadByte();
                     tmd.CLRS[i * 4 + 1] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
                     reader.Seek(1, SeekOrigin.Current);
                     tmd.CLRS[i * 4 + 2] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);

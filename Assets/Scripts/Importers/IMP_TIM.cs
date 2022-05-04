@@ -26,9 +26,9 @@ public class IMP_TIM : ScriptedImporter
                 Color32[] pixels = new Color32[width * height];
                 bool palette32 = clut.WIDTH * clut.HEIGHT > 16 ? true : false;
 
-                for (int y = 0; y < width; y++)
+                for (int y = 0; y < height; y++)
                 {
-                    for (int x = 0; x < height; x++)
+                    for (int x = 0; x < width; x++)
                     {
                         int index = x + y * height;
 

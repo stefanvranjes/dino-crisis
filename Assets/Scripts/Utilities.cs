@@ -4,6 +4,85 @@ using UnityEngine;
 
 public static class Utilities
 {
+    public static short[] DAT_AC7E8;
+
+    //FUN_8F8C0
+    public static Matrix3x3 RotMatrix(ref Vector3Int r, ref Matrix3x3 m)
+    {
+        short sVar1;
+        Matrix3x3 pMVar2;
+        int iVar3;
+        int iVar4;
+        int iVar5;
+        int iVar6;
+        int iVar7;
+        short sVar8;
+        int iVar9;
+
+        if (r.x < 0)
+        {
+            pMVar2 = FGO_01_OBJ_64(ref r, ref m);
+            return pMVar2;
+        }
+
+        iVar6 = DAT_AC7E8[(r.x & 0xfff) * 2];
+        iVar3 = DAT_AC7E8[(r.x & 0xfff) * 2 + 1];
+        
+        if (-1 < r.y)
+        {
+            sVar8 = DAT_AC7E8[(r.y & 0xfff) * 2];
+            iVar9 = -sVar8;
+            iVar4 = DAT_AC7E8[(r.y & 0xfff) * 2 + 1];
+            sVar1 = (short)r.z;
+            m.V02 = sVar8;
+            m.V12 = (short)(-(iVar4 * iVar6) >> 12);
+            sVar8 = (short)(iVar4 * iVar3 >> 12);
+
+            if (-1 < sVar1)
+            {
+                m.V22 = sVar8;
+                iVar7 = DAT_AC7E8[(sVar1 & 0xfff) * 2];
+                iVar5 = DAT_AC7E8[(sVar1 & 0xfff) * 2 + 1];
+                m.V00 = (short)(iVar5 * iVar4 >> 12);
+                m.V01 = (short)(-(iVar7 * iVar4) >> 12);
+                iVar4 = iVar5 * iVar9 >> 12;
+                m.V10 = (short)((iVar7 * iVar3 >> 12) - (iVar4 * iVar6 >> 12));
+                m.V20 = (short)((iVar7 * iVar6 >> 12) + (iVar4 * iVar3 >> 12));
+                iVar9 = iVar7 * iVar9 >> 12;
+                m.V11 = (short)((iVar5 * iVar3 >> 12) + (iVar9 * iVar6 >> 12));
+                m.V21 = (short)((iVar5 * iVar6 >> 12) - (iVar9 * iVar3 >> 12));
+                return m;
+            }
+
+            m.V22 = sVar8;
+            pMVar2 = FGO_01_OBJ_160(ref r, ref m);
+            return pMVar2;
+        }
+
+        pMVar2 = FGO_01_OBJ_CC(ref r, ref m);
+        return pMVar2;
+    }
+
+    private static Matrix3x3 FGO_01_OBJ_64(ref Vector3Int r, ref Matrix3x3 m)
+    {
+        if (r.y < 0)
+        {
+
+        }
+    }
+
+    private static Matrix3x3 FGO_01_OBJ_CC(ref Vector3Int r, ref Matrix3x3 m)
+    {
+        short sVar1;
+
+        sVar1 = (short)r.z;
+    }
+
+    private static Matrix3x3 FGO_01_OBJ_160(ref Vector3Int r, ref Matrix3x3 m)
+    {
+
+    }
+
     public static int LeadingZeros(int x)
     {
         if ((x & 0x80000000) != 0)

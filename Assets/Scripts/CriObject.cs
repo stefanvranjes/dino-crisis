@@ -239,6 +239,23 @@ public class CriObject : MonoBehaviour
     public Vector3Int screen; //0x20
     public Vector3Int vr; //0x28
     public uint flags; //0x30
+    public TmdScriptableObject cMesh; //0x3C
+    public byte DAT_48; //0x48
+
+    private List<byte> commandList;
+    private List<Vector3> vertexList;
+    private List<Vector2> uvList;
+    private List<Color> colorList;
+    private List<int> triangleList;
+
+    private void Awake()
+    {
+        commandList = new List<byte>();
+        vertexList = new List<Vector3>();
+        uvList = new List<Vector2>();
+        colorList = new List<Color>();
+        triangleList = new List<int>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -250,5 +267,86 @@ public class CriObject : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnRenderObject()
+    {
+        GL.PushMatrix();
+        GL.MultMatrix(transform.localToWorldMatrix);
+
+        for (int i = 0; i < commandList.Count; i++)
+        {
+            GameManager.instance.materials[commandList[i]].SetPass(0);
+            GL.Begin(GL.TRIANGLES);
+            int j = i * 6;
+
+            for (int k = 0; k < 6; k++)
+            {
+                GL.Vertex(vertexList[triangleList[j + k]]);
+                GL.TexCoord(uvList[triangleList[j + k]]);
+                GL.Color(colorList[triangleList[j + k]]);
+            }
+
+            GL.End();
+        }
+
+        GL.PopMatrix();
+    }
+
+    public void FUN_75F10(TmdScriptableObject param1, int param2)
+    {
+        uint uVar11;
+        uint uVar12;
+
+        int cmd = 0;
+        int vert = 0;
+        int uv = 0;
+        int clr = 0;
+        int tri = 0;
+        uVar12 = GameManager.instance.DAT_1f80002a;
+        uVar11 = GameManager.instance.DAT_1f800028;
+        commandList.Clear();
+        vertexList.Clear();
+        uvList.Clear();
+        colorList.Clear();
+        triangleList.Clear();
+
+        while (true)
+        {
+            param2--;
+            uVar12++;
+
+            if (param2 < 0) break;
+
+            commandList.Add(param1.CMDS[cmd]);
+            vertexList.Add(param1.VERTS[vert]);
+            vertexList.Add(param1.VERTS[vert + 1]);
+            vertexList.Add(param1.VERTS[vert + 2]);
+            vertexList.Add(param1.VERTS[vert + 3]);
+            uvList.Add(param1.UVS[uv]);
+            uvList.Add(param1.UVS[uv + 1]);
+            uvList.Add(param1.UVS[uv + 2]);
+            uvList.Add(param1.UVS[uv + 3]);
+            colorList.Add(param1.CLRS[clr]);
+            colorList.Add(param1.CLRS[clr + 1]);
+            colorList.Add(param1.CLRS[clr + 2]);
+            colorList.Add(param1.CLRS[clr + 3]);
+            triangleList.Add(param1.TRIS[tri]);
+            triangleList.Add(param1.TRIS[tri + 1]);
+            triangleList.Add(param1.TRIS[tri + 2]);
+            triangleList.Add(param1.TRIS[tri + 3]);
+            triangleList.Add(param1.TRIS[tri + 4]);
+            triangleList.Add(param1.TRIS[tri + 5]);
+
+            cmd++;
+            vert += 4;
+            uv += 4;
+            clr += 4;
+            tri += 6;
+            uVar11++;
+        }
+
+        GameManager.instance.DAT_1f800028 = (ushort)uVar11;
+        GameManager.instance.DAT_1f80002a = (ushort)uVar12;
     }
 }

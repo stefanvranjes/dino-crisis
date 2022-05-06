@@ -4,12 +4,74 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
+    public ushort DAT_1f800028;
+    public ushort DAT_1f80002a;
     public Vector3Int DAT_1f80002c;
     public Matrix3x3 DAT_1f800034;
+    public byte DAT_38; //gp+38h
     public CriObject DAT_B4; //gp+b4h
     public List<CriObject> DAT_27C; //gp+27ch...gp+1c9ch
-    public List<CriObject> DAT_5DCC; //gp+5fcch...gp+7cdch
+    public List<CriObject> DAT_5FCC; //gp+5fcch...gp+7cdch
     public List<CriObject> DAT_7CDC; //gp+7cdch...gp+8ffch
+    public Material[] materials;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    public void FUN_7302C()
+    {
+        //FUN_72F78
+        FUN_72C2C();
+
+        if ((DAT_38 & 1) == 0)
+            FUN_731E8();
+    }
+
+    private void FUN_731E8()
+    {
+        byte bVar1;
+        TmdScriptableObject puVar4;
+        CriObject puVar10;
+
+        for (int i = 0; i < DAT_7CDC.Count; i++)
+        {
+            puVar10 = DAT_7CDC[i];
+
+            if ((puVar10.flags & 3) == 3)
+            {
+                //if...
+                Coprocessor.rotationMatrix.rt11 = puVar10.cTransform.rotation.V00;
+                Coprocessor.rotationMatrix.rt12 = puVar10.cTransform.rotation.V01;
+                Coprocessor.rotationMatrix.rt13 = puVar10.cTransform.rotation.V02;
+                Coprocessor.rotationMatrix.rt21 = puVar10.cTransform.rotation.V10;
+                Coprocessor.rotationMatrix.rt22 = puVar10.cTransform.rotation.V11;
+                Coprocessor.rotationMatrix.rt23 = puVar10.cTransform.rotation.V12;
+                Coprocessor.rotationMatrix.rt31 = puVar10.cTransform.rotation.V20;
+                Coprocessor.rotationMatrix.rt32 = puVar10.cTransform.rotation.V21;
+                Coprocessor.rotationMatrix.rt33 = puVar10.cTransform.rotation.V22;
+                bVar1 = puVar10.DAT_48;
+                puVar4 = puVar10.cMesh;
+
+                if (bVar1 == 1)
+                {
+                    puVar10.FUN_75F10(puVar4, puVar4.QUAD_COUNT);
+                }
+                else
+                {
+                    //...
+                }
+
+                //FUN_75BEC
+            }
+        }
+    }
 
     private void FUN_72C2C()
     {
@@ -48,6 +110,11 @@ public class GameManager : MonoBehaviour
                 //if ()
                 FUN_72ADC(ref puVar8.cTransform);
             }
+        }
+
+        for (int i = 0; i < DAT_5FCC.Count; i++)
+        {
+
         }
     }
 

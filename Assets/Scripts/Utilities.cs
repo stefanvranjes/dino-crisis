@@ -18,6 +18,12 @@ public static class Utilities
         int iVar7;
         short sVar8;
         int iVar9;
+        int in_t0;
+        int in_t1;
+        int in_t2;
+        int in_t3;
+        int in_t4;
+        int in_t5;
 
         if (r.x < 0)
         {
@@ -55,33 +61,174 @@ public static class Utilities
             }
 
             m.V22 = sVar8;
+            sVar1 = (short)-sVar1;
+            in_t0 = iVar3;
+            in_t1 = iVar4;
+            in_t3 = iVar6;
+            in_t4 = iVar9;
+            in_t5 = -DAT_AC7E8[(sVar1 & 0xfff) * 2];
+            in_t2 = DAT_AC7E8[(sVar1 & 0xfff) * 2 + 1];
             pMVar2 = FGO_01_OBJ_160(ref r, ref m);
             return pMVar2;
         }
 
         pMVar2 = FGO_01_OBJ_CC(ref r, ref m);
         return pMVar2;
+
+        Matrix3x3 FGO_01_OBJ_160(ref Vector3Int r, ref Matrix3x3 m)
+        {
+            int iVar1;
+
+            m.V00 = (short)(in_t2 * in_t1 >> 12);
+            m.V01 = (short)(-(in_t5 * in_t1) >> 12);
+            iVar1 = in_t2 * in_t4 >> 12;
+            m.V10 = (short)((in_t5 * in_t0 >> 12) - (iVar1 * in_t3 >> 12));
+            m.V20 = (short)((in_t5 * in_t3 >> 12) + (iVar1 * in_t0 >> 12));
+            iVar1 = in_t5 * in_t4 >> 12;
+            m.V11 = (short)((in_t2 * in_t0 >> 12) + (iVar1 * in_t3 >> 12));
+            m.V21 = (short)((in_t2 * in_t3 >> 12) - (iVar1 * in_t0 >> 12));
+            return m;
+        }
     }
 
     private static Matrix3x3 FGO_01_OBJ_64(ref Vector3Int r, ref Matrix3x3 m)
     {
+        short sVar1;
+        int in_t0;
+        int in_t1;
+        int in_t2;
+        int iVar2;
+        int iVar3;
+        int in_t3;
+        int in_t4;
+        int in_t5;
+        int iVar4;
+        short sVar5;
+        short sVar6;
+        int iVar7;
+
         if (r.y < 0)
         {
+            return FGO_01_OBJ_CC(ref r, ref m);
+        }
 
+        in_t3 = -DAT_AC7E8[(-r.x & 0xfff) * 2];
+        in_t0 = DAT_AC7E8[(-r.x & 0xfff) * 2 + 1];
+        sVar5 = DAT_AC7E8[(r.y & 0xfff) * 2];
+        iVar7 = -sVar5;
+        iVar2 = DAT_AC7E8[(r.y & 0xfff) * 2 + 1];
+        sVar1 = (short)r.z;
+        m.V02 = sVar5;
+        m.V10 = (short)(-(iVar2 * in_t3) >> 12);
+        sVar6 = (short)(iVar2 * in_t0 >> 12);
+
+        if (-1 < sVar1)
+        {
+            m.V22 = sVar6;
+            iVar4 = DAT_AC7E8[(sVar1 & 0xfff) * 2];
+            iVar3 = DAT_AC7E8[(sVar1 & 0xfff) * 2 + 1];
+            m.V00 = (short)(iVar3 * iVar2 >> 12);
+            m.V01 = (short)(-(iVar4 * iVar2) >> 12);
+            iVar2 = iVar3 * iVar7 >> 12;
+            m.V10 = (short)((iVar4 * in_t0 >> 12) - (iVar2 * in_t3 >> 12));
+            m.V20 = (short)((iVar4 * in_t3 >> 12) + (iVar2 * in_t0 >> 12));
+            iVar7 = iVar4 * iVar7 >> 12;
+            m.V11 = (short)((iVar3 * in_t0 >> 12) + (iVar7 * in_t3 >> 12));
+            m.V21 = (short)((iVar3 * in_t3 >> 12) - (iVar7 * in_t0 >> 12));
+            return m;
+        }
+
+        m.V22 = sVar6;
+        in_t1 = iVar2;
+        in_t4 = iVar7;
+        sVar1 = (short)-sVar1;
+        in_t5 = -DAT_AC7E8[(sVar1 & 0xfff) * 2];
+        in_t2 = DAT_AC7E8[(sVar1 & 0xfff) * 2 + 1];
+        return FGO_01_OBJ_160(ref r, ref m);
+
+        Matrix3x3 FGO_01_OBJ_160(ref Vector3Int r, ref Matrix3x3 m)
+        {
+            int iVar1;
+
+            m.V00 = (short)(in_t2 * in_t1 >> 12);
+            m.V01 = (short)(-(in_t5 * in_t1) >> 12);
+            iVar1 = in_t2 * in_t4 >> 12;
+            m.V10 = (short)((in_t5 * in_t0 >> 12) - (iVar1 * in_t3 >> 12));
+            m.V20 = (short)((in_t5 * in_t3 >> 12) + (iVar1 * in_t0 >> 12));
+            iVar1 = in_t5 * in_t4 >> 12;
+            m.V11 = (short)((in_t2 * in_t0 >> 12) + (iVar1 * in_t3 >> 12));
+            m.V21 = (short)((in_t2 * in_t3 >> 12) - (iVar1 * in_t0 >> 12));
+            return m;
         }
     }
 
     private static Matrix3x3 FGO_01_OBJ_CC(ref Vector3Int r, ref Matrix3x3 m)
     {
         short sVar1;
+        int in_t0;
+        int in_t1;
+        int in_t2;
+        int iVar2;
+        int in_t3;
+        int in_t4;
+        int in_t5;
+        int iVar3;
+        short in_t6;
+        short sVar4;
+        int iVar5;
 
+        in_t3 = -DAT_AC7E8[(-r.x & 0xfff) * 2];
+        in_t0 = DAT_AC7E8[(-r.x & 0xfff) * 2 + 1];
+        in_t4 = DAT_AC7E8[(-r.y & 0xfff) * 2];
+        in_t1 = DAT_AC7E8[(-r.y & 0xfff) * 2 + 1];
+        in_t6 = (short)-in_t4;
         sVar1 = (short)r.z;
+        m.V02 = in_t6;
+        m.V12 = (short)(-(in_t1 * in_t3) >> 12);
+        sVar4 = (short)(in_t1 * in_t0 >> 12);
+
+        if (-1 < sVar1)
+        {
+            m.V22 = sVar4;
+            iVar3 = DAT_AC7E8[(sVar1 & 0xfff) * 2];
+            iVar2 = DAT_AC7E8[(sVar1 & 0xfff) * 2 + 1];
+            m.V00 = (short)(iVar2 * in_t1 >> 12);
+            m.V01 = (short)(-(iVar3 * in_t1) >> 12);
+            iVar5 = iVar2 * in_t4 >> 12;
+            m.V10 = (short)((iVar3 * in_t0 >> 12) - (iVar5 * in_t3 >> 12));
+            m.V20 = (short)((iVar3 * in_t3 >> 12) + (iVar5 * in_t0 >> 12));
+            iVar3 = iVar3 * in_t4 >> 12;
+            m.V11 = (short)((iVar2 * in_t0 >> 12) + (iVar3 * in_t3 >> 12));
+            m.V21 = (short)((iVar2 * in_t3 >> 12) - (iVar3 * in_t0 >> 12));
+            return m;
+        }
+
+        m.V22 = sVar4;
+        sVar1 = (short)-sVar1;
+        in_t5 = -DAT_AC7E8[(sVar1 & 0xfff) * 2];
+        in_t2 = DAT_AC7E8[(sVar1 & 0xfff) * 2 + 1];
+        return FGO_01_OBJ_160(ref r, ref m);
+
+        Matrix3x3 FGO_01_OBJ_160(ref Vector3Int r, ref Matrix3x3 m)
+        {
+            int iVar1;
+
+            m.V00 = (short)(in_t2 * in_t1 >> 12);
+            m.V01 = (short)(-(in_t5 * in_t1) >> 12);
+            iVar1 = in_t2 * in_t4 >> 12;
+            m.V10 = (short)((in_t5 * in_t0 >> 12) - (iVar1 * in_t3 >> 12));
+            m.V20 = (short)((in_t5 * in_t3 >> 12) + (iVar1 * in_t0 >> 12));
+            iVar1 = in_t5 * in_t4 >> 12;
+            m.V11 = (short)((in_t2 * in_t0 >> 12) + (iVar1 * in_t3 >> 12));
+            m.V21 = (short)((in_t2 * in_t3 >> 12) - (iVar1 * in_t0 >> 12));
+            return m;
+        }
     }
 
-    private static Matrix3x3 FGO_01_OBJ_160(ref Vector3Int r, ref Matrix3x3 m)
+    /*private static Matrix3x3 FGO_01_OBJ_160(ref Vector3Int r, ref Matrix3x3 m)
     {
 
-    }
+    }*/
 
     public static int LeadingZeros(int x)
     {

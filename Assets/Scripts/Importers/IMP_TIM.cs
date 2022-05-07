@@ -19,18 +19,18 @@ public class IMP_TIM : ScriptedImporter
 
                 grid.VRAM_X = reader.ReadInt16();
                 grid.VRAM_Y = reader.ReadInt16();
-                int width = reader.ReadInt16();
+                bool palette32 = clut.WIDTH * clut.HEIGHT > 16 ? true : false;
+                int width = reader.ReadInt16() * (palette32 ? 2 : 4);
                 int height = reader.ReadInt16();
                 reader.Seek(8, SeekOrigin.Current);
-                Texture2D texture = new Texture2D(width, height);
+                Texture2D texture = new Texture2D(width , height);
                 Color32[] pixels = new Color32[width * height];
-                bool palette32 = clut.WIDTH * clut.HEIGHT > 16 ? true : false;
 
                 for (int y = 0; y < height; y++)
                 {
                     for (int x = 0; x < width; x++)
                     {
-                        int index = x + y * height;
+                        int index = x + y * width;
 
                         if (palette32)
                             pixels[index] = GetColor32(clut.PALETTE[reader.ReadByte(index)]);

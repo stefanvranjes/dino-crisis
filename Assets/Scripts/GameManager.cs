@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public List<CriObject> DAT_27C; //gp+27ch...gp+1c9ch
     public List<CriObject> DAT_5FCC; //gp+5fcch...gp+7cdch
     public List<CriObject> DAT_7CDC; //gp+7cdch...gp+8ffch
+    public byte DAT_1AA0; //gp+9AA0h
     public Material[] materials;
 
     private void Awake()
@@ -61,7 +62,7 @@ public class GameManager : MonoBehaviour
 
                 if (bVar1 == 1)
                 {
-                    puVar10.FUN_75F10(puVar4, puVar4.QUAD_COUNT);
+                    puVar10.FUN_75F10(puVar4, puVar4.QUAD_COUNT_2);
                 }
                 else
                 {

@@ -5,6 +5,7 @@ using UnityEngine;
 [ScriptedImporter(1, "tmd")]
 public class IMP_TMD : ScriptedImporter
 {
+    public uint ramAddress;
     public GridScriptableObject grid;
     public Texture2D mainT;
 
@@ -18,16 +19,20 @@ public class IMP_TMD : ScriptedImporter
             {
                 TmdScriptableObject tmd = ScriptableObject.CreateInstance("TmdScriptableObject") as TmdScriptableObject;
 
-                tmd.QUAD_COUNT = reader.ReadUInt16(10);
-                tmd.CMDS = new byte[tmd.QUAD_COUNT];
-                tmd.VERTS = new Vector3[tmd.QUAD_COUNT * 4];
-                tmd.UVS = new Vector2[tmd.QUAD_COUNT * 4];
-                tmd.CLRS = new Color[tmd.QUAD_COUNT * 4];
-                tmd.TRIS = new int[tmd.QUAD_COUNT * 6];
-                reader.Seek(12, SeekOrigin.Begin);
+                tmd.OFFSET_1 = reader.ReadUInt32(0) - ramAddress;
+                tmd.OFFSET_2 = reader.ReadUInt32(4) - ramAddress;
+                tmd.QUAD_COUNT_1 = reader.ReadUInt16(8);
+                tmd.QUAD_COUNT_2 = reader.ReadUInt16(10);
+                tmd.CMDS = new byte[tmd.QUAD_COUNT_2];
+                tmd.VERTS = new Vector3[tmd.QUAD_COUNT_2 * 4];
+                tmd.UVS = new Vector2[tmd.QUAD_COUNT_2 * 4];
+                tmd.CLRS = new Color[tmd.QUAD_COUNT_2 * 4];
+                tmd.TRIS = new int[tmd.QUAD_COUNT_2 * 6];
+                tmd.TEX_2D = mainT;
+                reader.Seek(12, SeekOrigin.Current);
                 float translateFactor = 16f;
 
-                for (int i = 0; i < tmd.QUAD_COUNT; i++)
+                for (int i = 0; i < tmd.QUAD_COUNT_2; i++)
                 {
                     tmd.VERTS[i * 4] = new Vector3(reader.ReadInt16(), -reader.ReadInt16(), reader.ReadInt16()) / translateFactor;
                     Vector2Int uv1 = new Vector2Int(reader.ReadByte(), reader.ReadByte());

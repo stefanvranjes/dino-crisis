@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 public static class EXP_DAT
 {
@@ -28,20 +29,22 @@ public static class EXP_DAT
         {
             DAT_C3329 = 1; //not in the original code
             string outFile = outDir + Path.DirectorySeparatorChar;
-            outFile += Path.GetFileName(inFile);
+            outFile += Path.GetFileNameWithoutExtension(inFile);
             BufferedBinaryReader bufferReader = new BufferedBinaryReader(reader.BaseStream, (int)reader.BaseStream.Length);
             bufferReader.FillBuffer();
+            reader.BaseStream.Seek(0, SeekOrigin.Begin);
 
             while (true)
             {
                 int segmentId = reader.ReadInt32();
+                int size = reader.ReadInt32() - 1;
 
                 if (9 < segmentId) break;
 
                 PTR_FUN_9ACD0[segmentId](bufferReader, outFile);
-                reader.BaseStream.Seek(0xC, SeekOrigin.Current);
+                reader.BaseStream.Seek(8, SeekOrigin.Current);
                 bufferReader.Seek(reader.BaseStream.Position, SeekOrigin.Begin);
-                DAT_C3329++;
+                DAT_C3329 += (byte)(size / 0x800 + 1);
 
                 if (15 < DAT_C3329)
                     DAT_C3329 = 1;
@@ -94,9 +97,23 @@ public static class EXP_DAT
             writer.Write(reader.ReadInt16(14));
             writer.Write((long)0);
             int size = reader.ReadInt32(4);
+            int pos = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            int pageX = 0;
+            int pageY = 0;
 
             for (int i = 0; i < size; i++)
-                writer.Write(reader.ReadByte());
+            {
+                if ((i % 0x80) / 0x40 % 2 == 0)
+                {
+                    writer.Write(reader.ReadByte(pos + ((pageX / 0x800) * 0x1000 + (pageX % 0x800))));
+                    pageX++;
+                }
+                else
+                {
+                    writer.Write(reader.ReadByte(pos + ((pageY / 0x800) * 0x1000 + (pageY % 0x800) + 0x800)));
+                    pageY++;
+                }
+            }
         }
     }
 
@@ -112,9 +129,10 @@ public static class EXP_DAT
             writer.Write(reader.ReadInt16(14));
             writer.Write((long)0);
             int size = reader.ReadInt32(4);
+            int pos = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
 
             for (int i = 0; i < size; i++)
-                writer.Write(reader.ReadByte());
+                writer.Write(reader.ReadByte(pos + i));
         }
     }
 
@@ -193,7 +211,7 @@ public static class EXP_DAT
         uint uVar3;
         int pbVar4;
         int iVar5;
-        byte[] aVar6;
+        List<byte> lVar6;
         int pbVar6;
         uint uVar7;
         uint uVar8;
@@ -207,8 +225,9 @@ public static class EXP_DAT
         if (reader.ReadInt32(4) < 0x801)
             iVar5 = reader.ReadInt32(4);
 
+        iVar5 = reader.ReadInt32(4); //not in the original code
         pbVar6 = 0;
-        aVar6 = new byte[iVar5];
+        lVar6 = new List<byte>();
         uVar8 = reader.ReadByte(12);
         uVar7 = reader.ReadByte(13);
         uVar10 = reader.ReadByte(15);
@@ -239,10 +258,10 @@ public static class EXP_DAT
                 {
                     do
                     {
-                        bVar9 = aVar6[pbVar2];
+                        bVar9 = lVar6[pbVar2];
                         pbVar2++;
                         uVar3++;
-                        aVar6[pbVar6] = bVar9;
+                        lVar6.Add(bVar9);
                         pbVar6++;
                     } while (uVar3 < uVar1 + 2);
                 }
@@ -295,17 +314,17 @@ public static class EXP_DAT
                 {
                     do
                     {
-                        bVar9 = aVar6[pbVar2];
+                        bVar9 = lVar6[pbVar2];
                         pbVar2++;
                         uVar3++;
-                        aVar6[pbVar6] = bVar9;
+                        lVar6.Add(bVar9);
                         pbVar6++;
                     } while (uVar3 < uVar1 + 2);
                 }
             }
             else
             {
-                aVar6[pbVar6] = reader.ReadByte(pbVar4);
+                lVar6.Add(reader.ReadByte(pbVar4));
                 pbVar6++;
             }
 
@@ -321,8 +340,8 @@ public static class EXP_DAT
         reader.Write(12, (byte)uVar8);
         reader.Write(13, (byte)uVar7);
         reader.Write(15, bVar9);
-        outFile += "_" + DAT_C3329.ToString("D2") + ".tim";
-        File.WriteAllBytes(outFile, aVar6);
+        outFile += "_" + DAT_C3329.ToString("D2");
+        File.WriteAllBytes(outFile, lVar6.ToArray());
     }
 
     private static void FUN_2B270(BufferedBinaryReader reader, string outFile)
@@ -332,7 +351,7 @@ public static class EXP_DAT
         uint uVar3;
         int pbVar4;
         int iVar5;
-        byte[] aVar6;
+        List<byte> lVar6;
         int pbVar6;
         uint uVar7;
         uint uVar8;
@@ -346,8 +365,9 @@ public static class EXP_DAT
         if (reader.ReadInt32(4) < 0x801)
             iVar5 = reader.ReadInt32(4);
 
+        iVar5 = reader.ReadInt32(4); //not in the original code
         pbVar6 = 0;
-        aVar6 = new byte[iVar5];
+        lVar6 = new List<byte>();
         uVar8 = 0;
         uVar7 = 0;
         uVar10 = 0;
@@ -378,10 +398,10 @@ public static class EXP_DAT
                 {
                     do
                     {
-                        bVar9 = aVar6[pbVar2];
+                        bVar9 = lVar6[pbVar2];
                         pbVar2++;
                         uVar3++;
-                        aVar6[pbVar6] = bVar9;
+                        lVar6.Add(bVar9);
                         pbVar6++;
                     } while (uVar3 < uVar1 + 2);
                 }
@@ -434,17 +454,17 @@ public static class EXP_DAT
                 {
                     do
                     {
-                        bVar9 = aVar6[pbVar2];
+                        bVar9 = lVar6[pbVar2];
                         pbVar2++;
                         uVar3++;
-                        aVar6[pbVar6] = bVar9;
+                        lVar6.Add(bVar9);
                         pbVar6++;
                     } while (uVar3 < uVar1 + 2);
                 }
             }
             else
             {
-                aVar6[pbVar6] = reader.ReadByte(pbVar4);
+                lVar6.Add(reader.ReadByte(pbVar4));
                 pbVar6++;
             }
 
@@ -469,7 +489,7 @@ public static class EXP_DAT
             writer.Write(reader.ReadInt16(12));
             writer.Write(reader.ReadInt16(14));
             writer.Write((long)0);
-            writer.Write(aVar6);
+            writer.Write(lVar6.ToArray());
         }
     }
 

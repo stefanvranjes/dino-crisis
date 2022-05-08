@@ -23,7 +23,7 @@ public class IMP_TIM : ScriptedImporter
                 int width = reader.ReadInt16() * (palette32 ? 2 : 4);
                 int height = reader.ReadInt16();
                 reader.Seek(8, SeekOrigin.Current);
-                Texture2D texture = new Texture2D(width , height);
+                Texture2D texture = new Texture2D(width , height, TextureFormat.RGBA32, false, false);
                 Color32[] pixels = new Color32[width * height];
 
                 for (int y = 0; y < height; y++)
@@ -44,7 +44,25 @@ public class IMP_TIM : ScriptedImporter
                     }
                 }
 
-                texture.SetPixels32(pixels);
+                Color32[] flipped = new Color32[width * height];
+                int m = 0;
+
+                for (int i = 0, j = pixels.Length - width; i < pixels.Length; i += width, j -= width)
+                {
+                    for (int k = 0; k < width; ++k)
+                    {
+                        flipped[m++] = new Color32
+                            (pixels[j + k].b, 
+                             pixels[j + k].g, 
+                             pixels[j + k].r, 
+                             pixels[j + k].a);
+                    }
+                }
+
+                texture.SetPixels32(flipped);
+                texture.wrapMode = TextureWrapMode.Clamp;
+                texture.filterMode = FilterMode.Point;
+                texture.Apply();
                 ctx.AddObjectToAsset("tim", texture);
                 ctx.SetMainObject(texture);
                 ctx.AddObjectToAsset("grid", grid);

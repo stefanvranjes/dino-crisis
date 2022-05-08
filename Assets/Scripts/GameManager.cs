@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public static SceneManager sceneManager;
 
     public ushort DAT_1f800028;
     public ushort DAT_1f80002a;
@@ -12,10 +13,8 @@ public class GameManager : MonoBehaviour
     public Matrix3x3 DAT_1f800034;
     public byte DAT_38; //gp+38h
     public CriObject DAT_B4; //gp+b4h
-    public List<CriObject> DAT_27C; //gp+27ch...gp+1c9ch
-    public List<CriObject> DAT_5FCC; //gp+5fcch...gp+7cdch
-    public List<CriObject> DAT_7CDC; //gp+7cdch...gp+8ffch
     public byte DAT_1AA0; //gp+9AA0h
+    public bool disableColors;
     public Material[] materials;
 
     private void Awake()
@@ -24,6 +23,11 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        FUN_7302C();
     }
 
     public void FUN_7302C()
@@ -41,9 +45,9 @@ public class GameManager : MonoBehaviour
         TmdScriptableObject puVar4;
         CriObject puVar10;
 
-        for (int i = 0; i < DAT_7CDC.Count; i++)
+        for (int i = 0; i < sceneManager.DAT_7CDC.Count; i++)
         {
-            puVar10 = DAT_7CDC[i];
+            puVar10 = sceneManager.DAT_7CDC[i];
 
             if ((puVar10.flags & 3) == 3)
             {
@@ -60,14 +64,14 @@ public class GameManager : MonoBehaviour
                 bVar1 = puVar10.DAT_48;
                 puVar4 = puVar10.cMesh;
 
-                if (bVar1 == 1)
-                {
+                //if (bVar1 == 1)
+                //{
                     puVar10.FUN_75F10(puVar4, puVar4.QUAD_COUNT_2);
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     //...
-                }
+                //}
 
                 //FUN_75BEC
             }
@@ -95,14 +99,14 @@ public class GameManager : MonoBehaviour
         Coprocessor.translationVector._trz = DAT_B4.cTransform.position.z;
         DAT_1f80002c = DAT_B4.vr;
 
-        for (int i = 0; i < DAT_27C.Count; i++)
+        for (int i = 0; i < sceneManager.DAT_27C.Count; i++)
         {
 
         }
 
-        for (int i = 0; i < DAT_7CDC.Count; i++)
+        for (int i = 0; i < sceneManager.DAT_7CDC.Count; i++)
         {
-            puVar8 = DAT_7CDC[i];
+            puVar8 = sceneManager.DAT_7CDC[i];
 
             if ((puVar8.flags & 2) != 0)
             {
@@ -113,7 +117,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < DAT_5FCC.Count; i++)
+        for (int i = 0; i < sceneManager.DAT_5FCC.Count; i++)
         {
 
         }

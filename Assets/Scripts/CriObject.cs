@@ -238,15 +238,18 @@ public class CriObject : MonoBehaviour
     public CriTransform cTransform; //0x00
     public Vector3Int screen; //0x20
     public Vector3Int vr; //0x28
+    public byte DAT_2E; //0x2E
     public uint flags; //0x30
     public TmdScriptableObject cMesh; //0x3C
     public byte DAT_48; //0x48
+    public ushort DAT_4A; //0x4A
 
     private List<byte> commandList;
     private List<Vector3> vertexList;
     private List<Vector2> uvList;
     private List<Color> colorList;
     private List<int> triangleList;
+    public Material[] materials;
 
     private void Awake()
     {
@@ -266,31 +269,36 @@ public class CriObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position = (Vector3)screen / 4096f;
+        transform.rotation = Quaternion.Euler((Vector3)vr / 4096f * 360f);
     }
 
     private void OnRenderObject()
     {
-        GL.PushMatrix();
-        GL.MultMatrix(transform.localToWorldMatrix);
-
-        for (int i = 0; i < commandList.Count; i++)
+        if (cMesh != null)
         {
-            GameManager.instance.materials[commandList[i]].SetPass(0);
-            GL.Begin(GL.TRIANGLES);
-            int j = i * 6;
+            GL.PushMatrix();
+            GL.MultMatrix(transform.localToWorldMatrix);
 
-            for (int k = 0; k < 6; k++)
+            for (int i = 0; i < commandList.Count; i++)
             {
-                GL.Vertex(vertexList[triangleList[j + k]]);
-                GL.TexCoord(uvList[triangleList[j + k]]);
-                GL.Color(colorList[triangleList[j + k]]);
+                materials[commandList[i]].SetPass(0);
+                GL.Begin(GL.TRIANGLES);
+                int j = i * 6;
+
+                for (int k = 0; k < 6; k++)
+                {
+                    if (!GameManager.instance.disableColors)
+                        GL.Color(colorList[triangleList[j + k]]);
+                    GL.TexCoord(uvList[triangleList[j + k]]);
+                    GL.Vertex(vertexList[triangleList[j + k]]);
+                }
+
+                GL.End();
             }
 
-            GL.End();
+            GL.PopMatrix();
         }
-
-        GL.PopMatrix();
     }
 
     public void FUN_75F10(TmdScriptableObject param1, int param2)

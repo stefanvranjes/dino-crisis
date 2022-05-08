@@ -31,6 +31,8 @@ public class IMP_TMD : ScriptedImporter
                 tmd.TEX_2D = mainT;
                 reader.Seek(12, SeekOrigin.Current);
                 float translateFactor = 16f;
+                int vramX = grid.VRAM_X * 2;
+                int vramY = grid.VRAM_Y;
 
                 for (int i = 0; i < tmd.QUAD_COUNT_2; i++)
                 {
@@ -44,19 +46,19 @@ public class IMP_TMD : ScriptedImporter
                     Vector2Int uv4 = new Vector2Int(reader.ReadByte(), reader.ReadByte());
                     ushort texpage = reader.ReadUInt16();
                     reader.Seek(2, SeekOrigin.Current);
-                    int pageX = (texpage & 0xf) * 64;
+                    int pageX = (texpage & 0xf) * 64 * 2;
                     int pageY = (texpage >> 4 & 1) * 256;
-                    uv1.x = pageX + uv1.x - grid.VRAM_X;
-                    uv1.y = pageY + uv1.y - grid.VRAM_Y;
+                    uv1.x = pageX + (uv1.x / 2) - vramX;
+                    uv1.y = pageY + uv1.y - vramY;
                     tmd.UVS[i * 4] = new Vector2(uv1.x / (float)(mainT.width - 1), 1f - uv1.y / (float)(mainT.height - 1));
-                    uv2.x = pageX + uv2.x - grid.VRAM_X;
-                    uv2.y = pageY + uv2.y - grid.VRAM_Y;
+                    uv2.x = pageX + (uv2.x / 2) - vramX;
+                    uv2.y = pageY + uv2.y - vramY;
                     tmd.UVS[i * 4 + 1] = new Vector2(uv2.x / (float)(mainT.width - 1), 1f - uv2.y / (float)(mainT.height - 1));
-                    uv3.x = pageX + uv3.x - grid.VRAM_X;
-                    uv3.y = pageY + uv3.y - grid.VRAM_Y;
+                    uv3.x = pageX + (uv3.x / 2) - vramX;
+                    uv3.y = pageY + uv3.y - vramY;
                     tmd.UVS[i * 4 + 2] = new Vector2(uv3.x / (float)(mainT.width - 1), 1f - uv3.y / (float)(mainT.height - 1));
-                    uv4.x = pageX + uv4.x - grid.VRAM_X;
-                    uv4.y = pageY + uv4.y - grid.VRAM_Y;
+                    uv4.x = pageX + (uv4.x / 2) - vramX;
+                    uv4.y = pageY + uv4.y - vramY;
                     tmd.UVS[i * 4 + 3] = new Vector2(uv4.x / (float)(mainT.width - 1), 1f - uv4.y / (float)(mainT.height - 1));
                     tmd.CLRS[i * 4] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
                     tmd.CMDS[i] = reader.ReadByte();
@@ -76,6 +78,12 @@ public class IMP_TMD : ScriptedImporter
 
                 ctx.AddObjectToAsset("tmd", tmd);
                 ctx.SetMainObject(tmd);
+                Mesh mesh = new Mesh();
+                mesh.SetVertices(tmd.VERTS);
+                mesh.SetUVs(0, tmd.UVS);
+                mesh.SetColors(tmd.CLRS);
+                mesh.SetTriangles(tmd.TRIS, 0);
+                ctx.AddObjectToAsset("mesh", mesh);
             }
         }
     }

@@ -19,7 +19,7 @@ public static class EXP_DAT
                 new FUN_9ACD0(FUN_2ABC8), new FUN_9ACD0(FUN_2B13C),
                 new FUN_9ACD0(FUN_2B270), new FUN_9ACD0(FUN_2B3DC)
             };
-    private static byte DAT_C3329;
+    private static ushort DAT_C3329; //originally a byte
     private static short DAT_C3330;
 
     //FUN_2A990
@@ -44,10 +44,10 @@ public static class EXP_DAT
                 PTR_FUN_9ACD0[segmentId](bufferReader, outFile);
                 reader.BaseStream.Seek(8, SeekOrigin.Current);
                 bufferReader.Seek(reader.BaseStream.Position, SeekOrigin.Begin);
-                DAT_C3329 += (byte)(size / 0x800 + 1);
+                DAT_C3329 += (ushort)(size / 0x800 + 1);
 
-                if (15 < DAT_C3329)
-                    DAT_C3329 = 1;
+                /*if (15 < DAT_C3329)
+                    DAT_C3329 = 1;*/
             }
         }
     }
@@ -60,7 +60,8 @@ public static class EXP_DAT
 
         if (reader.ReadInt32(4) < 0x801)
         {
-            puVar1 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            //puVar1 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            puVar1 = DAT_C3329 * 0x800 - (int)reader.Position;
             aVar3 = new byte[0x800];
 
             for (puVar3 = 0; puVar3 < 0x800; puVar3++)
@@ -71,7 +72,8 @@ public static class EXP_DAT
         }
         else
         {
-            puVar1 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            //puVar1 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            puVar1 = DAT_C3329 * 0x800 - (int)reader.Position;
             aVar3 = new byte[0xA00];
 
             for (puVar3 = 0; puVar3 < 0xA00; puVar3++)
@@ -97,7 +99,8 @@ public static class EXP_DAT
             writer.Write(reader.ReadInt16(14));
             writer.Write((long)0);
             int size = reader.ReadInt32(4);
-            int pos = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            //int pos = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            int pos = DAT_C3329 * 0x800 - (int)reader.Position;
             int pageX = 0;
             int pageY = 0;
 
@@ -129,7 +132,8 @@ public static class EXP_DAT
             writer.Write(reader.ReadInt16(14));
             writer.Write((long)0);
             int size = reader.ReadInt32(4);
-            int pos = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            //int pos = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            int pos = DAT_C3329 * 0x800 - (int)reader.Position;
 
             for (int i = 0; i < size; i++)
                 writer.Write(reader.ReadByte(pos + i));
@@ -149,7 +153,8 @@ public static class EXP_DAT
 
         if (reader.ReadInt32(4) < 0x801)
         {
-            puVar2 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            //puVar2 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            puVar2 = DAT_C3329 * 0x800 - (int)reader.Position;
             aVar3 = new byte[0x800];
 
             for (puVar3 = 0; puVar3 < 0x800; puVar3++)
@@ -160,7 +165,8 @@ public static class EXP_DAT
         }
         else
         {
-            puVar2 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            //puVar2 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+            puVar2 = DAT_C3329 * 0x800 - (int)reader.Position;
             aVar3 = new byte[0xA00];
 
             for (puVar3 = 0; puVar3 < 0xA00; puVar3++)
@@ -186,11 +192,19 @@ public static class EXP_DAT
 
         size = reader.ReadInt32(4);
 
-        if (size < 0x801)
+        /*if (size < 0x801)
             addr = PTR_DAT_9AC6C[DAT_C3329];
         else
         {
             addr = PTR_DAT_9AC6C[DAT_C3329];
+            size = 0x800;
+        }*/
+
+        if (size < 0x801)
+            addr = DAT_C3329 * 0x800;
+        else
+        {
+            addr = DAT_C3329 * 0x800;
             size = 0x800;
         }
 
@@ -231,7 +245,8 @@ public static class EXP_DAT
         uVar8 = reader.ReadByte(12);
         uVar7 = reader.ReadByte(13);
         uVar10 = reader.ReadByte(15);
-        pbVar4 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+        //pbVar4 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+        pbVar4 = DAT_C3329 * 0x800 - (int)reader.Position;
         bVar11 = false;
         bVar12 = false;
 
@@ -371,12 +386,13 @@ public static class EXP_DAT
         uVar8 = 0;
         uVar7 = 0;
         uVar10 = 0;
-        pbVar4 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+        //pbVar4 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
+        pbVar4 = DAT_C3329 * 0x800 - (int)reader.Position;
         bVar11 = false;
         bVar12 = false;
 
-        if (reader.ReadByte(14) == 1) bVar11 = true;
-        if (reader.ReadByte(14) == 2) bVar12 = true;
+        //if (reader.ReadByte(14) == 1) bVar11 = true;
+        //if (reader.ReadByte(14) == 2) bVar12 = true;
 
         do
         {
@@ -474,22 +490,33 @@ public static class EXP_DAT
             pbVar4++;
         } while (iVar5 != 0);
 
-        reader.Write(14, 0);
+        //reader.Write(14, 0);
         LAB_2B25C:
         //write ram address
-        reader.Write(12, (byte)uVar8);
-        reader.Write(13, (byte)uVar7);
-        reader.Write(15, bVar9);
+        //reader.Write(12, (byte)uVar8);
+        //reader.Write(13, (byte)uVar7);
+        //reader.Write(15, bVar9);
         outFile += "_" + DAT_C3329.ToString("D2") + ".tim";
 
         using (BinaryWriter writer = new BinaryWriter(File.Open(outFile, FileMode.Create)))
         {
+            short width = reader.ReadInt16(12);
+            short height = reader.ReadInt16(14);
             writer.Write(reader.ReadInt16(8));
             writer.Write(reader.ReadInt16(10));
-            writer.Write(reader.ReadInt16(12));
-            writer.Write(reader.ReadInt16(14));
+            writer.Write(width);
+            writer.Write(height);
             writer.Write((long)0);
-            writer.Write(lVar6.ToArray());
+            //writer.Write(lVar6.ToArray());
+            int[] pages = new int[width * 2 / 0x40];
+            int[] slices = new int[width * 2 / 0x40];
+
+            for (int i = 0; i < lVar6.Count; i++)
+            {
+                int pageIndex = i % (width * 2) / 0x40;
+                writer.Write(lVar6[(pages[pageIndex] / 0x800) * pages.Length * 0x800 + (pages[pageIndex] % 0x800) + 0x800 * pageIndex]);
+                pages[pageIndex]++;
+            }
         }
     }
 

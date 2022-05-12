@@ -17,4 +17,16 @@ public class MenuItems
 
         EXP_DAT.ExtractDAT(file, save);
     }
+
+    [MenuItem("Tools/Export SCN")]
+    private static void ExportSCN()
+    {
+        string file = EditorUtility.OpenFilePanel("Open file to extract asset", defaultOpenPath, "");
+        defaultOpenPath = Path.GetDirectoryName(file);
+        string tim = EditorUtility.OpenFilePanel("Open texture", defaultOpenPath, "tim");
+        string save = EditorUtility.SaveFolderPanel("Save location", defaultSavePath, "");
+        defaultSavePath = Path.GetDirectoryName(save);
+
+        EXP_SCN.ExtractSCN(file, tim, save);
+    }
 }

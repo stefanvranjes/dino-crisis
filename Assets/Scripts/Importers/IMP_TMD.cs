@@ -29,7 +29,7 @@ public class IMP_TMD : ScriptedImporter
                 tmd.CLRS = new Color[tmd.QUAD_COUNT_2 * 4];
                 tmd.TRIS = new int[tmd.QUAD_COUNT_2 * 6];
                 tmd.TEX_2D = mainT;
-                reader.Seek(12, SeekOrigin.Current);
+                reader.Seek(tmd.OFFSET_2, SeekOrigin.Begin);
                 float translateFactor = 16f;
                 int vramX = grid.VRAM_X * 2;
                 int vramY = grid.VRAM_Y;

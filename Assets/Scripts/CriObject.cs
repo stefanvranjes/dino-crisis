@@ -269,8 +269,8 @@ public class CriObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = (Vector3)screen / 4096f;
-        transform.rotation = Quaternion.Euler((Vector3)vr / 4096f * 360f);
+        transform.position = (Vector3)screen / 16f;
+        transform.rotation = Quaternion.Euler((Vector3)vr / 4096f * 180f);
     }
 
     private void OnRenderObject()

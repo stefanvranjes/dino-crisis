@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using UnityEditor;
 
 public static class EXP_DAT
 {
@@ -49,6 +50,8 @@ public static class EXP_DAT
                 /*if (15 < DAT_C3329)
                     DAT_C3329 = 1;*/
             }
+
+            AssetDatabase.Refresh();
         }
     }
 

@@ -21,9 +21,12 @@ public class IMP_SCN : ScriptedImporter
 
                 scn.staticObjs = new List<_STATIC_OBJ_DATA>();
                 int offset = reader.ReadInt32();
-                reader.Seek(offset + 0x14, SeekOrigin.Begin);
+                reader.Seek(offset - 4, SeekOrigin.Begin); //tmp
 
-                while(reader.ReadByte() == 0x23)
+                while (reader.ReadByte() != 0x23)
+                    reader.Seek(3, SeekOrigin.Current);
+
+                do
                 {
                     _STATIC_OBJ_DATA data = new _STATIC_OBJ_DATA();
                     data.DAT_00 = 0x23;
@@ -37,7 +40,7 @@ public class IMP_SCN : ScriptedImporter
                     data.DAT_12 = new Vector3Int(reader.ReadInt16(), reader.ReadInt16(), reader.ReadInt16());
                     reader.Seek(8, SeekOrigin.Current);
                     scn.staticObjs.Add(data);
-                }
+                } while (reader.ReadByte() == 0x23);
 
                 ctx.AddObjectToAsset("scn", scn);
                 ctx.SetMainObject(scn);

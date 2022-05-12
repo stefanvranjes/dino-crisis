@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "TMD", menuName = "ScriptableObjects/TmdScriptableObject", order = 1)]
 public class TmdScriptableObject : ScriptableObject
 {
     public string prefabName;

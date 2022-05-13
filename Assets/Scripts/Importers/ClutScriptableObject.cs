@@ -11,4 +11,10 @@ public class ClutScriptableObject : ScriptableObject
     public int WIDTH;
     public int HEIGHT;
     public ushort[] PALETTE;
+    public Texture2D TEX_2D;
+
+    public ushort GetIndex(int id, int y)
+    {
+        return PALETTE[id + y * WIDTH];
+    }
 }

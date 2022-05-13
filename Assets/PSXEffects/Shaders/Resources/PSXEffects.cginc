@@ -2,6 +2,7 @@
 #define __PSXEFFECTS_CGINC__
 
 sampler2D _MainTex;
+sampler2D _CLUT;
 sampler2D _Emission;
 sampler2D _NormalMap;
 sampler2D _SpecularMap;

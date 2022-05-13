@@ -24,9 +24,10 @@ public class MenuItems
         string file = EditorUtility.OpenFilePanel("Open file to extract asset", defaultOpenPath, "");
         defaultOpenPath = Path.GetDirectoryName(file);
         string tim = EditorUtility.OpenFilePanel("Open texture", defaultOpenPath, "tim");
+        string clut = EditorUtility.OpenFilePanel("Open palette", defaultOpenPath, "clut");
         string save = EditorUtility.SaveFolderPanel("Save location", defaultSavePath, "");
         defaultSavePath = Path.GetDirectoryName(save);
 
-        EXP_SCN.ExtractSCN(file, tim, save);
+        EXP_SCN.ExtractSCN(file, tim, clut, save);
     }
 }

@@ -8,6 +8,7 @@ public class IMP_TMD : ScriptedImporter
     public uint ramAddress;
     public GridScriptableObject grid;
     public Texture2D mainT;
+    public ClutScriptableObject clut;
 
     public override void OnImportAsset(AssetImportContext ctx)
     {
@@ -15,65 +16,110 @@ public class IMP_TMD : ScriptedImporter
 
         using (BufferedBinaryReader reader = new BufferedBinaryReader(buffer))
         {
-            if (grid != null && mainT != null)
+            if (grid != null && mainT != null && clut != null)
             {
                 TmdScriptableObject tmd = ScriptableObject.CreateInstance("TmdScriptableObject") as TmdScriptableObject;
 
-                tmd.OFFSET_1 = reader.ReadUInt32(0) - ramAddress;
-                tmd.OFFSET_2 = reader.ReadUInt32(4) - ramAddress;
-                tmd.QUAD_COUNT_1 = reader.ReadUInt16(8);
-                tmd.QUAD_COUNT_2 = reader.ReadUInt16(10);
-                tmd.CMDS = new byte[tmd.QUAD_COUNT_2];
-                tmd.VERTS = new Vector3[tmd.QUAD_COUNT_2 * 4];
-                tmd.UVS = new Vector2[tmd.QUAD_COUNT_2 * 4];
-                tmd.CLRS = new Color[tmd.QUAD_COUNT_2 * 4];
-                tmd.TRIS = new int[tmd.QUAD_COUNT_2 * 6];
+                tmd.TRI_OFFSET = reader.ReadUInt32(0) - ramAddress;
+                tmd.QUAD_OFFSET = reader.ReadUInt32(4) - ramAddress;
+                tmd.TRI_COUNT = reader.ReadUInt16(8);
+                tmd.QUAD_COUNT = reader.ReadUInt16(10);
+                tmd.CMDS = new byte[tmd.TRI_COUNT + tmd.QUAD_COUNT];
+                tmd.VERTS = new Vector3[tmd.TRI_COUNT * 3 + tmd.QUAD_COUNT * 4];
+                tmd.UVS = new Vector2[tmd.TRI_COUNT * 3 + tmd.QUAD_COUNT * 4];
+                tmd.UVS2 = new Vector2[tmd.TRI_COUNT + tmd.QUAD_COUNT];
+                tmd.CLRS = new Color[tmd.TRI_COUNT * 3 + tmd.QUAD_COUNT * 4];
+                tmd.TRIS = new int[tmd.TRI_COUNT * 3];
+                tmd.QUADS = new int[tmd.QUAD_COUNT * 6];
                 tmd.TEX_2D = mainT;
-                reader.Seek(tmd.OFFSET_2, SeekOrigin.Begin);
+                tmd.CLUT_2D = clut.TEX_2D;
                 float translateFactor = 16f;
                 int vramX = grid.VRAM_X * 2;
                 int vramY = grid.VRAM_Y;
 
-                for (int i = 0; i < tmd.QUAD_COUNT_2; i++)
+                reader.Seek(tmd.TRI_OFFSET, SeekOrigin.Begin);
+                int triEnd = 0;
+
+                for (int i = 0; i < tmd.TRI_COUNT; i++, triEnd++)
                 {
-                    tmd.VERTS[i * 4] = new Vector3(reader.ReadInt16(), -reader.ReadInt16(), reader.ReadInt16()) / translateFactor;
+                    tmd.VERTS[i * 3] = new Vector3(reader.ReadInt16(), -reader.ReadInt16(), reader.ReadInt16()) / translateFactor;
                     Vector2Int uv1 = new Vector2Int(reader.ReadByte(), reader.ReadByte());
-                    tmd.VERTS[i * 4 + 1] = new Vector3(reader.ReadInt16(), -reader.ReadInt16(), reader.ReadInt16()) / translateFactor;
+                    tmd.VERTS[i * 3 + 1] = new Vector3(reader.ReadInt16(), -reader.ReadInt16(), reader.ReadInt16()) / translateFactor;
                     Vector2Int uv2 = new Vector2Int(reader.ReadByte(), reader.ReadByte());
-                    tmd.VERTS[i * 4 + 2] = new Vector3(reader.ReadInt16(), -reader.ReadInt16(), reader.ReadInt16()) / translateFactor;
+                    tmd.VERTS[i * 3 + 2] = new Vector3(reader.ReadInt16(), -reader.ReadInt16(), reader.ReadInt16()) / translateFactor;
                     Vector2Int uv3 = new Vector2Int(reader.ReadByte(), reader.ReadByte());
-                    tmd.VERTS[i * 4 + 3] = new Vector3(reader.ReadInt16(), -reader.ReadInt16(), reader.ReadInt16()) / translateFactor;
-                    Vector2Int uv4 = new Vector2Int(reader.ReadByte(), reader.ReadByte());
                     ushort texpage = reader.ReadUInt16();
-                    reader.Seek(2, SeekOrigin.Current);
+                    ushort palette = reader.ReadUInt16();
+                    int clutX = (palette & 0x3f) * 16;
+                    int clutY = palette >> 6;
+                    tmd.UVS2[i] = new Vector2((float)(clutX - clut.VRAM_X) / (clut.WIDTH - 1), 1f - (float)(clutY - clut.VRAM_Y) / (clut.HEIGHT - 1));
                     int pageX = (texpage & 0xf) * 64 * 2;
                     int pageY = (texpage >> 4 & 1) * 256;
                     uv1.x = pageX + (uv1.x / 2) - vramX;
                     uv1.y = pageY + uv1.y - vramY;
-                    tmd.UVS[i * 4] = new Vector2(uv1.x / (float)(mainT.width - 1), 1f - uv1.y / (float)(mainT.height - 1));
+                    tmd.UVS[i * 3] = new Vector2(uv1.x / (float)(mainT.width - 1), 1f - uv1.y / (float)(mainT.height - 1));
                     uv2.x = pageX + (uv2.x / 2) - vramX;
                     uv2.y = pageY + uv2.y - vramY;
-                    tmd.UVS[i * 4 + 1] = new Vector2(uv2.x / (float)(mainT.width - 1), 1f - uv2.y / (float)(mainT.height - 1));
+                    tmd.UVS[i * 3 + 1] = new Vector2(uv2.x / (float)(mainT.width - 1), 1f - uv2.y / (float)(mainT.height - 1));
                     uv3.x = pageX + (uv3.x / 2) - vramX;
                     uv3.y = pageY + uv3.y - vramY;
-                    tmd.UVS[i * 4 + 2] = new Vector2(uv3.x / (float)(mainT.width - 1), 1f - uv3.y / (float)(mainT.height - 1));
+                    tmd.UVS[i * 3 + 2] = new Vector2(uv3.x / (float)(mainT.width - 1), 1f - uv3.y / (float)(mainT.height - 1));
+                    tmd.CLRS[i * 3] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
+                    tmd.CMDS[i] = reader.ReadByte();
+                    tmd.CLRS[i * 3 + 1] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
+                    reader.Seek(1, SeekOrigin.Current);
+                    tmd.CLRS[i * 3 + 2] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
+                    reader.Seek(1, SeekOrigin.Current);
+                    tmd.TRIS[i * 3] = i * 3;
+                    tmd.TRIS[i * 3 + 1] = i * 3 + 1;
+                    tmd.TRIS[i * 3 + 2] = i * 3 + 2;
+                }
+
+                reader.Seek(tmd.QUAD_OFFSET, SeekOrigin.Begin);
+
+                for (int i = 0; i < tmd.QUAD_COUNT; i++)
+                {
+                    tmd.VERTS[triEnd * 3 + i * 4] = new Vector3(reader.ReadInt16(), -reader.ReadInt16(), reader.ReadInt16()) / translateFactor;
+                    Vector2Int uv1 = new Vector2Int(reader.ReadByte(), reader.ReadByte());
+                    tmd.VERTS[triEnd * 3 + i * 4 + 1] = new Vector3(reader.ReadInt16(), -reader.ReadInt16(), reader.ReadInt16()) / translateFactor;
+                    Vector2Int uv2 = new Vector2Int(reader.ReadByte(), reader.ReadByte());
+                    tmd.VERTS[triEnd * 3 + i * 4 + 2] = new Vector3(reader.ReadInt16(), -reader.ReadInt16(), reader.ReadInt16()) / translateFactor;
+                    Vector2Int uv3 = new Vector2Int(reader.ReadByte(), reader.ReadByte());
+                    tmd.VERTS[triEnd * 3 + i * 4 + 3] = new Vector3(reader.ReadInt16(), -reader.ReadInt16(), reader.ReadInt16()) / translateFactor;
+                    Vector2Int uv4 = new Vector2Int(reader.ReadByte(), reader.ReadByte());
+                    ushort texpage = reader.ReadUInt16();
+                    ushort palette = reader.ReadUInt16();
+                    int clutX = (palette & 0x3f) * 16;
+                    int clutY = palette >> 6;
+                    tmd.UVS2[triEnd + i] = new Vector2((float)(clutX - clut.VRAM_X) / (clut.WIDTH - 1), 1f - (float)(clutY - clut.VRAM_Y) / (clut.HEIGHT - 1));
+                    int pageX = (texpage & 0xf) * 64 * 2;
+                    int pageY = (texpage >> 4 & 1) * 256;
+                    uv1.x = pageX + (uv1.x / 2) - vramX;
+                    uv1.y = pageY + uv1.y - vramY;
+                    tmd.UVS[triEnd * 3 + i * 4] = new Vector2(uv1.x / (float)(mainT.width - 1), 1f - uv1.y / (float)(mainT.height - 1));
+                    uv2.x = pageX + (uv2.x / 2) - vramX;
+                    uv2.y = pageY + uv2.y - vramY;
+                    tmd.UVS[triEnd * 3 + i * 4 + 1] = new Vector2(uv2.x / (float)(mainT.width - 1), 1f - uv2.y / (float)(mainT.height - 1));
+                    uv3.x = pageX + (uv3.x / 2) - vramX;
+                    uv3.y = pageY + uv3.y - vramY;
+                    tmd.UVS[triEnd * 3 + i * 4 + 2] = new Vector2(uv3.x / (float)(mainT.width - 1), 1f - uv3.y / (float)(mainT.height - 1));
                     uv4.x = pageX + (uv4.x / 2) - vramX;
                     uv4.y = pageY + uv4.y - vramY;
-                    tmd.UVS[i * 4 + 3] = new Vector2(uv4.x / (float)(mainT.width - 1), 1f - uv4.y / (float)(mainT.height - 1));
-                    tmd.CLRS[i * 4] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
-                    tmd.CMDS[i] = reader.ReadByte();
-                    tmd.CLRS[i * 4 + 1] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
+                    tmd.UVS[triEnd * 3 + i * 4 + 3] = new Vector2(uv4.x / (float)(mainT.width - 1), 1f - uv4.y / (float)(mainT.height - 1));
+                    tmd.CLRS[triEnd * 3 + i * 4] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
+                    tmd.CMDS[triEnd + i] = reader.ReadByte();
+                    tmd.CLRS[triEnd * 3 + i * 4 + 1] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
                     reader.Seek(1, SeekOrigin.Current);
-                    tmd.CLRS[i * 4 + 2] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
+                    tmd.CLRS[triEnd * 3 + i * 4 + 2] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
                     reader.Seek(1, SeekOrigin.Current);
-                    tmd.CLRS[i * 4 + 3] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
+                    tmd.CLRS[triEnd * 3 + i * 4 + 3] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
                     reader.Seek(1, SeekOrigin.Current);
-                    tmd.TRIS[i * 6] = i * 4;
-                    tmd.TRIS[i * 6 + 1] = i * 4 + 1;
-                    tmd.TRIS[i * 6 + 2] = i * 4 + 2;
-                    tmd.TRIS[i * 6 + 3] = i * 4 + 3;
-                    tmd.TRIS[i * 6 + 4] = i * 4 + 2;
-                    tmd.TRIS[i * 6 + 5] = i * 4 + 1;
+                    tmd.QUADS[i * 6] = triEnd * 3 + i * 4;
+                    tmd.QUADS[i * 6 + 1] = triEnd * 3 + i * 4 + 1;
+                    tmd.QUADS[i * 6 + 2] = triEnd * 3 + i * 4 + 2;
+                    tmd.QUADS[i * 6 + 3] = triEnd * 3 + i * 4 + 3;
+                    tmd.QUADS[i * 6 + 4] = triEnd * 3 + i * 4 + 2;
+                    tmd.QUADS[i * 6 + 5] = triEnd * 3 + i * 4 + 1;
                 }
 
                 ctx.AddObjectToAsset("tmd", tmd);
@@ -82,7 +128,7 @@ public class IMP_TMD : ScriptedImporter
                 mesh.SetVertices(tmd.VERTS);
                 mesh.SetUVs(0, tmd.UVS);
                 mesh.SetColors(tmd.CLRS);
-                mesh.SetTriangles(tmd.TRIS, 0);
+                mesh.SetTriangles(tmd.QUADS, 0);
                 ctx.AddObjectToAsset("mesh", mesh);
             }
         }

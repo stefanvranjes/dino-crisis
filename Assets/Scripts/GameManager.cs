@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public static SceneManager sceneManager;
 
+    public ushort DAT_1f800024;
+    public ushort DAT_1f800026;
     public ushort DAT_1f800028;
     public ushort DAT_1f80002a;
     public Vector3Int DAT_1f80002c;
@@ -63,17 +65,16 @@ public class GameManager : MonoBehaviour
                 Coprocessor.rotationMatrix.rt33 = puVar10.cTransform.rotation.V22;
                 bVar1 = puVar10.DAT_48;
                 puVar4 = puVar10.cMesh;
+                puVar10.FUN_75BEC(puVar4, puVar4.TRI_COUNT);
 
                 //if (bVar1 == 1)
                 //{
-                    puVar10.FUN_75F10(puVar4, puVar4.QUAD_COUNT_2);
+                    puVar10.FUN_75F10(puVar4, puVar4.QUAD_COUNT);
                 //}
                 //else
                 //{
-                    //...
+                //...
                 //}
-
-                //FUN_75BEC
             }
         }
     }

@@ -6,7 +6,7 @@ using UnityEditor;
 
 public class EXP_SCN
 {
-    public static void ExtractSCN(string inFile, string timFile, string outDir)
+    public static void ExtractSCN(string inFile, string timFile, string clutFile, string outDir)
     {
         using (BinaryReader reader = new BinaryReader(File.Open(inFile, FileMode.Open)))
         {
@@ -44,8 +44,12 @@ public class EXP_SCN
             if (timFile.StartsWith(Application.dataPath))
                 timFile = "Assets" + timFile.Substring(Application.dataPath.Length);
 
+            if (clutFile.StartsWith(Application.dataPath))
+                clutFile = "Assets" + clutFile.Substring(Application.dataPath.Length);
+
             TmdPostprocessor.grid = (GridScriptableObject)AssetDatabase.LoadAssetAtPath(timFile, typeof(GridScriptableObject));
             TmdPostprocessor.tim = (Texture2D)AssetDatabase.LoadAssetAtPath(timFile, typeof(Texture2D));
+            TmdPostprocessor.clut = (ClutScriptableObject)AssetDatabase.LoadAssetAtPath(clutFile, typeof(ClutScriptableObject));
 
             for (int i = 0; i < pointerList.Count; i++)
             {

@@ -11,3 +11,4 @@ ScriptedImporter:
   ramAddress: 2148575264
   grid: {fileID: 4673482187186455597, guid: e7681e37f79d0e64385483f63ef66906, type: 3}
   mainT: {fileID: -2910988652576272905, guid: e7681e37f79d0e64385483f63ef66906, type: 3}
+  clut: {fileID: 5605554348678623116, guid: 09247e50fc5dd544c8d76af57a15b418, type: 3}

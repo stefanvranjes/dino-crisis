@@ -49,6 +49,7 @@ public class PS1ShaderEditor : ShaderGUI
 		public static GUIContent emissionMapText = EditorGUIUtility.TrTextContent("Emission Map");
 		public static GUIContent cubeMapText = EditorGUIUtility.TrTextContent("Cubemap");
 		public static GUIContent lodTexText = EditorGUIUtility.TrTextContent("LOD Texture");
+		public static GUIContent clutText = EditorGUIUtility.TrTextContent("CLUT Texture");
 
 		public static string renderModeText = "Render Mode";
 		public static string blendOpText = "Blend Operation";
@@ -68,6 +69,7 @@ public class PS1ShaderEditor : ShaderGUI
 	}
 
 	MaterialProperty _MainTex = null;
+	MaterialProperty _Clut = null;
 	MaterialProperty _Color = null;
 	MaterialProperty _RenderMode = null;
 	MaterialProperty _BlendOp = null;
@@ -91,6 +93,7 @@ public class PS1ShaderEditor : ShaderGUI
 
 	public void FindProperties(MaterialProperty[] props) {
 		_MainTex = FindProperty("_MainTex", props);
+		_Clut = FindProperty("_CLUT", props);
 		_Color = FindProperty("_Color", props);
 		_RenderMode = FindProperty("_RenderMode", props);
 		_BlendOp = FindProperty("_BlendOp", props);
@@ -139,6 +142,7 @@ public class PS1ShaderEditor : ShaderGUI
 
 		EditorGUILayout.LabelField(Styles.texturesText, EditorStyles.boldLabel);
 		materialEditor.TexturePropertySingleLine(Styles.mainTexText, _MainTex, _Color);
+		materialEditor.TexturePropertySingleLine(Styles.clutText, _Clut);
 		if (_NormalMap.textureValue == null)
 			_DiffModel.floatValue = EditorGUILayout.Popup(Styles.diffuseModeText, (int)_DiffModel.floatValue, Styles.diffuseNames);
 		materialEditor.TexturePropertySingleLine(Styles.normalMapText, _NormalMap, _NormalMapDepth);

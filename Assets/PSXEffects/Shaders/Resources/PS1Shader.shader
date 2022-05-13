@@ -8,6 +8,7 @@ Shader "PSXEffects/PS1Shader"
 		_Color("Color", Color) = (1,1,1,1)
 		[KeywordEnum(Vertex, Fragment)] _DiffModel("Diffuse Model", Float) = 0.0
 		_MainTex("Texture", 2D) = "white" {}
+		_CLUT("CLUT Texture", 2D) = "white" {}
 		_LODTex("LOD Texture", 2D) = "white" {}
 		_LODAmt("LOD Amount", Float) = 0.0
 		_NormalMap("Normal Map", 2D) = "bump" {}
@@ -68,15 +69,15 @@ Shader "PSXEffects/PS1Shader"
 			struct appdata {
 				float4 vertex : POSITION;
 				float3 normal : NORMAL;
-				float4 texcoord : TEXCOORD0;
+				float4 uv_MainTex : TEXCOORD0;
 				float4 color : COLOR;
 				float3 tangent: TANGENT;
-				float4 texcoord1 : TEXCOORD1;
+				float4 uv2_MainTex : TEXCOORD1;
 			};
 
 			struct v2f
 			{
-				float4 uv : TEXCOORD0;
+				float4 uv_MainTex : TEXCOORD0;
 				fixed4 color : COLOR;
 				fixed4 diff : COLOR1;
 				fixed3 spec : COLOR2;
@@ -92,7 +93,7 @@ Shader "PSXEffects/PS1Shader"
 				float3 N : TEXCOORD7;
 				LIGHTING_COORDS(8, 9)
 				UNITY_FOG_COORDS(10)
-				float4 uv1 : TEXCOORD11;
+				float4 uv2_MainTex : TEXCOORD11;
 			};
 
 			v2f vert(appdata v)
@@ -124,26 +125,26 @@ Shader "PSXEffects/PS1Shader"
 				// Set UV outputs
 				float wVal = mul(UNITY_MATRIX_P, o.pos).z;
 				if(_AffineMapping)
-					o.uv = float4(v.texcoord.xy * wVal, wVal, 0);
+					o.uv_MainTex = float4(v.uv_MainTex.xy * wVal, wVal, 0);
 				else
-					o.uv = float4(v.texcoord.xyz, 0);
+					o.uv_MainTex = float4(v.uv_MainTex.xyz, 0);
 
 				// Currently no difference from non-affine mapping
-				#if defined(LIGHTMAP_ON)
+				/*#if defined(LIGHTMAP_ON)
 				if (_AffineMapping)
 					o.uv1 = float4(v.texcoord1.xy * unity_LightmapST.xy + unity_LightmapST.zw, wVal, 0);
 				else
 					o.uv1 = float4(v.texcoord1.xy * unity_LightmapST.xy + unity_LightmapST.zw, 0, 0);
-				#endif
+				#endif*/
 
-					
+				o.uv2_MainTex = float4(v.uv2_MainTex.xyz, 0);	
 
 				float3 worldNormal = UnityObjectToWorldNormal(v.normal);
 					
 				// Set cutoff value for vertex render distance
 				o.diff.a = (_DrawDistance > 0 && distance(worldPos, _WorldSpaceCameraPos) > _DrawDistance);
 				// Set value for LOD distance
-				o.uv.a = (distance(worldPos, _WorldSpaceCameraPos) > _LODAmt && _LODAmt > 0);
+				o.uv_MainTex.a = (distance(worldPos, _WorldSpaceCameraPos) > _LODAmt && _LODAmt > 0);
 
 				// Various outputs needed for fragment
 				o.color = v.color;
@@ -212,13 +213,14 @@ Shader "PSXEffects/PS1Shader"
 			fixed4 frag(v2f i) : SV_Target
 			{
 
-				float2 adjUv = PerformAffineMapping(i.uv, _MainTex_ST, _AffineMapping);
-				float2 adjUV1 = PerformAffineMapping(i.uv1, unity_LightmapST, _AffineMapping);
-				float4 albedo = tex2D(_MainTex, adjUv);
+				float2 adjUv = PerformAffineMapping(i.uv_MainTex, _MainTex_ST, _AffineMapping);
+				float2 adjUV1 = PerformAffineMapping(i.uv2_MainTex, unity_LightmapST, _AffineMapping);
+				float4 albedo = tex2D(_MainTex, i.uv_MainTex);
+				albedo = tex2D(_CLUT, float2(albedo.r + i.uv2_MainTex.x, i.uv2_MainTex.y));
 				// Lerp between main texture and LOD texture depending on LOD distance
-				float4 lod = tex2D(_LODTex, adjUv);
+				/*float4 lod = tex2D(_LODTex, adjUv);
 				if (i.uv.a && lod.r + lod.g + lod.b < 3.0)
-					albedo = lod;
+					albedo = lod;*/
 				float4 col = float4(1,1,1,1);
 
 				#if !UNITY_COLORSPACE_GAMMA
@@ -328,14 +330,15 @@ Shader "PSXEffects/PS1Shader"
 					// If material is unlit, just set color to albedo
 					col.rgb = albedo;
 					// Tint material
-					col *= i.color * _Color * 2;
-					col.a = albedo.a * i.color.a * _Color.a;
+					col *= i.color * _Color;
+					//col.a = albedo.a * i.color.a * _Color.a;
+					col.a = 1;
 				}
 
-				if (i.diff.a && _DrawDist == 1.0 || (_RenderMode == 2.0 && albedo.a == 0)) {
+				/*if (i.diff.a && _DrawDist == 1.0 || (_RenderMode == 2.0 && albedo.a == 0)) {
 					// Don't draw if outside render distance
 					discard;
-				}
+				}*/
 
 				col.rgb = saturate(col.rgb);
 

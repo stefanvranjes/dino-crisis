@@ -16,6 +16,9 @@ public class TmdImporterEditor : ScriptedImporterEditor
         var texReference = new GUIContent("TIM");
         var prop3 = serializedObject.FindProperty("mainT");
         EditorGUILayout.PropertyField(prop3, texReference);
+        var clutReference = new GUIContent("CLUT");
+        var prop4 = serializedObject.FindProperty("clut");
+        EditorGUILayout.PropertyField(prop4, clutReference);
         base.ApplyRevertGUI();
     }
 }

@@ -247,7 +247,7 @@ public class CriObject : MonoBehaviour
     private List<byte> commandList;
     private List<Vector3> vertexList;
     private List<Vector2> uvList;
-    private List<Vector2> uv2List;
+    private List<Vector3> uv2List;
     private List<Color> colorList;
     private List<int> triangleList;
     public Material[] materials;
@@ -257,7 +257,7 @@ public class CriObject : MonoBehaviour
         commandList = new List<byte>();
         vertexList = new List<Vector3>();
         uvList = new List<Vector2>();
-        uv2List = new List<Vector2>();
+        uv2List = new List<Vector3>();
         colorList = new List<Color>();
         triangleList = new List<int>();
     }
@@ -281,39 +281,44 @@ public class CriObject : MonoBehaviour
         {
             GL.PushMatrix();
             GL.MultMatrix(transform.localToWorldMatrix);
-            int quadEnd = 0;
 
-            for (int i = 0; i < cMesh.QUAD_COUNT; i++, quadEnd++)
+            for (int i = 0; i < cMesh.TRI_COUNT; i++)
             {
                 materials[commandList[i]].SetPass(0);
                 GL.Begin(GL.TRIANGLES);
-                int j = i * 6;
+                int j = i * 3;
 
-                for (int k = 0; k < 6; k++)
+                for (int k = 0; k < 3; k++)
                 {
-                    if (!GameManager.instance.disableColors)
-                        GL.Color(colorList[triangleList[j + k]]);
-                    GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
-                    GL.MultiTexCoord(1, uv2List[i]);
-                    GL.Vertex(vertexList[triangleList[j + k]]);
+                    //if (uv2List[i].z == 1)
+                    //{
+                        if (!GameManager.instance.disableColors)
+                            GL.Color(colorList[triangleList[j + k]]);
+                        GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
+                        GL.MultiTexCoord(1, uv2List[i]);
+                        GL.Vertex(vertexList[triangleList[j + k]]);
+                    //}
                 }
 
                 GL.End();
             }
 
-            for (int i = 0; i < cMesh.TRI_COUNT; i++)
+            for (int i = 0; i < cMesh.QUAD_COUNT; i++)
             {
-                materials[commandList[quadEnd + i]].SetPass(0);
+                materials[commandList[cMesh.TRI_COUNT + i]].SetPass(0);
                 GL.Begin(GL.TRIANGLES);
-                int j = quadEnd * 6 + i * 3;
+                int j = cMesh.TRI_COUNT * 3 + i * 6;
 
-                for (int k = 0; k < 3; k++)
+                for (int k = 0; k < 6; k++)
                 {
-                    if (!GameManager.instance.disableColors)
-                        GL.Color(colorList[triangleList[j + k]]);
-                    GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
-                    GL.MultiTexCoord(1, uv2List[quadEnd + i]);
-                    GL.Vertex(vertexList[triangleList[j + k]]);
+                    //if (uv2List[cMesh.TRI_COUNT + i].z == 1)
+                    //{
+                        if (!GameManager.instance.disableColors)
+                            GL.Color(colorList[triangleList[j + k]]);
+                        GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
+                        GL.MultiTexCoord(1, uv2List[cMesh.TRI_COUNT + i]);
+                        GL.Vertex(vertexList[triangleList[j + k]]);
+                    //}
                 }
 
                 GL.End();

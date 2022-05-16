@@ -42,7 +42,8 @@ public class PS1ShaderEditor : ShaderGUI
 
 	private static class Styles
 	{
-		public static GUIContent mainTexText = EditorGUIUtility.TrTextContent("Main Texture");
+		public static GUIContent mainTexText = EditorGUIUtility.TrTextContent("Texture 4-bit");
+		public static GUIContent Tex8Text = EditorGUIUtility.TrTextContent("Texture 8-bit");
 		public static GUIContent normalMapText = EditorGUIUtility.TrTextContent("Normal Map");
 		public static GUIContent specularMapText = EditorGUIUtility.TrTextContent("Specular Map");
 		public static GUIContent metalMapText = EditorGUIUtility.TrTextContent("Metal Map");
@@ -69,6 +70,7 @@ public class PS1ShaderEditor : ShaderGUI
 	}
 
 	MaterialProperty _MainTex = null;
+	MaterialProperty _Tex8 = null;
 	MaterialProperty _Clut = null;
 	MaterialProperty _Color = null;
 	MaterialProperty _RenderMode = null;
@@ -93,6 +95,7 @@ public class PS1ShaderEditor : ShaderGUI
 
 	public void FindProperties(MaterialProperty[] props) {
 		_MainTex = FindProperty("_MainTex", props);
+		_Tex8 = FindProperty("_Tex8", props);
 		_Clut = FindProperty("_CLUT", props);
 		_Color = FindProperty("_Color", props);
 		_RenderMode = FindProperty("_RenderMode", props);
@@ -142,6 +145,7 @@ public class PS1ShaderEditor : ShaderGUI
 
 		EditorGUILayout.LabelField(Styles.texturesText, EditorStyles.boldLabel);
 		materialEditor.TexturePropertySingleLine(Styles.mainTexText, _MainTex, _Color);
+		materialEditor.TexturePropertySingleLine(Styles.Tex8Text, _Tex8);
 		materialEditor.TexturePropertySingleLine(Styles.clutText, _Clut);
 		if (_NormalMap.textureValue == null)
 			_DiffModel.floatValue = EditorGUILayout.Popup(Styles.diffuseModeText, (int)_DiffModel.floatValue, Styles.diffuseNames);

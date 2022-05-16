@@ -8,7 +8,6 @@ public class TmdPostprocessor : AssetPostprocessor
     public static bool script;
     public static uint address;
     public static GridScriptableObject grid;
-    public static Texture2D tim;
     public static ClutScriptableObject clut;
 
     private void OnPreprocessAsset()
@@ -21,7 +20,6 @@ public class TmdPostprocessor : AssetPostprocessor
             {
                 tmdImporter.ramAddress = address;
                 tmdImporter.grid = grid;
-                tmdImporter.mainT = tim;
                 tmdImporter.clut = clut;
             }
         }

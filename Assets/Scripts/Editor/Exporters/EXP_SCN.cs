@@ -48,7 +48,6 @@ public class EXP_SCN
                 clutFile = "Assets" + clutFile.Substring(Application.dataPath.Length);
 
             TmdPostprocessor.grid = (GridScriptableObject)AssetDatabase.LoadAssetAtPath(timFile, typeof(GridScriptableObject));
-            TmdPostprocessor.tim = (Texture2D)AssetDatabase.LoadAssetAtPath(timFile, typeof(Texture2D));
             TmdPostprocessor.clut = (ClutScriptableObject)AssetDatabase.LoadAssetAtPath(clutFile, typeof(ClutScriptableObject));
 
             for (int i = 0; i < pointerList.Count; i++)

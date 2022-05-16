@@ -14,10 +14,11 @@ public class TmdScriptableObject : ScriptableObject
     public byte[] CMDS;
     public Vector3[] VERTS;
     public Vector2[] UVS;
-    public Vector2[] UVS2;
+    public Vector3[] UVS2;
     public Color[] CLRS;
     public int[] TRIS;
     public int[] QUADS;
     public Texture2D TEX_2D;
+    public Texture2D TEX8_2D;
     public Texture2D CLUT_2D;
 }

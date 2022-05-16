@@ -66,6 +66,7 @@ public class SceneManager : MonoBehaviour
                 {
                     Material mat = new Material(GameManager.instance.materials[tmd.CMDS[i]]);
                     mat.mainTexture = tmd.TEX_2D;
+                    mat.SetTexture("_Tex8", tmd.TEX8_2D);
                     mat.SetTexture("_CLUT", tmd.CLUT_2D);
                     oVar1.materials[tmd.CMDS[i]] = mat;
                 }

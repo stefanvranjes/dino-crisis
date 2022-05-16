@@ -13,12 +13,9 @@ public class TmdImporterEditor : ScriptedImporterEditor
         var gridReference = new GUIContent("GRID");
         var prop2 = serializedObject.FindProperty("grid");
         EditorGUILayout.PropertyField(prop2, gridReference);
-        var texReference = new GUIContent("TIM");
-        var prop3 = serializedObject.FindProperty("mainT");
-        EditorGUILayout.PropertyField(prop3, texReference);
         var clutReference = new GUIContent("CLUT");
-        var prop4 = serializedObject.FindProperty("clut");
-        EditorGUILayout.PropertyField(prop4, clutReference);
+        var prop3 = serializedObject.FindProperty("clut");
+        EditorGUILayout.PropertyField(prop3, clutReference);
         base.ApplyRevertGUI();
     }
 }

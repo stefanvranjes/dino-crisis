@@ -19,52 +19,82 @@ public class IMP_TIM : ScriptedImporter
 
                 grid.VRAM_X = reader.ReadInt16();
                 grid.VRAM_Y = reader.ReadInt16();
-                bool palette32 = clut.WIDTH * clut.HEIGHT > 16 ? true : false;
-                int width = reader.ReadInt16() * (palette32 ? 2 : 4);
+                int width = reader.ReadInt16();
                 int height = reader.ReadInt16();
                 reader.Seek(8, SeekOrigin.Current);
-                Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false, false);
-                Color32[] pixels = new Color32[width * height];
+                Texture2D texture4 = new Texture2D(width * 4, height, TextureFormat.RGBA32, false, false);
+                Texture2D texture8 = new Texture2D(width * 2, height, TextureFormat.RGBA32, false, false);
+                Color32[] pixels4 = new Color32[texture4.width * height];
+                Color32[] pixels8 = new Color32[texture8.width * height];
 
                 for (int y = 0; y < height; y++)
                 {
-                    for (int x = 0; x < width; x++)
+                    for (int x = 0; x < texture4.width; x++)
                     {
-                        int index = x + y * width;
-
-                        if (palette32)
-                            pixels[index] = new Color32(reader.ReadByte(index), 0, 0, 0);
+                        int index = x + y * texture4.width;
+                        
+                        if (index % 2 == 0)
+                            pixels4[index] = new Color32((byte)(reader.ReadByte(index / 2) & 0xf), 0, 0, 0);
                         else
-                        {
-                            if (index % 2 == 0)
-                                pixels[index] = new Color32((byte)(reader.ReadByte(index / 2) & 0xf), 0, 0, 0);
-                            else
-                                pixels[index] = new Color32((byte)(reader.ReadByte(index / 2) >> 4), 0, 0, 0);
-                        }
+                            pixels4[index] = new Color32((byte)(reader.ReadByte(index / 2) >> 4), 0, 0, 0);
                     }
                 }
 
-                Color32[] flipped = new Color32[width * height];
+                Color32[] flipped4 = new Color32[texture4.width * height];
                 int m = 0;
 
-                for (int i = 0, j = pixels.Length - width; i < pixels.Length; i += width, j -= width)
+                for (int i = 0, j = pixels4.Length - texture4.width; i < pixels4.Length; i += texture4.width, j -= texture4.width)
                 {
-                    for (int k = 0; k < width; ++k)
+                    for (int k = 0; k < texture4.width; ++k)
                     {
-                        flipped[m++] = new Color32
-                            (pixels[j + k].r, 
-                             pixels[j + k].g, 
-                             pixels[j + k].b, 
-                             pixels[j + k].a);
+                        flipped4[m++] = new Color32
+                            (pixels4[j + k].r, 
+                             pixels4[j + k].g, 
+                             pixels4[j + k].b, 
+                             pixels4[j + k].a);
                     }
                 }
 
-                texture.SetPixels32(flipped);
-                texture.wrapMode = TextureWrapMode.Clamp;
-                texture.filterMode = FilterMode.Point;
-                texture.Apply();
-                ctx.AddObjectToAsset("tim", texture);
-                ctx.SetMainObject(texture);
+                texture4.SetPixels32(flipped4);
+                texture4.wrapMode = TextureWrapMode.Clamp;
+                texture4.filterMode = FilterMode.Point;
+                texture4.Apply();
+                ctx.AddObjectToAsset("tim4", texture4);
+
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < texture8.width; x++)
+                    {
+                        int index = x + y * texture8.width;
+                        
+                        pixels8[index] = new Color32(reader.ReadByte(index), 0, 0, 0);
+                    }
+                }
+
+                Color32[] flipped8 = new Color32[texture8.width * height];
+                m = 0;
+
+                for (int i = 0, j = pixels8.Length - texture8.width; i < pixels8.Length; i += texture8.width, j -= texture8.width)
+                {
+                    for (int k = 0; k < texture8.width; ++k)
+                    {
+                        flipped8[m++] = new Color32
+                            (pixels8[j + k].r,
+                             pixels8[j + k].g,
+                             pixels8[j + k].b,
+                             pixels8[j + k].a);
+                    }
+                }
+
+                texture8.SetPixels32(flipped8);
+                texture8.wrapMode = TextureWrapMode.Clamp;
+                texture8.filterMode = FilterMode.Point;
+                texture8.Apply();
+                ctx.AddObjectToAsset("tim8", texture8);
+                ctx.SetMainObject(texture8);
+
+                grid.tex4 = texture4;
+                grid.tex8 = texture8;
                 ctx.AddObjectToAsset("grid", grid);
             }
         }

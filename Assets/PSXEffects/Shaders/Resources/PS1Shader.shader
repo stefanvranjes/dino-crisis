@@ -8,6 +8,7 @@ Shader "PSXEffects/PS1Shader"
 		_Color("Color", Color) = (1,1,1,1)
 		[KeywordEnum(Vertex, Fragment)] _DiffModel("Diffuse Model", Float) = 0.0
 		_MainTex("Texture", 2D) = "white" {}
+		_Tex8("Texture 8", 2D) = "white" {}
 		_CLUT("CLUT Texture", 2D) = "white" {}
 		_LODTex("LOD Texture", 2D) = "white" {}
 		_LODAmt("LOD Amount", Float) = 0.0
@@ -216,6 +217,10 @@ Shader "PSXEffects/PS1Shader"
 				float2 adjUv = PerformAffineMapping(i.uv_MainTex, _MainTex_ST, _AffineMapping);
 				float2 adjUV1 = PerformAffineMapping(i.uv2_MainTex, unity_LightmapST, _AffineMapping);
 				float4 albedo = tex2D(_MainTex, i.uv_MainTex);
+
+				if (i.uv2_MainTex.z == 1)
+					albedo = tex2D(_Tex8, i.uv_MainTex);
+
 				albedo = tex2D(_CLUT, float2(albedo.r + i.uv2_MainTex.x, i.uv2_MainTex.y));
 				// Lerp between main texture and LOD texture depending on LOD distance
 				/*float4 lod = tex2D(_LODTex, adjUv);
@@ -330,15 +335,15 @@ Shader "PSXEffects/PS1Shader"
 					// If material is unlit, just set color to albedo
 					col.rgb = albedo;
 					// Tint material
-					col *= i.color * _Color;
-					//col.a = albedo.a * i.color.a * _Color.a;
-					col.a = 1;
+					col *= i.color * _Color * 3;
+					col.a = albedo.a * i.color.a * _Color.a;
+					//col.a = 1;
 				}
 
-				/*if (i.diff.a && _DrawDist == 1.0 || (_RenderMode == 2.0 && albedo.a == 0)) {
+				if (i.diff.a && _DrawDist == 1.0 || (_RenderMode == 2.0 && albedo.a == 0)) {
 					// Don't draw if outside render distance
 					discard;
-				}*/
+				}
 
 				col.rgb = saturate(col.rgb);
 

@@ -8,4 +8,6 @@ public class GridScriptableObject : ScriptableObject
 
     public int VRAM_X;
     public int VRAM_Y;
+    public Texture2D tex4;
+    public Texture2D tex8;
 }

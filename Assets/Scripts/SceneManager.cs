@@ -25,7 +25,7 @@ public class SceneManager : MonoBehaviour
         GameManager.sceneManager = this;
         DAT_7CDC = new List<CriObject>();
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 40; i++)
         {
             GameObject obj = new GameObject();
             DAT_7CDC.Add(obj.AddComponent<CriObject>());

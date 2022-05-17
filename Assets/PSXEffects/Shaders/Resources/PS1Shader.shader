@@ -335,9 +335,13 @@ Shader "PSXEffects/PS1Shader"
 					// If material is unlit, just set color to albedo
 					col.rgb = albedo;
 					// Tint material
-					col *= i.color * _Color * 3;
+
+					if (_ColorIntensity)
+						col *= i.color * _Color * 3;
+					else
+						col *= i.color * _Color;
+
 					col.a = albedo.a * i.color.a * _Color.a;
-					//col.a = 1;
 				}
 
 				if (i.diff.a && _DrawDist == 1.0 || (_RenderMode == 2.0 && albedo.a == 0)) {

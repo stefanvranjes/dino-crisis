@@ -15,6 +15,7 @@ float4 _MainTex_ST;
 float _VertexSnappingDetail;
 float _VertexInaccuracy;
 float _AffineMapping;
+float _ColorIntensity;
 float _DrawDistance;
 float _Specular;
 float4 _Color;

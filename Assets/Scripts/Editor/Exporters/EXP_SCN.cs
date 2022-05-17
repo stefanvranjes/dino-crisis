@@ -27,17 +27,25 @@ public class EXP_SCN
             RamScriptableObject ram = ScriptableObject.CreateInstance("RamScriptableObject") as RamScriptableObject;
             ram.objects = new UIntObjectDictionary();
 
-            while (reader.ReadByte() != 0x23)
-                reader.BaseStream.Seek(3, SeekOrigin.Current);
-
-            do
+            while (reader.BaseStream.Position < reader.BaseStream.Length)
             {
-                reader.BaseStream.Seek(7, SeekOrigin.Current);
-                uint pointer = reader.ReadUInt32();
-                if (!pointerList.Contains(pointer))
-                    pointerList.Add(pointer);
-                reader.BaseStream.Seek(0x14, SeekOrigin.Current);
-            } while (reader.ReadByte() == 0x23);
+                while (reader.BaseStream.Position < reader.BaseStream.Length && reader.ReadByte() != 0x23)
+                    reader.BaseStream.Seek(3, SeekOrigin.Current);
+
+                if (reader.BaseStream.Position == reader.BaseStream.Length)
+                    break;
+
+                do
+                {
+                    reader.BaseStream.Seek(7, SeekOrigin.Current);
+                    uint pointer = reader.ReadUInt32();
+                    if (!pointerList.Contains(pointer))
+                        pointerList.Add(pointer);
+                    reader.BaseStream.Seek(0x14, SeekOrigin.Current);
+                } while (reader.BaseStream.Position < reader.BaseStream.Length && reader.ReadByte() == 0x23);
+
+                reader.BaseStream.Seek(3, SeekOrigin.Current);
+            }
 
             TmdPostprocessor.script = true;
 

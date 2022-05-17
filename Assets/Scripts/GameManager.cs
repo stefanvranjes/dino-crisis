@@ -27,6 +27,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+            disableColors = !disableColors;
+
+        Shader.SetGlobalFloat("_ColorIntensity", !disableColors ? 1.0f : 0.0f);
+    }
+
     private void FixedUpdate()
     {
         FUN_7302C();

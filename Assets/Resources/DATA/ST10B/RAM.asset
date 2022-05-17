@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe36aa5f44f593408332a9325cc2d5f, type: 3}
+  m_Name: RAM
+  m_EditorClassIdentifier: 
+  prefabName: 
+  objects:
+    m_keys: 284d1080fc581080485c1080f05c1080045f1080ac5f10805c621080386310801c00108064021080600b1080b00f108044181080c41b10800028108008341080a44b1080
+    m_values:
+    - {fileID: -222693453202378655, guid: 76832834ac2fe0e40aa7e78d418a0530, type: 3}
+    - {fileID: -222693453202378655, guid: 69fbfe0f29a43914bb364130f17c467c, type: 3}
+    - {fileID: -222693453202378655, guid: 5fc11e6c52bf1e84a843de7d9c4de07b, type: 3}
+    - {fileID: -222693453202378655, guid: 47f57641842a54d4dbec4a09b1187925, type: 3}
+    - {fileID: -222693453202378655, guid: c779bb3674aac624cae4862d6d13e7b3, type: 3}
+    - {fileID: -222693453202378655, guid: 1d2c2d1e62eeee4409be3b81bb0ee004, type: 3}
+    - {fileID: -222693453202378655, guid: a0af711bbacfbe14aafdd23e4e1cbe0c, type: 3}
+    - {fileID: -222693453202378655, guid: 82af944b5f457cc43800a0932459e3bf, type: 3}
+    - {fileID: -222693453202378655, guid: 7fa0674a89f4b2041b4468b812b3b571, type: 3}
+    - {fileID: -222693453202378655, guid: 2a236fdb75ba01648b4b5a8ae562c92f, type: 3}
+    - {fileID: -222693453202378655, guid: 62253e1c551cdcf4d95cdef5437cfd0e, type: 3}
+    - {fileID: -222693453202378655, guid: 9c5ab843ac4e96146ae2cafdee876e66, type: 3}
+    - {fileID: -222693453202378655, guid: 0d7112536094a3a44b8892bacb33c249, type: 3}
+    - {fileID: -222693453202378655, guid: 8535cb07f3b0ca14f8d9e7beb129511d, type: 3}
+    - {fileID: -222693453202378655, guid: b89f6ecc9e56e564390d88a5e914e40f, type: 3}
+    - {fileID: -222693453202378655, guid: 3ccd4a800becdcd419eeb6372e0ad3a6, type: 3}
+    - {fileID: -222693453202378655, guid: b16d9e07c716b7242b5dbe54effc8bb0, type: 3}

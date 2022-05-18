@@ -337,7 +337,7 @@ Shader "PSXEffects/PS1Shader"
 					// Tint material
 
 					if (_ColorIntensity)
-						col *= i.color * _Color * 3;
+						col *= i.color * _Color * 2;
 					else
 						col *= i.color * _Color;
 

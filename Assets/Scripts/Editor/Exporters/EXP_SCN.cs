@@ -39,6 +39,13 @@ public class EXP_SCN
                 {
                     reader.BaseStream.Seek(7, SeekOrigin.Current);
                     uint pointer = reader.ReadUInt32();
+
+                    if (pointer >> 0x18 != 0x80 || pointer < baseOffset || pointer > baseOffset + (uint)reader.BaseStream.Length)
+                    {
+                        reader.BaseStream.Seek(-11, SeekOrigin.Current);
+                        break;
+                    }
+
                     if (!pointerList.Contains(pointer))
                         pointerList.Add(pointer);
                     reader.BaseStream.Seek(0x14, SeekOrigin.Current);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
 public class TmdPostprocessor : AssetPostprocessor
 {
     public static bool script;
@@ -25,3 +26,4 @@ public class TmdPostprocessor : AssetPostprocessor
         }
     }
 }
+#endif

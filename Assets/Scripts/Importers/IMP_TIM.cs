@@ -1,7 +1,10 @@
 using System.IO;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor.AssetImporters;
+#endif
 
+#if UNITY_EDITOR
 [ScriptedImporter(1, "tim")]
 public class IMP_TIM : ScriptedImporter
 {
@@ -100,3 +103,4 @@ public class IMP_TIM : ScriptedImporter
         }
     }
 }
+#endif

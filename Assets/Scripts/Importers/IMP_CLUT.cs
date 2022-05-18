@@ -1,7 +1,10 @@
 using System.IO;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor.AssetImporters;
+#endif
 
+#if UNITY_EDITOR
 [ScriptedImporter(1, "clut")]
 public class IMP_CLUT : ScriptedImporter
 {
@@ -79,3 +82,4 @@ public class IMP_CLUT : ScriptedImporter
         return new Color32(B8, G8, R8, A);
     }
 }
+#endif

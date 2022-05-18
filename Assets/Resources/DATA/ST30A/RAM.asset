@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe36aa5f44f593408332a9325cc2d5f, type: 3}
+  m_Name: RAM
+  m_EditorClassIdentifier: 
+  prefabName: 
+  objects:
+    m_keys: 9802108070291080904810803053118048d3108014ea108088f7108094041180c81b11806c3a1180f03e1180744311809c4a1180f08e10801c0010809c89108050971080
+    m_values:
+    - {fileID: -222693453202378655, guid: 920647978dd7c384585c9b087e319653, type: 3}
+    - {fileID: -222693453202378655, guid: 6da4954ceb1a320458347206d02000fb, type: 3}
+    - {fileID: -222693453202378655, guid: fd6bbb810688f8f4d835e057d385f0cc, type: 3}
+    - {fileID: -222693453202378655, guid: aad1d50d5da40134e853375226273d77, type: 3}
+    - {fileID: -222693453202378655, guid: 3a266353c9dcc724c87a71dbf8c04ee8, type: 3}
+    - {fileID: -222693453202378655, guid: 700638ff6f438594293864fad14ab239, type: 3}
+    - {fileID: -222693453202378655, guid: 7062d419ed9517e4480cd78cd2e8119f, type: 3}
+    - {fileID: -222693453202378655, guid: a2e71e614b9aab245be4b501b1b31ac0, type: 3}
+    - {fileID: -222693453202378655, guid: ea0651d1666190d4bb3ea7a3acfa3aaf, type: 3}
+    - {fileID: -222693453202378655, guid: 204366b811fbca94f98d98a071cd6777, type: 3}
+    - {fileID: -222693453202378655, guid: 5149e10342030ed48b055254bbe12a77, type: 3}
+    - {fileID: -222693453202378655, guid: fa403f47509341e4f9b3094157e74d89, type: 3}
+    - {fileID: -222693453202378655, guid: f78e4dd9046e0a34f861c421b52cc402, type: 3}
+    - {fileID: -222693453202378655, guid: 12f9f8f58e9b385449e94de8261712d1, type: 3}
+    - {fileID: -222693453202378655, guid: 3f3108926fcac47468ae1cbc0ebbec85, type: 3}
+    - {fileID: -222693453202378655, guid: fb4ced157ce069f4f9307abb60a6ecce, type: 3}
+    - {fileID: -222693453202378655, guid: 274f80bbe1d83d949910c134d20eaa9c, type: 3}

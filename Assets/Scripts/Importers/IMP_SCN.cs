@@ -1,9 +1,12 @@
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor.AssetImporters;
+#endif
 using UnityEngine;
 
+#if UNITY_EDITOR
 [ScriptedImporter(1, "scn")]
 public class IMP_SCN : ScriptedImporter
 {
@@ -20,6 +23,7 @@ public class IMP_SCN : ScriptedImporter
                 ScnScriptableObject scn = ScriptableObject.CreateInstance("ScnScriptableObject") as ScnScriptableObject;
 
                 scn.staticObjs = new List<_STATIC_OBJ_DATA>();
+                uint baseOffset = 0x80100000;
                 int offset = reader.ReadInt32();
                 reader.Seek(offset - 4, SeekOrigin.Begin); //tmp
 
@@ -33,6 +37,10 @@ public class IMP_SCN : ScriptedImporter
 
                     do
                     {
+                        if (reader.ReadUInt32(7) >> 0x18 != 0x80 || 
+                            !ram.objects.ContainsKey(reader.ReadUInt32(7)))
+                            break;
+
                         _STATIC_OBJ_DATA data = new _STATIC_OBJ_DATA();
                         data.DAT_00 = 0x23;
                         data.DAT_01 = reader.ReadByte();
@@ -56,3 +64,4 @@ public class IMP_SCN : ScriptedImporter
         }
     }
 }
+#endif

@@ -555,7 +555,8 @@ MonoBehaviour:
   m_Text: "WASD / Arrows:\t\tMovement\nQ / E: \t\t\t\t\t\tUp/Down (local space)\nR
     / F:\t\t\t\t\t\tUp/Down (world space)\nPgUp / PgDown:\t\tUp/Down (world space)\nHold
     Shift:\t\t\t\tEnable fast movement mode\nRight Mouse: \t\t\tEnable free look\nMouse:
-    \t\t\t\t\tFree look / rotation\nESC: \t\t\t\t\t\tReturn / Quit"
+    \t\t\t\t\tFree look / rotation\nC: \t\t\t\t\t\t\tToggle colors\nESC: \t\t\t\t\t\tReturn
+    / Quit"
 --- !u!222 &327765534
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1333,6 +1334,68 @@ MonoBehaviour:
     - m_Text: ST30D
       m_Image: {fileID: 0}
     - m_Text: ST30E
+      m_Image: {fileID: 0}
+    - m_Text: ST400
+      m_Image: {fileID: 0}
+    - m_Text: ST401
+      m_Image: {fileID: 0}
+    - m_Text: ST402
+      m_Image: {fileID: 0}
+    - m_Text: ST403
+      m_Image: {fileID: 0}
+    - m_Text: ST404
+      m_Image: {fileID: 0}
+    - m_Text: ST405
+      m_Image: {fileID: 0}
+    - m_Text: ST406
+      m_Image: {fileID: 0}
+    - m_Text: ST407
+      m_Image: {fileID: 0}
+    - m_Text: ST408
+      m_Image: {fileID: 0}
+    - m_Text: ST409
+      m_Image: {fileID: 0}
+    - m_Text: ST40A
+      m_Image: {fileID: 0}
+    - m_Text: ST40B
+      m_Image: {fileID: 0}
+    - m_Text: ST40C
+      m_Image: {fileID: 0}
+    - m_Text: ST500
+      m_Image: {fileID: 0}
+    - m_Text: ST501
+      m_Image: {fileID: 0}
+    - m_Text: ST502
+      m_Image: {fileID: 0}
+    - m_Text: ST503
+      m_Image: {fileID: 0}
+    - m_Text: ST504
+      m_Image: {fileID: 0}
+    - m_Text: ST505
+      m_Image: {fileID: 0}
+    - m_Text: ST506
+      m_Image: {fileID: 0}
+    - m_Text: ST507
+      m_Image: {fileID: 0}
+    - m_Text: ST508
+      m_Image: {fileID: 0}
+    - m_Text: ST509
+      m_Image: {fileID: 0}
+    - m_Text: ST50A
+      m_Image: {fileID: 0}
+    - m_Text: ST50B
+      m_Image: {fileID: 0}
+    - m_Text: ST50C
+      m_Image: {fileID: 0}
+    - m_Text: ST50D
+      m_Image: {fileID: 0}
+    - m_Text: ST50E
+      m_Image: {fileID: 0}
+    - m_Text: ST50F
+      m_Image: {fileID: 0}
+    - m_Text: ST510
+      m_Image: {fileID: 0}
+    - m_Text: ST511
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

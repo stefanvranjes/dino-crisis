@@ -77,9 +77,9 @@ public static class EXP_DAT
         {
             //puVar1 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
             puVar1 = DAT_C3329 * 0x800 - (int)reader.Position;
-            aVar3 = new byte[0xA00];
+            aVar3 = new byte[reader.ReadInt32(4)];
 
-            for (puVar3 = 0; puVar3 < 0xA00; puVar3++)
+            for (puVar3 = 0; puVar3 < aVar3.Length; puVar3++)
             {
                 aVar3[puVar3] = reader.ReadByte(puVar1);
                 puVar1++;

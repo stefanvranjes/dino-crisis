@@ -137,4 +137,97 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/DATA/ST30E/ST30E.unity
     guid: 4fd0aa7d402f3fa47916d1bab97556c5
+  - enabled: 1
+    path: Assets/Resources/DATA/ST400/ST400.unity
+    guid: 95482683f5db3e84d87ec02b75f928a3
+  - enabled: 1
+    path: Assets/Resources/DATA/ST401/ST401.unity
+    guid: d031c6fcd81847941939c32d5b845739
+  - enabled: 1
+    path: Assets/Resources/DATA/ST402/ST402.unity
+    guid: b2cf1c673a58a13488a5072067908daf
+  - enabled: 1
+    path: Assets/Resources/DATA/ST403/ST403.unity
+    guid: 15c767a5b733e5043892ae3f6d7d95b1
+  - enabled: 1
+    path: Assets/Resources/DATA/ST404/ST404.unity
+    guid: 5e7a71c2212f952428219d63ae891810
+  - enabled: 1
+    path: Assets/Resources/DATA/ST405/ST405.unity
+    guid: a6dcb5b3e70780f42ab99d2d81891312
+  - enabled: 1
+    path: Assets/Resources/DATA/ST406/ST406.unity
+    guid: 145addf36dcf57c409609a6f76c50e8c
+  - enabled: 1
+    path: Assets/Resources/DATA/ST407/ST407.unity
+    guid: e34500cd39298e846ac70ca0de524eb2
+  - enabled: 1
+    path: Assets/Resources/DATA/ST408/ST408.unity
+    guid: aacbb3d7ce49fc9439cf041f232c6e27
+  - enabled: 1
+    path: Assets/Resources/DATA/ST409/ST409.unity
+    guid: f52cfc405f2d3f6438de47be4695c591
+  - enabled: 1
+    path: Assets/Resources/DATA/ST40A/ST40A.unity
+    guid: 30ac29be66efd3f479078b4926d02a69
+  - enabled: 1
+    path: Assets/Resources/DATA/ST40B/ST40B.unity
+    guid: a91f326f26c4f244eb39192b58c36f20
+  - enabled: 1
+    path: Assets/Resources/DATA/ST40C/ST40C.unity
+    guid: 8cb8b35a2f32b22438166a4bbfde703d
+  - enabled: 1
+    path: Assets/Resources/DATA/ST500/ST500.unity
+    guid: 0a4f1975394706842a5bf171631b05ca
+  - enabled: 1
+    path: Assets/Resources/DATA/ST501/ST501.unity
+    guid: 59c025e403b769a4aaff84fd00657014
+  - enabled: 1
+    path: Assets/Resources/DATA/ST502/ST502.unity
+    guid: be4cfc20264004c4f880b67fdf258c62
+  - enabled: 1
+    path: Assets/Resources/DATA/ST503/ST503.unity
+    guid: 7037b0d4edd061947ae98d627ae36293
+  - enabled: 1
+    path: Assets/Resources/DATA/ST504/ST504.unity
+    guid: 0d480e1ed57f5094ea020b941f854bad
+  - enabled: 1
+    path: Assets/Resources/DATA/ST505/ST505.unity
+    guid: c016838c45d06df478070c8f2987af5e
+  - enabled: 1
+    path: Assets/Resources/DATA/ST506/ST506.unity
+    guid: 99c25c5cea7303f488ca76cbbfbb9ebe
+  - enabled: 1
+    path: Assets/Resources/DATA/ST507/ST507.unity
+    guid: f17d80ad58f6b3d4280425b606b73bff
+  - enabled: 1
+    path: Assets/Resources/DATA/ST508/ST508.unity
+    guid: d462c0bd68aa64e4a9cb3c07c11b8f76
+  - enabled: 1
+    path: Assets/Resources/DATA/ST509/ST509.unity
+    guid: 565b95e9d0d68494b97b4a940b5ca411
+  - enabled: 1
+    path: Assets/Resources/DATA/ST50A/ST50A.unity
+    guid: 47e6042afe1de04478ac793914019440
+  - enabled: 1
+    path: Assets/Resources/DATA/ST50B/ST50B.unity
+    guid: 014c5e77c9086ff4ba0ed9c40debcd03
+  - enabled: 1
+    path: Assets/Resources/DATA/ST50C/ST50C.unity
+    guid: 46d2a018f9f070f49b1421c3aec38e91
+  - enabled: 1
+    path: Assets/Resources/DATA/ST50D/ST50D.unity
+    guid: b025a8a0c146a1b4da53110679e69355
+  - enabled: 1
+    path: Assets/Resources/DATA/ST50E/ST50E.unity
+    guid: 7017f64f4bada054c961a6f444af2694
+  - enabled: 1
+    path: Assets/Resources/DATA/ST50F/ST50F.unity
+    guid: 82b9e5c0e13fc254d87c0d0a7d7ce527
+  - enabled: 1
+    path: Assets/Resources/DATA/ST510/ST510.unity
+    guid: bef8a1ce0dd9d194682f8dadb209d34a
+  - enabled: 1
+    path: Assets/Resources/DATA/ST511/ST511.unity
+    guid: 6dd20794e74bb7d49ab1f06996c2fb29
   m_configObjects: {}

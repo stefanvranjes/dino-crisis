@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe36aa5f44f593408332a9325cc2d5f, type: 3}
+  m_Name: RAM
+  m_EditorClassIdentifier: 
+  prefabName: 
+  objects:
+    m_keys: 1c00108050b110804cba108008cd10802cd31080ecd91080e0e0108004e7108070f2108074fd10804c0a1180d41c1180cc24118050291180fc2a1180482e1180a4351180
+    m_values:
+    - {fileID: -222693453202378655, guid: 9dfef2fd820afc04cb212b2772cc274e, type: 3}
+    - {fileID: -222693453202378655, guid: de6bf3d8b88fc6f41b729de773c01bf6, type: 3}
+    - {fileID: -222693453202378655, guid: 0e0ccd6e1d4507048a94b20116579832, type: 3}
+    - {fileID: -222693453202378655, guid: 3ea2fd25bd661d3419c7e22617ae64d4, type: 3}
+    - {fileID: -222693453202378655, guid: cfe48899fa063a44bb5f8f84a5bf5268, type: 3}
+    - {fileID: -222693453202378655, guid: 76804e65a20f2a746b6f19c041dc092d, type: 3}
+    - {fileID: -222693453202378655, guid: c7c536a5fa3432048b66bd9495502885, type: 3}
+    - {fileID: -222693453202378655, guid: 158ad79b0506e57419f7231b15a592e6, type: 3}
+    - {fileID: -222693453202378655, guid: 4891c2c9d5f21a941a3c4db47cfddca6, type: 3}
+    - {fileID: -222693453202378655, guid: 44b7c45499d03a64fbafc6aade4a61f6, type: 3}
+    - {fileID: -222693453202378655, guid: baf347edcd693524f8b9f34b9cc6f18e, type: 3}
+    - {fileID: -222693453202378655, guid: 2e26ee2ad61b73e4fbd5b1e86f2b364a, type: 3}
+    - {fileID: -222693453202378655, guid: af7d3cd3eb8a11e4d8a8a214966912f6, type: 3}
+    - {fileID: -222693453202378655, guid: 4108822483f26734187f70620403040f, type: 3}
+    - {fileID: -222693453202378655, guid: d58dfb7737f21314f8afcd4d313b0e43, type: 3}
+    - {fileID: -222693453202378655, guid: 895eabc31c631f44ca7319a8d75c1c3f, type: 3}
+    - {fileID: -222693453202378655, guid: d8b0142c3160c6246ac6da434ab2f5bb, type: 3}

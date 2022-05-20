@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1600
     height: 817
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Project
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 17
+  controlID: 45
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -317,21 +317,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Resources/DATA/ST70D
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Resources/DATA/ST70D
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\PC\Documents\GitHub\dino-crisis
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ca680000
-    m_LastClickedID: 26826
+    m_SelectedIDs: 80940000
+    m_LastClickedID: 38016
     m_ExpandedIDs: 00000000fa590000fc59000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -447,7 +447,7 @@ MonoBehaviour:
   m_ObjectsLockedBeforeSerialization: []
   m_InstanceIDsLockedBeforeSerialization: 
   m_PreviewResizer:
-    m_CachedPref: -310
+    m_CachedPref: -311
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
@@ -490,7 +490,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 6232ffffd632ffff4433ffffc033ffff3634ffffb034ffff3435ffffae35ffff2c36ffff7236ffffe236ffff4a37ffffb637ffff1a38ffff9838ffff0c39ffff7239ffffec39ffff623affffce3affff5c3bffffd23bffff443cffffc43cffff363dffff9a3dffff043effff7c3effff043fffff803ffffff63fffff6240ffffea40ffff1244ffffae49ffff9c4effffa054ffff9c5affff2660ffff4c66ffff1e6fffff7c75fffff67affffb680ffffc686ffff308cfffff891ffff8297ffffda9dffffaaa3ffff96adffff16b4ffff2eb9ffff66beffffa4c3ffffe8c8ffff5acfffffa8d4ffff40dbffff70e1ffff24e7ffff58edffff30f2ffffb4f7ffff1ef8ffff38fbffff
+      m_ExpandedIDs: ac3affff243bffff903bffff0c3cffff803cfffff23cffff5e3dffffcc3dffff423effffb23effff1c3fffff803ffffff43fffff7640ffffea40ffff7c41fffff441ffff6242ffffd642ffff4843ffffc043ffff2a44ffff9c44fffffc44ffff6c45ffffd845ffff4a46ffffb846ffff2447ffffa047ffff624bffff744effff7654ffff905cffffe661ffff5e67ffffcc6cffffa871ffffe876ffff827cffffa082ffffaa87ffffa48cffff5e92ffff9498ffffe89effffa4a5fffff6abffffd0b2ffff1eb8ffff6abdffff06c3ffff46c9ffff2ccfffff1ad5ffffa0daffff0ae0ffffbce5ffff42ebffff8af1ffff16f7ffff7cf7ffff38fbffff70960000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

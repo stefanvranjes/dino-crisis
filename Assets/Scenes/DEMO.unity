@@ -1439,8 +1439,6 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: ST615
       m_Image: {fileID: 0}
-    - m_Text: ST615
-      m_Image: {fileID: 0}
     - m_Text: ST701
       m_Image: {fileID: 0}
     - m_Text: ST702
@@ -1459,21 +1457,41 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: ST70D
       m_Image: {fileID: 0}
+    - m_Text: ST800
+      m_Image: {fileID: 0}
+    - m_Text: ST801
+      m_Image: {fileID: 0}
+    - m_Text: ST802
+      m_Image: {fileID: 0}
+    - m_Text: ST804
+      m_Image: {fileID: 0}
+    - m_Text: ST805
+      m_Image: {fileID: 0}
+    - m_Text: ST806
+      m_Image: {fileID: 0}
+    - m_Text: ST807
+      m_Image: {fileID: 0}
+    - m_Text: ST808
+      m_Image: {fileID: 0}
+    - m_Text: ST900
+      m_Image: {fileID: 0}
+    - m_Text: ST902
+      m_Image: {fileID: 0}
+    - m_Text: ST903
+      m_Image: {fileID: 0}
+    - m_Text: ST904
+      m_Image: {fileID: 0}
+    - m_Text: ST905
+      m_Image: {fileID: 0}
+    - m_Text: ST906
+      m_Image: {fileID: 0}
+    - m_Text: ST908
+      m_Image: {fileID: 0}
+    - m_Text: ST910
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1867428737}
-        m_TargetAssemblyTypeName: Demo, Assembly-CSharp
-        m_MethodName: SetRoom
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &1130225610
 MonoBehaviour:
@@ -2636,7 +2654,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: BUILT @ 04:42:35 ON MAY 17 2022
+  m_Text: BUILT @ 11:03:25 ON MAY 21 2022
 --- !u!222 &2103896427
 CanvasRenderer:
   m_ObjectHideFlags: 0

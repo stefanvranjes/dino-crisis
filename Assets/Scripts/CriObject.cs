@@ -273,7 +273,7 @@ public class CriObject : MonoBehaviour
     {
         transform.position = (Vector3)screen / 16f;
         transform.position = new Vector3(transform.position.x, -transform.position.y, transform.position.z);
-        transform.rotation = Quaternion.Euler((Vector3)vr / 4096f * 180f);
+        transform.rotation = Quaternion.Euler((Vector3)vr / 4096f * 360f);
     }
 
     private void OnRenderObject()

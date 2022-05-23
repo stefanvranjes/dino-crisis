@@ -582,6 +582,188 @@ public static class Utilities
         -6, 4096
     };
 
+    //FUN_8FFF0
+    public static Matrix3x3 RotMatrixYXZ_gte(ref Vector3Int r, ref Matrix3x3 m)
+    {
+        uint uVar1;
+        uint uVar2;
+        uint uVar3;
+        int iVar4;
+        int iVar5;
+        int iVar6;
+        int iVar7;
+        int iVar8;
+        int iVar9;
+        uint uVar10;
+        int iVar11;
+        uint uVar12;
+        int iVar13;
+        uint uVar14;
+        int iVar15;
+        int iVar16;
+        int iVar17;
+        int iVar18;
+        int iVar19;
+        short sVar18;
+        short sVar19;
+        short sVar20;
+        short sVar21;
+        short sVar22;
+        short sVar23;
+
+        iVar16 = r.y << 0x10 | (ushort)r.x;
+        uVar14 = (uint)(r.z >> 0x1f);
+        uVar12 = (uint)(iVar16 >> 0x1f);
+        uVar10 = (uint)((int)(short)iVar16 >> 0x1f);
+        sVar20 = DAT_AC7E8[(((uint)r.z + uVar14 ^ uVar14) & 0xfff) * 2];
+        sVar21 = DAT_AC7E8[(((uint)r.z + uVar14 ^ uVar14) & 0xfff) * 2 + 1];
+        uVar1 = (uint)(sVar21 << 0x10 | (ushort)sVar20) * 0x10000 + uVar14 ^ uVar14;
+        sVar22 = DAT_AC7E8[(((uint)(iVar16 >> 0x10) + uVar12 ^ uVar12) & 0xfff) * 2];
+        sVar23 = DAT_AC7E8[(((uint)(iVar16 >> 0x10) + uVar12 ^ uVar12) & 0xfff) * 2 + 1];
+        uVar2 = (uint)(sVar23 << 0x10 | (ushort)sVar22) * 0x10000 + uVar12 ^ uVar12;
+        sVar18 = DAT_AC7E8[(((uint)(int)(short)iVar16 + uVar10 ^ uVar10) & 0xfff) * 2];
+        sVar19 = DAT_AC7E8[(((uint)(int)(short)iVar16 + uVar10 ^ uVar10) & 0xfff) * 2 + 1];
+        uVar3 = (uint)(sVar19 << 0x10 | (ushort)sVar18) * 0x10000 + uVar10 ^ uVar10;
+        iVar8 = (int)((uint)((sVar23 << 0x10 | (ushort)sVar22) >> 0x10) << 0x10 | uVar2 >> 0x10) >> 0x10;
+        Coprocessor.accumulator.ir0 = (short)iVar8;
+        iVar7 = (int)uVar3 >> 0x10;
+        Coprocessor.accumulator.ir1 = (short)iVar7;
+        iVar5 = (int)uVar1 >> 0x10;
+        Coprocessor.accumulator.ir2 = (short)iVar5;
+        iVar4 = (int)((uint)((sVar21 << 0x10 | (ushort)sVar20) >> 0x10) << 0x10 | uVar1 >> 0x10) >> 0x10;
+        Coprocessor.accumulator.ir3 = (short)iVar4;
+        Coprocessor.ExecuteGPF(12, false);
+        iVar16 = (int)((uint)((sVar19 << 0x10 | (ushort)sVar18) >> 0x10) << 0x10 | uVar3 >> 0x10) >> 0x10;
+        iVar9 = Coprocessor.accumulator.ir1;
+        iVar11 = Coprocessor.accumulator.ir2;
+        iVar13 = Coprocessor.accumulator.ir3;
+        iVar19 = (int)uVar2 >> 0x10;
+        Coprocessor.accumulator.ir0 = (short)iVar19;
+        Coprocessor.accumulator.ir1 = (short)iVar7;
+        Coprocessor.accumulator.ir2 = (short)iVar5;
+        Coprocessor.accumulator.ir3 = (short)iVar4;
+        Coprocessor.ExecuteGPF(12, false);
+        m.V22 = (short)(iVar16 * iVar8 >> 12);
+        iVar15 = Coprocessor.accumulator.ir1;
+        iVar17 = Coprocessor.accumulator.ir2;
+        iVar18 = Coprocessor.accumulator.ir3;
+        Coprocessor.accumulator.ir0 = (short)iVar4;
+        Coprocessor.accumulator.ir1 = (short)iVar16;
+        Coprocessor.accumulator.ir2 = (short)iVar15;
+        Coprocessor.accumulator.ir3 = (short)iVar9;
+        Coprocessor.ExecuteGPF(12, false);
+        uVar1 = (uint)(int)Coprocessor.accumulator.ir1;
+        iVar8 = Coprocessor.accumulator.ir2;
+        iVar6 = Coprocessor.accumulator.ir3;
+        Coprocessor.accumulator.ir0 = (short)iVar5;
+        Coprocessor.accumulator.ir1 = (short)iVar16;
+        Coprocessor.accumulator.ir2 = (short)iVar15;
+        Coprocessor.accumulator.ir3 = (short)iVar9;
+        Coprocessor.ExecuteGPF(12, false);
+        m.V11 = (short)uVar1;
+        m.V12 = (short)-iVar7;
+        iVar4 = Coprocessor.accumulator.ir1;
+        iVar5 = Coprocessor.accumulator.ir2;
+        iVar7 = Coprocessor.accumulator.ir3;
+        m.V00 = (short)(iVar13 + iVar5);
+        m.V01 = (short)(iVar8 - iVar11);
+        m.V02 = (short)(iVar16 * iVar19 >> 12);
+        m.V10 = (short)iVar4;
+        m.V20 = (short)(iVar7 - iVar18);
+        m.V21 = (short)(iVar6 + iVar17);
+        return m;
+    }
+
+    //FUN_8FDE0
+    public static Matrix3x3 RotMatrix_gte(ref Vector3Int r, ref Matrix3x3 m)
+    {
+        uint uVar1;
+        uint uVar2;
+        uint uVar3;
+        int iVar4;
+        int iVar5;
+        int iVar6;
+        int iVar7;
+        uint uVar8;
+        int iVar9;
+        uint uVar10;
+        int iVar11;
+        uint uVar12;
+        int iVar13;
+        int iVar14;
+        int iVar15;
+        int iVar16;
+        int iVar17;
+        short sVar18;
+        short sVar19;
+        short sVar20;
+        short sVar21;
+        short sVar22;
+        short sVar23;
+
+        iVar14 = r.y << 0x10 | (ushort)r.x;
+        uVar12 = (uint)(r.z >> 0x1f);
+        uVar10 = (uint)(iVar14 >> 0x1f);
+        uVar8 = (uint)((int)(short)iVar14 >> 0x1f);
+        sVar20 = DAT_AC7E8[(((uint)r.z + uVar12 ^ uVar12) & 0xfff) * 2];
+        sVar21 = DAT_AC7E8[(((uint)r.z + uVar12 ^ uVar12) & 0xfff) * 2 + 1];
+        uVar1 = (uint)(sVar21 << 0x10 | (ushort)sVar20) * 0x10000 + uVar12 ^ uVar12;
+        sVar22 = DAT_AC7E8[(((uint)(iVar14 >> 0x10) + uVar10 ^ uVar10) & 0xfff) * 2];
+        sVar23 = DAT_AC7E8[(((uint)(iVar14 >> 0x10) + uVar10 ^ uVar10) & 0xfff) * 2 + 1];
+        uVar2 = (uint)(sVar23 << 0x10 | (ushort)sVar22) * 0x10000 + uVar10 ^ uVar10;
+        sVar18 = DAT_AC7E8[(((uint)(int)(short)iVar14 + uVar8 ^ uVar8) & 0xfff) * 2];
+        sVar19 = DAT_AC7E8[(((uint)(int)(short)iVar14 + uVar8 ^ uVar8) & 0xfff) * 2 + 1];
+        uVar3 = (uint)(sVar19 << 0x10 | (ushort)sVar18) * 0x10000 + uVar8 ^ uVar8;
+        iVar6 = (int)((uint)((sVar19 << 0x10 | (ushort)sVar18) >> 0x10) << 0x10 | uVar3 >> 0x10) >> 0x10;
+        Coprocessor.accumulator.ir0 = (short)iVar6;
+        uVar8 = (uint)((int)uVar2 >> 0x10);
+        Coprocessor.accumulator.ir1 = (short)uVar8;
+        iVar5 = (int)uVar1 >> 0x10;
+        Coprocessor.accumulator.ir2 = (short)iVar5;
+        iVar4 = (int)((uint)((sVar21 << 0x10 | (ushort)sVar20) >> 0x10) << 0x10 | uVar1 >> 0x10) >> 0x10;
+        Coprocessor.accumulator.ir3 = (short)iVar4;
+        Coprocessor.ExecuteGPF(12, false);
+        iVar14 = (int)((uint)((sVar23 << 0x10 | (ushort)sVar22) >> 0x10) << 0x10 | uVar2 >> 0x10) >> 0x10;
+        iVar7 = Coprocessor.accumulator.ir1;
+        iVar9 = Coprocessor.accumulator.ir2;
+        iVar11 = Coprocessor.accumulator.ir3;
+        iVar17 = (int)uVar3 >> 0x10;
+        Coprocessor.accumulator.ir0 = (short)iVar17;
+        Coprocessor.accumulator.ir1 = (short)uVar8;
+        Coprocessor.accumulator.ir2 = (short)iVar5;
+        Coprocessor.accumulator.ir3 = (short)iVar4;
+        Coprocessor.ExecuteGPF(12, false);
+        m.V22 = (short)(iVar14 * iVar6 >> 12);
+        iVar13 = Coprocessor.accumulator.ir1;
+        iVar15 = Coprocessor.accumulator.ir2;
+        iVar16 = Coprocessor.accumulator.ir3;
+        Coprocessor.accumulator.ir0 = (short)iVar4;
+        Coprocessor.accumulator.ir1 = (short)iVar14;
+        Coprocessor.accumulator.ir2 = (short)iVar13;
+        Coprocessor.accumulator.ir3 = (short)iVar7;
+        Coprocessor.ExecuteGPF(12, false);
+        uVar1 = (uint)(int)Coprocessor.accumulator.ir1;
+        iVar4 = Coprocessor.accumulator.ir2;
+        iVar6 = Coprocessor.accumulator.ir3;
+        Coprocessor.accumulator.ir0 = (short)iVar5;
+        Coprocessor.accumulator.ir1 = (short)iVar14;
+        Coprocessor.accumulator.ir2 = (short)iVar13;
+        Coprocessor.accumulator.ir3 = (short)iVar7;
+        Coprocessor.ExecuteGPF(12, false);
+        m.V02 = (short)uVar8;
+        m.V10 = (short)(iVar4 + iVar9);
+        iVar4 = Coprocessor.accumulator.ir1;
+        m.V00 = (short)uVar1;
+        m.V01 = (short)-iVar4;
+        iVar4 = Coprocessor.accumulator.ir2;
+        iVar5 = Coprocessor.accumulator.ir3;
+        m.V11 = (short)(iVar11 - iVar4);
+        m.V12 = (short)-(iVar14 * iVar17 >> 12);
+        m.V20 = (short)(iVar15 - iVar6);
+        m.V21 = (short)(iVar16 + iVar5);
+        return m;
+    }
+
     //FUN_8F8C0
     public static Matrix3x3 RotMatrix(ref Vector3Int r, ref Matrix3x3 m)
     {
@@ -801,10 +983,27 @@ public static class Utilities
         }
     }
 
-    /*private static Matrix3x3 FGO_01_OBJ_160(ref Vector3Int r, ref Matrix3x3 m)
+    //FUN_8F2A0
+    public static Matrix3x3 ScaleMatrix(ref Matrix3x3 m, ref Vector3Int v)
     {
+        int iVar2;
+        int iVar3;
+        int iVar4;
 
-    }*/
+        iVar2 = v.x;
+        iVar3 = v.y;
+        iVar4 = v.z;
+        m.V00 = (short)(m.V00 * iVar2 >> 12);
+        m.V01 = (short)(m.V01 * iVar3 >> 12);
+        m.V02 = (short)(m.V02 * iVar4 >> 12);
+        m.V10 = (short)(m.V10 * iVar2 >> 12);
+        m.V11 = (short)(m.V11 * iVar3 >> 12);
+        m.V12 = (short)(m.V12 * iVar4 >> 12);
+        m.V20 = (short)(m.V20 * iVar2 >> 12);
+        m.V21 = (short)(m.V21 * iVar3 >> 12);
+        m.V22 = (short)(m.V22 * iVar4 >> 12);
+        return m;
+    }
 
     public static int LeadingZeros(int x)
     {

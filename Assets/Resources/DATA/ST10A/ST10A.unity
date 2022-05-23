@@ -300,6 +300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: -4406283935363021935, guid: 89859ae7d7bbca8469af7f1f9d257747, type: 3}
   DAT_27C: []
+  DAT_1C9C: []
   DAT_5FCC: []
   DAT_7CDC: []
 --- !u!4 &1522627405
@@ -373,10 +374,9 @@ MonoBehaviour:
   vr: {x: 0, y: 0, z: 0}
   DAT_2E: 0
   flags: 0
+  DAT_34: {fileID: 0}
+  DAT_38: {fileID: 0}
   cMesh: {fileID: 0}
-  DAT_48: 0
-  DAT_4A: 0
-  materials: []
 --- !u!4 &1906816350
 Transform:
   m_ObjectHideFlags: 0

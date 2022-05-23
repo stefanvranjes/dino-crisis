@@ -7,9 +7,10 @@ public class SceneManager : MonoBehaviour
     public static SceneManager instance;
 
     public ScnScriptableObject data;
-    public List<CriObject> DAT_27C; //gp+27ch...gp+1c9ch
-    public List<CriObject> DAT_5FCC; //gp+5fcch...gp+7cdch
-    public List<CriObject> DAT_7CDC; //gp+7cdch...gp+8ffch
+    public CriObject[] DAT_27C; //gp+27ch...gp+1c9ch
+    public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
+    public CriObject[] DAT_5FCC; //gp+5fcch...gp+7cdch
+    public CriObject[] DAT_7CDC; //gp+7cdch...gp+8ffch
 
     void Awake()
     {
@@ -23,13 +24,8 @@ public class SceneManager : MonoBehaviour
     void Start()
     {
         GameManager.sceneManager = this;
-        DAT_7CDC = new List<CriObject>();
-
-        for (int i = 0; i < 40; i++)
-        {
-            GameObject obj = new GameObject();
-            DAT_7CDC.Add(obj.AddComponent<CriObject>());
-        }
+        DAT_27C = new CriObject[40];
+        DAT_7CDC = new CriObject[40];
 
         for (int i = 0; i < data.staticObjs.Count; i++)
         {
@@ -45,9 +41,11 @@ public class SceneManager : MonoBehaviour
 
     private void FUN_570A0(_STATIC_OBJ_DATA data)
     {
-        CriObject oVar1;
+        CriStatic oVar1;
 
-        oVar1 = DAT_7CDC[data.DAT_01];
+        GameObject obj = new GameObject();
+        oVar1 = obj.AddComponent<CriStatic>();
+        DAT_7CDC[data.DAT_01] = oVar1;
         oVar1.flags = 3;
         oVar1.DAT_2E = data.DAT_02;
         oVar1.DAT_48 = data.DAT_03;
@@ -72,5 +70,33 @@ public class SceneManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public CriBone FUN_601F0()
+    {
+        int iVar1;
+        CriBone puVar2;
+        int iVar3;
+
+        iVar1 = 99;
+        iVar3 = 0;
+
+        do
+        {
+            iVar1--;
+            puVar2 = DAT_1C9C[iVar3];
+
+            if ((puVar2.flags & 1) == 0)
+            {
+                puVar2.ResetValues();
+                puVar2.flags = 3;
+                puVar2.DAT_43 = 0;
+                return puVar2;
+            }
+
+            iVar3++;
+        } while (iVar1 != -1);
+
+        return null;
     }
 }

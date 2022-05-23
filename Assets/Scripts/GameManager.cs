@@ -56,13 +56,13 @@ public class GameManager : MonoBehaviour
     {
         byte bVar1;
         TmdScriptableObject puVar4;
-        CriObject puVar10;
+        CriStatic puVar10;
 
-        for (int i = 0; i < sceneManager.DAT_7CDC.Count; i++)
+        for (int i = 0; i < sceneManager.DAT_7CDC.Length; i++)
         {
-            puVar10 = sceneManager.DAT_7CDC[i];
+            puVar10 = sceneManager.DAT_7CDC[i] as CriStatic;
 
-            if ((puVar10.flags & 3) == 3)
+            if (puVar10 != null && (puVar10.flags & 3) == 3)
             {
                 //if...
                 Coprocessor.rotationMatrix.rt11 = puVar10.cTransform.rotation.V00;
@@ -111,16 +111,16 @@ public class GameManager : MonoBehaviour
         Coprocessor.translationVector._trz = DAT_B4.cTransform.position.z;
         DAT_1f80002c = DAT_B4.vr;
 
-        for (int i = 0; i < sceneManager.DAT_27C.Count; i++)
+        for (int i = 0; i < sceneManager.DAT_27C.Length; i++)
         {
 
         }
 
-        for (int i = 0; i < sceneManager.DAT_7CDC.Count; i++)
+        for (int i = 0; i < sceneManager.DAT_7CDC.Length; i++)
         {
             puVar8 = sceneManager.DAT_7CDC[i];
 
-            if ((puVar8.flags & 2) != 0)
+            if (puVar8 != null && (puVar8.flags & 2) != 0)
             {
                 Utilities.RotMatrix(ref puVar8.vr, ref DAT_1f800034);
 
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < sceneManager.DAT_5FCC.Count; i++)
+        for (int i = 0; i < sceneManager.DAT_5FCC.Length; i++)
         {
 
         }

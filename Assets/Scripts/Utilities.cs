@@ -582,6 +582,12 @@ public static class Utilities
         -6, 4096
     };
 
+    //FUN_901F0
+    public static long Ratan2(long y, long x)
+    {
+        return 0;
+    }
+
     //FUN_8FFF0
     public static Matrix3x3 RotMatrixYXZ_gte(ref Vector3Int r, ref Matrix3x3 m)
     {
@@ -1005,6 +1011,29 @@ public static class Utilities
         return m;
     }
 
+    //FUN_8F210
+    public static Vector3Int ApplyMatrixSV(ref Matrix3x3 m, ref Vector3Int v0)
+    {
+        Coprocessor.rotationMatrix.rt11 = m.V00;
+        Coprocessor.rotationMatrix.rt12 = m.V01;
+        Coprocessor.rotationMatrix.rt13 = m.V02;
+        Coprocessor.rotationMatrix.rt21 = m.V10;
+        Coprocessor.rotationMatrix.rt22 = m.V11;
+        Coprocessor.rotationMatrix.rt23 = m.V12;
+        Coprocessor.rotationMatrix.rt31 = m.V20;
+        Coprocessor.rotationMatrix.rt32 = m.V21;
+        Coprocessor.rotationMatrix.rt33 = m.V22;
+        Coprocessor.vector0.vx0 = (short)v0.x;
+        Coprocessor.vector0.vy0 = (short)v0.y;
+        Coprocessor.vector0.vz0 = (short)v0.z;
+        Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+
+        return new Vector3Int
+            (Coprocessor.accumulator.ir1,
+             Coprocessor.accumulator.ir2,
+             Coprocessor.accumulator.ir3);
+    }
+
     public static int LeadingZeros(int x)
     {
         if ((x & 0x80000000) != 0)
@@ -1033,6 +1062,32 @@ public static class Utilities
         if (val.CompareTo(min) < 0) return min;
         else if (val.CompareTo(max) > 0) return max;
         else return val;
+    }
+
+    public static CriObject FUN_601C8(CriObject param1, int param2)
+    {
+        int iVar1;
+
+        iVar1 = param2 - 1;
+
+        if (param2 != 0)
+        {
+            do
+            {
+                param1 = param1.DAT_34;
+                iVar1--;
+            } while (iVar1 != -1);
+        }
+
+        return param1;
+    }
+
+    public static int FUN_615EC(Vector3Int param1, Vector3Int param2)
+    {
+        long lVar1;
+
+        lVar1 = Ratan2(param2.x - param1.x, param2.z - param1.z);
+        return (int)(lVar1 & 0xfff);
     }
 }
 

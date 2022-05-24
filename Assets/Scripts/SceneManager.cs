@@ -7,7 +7,8 @@ public class SceneManager : MonoBehaviour
     public static SceneManager instance;
 
     public ScnScriptableObject data;
-    public CriObject[] DAT_27C; //gp+27ch...gp+1c9ch
+    public Tmd2ScriptableObject playerSkin;
+    public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriObject[] DAT_5FCC; //gp+5fcch...gp+7cdch
     public CriObject[] DAT_7CDC; //gp+7cdch...gp+8ffch
@@ -24,7 +25,9 @@ public class SceneManager : MonoBehaviour
     void Start()
     {
         GameManager.sceneManager = this;
-        DAT_27C = new CriObject[40];
+        DAT_27C = new CriSkinned[40];
+        DAT_1C9C = new CriBone[100];
+        DAT_5FCC = new CriObject[60];
         DAT_7CDC = new CriObject[40];
 
         for (int i = 0; i < data.staticObjs.Count; i++)
@@ -86,11 +89,11 @@ public class SceneManager : MonoBehaviour
             iVar1--;
             puVar2 = DAT_1C9C[iVar3];
 
-            if ((puVar2.flags & 1) == 0)
+            if (puVar2 != null && (puVar2.flags & 1) == 0)
             {
                 puVar2.ResetValues();
                 puVar2.flags = 3;
-                puVar2.DAT_43 = 0;
+                puVar2.DAT_43 = false;
                 return puVar2;
             }
 

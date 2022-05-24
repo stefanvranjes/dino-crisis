@@ -4,13 +4,32 @@ using UnityEngine;
 
 public class CriSkinned : CriObject
 {
+    public Vector3Int DAT_34_2; //0x34
+    public short DAT_46; //0x46
     public CriBone skeleton; //0x4C
     public int boneCount; //0x50
     public byte DAT_5E; //0x5E
     public Tmd2ScriptableObject cSkin; //0x9C
     public Vector3Int skinSize; //0xA4
     public Color32 tint; //0xB0
+    public short health; //0x118
+    public short maxHealth; //0x11A
+    public byte DAT_11E; //0x11E
+    public short DAT_12C; //0x12C
+    public bool DAT_12E; //0x12E
+    public bool DAT_12F; //0x12F
+    public Vector2Int DAT_13C; //0x13C
+    public short DAT_140; //0x140
+    public short DAT_152; //0x152
+    public byte DAT_164; //0x164
     public Vector2Int shadowSize; //0x170
+    public byte DAT_174; //0x174
+    public byte DAT_175; //0x175
+    public byte DAT_177; //0x177
+    public CriBone DAT_184; //0x184
+    public CriBone DAT_188; //0x188
+    public bool DAT_18C; //0x18C
+    public bool DAT_18D; //0x18D
     public sbyte DAT_198; //0x198
     public byte DAT_1A5; //0x1A5
 
@@ -27,15 +46,56 @@ public class CriSkinned : CriObject
     public override void ResetValues()
     {
         base.ResetValues();
+        DAT_34_2 = Vector3Int.zero;
+        DAT_46 = 0;
         skeleton = null;
         boneCount = 0;
         DAT_5E = 0;
         cSkin = null;
         skinSize = Vector3Int.zero;
         tint = Color.clear;
+        health = 0;
+        maxHealth = 0;
+        DAT_11E = 0;
+        DAT_12C = 0;
+        DAT_12E = false;
+        DAT_12F = false;
+        DAT_13C = Vector2Int.zero;
+        DAT_140 = 0;
+        DAT_152 = 0;
         shadowSize = Vector2Int.zero;
+        DAT_174 = 0;
+        DAT_175 = 0;
+        DAT_177 = 0;
+        DAT_184 = null;
+        DAT_188 = null;
+        DAT_18C = false;
+        DAT_18D = false;
         DAT_198 = 0;
         DAT_1A5 = 0;
+    }
+
+    public void FUN_60444()
+    {
+        Bone puVar2;
+        int iVar3;
+        CriBone oVar4;
+        int puVar5;
+
+        oVar4 = skeleton;
+        iVar3 = boneCount - 1;
+        puVar5 = 0;
+
+        if (iVar3 != -1)
+        {
+            do
+            {
+                puVar2 = cSkin.BONES[puVar5];
+                oVar4.DAT_44 = puVar2.DAT_00;
+                iVar3--;
+                puVar5++;
+            } while (iVar3 != -1);
+        }
     }
 
     public void FUN_604A4(Tmd2ScriptableObject param1)
@@ -104,6 +164,17 @@ public class CriSkinned : CriObject
         }
     }
 
+    public void FUN_65984(int param1, int param2)
+    {
+        CriBone oVar1;
+
+        DAT_18C = false;
+        oVar1 = Utilities.FUN_601C8(skeleton, param1) as CriBone;
+        DAT_184 = oVar1;
+        oVar1 = Utilities.FUN_601C8(skeleton, param2) as CriBone;
+        DAT_188 = oVar1;
+    }
+
     public void FUN_66208()
     {
         long lVar3;
@@ -125,7 +196,7 @@ public class CriSkinned : CriObject
         {
             puVar9 = m.DAT_38;
 
-            if (m.DAT_43 == 0)
+            if (!m.DAT_43)
                 Utilities.RotMatrix_gte(ref m.vr, ref m.cTransform.rotation);
             else
                 Utilities.RotMatrixYXZ_gte(ref m.vr, ref m.cTransform.rotation);
@@ -191,5 +262,11 @@ public class CriSkinned : CriObject
             iVar10++;
             m = (CriBone)m.DAT_34;
         } while (iVar10 != -1);
+    }
+
+    public void FUN_66404(byte param1, short param2, short param3)
+    {
+        DAT_174 = (byte)(param1 | 0x80);
+        shadowSize = new Vector2Int(param2, param3);
     }
 }

@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum _DIFFICULTY
+{
+    Normal, 
+    Easy
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -15,7 +21,15 @@ public class GameManager : MonoBehaviour
     public Matrix3x3 DAT_1f800034;
     public byte DAT_38; //gp+38h
     public CriObject DAT_B4; //gp+b4h
-    public byte DAT_1AA0; //gp+9AA0h
+    public byte DAT_9AA0; //gp+9aa0h
+    public _DIFFICULTY difficulty; //gp+9aa8h
+    public short playerHealth; //gp+a0f0h
+    public short DAT_A0F2; //gp+a0f2h
+    public uint DAT_A0F4; //gp+a0f4h
+    public ushort[] DAT_A0F8; //gp+a0f8h
+    public byte DAT_A100; //gp+a100h
+    public bool DAT_A2D0; //gp+a2d0h
+    public byte DAT_A2D3; //gp+a2d3h
     public bool disableColors;
     public Material[] materials;
 

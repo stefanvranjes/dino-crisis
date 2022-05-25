@@ -8,6 +8,8 @@ public class CriBone : CriObject
     public bool DAT_43; //0x43
     public Vector3Int DAT_44; //0x44
     public Vector3Int DAT_4C; //0x4C
+    public Matrix3x3 DAT_6C; //0x6C
+    public Matrix3x3 DAT_8C; //0x8C
 
     protected override void Start()
     {

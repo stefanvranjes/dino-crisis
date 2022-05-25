@@ -25,7 +25,7 @@ public class SceneManager : MonoBehaviour
     void Start()
     {
         GameManager.sceneManager = this;
-        DAT_27C = new CriSkinned[40];
+        DAT_27C = new CriSkinned[11];
         DAT_1C9C = new CriBone[100];
         DAT_5FCC = new CriObject[60];
         DAT_7CDC = new CriObject[40];

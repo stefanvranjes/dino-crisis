@@ -1473,6 +1473,19 @@ public class BufferedBinaryReader : IDisposable
         return val;
     }
 
+    public sbyte ReadSByte()
+    {
+        sbyte val = (sbyte)(int)buffer[bufferOffset];
+        bufferOffset++;
+        return val;
+    }
+
+    public sbyte ReadSByte(int offset)
+    {
+        sbyte val = (sbyte)(int)buffer[bufferOffset + offset];
+        return val;
+    }
+
     public short ReadInt16()
     {
         var val = (short)((int)buffer[bufferOffset] | (int)buffer[bufferOffset + 1] << 8);

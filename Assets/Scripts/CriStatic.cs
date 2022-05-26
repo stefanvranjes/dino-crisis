@@ -15,19 +15,15 @@ public class CriStatic : CriObject
     private List<int> triangleList;
     public Material[] materials;
 
-    private void Awake()
+    protected override void Start()
     {
+        base.Start();
         commandList = new List<byte>();
         vertexList = new List<Vector3>();
         uvList = new List<Vector2>();
         uv2List = new List<Vector3>();
         colorList = new List<Color>();
         triangleList = new List<int>();
-    }
-
-    protected override void Start()
-    {
-        base.Start();
     }
 
     protected override void Update()

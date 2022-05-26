@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public byte DAT_A100; //gp+a100h
     public bool DAT_A2D0; //gp+a2d0h
     public byte DAT_A2D3; //gp+a2d3h
+    public List<Vector3> skinnedVertices; //0x800C6F90
+    public List<Color> skinnedColors; //0x800C75D0
     public List<CriSkinned> skinnedList; //0x800C7C10
     public bool disableColors;
     public Material[] materials;
@@ -48,6 +50,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        skinnedVertices = new List<Vector3>();
+        skinnedColors = new List<Color>();
         skinnedList = new List<CriSkinned>();
     }
 
@@ -78,7 +82,7 @@ public class GameManager : MonoBehaviour
 
     private void FUN_73EB8()
     {
-        CriBone puVar6;
+        CriObject puVar6;
         int iVar7;
         int iVar8;
         int iVar9;
@@ -86,7 +90,7 @@ public class GameManager : MonoBehaviour
         int iVar12;
         uint uVar13;
         Vector3Int[] puVar14;
-        Vector3Int[] puVar15;
+        Vector3[] puVar15;
         CriSkinned oVar18;
         int iVar19;
         int iVar20;
@@ -105,6 +109,8 @@ public class GameManager : MonoBehaviour
             do
             {
                 oVar18 = skinnedList[(int)local_48];
+                skinnedVertices = new List<Vector3>();
+                skinnedColors = new List<Color>();
                 puVar10 = oVar18.skeleton;
                 puVar15 = oVar18.cSkin.VERTS;
                 puVar14 = oVar18.cSkin.NRMLS;
@@ -116,6 +122,8 @@ public class GameManager : MonoBehaviour
 
                 if (iVar12 != local_2c)
                 {
+                    iVar20 = 0;
+
                     do
                     {
                         Coprocessor.lightMatrix.l11 = puVar10.DAT_6C.V00;
@@ -136,7 +144,7 @@ public class GameManager : MonoBehaviour
                         Coprocessor.lightColorMatrix.lb1 = puVar10.DAT_8C.V20;
                         Coprocessor.lightColorMatrix.lb2 = puVar10.DAT_8C.V21;
                         Coprocessor.lightColorMatrix.lb3 = puVar10.DAT_8C.V22;
-                        puVar6 = (CriBone)puVar10.DAT_38;
+                        puVar6 = puVar10.DAT_38;
                         Coprocessor.rotationMatrix.rt11 = puVar6.cTransform.rotation.V00;
                         Coprocessor.rotationMatrix.rt12 = puVar6.cTransform.rotation.V01;
                         Coprocessor.rotationMatrix.rt13 = puVar6.cTransform.rotation.V02;
@@ -198,15 +206,15 @@ public class GameManager : MonoBehaviour
                         Coprocessor.translationVector._trx = puVar10.cTransform.position.x;
                         Coprocessor.translationVector._try = puVar10.cTransform.position.y;
                         Coprocessor.translationVector._trz = puVar10.cTransform.position.z;
+                        puVar10.BoneTransform();
+                        Matrix4x4 m = puVar10.transform.localToWorldMatrix;
                         iVar19 = puVar10.DAT_42 - 1;
 
                         if (iVar19 != local_2c)
                         {
-                            iVar20 = 0;
-
                             do
                             {
-                                Coprocessor.vector0.vx0 = (short)puVar15[iVar20].x;
+                                /*Coprocessor.vector0.vx0 = (short)puVar15[iVar20].x;
                                 Coprocessor.vector0.vy0 = (short)puVar15[iVar20].y;
                                 Coprocessor.vector0.vz0 = (short)puVar15[iVar20].z;
                                 Coprocessor.vector1.vx1 = (short)puVar15[iVar20 + 1].x;
@@ -215,8 +223,11 @@ public class GameManager : MonoBehaviour
                                 Coprocessor.vector2.vx2 = (short)puVar15[iVar20 + 2].x;
                                 Coprocessor.vector2.vy2 = (short)puVar15[iVar20 + 2].y;
                                 Coprocessor.vector2.vz2 = (short)puVar15[iVar20 + 2].z;
-                                Coprocessor.ExecuteRTPT(12, false);
+                                Coprocessor.ExecuteRTPT(12, false);*/
                                 //setting screen coords...
+                                skinnedVertices.Add(m.MultiplyPoint3x4(puVar15[iVar20]));
+                                skinnedVertices.Add(m.MultiplyPoint3x4(puVar15[iVar20 + 1]));
+                                skinnedVertices.Add(m.MultiplyPoint3x4(puVar15[iVar20 + 2]));
                                 Coprocessor.vector0.vx0 = (short)puVar14[iVar20].x;
                                 Coprocessor.vector0.vy0 = (short)puVar14[iVar20].y;
                                 Coprocessor.vector0.vz0 = (short)puVar14[iVar20].z;
@@ -255,19 +266,27 @@ public class GameManager : MonoBehaviour
                                 Coprocessor.vector2.vz2 = (short)DAT_1f800390.z;
                                 Coprocessor.ExecuteNCCT(12, true);
                                 //setting color rgb...
+                                skinnedColors.Add(new Color32
+                                    (Coprocessor.colorFIFO.r0, Coprocessor.colorFIFO.g0, Coprocessor.colorFIFO.b0, Coprocessor.colorFIFO.cd0));
+                                skinnedColors.Add(new Color32
+                                    (Coprocessor.colorFIFO.r1, Coprocessor.colorFIFO.g1, Coprocessor.colorFIFO.b1, Coprocessor.colorFIFO.cd1));
+                                skinnedColors.Add(new Color32
+                                    (Coprocessor.colorFIFO.r2, Coprocessor.colorFIFO.g2, Coprocessor.colorFIFO.b2, Coprocessor.colorFIFO.cd2));
                                 iVar19--;
                                 iVar20 += 3;
                             } while (iVar19 != -1);
                         }
 
-                        //...
+                        if (puVar10.cMesh2 != null)
+                            puVar10.FUN_7503C(puVar10.cMesh2);
+
                         puVar10 = (CriBone)puVar10.DAT_34;
                         iVar12--;
                     } while (iVar12 != local_2c);
                 }
 
                 local_48++;
-                //FUN_7569C
+                oVar18.FUN_7569C(oVar18.cSkin);
             } while (local_48 < local_44);
         }
     }

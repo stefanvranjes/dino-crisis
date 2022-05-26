@@ -33,9 +33,23 @@ public class CriSkinned : CriObject
     public sbyte DAT_198; //0x198
     public byte DAT_1A5; //0x1A5
 
+    private List<byte> commandList;
+    private List<Vector3> vertexList;
+    private List<Vector2> uvList;
+    private List<Vector3> uv2List;
+    private List<Color> colorList;
+    private List<int> triangleList;
+    public Material[] materials;
+
     protected override void Start()
     {
         base.Start();
+        commandList = new List<byte>();
+        vertexList = new List<Vector3>();
+        uvList = new List<Vector2>();
+        uv2List = new List<Vector3>();
+        colorList = new List<Color>();
+        triangleList = new List<int>();
     }
 
     protected override void Update()
@@ -268,5 +282,72 @@ public class CriSkinned : CriObject
     {
         DAT_174 = (byte)(param1 | 0x80);
         shadowSize = new Vector2Int(param2, param3);
+    }
+
+    public void FUN_7569C(Tmd2ScriptableObject param1)
+    {
+        vertexList = GameManager.instance.skinnedVertices;
+        colorList = GameManager.instance.skinnedColors;
+        FUN_75718(param1, param1.TRI_COUNT);
+        FUN_75944(param1, param1.QUAD_COUNT);
+    }
+
+    private void FUN_75718(Tmd2ScriptableObject param1, int param2)
+    {
+        int uv = 0;
+        int uv2 = 0;
+        int tri = 0;
+        commandList.Clear();
+        uvList.Clear();
+        uv2List.Clear();
+        triangleList.Clear();
+
+        while (-1 < --param2)
+        {
+            commandList.Add(0x34);
+            uvList.Add(param1.UVS[uv]);
+            uvList.Add(param1.UVS[uv + 1]);
+            uvList.Add(param1.UVS[uv + 2]);
+            uv2List.Add(param1.UVS2[uv2]);
+            triangleList.Add(param1.TRIS[tri]);
+            triangleList.Add(param1.TRIS[tri + 1]);
+            triangleList.Add(param1.TRIS[tri + 2]);
+            GameManager.instance.DAT_1f800026++;
+            GameManager.instance.DAT_1f800024++;
+
+            uv += 3;
+            uv2++;
+            tri += 3;
+        }
+    }
+
+    private void FUN_75944(Tmd2ScriptableObject param1, int param2)
+    {
+        int begin = param1.TRI_COUNT;
+        int uv = begin * 3;
+        int uv2 = begin;
+        int tri = 0;
+
+        while (-1 < --param2)
+        {
+            commandList.Add(0x3C);
+            uvList.Add(param1.UVS[uv]);
+            uvList.Add(param1.UVS[uv + 1]);
+            uvList.Add(param1.UVS[uv + 2]);
+            uvList.Add(param1.UVS[uv + 3]);
+            uv2List.Add(param1.UVS2[uv2]);
+            triangleList.Add(param1.QUADS[tri]);
+            triangleList.Add(param1.QUADS[tri + 1]);
+            triangleList.Add(param1.QUADS[tri + 2]);
+            triangleList.Add(param1.QUADS[tri + 3]);
+            triangleList.Add(param1.QUADS[tri + 4]);
+            triangleList.Add(param1.QUADS[tri + 5]);
+            GameManager.instance.DAT_1f80002a++;
+            GameManager.instance.DAT_1f800028++;
+
+            uv += 4;
+            uv2++;
+            tri += 6;
+        }
     }
 }

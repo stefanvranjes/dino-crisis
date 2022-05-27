@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CriPlayer : CriSkinned
 {
-    public uint DAT_3C_2; //0x3C
     public uint DAT_1C0; //0x1C0
     public byte DAT_1C6; //0x1C6
     public byte DAT_1C9; //0x1C9
@@ -27,10 +26,23 @@ public class CriPlayer : CriSkinned
     public byte DAT_227; //0x227
     public byte DAT_240; //0x240
     public ushort[] DAT_244; //0x244
+    public delegate void FUN_9CDE4();
+    public FUN_9CDE4[] PTR_FUN_9CDE4;
 
     protected override void Start()
     {
         base.Start();
+        PTR_FUN_9CDE4 = new FUN_9CDE4[8]
+        {
+            FUN_4D23C,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            FUN_4FE04
+        };
     }
 
     protected override void Update()
@@ -63,6 +75,45 @@ public class CriPlayer : CriSkinned
         DAT_227 = 0;
         DAT_240 = 0;
         DAT_244 = new ushort[3];
+    }
+
+    public void FUN_4CFDC()
+    {
+        short sVar2;
+        byte bVar3;
+        uint uVar4;
+
+        bVar3 = (byte)((GameManager.instance.DAT_40 ^ 1) & 1);
+
+        if (bVar3 != 0)
+        {
+            DAT_34_2 = screen;
+            //FUN_5211C
+        }
+
+        vr.y &= 0xfff;
+        Utilities.RotMatrix(ref vr, ref cTransform.rotation);
+
+        if (bVar3 != 0)
+        {
+            uVar4 = DAT_3C_2;
+
+            if (uVar4 != 0)
+            {
+                FUN_659D0();
+                uVar4 = DAT_3C_2;
+            }
+
+            PTR_FUN_9CDE4[uVar4]();
+            //...
+            FUN_62F3C(ref DAT_40);
+            FUN_66208();
+
+            if ((DAT_1C0 & 1) != 0 && (DAT_3C_2 == 1 || DAT_3C_2 == 4))
+                ; //FUN_65A28
+
+
+        }
     }
 
     public void FUN_4D23C()
@@ -116,8 +167,16 @@ public class CriPlayer : CriSkinned
         DAT_175 = 0x87;
         FUN_5342C();
         FUN_4FE30();
-        DAT_3C_2 = 0x1000001;
+        DAT_3C_2 = 1;
+        DAT_3D = 0;
+        DAT_3E = 0;
+        DAT_3F = 1;
         //FUN_609C8
+    }
+
+    private void FUN_4FE04()
+    {
+        return;
     }
 
     private void FUN_4FE90(uint param1)

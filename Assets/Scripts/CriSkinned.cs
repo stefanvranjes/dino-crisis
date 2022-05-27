@@ -5,7 +5,13 @@ using UnityEngine;
 public class CriSkinned : CriObject
 {
     public Vector3Int DAT_34_2; //0x34
+    public byte DAT_3C_2; //0x3C
+    public byte DAT_3D; //0x3D
+    public byte DAT_3E; //0x3E
+    public byte DAT_3F; //0x3F
+    public Vector3Int DAT_40; //0x40
     public short DAT_46; //0x46
+    public sbyte DAT_48; //0x48
     public CriBone skeleton; //0x4C
     public int boneCount; //0x50
     public byte DAT_5E; //0x5E
@@ -26,8 +32,7 @@ public class CriSkinned : CriObject
     public byte DAT_174; //0x174
     public byte DAT_175; //0x175
     public byte DAT_177; //0x177
-    public CriBone DAT_184; //0x184
-    public CriBone DAT_188; //0x188
+    public CriBone[] DAT_184; //0x184
     public bool DAT_18C; //0x18C
     public bool DAT_18D; //0x18D
     public sbyte DAT_198; //0x198
@@ -50,6 +55,7 @@ public class CriSkinned : CriObject
         uv2List = new List<Vector3>();
         colorList = new List<Color>();
         triangleList = new List<int>();
+        DAT_184 = new CriBone[2];
     }
 
     protected override void Update()
@@ -61,7 +67,12 @@ public class CriSkinned : CriObject
     {
         base.ResetValues();
         DAT_34_2 = Vector3Int.zero;
+        DAT_3C_2 = 0;
+        DAT_3D = 0;
+        DAT_3E = 0;
+        DAT_3F = 0;
         DAT_46 = 0;
+        DAT_48 = 0;
         skeleton = null;
         boneCount = 0;
         DAT_5E = 0;
@@ -81,8 +92,8 @@ public class CriSkinned : CriObject
         DAT_174 = 0;
         DAT_175 = 0;
         DAT_177 = 0;
-        DAT_184 = null;
-        DAT_188 = null;
+        DAT_184[0] = null;
+        DAT_184[1] = null;
         DAT_18C = false;
         DAT_18D = false;
         DAT_198 = 0;
@@ -178,15 +189,31 @@ public class CriSkinned : CriObject
         }
     }
 
+    public void FUN_659D0()
+    {
+        CriBone oVar1;
+        uint uVar2;
+
+        FUN_66208();
+        uVar2 = 0;
+
+        do
+        {
+            oVar1 = DAT_184[uVar2];
+            uVar2++;
+            oVar1.DAT_4C = oVar1.screen;
+        } while (uVar2 < 2);
+    }
+
     public void FUN_65984(int param1, int param2)
     {
         CriBone oVar1;
 
         DAT_18C = false;
         oVar1 = Utilities.FUN_601C8(skeleton, param1) as CriBone;
-        DAT_184 = oVar1;
+        DAT_184[0] = oVar1;
         oVar1 = Utilities.FUN_601C8(skeleton, param2) as CriBone;
-        DAT_188 = oVar1;
+        DAT_184[1] = oVar1;
     }
 
     public void FUN_66208()

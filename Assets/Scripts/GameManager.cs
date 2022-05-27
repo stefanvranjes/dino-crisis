@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public static SceneManager sceneManager;
 
+    public ushort DAT_1f800008;
+    public ushort DAT_1f80000a;
     public ushort DAT_1f800024;
     public ushort DAT_1f800026;
     public ushort DAT_1f800028;
@@ -23,15 +25,23 @@ public class GameManager : MonoBehaviour
     public Vector3Int DAT_1f800388;
     public Vector3Int DAT_1f800390;
     public byte DAT_21; //gp+21h
+    public ushort DAT_28; //gp+28h
     public byte DAT_38; //gp+38h
+    public byte DAT_40; //gp+40h
+    public Vector3Int playerSpawnPos; //gp+4ch
+    public short playerSpawnRotY; //gp+52h
+    public byte DAT_55; //gp+55h
     public CriObject DAT_B4; //gp+b4h
     public byte DAT_9AA0; //gp+9aa0h
+    public byte DAT_9AA1; //gp+9aa1h
     public _DIFFICULTY difficulty; //gp+9aa8h
+    public byte DAT_9ADD; //gp+9addh
     public short playerHealth; //gp+a0f0h
     public short DAT_A0F2; //gp+a0f2h
     public uint DAT_A0F4; //gp+a0f4h
     public ushort[] DAT_A0F8; //gp+a0f8h
     public byte DAT_A100; //gp+a100h
+    public byte DAT_A2CF; //gp+a2cfh
     public bool DAT_A2D0; //gp+a2d0h
     public byte DAT_A2D3; //gp+a2d3h
     public List<Vector3> skinnedVertices; //0x800C6F90

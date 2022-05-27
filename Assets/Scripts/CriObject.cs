@@ -279,4 +279,14 @@ public class CriObject : MonoBehaviour
     {
         flags = 0;
     }
+
+    public void FUN_62F3C(ref Vector3Int param1)
+    {
+        Vector3Int local_10;
+
+        local_10 = Utilities.ApplyMatrixSV(ref cTransform.rotation, ref param1);
+        screen.x += local_10.x;
+        screen.y += local_10.y;
+        screen.z += local_10.z;
+    }
 }

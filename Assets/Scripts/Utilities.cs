@@ -6,6 +6,7 @@ public delegate int _SORTING_CMP(byte[] arry, int cmp1, int cmp2);
 
 public static class Utilities
 {
+    public static short[] DAT_AC658;
     public static short[] DAT_AC7E8 = new short[]
     {
         0, 4096, 6, 4096, 13, 4096, 19, 4096, 25, 4096, 31, 4096, 38, 4096, 44, 4096, 50, 4096,
@@ -583,7 +584,6 @@ public static class Utilities
         -57, 4096, -50, 4096, -44, 4096, -38, 4096, -31, 4096, -25, 4096, -19, 4096, -13, 4096,
         -6, 4096
     };
-
     public static short[] DAT_B07E8 = new short[]
     {
         0, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7, 7, 8, 9, 9,
@@ -1323,6 +1323,30 @@ public static class Utilities
             (Coprocessor.accumulator.ir1,
              Coprocessor.accumulator.ir2,
              Coprocessor.accumulator.ir3);
+    }
+
+    //FUN_8EEA0
+    public static long SquareRoot0(long a)
+    {
+        uint uVar1;
+        int iVar2;
+
+        uVar1 = (uint)LeadingZeros((int)a);
+
+        if (uVar1 != 0x20)
+        {
+            uVar1 &= 0xfffffffe;
+
+            if ((int)(uVar1 - 0x18) < 0)
+                iVar2 = (int)a >> (int)(0x18 - uVar1 & 0x1f);
+            else
+                iVar2 = (int)a << (int)(uVar1 - 0x18 & 0x1f);
+
+            return (long)((uint)(DAT_AC658[iVar2 - 0x40] << 
+                ((int)(0x1f - uVar1) >> 1 & 0x1f)) >> 12);
+        }
+
+        return 0;
     }
 
     public static int LeadingZeros(int x)

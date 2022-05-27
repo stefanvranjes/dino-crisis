@@ -42,6 +42,33 @@ public class SceneManager : MonoBehaviour
         
     }
 
+    public void FUN_47BE0()
+    {
+        CriPlayer oVar3;
+
+        GameManager.instance.DAT_55 = 0;
+        GameManager.instance.DAT_21 = 6;
+        GameManager.instance.DAT_28++;
+        //FUN_6E6C8
+
+        if (GameManager.instance.DAT_9AA1 != GameManager.instance.DAT_9ADD)
+        {
+            //FUN_1802C
+        }
+
+        //FUN_1802C
+        //FUN_601A4
+        //FUN_5DDD0
+        GameObject obj = new GameObject();
+        oVar3 = obj.AddComponent<CriPlayer>();
+        DAT_27C[10] = oVar3;
+        oVar3.screen = GameManager.instance.playerSpawnPos;
+        oVar3.DAT_34_2 = GameManager.instance.playerSpawnPos;
+        oVar3.vr.y = GameManager.instance.playerSpawnRotY;
+        oVar3.DAT_48 = (sbyte)-(oVar3.screen.y / 0x1a9);
+
+    }
+
     private void FUN_570A0(_STATIC_OBJ_DATA data)
     {
         CriStatic oVar1;

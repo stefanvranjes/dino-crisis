@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+
+        DAT_A0F8 = new ushort[3];
     }
 
     private void Start()
@@ -85,6 +87,9 @@ public class GameManager : MonoBehaviour
     {
         //FUN_72F78
         FUN_72C2C();
+
+        if ((DAT_38 & 2) == 0)
+            FUN_73EB8();
 
         if ((DAT_38 & 1) == 0)
             FUN_731E8();
@@ -328,7 +333,7 @@ public class GameManager : MonoBehaviour
         {
             pbVar3 = SceneManager.instance.DAT_27C[uVar5];
 
-            if ((pbVar3.flags & 2) != 0)
+            if (pbVar3 != null && (pbVar3.flags & 2) != 0)
             {
                 bVar1 = pbVar3.DAT_1A5;
                 uVar7++;
@@ -353,7 +358,7 @@ public class GameManager : MonoBehaviour
                 pbVar4 = piVar6 + 1;
                 piVar6 += 2;
                 uVar5++;
-                skinnedList.Add(SceneManager.instance.DAT_27C[pbVar4]);
+                skinnedList.Add(SceneManager.instance.DAT_27C[local_20[pbVar4]]);
             } while (uVar5 < uVar7);
         }
 

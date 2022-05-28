@@ -21,7 +21,7 @@ public class CriSkinned : CriObject
     public short health; //0x118
     public short maxHealth; //0x11A
     public byte DAT_11E; //0x11E
-    public short DAT_12C; //0x12C
+    public ushort DAT_12C; //0x12C
     public bool DAT_12E; //0x12E
     public bool DAT_12F; //0x12F
     public Vector2Int DAT_13C; //0x13C
@@ -46,6 +46,12 @@ public class CriSkinned : CriObject
     private List<int> triangleList;
     public Material[] materials;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        DAT_184 = new CriBone[2];
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -55,12 +61,58 @@ public class CriSkinned : CriObject
         uv2List = new List<Vector3>();
         colorList = new List<Color>();
         triangleList = new List<int>();
-        DAT_184 = new CriBone[2];
     }
 
     protected override void Update()
     {
         base.Update();
+    }
+
+    private void OnRenderObject()
+    {
+        if (cSkin != null)
+        {
+            GL.PushMatrix();
+            GL.MultMatrix(transform.localToWorldMatrix);
+
+            for (int i = 0; i < cSkin.TRI_COUNT; i++)
+            {
+                materials[commandList[i]].SetPass(0);
+                GL.Begin(GL.TRIANGLES);
+                int j = i * 3;
+
+                for (int k = 0; k < 3; k++)
+                {
+                    if (!GameManager.instance.disableColors)
+                        GL.Color(colorList[triangleList[j + k]]);
+                    GL.MultiTexCoord(0, uvList[j + k]);
+                    GL.MultiTexCoord(1, uv2List[i]);
+                    GL.Vertex(vertexList[triangleList[j + k]]);
+                }
+
+                GL.End();
+            }
+
+            for (int i = 0; i < cSkin.QUAD_COUNT; i++)
+            {
+                materials[commandList[cSkin.TRI_COUNT + i]].SetPass(0);
+                GL.Begin(GL.TRIANGLES);
+                int j = cSkin.TRI_COUNT * 3 + i * 6;
+
+                for (int k = 0; k < 6; k++)
+                {
+                    if (!GameManager.instance.disableColors)
+                        GL.Color(colorList[triangleList[j + k]]);
+                    GL.MultiTexCoord(0, uvList[j + k]);
+                    GL.MultiTexCoord(1, uv2List[cSkin.TRI_COUNT + i]);
+                    GL.Vertex(vertexList[triangleList[j + k]]);
+                }
+
+                GL.End();
+            }
+
+            GL.PopMatrix();
+        }
     }
 
     public override void ResetValues()
@@ -230,7 +282,7 @@ public class CriSkinned : CriObject
         Utilities.RotMatrix_gte(ref vr, ref cTransform.rotation);
         Utilities.ScaleMatrix(ref cTransform.rotation, ref skinSize);
         m = skeleton;
-        iVar10 = boneCount;
+        iVar10 = boneCount - 1;
         cTransform.position = screen;
 
         do
@@ -300,7 +352,7 @@ public class CriSkinned : CriObject
             m.cTransform.rotation.V02 = (short)iVar6;
             m.cTransform.rotation.V12 = (short)iVar7;
             m.cTransform.rotation.V22 = (short)iVar8;
-            iVar10++;
+            iVar10--;
             m = (CriBone)m.DAT_34;
         } while (iVar10 != -1);
     }
@@ -362,6 +414,8 @@ public class CriSkinned : CriObject
             uvList.Add(param1.UVS[uv + 1]);
             uvList.Add(param1.UVS[uv + 2]);
             uvList.Add(param1.UVS[uv + 3]);
+            uvList.Add(param1.UVS[uv + 2]);
+            uvList.Add(param1.UVS[uv + 1]);
             uv2List.Add(param1.UVS2[uv2]);
             triangleList.Add(param1.QUADS[tri]);
             triangleList.Add(param1.QUADS[tri + 1]);

@@ -245,6 +245,11 @@ public class CriObject : MonoBehaviour
     public CriObject DAT_38; //0x38
     public TmdScriptableObject cMesh; //0x3C
 
+    protected virtual void Awake()
+    {
+
+    }
+
     // Start is called before the first frame update
     protected virtual void Start()
     {

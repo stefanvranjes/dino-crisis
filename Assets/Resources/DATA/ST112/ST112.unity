@@ -176,13 +176,13 @@ MonoBehaviour:
     padding: 0
     position: {x: 0, y: 0, z: 0}
   screen: {x: 0, y: 0, z: 0}
+  tags: 0
   vr: {x: 0, y: 0, z: 0}
   DAT_2E: 0
   flags: 0
+  DAT_34: {fileID: 0}
+  DAT_38: {fileID: 0}
   cMesh: {fileID: 0}
-  DAT_48: 0
-  DAT_4A: 0
-  materials: []
 --- !u!4 &451172097
 Transform:
   m_ObjectHideFlags: 0
@@ -374,7 +374,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: -4406283935363021935, guid: 11bdbed0b1e961f4f8c2c35ee71b12a7, type: 3}
+  playerSkin: {fileID: 3461730495671313538, guid: 49a23d4245583184fad120f2d191e6fa, type: 3}
   DAT_27C: []
+  DAT_1C9C: []
   DAT_5FCC: []
   DAT_7CDC: []
 --- !u!4 &1678437249
@@ -421,6 +423,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85de5e7f7052e340b740f831a33b3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DAT_1f800008: 0
+  DAT_1f80000a: 0
   DAT_1f800024: 0
   DAT_1f800026: 0
   DAT_1f800028: 0
@@ -446,9 +450,32 @@ MonoBehaviour:
     _V20: 0
     _V21: 0
     _V22: 0
+  DAT_1f800380: {x: 0, y: 0, z: 0}
+  DAT_1f800388: {x: 0, y: 0, z: 0}
+  DAT_1f800390: {x: 0, y: 0, z: 0}
+  DAT_21: 0
+  DAT_28: 0
   DAT_38: 0
+  DAT_40: 0
+  playerSpawnPos: {x: 0, y: 0, z: 0}
+  playerSpawnRotY: 0
+  DAT_55: 0
   DAT_B4: {fileID: 451172096}
-  DAT_1AA0: 0
+  DAT_9AA0: 0
+  DAT_9AA1: 0
+  difficulty: 0
+  DAT_9ADD: 0
+  playerHealth: 0
+  DAT_A0F2: 0
+  DAT_A0F4: 0
+  DAT_A0F8: 
+  DAT_A100: 0
+  DAT_A2CF: 0
+  DAT_A2D0: 0
+  DAT_A2D3: 0
+  skinnedVertices: []
+  skinnedColors: []
+  skinnedList: []
   disableColors: 0
   materials:
   - {fileID: 2100000, guid: cb2090ab002423541a031bc005801511, type: 2}

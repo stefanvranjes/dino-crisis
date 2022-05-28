@@ -34,6 +34,14 @@ public class SceneManager : MonoBehaviour
         {
             FUN_570A0(data.staticObjs[i]);
         }
+
+        for (int i = 0; i < 40; i++)
+        {
+            GameObject obj = new GameObject();
+            DAT_1C9C[i] = obj.AddComponent<CriBone>();
+        }
+
+        FUN_47BE0();
     }
 
     // Update is called once per frame
@@ -66,7 +74,19 @@ public class SceneManager : MonoBehaviour
         oVar3.DAT_34_2 = GameManager.instance.playerSpawnPos;
         oVar3.vr.y = GameManager.instance.playerSpawnRotY;
         oVar3.DAT_48 = (sbyte)-(oVar3.screen.y / 0x1a9);
-
+        oVar3.FUN_4CFDC();
+        oVar3.materials = new Material[255];
+        Tmd2ScriptableObject tmd = oVar3.cSkin;
+        Material mat1 = new Material(GameManager.instance.materials[0x34]);
+        Material mat2 = new Material(GameManager.instance.materials[0x3C]);
+        mat1.mainTexture = tmd.TEX_2D;
+        mat1.SetTexture("_Tex8", tmd.TEX8_2D);
+        mat1.SetTexture("_CLUT", tmd.CLUT_2D);
+        oVar3.materials[0x34] = mat1;
+        mat2.mainTexture = tmd.TEX_2D;
+        mat2.SetTexture("_Tex8", tmd.TEX8_2D);
+        mat2.SetTexture("_CLUT", tmd.CLUT_2D);
+        oVar3.materials[0x3C] = mat2;
     }
 
     private void FUN_570A0(_STATIC_OBJ_DATA data)

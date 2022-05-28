@@ -53,14 +53,11 @@ public class CriStatic : CriObject
 
                 for (int k = 0; k < 3; k++)
                 {
-                    //if (uv2List[i].z == 1)
-                    //{
                     if (!GameManager.instance.disableColors)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
                     GL.MultiTexCoord(1, uv2List[i]);
                     GL.Vertex(vertexList[triangleList[j + k]]);
-                    //}
                 }
 
                 GL.End();
@@ -74,14 +71,11 @@ public class CriStatic : CriObject
 
                 for (int k = 0; k < 6; k++)
                 {
-                    //if (uv2List[cMesh.TRI_COUNT + i].z == 1)
-                    //{
                     if (!GameManager.instance.disableColors)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
                     GL.MultiTexCoord(1, uv2List[cMesh.TRI_COUNT + i]);
                     GL.Vertex(vertexList[triangleList[j + k]]);
-                    //}
                 }
 
                 GL.End();

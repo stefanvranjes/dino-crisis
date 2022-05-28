@@ -28,7 +28,7 @@ public class IMP_TMD2 : ScriptedImporter
                 tmd.BONE_COUNT = reader.ReadInt32(20);
                 tmd.BONES = new Bone[tmd.BONE_COUNT];
                 reader.Seek(0x18, SeekOrigin.Begin);
-                int vertCount = 0;
+                int vertCount = (int)(tmd.NRML_OFFSET - tmd.VERT_OFFSET) / 8;
 
                 for (int i = 0; i < tmd.BONE_COUNT; i++)
                 {
@@ -36,7 +36,6 @@ public class IMP_TMD2 : ScriptedImporter
                     b.DAT_00 = new Vector3Int(reader.ReadInt16(), reader.ReadInt16(), reader.ReadInt16());
                     b.DAT_06 = reader.ReadSByte();
                     b.DAT_07 = reader.ReadByte();
-                    vertCount += b.DAT_07;
                     tmd.BONES[i] = b;
                     reader.Seek(0xc, SeekOrigin.Current); //tmp
                 }

@@ -29,9 +29,9 @@ public class CriPlayer : CriSkinned
     public delegate void FUN_9CDE4();
     public FUN_9CDE4[] PTR_FUN_9CDE4;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         PTR_FUN_9CDE4 = new FUN_9CDE4[8]
         {
             FUN_4D23C,
@@ -43,6 +43,12 @@ public class CriPlayer : CriSkinned
             null,
             FUN_4FE04
         };
+        DAT_244 = new ushort[3];
+    }
+
+    protected override void Start()
+    {
+        base.Start();
     }
 
     protected override void Update()
@@ -136,7 +142,8 @@ public class CriPlayer : CriSkinned
         DAT_244 = new ushort[3] { GameManager.instance.DAT_A0F8[0],
                                   GameManager.instance.DAT_A0F8[1],
                                   GameManager.instance.DAT_A0F8[2] };
-        FUN_4FE90(DAT_240);
+        //FUN_4FE90(DAT_240);
+        FUN_4FE90(0x20); //tmp
         FUN_65984(11, 14);
         FUN_66404(8, 0x1000, 0x1000);
         DAT_1CF = 0;
@@ -225,6 +232,7 @@ public class CriPlayer : CriSkinned
         oVar2 = Utilities.FUN_601C8(skeleton, 3);
         //...
         FUN_4FE30();
+        return; //tmp
 
         do
         {

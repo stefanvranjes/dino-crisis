@@ -36,6 +36,53 @@ public class CriBone : CriObject
         return;
     }
 
+    private void OnRenderObject()
+    {
+        if (cMesh2 != null)
+        {
+            GL.PushMatrix();
+            GL.MultMatrix(transform.localToWorldMatrix);
+
+            for (int i = 0; i < cMesh2.TRI_COUNT; i++)
+            {
+                materials[commandList[i]].SetPass(0);
+                GL.Begin(GL.TRIANGLES);
+                int j = i * 3;
+
+                for (int k = 0; k < 3; k++)
+                {
+                    if (!GameManager.instance.disableColors)
+                        GL.Color(colorList[triangleList[j + k]]);
+                    GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
+                    GL.MultiTexCoord(1, uv2List[i]);
+                    GL.Vertex(vertexList[triangleList[j + k]]);
+                }
+
+                GL.End();
+            }
+
+            for (int i = 0; i < cMesh2.QUAD_COUNT; i++)
+            {
+                materials[commandList[cMesh2.TRI_COUNT + i]].SetPass(0);
+                GL.Begin(GL.TRIANGLES);
+                int j = cMesh2.TRI_COUNT * 3 + i * 6;
+
+                for (int k = 0; k < 6; k++)
+                {
+                    if (!GameManager.instance.disableColors)
+                        GL.Color(colorList[triangleList[j + k]]);
+                    GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
+                    GL.MultiTexCoord(1, uv2List[cMesh2.TRI_COUNT + i]);
+                    GL.Vertex(vertexList[triangleList[j + k]]);
+                }
+
+                GL.End();
+            }
+
+            GL.PopMatrix();
+        }
+    }
+
     public override void ResetValues()
     {
         base.ResetValues();

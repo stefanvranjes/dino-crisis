@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public Vector3Int DAT_1f800380;
     public Vector3Int DAT_1f800388;
     public Vector3Int DAT_1f800390;
+    public List<Vector3Int> todUncomp;
     public byte DAT_21; //gp+21h
     public ushort DAT_28; //gp+28h
     public byte DAT_38; //gp+38h
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
         skinnedVertices = new List<Vector3>();
         skinnedColors = new List<Color>();
         skinnedList = new List<CriSkinned>();
+        todUncomp = new List<Vector3Int>();
     }
 
     private void Update()
@@ -141,24 +143,24 @@ public class GameManager : MonoBehaviour
 
                     do
                     {
-                        Coprocessor.lightMatrix.l11 = puVar10.DAT_6C.V00;
-                        Coprocessor.lightMatrix.l12 = puVar10.DAT_6C.V01;
-                        Coprocessor.lightMatrix.l13 = puVar10.DAT_6C.V02;
-                        Coprocessor.lightMatrix.l21 = puVar10.DAT_6C.V10;
-                        Coprocessor.lightMatrix.l22 = puVar10.DAT_6C.V11;
-                        Coprocessor.lightMatrix.l23 = puVar10.DAT_6C.V12;
-                        Coprocessor.lightMatrix.l31 = puVar10.DAT_6C.V20;
-                        Coprocessor.lightMatrix.l32 = puVar10.DAT_6C.V21;
-                        Coprocessor.lightMatrix.l33 = puVar10.DAT_6C.V22;
-                        Coprocessor.lightColorMatrix.lr1 = puVar10.DAT_8C.V00;
-                        Coprocessor.lightColorMatrix.lr2 = puVar10.DAT_8C.V01;
-                        Coprocessor.lightColorMatrix.lr3 = puVar10.DAT_8C.V02;
-                        Coprocessor.lightColorMatrix.lg1 = puVar10.DAT_8C.V10;
-                        Coprocessor.lightColorMatrix.lg2 = puVar10.DAT_8C.V11;
-                        Coprocessor.lightColorMatrix.lg3 = puVar10.DAT_8C.V12;
-                        Coprocessor.lightColorMatrix.lb1 = puVar10.DAT_8C.V20;
-                        Coprocessor.lightColorMatrix.lb2 = puVar10.DAT_8C.V21;
-                        Coprocessor.lightColorMatrix.lb3 = puVar10.DAT_8C.V22;
+                        Coprocessor.lightMatrix.l11 = puVar10.lightMatrix.V00;
+                        Coprocessor.lightMatrix.l12 = puVar10.lightMatrix.V01;
+                        Coprocessor.lightMatrix.l13 = puVar10.lightMatrix.V02;
+                        Coprocessor.lightMatrix.l21 = puVar10.lightMatrix.V10;
+                        Coprocessor.lightMatrix.l22 = puVar10.lightMatrix.V11;
+                        Coprocessor.lightMatrix.l23 = puVar10.lightMatrix.V12;
+                        Coprocessor.lightMatrix.l31 = puVar10.lightMatrix.V20;
+                        Coprocessor.lightMatrix.l32 = puVar10.lightMatrix.V21;
+                        Coprocessor.lightMatrix.l33 = puVar10.lightMatrix.V22;
+                        Coprocessor.lightColorMatrix.lr1 = puVar10.colorMatrix.V00;
+                        Coprocessor.lightColorMatrix.lr2 = puVar10.colorMatrix.V01;
+                        Coprocessor.lightColorMatrix.lr3 = puVar10.colorMatrix.V02;
+                        Coprocessor.lightColorMatrix.lg1 = puVar10.colorMatrix.V10;
+                        Coprocessor.lightColorMatrix.lg2 = puVar10.colorMatrix.V11;
+                        Coprocessor.lightColorMatrix.lg3 = puVar10.colorMatrix.V12;
+                        Coprocessor.lightColorMatrix.lb1 = puVar10.colorMatrix.V20;
+                        Coprocessor.lightColorMatrix.lb2 = puVar10.colorMatrix.V21;
+                        Coprocessor.lightColorMatrix.lb3 = puVar10.colorMatrix.V22;
                         puVar6 = puVar10.DAT_38;
                         Coprocessor.rotationMatrix.rt11 = puVar6.cTransform.rotation.V00;
                         Coprocessor.rotationMatrix.rt12 = puVar6.cTransform.rotation.V01;

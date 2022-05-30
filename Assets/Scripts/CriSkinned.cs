@@ -14,7 +14,19 @@ public class CriSkinned : CriObject
     public sbyte DAT_48; //0x48
     public CriBone skeleton; //0x4C
     public int boneCount; //0x50
+    public Packet packet; //0x54
+    public Frame[] frames; //0x58
+    public byte DAT_5C; //0x5C
+    public byte DAT_5D; //0x5D
     public byte DAT_5E; //0x5E
+    public ushort DAT_60; //0x60
+    public byte DAT_62; //0x62
+    public Vector3Int DAT_64; //0x64
+    public Packet[] packets; //0x70
+    public Frame[] DAT_74; //0x74
+    public byte frameCount; //0x78
+    public byte frameNum; //0x79
+    public Frame frame; //0x7C
     public Tmd2ScriptableObject cSkin; //0x9C
     public Vector3Int skinSize; //0xA4
     public Color32 tint; //0xB0
@@ -127,7 +139,19 @@ public class CriSkinned : CriObject
         DAT_48 = 0;
         skeleton = null;
         boneCount = 0;
+        packet = null;
+        frames = null;
+        DAT_5C = 0;
+        DAT_5D = 0;
         DAT_5E = 0;
+        DAT_60 = 0;
+        DAT_62 = 0;
+        DAT_64 = Vector3Int.zero;
+        packets = null;
+        DAT_74 = null;
+        frameCount = 0;
+        frameNum = 0;
+        frame = null;
         cSkin = null;
         skinSize = Vector3Int.zero;
         tint = Color.clear;
@@ -238,6 +262,261 @@ public class CriSkinned : CriObject
         {
             oVar2.DAT_4C = oVar2.screen;
             oVar2 = (CriBone)oVar2.DAT_34;
+        }
+    }
+
+    public bool FUN_60AB4()
+    {
+        byte bVar1;
+        byte bVar2;
+        byte bVar3;
+        uint uVar4;
+        bool bVar6;
+
+        bVar1 = DAT_5C;
+        DAT_60++;
+        bVar6 = false;
+
+        if ((bVar1 & 0x20) == 0)
+        {
+            if (DAT_62 != 0) goto LAB_60C78;
+
+            bVar3 = frameNum;
+            frameNum = (byte)(bVar3 + 1);
+
+            if ((bVar1 & 4) != 0)
+            {
+                bVar6 = frameCount <= bVar3 + 1U;
+
+                if (frameCount < bVar3 + 1U)
+                {
+                    if ((bVar1 & 1) == 0)
+                        frameNum = bVar3;
+                    else
+                    {
+                        frameNum = 0;
+                        DAT_60 = 0;
+                    }
+                }
+
+                if ((uint)frames[frameNum].DAT_00 >> 1 == 0)
+                    frameNum++;
+            }
+
+            if ((uint)frameCount <= frameNum)
+            {
+                bVar6 = true;
+
+                if ((bVar1 & 1) == 0)
+                    DAT_5C |= 0x20;
+            }
+
+            if ((uint)frameCount < frameNum)
+            {
+                if ((bVar1 & 1) == 0)
+                    frameNum--;
+                else
+                {
+                    frameNum = 0;
+                    DAT_60 = 0;
+                }
+            }
+
+            if ((bVar1 & 2) == 0)
+                uVar4 = frameNum;
+            else
+                uVar4 = (uint)frameCount - frameNum;
+
+            packet = packets[frames[uVar4].DAT_01 * DAT_5E / 4];
+            bVar2 = frames[uVar4].DAT_00;
+            DAT_62 = bVar2;
+
+            if ((bVar1 & 4) != 0 && 1U < bVar2)
+                DAT_62 = (byte)((uint)bVar2 >> 1);
+
+            if ((bVar1 & 8) == 0) goto LAB_60C78;
+
+            bVar3 = (byte)(DAT_62 << 1);
+        }
+        else
+            bVar3 = (byte)(DAT_62 + 1);
+
+        DAT_62 = bVar3;
+        LAB_60C78:
+        FUN_607A4();
+        return bVar6;
+    }
+
+    public void FUN_607A4()
+    {
+        byte bVar1;
+        int iVar1;
+        CriBone oVar2;
+        Packet psVar3;
+        Vector3Int local_18;
+
+        psVar3 = packet;
+        oVar2 = skeleton;
+
+        if ((DAT_5C & 2) == 0)
+            bVar1 = frameNum;
+        else
+            bVar1 = (byte)(frameCount - frameNum);
+
+        frame = frames[bVar1];
+        DAT_64 = psVar3.DAT_06;
+
+        if ((DAT_5C & 0x10) == 0)
+        {
+            local_18 = psVar3.DAT_00;
+
+            if (DAT_5D == 0)
+                bVar1 = DAT_62;
+            else
+                bVar1 = (byte)(DAT_62 + DAT_5D);
+
+            if (bVar1 == 0)
+                return; //trap(0x1c00)
+
+            oVar2.DAT_44 = Utilities.LoadAverageShort12
+                (ref oVar2.DAT_44, ref local_18, 0x1000 - 0x1000 / bVar1, 0x1000 / bVar1);
+        }
+        else
+            oVar2.DAT_44 = psVar3.DAT_00;
+
+        if (DAT_5D == 0)
+        {
+            Utilities.FUN_60C94(psVar3.COMP, GameManager.instance.todUncomp, boneCount);
+
+            if (DAT_62 == 0)
+                return; //trap(0x1c00)
+
+            FUN_60EF0((uint)boneCount, 0x1000 / DAT_62);
+        }
+        else
+        {
+            Utilities.FUN_60C94(psVar3.COMP, GameManager.instance.todUncomp, boneCount);
+            iVar1 = DAT_62 + DAT_5D;
+
+            if (iVar1 == 0)
+                return; //trap(0x1c00)
+
+            FUN_60EF0((uint)boneCount, 0x1000 / iVar1);
+            DAT_5D--;
+        }
+
+        DAT_62--;
+    }
+
+    public void FUN_609C8(TodScriptableObject param1, byte param2, byte param3)
+    {
+        byte bVar1;
+        byte bVar2;
+        uint uVar3;
+
+        packets = param1.PACKETS;
+        bVar1 = (byte)(param1.FRAME_COUNT + 1);
+        frames = param1.FRAMES;
+        DAT_74 = param1.FRAMES;
+        frameNum = 0;
+        DAT_60 = 0;
+        DAT_5C = param2;
+        frameCount = bVar1;
+
+        if ((param2 & 2) == 0)
+            uVar3 = frameNum;
+        else
+            uVar3 = (uint)(bVar1 - frameNum);
+
+        packet = packets[frames[uVar3].DAT_01 * DAT_5E / 4];
+        DAT_62 = frames[uVar3].DAT_00;
+        bVar2 = frames[0].DAT_00;
+        DAT_62 = bVar2;
+
+        if ((param2 & 8) != 0)
+            DAT_62 = (byte)(bVar2 << 1);
+
+        DAT_5D = param3;
+        FUN_607A4();
+    }
+
+    public void FUN_60EF0(uint param1, int param2)
+    {
+        uint uVar1;
+        CriBone oVar2;
+        List<Vector3Int> puVar3;
+        int iVar4;
+        bool bVar5;
+        int iVar6;
+
+        puVar3 = GameManager.instance.todUncomp;
+        oVar2 = skeleton;
+        bVar5 = false;
+
+        if ((DAT_5C & 0x40) == 0)
+        {
+            uVar1 = 0;
+
+            if (param1 != 0)
+            {
+                do
+                {
+                    Vector3Int temp = puVar3[(int)uVar1];
+                    Utilities.FUN_665D8(ref oVar2.vr, ref temp, ref oVar2.vr, param2);
+                    puVar3[(int)uVar1] = temp;
+                    oVar2 = (CriBone)oVar2.DAT_34;
+                    uVar1++;
+                } while (uVar1 < param1);
+            }
+        }
+        else
+        {
+            uVar1 = 0;
+
+            if (param1 != 0)
+            {
+                iVar4 = -1;
+
+                if (uVar1 - 1 < 14)
+                {
+                    switch (iVar4)
+                    {
+                        case 0:
+                            bVar5 = true;
+                            break;
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                            if ((DAT_5C & 0x40) != 0)
+                                bVar5 = true;
+
+                            break;
+                        case 7:
+                            bVar5 = false;
+                            break;
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                        case 12:
+                        case 13:
+                            if ((DAT_5C & 0x80) != 0)
+                                bVar5 = true;
+
+                            break;
+                    }
+                }
+
+                Vector3Int temp = puVar3[(int)uVar1];
+                iVar6 = bVar5 ? param2 : 0x1000;
+                Utilities.FUN_665D8(ref oVar2.vr, ref temp, ref oVar2.vr, iVar6);
+                oVar2 = (CriBone)oVar2.DAT_34;
+                uVar1++;
+                iVar4++;
+            }while (uVar1 < param1) ;
         }
     }
 

@@ -12,6 +12,7 @@ public class CriPlayer : CriSkinned
     public byte DAT_1CF; //0x1CF
     public byte DAT_1D7; //0x1D7
     public short DAT_1E8; //0x1E8
+    public byte DAT_1F4; //0x1F4
     public byte DAT_1F8; //0x1F8
     public byte DAT_1F9; //0x1F9
     public sbyte DAT_1FA; //0x1FA
@@ -19,6 +20,7 @@ public class CriPlayer : CriSkinned
     public Vector3Int DAT_1FC; //0x1FC
     public Vector3Int DAT_204; //0x204
     public Vector2Int DAT_20C; //0x20C
+    public TodScriptableObject[] TODS;
     public int DAT_21C; //0x21C
     public int DAT_220; //0x220
     public byte DAT_224; //0x224
@@ -67,6 +69,7 @@ public class CriPlayer : CriSkinned
         DAT_1CF = 0;
         DAT_1D7 = 0;
         DAT_1E8 = 0;
+        DAT_1F4 = 0;
         DAT_1F8 = 0;
         DAT_1F9 = 0;
         DAT_1FA = 0;
@@ -74,6 +77,7 @@ public class CriPlayer : CriSkinned
         DAT_1FC = Vector3Int.zero;
         DAT_204 = Vector3Int.zero;
         DAT_20C = Vector2Int.zero;
+        TODS = null;
         DAT_21C = 0;
         DAT_220 = 0;
         DAT_224 = 0;
@@ -263,6 +267,75 @@ public class CriPlayer : CriSkinned
         {
             DAT_1D7 = 2;
             DAT_220 = DAT_21C + 60;
+        }
+    }
+
+    private void FUN_4D7A4()
+    {
+        uint uVar1;
+        byte bVar2;
+        byte bVar3;
+        uint uVar4;
+        int iVar6;
+
+        uVar1 = GameManager.instance.DAT_1f800008 | 
+            (uint)GameManager.instance.DAT_1f80000a << 0x10;
+
+        switch (DAT_3E)
+        {
+            case 0:
+                DAT_40 = new Vector3Int(0, 0, 0);
+
+                if (DAT_3F == 0)
+                    iVar6 = 6;
+                else
+                    iVar6 = DAT_3F - 1;
+
+                FUN_609C8(TODS[DAT_220], 1, (byte)iVar6);
+                DAT_1F4 = 90;
+                DAT_1C0 |= 1;
+
+                if (DAT_1D7 == 0)
+                    DAT_3E++;
+                else
+                    DAT_3E = 4;
+
+                break;
+            case 1:
+                if (DAT_5D == 0)
+                    DAT_18C = false;
+
+                FUN_60AB4();
+                bVar2 = (byte)(DAT_1F4 - 1);
+                DAT_1F4 = bVar2;
+
+                if (bVar2 == 0)
+                {
+                    if (DAT_1F8 != 0)
+                    {
+                        //...
+                    }
+
+                    DAT_1F4 = 90;
+                }
+
+                break;
+            case 2:
+                FUN_60AB4();
+                bVar2 = (byte)(DAT_1F4 - 1);
+                DAT_1F4 = bVar2;
+
+                if (bVar2 == 0)
+                {
+                    FUN_609C8(SceneManager.instance.playerIdle, 1, 0);
+                    DAT_1C0 &= 0xfffffffe;
+                    uVar4 = (uint)Utilities.Rand();
+                    bVar3 = Utilities.DAT_187BC[(uVar4 & 3) * 2];
+                    DAT_1F4 = bVar3;
+                    DAT_3E++;
+                }
+
+                break;
         }
     }
 

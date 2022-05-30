@@ -1,11 +1,17 @@
 using System;
 using System.IO;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public delegate int _SORTING_CMP(byte[] arry, int cmp1, int cmp2);
 
 public static class Utilities
 {
+    public static byte[] DAT_187BC = new byte[]
+    {
+        8, 7, 8, 7, 16, 14, 24, 21
+    };
     public static short[] DAT_AC658;
     public static short[] DAT_AC7E8 = new short[]
     {
@@ -781,6 +787,15 @@ public static class Utilities
         }
     }
 
+    //FUN_94A10
+    public static int Rand()
+    {
+        int iVar1;
+
+        iVar1 = UnityEngine.Random.Range(0, 0x8000);
+        return iVar1;
+    }
+
     //FUN_901F0
     public static long Ratan2(long y, long x)
     {
@@ -1325,6 +1340,30 @@ public static class Utilities
              Coprocessor.accumulator.ir3);
     }
 
+    //FUN_8EFD0
+    public static Vector3Int LoadAverageShort12(ref Vector3Int v0, ref Vector3Int v1, long p0, long p1)
+    {
+        int iVar1;
+        int iVar2;
+        int iVar3;
+
+        Coprocessor.accumulator.ir0 = (short)p0;
+        Coprocessor.accumulator.ir1 = (short)v0.x;
+        Coprocessor.accumulator.ir2 = (short)v0.y;
+        Coprocessor.accumulator.ir3 = (short)v0.z;
+        Coprocessor.ExecuteGPF(12, false);
+        Coprocessor.accumulator.ir0 = (short)p1;
+        Coprocessor.accumulator.ir1 = (short)v1.x;
+        Coprocessor.accumulator.ir2 = (short)v1.y;
+        Coprocessor.accumulator.ir3 = (short)v1.z;
+        Coprocessor.ExecuteGPL(12, false);
+        iVar1 = Coprocessor.accumulator.ir1;
+        iVar2 = Coprocessor.accumulator.ir2;
+        iVar3 = Coprocessor.accumulator.ir3;
+
+        return new Vector3Int(iVar1, iVar2, iVar3);
+    }
+
     //FUN_8EEA0
     public static long SquareRoot0(long a)
     {
@@ -1397,12 +1436,166 @@ public static class Utilities
         return param1;
     }
 
+    public static void FUN_60C94(uint[] param1, List<Vector3Int> param2, int param3)
+    {
+        uint uVar1;
+        uint uVar2;
+        int iVar3;
+
+        uVar1 = param1[0];
+        param3--;
+        uVar2 = param1[1];
+        iVar3 = 2;
+        param2.Add(new Vector3Int
+            ((ushort)(uVar1 & 0xfff), (ushort)((uVar1 & 0xfff000) >> 0xc),
+            (ushort)((uVar1 >> 0x18) | ((uVar2 & 0xf) << 8))));
+
+        while (true)
+        {
+            if (param3 == 0)
+                return;
+
+            uVar1 = param1[iVar3];
+            param2.Add(new Vector3Int
+                ((ushort)((uVar2 & 0xfff0) >> 4), (ushort)((uVar2 & 0xfff0000) >> 0x10),
+                (ushort)((uVar2 >> 0x1c) | ((uVar1 & 0xff) << 4))));
+
+            if (param3 == 1)
+                return;
+
+            uVar2 = param1[iVar3 + 1];
+            param2.Add(new Vector3Int
+                ((ushort)((uVar1 & 0xfff00) >> 8), (ushort)((uVar1 & 0xfff00000) >> 0x14),
+                (ushort)(uVar2 & 0xfff)));
+
+            if (param3 == 2)
+                return;
+
+            uVar1 = param1[iVar3 + 2];
+            param2.Add(new Vector3Int
+                ((ushort)((uVar2 & 0xfff000) >> 0xc), (ushort)(((uVar2 & 0xff000000) >> 8 | (uVar1 & 0xf) << 0x18) >> 0x10),
+                (ushort)((uVar1 & 0xfff0) >> 4)));
+
+            if (param3 == 3)
+                return;
+
+            uVar2 = param1[iVar3 + 3];
+            param2.Add(new Vector3Int
+                ((ushort)((uVar1 & 0xfff0000) >> 0x10), (ushort)(((uVar1 & 0xf0000000) >> 0xc | (uVar2 & 0xff) << 0x14) >> 0x10),
+                (ushort)((uVar2 >> 8) & 0xfff)));
+
+            if (param3 == 4)
+                return;
+
+            uVar1 = param1[iVar3 + 4];
+            param2.Add(new Vector3Int
+                ((ushort)(uVar2 >> 0x14), (ushort)(uVar1 & 0xfff), (ushort)((uVar1 & 0xfff000) >> 0xc)));
+
+            if (param3 == 5)
+                return;
+
+            uVar2 = param1[iVar3 + 5];
+            param2.Add(new Vector3Int
+                ((ushort)(uVar1 >> 0x18 | (uVar2 & 0xf) << 8), (ushort)((uVar2 & 0xfff0) << 0xc >> 0x10), 
+                (ushort)((uVar2 >> 0x10) & 0xfff)));
+
+            if (param3 == 6)
+                return;
+
+            uVar1 = param1[iVar3 + 6];
+            param2.Add(new Vector3Int
+                ((ushort)(uVar2 >> 0x1c | (uVar1 & 0xff) << 4), (ushort)((uVar1 & 0xfff00) << 8 >> 0x10), 
+                (ushort)(uVar1 >> 0x14)));
+
+            if (param3 == 7)
+                break;
+
+            uVar1 = param1[iVar3 + 7];
+            iVar3 -= 8;
+            uVar2 = param1[iVar3 + 8];
+            param2.Add(new Vector3Int
+                ((ushort)(uVar1 & 0xfff), (ushort)((uVar1 & 0xfff000) << 4 >> 0x10),
+                (ushort)((uVar1 >> 0x18) | ((uVar2 & 0xf) << 8))));
+        }
+    }
+
     public static int FUN_615EC(Vector3Int param1, Vector3Int param2)
     {
         long lVar1;
 
         lVar1 = Ratan2(param2.x - param1.x, param2.z - param1.z);
         return (int)(lVar1 & 0xfff);
+    }
+
+    public static void FUN_665D8(ref Vector3Int param1, ref Vector3Int param2, ref Vector3Int param3, int param4)
+    {
+        short sVar1;
+        ushort uVar2;
+        int iVar3;
+        int iVar4;
+        int iVar5;
+
+        uVar2 = (ushort)param1.x;
+        param1.x = uVar2 & 0xfff;
+        uVar2 = (ushort)((param2.x - (uVar2 & 0xfff)) + 0x800);
+
+        if (0x1000U < uVar2)
+        {
+            sVar1 = 0x1000;
+
+            if ((uVar2 & 0x8000) == 0)
+                sVar1 = -0x1000;
+
+            param2.x += sVar1;
+        }
+
+        uVar2 = (ushort)param1.y;
+        param1.y = uVar2 & 0xfff;
+        uVar2 = (ushort)((param2.y - (uVar2 & 0xfff)) + 0x800);
+
+        if (0x1000U < uVar2)
+        {
+            sVar1 = 0x1000;
+
+            if ((uVar2 & 0x8000) == 0)
+                sVar1 = -0x1000;
+
+            param2.y += sVar1;
+        }
+
+        uVar2 = (ushort)param1.z;
+        param1.z = uVar2 & 0xfff;
+        uVar2 = (ushort)((param2.z - (uVar2 & 0xfff)) + 0x800);
+
+        if (0x1000U < uVar2)
+        {
+            sVar1 = 0x1000;
+
+            if ((uVar2 & 0x8000) == 0)
+                sVar1 = -0x1000;
+
+            param2.z += sVar1;
+        }
+
+        Coprocessor.accumulator.ir0 = (short)(0x1000 - param4);
+        Coprocessor.accumulator.ir1 = (short)param1.x;
+        Coprocessor.accumulator.ir2 = (short)param1.y;
+        Coprocessor.accumulator.ir3 = (short)param1.z;
+        Coprocessor.ExecuteGPF(12, false);
+        Coprocessor.accumulator.ir0 = (short)param4;
+        Coprocessor.accumulator.ir1 = (short)param2.x;
+        Coprocessor.accumulator.ir2 = (short)param2.y;
+        Coprocessor.accumulator.ir3 = (short)param2.z;
+        Coprocessor.ExecuteGPL(12, false);
+        iVar3 = Coprocessor.accumulator.ir1;
+        iVar4 = Coprocessor.accumulator.ir2;
+        iVar5 = Coprocessor.accumulator.ir3;
+        param3.x = iVar3;
+        param3.y = iVar4;
+        param3.z = iVar5;
+        param3.x &= 0xfff;
+        param3.y &= 0xfff;
+        param3.z &= 0xfff;
     }
 }
 

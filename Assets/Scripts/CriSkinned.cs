@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CriSkinned : CriObject
 {
-    public Vector3Int DAT_34_2; //0x34
-    public byte DAT_3C_2; //0x3C
+    public Vector3Int DAT_34; //0x34
+    public byte DAT_3C; //0x3C
     public byte DAT_3D; //0x3D
     public byte DAT_3E; //0x3E
     public byte DAT_3F; //0x3F
@@ -45,7 +45,7 @@ public class CriSkinned : CriObject
     public byte DAT_175; //0x175
     public byte DAT_177; //0x177
     public CriBone[] DAT_184; //0x184
-    public bool DAT_18C; //0x18C
+    public byte DAT_18C; //0x18C
     public bool DAT_18D; //0x18D
     public sbyte DAT_198; //0x198
     public byte DAT_1A5; //0x1A5
@@ -130,8 +130,8 @@ public class CriSkinned : CriObject
     public override void ResetValues()
     {
         base.ResetValues();
-        DAT_34_2 = Vector3Int.zero;
-        DAT_3C_2 = 0;
+        DAT_34 = Vector3Int.zero;
+        DAT_3C = 0;
         DAT_3D = 0;
         DAT_3E = 0;
         DAT_3F = 0;
@@ -170,7 +170,7 @@ public class CriSkinned : CriObject
         DAT_177 = 0;
         DAT_184[0] = null;
         DAT_184[1] = null;
-        DAT_18C = false;
+        DAT_18C = 0;
         DAT_18D = false;
         DAT_198 = 0;
         DAT_1A5 = 0;
@@ -223,9 +223,9 @@ public class CriSkinned : CriObject
                 oVar2.DAT_44 = puVar7.DAT_00;
 
                 if (puVar7.DAT_06 < 0)
-                    oVar2.DAT_38 = this;
+                    oVar2.prev = this;
                 else
-                    oVar2.DAT_38 = local_a0[puVar7.DAT_06];
+                    oVar2.prev = local_a0[puVar7.DAT_06];
 
                 bVar1 = puVar7.DAT_07;
                 uVar4++;
@@ -240,11 +240,11 @@ public class CriSkinned : CriObject
             do
             {
                 uVar4++;
-                local_a0[uVar4 - 1].DAT_34 = local_a0[uVar4];
+                local_a0[uVar4 - 1].next = local_a0[uVar4];
             } while (uVar4 < uVar8 - 1);
         }
 
-        local_a0[uVar4].DAT_34 = null;
+        local_a0[uVar4].next = null;
         skinSize = new Vector3Int(0x1000, 0x1000, 0x1000);
         shadowSize = new Vector2Int(0x1000, 0x1000);
         tint = new Color32(0x80, 0x80, 0x80, 0x00);
@@ -261,7 +261,7 @@ public class CriSkinned : CriObject
         while (--iVar5 != -1)
         {
             oVar2.DAT_4C = oVar2.screen;
-            oVar2 = (CriBone)oVar2.DAT_34;
+            oVar2 = (CriBone)oVar2.next;
         }
     }
 
@@ -464,7 +464,7 @@ public class CriSkinned : CriObject
                     Vector3Int temp = puVar3[(int)uVar1];
                     Utilities.FUN_665D8(ref oVar2.vr, ref temp, ref oVar2.vr, param2);
                     puVar3[(int)uVar1] = temp;
-                    oVar2 = (CriBone)oVar2.DAT_34;
+                    oVar2 = (CriBone)oVar2.next;
                     uVar1++;
                 } while (uVar1 < param1);
             }
@@ -513,11 +513,60 @@ public class CriSkinned : CriObject
                 Vector3Int temp = puVar3[(int)uVar1];
                 iVar6 = bVar5 ? param2 : 0x1000;
                 Utilities.FUN_665D8(ref oVar2.vr, ref temp, ref oVar2.vr, iVar6);
-                oVar2 = (CriBone)oVar2.DAT_34;
+                oVar2 = (CriBone)oVar2.next;
                 uVar1++;
                 iVar4++;
             }while (uVar1 < param1) ;
         }
+    }
+
+    public void FUN_6103C(TodScriptableObject param1, byte param2, byte param3, int param4)
+    {
+        byte bVar1;
+        byte bVar2;
+        uint uVar3;
+        CriBone oVar4;
+
+        packets = param1.PACKETS;
+        bVar1 = (byte)param1.FRAME_COUNT;
+        frames = param1.FRAMES;
+        DAT_74 = param1.FRAMES;
+        DAT_60 = 0;
+        DAT_5C = param2;
+        frameCount = bVar1;
+
+        if ((param2 & 2) == 0)
+        {
+            frameNum = param3;
+            uVar3 = param3;
+        }
+        else
+        {
+            frameNum = (byte)(bVar1 - param3);
+            uVar3 = (uint)bVar1 - frameNum;
+        }
+
+        packet = packets[frames[uVar3].DAT_01 * DAT_5E / 4];
+        bVar2 = frames[uVar3].DAT_00;
+        DAT_62 = bVar2;
+
+        if ((param2 & 8) != 0)
+            DAT_62 = (byte)(bVar2 << 1);
+
+        DAT_5D = (byte)param4;
+
+        if (param4 == 0)
+        {
+            oVar4 = skeleton;
+
+            if (oVar4 != null)
+            {
+                oVar4.vr = new Vector3Int(0, 0, 0);
+                oVar4 = oVar4.next as CriBone;
+            }
+        }
+
+        FUN_607A4();
     }
 
     public void FUN_659D0()
@@ -540,7 +589,7 @@ public class CriSkinned : CriObject
     {
         CriBone oVar1;
 
-        DAT_18C = false;
+        DAT_18C = 0;
         oVar1 = Utilities.FUN_601C8(skeleton, param1) as CriBone;
         DAT_184[0] = oVar1;
         oVar1 = Utilities.FUN_601C8(skeleton, param2) as CriBone;
@@ -566,7 +615,7 @@ public class CriSkinned : CriObject
 
         do
         {
-            puVar9 = m.DAT_38;
+            puVar9 = m.prev;
 
             if (!m.DAT_43)
                 Utilities.RotMatrix_gte(ref m.vr, ref m.cTransform.rotation);
@@ -632,7 +681,7 @@ public class CriSkinned : CriObject
             m.cTransform.rotation.V12 = (short)iVar7;
             m.cTransform.rotation.V22 = (short)iVar8;
             iVar10--;
-            m = (CriBone)m.DAT_34;
+            m = (CriBone)m.next;
         } while (iVar10 != -1);
     }
 

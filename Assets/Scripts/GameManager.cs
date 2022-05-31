@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
                         Coprocessor.lightColorMatrix.lb1 = puVar10.colorMatrix.V20;
                         Coprocessor.lightColorMatrix.lb2 = puVar10.colorMatrix.V21;
                         Coprocessor.lightColorMatrix.lb3 = puVar10.colorMatrix.V22;
-                        puVar6 = puVar10.DAT_38;
+                        puVar6 = puVar10.prev;
                         Coprocessor.rotationMatrix.rt11 = puVar6.cTransform.rotation.V00;
                         Coprocessor.rotationMatrix.rt12 = puVar6.cTransform.rotation.V01;
                         Coprocessor.rotationMatrix.rt13 = puVar6.cTransform.rotation.V02;
@@ -294,10 +294,10 @@ public class GameManager : MonoBehaviour
                             } while (iVar19 != -1);
                         }
 
-                        if (puVar10.cMesh2 != null)
-                            puVar10.FUN_7503C(puVar10.cMesh2);
+                        if (puVar10.cMesh != null)
+                            puVar10.FUN_7503C(puVar10.cMesh);
 
-                        puVar10 = (CriBone)puVar10.DAT_34;
+                        puVar10 = (CriBone)puVar10.next;
                         iVar12--;
                     } while (iVar12 != local_2c);
                 }

@@ -241,9 +241,6 @@ public class CriObject : MonoBehaviour
     public Vector3Int vr; //0x28
     public byte DAT_2E; //0x2E
     public uint flags; //0x30
-    public CriObject DAT_34; //0x34
-    public CriObject DAT_38; //0x38
-    public TmdScriptableObject cMesh; //0x3C
 
     protected virtual void Awake()
     {
@@ -275,9 +272,6 @@ public class CriObject : MonoBehaviour
         vr = Vector3Int.zero;
         DAT_2E = 0;
         flags = 0;
-        DAT_34 = null;
-        DAT_38 = null;
-        cMesh = null;
     }
 
     public void FUN_60068()

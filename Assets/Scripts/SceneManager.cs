@@ -9,6 +9,7 @@ public class SceneManager : MonoBehaviour
     public ScnScriptableObject data;
     public Tmd2ScriptableObject playerSkin;
     public TodScriptableObject playerIdle; //0x80190604
+    public TodScriptableObject DAT_1860CC;
     public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriObject[] DAT_5FCC; //gp+5fcch...gp+7cdch
@@ -72,7 +73,7 @@ public class SceneManager : MonoBehaviour
         oVar3 = obj.AddComponent<CriPlayer>();
         DAT_27C[10] = oVar3;
         oVar3.screen = GameManager.instance.playerSpawnPos;
-        oVar3.DAT_34_2 = GameManager.instance.playerSpawnPos;
+        oVar3.DAT_34 = GameManager.instance.playerSpawnPos;
         oVar3.vr.y = GameManager.instance.playerSpawnRotY;
         oVar3.DAT_48 = (sbyte)-(oVar3.screen.y / 0x1a9);
         oVar3.FUN_4CFDC();

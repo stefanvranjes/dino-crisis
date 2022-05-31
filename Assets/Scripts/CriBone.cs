@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CriBone : CriObject
 {
-    public Tmd3ScriptableObject cMesh2; //0x3C
+    public CriObject next; //0x34
+    public CriObject prev; //0x38
+    public Tmd3ScriptableObject cMesh; //0x3C
     public byte DAT_42; //0x42
     public bool DAT_43; //0x43
     public Vector3Int DAT_44; //0x44
@@ -38,12 +40,12 @@ public class CriBone : CriObject
 
     private void OnRenderObject()
     {
-        if (cMesh2 != null)
+        if (cMesh != null)
         {
             GL.PushMatrix();
             GL.MultMatrix(transform.localToWorldMatrix);
 
-            for (int i = 0; i < cMesh2.TRI_COUNT; i++)
+            for (int i = 0; i < cMesh.TRI_COUNT; i++)
             {
                 materials[commandList[i]].SetPass(0);
                 GL.Begin(GL.TRIANGLES);
@@ -61,18 +63,18 @@ public class CriBone : CriObject
                 GL.End();
             }
 
-            for (int i = 0; i < cMesh2.QUAD_COUNT; i++)
+            for (int i = 0; i < cMesh.QUAD_COUNT; i++)
             {
-                materials[commandList[cMesh2.TRI_COUNT + i]].SetPass(0);
+                materials[commandList[cMesh.TRI_COUNT + i]].SetPass(0);
                 GL.Begin(GL.TRIANGLES);
-                int j = cMesh2.TRI_COUNT * 3 + i * 6;
+                int j = cMesh.TRI_COUNT * 3 + i * 6;
 
                 for (int k = 0; k < 6; k++)
                 {
                     if (!GameManager.instance.disableColors)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
-                    GL.MultiTexCoord(1, uv2List[cMesh2.TRI_COUNT + i]);
+                    GL.MultiTexCoord(1, uv2List[cMesh.TRI_COUNT + i]);
                     GL.Vertex(vertexList[triangleList[j + k]]);
                 }
 
@@ -86,6 +88,9 @@ public class CriBone : CriObject
     public override void ResetValues()
     {
         base.ResetValues();
+        next = null;
+        prev = null;
+        cMesh = null;
         DAT_42 = 0;
         DAT_43 = false;
         DAT_44 = Vector3Int.zero;

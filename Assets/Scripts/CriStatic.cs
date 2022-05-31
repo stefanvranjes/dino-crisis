@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CriStatic : CriObject
 {
+    public TmdScriptableObject cMesh; //0x3C
     public byte DAT_48; //0x48
     public ushort DAT_4A; //0x4A
 
@@ -34,6 +35,7 @@ public class CriStatic : CriObject
     public override void ResetValues()
     {
         base.ResetValues();
+        cMesh = null;
         DAT_48 = 0;
         DAT_4A = 0;
     }

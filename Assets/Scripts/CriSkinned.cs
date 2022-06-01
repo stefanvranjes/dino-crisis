@@ -30,6 +30,7 @@ public class CriSkinned : CriObject
     public Tmd2ScriptableObject cSkin; //0x9C
     public Vector3Int skinSize; //0xA4
     public Color32 tint; //0xB0
+    public short DAT_112; //0x112
     public short health; //0x118
     public short maxHealth; //0x11A
     public byte DAT_11E; //0x11E
@@ -47,6 +48,9 @@ public class CriSkinned : CriObject
     public CriBone[] DAT_184; //0x184
     public byte DAT_18C; //0x18C
     public bool DAT_18D; //0x18D
+    public byte DAT_18F; //0x18F
+    public int DAT_190; //0x190
+    public Vector3Int[] PTR_190; //0x190
     public sbyte DAT_198; //0x198
     public byte DAT_1A5; //0x1A5
 
@@ -155,6 +159,7 @@ public class CriSkinned : CriObject
         cSkin = null;
         skinSize = Vector3Int.zero;
         tint = Color.clear;
+        DAT_112 = 0;
         health = 0;
         maxHealth = 0;
         DAT_11E = 0;
@@ -172,6 +177,9 @@ public class CriSkinned : CriObject
         DAT_184[1] = null;
         DAT_18C = 0;
         DAT_18D = false;
+        DAT_18F = 0;
+        DAT_190 = 0;
+        PTR_190 = null;
         DAT_198 = 0;
         DAT_1A5 = 0;
     }

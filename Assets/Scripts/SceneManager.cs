@@ -10,6 +10,8 @@ public class SceneManager : MonoBehaviour
     public Tmd2ScriptableObject playerSkin;
     public TodScriptableObject playerIdle; //0x80190604
     public TodScriptableObject DAT_1860CC;
+    public TodScriptableObject DAT_189774;
+    public TodScriptableObject DAT_18A058;
     public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriObject[] DAT_5FCC; //gp+5fcch...gp+7cdch

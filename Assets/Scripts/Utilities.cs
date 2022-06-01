@@ -1462,6 +1462,75 @@ public static class Utilities
         else return val;
     }
 
+    public static short FUN_51C8C(Vector3Int param1, Vector3Int param2, int param3, short param4)
+    {
+        int iVar1;
+        int iVar2;
+        int iVar3;
+
+        iVar1 = FUN_615EC(param1, param2);
+        iVar2 = iVar1 - param3 & 0xfff;
+
+        if (iVar2 < 0x800)
+        {
+            iVar3 = iVar2;
+
+            if ((param4 << 0x10) >> 0xf <= iVar2)
+            {
+                if (iVar2 < 0x800) goto LAB_51D10;
+
+                if ((param4 << 0x10) >> 0xf <= 0x1000 - iVar2) goto LAB_51D10;
+
+                iVar3 = 0x1000 - iVar2;
+            }
+        }
+        else
+        {
+            if ((param4 << 0x10) >> 0xf <= 0x1000 - iVar2) goto LAB_51D10;
+
+            iVar3 = 0x1000 - iVar2;
+        }
+
+        param4 = (short)iVar3;
+
+        LAB_51D10:
+        if (0x800 < iVar2)
+            param4 = (short)-param4;
+
+        return param4;
+    }
+
+    public static short FUN_51D40(int param1, int param2, short param3)
+    {
+        short sVar1;
+        int iVar2;
+        short sVar3;
+
+        sVar3 = (short)(param1 - param2);
+
+        if ((param1 - param2) * 0x10000 < 0)
+            sVar3 += 0x1000;
+
+        iVar2 = sVar3;
+
+        if (iVar2 < 0x800)
+        {
+            sVar1 = param3;
+
+            if (iVar2 < param3)
+                sVar1 = sVar3;
+        }
+        else
+        {
+            sVar1 = (short)(sVar3 - 0x1000);
+
+            if (param3 <= 0x1000 - iVar2)
+                sVar1 = (short)-param3;
+        }
+
+        return sVar1;
+    }
+
     public static CriObject FUN_601C8(CriBone param1, int param2)
     {
         int iVar1;
@@ -1569,6 +1638,24 @@ public static class Utilities
 
         lVar1 = Ratan2(param2.x - param1.x, param2.z - param1.z);
         return (int)(lVar1 & 0xfff);
+    }
+
+    public static uint FUN_63160(Vector3Int param1, Vector3Int param2)
+    {
+        int iVar1;
+        int iVar2;
+
+        iVar1 = param2.x - param1.x;
+
+        if (iVar1 < 0)
+            iVar1 = -iVar1;
+
+        iVar2 = param2.z - param1.z;
+
+        if (iVar2 < 0)
+            iVar2 = -iVar2;
+
+        return (uint)(iVar1 * iVar1 + iVar2 * iVar2);
     }
 
     public static void FUN_665D8(ref Vector3Int param1, ref Vector3Int param2, ref Vector3Int param3, int param4)

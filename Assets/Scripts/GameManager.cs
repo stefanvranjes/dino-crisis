@@ -45,6 +45,16 @@ public class GameManager : MonoBehaviour
     public byte DAT_A2CF; //gp+a2cfh
     public bool DAT_A2D0; //gp+a2d0h
     public byte DAT_A2D3; //gp+a2d3h
+    public Packet[] DAT_C3380;
+    public Frame[] DAT_C3384;
+    public Packet DAT_C3388;
+    public Frame[] DAT_C338C;
+    public ushort DAT_C3390;
+    public Packet[] DAT_C33A0;
+    public Frame[] DAT_C33A4;
+    public Packet DAT_C33A8;
+    public Frame[] DAT_C33AC;
+    public ushort DAT_C33B0;
     public List<Vector3> skinnedVertices; //0x800C6F90
     public List<Color> skinnedColors; //0x800C75D0
     public List<CriSkinned> skinnedList; //0x800C7C10

@@ -27,6 +27,7 @@ public class CriSkinned : CriObject
     public byte frameCount; //0x78
     public byte frameNum; //0x79
     public Frame frame; //0x7C
+    public TodScriptableObject[] DAT_98; //0x98
     public Tmd2ScriptableObject cSkin; //0x9C
     public Vector3Int skinSize; //0xA4
     public Color32 tint; //0xB0
@@ -38,8 +39,10 @@ public class CriSkinned : CriObject
     public bool DAT_12E; //0x12E
     public bool DAT_12F; //0x12F
     public Vector2Int DAT_13C; //0x13C
-    public short DAT_140; //0x140
+    public ushort DAT_140; //0x140
+    public Vector3Int DAT_14C; //0x14C
     public short DAT_152; //0x152
+    public CriSkinned DAT_154; //0x154
     public byte DAT_164; //0x164
     public Vector2Int shadowSize; //0x170
     public byte DAT_174; //0x174
@@ -52,6 +55,7 @@ public class CriSkinned : CriObject
     public int DAT_190; //0x190
     public Vector3Int[] PTR_190; //0x190
     public sbyte DAT_198; //0x198
+    public byte DAT_1A3; //0x1A3
     public byte DAT_1A5; //0x1A5
 
     private List<byte> commandList;
@@ -156,6 +160,7 @@ public class CriSkinned : CriObject
         frameCount = 0;
         frameNum = 0;
         frame = null;
+        DAT_98 = null;
         cSkin = null;
         skinSize = Vector3Int.zero;
         tint = Color.clear;
@@ -168,7 +173,9 @@ public class CriSkinned : CriObject
         DAT_12F = false;
         DAT_13C = Vector2Int.zero;
         DAT_140 = 0;
+        DAT_14C = Vector3Int.zero;
         DAT_152 = 0;
+        DAT_154 = null;
         shadowSize = Vector2Int.zero;
         DAT_174 = 0;
         DAT_175 = 0;
@@ -181,6 +188,7 @@ public class CriSkinned : CriObject
         DAT_190 = 0;
         PTR_190 = null;
         DAT_198 = 0;
+        DAT_1A3 = 0;
         DAT_1A5 = 0;
     }
 
@@ -448,6 +456,38 @@ public class CriSkinned : CriObject
         FUN_607A4();
     }
 
+    public void FUN_609C8(int param1, byte param2, byte param3)
+    {
+        byte bVar1;
+        byte bVar2;
+        uint uVar3;
+
+        packets = DAT_98[param1].PACKETS;
+        bVar1 = (byte)(DAT_98[param1].FRAME_COUNT + 1);
+        frames = DAT_98[param1].FRAMES;
+        DAT_74 = DAT_98[param1].FRAMES;
+        frameNum = 0;
+        DAT_60 = 0;
+        DAT_5C = param2;
+        frameCount = bVar1;
+
+        if ((param2 & 2) == 0)
+            uVar3 = frameNum;
+        else
+            uVar3 = (uint)(bVar1 - frameNum);
+
+        packet = packets[frames[uVar3].DAT_01 * DAT_5E / 4];
+        DAT_62 = frames[uVar3].DAT_00;
+        bVar2 = frames[0].DAT_00;
+        DAT_62 = bVar2;
+
+        if ((param2 & 8) != 0)
+            DAT_62 = (byte)(bVar2 << 1);
+
+        DAT_5D = param3;
+        FUN_607A4();
+    }
+
     public void FUN_60EF0(uint param1, int param2)
     {
         uint uVar1;
@@ -575,6 +615,66 @@ public class CriSkinned : CriObject
         }
 
         FUN_607A4();
+    }
+
+    public void FUN_6103C(int param1, byte param2, byte param3, int param4)
+    {
+        byte bVar1;
+        byte bVar2;
+        uint uVar3;
+        CriBone oVar4;
+
+        packets = DAT_98[param1].PACKETS;
+        bVar1 = (byte)DAT_98[param1].FRAME_COUNT;
+        frames = DAT_98[param1].FRAMES;
+        DAT_74 = DAT_98[param1].FRAMES;
+        DAT_60 = 0;
+        DAT_5C = param2;
+        frameCount = bVar1;
+
+        if ((param2 & 2) == 0)
+        {
+            frameNum = param3;
+            uVar3 = param3;
+        }
+        else
+        {
+            frameNum = (byte)(bVar1 - param3);
+            uVar3 = (uint)bVar1 - frameNum;
+        }
+
+        packet = packets[frames[uVar3].DAT_01 * DAT_5E / 4];
+        bVar2 = frames[uVar3].DAT_00;
+        DAT_62 = bVar2;
+
+        if ((param2 & 8) != 0)
+            DAT_62 = (byte)(bVar2 << 1);
+
+        DAT_5D = (byte)param4;
+
+        if (param4 == 0)
+        {
+            oVar4 = skeleton;
+
+            if (oVar4 != null)
+            {
+                oVar4.vr = new Vector3Int(0, 0, 0);
+                oVar4 = oVar4.next as CriBone;
+            }
+        }
+
+        FUN_607A4();
+    }
+
+    public void FUN_65714()
+    {
+        GameManager.instance.DAT_1f80002c = DAT_64;
+        Utilities.RotMatrix_gte(ref vr, ref GameManager.instance.DAT_1f800034);
+        GameManager.instance.DAT_1f80002c = Utilities.ApplyMatrixSV
+            (ref GameManager.instance.DAT_1f800034, ref GameManager.instance.DAT_1f80002c);
+        screen.x = DAT_14C.x + GameManager.instance.DAT_1f80002c.x;
+        screen.y = DAT_14C.y + GameManager.instance.DAT_1f80002c.y;
+        screen.z = DAT_14C.z + GameManager.instance.DAT_1f80002c.z;
     }
 
     public void FUN_659D0()

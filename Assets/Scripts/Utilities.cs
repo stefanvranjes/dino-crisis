@@ -8,6 +8,17 @@ public delegate int _SORTING_CMP(byte[] arry, int cmp1, int cmp2);
 
 public static class Utilities
 {
+    public static TodScriptableObject[] DAT_18770 = new TodScriptableObject[]
+    {
+        SceneManager.instance.database.DAT_18466C, 
+        SceneManager.instance.database.DAT_18539C, 
+        SceneManager.instance.database.DAT_184D04, 
+        SceneManager.instance.database.DAT_185A34, 
+        SceneManager.instance.database.DAT_19113C, 
+        SceneManager.instance.database.DAT_191884, 
+        SceneManager.instance.database.DAT_1914E0, 
+        SceneManager.instance.database.DAT_191C28
+    };
     public static short[] DAT_18790 = new short[]
     {
         54, 46, 35
@@ -31,6 +42,10 @@ public static class Utilities
     public static byte[] DAT_187BC = new byte[]
     {
         8, 7, 8, 7, 16, 14, 24, 21
+    };
+    public static byte[] DAT_18824 = new byte[]
+    {
+        3, 9, 2, 6
     };
     public static short[] DAT_AC658 = new short[]
     {

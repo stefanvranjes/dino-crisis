@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public static SceneManager sceneManager;
 
+    private static ushort DAT_B58BA;
+
     public ushort DAT_1f800008;
     public ushort DAT_1f80000a;
     public ushort DAT_1f800024;
@@ -509,5 +511,48 @@ public class GameManager : MonoBehaviour
         param1.position.y = iVar1;
         iVar1 = Coprocessor.mathsAccumulator.mac3;
         param1.position.z = iVar1;
+    }
+
+    public int FUN_64C80()
+    {
+        uint uVar1;
+        uint uVar2;
+        int iVar3;
+
+        iVar3 = 0;
+        uVar2 = 0;
+        uVar1 = DAT_1f80000a;
+
+        do
+        {
+            if ((uVar1 & 1) != 0)
+                iVar3++;
+
+            uVar2++;
+            uVar1 = (uint)(DAT_1f80000a >> (int)(uVar2 & 0x1f));
+        } while (uVar2 < 8);
+
+        uVar1 = 0;
+
+        do
+        {
+            if ((DAT_1f80000a & 0x2000) != 0)
+                iVar3++;
+
+            uVar1++;
+        } while (uVar1 < 4);
+
+        return iVar3;
+    }
+
+    public static uint FUN_64650()
+    {
+        uint uVar1;
+        uint uVar2;
+
+        uVar1 = DAT_B58BA * 3U;
+        uVar2 = DAT_B58BA + ((uVar1 & 0xffff) >> 8) & 0xff;
+        DAT_B58BA = (ushort)(uVar2 | uVar1 & 0xff00U);
+        return uVar2;
     }
 }

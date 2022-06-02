@@ -6,12 +6,8 @@ public class SceneManager : MonoBehaviour
 {
     public static SceneManager instance;
 
-    public ScnScriptableObject data;
-    public Tmd2ScriptableObject playerSkin;
-    public TodScriptableObject playerIdle; //0x80190604
-    public TodScriptableObject DAT_1860CC;
-    public TodScriptableObject DAT_189774;
-    public TodScriptableObject DAT_18A058;
+    public ScnScriptableObject scn;
+    public DatabaseScriptableObject database;
     public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriObject[] DAT_5FCC; //gp+5fcch...gp+7cdch
@@ -34,9 +30,9 @@ public class SceneManager : MonoBehaviour
         DAT_5FCC = new CriObject[60];
         DAT_7CDC = new CriObject[40];
 
-        for (int i = 0; i < data.staticObjs.Count; i++)
+        for (int i = 0; i < scn.staticObjs.Count; i++)
         {
-            FUN_570A0(data.staticObjs[i]);
+            FUN_570A0(scn.staticObjs[i]);
         }
 
         for (int i = 0; i < 40; i++)

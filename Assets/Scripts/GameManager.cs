@@ -8,6 +8,9 @@ public enum _DIFFICULTY
     Easy
 }
 
+public delegate void FUN_148(CriPlayer p);
+public delegate void FUN_14C(CriPlayer p);
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -35,6 +38,8 @@ public class GameManager : MonoBehaviour
     public short playerSpawnRotY; //gp+52h
     public byte DAT_55; //gp+55h
     public CriObject DAT_B4; //gp+b4h
+    public FUN_148 PTR_FUN_148; //gp+148h
+    public FUN_14C PTR_FUN_14C; //gp+14ch
     public byte DAT_9AA0; //gp+9aa0h
     public byte DAT_9AA1; //gp+9aa1h
     public _DIFFICULTY difficulty; //gp+9aa8h
@@ -543,6 +548,16 @@ public class GameManager : MonoBehaviour
         } while (uVar1 < 4);
 
         return iVar3;
+    }
+
+    public static void FUN_2B6F4(CriPlayer param1)
+    {
+        param1.FUN_2B6F4();
+    }
+
+    public static void FUN_2D6C8(CriPlayer param1)
+    {
+        param1.FUN_2D6C8();
     }
 
     public static uint FUN_64650()

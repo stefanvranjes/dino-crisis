@@ -35,6 +35,8 @@ public class CriSkinned : CriObject
     public short health; //0x118
     public short maxHealth; //0x11A
     public byte DAT_11E; //0x11E
+    public int DAT_120; //0x120
+    public int DAT_124; //0x124
     public ushort DAT_12C; //0x12C
     public bool DAT_12E; //0x12E
     public bool DAT_12F; //0x12F
@@ -43,6 +45,7 @@ public class CriSkinned : CriObject
     public Vector3Int DAT_14C; //0x14C
     public short DAT_152; //0x152
     public CriSkinned DAT_154; //0x154
+    public byte DAT_162; //0x162
     public byte DAT_164; //0x164
     public Vector2Int shadowSize; //0x170
     public byte DAT_174; //0x174
@@ -168,6 +171,8 @@ public class CriSkinned : CriObject
         health = 0;
         maxHealth = 0;
         DAT_11E = 0;
+        DAT_120 = 0;
+        DAT_124 = 0;
         DAT_12C = 0;
         DAT_12E = false;
         DAT_12F = false;
@@ -176,6 +181,8 @@ public class CriSkinned : CriObject
         DAT_14C = Vector3Int.zero;
         DAT_152 = 0;
         DAT_154 = null;
+        DAT_162 = 0;
+        DAT_164 = 0;
         shadowSize = Vector2Int.zero;
         DAT_174 = 0;
         DAT_175 = 0;
@@ -702,6 +709,54 @@ public class CriSkinned : CriObject
         DAT_184[0] = oVar1;
         oVar1 = Utilities.FUN_601C8(skeleton, param2) as CriBone;
         DAT_184[1] = oVar1;
+    }
+
+    public uint FUN_65A28()
+    {
+        short sVar1;
+        short sVar2;
+        CriBone oVar3;
+        short sVar4;
+        CriBone oVar5;
+        uint uVar6;
+
+        uVar6 = DAT_18C;
+
+        if (uVar6 == 0)
+            uVar6 = frames[frameNum].DAT_02;
+
+        if ((uVar6 & 0xe0) != 0)
+        {
+            oVar5 = DAT_184[uVar6 & 1];
+
+            if ((uVar6 & 0x80) != 0)
+            {
+                screen.x -= oVar5.screen.x - oVar5.DAT_4C.x;
+                screen.z -= oVar5.screen.z - oVar5.DAT_4C.z;
+            }
+
+            if ((uVar6 & 0x40) == 0)
+            {
+                if ((uVar6 & 0x20) == 0)
+                    return uVar6;
+
+                oVar3 = (CriBone)Utilities.FUN_601C8(skeleton, 0);
+                sVar4 = (short)oVar5.screen.y;
+                sVar1 = (short)oVar5.DAT_4C.y;
+                sVar2 = (short)oVar3.DAT_44.y;
+            }
+            else
+            {
+                oVar3 = (CriBone)Utilities.FUN_601C8(skeleton, 0);
+                sVar1 = (short)screen.y;
+                sVar2 = (short)oVar3.DAT_44.y;
+                sVar4 = (short)(oVar5.screen.y + 0x74);
+            }
+
+            oVar3.DAT_44.y = sVar2 - (sVar4 - sVar1);
+        }
+
+        return uVar6;
     }
 
     public void FUN_66208()

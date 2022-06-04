@@ -2,7 +2,10 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 public delegate int _SORTING_CMP(byte[] arry, int cmp1, int cmp2);
 
@@ -1354,6 +1357,38 @@ public static class Utilities
         }
     }
 
+    //FUN_8F76C
+    public static Vector3Int OuterProduct0(ref Vector3Int v0, ref Vector3Int v1)
+    {
+        uint uVar2;
+        uint uVar3;
+        uint uVar4;
+
+        uVar2 = (ushort)Coprocessor.rotationMatrix.rt11 | 
+            (uint)(ushort)Coprocessor.rotationMatrix.rt12 << 0x10;
+        uVar3 = (ushort)Coprocessor.rotationMatrix.rt22 |
+            (uint)(ushort)Coprocessor.rotationMatrix.rt23 << 0x10;
+        uVar4 = (ushort)Coprocessor.rotationMatrix.rt33;
+        Coprocessor.rotationMatrix.rt11 = (short)v0.x;
+        Coprocessor.rotationMatrix.rt12 = (short)(v0.x >> 0x10);
+        Coprocessor.rotationMatrix.rt22 = (short)v0.y;
+        Coprocessor.rotationMatrix.rt23 = (short)(v0.y >> 0x10);
+        Coprocessor.rotationMatrix.rt33 = (short)v0.z;
+        Coprocessor.accumulator.ir1 = (short)v1.x;
+        Coprocessor.accumulator.ir2 = (short)v1.y;
+        Coprocessor.accumulator.ir3 = (short)v1.z;
+        Coprocessor.ExecuteOP(0, false);
+        Coprocessor.rotationMatrix.rt11 = (short)uVar2;
+        Coprocessor.rotationMatrix.rt12 = (short)(uVar2 >> 0x10);
+        Coprocessor.rotationMatrix.rt22 = (short)uVar3;
+        Coprocessor.rotationMatrix.rt23 = (short)(uVar3 >> 0x10);
+        Coprocessor.rotationMatrix.rt33 = (short)uVar4;
+        return new Vector3Int
+            (Coprocessor.mathsAccumulator.mac1, 
+            Coprocessor.mathsAccumulator.mac2, 
+            Coprocessor.mathsAccumulator.mac3);
+    }
+
     //FUN_8F2A0
     public static Matrix3x3 ScaleMatrix(ref Matrix3x3 m, ref Vector3Int v)
     {
@@ -1655,6 +1690,33 @@ public static class Utilities
         return (int)(lVar1 & 0xfff);
     }
 
+    public static bool FUN_61FDC(Vector4Int param1, Vector4Int param2, ref Vector2Int param3)
+    {
+        bool bVar1;
+        long lVar2;
+        Vector3Int local_50;
+        Vector3Int local_48;
+        Vector3Int local_40;
+        Matrix3x3 MStack56;
+
+        lVar2 = (int)FUN_63160((Vector3Int)param2, (Vector3Int)param1);
+        lVar2 = SquareRoot0(lVar2);
+        bVar1 = lVar2 <= param2.w + param1.w;
+
+        if (bVar1)
+        {
+            local_48 = new Vector3Int(0, FUN_615EC((Vector3Int)param1, (Vector3Int)param2), 0);
+            local_50 = new Vector3Int(0, 0, param2.w + param1.w);
+            MStack56 = new Matrix3x3();
+            RotMatrix(ref local_48, ref MStack56);
+            local_40 = ApplyMatrixSV(ref MStack56, ref local_50);
+            param3.x = param1.x + local_40.x;
+            param3.y = param1.z + local_40.z;
+        }
+
+        return bVar1;
+    }
+
     public static uint FUN_63160(Vector3Int param1, Vector3Int param2)
     {
         int iVar1;
@@ -1671,6 +1733,31 @@ public static class Utilities
             iVar2 = -iVar2;
 
         return (uint)(iVar1 * iVar1 + iVar2 * iVar2);
+    }
+
+    public static uint FUN_64838(int param1, uint param2, int param3)
+    {
+        uint uVar1;
+        uint uVar2;
+
+        uVar1 = (uint)(param3 - param1 & 0xfff);
+
+        if ((param3 - param1 & 0x800) == 0)
+        {
+            uVar2 = uVar1;
+
+            if ((short)param2 < (int)uVar1)
+                uVar2 = param2;
+        }
+        else
+        {
+            uVar2 = uVar1 | 0xf000;
+
+            if ((int)(uVar1 | 0xf000) < 0x10000 - (short)param2)
+                uVar2 = (uint)-param2;
+        }
+
+        return uVar2 & 0xffff;
     }
 
     public static void FUN_665D8(ref Vector3Int param1, ref Vector3Int param2, ref Vector3Int param3, int param4)
@@ -1961,5 +2048,237 @@ public class BufferedBinaryReader : IDisposable
                 bufferOffset = bufferSize - (int)offset;
                 break;
         }
+    }
+}
+
+namespace UnityEngine
+{
+    [System.Serializable]
+    [StructLayout(LayoutKind.Sequential)]
+    public struct Vector4Int : IEquatable<Vector4Int>, IFormattable
+    {
+        public int x { get { return m_X; } set { m_X = value; } }
+        public int y { get { return m_Y; } set { m_Y = value; } }
+        public int z { get { return m_Z; } set { m_Z = value; } }
+        public int w { get { return m_W; } set { m_W = value; } }
+
+        private int m_X;
+        private int m_Y;
+        private int m_Z;
+        private int m_W;
+
+        public Vector4Int(int x, int y, int z, int w)
+        {
+            m_X = x;
+            m_Y = y;
+            m_Z = z;
+            m_W = w;
+        }
+
+        // Set x, y and z components of an existing Vector.
+        public void Set(int x, int y, int z, int w)
+        {
+            m_X = x;
+            m_Y = y;
+            m_Z = z;
+            m_W = w;
+        }
+
+        // Access the /x/, /y/ or /z/ component using [0], [1] or [2] respectively.
+        public int this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0: return x;
+                    case 1: return y;
+                    case 2: return z;
+                    case 3: return w;
+                    default:
+                        throw new IndexOutOfRangeException(String.Format("Invalid Vector4Int index addressed: {0}!", index));
+                }
+            }
+
+            set
+            {
+                switch (index)
+                {
+                    case 0: x = value; break;
+                    case 1: y = value; break;
+                    case 2: z = value; break;
+                    case 3: w = value; break;
+                    default:
+                        throw new IndexOutOfRangeException(String.Format("Invalid Vector4Int index addressed: {0}!", index));
+                }
+            }
+        }
+
+        // Returns the length of this vector (RO).
+        public float magnitude { get { return Mathf.Sqrt((float)(x * x + y * y + z * z + w * w)); } }
+
+        // Returns the squared length of this vector (RO).
+        public int sqrMagnitude { get { return x * x + y * y + z * z + w * w; } }
+
+        // Returns the distance between /a/ and /b/.
+        public static float Distance(Vector4Int a, Vector4Int b) { return (a - b).magnitude; }
+
+        // Returns a vector that is made from the smallest components of two vectors.
+        public static Vector4Int Min(Vector4Int lhs, Vector4Int rhs) { return new Vector4Int(Mathf.Min(lhs.x, rhs.x), Mathf.Min(lhs.y, rhs.y), Mathf.Min(lhs.z, rhs.z), Mathf.Min(lhs.w, rhs.w)); }
+
+        // Returns a vector that is made from the largest components of two vectors.
+        public static Vector4Int Max(Vector4Int lhs, Vector4Int rhs) { return new Vector4Int(Mathf.Max(lhs.x, rhs.x), Mathf.Max(lhs.y, rhs.y), Mathf.Max(lhs.z, rhs.z), Mathf.Max(lhs.w, rhs.w)); }
+
+        // Multiplies two vectors component-wise.
+        public static Vector4Int Scale(Vector4Int a, Vector4Int b) { return new Vector4Int(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w); }
+
+        // Multiplies every component of this vector by the same component of /scale/.
+        public void Scale(Vector4Int scale) { x *= scale.x; y *= scale.y; z *= scale.z; w *= scale.w; }
+
+        public void Clamp(Vector4Int min, Vector4Int max)
+        {
+            x = Math.Max(min.x, x);
+            x = Math.Min(max.x, x);
+            y = Math.Max(min.y, y);
+            y = Math.Min(max.y, y);
+            z = Math.Max(min.z, z);
+            z = Math.Min(max.z, z);
+            w = Math.Max(min.w, w);
+            w = Math.Min(max.w, w);
+        }
+
+        // Converts a Vector4Int to a [[Vector4]].
+        public static implicit operator Vector4(Vector4Int v)
+        {
+            return new Vector4(v.x, v.y, v.z, v.w);
+        }
+
+        // Converts a Vector4Int to a [[Vector2Int]].
+        public static explicit operator Vector3Int(Vector4Int v)
+        {
+            return new Vector3Int(v.x, v.y, v.z);
+        }
+
+        // Converts a Vector4Int to a [[Vector2Int]].
+        public static explicit operator Vector2Int(Vector4Int v)
+        {
+            return new Vector2Int(v.x, v.y);
+        }
+
+        public static Vector4Int FloorToInt(Vector4 v)
+        {
+            return new Vector4Int(
+                Mathf.FloorToInt(v.x),
+                Mathf.FloorToInt(v.y),
+                Mathf.FloorToInt(v.z),
+                Mathf.FloorToInt(v.w)
+            );
+        }
+
+        public static Vector4Int CeilToInt(Vector4 v)
+        {
+            return new Vector4Int(
+                Mathf.CeilToInt(v.x),
+                Mathf.CeilToInt(v.y),
+                Mathf.CeilToInt(v.z),
+                Mathf.CeilToInt(v.w)
+            );
+        }
+
+        public static Vector4Int RoundToInt(Vector4 v)
+        {
+            return new Vector4Int(
+                Mathf.RoundToInt(v.x),
+                Mathf.RoundToInt(v.y),
+                Mathf.RoundToInt(v.z),
+                Mathf.RoundToInt(v.w)
+            );
+        }
+
+        public static Vector4Int operator +(Vector4Int a, Vector4Int b)
+        {
+            return new Vector4Int(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
+        }
+
+        public static Vector4Int operator -(Vector4Int a, Vector4Int b)
+        {
+            return new Vector4Int(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+        }
+
+        public static Vector4Int operator *(Vector4Int a, Vector4Int b)
+        {
+            return new Vector4Int(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w);
+        }
+
+        public static Vector4Int operator -(Vector4Int a)
+        {
+            return new Vector4Int(-a.x, -a.y, -a.z, -a.w);
+        }
+
+        public static Vector4Int operator *(Vector4Int a, int b)
+        {
+            return new Vector4Int(a.x * b, a.y * b, a.z * b, a.w * b);
+        }
+
+        public static Vector4Int operator *(int a, Vector4Int b)
+        {
+            return new Vector4Int(a * b.x, a * b.y, a * b.z, a * b.w);
+        }
+
+        public static Vector4Int operator /(Vector4Int a, int b)
+        {
+            return new Vector4Int(a.x / b, a.y / b, a.z / b, a.w / b);
+        }
+
+        public static bool operator ==(Vector4Int lhs, Vector4Int rhs)
+        {
+            return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.w == rhs.w;
+        }
+
+        public static bool operator !=(Vector4Int lhs, Vector4Int rhs)
+        {
+            return !(lhs == rhs);
+        }
+
+        public override bool Equals(object other)
+        {
+            if (!(other is Vector4Int)) return false;
+
+            return Equals((Vector4Int)other);
+        }
+
+        public bool Equals(Vector4Int other)
+        {
+            return this == other;
+        }
+
+        public override int GetHashCode()
+        {
+            var yHash = y.GetHashCode();
+            var zHash = z.GetHashCode();
+            var wHash = w.GetHashCode();
+            return x.GetHashCode() ^ (yHash << 8) ^ (yHash >> 24) ^ (zHash << 16) ^ (zHash >> 16) ^ (wHash << 24) ^ (wHash >> 8);
+        }
+
+        public override string ToString()
+        {
+            return ToString(null, CultureInfo.InvariantCulture.NumberFormat);
+        }
+
+        public string ToString(string format)
+        {
+            return ToString(format, CultureInfo.InvariantCulture.NumberFormat);
+        }
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return String.Format("({0}, {1}, {2}, {3})", x.ToString(format, formatProvider), y.ToString(format, formatProvider), z.ToString(format, formatProvider), w.ToString(format, formatProvider));
+        }
+
+        public static Vector4Int zero { get { return s_Zero; } }
+        public static Vector4Int one { get { return s_One; } }
+
+        private static readonly Vector4Int s_Zero = new Vector4Int(0, 0, 0, 0);
+        private static readonly Vector4Int s_One = new Vector4Int(1, 1, 1, 1);
     }
 }

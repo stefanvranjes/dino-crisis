@@ -36,10 +36,14 @@ public class CriSkinned : CriObject
     public short maxHealth; //0x11A
     public byte DAT_11E; //0x11E
     public int DAT_120; //0x120
+    public CapsuleCollider[] PTR_120;
     public int DAT_124; //0x124
+    public CapsuleCollider[] PTR_124;
     public ushort DAT_12C; //0x12C
     public bool DAT_12E; //0x12E
     public bool DAT_12F; //0x12F
+    public int DAT_130; //0x130
+    public CapsuleCollider[] PTR_130;
     public Vector2Int DAT_13C; //0x13C
     public ushort DAT_140; //0x140
     public Vector3Int DAT_14C; //0x14C
@@ -172,10 +176,14 @@ public class CriSkinned : CriObject
         maxHealth = 0;
         DAT_11E = 0;
         DAT_120 = 0;
+        PTR_120 = null;
         DAT_124 = 0;
+        PTR_124 = null;
         DAT_12C = 0;
         DAT_12E = false;
         DAT_12F = false;
+        DAT_130 = 0;
+        PTR_130 = null;
         DAT_13C = Vector2Int.zero;
         DAT_140 = 0;
         DAT_14C = Vector3Int.zero;

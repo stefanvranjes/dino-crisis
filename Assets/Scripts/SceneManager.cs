@@ -11,7 +11,7 @@ public class SceneManager : MonoBehaviour
     public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriObject[] DAT_5FCC; //gp+5fcch...gp+7cdch
-    public CriObject[] DAT_7CDC; //gp+7cdch...gp+8ffch
+    public CriStatic[] DAT_7CDC; //gp+7cdch...gp+8ffch
 
     void Awake()
     {
@@ -28,7 +28,7 @@ public class SceneManager : MonoBehaviour
         DAT_27C = new CriSkinned[11];
         DAT_1C9C = new CriBone[100];
         DAT_5FCC = new CriObject[60];
-        DAT_7CDC = new CriObject[40];
+        DAT_7CDC = new CriStatic[40];
 
         for (int i = 0; i < scn.staticObjs.Count; i++)
         {

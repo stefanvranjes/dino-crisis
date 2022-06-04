@@ -74,8 +74,10 @@ public class CriPlayer : CriSkinned
     private delegate void FUN_9CE2C();
     private delegate void FUN_9CE04();
     private delegate void FUN_9CEA4();
+    private delegate void FUN_9D070();
     private delegate void FUN_9D09C();
     private delegate void FUN_9D0A8();
+    private delegate void FUN_9D0B8();
     private delegate void FUN_9D0C8();
     private delegate void FUN_9D10C();
     private delegate void FUN_9D11C();
@@ -115,8 +117,10 @@ public class CriPlayer : CriSkinned
     private FUN_9CE2C[] PTR_FUN_9CE2C;
     private FUN_9CE04[] PTR_FUN_9CE04;
     private FUN_9CEA4[] PTR_FUN_9CEA4;
+    private FUN_9D070[] PTR_FUN_9D070;
     private FUN_9D09C[] PTR_FUN_9D09C;
     private FUN_9D0A8[] PTR_FUN_9D0A8;
+    private FUN_9D0B8[] PTR_FUN_9D0B8;
     private FUN_9D0C8[] PTR_FUN_9D0C8;
     private FUN_9D10C[] PTR_FUN_9D10C;
     private FUN_9D11C[] PTR_FUN_9D11C;
@@ -350,6 +354,20 @@ public class CriPlayer : CriSkinned
             FUN_4FA28,
             FUN_4FB94
         };
+        PTR_FUN_9D070 = new FUN_9D070[11]
+        {
+            FUN_52654,
+            FUN_52698,
+            FUN_52724,
+            FUN_52778,
+            FUN_52798,
+            FUN_52964,
+            FUN_52B9C,
+            FUN_52BA4,
+            FUN_52C28,
+            FUN_52FD0,
+            FUN_53064
+        };
         PTR_FUN_9D09C = new FUN_9D09C[3]
         {
             FUN_5282C,
@@ -541,6 +559,8 @@ public class CriPlayer : CriSkinned
         short sVar2;
         byte bVar3;
         uint uVar4;
+        CriStatic local_18;
+        byte local_14;
 
         bVar3 = (byte)((GameManager.instance.DAT_40 ^ 1) & 1);
 
@@ -572,7 +592,11 @@ public class CriPlayer : CriSkinned
             if ((DAT_1C0 & 1) != 0 && (DAT_3C == 1 || DAT_3C == 4))
                 FUN_65A28();
 
-
+            //FUN_80030
+            FUN_52618();
+            local_18 = null;
+            local_14 = 0;
+            GameManager.instance.FUN_82EFC(this, ref local_18, ref local_14);
         }
     }
 
@@ -2211,7 +2235,7 @@ public class CriPlayer : CriSkinned
 
     private void FUN_52618()
     {
-
+        PTR_FUN_9D070[DAT_164]();
     }
 
     private void FUN_52654()
@@ -2429,7 +2453,7 @@ public class CriPlayer : CriSkinned
 
     private void FUN_52C28()
     {
-
+        PTR_FUN_9D0B8[DAT_1F8]();
     }
 
     private void FUN_52C64()
@@ -2502,6 +2526,155 @@ public class CriPlayer : CriSkinned
                 }
             }
         }
+    }
+
+    private void FUN_52E8C()
+    {
+        byte bVar1;
+        short sVar2;
+        CriBone oVar3;
+
+        if (DAT_3C == 1 && DAT_3D != 6)
+        {
+            bVar1 = (byte)DAT_1C4;
+            oVar3 = (CriBone)Utilities.FUN_601C8(skeleton, 7);
+
+            if ((bVar1 & 8) == 0 && bVar1 < 3U)
+            {
+                DAT_20C.x = oVar3.vr.x;
+                sVar2 = (short)oVar3.vr.y;
+                DAT_1FB = 0x70;
+                DAT_20C.y = sVar2;
+                oVar3.DAT_43 = true;
+                DAT_1F8 = 0;
+            }
+            else
+            {
+                if ((GameManager.instance.DAT_1f800008 & 0x2000) == 0)
+                {
+                    if ((GameManager.instance.DAT_1f800008 & 0x8000) == 0)
+                    {
+                        bVar1 = DAT_9D06C[DAT_1D7];
+                        DAT_204.y = 0;
+                        DAT_1F8 = 1;
+                        DAT_1FB = (sbyte)((uint)bVar1 >> 1);
+                        oVar3.DAT_43 = true;
+                    }
+                    else
+                        DAT_204.y = 0xe80;
+                }
+                else
+                    DAT_204.y = 0x180;
+
+                DAT_204.x = oVar3.vr.x;
+            }
+        }
+        else
+        {
+            DAT_1FB = 0x70;
+            DAT_204.y = 0;
+            DAT_1F8 = 1;
+        }
+
+        FUN_531EC();
+    }
+
+    private void FUN_52FD0()
+    {
+        CriBone oVar1;
+        short sVar2;
+
+        DAT_224 = DAT_210;
+        FUN_52538();
+        FUN_52320();
+        oVar1 = (CriBone)Utilities.FUN_601C8(skeleton, 0);
+        DAT_204.x = DAT_204.x - oVar1.vr.x & 0xfff;
+        sVar2 = (short)(DAT_204.y - oVar1.vr.y & 0xfff);
+        DAT_204.y = sVar2;
+        DAT_204.y = sVar2 - vr.y & 0xfff;
+        FUN_531EC();
+    }
+
+    private void FUN_53064()
+    {
+        byte bVar1;
+        byte bVar2;
+        ushort uVar3;
+        int iVar4;
+        ushort uVar5;
+        uint uVar6;
+        int iVar7;
+
+        iVar4 = GameManager.instance.FUN_64CF0();
+        uVar6 = DAT_210 - 0x20U;
+
+        if (0xc0 < uVar6)
+            uVar6 = 0xc0;
+
+        bVar1 = DAT_1F8;
+
+        if (bVar1 == 1)
+        {
+            uVar6 = (uint)(DAT_204.y + (int)uVar6 & 0xfff);
+            DAT_204.y = (short)uVar6;
+
+            if (0x7ff < (short)uVar6 || (short)uVar6 <= DAT_210) goto LAB_53190;
+
+            DAT_204.y = (short)(DAT_210 | DAT_211 << 8);
+            bVar2 = (byte)(DAT_1F8 + 1);
+        }
+        else
+        {
+            if (bVar1 < 2)
+            {
+                if (bVar1 != 0) goto LAB_53190;
+
+                DAT_204.x = 0xfb0;
+                DAT_204.z = 0;
+                DAT_204.y = 0;
+                DAT_210 = 0x20;
+                bVar2 = (byte)(DAT_1F8 + 1);
+            }
+            else
+            {
+                if (bVar1 != 2) goto LAB_53190;
+
+                uVar6 = (uint)(DAT_204.y - (int)uVar6 & 0xfff);
+                DAT_204.y = (short)uVar6;
+
+                if ((short)uVar6 < 0x801 || (iVar7 = 0x1000 - DAT_210) <= (short)uVar6)
+                    goto LAB_53190;
+
+                DAT_204.y = iVar7;
+                bVar2 = (byte)(DAT_1F8 - 1);
+            }
+        }
+
+        DAT_1F8 = bVar2;
+
+    LAB_53190:
+        uVar5 = (ushort)(DAT_210 | DAT_211 << 8);
+
+        if (uVar5 < 0x200)
+        {
+            uVar5 = (ushort)((short)uVar5 + iVar4 * 0x20);
+            DAT_210 = (byte)(uVar5 & 0xff);
+            DAT_211 = (byte)((uVar5 & 0xff00) >> 8);
+        }
+
+        uVar3 = 0x20;
+
+        if (0x20 < uVar5)
+        {
+            uVar3 = (ushort)(uVar5 - 3);
+
+            if (iVar4 == 0)
+                uVar3 = (ushort)(uVar5 - 20);
+        }
+
+        DAT_210 = (byte)(uVar3 & 0xff);
+        DAT_211 = (byte)((uVar3 & 0xff00) >> 8);
+        FUN_531EC();
     }
 
     private void FUN_531EC()

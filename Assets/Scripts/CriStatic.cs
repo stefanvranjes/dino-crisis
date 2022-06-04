@@ -5,6 +5,7 @@ using UnityEngine;
 public class CriStatic : CriObject
 {
     public TmdScriptableObject cMesh; //0x3C
+    public ColliderScriptableObject cCollider; //0x44
     public byte DAT_48; //0x48
     public ushort DAT_4A; //0x4A
 

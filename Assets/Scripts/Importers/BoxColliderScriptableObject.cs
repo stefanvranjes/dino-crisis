@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColliderScriptableObject : ScriptableObject
+public class BoxColliderScriptableObject : ScriptableObject
 {
     public string prefabName;
 

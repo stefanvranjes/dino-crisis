@@ -17,6 +17,7 @@ public class CriPlayer : CriSkinned
     public byte DAT_1D4; //0x1D4
     public byte DAT_1D6; //0x1D6
     public byte DAT_1D7; //0x1D7
+    public CriStatic DAT_1D8; //0x1D8
     public CriPlayer DAT_1DC; //0x1DC
     public TodScriptableObject[] DAT_1E0; //0x1E0
     public byte DAT_1E4; //0x1E4
@@ -519,6 +520,7 @@ public class CriPlayer : CriSkinned
         DAT_1D4 = 0;
         DAT_1D6 = 0;
         DAT_1D7 = 0;
+        DAT_1D8 = null;
         DAT_1DC = null;
         DAT_1E0 = null;
         DAT_1E4 = 0;
@@ -556,6 +558,7 @@ public class CriPlayer : CriSkinned
 
     public void FUN_4CFDC()
     {
+        byte bVar1;
         short sVar2;
         byte bVar3;
         uint uVar4;
@@ -597,6 +600,22 @@ public class CriPlayer : CriSkinned
             local_18 = null;
             local_14 = 0;
             GameManager.instance.FUN_82EFC(this, ref local_18, ref local_14);
+
+            if (DAT_3C == 1)
+            {
+                bVar1 = DAT_3D;
+
+                if (bVar1 == 1 || bVar1 == 5)
+                {
+                    DAT_1D8 = local_18;
+                    DAT_1D4 = local_14;
+                }
+            }
+
+            if (DAT_152 == 0)
+                screen.y += 200;
+
+
         }
     }
 

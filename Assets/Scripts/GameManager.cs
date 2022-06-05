@@ -17,6 +17,18 @@ public struct CapsuleCollider
     public byte flags; //0x0B
 }
 
+public class Hit
+{
+    public Vector2Int[] DAT_00; //0x00
+    public Vector2Int[] DAT_0C; //0x0C
+    public ushort DAT_2C; //0x2c
+    public byte DAT_2E; //0x2E
+    public byte DAT_2F; //0x2F
+    public ushort DAT_30; //0x30
+    public byte DAT_32; //0x32
+    public CriPlayer DAT_34; //0x34
+}
+
 public delegate void FUN_148(CriPlayer p);
 public delegate void FUN_14C(CriPlayer p);
 
@@ -96,6 +108,14 @@ public class GameManager : MonoBehaviour
     {
         0x800, 0xc00, 0, 0x400
     };
+    private byte[] DAT_AA4EB = new byte[]
+    {
+        128, 1, 2, 0, 3
+    };
+    private byte[] DAT_AA4F0 = new byte[]
+    {
+        0, 0, 0, 1, 0, 0, 2, 0, 80, 115, 17, 0, 0, 0, 69, 0
+    };
 
     private void Awake()
     {
@@ -140,7 +160,7 @@ public class GameManager : MonoBehaviour
     private void FUN_81720(CriStatic param1, Vector2Int[] param2)
     {
         int iVar3;
-        ColliderScriptableObject psVar4;
+        BoxColliderScriptableObject psVar4;
         Matrix3x3 MStack64;
         Vector3Int local_48;
 
@@ -238,10 +258,8 @@ public class GameManager : MonoBehaviour
         int v0;
         Vector3Int local_88;
         short[] local_60;
-        Vector2Int[] local_58;
-        short local_2c;
+        Hit local_58;
         Matrix3x3 MStack128;
-        Vector2Int[] auStack76;
 
         bVar4 = 0;
         local_88 = new Vector3Int(0, param1.vr.y, 0);
@@ -249,12 +267,13 @@ public class GameManager : MonoBehaviour
         Utilities.RotMatrix_gte(ref local_88, ref MStack128);
         v0 = param1.DAT_120;
         bVar1 = param1.DAT_12E;
-        auStack76 = new Vector2Int[4];
-        FUN_81720(param2, auStack76);
+        local_58 = new Hit();
+        local_58.DAT_0C = new Vector2Int[4];
+        FUN_81720(param2, local_58.DAT_0C);
         local_60 = new short[4];
-        FUN_82730(local_60, auStack76);
+        FUN_82730(local_60, local_58.DAT_0C);
         sVar3 = (sbyte)((bVar1 ? 1 : 0) - 1);
-        local_58 = new Vector2Int[3];
+        local_58.DAT_00 = new Vector2Int[3];
 
         if (bVar1)
         {
@@ -264,26 +283,26 @@ public class GameManager : MonoBehaviour
 
                 if (param1.PTR_120[v0].bone == -1)
                 {
-                    local_58[1].x = param1.screen.z + local_88.z;
-                    local_58[0].x = param1.DAT_34.z + local_88.z;
+                    local_58.DAT_00[1].x = param1.screen.z + local_88.z;
+                    local_58.DAT_00[0].x = param1.DAT_34.z + local_88.z;
                     uVar2 = (ushort)param1.screen.y;
                 }
                 else
                 {
                     oVar7 = (CriBone)Utilities.FUN_601C8(param1.skeleton, param1.PTR_120[v0].bone);
-                    local_58[0].x = oVar7.DAT_4C.x + local_88.x;
-                    local_58[0].y = oVar7.DAT_4C.z + local_88.z;
-                    local_58[1].x = oVar7.screen.x + local_88.x;
-                    local_58[1].y = oVar7.screen.z + local_88.z;
+                    local_58.DAT_00[0].x = oVar7.DAT_4C.x + local_88.x;
+                    local_58.DAT_00[0].y = oVar7.DAT_4C.z + local_88.z;
+                    local_58.DAT_00[1].x = oVar7.screen.x + local_88.x;
+                    local_58.DAT_00[1].y = oVar7.screen.z + local_88.z;
                     uVar2 = (ushort)oVar7.screen.y;
                 }
 
                 uVar8 = (ushort)local_88.y;
                 uVar9 = (ushort)param1.PTR_120[v0].radius;
 
-                if (((uint)((local_58[1].x + (int)uVar9) - local_60[0]) < (ushort)local_60[2] + uVar9 * 2 &&
-                    (uint)((local_58[1].y + (int)uVar9) - local_60[1]) < (ushort)local_60[3] + uVar9 * 2) ||
-                    FUN_841E8(auStack76, local_58, ref local_88) != 0)
+                if (((uint)((local_58.DAT_00[1].x + (int)uVar9) - local_60[0]) < (ushort)local_60[2] + uVar9 * 2 &&
+                    (uint)((local_58.DAT_00[1].y + (int)uVar9) - local_60[1]) < (ushort)local_60[3] + uVar9 * 2) ||
+                    FUN_841E8(local_58.DAT_0C, local_58.DAT_00, ref local_88) != 0)
                 {
                     if (param2.cCollider.DAT_00.y < 0)
                         sVar6 = (short)(param2.screen.y - param2.cCollider.DAT_00.y);
@@ -321,10 +340,10 @@ public class GameManager : MonoBehaviour
 
         if (bVar4 != 0)
         {
-            param1.screen.x += local_58[2].x;
-            param1.screen.z += local_58[2].y;
-            param1.DAT_14C.x += local_58[2].x;
-            param1.DAT_14C.z = local_58[2].y;
+            param1.screen.x += local_58.DAT_00[2].x;
+            param1.screen.z += local_58.DAT_00[2].y;
+            param1.DAT_14C.x += local_58.DAT_00[2].x;
+            param1.DAT_14C.z = local_58.DAT_00[2].y;
 
             if ((param1.DAT_152 & 1) != 0)
             {
@@ -410,7 +429,7 @@ public class GameManager : MonoBehaviour
         short sVar2;
         bool bVar3;
         int iVar4;
-        ColliderScriptableObject psVar5;
+        BoxColliderScriptableObject psVar5;
         uint uVar6;
         int iVar7;
         uint uVar8;
@@ -501,12 +520,304 @@ public class GameManager : MonoBehaviour
         return bVar3;
     }
 
-    private sbyte FUN_839D0(Vector2Int[] param1)
+    public uint FUN_8383C(uint param1)
     {
+        uint uVar1;
+        uint uVar2;
 
+        uVar2 = 0;
+
+        if ((param1 & 0xff) != 0)
+        {
+            uVar1 = param1 & 1;
+
+            do
+            {
+                uVar2 += uVar1;
+                param1 = (param1 & 0xff) >> 1;
+                uVar1 = param1 & 1;
+            } while (param1 != 0);
+        }
+
+        return uVar2 & 0xff;
     }
 
-    private bool FUN_84008(Vector2Int[] param1, Vector2Int[] param2, ref Vector3Int param3)
+    private uint FUN_83868(Hit param1, Vector2Int param2)
+    {
+        uint uVar3;
+        uint uVar6;
+        Vector3Int local_40;
+        Vector3Int local_30;
+
+        uVar6 = 0;
+        uVar3 = 0;
+
+        if (param1.DAT_2F != 0)
+        {
+            do
+            {
+                if ((param1.DAT_30 >> (int)(uVar3 + 4 & 0x1f) & 1) == 0)
+                {
+                    local_40 = new Vector3Int();
+                    local_30 = new Vector3Int();
+                    local_40.x = param2.x - param1.DAT_0C[uVar3].x >> 1;
+                    local_40.z = param2.y - param1.DAT_0C[uVar3].y >> 1;
+                    local_30.x = param1.DAT_0C[(uVar3 * 2 + 2 & 6) * 2 / 4].x - param1.DAT_0C[uVar3].x >> 1;
+                    local_30.y = 0;
+                    local_40.y = 0;
+                    local_30.z = param1.DAT_0C[(uVar3 * 2 + 3 & 7) * 2 / 4].y - param1.DAT_0C[uVar3].y >> 1;
+                    local_30 = Utilities.OuterProduct0(ref local_40, ref local_30);
+
+                    if (-1 < local_30.y)
+                        uVar6 = uVar6 | 1U << (int)(uVar3 & 0x1f);
+                }
+
+                uVar3++;
+            } while ((int)uVar3 < param1.DAT_2F);
+        }
+
+        return uVar6 & 0xff;
+    }
+
+    private sbyte FUN_839D0(Hit param1)
+    {
+        byte bVar1;
+        sbyte sVar2;
+        bool bVar2;
+        short sVar3;
+        uint uVar4;
+        uint uVar5;
+        int iVar6;
+        long lVar7;
+        int iVar8;
+        int puVar10;
+        short sVar12;
+        uint uVar13;
+        uint uVar14;
+        int iVar17;
+        Vector4Int local_a0;
+        Vector4Int local_98;
+        Vector4Int local_90;
+        Matrix3x3 MStack136;
+        Vector2Int[] local_68;
+        ushort local_60;
+        ushort local_58;
+        Vector4Int local_50;
+        sbyte local_48;
+        bool local_40;
+        int local_3c;
+        int local_38;
+        int local_34;
+        int local_30;
+        Vector3Int temp;
+
+        local_38 = 0;
+        local_3c = 0;
+        local_48 = 0;
+        local_50 = new Vector4Int();
+        local_50.x = param1.DAT_00[0].x;
+        iVar17 = 0;
+        local_50.z = param1.DAT_00[0].y;
+        uVar13 = 0;
+        local_60 = (ushort)param1.DAT_00[1].x;
+        local_58 = (ushort)param1.DAT_00[1].y;
+        local_50.y = (short)local_60;
+        local_50.w = (short)local_58;
+        uVar4 = FUN_83868(param1, param1.DAT_00[0]);
+
+        if ((uVar4 & 0xff) == 0)
+        {
+            param1.DAT_00[2].x = param1.DAT_00[1].x - param1.DAT_00[0].x;
+            param1.DAT_00[2].y = param1.DAT_00[1].y - param1.DAT_00[0].y;
+            return -1;
+        }
+
+        sVar2 = (sbyte)FUN_8383C(uVar4 & 0xff);
+        uVar5 = uVar4 & 0xff;
+
+        if (sVar2 == 2)
+        {
+            uVar5 = 0;
+            uVar14 = 1;
+            puVar10 = 0;
+            local_a0 = new Vector4Int();
+            local_a0.x = param1.DAT_00[1].x;
+            local_a0.z = param1.DAT_00[1].y;
+            local_a0.w = param1.DAT_2C;
+            local_40 = FUN_768C8((Vector3Int)local_a0, param1.DAT_0C);
+            local_68 = new Vector2Int[2];
+
+            do
+            {
+                if (((int)(uVar4 & 0xff) >> (int)(uVar5 & 0x1f) & 1) != 0)
+                {
+                    local_68[0] = param1.DAT_0C[uVar5];
+                    local_68[1] = param1.DAT_0C[uVar14 & 3];
+
+                    if (!local_40)
+                        bVar2 = FUN_84338(local_68, local_a0);
+                    else
+                        bVar2 = FUN_84008(param1.DAT_00, local_68, ref local_a0);
+
+                    if (!bVar2)
+                        uVar4 = uVar4 & ~(1U << (int)(uVar5 & 0x1f));
+                }
+
+                uVar14++;
+                uVar5++;
+            } while ((int)uVar5 < 4);
+
+            sVar2 = (sbyte)FUN_8383C(uVar4 & 0xff);
+            uVar5 = uVar4 & 0xff;
+
+            if (sVar2 == 2)
+            {
+                uVar4 = FUN_83868(param1, param1.DAT_00[1]);
+                sVar2 = (sbyte)FUN_8383C(uVar4 & 0xff);
+                uVar5 = uVar4 & 0xff;
+
+                if (sVar2 == 2)
+                {
+                    bVar1 = param1.DAT_2E;
+
+                    if (bVar1 < 6)
+                    {
+                        if (bVar1 == 0)
+                            bVar1 = DAT_AA4EB[(uVar4 & 0xff) / 3];
+                        else
+                            bVar1 = DAT_AA4F0[uVar4 & 0xff];
+
+                        puVar10 += bVar1;
+                    }
+                    else
+                    {
+                        if (bVar1 == 6)
+                        {
+                            bVar1 = DAT_AA4EB[(uVar4 & 0xff) / 3];
+                            puVar10 += bVar1;
+                        }
+                    }
+
+                    local_a0.x = param1.DAT_0C[puVar10].x;
+                    iVar17 = ((local_60 - (ushort)local_a0.x) * 0x10000) >> 0x10;
+                    local_a0.y = param1.DAT_0C[puVar10].y;
+                    iVar6 = ((local_58 - (ushort)local_a0.y) * 0x10000) >> 0x10;
+                    local_a0.z = (short)local_60;
+                    local_a0.w = (short)local_58;
+                    uVar4 = (uint)Utilities.SquareRoot0(iVar17 * iVar17 + iVar6 * iVar6);
+                    local_a0.y = Utilities.FUN_61620(local_a0);
+
+                    if (!local_40)
+                    {
+                        if (param1.DAT_2C < uVar4)
+                            return 0;
+
+                        sVar12 = (short)(param1.DAT_2C - uVar4 + 5);
+                    }
+                    else
+                        sVar12 = (short)(uVar4 + 5 + param1.DAT_2C);
+
+                    local_a0.z = 0;
+                    local_a0.x = 0;
+                    MStack136 = new Matrix3x3();
+                    temp = (Vector3Int)local_a0;
+                    Utilities.RotMatrix_gte(ref temp, ref MStack136);
+                    local_a0.y = 0;
+                    local_a0.x = 0;
+                    local_a0.z = sVar12;
+                    temp = (Vector3Int)local_a0;
+                    temp = Utilities.ApplyMatrixSV(ref MStack136, ref temp);
+                    local_a0.x = temp.x;
+                    local_a0.y = temp.y;
+                    local_a0.z = temp.z;
+                    param1.DAT_00[2].x = local_a0.x;
+                    local_48 = -2;
+                    goto LAB_83FD4;
+                }
+            }
+        }
+
+        if (uVar5 == 0)
+            return 0;
+
+        local_90 = new Vector4Int();
+        local_98 = new Vector4Int();
+        local_98.x = local_50.x;
+        local_98.y = local_50.z;
+        local_98.z = local_50.y;
+        local_98.w = local_50.w;
+        uVar5 = 0;
+
+        if (param1.DAT_2F != 0)
+        {
+            local_34 = (short)local_60;
+            local_30 = (short)local_58;
+
+            do
+            {
+                if (((int)(uVar4 & 0xff) >> (int)(uVar5 & 0x1f) & 1) != 0)
+                {
+                    local_90.x = param1.DAT_0C[uVar5].x;
+                    local_90.y = param1.DAT_0C[uVar5].y;
+                    local_90.z = param1.DAT_0C[(uVar5 * 2 + 2 & 7) / 2].x;
+                    local_90.w = param1.DAT_0C[(uVar5 * 2 + 3 & 7) / 2].y;
+                    iVar17 = local_90.w - local_90.y + 1;
+                    local_3c = local_90.x - local_90.z + 1;
+                    local_38 = local_90.z * local_90.y - local_90.x * local_90.w;
+                    lVar7 = Utilities.SquareRoot0(iVar17 * iVar17 + local_3c * local_3c);
+                    local_48 = (sbyte)uVar5;
+                    iVar8 = iVar17 * local_34 + local_3c * local_30 + local_38;
+
+                    if (iVar8 < 0)
+                        iVar8 = -iVar8;
+
+                    if (lVar7 == 0)
+                        return 0; //trap(0x1c00)
+
+                    if (lVar7 == -1 && iVar8 == -0x80000000)
+                        return 0; //trap(0x1800)
+
+                    uVar13 = (uint)(iVar8 / (int)lVar7);
+                }
+
+                uVar5++;
+            } while ((int)uVar5 < param1.DAT_2F);
+        }
+
+        if (iVar17 * (short)local_60 + local_3c * (short)local_58 + local_38 < 0)
+        {
+            if (param1.DAT_2C < uVar13)
+                return 0;
+
+            sVar12 = (short)(param1.DAT_2C - uVar13 + 5);
+        }
+        else
+            sVar12 = (short)(uVar13 + 5 + param1.DAT_2C);
+
+        local_a0 = new Vector4Int();
+        local_a0.z = 0;
+        local_a0.x = 0;
+        sVar3 = (short)Utilities.FUN_61620(local_90);
+        local_a0.y = sVar3 - 0x400 & 0xfff;
+        MStack136 = new Matrix3x3();
+        temp = (Vector3Int)local_a0;
+        Utilities.RotMatrix_gte(ref temp, ref MStack136);
+        local_a0.y = 0;
+        local_a0.x = 0;
+        local_a0.z = sVar12;
+        temp = (Vector3Int)local_a0;
+        temp = Utilities.ApplyMatrixSV(ref MStack136, ref temp);
+        local_a0.x = temp.x;
+        local_a0.y = temp.y;
+        local_a0.z = temp.z;
+        param1.DAT_00[2].x = local_a0.x;
+        local_48++;
+        LAB_83FD4:
+        param1.DAT_00[2].y = local_a0.z;
+        return local_48;
+    }
+
+    private bool FUN_84008(Vector2Int[] param1, Vector2Int[] param2, ref Vector4Int param3)
     {
         short sVar1;
         short sVar2;
@@ -537,9 +848,9 @@ public class GameManager : MonoBehaviour
             iVar3 = iVar6 * iVar3 - iVar4 * iVar9;
             iVar6 = iVar6 * iVar10 - iVar4 * iVar8;
 
-            if (((0 < iVar7 && -1 < iVar3 && iVar3 <= iVar7) || 
-                (iVar7 < 0 && iVar7 <= iVar3 && iVar3 < 1)) && 
-                ((0 < iVar7 && -1 < iVar6 && iVar6 <= iVar7) || 
+            if (((0 < iVar7 && -1 < iVar3 && iVar3 <= iVar7) ||
+                (iVar7 < 0 && iVar7 <= iVar3 && iVar3 < 1)) &&
+                ((0 < iVar7 && -1 < iVar6 && iVar6 <= iVar7) ||
                 (iVar7 < 0 && iVar7 <= iVar6 && iVar6 < 1)))
             {
                 if (iVar7 == 0)
@@ -566,12 +877,12 @@ public class GameManager : MonoBehaviour
         Vector2Int[] local_48;
         Vector3Int local_40;
         Vector3Int local_30;
-        Vector3Int local_20;
+        Vector4Int local_20;
 
         bVar4 = 0;
         uVar3 = 0;
         local_48 = new Vector2Int[2];
-        local_20 = new Vector3Int();
+        local_20 = new Vector4Int();
         local_40 = new Vector3Int();
         local_30 = new Vector3Int();
 
@@ -604,6 +915,102 @@ public class GameManager : MonoBehaviour
         } while (bVar4 < 4);
 
         return 0;
+    }
+
+    public bool FUN_84338(Vector2Int[] param1, Vector4Int param2)
+    {
+        short sVar1;
+        bool bVar2;
+        long lVar3;
+        int iVar4;
+        int iVar5;
+        uint uVar6;
+        Vector3Int local_28;
+        Vector3Int local_18;
+
+        iVar5 = param2.x - param1[0].x;
+        iVar4 = param2.z - param1[0].y;
+        uVar6 = (uint)(param2.w * param2.w);
+        bVar2 = true;
+
+        if (uVar6 < (uint)(iVar5 * iVar5 + iVar4 * iVar4))
+        {
+            iVar5 = param2.x - param1[1].x;
+            iVar4 = param2.z - param1[1].y;
+            local_18 = new Vector3Int();
+            local_18.x = param1[1].x - param1[0].x;
+
+            if (uVar6 < (uint)(iVar5 * iVar5 + iVar4 * iVar4))
+            {
+                local_18.y = 0;
+                local_18.z = param1[1].y - param1[0].y;
+                local_28 = new Vector3Int();
+                local_28.x = param2.x - param1[0].x;
+                local_28.y = 0;
+                local_28.z = param2.z - param1[0].y;
+
+                if ((local_28.x * local_18.x + local_28.z * local_18.z ^
+                    (param2.x - param1[1].x) * local_18.x +
+                    (param2.z - param1[1].y) * local_18.z) < 0)
+                {
+                    iVar4 = local_18.x;
+
+                    if (local_18.x < 0)
+                        iVar4 = -local_18.x;
+
+                    iVar5 = local_18.z;
+
+                    if (local_18.z < 0)
+                        iVar5 = -local_18.z;
+
+                    lVar3 = Utilities.SquareRoot0(iVar4 * iVar4 + iVar5 * iVar5);
+                    sVar1 = (short)param2.w;
+                    local_28 = Utilities.OuterProduct0(ref local_28, ref local_18);
+
+                    if (local_28.y < 0)
+                        local_28.y = -local_28.y;
+
+                    if (local_28.y <= (lVar3 * sVar1))
+                        return true;
+                }
+
+                bVar2 = false;
+            }
+            else
+                bVar2 = true;
+        }
+
+        return bVar2;
+    }
+
+    public bool FUN_768C8(Vector3Int param1, Vector2Int[] param2)
+    {
+        int iVar1;
+        int iVar2;
+        int iVar3;
+        int iVar4;
+        int iVar5;
+        int iVar6;
+
+        iVar6 = param2[0].x;
+        iVar4 = param2[0].y;
+        iVar5 = param1.z - iVar4;
+        iVar3 = param1.x - iVar6;
+
+        if ((param2[1].x - iVar6) * iVar5 <= (param2[1].y - iVar4) * iVar3 && 
+            (param2[3].y - iVar4) * iVar3 <= (param2[3].x - iVar6) * iVar5)
+        {
+            iVar2 = param2[2].y - iVar4;
+            iVar1 = param2[2].x - iVar6;
+
+            if ((param2[1].y - iVar4 - iVar2) * (iVar3 - iVar1) <=
+                (param2[1].x - iVar6 - iVar1) * (iVar5 - iVar2) &&
+                (param2[3].x - iVar6 - iVar1) * (iVar5 - iVar2) <=
+                (param2[3].y - iVar4 - iVar2) * (iVar3 - iVar1))
+                return true;
+        }
+
+        return false;
     }
 
     public void FUN_7302C()

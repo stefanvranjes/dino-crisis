@@ -1690,6 +1690,14 @@ public static class Utilities
         return (int)(lVar1 & 0xfff);
     }
 
+    public static int FUN_61620(Vector4Int param1)
+    {
+        long lVar1;
+
+        lVar1 = Ratan2(param1.z - param1.x, param1.w - param1.y);
+        return (int)(lVar1 & 0xfff);
+    }
+
     public static bool FUN_61FDC(Vector4Int param1, Vector4Int param2, ref Vector2Int param3)
     {
         bool bVar1;

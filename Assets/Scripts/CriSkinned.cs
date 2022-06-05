@@ -681,6 +681,27 @@ public class CriSkinned : CriObject
         FUN_607A4();
     }
 
+    public void FUN_6449C(ushort param2)
+    {
+        int iVar2;
+        int iVar3;
+
+        if (0 < vr.y)
+            vr.y = 0;
+
+        iVar3 = DAT_34.y / 425 * -0x1000000 >> 0x18;
+        iVar2 = screen.y / 425 * -0x1000000 >> 0x18;
+
+        if (iVar2 < iVar3)
+        {
+            do
+            {
+                if (iVar3 < iVar2)
+                    return;
+            }
+        }
+    }
+
     public void FUN_65714()
     {
         GameManager.instance.DAT_1f80002c = DAT_64;

@@ -562,6 +562,7 @@ public class CriPlayer : CriSkinned
         short sVar2;
         byte bVar3;
         uint uVar4;
+        bool bVar5;
         CriStatic local_18;
         byte local_14;
 
@@ -615,7 +616,20 @@ public class CriPlayer : CriSkinned
             if (DAT_152 == 0)
                 screen.y += 200;
 
+            FUN_6449C(DAT_140);
+            DAT_48 = (sbyte)-((ushort)screen.y / 0x1a9);
+            bVar5 = SceneManager.instance.FUN_80A14(this);
 
+            if (!bVar5)
+                bVar3 = (byte)(DAT_162 & 0xfd);
+            else
+                bVar3 = (byte)(DAT_162 | 2);
+
+            DAT_162 = bVar3;
+            bVar1 = DAT_177;
+
+            if (bVar1 != 0)
+                DAT_177 = (byte)(bVar1 - 1);
         }
     }
 

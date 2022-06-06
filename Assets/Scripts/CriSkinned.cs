@@ -44,8 +44,10 @@ public class CriSkinned : CriObject
     public bool DAT_12F; //0x12F
     public int DAT_130; //0x130
     public CapsuleCollider[] PTR_130;
+    public WallCollider DAT_134; //0x134
     public Vector2Int DAT_13C; //0x13C
     public ushort DAT_140; //0x140
+    public sbyte DAT_142; //0x142
     public Vector3Int DAT_14C; //0x14C
     public short DAT_152; //0x152
     public CriSkinned DAT_154; //0x154
@@ -184,8 +186,10 @@ public class CriSkinned : CriObject
         DAT_12F = false;
         DAT_130 = 0;
         PTR_130 = null;
+        DAT_134 = null;
         DAT_13C = Vector2Int.zero;
         DAT_140 = 0;
+        DAT_142 = 0;
         DAT_14C = Vector3Int.zero;
         DAT_152 = 0;
         DAT_154 = null;
@@ -683,6 +687,7 @@ public class CriSkinned : CriObject
 
     public void FUN_6449C(ushort param2)
     {
+        bool bVar1;
         int iVar2;
         int iVar3;
 
@@ -698,7 +703,21 @@ public class CriSkinned : CriObject
             {
                 if (iVar3 < iVar2)
                     return;
-            }
+
+                bVar1 = SceneManager.instance.FUN_64210(ref screen, (byte)iVar3, param2);
+                iVar3--;
+            } while (!bVar1);
+        }
+        else
+        {
+            do
+            {
+                if (iVar3 < iVar2)
+                    return;
+
+                bVar1 = SceneManager.instance.FUN_64210(ref screen, (byte)iVar2, param2);
+                iVar2++;
+            } while (!bVar1);
         }
     }
 

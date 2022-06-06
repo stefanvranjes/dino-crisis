@@ -92,6 +92,16 @@ public class GameManager : MonoBehaviour
     private delegate sbyte FUN_AA4D0(CriPlayer p, CriStatic o);
     private FUN_AA4D0[] PTR_FUN_AA4D0;
 
+    private byte[] DAT_AA44C = new byte[]
+    {
+        1, 2, 2, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 0,
+        1, 1, 1, 1, 2, 1, 1, 1, 0, 1, 1, 2, 1, 0
+    };
+    private byte[] DAT_AA468 = new byte[]
+    {
+        2, 2, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1,
+        2, 1, 1, 2, 1, 1, 1, 0, 1, 1, 2, 1, 0, 1
+    };
     private short[] DAT_AA4A4 = new short[]
     {
         -1, 1, 1, -1
@@ -155,6 +165,42 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         FUN_7302C();
+    }
+
+    public Vector2Int[] FUN_813F0(Vector2Int[] param1, WallCollider param2)
+    {
+        sbyte sVar1;
+        int iVar3;
+        short[] local_20;
+        Vector2Int[] local_10;
+
+        iVar3 = -1;
+        local_20 = new short[8];
+
+        do
+        {
+            sVar1 = (sbyte)iVar3;
+            local_20[sVar1 + 1] = (short)(param2.DAT_04.x + param2.DAT_08.x * sVar1);
+            iVar3++;
+            local_20[sVar1 + 5] = (short)(param2.DAT_04.y + param2.DAT_08.y * sVar1);
+        } while (iVar3 * 0x1000000 >> 0x18 < 2);
+
+        local_10 = new Vector2Int[4];
+        iVar3 = 0;
+
+        do
+        {
+            sVar1 = (sbyte)iVar3;
+            iVar3++;
+            local_10[sVar1].x = local_20[DAT_AA44C[sVar1 + param2.DAT_00 * 4]];
+            local_10[sVar1].y = local_20[DAT_AA468[sVar1 + param2.DAT_00 * 4]];
+        } while (iVar3 * 0x1000000 >> 0x18 < 4);
+
+        param1[0] = local_10[0];
+        param1[1] = local_10[1];
+        param1[2] = local_10[2];
+        param1[3] = local_10[3];
+        return param1;
     }
 
     private void FUN_81720(CriStatic param1, Vector2Int[] param2)
@@ -579,7 +625,7 @@ public class GameManager : MonoBehaviour
         return uVar6 & 0xff;
     }
 
-    private sbyte FUN_839D0(Hit param1)
+    public sbyte FUN_839D0(Hit param1)
     {
         byte bVar1;
         sbyte sVar2;
@@ -869,7 +915,7 @@ public class GameManager : MonoBehaviour
         return bVar5;
     }
 
-    private sbyte FUN_841E8(Vector2Int[] param1, Vector2Int[] param2, ref Vector3Int param3)
+    public sbyte FUN_841E8(Vector2Int[] param1, Vector2Int[] param2, ref Vector3Int param3)
     {
         bool bVar1;
         uint uVar3;
@@ -981,6 +1027,50 @@ public class GameManager : MonoBehaviour
         }
 
         return bVar2;
+    }
+
+    public bool FUN_844FC(Vector4Int param1, Vector4Int param2, ref Vector4Int param3)
+    {
+        short sVar1;
+        short sVar2;
+        long lVar3;
+        bool bVar4;
+        int iVar5;
+        int iVar6;
+        int iVar7;
+        int iVar8;
+
+        iVar8 = param1.x - param2.x;
+        iVar7 = param1.z - param2.z;
+        sVar1 = (short)param1.w;
+        sVar2 = (short)param2.w;
+        lVar3 = Utilities.SquareRoot0(iVar8 * iVar8 + iVar7 * iVar7);
+        iVar6 = (sVar1 + sVar2) - (int)lVar3;
+
+        if (iVar6 < 1)
+            bVar4 = false;
+        else
+        {
+            iVar5 = (int)(lVar3 + 1);
+
+            if (iVar5 == 0)
+                return false; //trap(0x1c00)
+
+            if (iVar5 == -1 && iVar8 * iVar6 == -0x80000000)
+                return false; //trap(0x1800)
+
+            if (iVar5 == 0)
+                return false; //trap(0x1c00)
+
+            if (iVar5 == -1 && iVar7 * iVar6 == -0x80000000)
+                return false; //trap(0x1800)
+
+            bVar4 = true;
+            param3.x = iVar8 * iVar6 / iVar5;
+            param3.z = iVar7 * iVar6 / iVar5;
+        }
+
+        return bVar4;
     }
 
     public bool FUN_768C8(Vector3Int param1, Vector2Int[] param2)

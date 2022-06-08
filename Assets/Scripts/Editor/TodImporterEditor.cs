@@ -10,9 +10,9 @@ public class TodImporterEditor : ScriptedImporterEditor
         var ramAddress = new GUIContent("RAM");
         var prop1 = serializedObject.FindProperty("ramAddress");
         EditorGUILayout.PropertyField(prop1, ramAddress);
-        var tmdReference = new GUIContent("TMD");
-        var prop2 = serializedObject.FindProperty("tmd");
-        EditorGUILayout.PropertyField(prop2, tmdReference);
+        var boneCount = new GUIContent("BONES");
+        var prop2 = serializedObject.FindProperty("boneCount");
+        EditorGUILayout.PropertyField(prop2, boneCount);
         base.ApplyRevertGUI();
     }
 }

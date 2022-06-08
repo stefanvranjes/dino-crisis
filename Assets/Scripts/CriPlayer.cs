@@ -167,6 +167,26 @@ public class CriPlayer : CriSkinned
     {
         -70, -70, 70, 70
     };
+    private static int[][] DAT_9CFA8 = new int[][]
+    {
+        new int[1] { 0 },  //DAT_9CF74
+        new int[4],  //DAT_9CF78
+        new int[4] { 0, 0, 8, 8 }, //DAT_9CF88
+        new int[4] //DAT_9CF98
+    };
+    private static RefScriptableObject[][] PTR_9CFA8 = new RefScriptableObject[][]
+    {
+        new RefScriptableObject[1], //PTR_9CF74
+        new RefScriptableObject[4], //PTR_9CF78, 
+        new RefScriptableObject[4]
+        {
+            SceneManager.instance.database.DAT_17B83C,
+            SceneManager.instance.database.DAT_17B83C,
+            SceneManager.instance.database.DAT_17B83C,
+            SceneManager.instance.database.DAT_17B83C
+        }, //PTR_9CF88
+        new RefScriptableObject[4] //PTR_9CF98
+    };
     private static byte[] DAT_9D06C = new byte[]
     {
         0x50, 0x30, 0x20, 0
@@ -382,6 +402,13 @@ public class CriPlayer : CriSkinned
             FUN_52AC0,
             FUN_52B40
         };
+        PTR_FUN_9D0B8 = new FUN_9D0B8[4]
+        {
+            FUN_52C64,
+            FUN_52CE0,
+            FUN_52D44,
+            FUN_52E8C
+        };
         PTR_FUN_9D0C8 = new FUN_9D0C8[17]
         {
             FUN_53B6C,
@@ -504,6 +531,11 @@ public class CriPlayer : CriSkinned
         base.Update();
     }
 
+    private void FixedUpdate()
+    {
+        FUN_4CFDC();
+    }
+
     public override void ResetValues()
     {
         base.ResetValues();
@@ -572,6 +604,7 @@ public class CriPlayer : CriSkinned
         {
             DAT_34 = screen;
             //FUN_5211C
+            DAT_1C4 = 8; //tmp
         }
 
         vr.y &= 0xfff;
@@ -598,6 +631,7 @@ public class CriPlayer : CriSkinned
 
             //FUN_80030
             FUN_52618();
+            return;
             local_18 = null;
             local_14 = 0;
             GameManager.instance.FUN_82EFC(this, ref local_18, ref local_14);
@@ -646,7 +680,8 @@ public class CriPlayer : CriSkinned
             sVar2 = 2400;
 
         maxHealth = sVar2;
-        health = GameManager.instance.playerHealth;
+        //health = GameManager.instance.playerHealth;
+        health = maxHealth; //tmp
         DAT_240 = GameManager.instance.DAT_A100;
         DAT_1C0 = GameManager.instance.DAT_A0F4;
         DAT_1E8 = GameManager.instance.DAT_A0F2;
@@ -1122,9 +1157,10 @@ public class CriPlayer : CriSkinned
     private void FUN_4FE90(uint param1)
     {
         sbyte sVar1;
-        CriObject oVar2;
+        CriBone oVar2;
         uint uVar3;
         uint uVar4;
+        int iVar5;
         CriObject oVar6;
         uint uVar8;
 
@@ -1161,9 +1197,23 @@ public class CriPlayer : CriSkinned
         }
 
         uVar4 = 0;
-        //...
-        oVar2 = Utilities.FUN_601C8(skeleton, 3);
-        //...
+        iVar5 = (int)(uVar8 & 3);
+        DAT_21C = DAT_9CFA8[param1][iVar5];
+        REFS = PTR_9CFA8[param1][iVar5].ASSET_REFS;
+        oVar2 = (CriBone)Utilities.FUN_601C8(skeleton, 3);
+        oVar2.cMesh = (Tmd3ScriptableObject)PTR_9CFA8[param1][iVar5].ASSET_REFS[DAT_21C];
+        oVar2.materials = new Material[255];
+        Tmd3ScriptableObject tmd = oVar2.cMesh;
+        Material mat1 = new Material(GameManager.instance.materials[0x34]);
+        Material mat2 = new Material(GameManager.instance.materials[0x3C]);
+        mat1.mainTexture = tmd.TEX_2D;
+        mat1.SetTexture("_Tex8", tmd.TEX8_2D);
+        mat1.SetTexture("_CLUT", tmd.CLUT_2D);
+        oVar2.materials[0x34] = mat1;
+        mat2.mainTexture = tmd.TEX_2D;
+        mat2.SetTexture("_Tex8", tmd.TEX8_2D);
+        mat2.SetTexture("_CLUT", tmd.CLUT_2D);
+        oVar2.materials[0x3C] = mat2;
         FUN_4FE30();
         return; //tmp
 
@@ -1184,18 +1234,18 @@ public class CriPlayer : CriSkinned
         if (550 < health)
         {
             DAT_1D7 = 0;
-            DAT_220 = DAT_21C + 4;
+            DAT_220 = DAT_21C + 1;
         }
 
         else if (250 < health)
         {
             DAT_1D7 = 1;
-            DAT_220 = DAT_21C + 32;
+            DAT_220 = DAT_21C + 8;
         }
         else
         {
             DAT_1D7 = 2;
-            DAT_220 = DAT_21C + 60;
+            DAT_220 = DAT_21C + 15;
         }
     }
 
@@ -2069,7 +2119,7 @@ public class CriPlayer : CriSkinned
         else
             uVar3 = (uint)bVar1 - frameNum;
 
-        packet = packets[frames[uVar3].DAT_01 * DAT_5E / 4];
+        packet = packets[frames[uVar3].DAT_01];
         bVar2 = frames[uVar3].DAT_00;
         DAT_62 = bVar2;
 
@@ -2081,12 +2131,12 @@ public class CriPlayer : CriSkinned
         GameManager.instance.DAT_C3384 = param2.FRAMES;
         GameManager.instance.DAT_C3390 = 0;
         GameManager.instance.DAT_C3388 = GameManager.instance.DAT_C3380
-            [GameManager.instance.DAT_C3384[frameNum].DAT_01 * DAT_5E / 4];
+            [GameManager.instance.DAT_C3384[frameNum].DAT_01];
         GameManager.instance.DAT_C33A0 = param3.PACKETS;
         GameManager.instance.DAT_C33A4 = param3.FRAMES;
         GameManager.instance.DAT_C33B0 = 0;
         GameManager.instance.DAT_C33A8 = GameManager.instance.DAT_C33A0
-            [GameManager.instance.DAT_C33A4[frameNum].DAT_01 * DAT_5E / 4];
+            [GameManager.instance.DAT_C33A4[frameNum].DAT_01];
         GameManager.instance.DAT_C338C = GameManager.instance.DAT_C3384;
         GameManager.instance.DAT_C33AC = GameManager.instance.DAT_C33A4;
         frameNum++;
@@ -2109,12 +2159,12 @@ public class CriPlayer : CriSkinned
                 uVar1 = (uint)frameCount - frameNum;
 
             iVar2 = (int)(uVar1 & 0xff);
-            packet = packets[frames[iVar2].DAT_01 * DAT_5E / 4];
+            packet = packets[frames[iVar2].DAT_01];
             DAT_62 = frames[iVar2].DAT_00;
             GameManager.instance.DAT_C3388 = GameManager.instance.DAT_C3380
-                [GameManager.instance.DAT_C338C[iVar2].DAT_01 * DAT_5E / 4];
+                [GameManager.instance.DAT_C338C[iVar2].DAT_01];
             GameManager.instance.DAT_C33A8 = GameManager.instance.DAT_C33A0
-                [GameManager.instance.DAT_C33AC[iVar2].DAT_01 * DAT_5E / 4];
+                [GameManager.instance.DAT_C33AC[iVar2].DAT_01];
 
             if ((uint)frameNum < frameCount)
                 frameNum++;
@@ -2846,8 +2896,12 @@ public class CriPlayer : CriSkinned
         CriBone oVar2;
 
         oVar1 = SceneManager.instance.DAT_27C[DAT_224];
-        oVar2 = Utilities.FUN_601C8(oVar1.skeleton, oVar1.DAT_175 & 0xf) as CriBone;
-        DAT_1FC = oVar2.screen;
+
+        if (oVar1 != null)
+        {
+            oVar2 = Utilities.FUN_601C8(oVar1.skeleton, oVar1.DAT_175 & 0xf) as CriBone;
+            DAT_1FC = oVar2.screen;
+        }
     }
 
     private void FUN_535E4(sbyte param1, sbyte param2)

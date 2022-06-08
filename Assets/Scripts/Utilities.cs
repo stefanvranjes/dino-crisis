@@ -1605,6 +1605,7 @@ public static class Utilities
         uint uVar2;
         int iVar3;
 
+        param2.Clear();
         uVar1 = param1[0];
         param3--;
         uVar2 = param1[1];
@@ -1674,8 +1675,9 @@ public static class Utilities
                 break;
 
             uVar1 = param1[iVar3 + 7];
-            iVar3 -= 8;
+            param3 -= 8;
             uVar2 = param1[iVar3 + 8];
+            iVar3 += 9;
             param2.Add(new Vector3Int
                 ((ushort)(uVar1 & 0xfff), (ushort)((uVar1 & 0xfff000) << 4 >> 0x10),
                 (ushort)((uVar1 >> 0x18) | ((uVar2 & 0xf) << 8))));
@@ -1777,7 +1779,7 @@ public static class Utilities
         int iVar5;
 
         uVar2 = (ushort)param1.x;
-        param1.x = uVar2 & 0xfff;
+        param1.x = (short)(uVar2 & 0xfff);
         uVar2 = (ushort)((param2.x - (uVar2 & 0xfff)) + 0x800);
 
         if (0x1000U < uVar2)
@@ -1791,7 +1793,7 @@ public static class Utilities
         }
 
         uVar2 = (ushort)param1.y;
-        param1.y = uVar2 & 0xfff;
+        param1.y = (short)(uVar2 & 0xfff);
         uVar2 = (ushort)((param2.y - (uVar2 & 0xfff)) + 0x800);
 
         if (0x1000U < uVar2)
@@ -1805,7 +1807,7 @@ public static class Utilities
         }
 
         uVar2 = (ushort)param1.z;
-        param1.z = uVar2 & 0xfff;
+        param1.z = (short)(uVar2 & 0xfff);
         uVar2 = (ushort)((param2.z - (uVar2 & 0xfff)) + 0x800);
 
         if (0x1000U < uVar2)

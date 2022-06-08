@@ -48,6 +48,9 @@ public class InputManager : MonoBehaviour
     {
         controllers = new Controller[2];
         inputs = new PSXInput[2, 9];
+
+        for (int i = 0; i < 2; i++)
+            controllers[i] = new Controller();
     }
 
     // Update is called once per frame
@@ -83,28 +86,22 @@ public class InputManager : MonoBehaviour
             if (Input.GetButton(player + "L1"))
                 inputs[i, 0].DAT_03 &= 0xfb;
 
-            if (Input.GetButton(player + "R2") ||
-                Input.GetAxis(player + "TRIGGER_R") > 0)
+            if (Input.GetButton(player + "R2"))
                 inputs[i, 0].DAT_03 &= 0xfd;
 
-            if (Input.GetButton(player + "L2") ||
-                Input.GetAxis(player + "TRIGGER_L") > 0)
+            if (Input.GetButton(player + "L2"))
                 inputs[i, 0].DAT_03 &= 0xfe;
 
-            if (Input.GetButton(player + "UP") ||
-                Input.GetAxis(player + "DPAD_Y") > 0)
+            if (Input.GetButton(player + "UP"))
                 inputs[i, 0].DAT_02 &= 0xef;
 
-            if (Input.GetButton(player + "DOWN") ||
-                Input.GetAxis(player + "DPAD_Y") < 0)
+            if (Input.GetButton(player + "DOWN"))
                 inputs[i, 0].DAT_02 &= 0xbf;
 
-            if (Input.GetButton(player + "RIGHT") ||
-                Input.GetAxis(player + "DPAD_X") > 0)
+            if (Input.GetButton(player + "RIGHT"))
                 inputs[i, 0].DAT_02 &= 0xdf;
 
-            if (Input.GetButton(player + "LEFT") ||
-                Input.GetAxis(player + "DPAD_X") < 0)
+            if (Input.GetButton(player + "LEFT"))
                 inputs[i, 0].DAT_02 &= 0x7f;
 
             if (Input.GetButton(player + "START"))
@@ -112,11 +109,6 @@ public class InputManager : MonoBehaviour
 
             if (Input.GetButton(player + "SELECT"))
                 inputs[i, 0].DAT_02 &= 0xfe;
-
-            inputs[i, 0].DAT_04 = (byte)((int)(Input.GetAxis(player + "ANALOG_RX") * 0x7f) + 0x7f);
-            inputs[i, 0].DAT_05 = (byte)((int)(Input.GetAxis(player + "ANALOG_RY") * 0x7f) + 0x7f);
-            inputs[i, 0].DAT_06 = (byte)((int)(Input.GetAxis(player + "ANALOG_LX") * 0x7f) + 0x7f);
-            inputs[i, 0].DAT_07 = (byte)((int)(Input.GetAxis(player + "ANALOG_LY") * 0x7f) + 0x7f);
 
             for (int j = 1; j < 9; j++)
             {
@@ -130,6 +122,11 @@ public class InputManager : MonoBehaviour
                 inputs[i, j].DAT_07 = inputs[i, 0].DAT_07;
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        FUN_1DAEC();
     }
 
     public void FUN_1DAEC()
@@ -165,8 +162,8 @@ public class InputManager : MonoBehaviour
 
                     uVar4 = ~((uint)(inputs[0, 0].DAT_02 << 8) | inputs[0, 0].DAT_03);
                 }
-
-                uVar4 = 0;
+                else
+                    uVar4 = 0;
             }
 
             controllers[0].DAT_C2556 = (ushort)(inputs[0, 0].DAT_01 == 0x73 ? 1 : 0);

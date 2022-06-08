@@ -22,4 +22,5 @@ public class DatabaseScriptableObject : ScriptableObject
     public TodScriptableObject DAT_19C388;
     public TodScriptableObject DAT_19CF60;
     public TodScriptableObject DAT_19D2B0;
+    public RefScriptableObject DAT_17B83C;
 }

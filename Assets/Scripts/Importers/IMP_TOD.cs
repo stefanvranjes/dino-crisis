@@ -6,7 +6,7 @@ using UnityEngine;
 public class IMP_TOD : ScriptedImporter
 {
     public uint ramAddress;
-    public Tmd2ScriptableObject tmd;
+    public int boneCount;
 
     public override void OnImportAsset(AssetImportContext ctx)
     {
@@ -14,14 +14,14 @@ public class IMP_TOD : ScriptedImporter
 
         using (BufferedBinaryReader reader = new BufferedBinaryReader(buffer))
         {
-            if (tmd != null)
+            if (boneCount != 0)
             {
                 TodScriptableObject tod = ScriptableObject.CreateInstance("TodScriptableObject") as TodScriptableObject;
 
                 tod.PACKET_OFFSET = reader.ReadUInt32() - ramAddress;
                 tod.FRAME_COUNT = reader.ReadInt32();
                 tod.FRAMES = new Frame[tod.FRAME_COUNT + 1];
-                tod.PACKETS = new Packet[tod.FRAME_COUNT + 1];
+                int packetCount = 0;
 
                 for (int i = 0; i < tod.FRAME_COUNT + 1; i++)
                 {
@@ -31,14 +31,19 @@ public class IMP_TOD : ScriptedImporter
                     f.DAT_02 = reader.ReadByte();
                     f.DAT_03 = reader.ReadByte();
                     tod.FRAMES[i] = f;
+
+                    if (f.DAT_01 >= packetCount)
+                        packetCount = f.DAT_01 + 1;
                 }
 
-                for (int i = 0; i < tod.FRAME_COUNT + 1; i++)
+                tod.PACKETS = new Packet[packetCount];
+
+                for (int i = 0; i < packetCount; i++)
                 {
                     Packet p = new Packet();
                     p.DAT_00 = reader.ReadSVector();
                     p.DAT_06 = reader.ReadSVector();
-                    p.COMP = new uint[(uint)tmd.BONE_COUNT * 0x24 + 0x1f >> 5];
+                    p.COMP = new uint[(uint)boneCount * 0x24 + 0x1f >> 5];
 
                     for (int j = 0; j < p.COMP.Length; j++)
                         p.COMP[j] = reader.ReadUInt32();

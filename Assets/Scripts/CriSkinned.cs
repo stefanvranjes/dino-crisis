@@ -362,7 +362,7 @@ public class CriSkinned : CriObject
             else
                 uVar4 = (uint)frameCount - frameNum;
 
-            packet = packets[frames[uVar4].DAT_01 * DAT_5E / 4];
+            packet = packets[frames[uVar4].DAT_01];
             bVar2 = frames[uVar4].DAT_00;
             DAT_62 = bVar2;
 
@@ -450,7 +450,7 @@ public class CriSkinned : CriObject
         uint uVar3;
 
         packets = param1.PACKETS;
-        bVar1 = (byte)(param1.FRAME_COUNT + 1);
+        bVar1 = (byte)param1.FRAME_COUNT;
         frames = param1.FRAMES;
         DAT_74 = param1.FRAMES;
         frameNum = 0;
@@ -463,7 +463,7 @@ public class CriSkinned : CriObject
         else
             uVar3 = (uint)(bVar1 - frameNum);
 
-        packet = packets[frames[uVar3].DAT_01 * DAT_5E / 4];
+        packet = packets[frames[uVar3].DAT_01];
         DAT_62 = frames[uVar3].DAT_00;
         bVar2 = frames[0].DAT_00;
         DAT_62 = bVar2;
@@ -482,7 +482,7 @@ public class CriSkinned : CriObject
         uint uVar3;
 
         packets = DAT_98[param1].PACKETS;
-        bVar1 = (byte)(DAT_98[param1].FRAME_COUNT + 1);
+        bVar1 = (byte)DAT_98[param1].FRAME_COUNT;
         frames = DAT_98[param1].FRAMES;
         DAT_74 = DAT_98[param1].FRAMES;
         frameNum = 0;
@@ -495,7 +495,7 @@ public class CriSkinned : CriObject
         else
             uVar3 = (uint)(bVar1 - frameNum);
 
-        packet = packets[frames[uVar3].DAT_01 * DAT_5E / 4];
+        packet = packets[frames[uVar3].DAT_01];
         DAT_62 = frames[uVar3].DAT_00;
         bVar2 = frames[0].DAT_00;
         DAT_62 = bVar2;
@@ -613,7 +613,7 @@ public class CriSkinned : CriObject
             uVar3 = (uint)bVar1 - frameNum;
         }
 
-        packet = packets[frames[uVar3].DAT_01 * DAT_5E / 4];
+        packet = packets[frames[uVar3].DAT_01];
         bVar2 = frames[uVar3].DAT_00;
         DAT_62 = bVar2;
 
@@ -662,7 +662,7 @@ public class CriSkinned : CriObject
             uVar3 = (uint)bVar1 - frameNum;
         }
 
-        packet = packets[frames[uVar3].DAT_01 * DAT_5E / 4];
+        packet = packets[frames[uVar3].DAT_01];
         bVar2 = frames[uVar3].DAT_00;
         DAT_62 = bVar2;
 

@@ -1193,6 +1193,7 @@ public class GameManager : MonoBehaviour
                         Coprocessor.vector0.vy0 = (short)puVar10.DAT_44.y;
                         Coprocessor.vector0.vz0 = (short)puVar10.DAT_44.z;
                         Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+                        puVar10.BoneTransform();
                         puVar10.cTransform.position.x = Coprocessor.mathsAccumulator.mac1;
                         puVar10.cTransform.position.y = Coprocessor.mathsAccumulator.mac2;
                         puVar10.cTransform.position.z = Coprocessor.mathsAccumulator.mac3;
@@ -1241,7 +1242,6 @@ public class GameManager : MonoBehaviour
                         Coprocessor.translationVector._trx = puVar10.cTransform.position.x;
                         Coprocessor.translationVector._try = puVar10.cTransform.position.y;
                         Coprocessor.translationVector._trz = puVar10.cTransform.position.z;
-                        puVar10.BoneTransform();
                         Matrix4x4 m = puVar10.transform.localToWorldMatrix;
                         iVar19 = puVar10.DAT_42 - 1;
 
@@ -1330,6 +1330,20 @@ public class GameManager : MonoBehaviour
     {
         if ((uint)param1[param3] <= param1[param2])
             return param1[param2] != param1[param3] ? 1 : 0;
+
+        return -1;
+    }
+
+    public int FUN_53B08(byte[] param1, int param2, int param3)
+    {
+        uint uVar1;
+        uint uVar2;
+
+        uVar1 = (uint)(param1[param2] | param1[param2 + 1] << 8 | param1[param2 + 2] << 0x10 | param1[param2 + 3] << 0x18);
+        uVar2 = (uint)(param1[param3] | param1[param3 + 1] << 8 | param1[param3 + 2] << 0x10 | param1[param3 + 3] << 0x18);
+
+        if (uVar2 <= uVar1)
+            return uVar1 != uVar2 ? 1 : 0;
 
         return -1;
     }

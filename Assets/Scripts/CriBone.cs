@@ -105,8 +105,8 @@ public class CriBone : CriObject
             (cTransform.position.x / 16f, 
             cTransform.position.y / -16f, 
             cTransform.position.z / 16f);
-        transform.rotation = cTransform.rotation.Matrix2Quaternion;
-        transform.eulerAngles = new Vector3
+        transform.localRotation = cTransform.rotation.Matrix2Quaternion;
+        transform.localEulerAngles = new Vector3
             (-transform.eulerAngles.x, transform.eulerAngles.y, -transform.eulerAngles.z);
     }
 

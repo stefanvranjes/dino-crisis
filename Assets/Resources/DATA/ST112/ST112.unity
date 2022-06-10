@@ -333,14 +333,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1582952273}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalRotation: {x: 0.11001915, y: -0.78470534, z: 0.1457431, w: 0.5923616}
+  m_LocalPosition: {x: 279, y: 200, z: 160}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 21.043, y: -105.903, z: 0}
 --- !u!1 &1678437247
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,7 +372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scn: {fileID: -4406283935363021935, guid: 11bdbed0b1e961f4f8c2c35ee71b12a7, type: 3}
   database: {fileID: 11400000, guid: 536651ecb139fdf4ba707b4c44b49643, type: 2}
-  sceneCollision: {fileID: 0}
+  sceneCollision: {fileID: -6028080052161987059, guid: 879851d3ff2d9d248bd201b9776c0852, type: 3}
   DAT_27C: []
   DAT_1C9C: []
   DAT_5FCC: []

@@ -660,7 +660,7 @@ public class SceneManager : MonoBehaviour
         byte bVar1;
         bool bVar2;
         bool bVar3;
-        ColliderSegment oVar4;
+        FloorSegment oVar4;
         FloorCollider puVar5;
         uint uVar7;
         short local_28;
@@ -670,7 +670,7 @@ public class SceneManager : MonoBehaviour
             if (param2 < 0)
                 param2 = 0;
 
-            oVar4 = sceneCollision.SEGMENTS[param2 << 0x18 >> 0x14];
+            oVar4 = sceneCollision.FLOOR_SEGMENT;
             bVar1 = oVar4.FLOOR_COUNT;
             uVar7 = 0;
             local_28 = 0;
@@ -827,6 +827,20 @@ public class SceneManager : MonoBehaviour
         return bVar1;
     }
 
+    /*public bool FUN_80D48(Vector3Int param1, Vector3Int param2, uint param3)
+    {
+        uint[] local_68;
+        Vector2Int[] local_60;
+
+        local_60 = new Vector2Int[2];
+        local_60[0].x = param1.x;
+        local_60[0].y = param1.z;
+        local_60[1].x = param2.x;
+        local_60[1].y = param2.z;
+        local_68 = new uint[2];
+        return false;
+    }*/
+
     public bool FUN_80A14(CriSkinned param1)
     {
         return FUN_80500(param1, 0);
@@ -869,14 +883,14 @@ public class SceneManager : MonoBehaviour
         sbyte sVar3;
         uint uVar4;
         int iVar5;
-        ColliderSegment oVar5;
+        WallSegment oVar5;
         int iVar6;
         CriBone oVar6;
         WallCollider pbVar7;
         WallCollider[] pbVar8;
         int iVar9;
         int iVar10;
-        ColliderSegment oVar10;
+        WallSegment oVar10;
         CapsuleCollider psVar11;
         int iVar12;
         WallCollider[][] local_a8;
@@ -899,7 +913,7 @@ public class SceneManager : MonoBehaviour
         if ((param1.DAT_140 & 0x8000) == 0 && param1.DAT_130 != 0)
         {
             param1.DAT_142 = 0;
-            oVar5 = sceneCollision.SEGMENTS[0];
+            oVar5 = sceneCollision.WALL_SEGMENTS[0];
             local_88 = new uint[2];
             local_88[0] = oVar5.WALL_COUNT;
             uVar4 = (byte)param1.DAT_48 + 1U & 0xffU;
@@ -908,7 +922,7 @@ public class SceneManager : MonoBehaviour
 
             if (uVar4 < 0x10)
             {
-                oVar10 = sceneCollision.SEGMENTS[uVar4];
+                oVar10 = sceneCollision.WALL_SEGMENTS[uVar4];
                 local_88[1] = oVar10.WALL_COUNT;
                 local_a8[1] = oVar10.WALL_COLLIDERS;
             }

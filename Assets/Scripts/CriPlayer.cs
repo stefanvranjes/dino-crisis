@@ -43,6 +43,7 @@ public class CriPlayer : CriSkinned
     public byte DAT_216; //0x216
     public byte DAT_217; //0x217
     public bool DAT_218; //0x218
+    public byte DAT_219; //0x219
     public Object[] REFS;
     public int DAT_21C; //0x21C
     public int DAT_220; //0x220
@@ -578,6 +579,7 @@ public class CriPlayer : CriSkinned
         DAT_216 = 0;
         DAT_217 = 0;
         DAT_218 = false;
+        DAT_219 = 0;
         REFS = null;
         DAT_21C = 0;
         DAT_220 = 0;
@@ -603,8 +605,7 @@ public class CriPlayer : CriSkinned
         if (bVar3 != 0)
         {
             DAT_34 = screen;
-            //FUN_5211C
-            DAT_1C4 = 8; //tmp
+            FUN_5211C(DAT_1CF);
         }
 
         vr.y &= 0xfff;
@@ -631,7 +632,6 @@ public class CriPlayer : CriSkinned
 
             //FUN_80030
             FUN_52618();
-            return;
             local_18 = null;
             local_14 = 0;
             GameManager.instance.FUN_82EFC(this, ref local_18, ref local_14);
@@ -1675,6 +1675,9 @@ public class CriPlayer : CriSkinned
                     vr.y += 0x20;
                 }
 
+                if (DAT_1C4 != 0)
+                    return;
+
                 DAT_1F5 = 6;
                 uVar3 = 0x301;
                 DAT_1F4 = 0;
@@ -2275,6 +2278,70 @@ public class CriPlayer : CriSkinned
                 oVar4 = (CriBone)oVar4.next;
             } while (uVar3 < boneCount);
         }
+    }
+
+    private void FUN_5211C(byte param1)
+    {
+        uint uVar2;
+        uint uVar5;
+        CriSkinned oVar6;
+        byte bVar8;
+        uint[] local_50;
+        byte[] local_40;
+
+        bVar8 = 0;
+        uVar5 = 0;
+        local_50 = new uint[10];
+        local_40 = new byte[10 * 4];
+
+        do
+        {
+            uVar2 = 0x80000000;
+            oVar6 = SceneManager.instance.DAT_27C[uVar5];
+
+            if (oVar6 != null && (oVar6.flags & 1) != 0 && 0 < oVar6.health && (oVar6.DAT_175 & 0x80) == 0)
+            {
+                //...
+            }
+
+            local_50[uVar5] = uVar2 + uVar5;
+            uVar5++;
+        } while (uVar5 < 10);
+
+        if (param1 == 0)
+        {
+            uVar5 = 1;
+
+            do
+            {
+                if (local_50[uVar5] < local_50[0])
+                    local_50[0] = local_50[uVar5];
+
+                uVar5++;
+            } while (uVar5 < 10);
+        }
+        else
+        {
+            for (int i = 0; i < local_50.Length; i++)
+            {
+                local_40[i * 4] = (byte)local_50[i];
+                local_40[i * 4 + 1] = (byte)(local_50[i] >> 8);
+                local_40[i * 4 + 2] = (byte)(local_50[i] >> 0x10);
+                local_40[i * 4 + 3] = (byte)(local_50[i] >> 0x18);
+            }
+
+            Utilities.QSort(local_40, 0, 10, 4, GameManager.instance.FUN_53B08);
+
+            for (int i = 0; i < local_50.Length; i++)
+            {
+                local_50[i] = (uint)(local_40[i * 4] | local_40[i * 4 + 1] << 8 | 
+                    local_40[i * 4 + 2] << 0x10 | local_40[i * 4 + 3] << 0x18);
+            }
+        }
+
+        DAT_219 = bVar8;
+        DAT_224 = (byte)(local_50[param1] & 0xf);
+        DAT_1C4 = (sbyte)(local_50[param1] >> 0x1c);
     }
 
     private void FUN_52320()

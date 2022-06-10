@@ -2008,9 +2008,21 @@ public class BufferedBinaryReader : IDisposable
         return val;
     }
 
+    public Vector2Int ReadSVector2()
+    {
+        var val = new Vector2Int(ReadInt16(), ReadInt16());
+        return val;
+    }
+
     public Vector3Int ReadSVector(int offset)
     {
         var val = new Vector3Int(ReadInt16(offset), ReadInt16(offset + 2), ReadInt16(offset + 4));
+        return val;
+    }
+
+    public Vector2Int ReadSVector2(int offset)
+    {
+        var val = new Vector2Int(ReadInt16(offset), ReadInt16(offset + 2));
         return val;
     }
 

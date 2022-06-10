@@ -102,7 +102,7 @@ public class CriSkinned : CriObject
         if (cSkin != null)
         {
             GL.PushMatrix();
-            GL.MultMatrix(transform.localToWorldMatrix);
+            GL.MultMatrix(Matrix4x4.identity);
 
             for (int i = 0; i < cSkin.TRI_COUNT; i++)
             {

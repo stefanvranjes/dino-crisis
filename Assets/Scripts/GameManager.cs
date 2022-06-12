@@ -58,7 +58,6 @@ public class GameManager : MonoBehaviour
     public Vector3Int playerSpawnPos; //gp+4ch
     public short playerSpawnRotY; //gp+52h
     public byte DAT_55; //gp+55h
-    public CriObject DAT_B4; //gp+b4h
     public FUN_148 PTR_FUN_148; //gp+148h
     public FUN_14C PTR_FUN_14C; //gp+14ch
     public byte DAT_9AA0; //gp+9aa0h
@@ -193,7 +192,7 @@ public class GameManager : MonoBehaviour
             sVar1 = (sbyte)iVar3;
             iVar3++;
             local_10[sVar1].x = local_20[DAT_AA44C[sVar1 + param2.DAT_00 * 4]];
-            local_10[sVar1].y = local_20[DAT_AA468[sVar1 + param2.DAT_00 * 4]];
+            local_10[sVar1].y = local_20[DAT_AA468[sVar1 + param2.DAT_00 * 4] + 4];
         } while (iVar3 * 0x1000000 >> 0x18 < 4);
 
         param1[0] = local_10[0];
@@ -951,14 +950,14 @@ public class GameManager : MonoBehaviour
                 if (-1 < local_30.y)
                 {
                     param3.x = local_20.x;
-                    param3.y = local_20.z;
+                    param3.z = local_20.z;
                     return (sbyte)(bVar4 + 1);
                 }
             }
 
             bVar4++;
             uVar3 = bVar4;
-        } while (bVar4 < 4);
+        } while (bVar4 < 4U);
 
         return 0;
     }
@@ -1016,7 +1015,7 @@ public class GameManager : MonoBehaviour
                     if (local_28.y < 0)
                         local_28.y = -local_28.y;
 
-                    if (local_28.y <= (lVar3 * sVar1))
+                    if ((uint)local_28.y <= (uint)(lVar3 * sVar1))
                         return true;
                 }
 
@@ -1440,23 +1439,25 @@ public class GameManager : MonoBehaviour
     private void FUN_72C2C()
     {
         CriObject puVar8;
+        CriCamera oVar9;
 
-        Coprocessor.rotationMatrix.rt11 = DAT_B4.cTransform.rotation.V00;
-        Coprocessor.rotationMatrix.rt12 = DAT_B4.cTransform.rotation.V01;
-        Coprocessor.rotationMatrix.rt13 = DAT_B4.cTransform.rotation.V02;
-        Coprocessor.rotationMatrix.rt21 = DAT_B4.cTransform.rotation.V10;
-        Coprocessor.rotationMatrix.rt22 = DAT_B4.cTransform.rotation.V11;
-        Coprocessor.rotationMatrix.rt23 = DAT_B4.cTransform.rotation.V12;
-        Coprocessor.rotationMatrix.rt31 = DAT_B4.cTransform.rotation.V20;
-        Coprocessor.rotationMatrix.rt32 = DAT_B4.cTransform.rotation.V21;
-        Coprocessor.rotationMatrix.rt33 = DAT_B4.cTransform.rotation.V22;
-        DAT_B4.cTransform.position.x = DAT_B4.screen.x;
-        DAT_B4.cTransform.position.y = DAT_B4.screen.y;
-        DAT_B4.cTransform.position.z = DAT_B4.screen.z;
-        Coprocessor.translationVector._trx = DAT_B4.cTransform.position.x;
-        Coprocessor.translationVector._try = DAT_B4.cTransform.position.y;
-        Coprocessor.translationVector._trz = DAT_B4.cTransform.position.z;
-        DAT_1f80002c = DAT_B4.vr;
+        oVar9 = SceneManager.instance.cCamera;
+        Coprocessor.rotationMatrix.rt11 = oVar9.cTransform.rotation.V00;
+        Coprocessor.rotationMatrix.rt12 = oVar9.cTransform.rotation.V01;
+        Coprocessor.rotationMatrix.rt13 = oVar9.cTransform.rotation.V02;
+        Coprocessor.rotationMatrix.rt21 = oVar9.cTransform.rotation.V10;
+        Coprocessor.rotationMatrix.rt22 = oVar9.cTransform.rotation.V11;
+        Coprocessor.rotationMatrix.rt23 = oVar9.cTransform.rotation.V12;
+        Coprocessor.rotationMatrix.rt31 = oVar9.cTransform.rotation.V20;
+        Coprocessor.rotationMatrix.rt32 = oVar9.cTransform.rotation.V21;
+        Coprocessor.rotationMatrix.rt33 = oVar9.cTransform.rotation.V22;
+        oVar9.cTransform.position.x = oVar9.screen.x;
+        oVar9.cTransform.position.y = oVar9.screen.y;
+        oVar9.cTransform.position.z = oVar9.screen.z;
+        Coprocessor.translationVector._trx = oVar9.cTransform.position.x;
+        Coprocessor.translationVector._try = oVar9.cTransform.position.y;
+        Coprocessor.translationVector._trz = oVar9.cTransform.position.z;
+        DAT_1f80002c = oVar9.DAT_30;
 
         for (int i = 0; i < sceneManager.DAT_27C.Length; i++)
         {

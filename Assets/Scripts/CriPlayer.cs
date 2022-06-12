@@ -140,6 +140,25 @@ public class CriPlayer : CriSkinned
     private FUN_9D1B8[] PTR_FUN_9D1B8;
 
     private static byte DAT_9CDC6;
+    private static CapsuleCollider[] DAT_9CDB0 = new CapsuleCollider[]
+    {
+        new CapsuleCollider()
+        {
+            pos = new Vector3Int(0, 0x4a1, 0),
+            radius = 320,
+            height = 1770,
+            bone = 8,
+            flags = 0x80
+        },
+        new CapsuleCollider()
+        {
+            pos = new Vector3Int(0, 0, 0),
+            radius = 320,
+            height = 0,
+            bone = 0,
+            flags = 0
+        }
+    };
     private static short[] DAT_9CED0 = new short[]
     {
         -304, -304, 304, 304
@@ -706,7 +725,12 @@ public class CriPlayer : CriSkinned
         DAT_12C = 0;
         DAT_11E = 0;
         DAT_226 = -0x80;
-        //...
+        DAT_120 = 0;
+        PTR_120 = DAT_9CDB0;
+        DAT_124 = 0;
+        PTR_124 = DAT_9CDB0;
+        DAT_130 = 1;
+        PTR_130 = DAT_9CDB0;
         DAT_18D = true;
         DAT_12E = true;
         DAT_12F = true;

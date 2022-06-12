@@ -1138,6 +1138,12 @@ public static class Utilities
         return m;
     }
 
+    public static Matrix3x3 RotMatrixYXZ(ref Vector3Int r, ref Matrix3x3 m)
+    {
+        //...
+        return new Matrix3x3();
+    }
+
     //FUN_8F8C0
     public static Matrix3x3 RotMatrix(ref Vector3Int r, ref Matrix3x3 m)
     {
@@ -1839,6 +1845,104 @@ public static class Utilities
         param3.x &= 0xfff;
         param3.y &= 0xfff;
         param3.z &= 0xfff;
+    }
+
+    public static uint FUN_2630C(Vector3Int param1, Vector3Int param2)
+    {
+        int iVar1;
+        int iVar2;
+        int iVar3;
+        uint uVar4;
+        long a;
+
+        iVar1 = param2.x - param1.x;
+
+        if (iVar1 < 0)
+            iVar1 = -iVar1;
+
+        iVar2 = param2.y - param1.y;
+
+        if (iVar2 < 0)
+            iVar2 = -iVar2;
+
+        iVar3 = param2.z - param1.z;
+
+        if (iVar3 < 0)
+            iVar3 = -iVar3;
+
+        a = iVar1 * iVar1 + iVar2 * iVar2 + iVar3 * iVar3;
+        uVar4 = (uint)SquareRoot0(a);
+
+        if (uVar4 != 0)
+        {
+            if (uVar4 == 0)
+                return 0; //trap(0x1c00)
+
+            uVar4 = uVar4 + (uint)a / uVar4 >> 1;
+        }
+
+        return uVar4;
+    }
+
+    public static Vector3Int FUN_263CC(Vector3Int param1, Vector3Int param2)
+    {
+        uint a;
+        uint x;
+        long lVar1;
+        long lVar2;
+
+        a = FUN_63160(param1, param2);
+        x = (uint)SquareRoot0((int)a);
+
+        if (x != 0)
+        {
+            if (x == 0)
+                ; //trap(0x1c00)
+
+            x = x + a / x >> 1;
+        }
+
+        lVar1 = Ratan2(param2.y - param1.y, (int)x);
+        lVar2 = Ratan2(param2.x - param1.x, param2.z - param1.z);
+        return new Vector3Int((short)lVar1, (short)(lVar2 + 0x800), 0);
+    }
+
+    public static int FUN_265E8(Vector3Int param1, Vector3Int param2, int param3, ushort param4)
+    {
+        int iVar1;
+        uint uVar2;
+        uint uVar3;
+
+        iVar1 = FUN_615EC(param1, param2);
+        uVar2 = (uint)(iVar1 - param3 & 0xfff);
+
+        if ((int)uVar2 < 0x800)
+        {
+            uVar3 = uVar2;
+
+            if ((int)((uint)param4 << 0x10) >> 0xf <= (int)uVar2)
+            {
+                if ((int)uVar2 < 0x800) goto LAB_2666C;
+
+                if ((int)((uint)param4 << 0x10) >> 0xf <= (int)(0x1000 - uVar2)) goto LAB_2666C;
+
+                uVar3 = 0x1000 - uVar2;
+            }
+        }
+        else
+        {
+            if ((int)((uint)param4 << 0x10) >> 0xf <= (int)(0x1000 - uVar2)) goto LAB_2666C;
+
+            uVar3 = 0x1000 - uVar2;
+        }
+
+        param4 = (ushort)uVar3;
+
+        LAB_2666C:
+        if (0x800 < (int)uVar2)
+            param4 = (ushort)-(short)param4;
+
+        return (short)param4;
     }
 }
 

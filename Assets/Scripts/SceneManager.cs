@@ -8,7 +8,10 @@ public class SceneManager : MonoBehaviour
 
     public ScnScriptableObject scn;
     public DatabaseScriptableObject database;
-    public SceneColliderScriptableObject sceneCollision; //0x154
+    public CriCamera cCamera; //gp+b4h
+    public SceneColliderScriptableObject sceneCollision; //gp+154h
+    public uint motionLength; //gp+160h
+    public CameraMotion[] motions; //gp+164h
     public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriObject[] DAT_5FCC; //gp+5fcch...gp+7cdch
@@ -66,6 +69,242 @@ public class SceneManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void FUN_27A1C(Vector3Int param1, Vector3Int param2)
+    {
+        CriPlayer oVar1;
+        CriCamera oVar2;
+        uint uVar3;
+
+        oVar1 = (CriPlayer)DAT_27C[10];
+        oVar2 = cCamera;
+
+        if (cCamera.DAT_5B == 0)
+        {
+            cCamera.DAT_6B = false;
+            oVar2.DAT_5B++;
+        }
+        else
+        {
+            if (cCamera.DAT_5B == 1 && cCamera.DAT_8B != 2
+                && cCamera.DAT_8A != 2 && cCamera.DAT_90 == 0 && cCamera.DAT_92 == 0)
+            {
+                if ((oVar1.DAT_1C0 & 1) == 0)
+                {
+                    if (!cCamera.DAT_6B) goto LAB_27B30;
+
+                    cCamera.DAT_92 = 30;
+                }
+                else
+                {
+                    if (!cCamera.DAT_6B)
+                        cCamera.DAT_6B = true;
+
+                    uVar3 = Utilities.FUN_2630C(param1, oVar2.DAT_7C);
+
+                    if (100 < uVar3)
+                    {
+                        oVar2.DAT_92 = 30;
+                        oVar2.DAT_90 = 30;
+                        oVar2.DAT_6B = false;
+                    }
+
+                    uVar3 = Utilities.FUN_2630C(param2, oVar2.DAT_84);
+
+                    if (uVar3 < 101) goto LAB_27B30;
+
+                    oVar2.DAT_92 = 30;
+                }
+
+                oVar2.DAT_90 = 30;
+                oVar2.DAT_6B = false;
+            }
+        }
+
+        LAB_27B30:
+        oVar2.DAT_40 = param1;
+        oVar2.DAT_48 = param2;
+
+        if (!oVar2.DAT_6B)
+        {
+            oVar2.DAT_7C = oVar2.DAT_40;
+            oVar2.DAT_84 = oVar2.DAT_48;
+        }
+    }
+
+    public void FUN_269C8(Vector3Int param1, Vector3Int param2)
+    {
+        CriCamera oVar1;
+        short sVar2;
+        short sVar3;
+
+        oVar1 = cCamera;
+        sVar2 = (short)(cCamera.DAT_26 + cCamera.DAT_2E);
+        cCamera.DAT_26 = sVar2;
+
+        if (10000 < sVar2)
+            oVar1.DAT_26 = 10000;
+
+        if (oVar1.DAT_26 < 10)
+            oVar1.DAT_26 = 10;
+
+        FUN_2669C(ref oVar1.screen, param2, oVar1.DAT_26, ref oVar1.DAT_54,
+                  oVar1.DAT_56, ref oVar1.DAT_8A, ref oVar1.DAT_90);
+        sVar2 = (short)(oVar1.DAT_36 + oVar1.DAT_3E);
+        oVar1.DAT_36 = sVar2;
+
+        if (10000 < sVar2)
+            oVar1.DAT_36 = 10000;
+
+        if (oVar1.DAT_36 < 10)
+            oVar1.DAT_36 = 10;
+
+        FUN_2669C(ref oVar1.DAT_30, param1, oVar1.DAT_36, ref oVar1.DAT_50,
+                  oVar1.DAT_52, ref oVar1.DAT_8B, ref oVar1.DAT_92);
+        sVar3 = (short)Utilities.FUN_2630C(oVar1.DAT_30, oVar1.screen);
+        oVar1.DAT_3C = sVar3;
+        oVar1.vr = Utilities.FUN_263CC(oVar1.DAT_30, oVar1.screen);
+    }
+
+    private void FUN_2669C(ref Vector3Int param1, Vector3Int param2, short param3, 
+        ref short param4, short param5, ref byte param6, ref short param7)
+    {
+        byte bVar1;
+        short sVar2;
+        uint uVar3;
+        uint uVar4;
+        Matrix3x3 MStack80;
+        Vector3Int local_30;
+
+        uVar3 = Utilities.FUN_2630C(param1, param2);
+
+        if (param7 != 0)
+        {
+            sVar2 = (short)(param7 - 1);
+
+            if (uVar3 == 0)
+            {
+                param7 = 0;
+                param1 = param2;
+                return;
+            }
+
+            param7 = sVar2;
+
+            if (sVar2 < 1)
+            {
+                param1 = param2;
+                return;
+            }
+
+            local_30 = Utilities.FUN_263CC(param2, param1);
+            MStack80 = new Matrix3x3();
+            Utilities.RotMatrixYXZ(ref local_30, ref MStack80);
+            local_30.z = (short)(uVar3 >> 1) + (short)((uVar3 >> 1) / 30) * (30 - sVar2);
+            goto LAB_26954;
+        }
+
+        bVar1 = param6;
+
+        if (bVar1 == 1)
+        {
+            param3 = 80;
+            uVar4 = (uint)(int)param3;
+        }
+        else
+        {
+            if (bVar1 < 2)
+            {
+                if (bVar1 == 0)
+                {
+                    param1 = param2;
+                    return;
+                }
+
+                uVar4 = (uint)(int)param3;
+            }
+            else
+            {
+                if (bVar1 == 2)
+                {
+                    uVar4 = (uint)(int)param3;
+                    goto LAB_2687C;
+                }
+
+                if (bVar1 == 3)
+                {
+                    local_30 = Utilities.FUN_263CC(param2, param1);
+                    MStack80 = new Matrix3x3();
+                    Utilities.RotMatrixYXZ(ref local_30, ref MStack80);
+                    local_30.z = (short)(uVar3 >> 2);
+                    goto LAB_26954;
+                }
+
+                uVar4 = (uint)(int)param3;
+            }
+        }
+
+        LAB_2687C:
+        if (uVar3 < uVar4)
+        {
+            param1 = param2;
+            param6 = 0;
+            return;
+        }
+
+        local_30 = Utilities.FUN_263CC(param2, param1);
+
+        if (param5 != 0)
+        {
+            local_30.y = Utilities.FUN_265E8(param1, param2, param4, (ushort)param5);
+            local_30.y = param4 + local_30.y;
+            param4 = (short)local_30.y;
+        }
+
+        MStack80 = new Matrix3x3();
+        Utilities.RotMatrixYXZ(ref local_30, ref MStack80);
+
+        if (param6 == 1)
+        {
+            if (uVar4 == 0)
+                return; //trap(0x1c00)
+
+            local_30.z = param3 + (short)(uVar3 / uVar4);
+        }
+        else
+        {
+            if (param6 == 2)
+                local_30.z = param3;
+        }
+
+        LAB_26954:
+        local_30.y = 0;
+        local_30.x = 0;
+        local_30 = Utilities.ApplyMatrixSV(ref MStack80, ref local_30);
+        param1.x += local_30.x;
+        param1.y += local_30.y;
+        param1.z += local_30.z;
+    }
+
+    public void FUN_26504(short param1, short param2, short param3, short param4)
+    {
+        CriCamera oVar1;
+
+        oVar1 = cCamera;
+        cCamera.DAT_48.x = param2;
+        oVar1.DAT_48.y = param3;
+        oVar1.DAT_48.z = param4;
+
+        if (param1 == 0)
+        {
+            oVar1.screen.x = param2;
+            oVar1.DAT_84.x = param2;
+            oVar1.screen.y = param3;
+            oVar1.DAT_84.y = param3;
+            oVar1.screen.z = param4;
+            oVar1.DAT_84.z = param4;
+        }
     }
 
     public void FUN_47BE0()
@@ -903,14 +1142,13 @@ public class SceneManager : MonoBehaviour
         uint[] local_88;
         Vector2Int[] local_80;
         Hit local_70;
-        ushort local_44;
         byte local_38;
         bool local_30;
 
         local_30 = false;
         param1.DAT_142 = 0;
         
-        if ((param1.DAT_140 & 0x8000) == 0 && param1.DAT_130 != 0)
+        if ((param1.DAT_140 & 0x8000) == 0 && param1.PTR_130 != null)
         {
             param1.DAT_142 = 0;
             oVar5 = sceneCollision.WALL_SEGMENTS[0];
@@ -922,9 +1160,17 @@ public class SceneManager : MonoBehaviour
 
             if (uVar4 < 0x10)
             {
-                oVar10 = sceneCollision.WALL_SEGMENTS[uVar4];
-                local_88[1] = oVar10.WALL_COUNT;
-                local_a8[1] = oVar10.WALL_COLLIDERS;
+                if (sceneCollision.WALL_SEGMENTS.Length < uVar4)
+                {
+                    oVar10 = sceneCollision.WALL_SEGMENTS[uVar4];
+                    local_88[1] = oVar10.WALL_COUNT;
+                    local_a8[1] = oVar10.WALL_COLLIDERS;
+                }
+                else
+                {
+                    local_88[1] = 0;
+                    local_a8[1] = null;
+                }
             }
             else
             {
@@ -935,10 +1181,14 @@ public class SceneManager : MonoBehaviour
             psVar11 = param1.PTR_130[param1.DAT_130];
             local_38 = param2;
             Utilities.RotMatrix_gte(ref param1.vr, ref GameManager.instance.DAT_1f800034);
-            GameManager.instance.DAT_1f80002c = psVar11.pos;
+            GameManager.instance.DAT_1f80002c.x = psVar11.pos.x;
+            GameManager.instance.DAT_1f80002c.z = psVar11.pos.z;
+            GameManager.instance.DAT_1f80002c.y = 0;
             GameManager.instance.DAT_1f80002c = Utilities.ApplyMatrixSV
                 (ref GameManager.instance.DAT_1f800034, ref GameManager.instance.DAT_1f80002c);
             local_70 = new Hit();
+            local_70.DAT_00 = new Vector2Int[3];
+            local_70.DAT_0C = new Vector2Int[4];
             local_80 = new Vector2Int[4];
             auStack144 = new Vector3Int();
 
@@ -955,14 +1205,16 @@ public class SceneManager : MonoBehaviour
             local_70.DAT_00[1].y += GameManager.instance.DAT_1f80002c.z;
             local_70.DAT_00[0] = param1.DAT_13C;
             iVar10 = 0;
-            local_44 = psVar11.radius;
+            local_70.DAT_2C = psVar11.radius;
+            local_70.DAT_32 = 0;
+            local_70.DAT_34 = (CriPlayer)param1;
 
             do
             {
                 iVar9 = (int)local_88[iVar10];
                 pbVar8 = local_a8[iVar10];
 
-                if (iVar9 != 0)
+                if (iVar9 != 0 && pbVar8 != null)
                 {
                     iVar12 = 0;
 
@@ -994,14 +1246,15 @@ public class SceneManager : MonoBehaviour
                             local_80[3].x = local_9c;
                             local_80[3].y = local_9a;
 
-                            if (((local_70.DAT_00[1].x + local_44) - (iVar5 * 0x10000 >> 0x10) <
-                                local_98 + psVar11.radius * 2 &&
-                                (local_70.DAT_00[1].y + local_44) - (iVar6 * 0x10000 >> 0x10) <
-                                local_96 + psVar11.radius * 2) ||
+                            if (((uint)((local_70.DAT_00[1].x + local_70.DAT_2C) - (iVar5 * 0x10000 >> 0x10)) <
+                                local_98 + psVar11.radius * 2U &&
+                                (uint)((local_70.DAT_00[1].y + local_70.DAT_2C) - (iVar6 * 0x10000 >> 0x10)) <
+                                local_96 + psVar11.radius * 2U) ||
                                 GameManager.instance.FUN_841E8(local_80, local_70.DAT_00, ref auStack144) != 0)
                             {
                                 sVar2 = (short)local_70.DAT_00[1].y;
                                 sVar1 = (short)local_70.DAT_00[1].x;
+                                local_70.DAT_30 = pbVar7.flags;
                                 sVar3 = 0;
 
                                 if (pbVar7.DAT_03 == 0)

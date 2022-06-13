@@ -1138,10 +1138,225 @@ public static class Utilities
         return m;
     }
 
+    //FUN_8FB50
     public static Matrix3x3 RotMatrixYXZ(ref Vector3Int r, ref Matrix3x3 m)
     {
-        //...
-        return new Matrix3x3();
+        short sVar1;
+        Matrix3x3 pMVar2;
+        int iVar3;
+        int iVar4;
+        int iVar5;
+        int iVar6;
+        int iVar7;
+        short sVar8;
+        short sVar9;
+        int in_t0;
+        int in_t1;
+        int in_t2;
+        int in_t3;
+        int in_t4;
+        int in_t5;
+
+        if (r.x < 0)
+        {
+            pMVar2 = FGO_02_OBJ_68(ref r, ref m);
+            return pMVar2;
+        }
+
+        sVar9 = DAT_AC7E8[(r.x & 0xfff) * 2];
+        iVar3 = DAT_AC7E8[(r.x & 0xfff) * 2 + 1];
+
+        if (-1 < r.y)
+        {
+            iVar6 = DAT_AC7E8[(r.y & 0xfff) * 2];
+            iVar4 = DAT_AC7E8[(r.y & 0xfff) * 2 + 1];
+            sVar1 = (short)r.z;
+            m.V12 = (short)-sVar9;
+            m.V02 = (short)(iVar6 * iVar3 >> 12);
+            sVar8 = (short)(iVar4 * iVar3 >> 12);
+
+            if (-1 < sVar1)
+            {
+                m.V22 = sVar8;
+                iVar7 = DAT_AC7E8[(sVar1 & 0xfff) * 2];
+                iVar5 = DAT_AC7E8[(sVar1 & 0xfff) * 2 + 1];
+                m.V10 = (short)(iVar7 * iVar3 >> 12);
+                m.V11 = (short)(iVar5 * iVar3 >> 12);
+                iVar3 = iVar6 * sVar9 >> 12;
+                m.V00 = (short)((iVar4 * iVar5 >> 12) + (iVar3 * iVar7 >> 12));
+                m.V01 = (short)((iVar3 * iVar5 >> 12) - (iVar4 * iVar7 >> 12));
+                iVar3 = iVar4 * sVar9 >> 12;
+                m.V21 = (short)((iVar6 * iVar7 >> 12) + (iVar3 * iVar5 >> 12));
+                m.V20 = (short)((iVar3 * iVar7 >> 12) - (iVar6 * iVar5 >> 12));
+                return m;
+            }
+
+            m.V22 = sVar8;
+            in_t0 = iVar3;
+            in_t1 = iVar4;
+            in_t3 = sVar9;
+            in_t4 = iVar6;
+            sVar1 = (short)-sVar1;
+            in_t5 = -DAT_AC7E8[(sVar1 & 0xfff) * 2];
+            in_t2 = DAT_AC7E8[(sVar1 & 0xfff) * 2 + 1];
+            pMVar2 = FGO_02_OBJ_160(ref r, ref m);
+            return pMVar2;
+        }
+
+        pMVar2 = FGO_02_OBJ_CC(ref r, ref m);
+        return pMVar2;
+
+        Matrix3x3 FGO_02_OBJ_160(ref Vector3Int r, ref Matrix3x3 m)
+        {
+            int iVar1;
+
+            m.V10 = (short)(in_t5 * in_t0 >> 12);
+            m.V11 = (short)(in_t2 * in_t0 >> 12);
+            iVar1 = in_t4 * in_t3 >> 12;
+            m.V00 = (short)((in_t1 * in_t2 >> 12) + (iVar1 * in_t5 >> 12));
+            m.V01 = (short)((iVar1 * in_t2 >> 12) - (in_t1 * in_t5 >> 12));
+            iVar1 = in_t1 * in_t3 >> 12;
+            m.V21 = (short)((in_t4 * in_t5 >> 12) + (iVar1 * in_t2 >> 12));
+            m.V20 = (short)((iVar1 * in_t5 >> 12) - (in_t4 * in_t2 >> 12));
+            return m;
+        }
+    }
+
+    private static Matrix3x3 FGO_02_OBJ_68(ref Vector3Int r, ref Matrix3x3 m)
+    {
+        short sVar1;
+        int in_t0;
+        int in_t1;
+        int in_t2;
+        int in_t3;
+        int in_t4;
+        int in_t5;
+        int in_t6;
+        int iVar2;
+        int iVar3;
+        int iVar4;
+        int iVar5;
+        short sVar6;
+        int iVar7;
+
+        if (r.y < 0)
+        {
+            return FGO_02_OBJ_CC(ref r, ref m);
+        }
+
+        in_t6 = DAT_AC7E8[(-r.x & 0xfff) * 2];
+        in_t3 = -in_t6;
+        in_t0 = DAT_AC7E8[(-r.x & 0xfff) * 2 + 1];
+        iVar4 = DAT_AC7E8[(r.y & 0xfff) * 2];
+        iVar2 = DAT_AC7E8[(r.y & 0xfff) * 2 + 1];
+        sVar1 = (short)r.z;
+        m.V12 = (short)in_t6;
+        m.V02 = (short)(iVar4 * in_t0 >> 12);
+        sVar6 = (short)(iVar2 * in_t0 >> 12);
+
+        if (-1 < sVar1)
+        {
+            m.V22 = sVar6;
+            iVar5 = DAT_AC7E8[(sVar1 & 0xfff) * 2];
+            iVar3 = DAT_AC7E8[(sVar1 & 0xfff) * 2 + 1];
+            m.V10 = (short)(iVar5 * in_t0 >> 12);
+            m.V11 = (short)(iVar3 * in_t0 >> 12);
+            iVar7 = iVar4 * in_t3 >> 12;
+            m.V00 = (short)((iVar2 * iVar3 >> 12) + (iVar7 * iVar5 >> 12));
+            m.V01 = (short)((iVar7 * iVar3 >> 12) - (iVar2 * iVar5 >> 12));
+            iVar2 = iVar2 * in_t3 >> 12;
+            m.V21 = (short)((iVar4 * iVar5 >> 12) + (iVar2 * iVar3 >> 12));
+            m.V20 = (short)((iVar2 * iVar5 >> 12) - (iVar4 * iVar3 >> 12));
+            return m;
+        }
+
+        m.V22 = sVar6;
+        in_t4 = iVar4;
+        in_t1 = iVar2;
+        sVar1 = (short)-sVar1;
+        in_t5 = -DAT_AC7E8[(sVar1 & 0xfff) * 2];
+        in_t2 = DAT_AC7E8[(sVar1 & 0xfff) * 2 + 1];
+        return FGO_02_OBJ_160(ref r, ref m);
+
+        Matrix3x3 FGO_02_OBJ_160(ref Vector3Int r, ref Matrix3x3 m)
+        {
+            int iVar1;
+
+            m.V10 = (short)(in_t5 * in_t0 >> 12);
+            m.V11 = (short)(in_t2 * in_t0 >> 12);
+            iVar1 = in_t4 * in_t3 >> 12;
+            m.V00 = (short)((in_t1 * in_t2 >> 12) + (iVar1 * in_t5 >> 12));
+            m.V01 = (short)((iVar1 * in_t2 >> 12) - (in_t1 * in_t5 >> 12));
+            iVar1 = in_t1 * in_t3 >> 12;
+            m.V21 = (short)((in_t4 * in_t5 >> 12) + (iVar1 * in_t2 >> 12));
+            m.V20 = (short)((iVar1 * in_t5 >> 12) - (in_t4 * in_t2 >> 12));
+            return m;
+        }
+    }
+
+    private static Matrix3x3 FGO_02_OBJ_CC(ref Vector3Int r, ref Matrix3x3 m)
+    {
+        short sVar1;
+        int in_t0;
+        int in_t1;
+        int in_t2;
+        int in_t3;
+        int in_t4;
+        int in_t5;
+        int in_t6;
+        int in_t8;
+        int iVar2;
+        int iVar3;
+        short sVar4;
+        int iVar5;
+
+        in_t8 = DAT_AC7E8[(-r.y & 0xfff) * 2];
+        in_t4 = -in_t8;
+        in_t1 = DAT_AC7E8[(-r.y & 0xfff) * 2 + 1];
+        in_t6 = DAT_AC7E8[(-r.x & 0xfff) * 2];
+        in_t3 = -in_t6;
+        in_t0 = DAT_AC7E8[(-r.x & 0xfff) * 2 + 1];
+        sVar1 = (short)r.z;
+        m.V12 = (short)in_t6;
+        m.V02 = (short)(in_t4 * in_t0 >> 12);
+        sVar4 = (short)(in_t1 * in_t0 >> 12);
+
+        if (-1 < sVar1)
+        {
+            m.V22 = sVar4;
+            iVar3 = DAT_AC7E8[(sVar1 & 0xfff) * 2];
+            iVar2 = DAT_AC7E8[(sVar1 & 0xfff) * 2 + 1];
+            m.V10 = (short)(iVar3 * in_t0 >> 12);
+            m.V11 = (short)(iVar2 * in_t0 >> 12);
+            iVar5 = in_t4 * in_t3 >> 12;
+            m.V00 = (short)((in_t1 * iVar2 >> 12) + (iVar5 * iVar3 >> 12));
+            m.V01 = (short)((iVar5 * iVar2 >> 12) - (in_t1 * iVar3 >> 12));
+            iVar5 = in_t1 * in_t3 >> 12;
+            m.V21 = (short)((in_t4 * iVar3 >> 12) + (iVar5 * iVar2 >> 12));
+            m.V20 = (short)((iVar5 * iVar3 >> 12) - (in_t4 * iVar2 >> 12));
+            return m;
+        }
+
+        m.V22 = sVar4;
+        sVar1 = (short)-sVar1;
+        in_t5 = -DAT_AC7E8[(sVar1 & 0xfff) * 2];
+        in_t2 = DAT_AC7E8[(sVar1 & 0xfff) * 2 + 1];
+        return FGO_02_OBJ_160(ref r, ref m);
+
+        Matrix3x3 FGO_02_OBJ_160(ref Vector3Int r, ref Matrix3x3 m)
+        {
+            int iVar1;
+
+            m.V10 = (short)(in_t5 * in_t0 >> 12);
+            m.V11 = (short)(in_t2 * in_t0 >> 12);
+            iVar1 = in_t4 * in_t3 >> 12;
+            m.V00 = (short)((in_t1 * in_t2 >> 12) + (iVar1 * in_t5 >> 12));
+            m.V01 = (short)((iVar1 * in_t2 >> 12) - (in_t1 * in_t5 >> 12));
+            iVar1 = in_t1 * in_t3 >> 12;
+            m.V21 = (short)((in_t4 * in_t5 >> 12) + (iVar1 * in_t2 >> 12));
+            m.V20 = (short)((iVar1 * in_t5 >> 12) - (in_t4 * in_t2 >> 12));
+            return m;
+        }
     }
 
     //FUN_8F8C0

@@ -372,7 +372,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scn: {fileID: -4406283935363021935, guid: 11bdbed0b1e961f4f8c2c35ee71b12a7, type: 3}
   database: {fileID: 11400000, guid: 536651ecb139fdf4ba707b4c44b49643, type: 2}
+  cCamera: {fileID: 0}
   sceneCollision: {fileID: -6028080052161987059, guid: 879851d3ff2d9d248bd201b9776c0852, type: 3}
+  motions: {fileID: 9013893561334630828, guid: 49c148669d55a534e936a792b0d1d34f, type: 3}
   DAT_27C: []
   DAT_1C9C: []
   DAT_5FCC: []
@@ -460,7 +462,6 @@ MonoBehaviour:
   playerSpawnPos: {x: 0, y: 0, z: 0}
   playerSpawnRotY: 0
   DAT_55: 0
-  DAT_B4: {fileID: 451172096}
   DAT_9AA0: 0
   DAT_9AA1: 0
   difficulty: 0

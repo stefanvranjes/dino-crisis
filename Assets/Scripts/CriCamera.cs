@@ -14,6 +14,7 @@ public class CriCamera : MonoBehaviour
     public short DAT_3C; //0x3C
     public short DAT_3E; //0x3E
     public Vector3Int DAT_40; //0x40
+    public short DAT_46; //0x46
     public Vector3Int DAT_48; //0x48
     public short DAT_50; //0x50
     public short DAT_52; //0x52
@@ -28,8 +29,13 @@ public class CriCamera : MonoBehaviour
     public byte DAT_69; //0x69
     public byte DAT_6A; //0x6A
     public bool DAT_6B; //0x6B
+    public byte DAT_70; //0x70
+    public byte DAT_71; //0x71
     public byte DAT_72; //0x72
     public byte DAT_73; //0x73
+    public short DAT_74; //0x74
+    public short DAT_76; //0x76
+    public short DAT_78; //0x78
     public Vector3Int DAT_7C; //0x7C
     public byte DAT_82; //0x82
     public byte DAT_83; //0x83
@@ -39,11 +45,26 @@ public class CriCamera : MonoBehaviour
     public short DAT_90; //0x90
     public short DAT_92; //0x92
 
+    private delegate void FUN_18448();
     private delegate void FUN_99404(CameraMotion m);
+    private FUN_18448[] PTR_FUN_18448;
     private FUN_99404[] PTR_FUN_99404;
 
     private void Awake()
     {
+        PTR_FUN_18448 = new FUN_18448[10]
+        {
+            FUN_27320,
+            null,
+            FUN_27444,
+            FUN_27478,
+            FUN_2753C,
+            FUN_2765C,
+            FUN_27720,
+            FUN_277B8,
+            FUN_278B4,
+            FUN_27944
+        };
         PTR_FUN_99404 = new FUN_99404[37]
         {
             FUN_27BC4,
@@ -96,6 +117,258 @@ public class CriCamera : MonoBehaviour
         
     }
 
+    public void FUN_27210()
+    {
+        FUN_18448[] local_30;
+        int ppcVar3;
+        int ppcVar4;
+        int ppcVar5;
+        int ppcVar6;
+        FUN_18448 pcVar7;
+        FUN_18448 pcVar8;
+        FUN_18448 pcVar9;
+        Vector3Int local_38;
+
+        ppcVar3 = 0;
+        ppcVar4 = 0;
+        local_30 = new FUN_18448[10];
+
+        do
+        {
+            ppcVar6 = ppcVar4;
+            ppcVar5 = ppcVar3;
+            pcVar7 = PTR_FUN_18448[ppcVar5 + 1];
+            pcVar8 = PTR_FUN_18448[ppcVar5 + 2];
+            pcVar9 = PTR_FUN_18448[ppcVar5 + 3];
+            local_30[ppcVar6] = PTR_FUN_18448[ppcVar5];
+            local_30[ppcVar6 + 1] = pcVar7;
+            local_30[ppcVar6 + 2] = pcVar8;
+            local_30[ppcVar6 + 3] = pcVar9;
+            ppcVar3 = ppcVar5 + 4;
+            ppcVar4 = ppcVar6 + 4;
+        } while (ppcVar5 + 4 != 8);
+
+        pcVar7 = PTR_FUN_18448[ppcVar5 + 5];
+        local_30[ppcVar6 + 4] = FUN_278B4;
+        local_30[ppcVar6 + 5] = pcVar7;
+
+        if ((GameManager.instance.DAT_40 & 8) == 0)
+        {
+            if ((DAT_72 & 2) != 0)
+                return;
+
+            local_30[DAT_70]();
+        }
+
+        vr.x &= 0xfff;
+        vr.y &= 0xfff;
+        vr.z &= 0xfff;
+        local_38 = new Vector3Int();
+        local_38.x = -vr.x;
+        local_38.y = -vr.y;
+        local_38.z = -vr.z;
+        Utilities.RotMatrix(ref local_38, ref cTransform.rotation);
+    }
+
+    private void FUN_27320()
+    {
+        byte bVar1;
+        CameraMotion mVar2;
+
+        if ((DAT_72 & 1) != 0)
+        {
+            bVar1 = (byte)(DAT_73 - 1);
+            DAT_73 = bVar1;
+
+            if (bVar1 != 0)
+                return;
+
+            //...
+            mVar2 = SceneManager.instance.motions.MOTIONS[DAT_6A];
+            DAT_72 &= 0xfe;
+            motion = mVar2;
+            //FUN_4A7E8
+        }
+
+        FUN_26B18(SceneManager.instance.motions.MOTIONS);
+    }
+
+    private void FUN_27444()
+    {
+        DAT_8A = 2;
+        DAT_8B = 2;
+        SceneManager.instance.FUN_269C8(DAT_40, DAT_48);
+    }
+
+    private void FUN_27478()
+    {
+        CameraMotion mVar1;
+
+        if (DAT_5A == 0)
+        {
+            mVar1 = SceneManager.instance.motions.MOTIONS[DAT_6A];
+            motion = mVar1;
+            DAT_68 = mVar1.DAT_02;
+            DAT_69 = motion.DAT_00;
+            //...
+            DAT_5A++;
+        }
+        else
+        {
+            if (DAT_5A != 1)
+                return;
+        }
+
+        PTR_FUN_99404[DAT_69](motion);
+    }
+
+    private void FUN_2753C()
+    {
+        short sVar1;
+        Vector3Int local_38;
+        Matrix3x3 MStack48;
+
+        if (DAT_5A == 0)
+        {
+            sVar1 = (short)(DAT_46 - 1);
+            DAT_46 = sVar1;
+
+            if (sVar1 == -1)
+                DAT_5A++;
+            else
+            {
+                vr.x += DAT_74;
+                vr.y += DAT_76;
+                DAT_3C += DAT_78;
+            }
+        }
+
+        local_38 = new Vector3Int();
+        local_38.x = vr.x;
+        local_38.y = vr.y;
+        local_38.z = 0;
+        MStack48 = new Matrix3x3();
+        Utilities.RotMatrixYXZ(ref local_38, ref MStack48);
+        local_38.x = 0;
+        local_38.y = 0;
+        local_38.z = -DAT_3C;
+        local_38 = Utilities.ApplyMatrixSV(ref MStack48, ref local_38);
+        screen.x = DAT_30.x + local_38.x;
+        screen.y = DAT_30.y + local_38.y;
+        screen.z = DAT_30.z + local_38.z;
+    }
+
+    private void FUN_2765C()
+    {
+        CriBone puVar1;
+        CriBone m;
+        Vector3Int local_18;
+        Vector3Int local_10;
+
+        puVar1 = SceneManager.instance.DAT_27C[0].skeleton;
+        SceneManager.instance.DAT_27C[0].flags &= 0xfffffffd;
+        m = (CriBone)Utilities.FUN_601C8(puVar1, 3);
+        local_10 = m.screen;
+        local_18 = new Vector3Int(0, 0, 1000);
+        local_18 = Utilities.ApplyMatrixSV(ref m.cTransform.rotation, ref local_18);
+        local_18.x += local_10.x;
+        local_18.y += local_10.y;
+        local_18.z += local_10.z;
+        DAT_8A = 0;
+        DAT_8B = 0;
+        SceneManager.instance.FUN_269C8(local_18, local_10);
+    }
+
+    private void FUN_27720()
+    {
+        CriPlayer oVar1;
+        CriBone puVar1;
+        CriBone oVar2;
+        Vector3Int local_18;
+        Vector3Int local_10;
+
+        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        local_18 = new Vector3Int();
+        local_18.x = oVar1.screen.x;
+        local_18.y = oVar1.screen.y - 0x400;
+        local_18.z = oVar1.screen.z;
+        puVar1 = SceneManager.instance.DAT_27C[0].skeleton;
+        SceneManager.instance.DAT_27C[0].flags &= 0xfffffffd;
+        oVar2 = (CriBone)Utilities.FUN_601C8(puVar1, 3);
+        local_10 = oVar2.screen;
+        DAT_8A = 0;
+        DAT_8B = 0;
+        SceneManager.instance.FUN_269C8(local_18, local_10);
+    }
+
+    private void FUN_277B8()
+    {
+        CriStatic oVar1;
+        Matrix3x3 MStack64;
+        Vector3Int local_20;
+        Vector3Int local_18;
+
+        oVar1 = SceneManager.instance.DAT_7CDC[DAT_71];
+        local_18 = oVar1.screen;
+        local_20 = oVar1.vr;
+        MStack64 = new Matrix3x3();
+        Utilities.RotMatrixYXZ(ref local_20, ref MStack64);
+        local_20 = new Vector3Int(0, 0, 1000);
+        local_20 = Utilities.ApplyMatrixSV(ref MStack64, ref local_20);
+        local_20.x += local_18.x;
+        local_20.y += local_18.y;
+        local_20.z += local_18.z;
+        DAT_8A = 0;
+        DAT_8B = 0;
+        SceneManager.instance.FUN_269C8(local_20, local_18);
+    }
+
+    private void FUN_278B4()
+    {
+        CriStatic oVar1;
+        CriBone oVar2;
+        Vector3Int local_18;
+        Vector3Int local_10;
+
+        oVar1 = SceneManager.instance.DAT_7CDC[0];
+        local_10 = new Vector3Int();
+        local_10.x = oVar1.screen.x;
+        local_10.y = oVar1.screen.y - 0x400;
+        local_10.z = oVar1.screen.z;
+        oVar2 = (CriBone)Utilities.FUN_601C8
+            (SceneManager.instance.DAT_27C[0].skeleton, 3);
+        local_18 = oVar2.screen;
+        DAT_8A = 0;
+        DAT_8B = 0;
+        SceneManager.instance.FUN_269C8(local_18, local_10);
+    }
+
+    private void FUN_27944()
+    {
+        CameraMotion mVar1;
+
+        if (DAT_5A == 0)
+        {
+            mVar1 = SceneManager.instance.motions.MOTIONS[DAT_71];
+            motion = mVar1;
+            DAT_68 = mVar1.DAT_02;
+            DAT_69 = motion.DAT_00;
+            //...
+            DAT_8A = 0;
+            DAT_8B = 0;
+            DAT_5A++;
+        }
+        else
+        {
+            if (DAT_5A != 1)
+                return;
+        }
+
+        DAT_6B = false;
+        PTR_FUN_99404[DAT_69](motion);
+        SceneManager.instance.FUN_269C8(DAT_40, DAT_48);
+    }
+
     private void FUN_26B18(CameraMotion[] param1)
     {
         byte bVar1;
@@ -110,7 +383,7 @@ public class CriCamera : MonoBehaviour
 
         if ((DAT_72 & 4) == 0)
         {
-            while (SceneManager.instance.motionLength != 0)
+            while (SceneManager.instance.motions.MOTIONS.Length != 0)
             {
                 bVar7 = 0;
                 pbVar6 = param1[bVar7];
@@ -122,7 +395,7 @@ public class CriCamera : MonoBehaviour
                     bVar7++;
                     pbVar6 = param1[bVar7];
 
-                    if (SceneManager.instance.motionLength <= bVar7) goto LAB_26D98;
+                    if (SceneManager.instance.motions.MOTIONS.Length <= bVar7) goto LAB_26D98;
                 }
 
                 if (pbVar6.DAT_00 != 0)
@@ -171,7 +444,7 @@ public class CriCamera : MonoBehaviour
                         else
                         {
                             //...
-                            oVar5 = SceneManager.instance.motions[DAT_6A];
+                            oVar5 = SceneManager.instance.motions.MOTIONS[DAT_6A];
                             DAT_72 &= 0xfe;
                             motion = oVar5;
                         }
@@ -181,7 +454,7 @@ public class CriCamera : MonoBehaviour
                     }
 
                     //...
-                    oVar5 = SceneManager.instance.motions[DAT_6A];
+                    oVar5 = SceneManager.instance.motions.MOTIONS[DAT_6A];
                     DAT_72 &= 0xfe;
                     DAT_82 = DAT_83;
                     motion = oVar5;

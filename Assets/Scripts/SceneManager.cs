@@ -11,6 +11,7 @@ public class SceneManager : MonoBehaviour
     public CriCamera cCamera; //gp+b4h
     public SceneColliderScriptableObject sceneCollision; //gp+154h
     public SceneCameraScriptableObject motions; //gp+164h, gp+160h -> motions.Length
+    public TriggerScriptableObject[] triggers; //gp+1e8h
     public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriObject[] DAT_5FCC; //gp+5fcch...gp+7cdch

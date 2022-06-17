@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 1582952276}
   - component: {fileID: 1582952275}
   - component: {fileID: 1582952274}
+  - component: {fileID: 1582952279}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -341,6 +342,93 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 21.043, y: -105.903, z: 0}
+--- !u!114 &1582952279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582952273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a6d5fad6fb3654f912c559117a8e97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cTransform:
+    rotation:
+      V00: 0
+      V01: 0
+      V02: 0
+      V10: 0
+      V11: 0
+      V12: 0
+      V20: 0
+      V21: 0
+      V22: 0
+      skewed: 0
+      _V00: 0
+      _V01: 0
+      _V02: 0
+      _V10: 0
+      _V11: 0
+      _V12: 0
+      _V20: 0
+      _V21: 0
+      _V22: 0
+    padding: 0
+    position: {x: 0, y: 0, z: 0}
+  screen: {x: 0, y: 0, z: 0}
+  DAT_26: 0
+  vr: {x: 0, y: 0, z: 0}
+  DAT_2E: 0
+  DAT_30: {x: 0, y: 0, z: 0}
+  DAT_36: 0
+  DAT_3C: 0
+  DAT_3E: 0
+  DAT_40: {x: 0, y: 0, z: 0}
+  DAT_46: 0
+  DAT_48: {x: 0, y: 0, z: 0}
+  DAT_50: 0
+  DAT_52: 0
+  DAT_54: 0
+  DAT_56: 0
+  DAT_58: 0
+  DAT_59: 0
+  DAT_5A: 0
+  DAT_5B: 0
+  motion:
+    DAT_00: 0
+    DAT_01: 0
+    DAT_02: 0
+    DAT_03: 0
+    DAT_04: []
+    DAT_24: 0
+    DAT_25: 0
+    DAT_26: 0
+    DAT_27: 0
+    DAT_2C: {x: 0, y: 0, z: 0}
+    DAT_32: 0
+    DAT_34: {x: 0, y: 0, z: 0}
+    DAT_3C: {x: 0, y: 0, z: 0}
+  DAT_68: 0
+  DAT_69: 0
+  DAT_6A: 0
+  DAT_6B: 0
+  DAT_70: 0
+  DAT_71: 0
+  DAT_72: 0
+  DAT_73: 0
+  DAT_74: 0
+  DAT_76: 0
+  DAT_78: 0
+  DAT_7C: {x: 0, y: 0, z: 0}
+  DAT_82: 0
+  DAT_83: 0
+  DAT_84: {x: 0, y: 0, z: 0}
+  DAT_8A: 0
+  DAT_8B: 0
+  DAT_90: 0
+  DAT_92: 0
 --- !u!1 &1678437247
 GameObject:
   m_ObjectHideFlags: 0

@@ -109,12 +109,21 @@ public class CriCamera : MonoBehaviour
 
     void Start()
     {
-        
+        SceneManager.instance.cCamera = this;
     }
 
     void Update()
     {
-        
+        transform.position = (Vector3)screen / 16f;
+        transform.position = new Vector3(transform.position.x, -transform.position.y, transform.position.z);
+        transform.rotation = Quaternion.Euler((Vector3)vr / 4096f * 360f);
+        transform.eulerAngles = new Vector3
+            (-transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
+    }
+
+    private void FixedUpdate()
+    {
+        FUN_27210();
     }
 
     public void FUN_27210()
@@ -393,9 +402,10 @@ public class CriCamera : MonoBehaviour
                        !GameManager.instance.FUN_768C8(oVar3.screen, pbVar6.DAT_04))
                 {
                     bVar7++;
-                    pbVar6 = param1[bVar7];
 
                     if (SceneManager.instance.motions.MOTIONS.Length <= bVar7) goto LAB_26D98;
+
+                    pbVar6 = param1[bVar7];
                 }
 
                 if (pbVar6.DAT_00 != 0)

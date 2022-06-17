@@ -619,7 +619,7 @@ public class CriPlayer : CriSkinned
         CriStatic local_18;
         byte local_14;
 
-        bVar3 = (byte)((GameManager.instance.DAT_40 ^ 1) & 1);
+        bVar3 = (byte)(((byte)GameManager.instance.DAT_40 ^ 1) & 1);
 
         if (bVar3 != 0)
         {

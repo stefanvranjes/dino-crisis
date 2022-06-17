@@ -54,10 +54,11 @@ public class GameManager : MonoBehaviour
     public byte DAT_21; //gp+21h
     public ushort DAT_28; //gp+28h
     public byte DAT_38; //gp+38h
-    public byte DAT_40; //gp+40h
+    public uint DAT_40; //gp+40h
     public Vector3Int playerSpawnPos; //gp+4ch
     public short playerSpawnRotY; //gp+52h
     public byte DAT_55; //gp+55h
+    public bool DAT_6D; //gp+6dh
     public FUN_148 PTR_FUN_148; //gp+148h
     public FUN_14C PTR_FUN_14C; //gp+14ch
     public byte DAT_9AA0; //gp+9aa0h
@@ -164,6 +165,178 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         FUN_7302C();
+    }
+
+    public void FUN_1A8AC()
+    {
+        bool bVar3;
+        CriPlayer oVar4;
+        byte bVar5;
+        bool bVar6;
+        TriggerScriptableObject tVar6;
+        uint uVar7;
+        bool bVar8;
+        Vector3Int psVar9;
+        byte bVar10;
+        Vector3Int local_20;
+
+        bVar3 = false;
+        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        if (!DAT_6D && (DAT_40 & 0x20) == 0 && oVar4.DAT_11E == 0)
+        {
+            //FUN_4A87C
+            bVar6 = false; //tmp
+
+            if (!bVar6)
+            {
+                local_20 = new Vector3Int(0, 0, 400);
+                Utilities.RotMatrix(ref oVar4.vr, ref oVar4.cTransform.rotation);
+                local_20 = Utilities.ApplyMatrixSV(ref oVar4.cTransform.rotation, ref local_20);
+                bVar10 = 0;
+                local_20.x += oVar4.screen.x;
+                local_20.y += oVar4.screen.y;
+                local_20.z += oVar4.screen.z;
+                uVar7 = 0;
+
+                do
+                {
+                    tVar6 = SceneManager.instance.triggers[uVar7];
+
+                    if (tVar6 != null && tVar6.DAT_13 != 0 &&
+                        tVar6.DAT_12 == oVar4.DAT_48)
+                    {
+                        psVar9 = local_20;
+
+                        if ((tVar6.DAT_11 & 1) == 0)
+                            psVar9 = oVar4.screen;
+
+                        bVar8 = FUN_768C8(psVar9, tVar6.DAT_00);
+
+                        if (bVar8)
+                            bVar3 = true;
+
+                        if (bVar3)
+                        {
+                            bVar3 = false;
+
+                            if ((tVar6.DAT_11 & 2) == 0)
+                            {
+                                bVar5 = tVar6.DAT_10;
+
+                                if (bVar5 != 4 || 3 < bVar10)
+                                {
+                                    if (bVar5 != 2)
+                                        oVar4.DAT_34 = oVar4.screen;
+
+                                    //...
+                                    bVar8 = false; //tmp
+
+                                    if (!bVar8) break;
+                                }
+                                else
+                                {
+                                    //FUN_4A87C
+                                    bVar8 = false; //tmp
+
+                                    if (!bVar8)
+                                    {
+                                        bVar5 = tVar6.DAT_10;
+
+                                        if (bVar5 != 2)
+                                            oVar4.DAT_34 = oVar4.screen;
+
+                                        //...
+                                        bVar8 = false; //tmp
+
+                                        if (!bVar8) break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                //FUN_4A87C
+                                bVar8 = false; //tmp
+
+                                if (bVar8)
+                                {
+                                    //FUN_4A7E8
+                                    bVar5 = tVar6.DAT_10;
+
+                                    if (bVar5 != 2)
+                                        oVar4.DAT_34 = oVar4.screen;
+
+                                    //...
+                                    bVar8 = false; //tmp
+
+                                    if (!bVar8) break;
+                                }
+                            }
+                        }
+                    }
+
+                    bVar10++;
+                    uVar7 = bVar10;
+                } while (bVar10 < 0x20);
+
+                //FUN_4A7E8
+                //FUN_4A7E8
+            }
+            else
+            {
+                //...
+            }
+        }
+    }
+
+    private bool FUN_1AB50(TriggerScriptableObject param1)
+    {
+        bool bVar1;
+        byte bVar3;
+
+        InventoryManager.FUN_4A7E8(1, 0xb, true);
+        bVar3 = param1.DAT_24;
+
+        if (bVar3 < 9)
+        {
+            if (5 < bVar3)
+            {
+                bVar3 = 0;
+                bVar1 = InventoryManager.FUN_4A87C(11, 0x38);
+
+                if (bVar1)
+                    bVar3 = 6;
+
+                bVar1 = InventoryManager.FUN_4A87C(11, 0x39);
+
+                if (bVar1)
+                    bVar3 = 7;
+
+                bVar1 = InventoryManager.FUN_4A87C(11, 0x3a);
+
+                if (bVar1)
+                    bVar3 = 8;
+
+                if (bVar3 < (uint)param1.DAT_24)
+                {
+                    DialogManager.instance.FUN_1BAB4(0, param1);
+                    //sound
+                    DialogManager.instance.FUN_1BCA4(DialogManager.DAT_98628, 1190);
+                    DialogManager.instance.DAT_B12C0[41] = (ushort)(DialogManager.DAT_98628
+                        [DialogManager.DAT_98594[1]] - (param1.DAT_24 - 6 << 1));
+                    DialogManager.instance.FUN_1E2D8(DialogManager.instance.DAT_B12C0, 0, 0, 0xffff);
+                    DialogManager.instance.DAT_B1390++;
+                    return false;
+                }
+
+                InventoryManager.FUN_4A7E8(9, param1.DAT_23, true);
+                //sound
+                DialogManager.instance.FUN_1BAB4(7, param1);
+                return false;
+            }
+        }
+
+        return false;
     }
 
     public Vector2Int[] FUN_813F0(Vector2Int[] param1, WallCollider param2)

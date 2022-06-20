@@ -37,6 +37,7 @@ public class CriStatic : CriObject
     {
         base.ResetValues();
         cMesh = null;
+        cCollider = null;
         DAT_48 = 0;
         DAT_4A = 0;
     }

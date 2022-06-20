@@ -6,8 +6,9 @@ public class SceneManager : MonoBehaviour
 {
     public static SceneManager instance;
 
-    public ScnScriptableObject scn;
+    public ScnScriptableObject scn; //gp+268h
     public DatabaseScriptableObject database;
+    public byte[] DAT_AC; //gp+ach
     public CriCamera cCamera; //gp+b4h
     public SceneColliderScriptableObject sceneCollision; //gp+154h
     public SceneCameraScriptableObject motions; //gp+164h, gp+160h -> motions.Length
@@ -305,6 +306,40 @@ public class SceneManager : MonoBehaviour
             oVar1.screen.z = param4;
             oVar1.DAT_84.z = param4;
         }
+    }
+
+    public byte FUN_47864()
+    {
+        byte bVar1;
+        uint uVar2;
+        int puVar3;
+        int iVar4;
+
+        bVar1 = (byte)GameManager.FUN_64650();
+        puVar3 = 0;
+
+        if (GameManager.instance.DAT_9AAA < 4U)
+        {
+            iVar4 = 2;
+
+            if (2U < GameManager.instance.DAT_9AAA)
+                iVar4 = 1;
+        }
+        else
+            iVar4 = 0;
+
+        uVar2 = 0;
+
+        while(DAT_AC[puVar3 + iVar4 + 1] == 0 || DAT_AC[puVar3 + iVar4 + 1] < (bVar1 & 0x1fU))
+        {
+            uVar2++;
+            puVar3 += 4;
+
+            if (11 < uVar2)
+                return 0;
+        }
+
+        return DAT_AC[puVar3];
     }
 
     public void FUN_47BE0()

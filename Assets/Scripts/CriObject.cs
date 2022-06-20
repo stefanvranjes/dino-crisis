@@ -240,6 +240,7 @@ public class CriObject : MonoBehaviour
     public sbyte tags; //0x27
     public Vector3Int vr; //0x28
     public byte DAT_2E; //0x2E
+    public byte DAT_2F; //0x2F
     public uint flags; //0x30
 
     protected virtual void Awake()
@@ -271,6 +272,7 @@ public class CriObject : MonoBehaviour
         tags = 0;
         vr = Vector3Int.zero;
         DAT_2E = 0;
+        DAT_2F = 0;
         flags = 0;
     }
 

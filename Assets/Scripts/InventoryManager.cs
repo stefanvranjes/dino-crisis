@@ -55,6 +55,22 @@ public class InventoryManager : MonoBehaviour
         
     }
 
+    public static void FUN_1BBCC()
+    {
+        FUN_4A7E8(2, 0xe, false);
+        FUN_4A7E8(1, 0, false);
+        FUN_4A7E8(1, 1, false);
+        FUN_4A7E8(1, 2, false);
+        FUN_4A7E8(1, 3, false);
+        FUN_4A7E8(1, 6, false);
+        FUN_4A7E8(1, 7, false);
+        FUN_4A7E8(1, 10, false);
+        FUN_4A7E8(1, 0xb, false);
+        FUN_4A7E8(1, 0xc, false);
+        FUN_4A7E8(1, 0xd, false);
+        FUN_4A7E8(1, 0xe, false);
+    }
+
     public static void FUN_4A7E8(int param1, uint param2, bool param3)
     {
         uint puVar1;
@@ -67,7 +83,7 @@ public class InventoryManager : MonoBehaviour
             return;
         }
         
-        PTR_DAT_9CD18[param1][puVar1] |= 1U << (int)(param2 & 0x1f));
+        PTR_DAT_9CD18[param1][puVar1] |= 1U << (int)(param2 & 0x1f);
 
         if (param1 == 1 && param2 == 2)
         {

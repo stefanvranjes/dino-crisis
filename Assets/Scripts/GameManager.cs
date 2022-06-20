@@ -51,9 +51,12 @@ public class GameManager : MonoBehaviour
     public Vector3Int DAT_1f800388;
     public Vector3Int DAT_1f800390;
     public List<Vector3Int> todUncomp;
+    public byte DAT_20; //gp+20h
     public byte DAT_21; //gp+21h
     public ushort DAT_28; //gp+28h
+    public ushort DAT_2E; //gp+2eh
     public byte DAT_38; //gp+38h
+    public byte DAT_39; //gp+39h
     public uint DAT_40; //gp+40h
     public Vector3Int playerSpawnPos; //gp+4ch
     public short playerSpawnRotY; //gp+52h
@@ -64,7 +67,16 @@ public class GameManager : MonoBehaviour
     public byte DAT_9AA0; //gp+9aa0h
     public byte DAT_9AA1; //gp+9aa1h
     public _DIFFICULTY difficulty; //gp+9aa8h
+    public byte DAT_9AAA; //gp+9aaah
     public byte DAT_9ADD; //gp+9addh
+    public byte DAT_9ADE; //gp+9adeh
+    public byte[] DAT_9EAC; //gp+9each
+    public byte DAT_9EE8; //gp+9ee8h
+    public byte DAT_9EE9; //gp+9ee9h
+    public byte DAT_9EEA; //gp+9eeah
+    public byte DAT_9EEB; //gp+9eebh
+    public byte[] DAT_A090; //gp+a090h
+    public ushort DAT_A0E0; //gp+a0e0h
     public short playerHealth; //gp+a0f0h
     public short DAT_A0F2; //gp+a0f2h
     public uint DAT_A0F4; //gp+a0f4h
@@ -134,6 +146,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
 
+        DAT_A090 = new byte[80];
         DAT_A0F8 = new ushort[3];
         PTR_FUN_AA4D0 = new FUN_AA4D0[3]
         {
@@ -185,8 +198,7 @@ public class GameManager : MonoBehaviour
 
         if (!DAT_6D && (DAT_40 & 0x20) == 0 && oVar4.DAT_11E == 0)
         {
-            //FUN_4A87C
-            bVar6 = false; //tmp
+            bVar6 = InventoryManager.FUN_4A87C(2, 0xe);
 
             if (!bVar6)
             {
@@ -203,7 +215,7 @@ public class GameManager : MonoBehaviour
                 {
                     tVar6 = SceneManager.instance.triggers[uVar7];
 
-                    if (tVar6 != null && tVar6.DAT_13 != 0 &&
+                    if (tVar6 != null && tVar6.DAT_13 &&
                         tVar6.DAT_12 == oVar4.DAT_48)
                     {
                         psVar9 = local_20;
@@ -229,15 +241,13 @@ public class GameManager : MonoBehaviour
                                     if (bVar5 != 2)
                                         oVar4.DAT_34 = oVar4.screen;
 
-                                    //...
-                                    bVar8 = false; //tmp
+                                    bVar8 = DialogManager.instance.PTR_FUN_99028[tVar6.DAT_10](tVar6);
 
                                     if (!bVar8) break;
                                 }
                                 else
                                 {
-                                    //FUN_4A87C
-                                    bVar8 = false; //tmp
+                                    bVar8 = InventoryManager.FUN_4A87C(1, 2);
 
                                     if (!bVar8)
                                     {
@@ -246,8 +256,7 @@ public class GameManager : MonoBehaviour
                                         if (bVar5 != 2)
                                             oVar4.DAT_34 = oVar4.screen;
 
-                                        //...
-                                        bVar8 = false; //tmp
+                                        bVar8 = DialogManager.instance.PTR_FUN_99028[tVar6.DAT_10](tVar6);
 
                                         if (!bVar8) break;
                                     }
@@ -255,19 +264,17 @@ public class GameManager : MonoBehaviour
                             }
                             else
                             {
-                                //FUN_4A87C
-                                bVar8 = false; //tmp
+                                bVar8 = InventoryManager.FUN_4A87C(2, 8);
 
                                 if (bVar8)
                                 {
-                                    //FUN_4A7E8
+                                    InventoryManager.FUN_4A7E8(2, 8, false);
                                     bVar5 = tVar6.DAT_10;
 
                                     if (bVar5 != 2)
                                         oVar4.DAT_34 = oVar4.screen;
 
-                                    //...
-                                    bVar8 = false; //tmp
+                                    bVar8 = DialogManager.instance.PTR_FUN_99028[tVar6.DAT_10](tVar6);
 
                                     if (!bVar8) break;
                                 }
@@ -279,64 +286,14 @@ public class GameManager : MonoBehaviour
                     uVar7 = bVar10;
                 } while (bVar10 < 0x20);
 
-                //FUN_4A7E8
-                //FUN_4A7E8
+                InventoryManager.FUN_4A7E8(2, 8, false);
+                InventoryManager.FUN_4A7E8(2, 0x10, false);
             }
             else
             {
                 //...
             }
         }
-    }
-
-    private bool FUN_1AB50(TriggerScriptableObject param1)
-    {
-        bool bVar1;
-        byte bVar3;
-
-        InventoryManager.FUN_4A7E8(1, 0xb, true);
-        bVar3 = param1.DAT_24;
-
-        if (bVar3 < 9)
-        {
-            if (5 < bVar3)
-            {
-                bVar3 = 0;
-                bVar1 = InventoryManager.FUN_4A87C(11, 0x38);
-
-                if (bVar1)
-                    bVar3 = 6;
-
-                bVar1 = InventoryManager.FUN_4A87C(11, 0x39);
-
-                if (bVar1)
-                    bVar3 = 7;
-
-                bVar1 = InventoryManager.FUN_4A87C(11, 0x3a);
-
-                if (bVar1)
-                    bVar3 = 8;
-
-                if (bVar3 < (uint)param1.DAT_24)
-                {
-                    DialogManager.instance.FUN_1BAB4(0, param1);
-                    //sound
-                    DialogManager.instance.FUN_1BCA4(DialogManager.DAT_98628, 1190);
-                    DialogManager.instance.DAT_B12C0[41] = (ushort)(DialogManager.DAT_98628
-                        [DialogManager.DAT_98594[1]] - (param1.DAT_24 - 6 << 1));
-                    DialogManager.instance.FUN_1E2D8(DialogManager.instance.DAT_B12C0, 0, 0, 0xffff);
-                    DialogManager.instance.DAT_B1390++;
-                    return false;
-                }
-
-                InventoryManager.FUN_4A7E8(9, param1.DAT_23, true);
-                //sound
-                DialogManager.instance.FUN_1BAB4(7, param1);
-                return false;
-            }
-        }
-
-        return false;
     }
 
     public Vector2Int[] FUN_813F0(Vector2Int[] param1, WallCollider param2)

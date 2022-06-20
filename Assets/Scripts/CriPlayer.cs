@@ -3013,6 +3013,56 @@ public class CriPlayer : CriSkinned
         oVar1.DAT_43 = false;
     }
 
+    public void FUN_5397C(byte param1)
+    {
+        DAT_1C5 = param1;
+    }
+
+    public void FUN_53A2C(uint param1, uint param2)
+    {
+        uint uVar1;
+
+        DAT_1C0 &= 0xfffffff7;
+        uVar1 = param1;
+
+        if ((param1 & 0xf0) != 0)
+        {
+            if ((param1 & 0xe0) == 0x20)
+                uVar1 = 0;
+
+            if ((param1 & 0xe0) == 0x40)
+                uVar1 = 1;
+
+            if ((param1 & 0x10) != 0)
+                uVar1 += 2;
+        }
+
+        if (0 < health)
+        {
+            if ((param1 & 0xe0) == 0x60)
+            {
+                uVar1 = ((param1 & 0xf0) >> 4 & 1) * 0x10000 + 0x202;
+                DAT_3C = (byte)uVar1;
+                DAT_3D = (byte)(uVar1 >> 8);
+                DAT_3E = (byte)(uVar1 >> 0x10);
+                DAT_3F = (byte)(uVar1 >> 0x18);
+                return;
+            }
+
+            uVar1 = ((uVar1 & 0xff) << 4 | param2 & 0xff) * 0x10000 + 2;
+            DAT_3C = (byte)uVar1;
+            DAT_3D = (byte)(uVar1 >> 8);
+            DAT_3E = (byte)(uVar1 >> 0x10);
+            DAT_3F = (byte)(uVar1 >> 0x18);
+            return;
+        }
+
+        DAT_3C = 3;
+        DAT_3D = 0;
+        DAT_3E = 0;
+        DAT_3F = 0;
+    }
+
     private void FUN_53B30()
     {
         PTR_FUN_9D0C8[DAT_3D]();

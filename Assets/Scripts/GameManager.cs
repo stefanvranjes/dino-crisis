@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_9AAA; //gp+9aaah
     public byte DAT_9ADD; //gp+9addh
     public byte DAT_9ADE; //gp+9adeh
+    public byte DAT_9ADF; //gp+9adfh
     public byte[] DAT_9EAC; //gp+9each
     public byte DAT_9EE8; //gp+9ee8h
     public byte DAT_9EE9; //gp+9ee9h
@@ -290,9 +291,8 @@ public class GameManager : MonoBehaviour
                 InventoryManager.FUN_4A7E8(2, 0x10, false);
             }
             else
-            {
-                //...
-            }
+                DialogManager.instance.PTR_FUN_99058
+                    [DialogManager.instance.DAT_B138C](DialogManager.instance.DAT_B1388);
         }
     }
 

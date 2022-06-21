@@ -46,7 +46,9 @@ public class DialogManager : MonoBehaviour
     public static ushort[] DAT_9F0EC;
     public static ushort[] DAT_A593C;
     public delegate bool FUN_99028(TriggerScriptableObject t);
+    public delegate void FUN_99058(TriggerScriptableObject t);
     public FUN_99028[] PTR_FUN_99028;
+    public FUN_99058[] PTR_FUN_99058;
 
     private void Awake()
     {
@@ -67,6 +69,17 @@ public class DialogManager : MonoBehaviour
                 FUN_1B9DC,
                 FUN_1BA04,
                 FUN_1BA74
+            };
+            PTR_FUN_99058 = new FUN_99058[8]
+            {
+                FUN_1BD1C,
+                FUN_1BD58,
+                FUN_1C040,
+                FUN_1C3B0,
+                FUN_1C580,
+                FUN_1C888,
+                FUN_1CA74,
+                FUN_1CBA4
             };
         }
     }
@@ -626,6 +639,464 @@ public class DialogManager : MonoBehaviour
         LAB_1BFE0:
         FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
         DAT_B1390++;
+    }
+
+    private void FUN_1C040(TriggerScriptableObject param1)
+    {
+        CriPlayer oVar1;
+        bool bVar1;
+
+        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        switch (DAT_B1390)
+        {
+            case 0:
+                InventoryManager.FUN_4A7E8(1, 0, false);
+                InventoryManager.FUN_4A7E8(1, 1, true);
+                oVar1.DAT_3C = 4;
+                oVar1.DAT_3D = 0;
+                oVar1.DAT_3E = 0;
+                oVar1.DAT_3F = 0;
+                oVar1.DAT_40 = new Vector3Int(0, 0, 0);
+                oVar1.FUN_6103C(SceneManager.instance.database.DAT_1860CC, 0, 0, 10);
+                DAT_B1391 = 30;
+                goto LAB_1C360;
+            case 1:
+                DAT_B1391--;
+
+                if (DAT_B1391 == 0)
+                {
+                    if (GameManager.instance.DAT_9ADF == 0)
+                    {
+                        FUN_1BCA4(DAT_98628, 477);
+                        FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
+                        GameManager.instance.DAT_9ADF = param1.DAT_18;
+                        InventoryManager.FUN_4A7E8(11, 0x41, false);
+                        InventoryManager.FUN_4A7E8(11, 0x42, true);
+                        DAT_B1390 = 2;
+                    }
+                    else
+                    {
+                        FUN_1BCA4(DAT_98628, 516);
+                        FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
+                        DAT_B1390 = 3;
+                    }
+                }
+
+                break;
+            case 2:
+                bVar1 = InventoryManager.FUN_4A87C(2, 0);
+
+                if (bVar1)
+                    return;
+
+                goto LAB_1C28C;
+            case 3:
+                bVar1 = InventoryManager.FUN_4A87C(2, 0);
+
+                if (bVar1)
+                    return;
+
+                InventoryManager.FUN_4A7E8(11, 0x41, false);
+                InventoryManager.FUN_4A7E8(11, 0x42, true);
+                bVar1 = InventoryManager.FUN_4A87C(2, 4);
+
+                if (bVar1)
+                {
+                    //sound
+                    DAT_B1390++;
+                    GameManager.instance.DAT_9ADF = param1.DAT_18;
+                }
+
+                bVar1 = InventoryManager.FUN_4A87C(2, 5);
+
+                if (!bVar1)
+                    return;
+
+                LAB_1C28C:
+                DAT_B1390 = 6;
+                break;
+            case 4:
+                DAT_B138D = 0;
+                FUN_1BCA4(DAT_98628, 477);
+                FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
+                goto LAB_1C2E8;
+            case 5:
+                bVar1 = InventoryManager.FUN_4A87C(2, 0);
+
+                if (bVar1)
+                    return;
+
+                LAB_1C2E8:
+                DAT_B1390++;
+                break;
+            case 6:
+                InventoryManager.FUN_4A7E8(1, 0, false);
+                InventoryManager.FUN_4A7E8(1, 1, true);
+                oVar1.DAT_3C = 4;
+                oVar1.DAT_3D = 0;
+                oVar1.DAT_3E = 0;
+                oVar1.DAT_3F = 0;
+                oVar1.DAT_40 = new Vector3Int(0, 0, 0);
+                oVar1.FUN_6103C(SceneManager.instance.database.DAT_1860CC, 2, 0x18, 10);
+                DAT_B1391 = 25;
+                LAB_1C360:
+                DAT_B1390++;
+                break;
+            case 7:
+                DAT_B1391--;
+
+                if (DAT_B1391 == 0)
+                {
+                    oVar1.DAT_3C = 1;
+                    oVar1.DAT_3D = 0;
+                    oVar1.DAT_3E = 0;
+                    oVar1.DAT_3F = 0;
+                    InventoryManager.FUN_1BBCC();
+                }
+
+                break;
+        }
+    }
+
+    private void FUN_1C3B0(TriggerScriptableObject param1)
+    {
+        int iVar1;
+        bool bVar2;
+        CriPlayer oVar2;
+
+        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        if (DAT_B1390 == 1)
+        {
+            bVar2 = InventoryManager.FUN_4A87C(2, 0);
+
+            if (!bVar2)
+            {
+                if ((param1.DAT_1F & 0x80) == 0)
+                    InventoryManager.FUN_1BBCC();
+                else
+                {
+                    InventoryManager.FUN_4A7E8(2, 0xe, true);
+                    DAT_B1390 = 2;
+                }
+            }
+        }
+        else
+        {
+            if (DAT_B1390 < 2)
+            {
+                if (DAT_B1390 != 0)
+                    return;
+
+                FUN_1BCA4(DAT_98628, 602);
+                iVar1 = FUN_67988(DAT_B138E);
+                FUN_1BCA4(DAT_9F0EC, iVar1);
+                FUN_1BCA4(DAT_98628, 4);
+                FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
+            }
+            else
+            {
+                if (DAT_B1390 != 2)
+                {
+                    if (DAT_B1390 != 3)
+                        return;
+
+                    DAT_B1391--;
+
+                    if (DAT_B1391 != 0)
+                        return;
+
+                    InventoryManager.FUN_1BBCC();
+                    oVar2.DAT_3C = 1;
+                    oVar2.DAT_3D = 0;
+                    oVar2.DAT_3E = 0;
+                    oVar2.DAT_3F = 0;
+                    return;
+                }
+
+                InventoryManager.FUN_4A7E8(1, 0, false);
+                InventoryManager.FUN_4A7E8(1, 1, true);
+                oVar2.FUN_6103C(SceneManager.instance.database.DAT_1860CC, 2, 25, 10);
+                DAT_B1391 = 30;
+            }
+
+            DAT_B1390++;
+        }
+    }
+
+    private void FUN_1C580(TriggerScriptableObject param1)
+    {
+        int iVar1;
+        uint uVar2;
+        int iVar3;
+        bool bVar3;
+        byte bVar4;
+
+        bVar4 = 0;
+
+        if (DAT_B1390 == 1)
+        {
+            bVar3 = InventoryManager.FUN_4A87C(2, 0);
+
+            if (bVar3)
+                return;
+
+            bVar3 = InventoryManager.FUN_4A87C(2, 4);
+
+            if (!bVar3)
+            {
+                InventoryManager.FUN_1BBCC();
+                return;
+            }
+
+            //sound
+            iVar3 = 897;
+            DAT_B138D = 0;
+        }
+        else
+        {
+            if (1 < DAT_B1390)
+            {
+                if (DAT_B1390 == 2)
+                {
+                    bVar3 = InventoryManager.FUN_4A87C(2, 0);
+
+                    if (bVar3)
+                        return;
+                }
+                else
+                {
+                    if (DAT_B1390 != 3)
+                        return;
+
+                    bVar3 = InventoryManager.FUN_4A87C(2, 0);
+
+                    if (bVar3)
+                        return;
+
+                    bVar3 = InventoryManager.FUN_4A87C(2, 4);
+
+                    if (bVar3)
+                    {
+                        //sound
+                        bVar3 = InventoryManager.FUN_4A87C(param1.DAT_18, param1.DAT_19);
+
+                        if (!bVar3)
+                        {
+                            iVar1 = param1.DAT_18;
+                            uVar2 = param1.DAT_19;
+                        }
+                        else
+                        {
+                            iVar1 = param1.DAT_18;
+                            uVar2 = param1.DAT_19;
+                        }
+
+                        InventoryManager.FUN_4A7E8(iVar1, uVar2, !bVar3);
+                    }
+                }
+
+                InventoryManager.FUN_1BBCC();
+                return;
+            }
+
+            if (DAT_B1390 != 0)
+                return;
+
+            bVar3 = InventoryManager.FUN_4A87C(0, param1.DAT_1B);
+
+            if (bVar3)
+            {
+                if (param1.DAT_1A == 0)
+                {
+                    FUN_1BCA4(DAT_98628, 867);
+                    FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
+                }
+                else
+                {
+                    bVar3 = InventoryManager.FUN_4A87C(11, 0x38);
+
+                    if (bVar3)
+                        bVar4 = 6;
+
+                    bVar3 = InventoryManager.FUN_4A87C(11, 0x39);
+
+                    if (bVar3)
+                        bVar4 = 7;
+
+                    bVar3 = InventoryManager.FUN_4A87C(11, 0x3a);
+
+                    if (bVar3)
+                        bVar4 = 8;
+
+                    if (bVar4 < param1.DAT_1A)
+                    {
+                        //sound
+                        FUN_1BCA4(DAT_98628, 1110);
+                        DAT_B12C0[41] = (ushort)(DAT_98628[DAT_98594[1]] - (param1.DAT_1A - 6 * 2));
+                        FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
+                        DAT_B1390 = 2;
+                        return;
+                    }
+
+                    FUN_1BCA4(DAT_98628, 867);
+                    FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
+                    //sound
+                }
+
+                DAT_B1390 = 3;
+                return;
+            }
+
+            iVar3 = 867;
+        }
+
+        FUN_1BCA4(DAT_98628, iVar3);
+        FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
+        DAT_B1390++;
+    }
+
+    private void FUN_1C888(TriggerScriptableObject param1)
+    {
+        int iVar1;
+        bool bVar2;
+        CriPlayer oVar2;
+
+        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        if (DAT_B1390 == 1)
+        {
+            bVar2 = InventoryManager.FUN_4A87C(2, 0);
+
+            if (!bVar2)
+            {
+                bVar2 = InventoryManager.FUN_4A87C(2, 4);
+
+                if (!bVar2)
+                {
+                    if ((param1.DAT_1F & 0x80) == 0)
+                        InventoryManager.FUN_1BBCC();
+                    else
+                        DAT_B1390 = 2;
+                }
+                else
+                {
+                    InventoryManager.FUN_1BBCC();
+                    FUN_1B550(param1);
+                }
+            }
+        }
+        else
+        {
+            if (DAT_B1390 < 2)
+            {
+                if (DAT_B1390 != 0)
+                    return;
+
+                FUN_1BCA4(DAT_98628, 966);
+                iVar1 = FUN_67988(DAT_B138E);
+                FUN_1BCA4(DAT_9F0EC, iVar1);
+                FUN_1BCA4(DAT_98628, 6);
+                FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
+            }
+            else
+            {
+                if (DAT_B1390 != 2)
+                {
+                    if (DAT_B1390 != 3)
+                        return;
+
+                    DAT_B1391--;
+
+                    if (DAT_B1391 != 0)
+                        return;
+
+                    InventoryManager.FUN_1BBCC();
+                    oVar2.DAT_3C = 1;
+                    oVar2.DAT_3D = 0;
+                    oVar2.DAT_3E = 0;
+                    oVar2.DAT_3F = 0;
+                    return;
+                }
+
+                InventoryManager.FUN_4A7E8(1, 0, false);
+                InventoryManager.FUN_4A7E8(1, 1, true);
+                oVar2.FUN_6103C(SceneManager.instance.database.DAT_1860CC, 2, 25, 10);
+                DAT_B1391 = 30;
+            }
+
+            DAT_B1390++;
+        }
+    }
+
+    private void FUN_1CA74(TriggerScriptableObject param1)
+    {
+        CriPlayer oVar1;
+
+        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        if (DAT_B1390 == 1)
+        {
+            oVar1.DAT_3C = 4;
+            oVar1.DAT_3D = 0;
+            oVar1.DAT_3E = 0;
+            oVar1.DAT_3F = 0;
+            oVar1.DAT_40 = new Vector3Int(0, 0, 0);
+            oVar1.FUN_6103C(SceneManager.instance.database.DAT_1860CC, 0, 0, 10);
+            DAT_B1391 = 30;
+            DAT_B1390++;
+        }
+        else
+        {
+            if (DAT_B1390 < 2)
+            {
+                if (DAT_B1390 == 0)
+                {
+                    InventoryManager.FUN_4A7E8(1, 0, false);
+                    InventoryManager.FUN_4A7E8(1, 1, true);
+
+                    if ((param1.DAT_1F & 0x80) != 0)
+                        DAT_B1390 = 1;
+                }
+            }
+            else
+            {
+                if (DAT_B1390 == 2)
+                {
+                    DAT_B1391--;
+
+                    if (DAT_B1391 == 0)
+                    {
+                        InventoryManager.FUN_1BBCC();
+                        FUN_1B4CC(param1);
+                    }
+                }
+            }
+        }
+    }
+
+    private void FUN_1CBA4(TriggerScriptableObject param1)
+    {
+        if (DAT_B1390 == 0)
+        {
+            InventoryManager.FUN_4A7E8(1, 0, false);
+            InventoryManager.FUN_4A7E8(1, 3, false);
+            DAT_B1391 = 30;
+            DAT_B1390++;
+        }
+        else
+        {
+            if (DAT_B1390 == 1)
+            {
+                DAT_B1391--;
+
+                if (DAT_B1391 == 0)
+                {
+                    InventoryManager.FUN_1BBCC();
+                    //FUN_1AFC4
+                }
+            }
+        }
     }
 
     private void FUN_1B4CC(TriggerScriptableObject param1)

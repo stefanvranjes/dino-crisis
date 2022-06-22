@@ -13,10 +13,20 @@ public class SceneManager : MonoBehaviour
     public SceneColliderScriptableObject sceneCollision; //gp+154h
     public SceneCameraScriptableObject motions; //gp+164h, gp+160h -> motions.Length
     public TriggerScriptableObject[] triggers; //gp+1e8h
+    public byte DAT_270; //gp+270h
     public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriObject[] DAT_5FCC; //gp+5fcch...gp+7cdch
     public CriStatic[] DAT_7CDC; //gp+7cdch...gp+8ffch
+    public int DAT_C51B8;
+    public int DAT_C51BC;
+    public int DAT_C51C0;
+    public int DAT_C51C4;
+    public int DAT_C51C8;
+    public int DAT_C51CC;
+    public int DAT_C51D0;
+    public int DAT_C51D4;
+    public CriMovie[] DAT_D7C0; //gp+d7c0h...gp+dea0h (0x800C51E0)
 
     private byte[] DAT_AA484 = new byte[]
     {
@@ -51,6 +61,7 @@ public class SceneManager : MonoBehaviour
         DAT_1C9C = new CriBone[100];
         DAT_5FCC = new CriObject[60];
         DAT_7CDC = new CriStatic[40];
+        DAT_D7C0 = new CriMovie[10];
 
         for (int i = 0; i < scn.staticObjs.Count; i++)
         {
@@ -63,6 +74,12 @@ public class SceneManager : MonoBehaviour
             DAT_1C9C[i] = obj.AddComponent<CriBone>();
         }
 
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            DAT_D7C0[i] = obj.AddComponent<CriMovie>();
+        }
+
         FUN_47BE0();
     }
 
@@ -70,6 +87,194 @@ public class SceneManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void FUN_1A8AC()
+    {
+        bool bVar3;
+        CriPlayer oVar4;
+        byte bVar5;
+        bool bVar6;
+        TriggerScriptableObject tVar6;
+        uint uVar7;
+        bool bVar8;
+        Vector3Int psVar9;
+        byte bVar10;
+        Vector3Int local_20;
+
+        bVar3 = false;
+        oVar4 = (CriPlayer)DAT_27C[10];
+
+        if (!GameManager.instance.DAT_6D && 
+            (GameManager.instance.DAT_40 & 0x20) == 0 && 
+            oVar4.DAT_11E == 0)
+        {
+            bVar6 = InventoryManager.FUN_4A87C(2, 0xe);
+
+            if (!bVar6)
+            {
+                local_20 = new Vector3Int(0, 0, 400);
+                Utilities.RotMatrix(ref oVar4.vr, ref oVar4.cTransform.rotation);
+                local_20 = Utilities.ApplyMatrixSV(ref oVar4.cTransform.rotation, ref local_20);
+                bVar10 = 0;
+                local_20.x += oVar4.screen.x;
+                local_20.y += oVar4.screen.y;
+                local_20.z += oVar4.screen.z;
+                uVar7 = 0;
+
+                do
+                {
+                    tVar6 = triggers[uVar7];
+
+                    if (tVar6 != null && tVar6.DAT_13 &&
+                        tVar6.DAT_12 == oVar4.DAT_48)
+                    {
+                        psVar9 = local_20;
+
+                        if ((tVar6.DAT_11 & 1) == 0)
+                            psVar9 = oVar4.screen;
+
+                        bVar8 = GameManager.instance.FUN_768C8(psVar9, tVar6.DAT_00);
+
+                        if (bVar8)
+                            bVar3 = true;
+
+                        if (bVar3)
+                        {
+                            bVar3 = false;
+
+                            if ((tVar6.DAT_11 & 2) == 0)
+                            {
+                                bVar5 = tVar6.DAT_10;
+
+                                if (bVar5 != 4 || 3 < bVar10)
+                                {
+                                    if (bVar5 != 2)
+                                        oVar4.DAT_34 = oVar4.screen;
+
+                                    bVar8 = DialogManager.instance.PTR_FUN_99028[tVar6.DAT_10](tVar6);
+
+                                    if (!bVar8) break;
+                                }
+                                else
+                                {
+                                    bVar8 = InventoryManager.FUN_4A87C(1, 2);
+
+                                    if (!bVar8)
+                                    {
+                                        bVar5 = tVar6.DAT_10;
+
+                                        if (bVar5 != 2)
+                                            oVar4.DAT_34 = oVar4.screen;
+
+                                        bVar8 = DialogManager.instance.PTR_FUN_99028[tVar6.DAT_10](tVar6);
+
+                                        if (!bVar8) break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                bVar8 = InventoryManager.FUN_4A87C(2, 8);
+
+                                if (bVar8)
+                                {
+                                    InventoryManager.FUN_4A7E8(2, 8, false);
+                                    bVar5 = tVar6.DAT_10;
+
+                                    if (bVar5 != 2)
+                                        oVar4.DAT_34 = oVar4.screen;
+
+                                    bVar8 = DialogManager.instance.PTR_FUN_99028[tVar6.DAT_10](tVar6);
+
+                                    if (!bVar8) break;
+                                }
+                            }
+                        }
+                    }
+
+                    bVar10++;
+                    uVar7 = bVar10;
+                } while (bVar10 < 0x20);
+
+                InventoryManager.FUN_4A7E8(2, 8, false);
+                InventoryManager.FUN_4A7E8(2, 0x10, false);
+            }
+            else
+                DialogManager.instance.PTR_FUN_99058
+                    [DialogManager.instance.DAT_B138C](DialogManager.instance.DAT_B1388);
+        }
+    }
+
+    public void FUN_555E8()
+    {
+        byte bVar1;
+        ushort uVar2;
+        bool bVar3;
+        CriMovie psVar5;
+        uint uVar6;
+
+        if ((GameManager.instance.DAT_40 & 0x80) == 0)
+        {
+            DAT_C51D0 = Utilities.Rand();
+            uVar6 = 0;
+            do
+            {
+                psVar5 = DAT_D7C0[uVar6];
+                bVar1 = psVar5.DAT_05;
+
+                if (bVar1 == 2)
+                {
+                    uVar2 = psVar5.DAT_00;
+                    psVar5.DAT_00 = (ushort)(uVar2 - 1);
+
+                    if (uVar2 == 1)
+                    {
+                        psVar5.DAT_05 = 1;
+
+                        do
+                        {
+                            //...
+                            bVar3 = true; //tmp
+                        } while (!bVar3);
+                    }
+                }
+                else
+                {
+                    if (bVar1 < 3 && bVar1 == 1)
+                    {
+                        do
+                        {
+                            //...
+                            bVar3 = true; //tmp
+                        } while (!bVar3);
+                    }
+                }
+
+                uVar6++;
+            } while (uVar6 < 10);
+
+            InventoryManager.FUN_4A7E8(2, 0x15, false);
+        }
+    }
+
+    public uint FUN_566B0()
+    {
+        uint uVar1;
+        CriMovie mVar2;
+
+        uVar1 = 1;
+        do
+        {
+            mVar2 = DAT_D7C0[uVar1];
+
+            if (mVar2.DAT_05 == 0)
+                return uVar1;
+
+            uVar1++;
+        } while (uVar1 < 10);
+
+        return 8;
     }
 
     public void FUN_27A1C(Vector3Int param1, Vector3Int param2)

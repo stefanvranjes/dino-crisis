@@ -19,5 +19,6 @@ public class ScnScriptableObject : ScriptableObject
 {
     public string prefabName;
 
+    public Object[] OBJECTS;
     public List<_STATIC_OBJ_DATA> staticObjs;
 }

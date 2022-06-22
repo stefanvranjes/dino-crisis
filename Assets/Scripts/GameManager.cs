@@ -53,21 +53,27 @@ public class GameManager : MonoBehaviour
     public List<Vector3Int> todUncomp;
     public byte DAT_20; //gp+20h
     public byte DAT_21; //gp+21h
-    public ushort DAT_28; //gp+28h
-    public ushort DAT_2E; //gp+2eh
+    public short DAT_28; //gp+28h
+    public short DAT_2A; //gp+2ah
+    public short DAT_2C; //gp+2ch
+    public short DAT_2E; //gp+2eh
     public byte DAT_38; //gp+38h
     public byte DAT_39; //gp+39h
+    public byte DAT_3B; //gp+3bh
     public uint DAT_40; //gp+40h
     public Vector3Int playerSpawnPos; //gp+4ch
     public short playerSpawnRotY; //gp+52h
     public byte DAT_55; //gp+55h
     public bool DAT_6D; //gp+6dh
+    public int DAT_78; //gp+78h
     public FUN_148 PTR_FUN_148; //gp+148h
     public FUN_14C PTR_FUN_14C; //gp+14ch
+    public byte DAT_922C; //gp+922ch
     public byte DAT_9AA0; //gp+9aa0h
     public byte DAT_9AA1; //gp+9aa1h
     public _DIFFICULTY difficulty; //gp+9aa8h
     public byte DAT_9AAA; //gp+9aaah
+    public byte DAT_9ADC; //gp+9adch
     public byte DAT_9ADD; //gp+9addh
     public byte DAT_9ADE; //gp+9adeh
     public byte DAT_9ADF; //gp+9adfh
@@ -179,121 +185,6 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         FUN_7302C();
-    }
-
-    public void FUN_1A8AC()
-    {
-        bool bVar3;
-        CriPlayer oVar4;
-        byte bVar5;
-        bool bVar6;
-        TriggerScriptableObject tVar6;
-        uint uVar7;
-        bool bVar8;
-        Vector3Int psVar9;
-        byte bVar10;
-        Vector3Int local_20;
-
-        bVar3 = false;
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
-
-        if (!DAT_6D && (DAT_40 & 0x20) == 0 && oVar4.DAT_11E == 0)
-        {
-            bVar6 = InventoryManager.FUN_4A87C(2, 0xe);
-
-            if (!bVar6)
-            {
-                local_20 = new Vector3Int(0, 0, 400);
-                Utilities.RotMatrix(ref oVar4.vr, ref oVar4.cTransform.rotation);
-                local_20 = Utilities.ApplyMatrixSV(ref oVar4.cTransform.rotation, ref local_20);
-                bVar10 = 0;
-                local_20.x += oVar4.screen.x;
-                local_20.y += oVar4.screen.y;
-                local_20.z += oVar4.screen.z;
-                uVar7 = 0;
-
-                do
-                {
-                    tVar6 = SceneManager.instance.triggers[uVar7];
-
-                    if (tVar6 != null && tVar6.DAT_13 &&
-                        tVar6.DAT_12 == oVar4.DAT_48)
-                    {
-                        psVar9 = local_20;
-
-                        if ((tVar6.DAT_11 & 1) == 0)
-                            psVar9 = oVar4.screen;
-
-                        bVar8 = FUN_768C8(psVar9, tVar6.DAT_00);
-
-                        if (bVar8)
-                            bVar3 = true;
-
-                        if (bVar3)
-                        {
-                            bVar3 = false;
-
-                            if ((tVar6.DAT_11 & 2) == 0)
-                            {
-                                bVar5 = tVar6.DAT_10;
-
-                                if (bVar5 != 4 || 3 < bVar10)
-                                {
-                                    if (bVar5 != 2)
-                                        oVar4.DAT_34 = oVar4.screen;
-
-                                    bVar8 = DialogManager.instance.PTR_FUN_99028[tVar6.DAT_10](tVar6);
-
-                                    if (!bVar8) break;
-                                }
-                                else
-                                {
-                                    bVar8 = InventoryManager.FUN_4A87C(1, 2);
-
-                                    if (!bVar8)
-                                    {
-                                        bVar5 = tVar6.DAT_10;
-
-                                        if (bVar5 != 2)
-                                            oVar4.DAT_34 = oVar4.screen;
-
-                                        bVar8 = DialogManager.instance.PTR_FUN_99028[tVar6.DAT_10](tVar6);
-
-                                        if (!bVar8) break;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                bVar8 = InventoryManager.FUN_4A87C(2, 8);
-
-                                if (bVar8)
-                                {
-                                    InventoryManager.FUN_4A7E8(2, 8, false);
-                                    bVar5 = tVar6.DAT_10;
-
-                                    if (bVar5 != 2)
-                                        oVar4.DAT_34 = oVar4.screen;
-
-                                    bVar8 = DialogManager.instance.PTR_FUN_99028[tVar6.DAT_10](tVar6);
-
-                                    if (!bVar8) break;
-                                }
-                            }
-                        }
-                    }
-
-                    bVar10++;
-                    uVar7 = bVar10;
-                } while (bVar10 < 0x20);
-
-                InventoryManager.FUN_4A7E8(2, 8, false);
-                InventoryManager.FUN_4A7E8(2, 0x10, false);
-            }
-            else
-                DialogManager.instance.PTR_FUN_99058
-                    [DialogManager.instance.DAT_B138C](DialogManager.instance.DAT_B1388);
-        }
     }
 
     public Vector2Int[] FUN_813F0(Vector2Int[] param1, WallCollider param2)

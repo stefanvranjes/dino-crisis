@@ -1164,7 +1164,7 @@ public class DialogManager : MonoBehaviour
 
         InventoryManager.FUN_4A7E8(iVar1, param1.DAT_1C, true);
         InventoryManager.FUN_4A7E8(11, DAT_B138E, true);
-        GameManager.instance.DAT_2E = (ushort)(DAT_B138E | (param1.DAT_1A | param1.DAT_1B << 8) << 8);
+        GameManager.instance.DAT_2E = (short)(DAT_B138E | (param1.DAT_1A | param1.DAT_1B << 8) << 8);
         InventoryManager.FUN_4A7E8(1, 0xb, false);
         InventoryManager.FUN_4A7E8(2, 0xf, true);
 

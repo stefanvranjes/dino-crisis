@@ -8,6 +8,8 @@ public class CriStatic : CriObject
     public BoxColliderScriptableObject cCollider; //0x44
     public byte DAT_48; //0x48
     public ushort DAT_4A; //0x4A
+    public uint DAT_74;
+    public byte DAT_78;
 
     private List<byte> commandList;
     private List<Vector3> vertexList;
@@ -40,6 +42,8 @@ public class CriStatic : CriObject
         cCollider = null;
         DAT_48 = 0;
         DAT_4A = 0;
+        DAT_74 = 0;
+        DAT_78 = 0;
     }
 
     private void OnRenderObject()

@@ -11,7 +11,9 @@ public class CriCamera : MonoBehaviour
     public short DAT_2E; //0x2E
     public Vector3Int DAT_30; //0x30
     public short DAT_36; //0x36
-    public short DAT_3C; //0x3C
+    public short DAT_38; //0x38
+    public short DAT_3A; //0x3A
+    public ushort DAT_3C; //0x3C
     public short DAT_3E; //0x3E
     public Vector3Int DAT_40; //0x40
     public short DAT_46; //0x46
@@ -20,10 +22,10 @@ public class CriCamera : MonoBehaviour
     public short DAT_52; //0x52
     public short DAT_54; //0x54
     public short DAT_56; //0x56
-    public byte DAT_58; //0x58
-    public byte DAT_59; //0x59
-    public byte DAT_5A; //0x5A
-    public byte DAT_5B; //0x5B
+    public sbyte DAT_58; //0x58
+    public sbyte DAT_59; //0x59
+    public sbyte DAT_5A; //0x5A
+    public sbyte DAT_5B; //0x5B
     public CameraMotion motion; //0x5C
     public byte DAT_68; //0x68
     public byte DAT_69; //0x69
@@ -35,7 +37,7 @@ public class CriCamera : MonoBehaviour
     public byte DAT_73; //0x73
     public short DAT_74; //0x74
     public short DAT_76; //0x76
-    public short DAT_78; //0x78
+    public ushort DAT_78; //0x78
     public Vector3Int DAT_7C; //0x7C
     public byte DAT_82; //0x82
     public byte DAT_83; //0x83
@@ -260,7 +262,7 @@ public class CriCamera : MonoBehaviour
         Utilities.RotMatrixYXZ(ref local_38, ref MStack48);
         local_38.x = 0;
         local_38.y = 0;
-        local_38.z = -DAT_3C;
+        local_38.z = (short)-DAT_3C;
         local_38 = Utilities.ApplyMatrixSV(ref MStack48, ref local_38);
         screen.x = DAT_30.x + local_38.x;
         screen.y = DAT_30.y + local_38.y;
@@ -914,7 +916,7 @@ public class CriCamera : MonoBehaviour
 
     private void FUN_28A0C(CameraMotion param1)
     {
-        byte bVar1;
+        sbyte sVar1;
         CriPlayer oVar2;
         int iVar2;
         int iVar3;
@@ -929,9 +931,9 @@ public class CriCamera : MonoBehaviour
         oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
         local_60 = new Vector3Int();
         local_58 = new Vector3Int();
-        bVar1 = DAT_58;
+        sVar1 = DAT_58;
 
-        if (bVar1 == 1)
+        if (sVar1 == 1)
         {
             local_48 = param1.DAT_34.x - param1.DAT_2C.x;
             local_40 = param1.DAT_34.z - param1.DAT_2C.z;
@@ -954,9 +956,9 @@ public class CriCamera : MonoBehaviour
         }
         else
         {
-            if (bVar1 < 2)
+            if (sVar1 < 2)
             {
-                if (bVar1 != 0) goto LAB_29044;
+                if (sVar1 != 0) goto LAB_29044;
 
                 local_60.x = oVar2.screen.x;
                 local_60.y = oVar2.screen.y - 0x400;
@@ -1011,7 +1013,7 @@ public class CriCamera : MonoBehaviour
             }
             else
             {
-                if (bVar1 != 2) goto LAB_29044;
+                if (sVar1 != 2) goto LAB_29044;
 
                 local_48 = param1.DAT_2C.x - param1.DAT_34.x;
                 local_40 = param1.DAT_2C.z - param1.DAT_34.z;

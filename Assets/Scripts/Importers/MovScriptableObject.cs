@@ -23,11 +23,47 @@ public class MovContainer4 : MovContainer
 {
     public byte DAT_01;
     public byte DAT_02;
+    public byte DAT_03;
 }
 
 public class MovContainer5 : MovContainer4
 {
     public int DAT_04;
+}
+
+public class MovContainer6 : MovContainer4
+{
+    public byte DAT_04;
+    public byte DAT_05;
+    public short DAT_06;
+    public Vector3Int DAT_08;
+    public short DAT_0E;
+    public Tmd2ScriptableObject DAT_10;
+    public TodScriptableObject[] DAT_14;
+}
+
+public class MovContainer7 : MovContainer2
+{
+    public int DAT_04;
+}
+
+public class MovContainer8 : MovContainer4
+{
+    public ushort DAT_04;
+    public TmdScriptableObject DAT_08;
+    public Vector3Int DAT_0C;
+    public Vector3Int DAT_12;
+    public BoxColliderScriptableObject DAT_18;
+}
+
+public class MovContainer9 : MovContainer4
+{
+    public TodScriptableObject DAT_04;
+}
+
+public class MovContainer10 : MovContainer4
+{
+    public TriggerScriptableObject DAT_04;
 }
 
 public class MovScriptableObject : ScriptableObject

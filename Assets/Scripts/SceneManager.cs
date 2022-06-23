@@ -343,7 +343,7 @@ public class SceneManager : MonoBehaviour
     {
         CriCamera oVar1;
         short sVar2;
-        short sVar3;
+        ushort uVar3;
 
         oVar1 = cCamera;
         sVar2 = (short)(cCamera.DAT_26 + cCamera.DAT_2E);
@@ -368,8 +368,8 @@ public class SceneManager : MonoBehaviour
 
         FUN_2669C(ref oVar1.DAT_30, param1, oVar1.DAT_36, ref oVar1.DAT_50,
                   oVar1.DAT_52, ref oVar1.DAT_8B, ref oVar1.DAT_92);
-        sVar3 = (short)Utilities.FUN_2630C(oVar1.DAT_30, oVar1.screen);
-        oVar1.DAT_3C = sVar3;
+        uVar3 = (ushort)Utilities.FUN_2630C(oVar1.DAT_30, oVar1.screen);
+        oVar1.DAT_3C = uVar3;
         oVar1.vr = Utilities.FUN_263CC(oVar1.DAT_30, oVar1.screen);
     }
 

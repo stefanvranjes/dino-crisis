@@ -52,7 +52,11 @@ public class CriSkinned : CriObject
     public short DAT_152; //0x152
     public CriSkinned DAT_154; //0x154
     public byte DAT_162; //0x162
+    public byte DAT_163; //0x163
     public byte DAT_164; //0x164
+    public byte DAT_165; //0x165
+    public byte DAT_166; //0x166
+    public byte DAT_167; //0x167
     public Vector2Int shadowSize; //0x170
     public byte DAT_174; //0x174
     public byte DAT_175; //0x175
@@ -60,12 +64,14 @@ public class CriSkinned : CriObject
     public CriBone[] DAT_184; //0x184
     public byte DAT_18C; //0x18C
     public bool DAT_18D; //0x18D
+    public byte DAT_18E; //0x18E
     public byte DAT_18F; //0x18F
     public int DAT_190; //0x190
     public Vector3Int[] PTR_190; //0x190
     public sbyte DAT_198; //0x198
     public byte DAT_1A3; //0x1A3
     public byte DAT_1A5; //0x1A5
+    public byte DAT_1A7; //0x1A7
 
     private List<byte> commandList;
     private List<Vector3> vertexList;
@@ -194,7 +200,11 @@ public class CriSkinned : CriObject
         DAT_152 = 0;
         DAT_154 = null;
         DAT_162 = 0;
+        DAT_163 = 0;
         DAT_164 = 0;
+        DAT_165 = 0;
+        DAT_166 = 0;
+        DAT_167 = 0;
         shadowSize = Vector2Int.zero;
         DAT_174 = 0;
         DAT_175 = 0;
@@ -203,12 +213,14 @@ public class CriSkinned : CriObject
         DAT_184[1] = null;
         DAT_18C = 0;
         DAT_18D = false;
+        DAT_18E = 0;
         DAT_18F = 0;
         DAT_190 = 0;
         PTR_190 = null;
         DAT_198 = 0;
         DAT_1A3 = 0;
         DAT_1A5 = 0;
+        DAT_1A7 = 0;
     }
 
     public void FUN_60444()

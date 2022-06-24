@@ -556,7 +556,7 @@ public class SceneManager : MonoBehaviour
         GameManager.instance.DAT_28++;
         //FUN_6E6C8
 
-        if (GameManager.instance.DAT_9AA1 != GameManager.instance.DAT_9ADD)
+        if (GameManager.instance.DAT_9AA1 != (byte)(GameManager.instance.DAT_9ADC >> 8))
         {
             //FUN_1802C
         }

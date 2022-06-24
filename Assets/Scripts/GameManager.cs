@@ -73,8 +73,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_9AA1; //gp+9aa1h
     public _DIFFICULTY difficulty; //gp+9aa8h
     public byte DAT_9AAA; //gp+9aaah
-    public byte DAT_9ADC; //gp+9adch
-    public byte DAT_9ADD; //gp+9addh
+    public ushort DAT_9ADC; //gp+9adch
     public byte DAT_9ADE; //gp+9adeh
     public byte DAT_9ADF; //gp+9adfh
     public byte[] DAT_9EAC; //gp+9each

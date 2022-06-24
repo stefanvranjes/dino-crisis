@@ -16,10 +16,14 @@ public class CriMovie : MonoBehaviour
     public short DAT_0E; //0x0E
     public short DAT_10; //0x10
     public short DAT_12; //0x12
+    public short DAT_14; //0x14
+    public short DAT_16; //0x16
     public short DAT_18; //0x18
     public short DAT_1A; //0x1A
     public short DAT_1C; //0x1C
     public short DAT_1E; //0x1E
+    public short DAT_20; //0x20
+    public short DAT_22; //0x22
     public ushort[] DAT_24; //0x24
     public int[] DAT_30; //0x30
     public int[] DAT_44; //0x44
@@ -73,6 +77,393 @@ public class CriMovie : MonoBehaviour
         PTR_58 = new MovScriptableObject[21];
     }
 
+    private void FUN_557B4(uint param1, int param2, int param3)
+    {
+        byte bVar1;
+        short sVar2;
+        ushort uVar3;
+        CriPlayer oVar4;
+        CriStatic oVar5;
+        CriCamera oVar6;
+
+        if (8 < param1 >> 0x10)
+            return;
+
+        bVar1 = (byte)param3;
+        sVar2 = (short)param3;
+        uVar3 = (ushort)param3;
+
+        switch (param1 >> 0x10)
+        {
+            case 0:
+                switch (param2)
+                {
+                    case 0:
+                        GameManager.instance.DAT_78 = param3;
+                        return;
+                    case 1:
+                        GameManager.instance.DAT_922C = bVar1;
+                        return;
+                    case 2:
+                        GameManager.instance.DAT_28 = sVar2;
+                        return;
+                    case 3:
+                        GameManager.instance.DAT_2A = sVar2;
+                        return;
+                    case 4:
+                        GameManager.instance.DAT_2C = sVar2;
+                        return;
+                    case 5:
+                        GameManager.instance.DAT_2E = sVar2;
+                        return;
+                    case 6:
+                        GameManager.instance.DAT_28 = (short)param3;
+                        GameManager.instance.DAT_2A = (short)(param3 >> 0x10);
+                        return;
+                    case 7:
+                        GameManager.instance.DAT_9ADC = uVar3;
+                        return;
+                    case 8:
+                        GameManager.instance.DAT_20 = bVar1;
+                        return;
+                    case 9:
+                        SceneManager.instance.DAT_270 = bVar1;
+                        return;
+                    case 10:
+                        GameManager.instance.DAT_3B = bVar1;
+                        return;
+                    default:
+                        return;
+                }
+            case 1:
+                switch (param2)
+                {
+                    case 0:
+                        SceneManager.instance.DAT_C51D0 = param3;
+                        return;
+                    case 1:
+                        SceneManager.instance.DAT_C51D4 = param3;
+                        return;
+                    case 2:
+                        SceneManager.instance.DAT_C51B8 = param3;
+                        return;
+                    case 3:
+                        SceneManager.instance.DAT_C51BC = param3;
+                        return;
+                    case 4:
+                        SceneManager.instance.DAT_C51C0 = param3;
+                        return;
+                    case 5:
+                        SceneManager.instance.DAT_C51C4 = param3;
+                        return;
+                    case 6:
+                        SceneManager.instance.DAT_C51C8 = param3;
+                        return;
+                    case 7:
+                        SceneManager.instance.DAT_C51CC = param3;
+                        return;
+                    case 8:
+                        DAT_0C = sVar2;
+                        return;
+                    case 9:
+                        DAT_0E = sVar2;
+                        return;
+                    case 10:
+                        DAT_10 = sVar2;
+                        return;
+                    case 11:
+                        DAT_12 = sVar2;
+                        return;
+                    case 12:
+                        DAT_14 = sVar2;
+                        return;
+                    case 13:
+                        DAT_16 = sVar2;
+                        return;
+                    case 14:
+                        DAT_18 = sVar2;
+                        return;
+                    case 15:
+                        DAT_1A = sVar2;
+                        return;
+                    case 16:
+                        DAT_1C = sVar2;
+                        return;
+                    case 17:
+                        DAT_1E = sVar2;
+                        return;
+                    case 18:
+                        DAT_20 = sVar2;
+                        return;
+                    case 19:
+                        DAT_22 = sVar2;
+                        return;
+                    default:
+                        return;
+                }
+            case 2:
+                oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[param1 & 0xffff];
+
+                switch (param2)
+                {
+                    case 0:
+                        oVar4.flags = (uint)param3;
+                        return;
+                    case 1:
+                        oVar4.tags = (sbyte)bVar1;
+                        return;
+                    case 2:
+                        oVar4.DAT_2F = bVar1;
+                        return;
+                    case 3:
+                        oVar4.screen.x = sVar2;
+                        return;
+                    case 4:
+                        oVar4.screen.y = sVar2;
+                        return;
+                    case 5:
+                        oVar4.screen.z = sVar2;
+                        return;
+                    case 6:
+                        oVar4.vr.x = sVar2;
+                        return;
+                    case 7:
+                        oVar4.vr.y = sVar2;
+                        return;
+                    case 8:
+                        oVar4.vr.z = sVar2;
+                        return;
+                    default:
+                        return;
+                    case 10:
+                        oVar4.DAT_3C = bVar1;
+                        return;
+                    case 11:
+                        oVar4.DAT_3D = bVar1;
+                        return;
+                    case 12:
+                        oVar4.DAT_3E = bVar1;
+                        return;
+                    case 13:
+                        oVar4.DAT_3F = bVar1;
+                        return;
+                    case 16:
+                        oVar4.DAT_140 = uVar3;
+                        break;
+                    case 17:
+                        oVar4.DAT_12C = uVar3;
+                        break;
+                    case 18:
+                        oVar4.DAT_11E = bVar1;
+                        return;
+                    case 19:
+                        oVar4.DAT_3C = (byte)param3;
+                        oVar4.DAT_3D = (byte)(param3 >> 8);
+                        oVar4.DAT_3E = (byte)(param3 >> 0x10);
+                        oVar4.DAT_3F = (byte)(param3 >> 0x18);
+                        return;
+                    case 21:
+                        oVar4.health = sVar2;
+                        return;
+                    case 23:
+                        oVar4.DAT_40.x = sVar2;
+                        return;
+                    case 24:
+                        oVar4.DAT_40.y = sVar2;
+                        return;
+                    case 25:
+                        oVar4.DAT_40.z = sVar2;
+                        return;
+                    case 26:
+                        oVar4.DAT_174 = bVar1;
+                        return;
+                    case 27:
+                        oVar4.DAT_1C0 = oVar4.DAT_1C0 & 0xffffff00 | bVar1;
+                        return;
+                    case 28:
+                        oVar4.DAT_1C0 = oVar4.DAT_1C0 & 0xffff00ff | (uint)bVar1 << 8;
+                        return;
+                    case 29:
+                        oVar4.DAT_1C0 = oVar4.DAT_1C0 & 0xff00ffff | (uint)bVar1 << 0x10;
+                        return;
+                    case 30:
+                        oVar4.DAT_1C0 = oVar4.DAT_1C0 & 0x00ffffff | (uint)bVar1 << 0x18;
+                        return;
+                    case 31:
+                        oVar4.DAT_1C4 = (sbyte)bVar1;
+                        return;
+                    case 32:
+                        oVar4.DAT_18E = bVar1;
+                        return;
+                    case 33:
+                        oVar4.DAT_152 = sVar2;
+                        return;
+                    case 34:
+                        oVar4.DAT_1A3 = bVar1;
+                        return;
+                    case 35:
+                        oVar4.DAT_34.x = sVar2;
+                        return;
+                    case 36:
+                        oVar4.DAT_34.y = sVar2;
+                        return;
+                    case 37:
+                        oVar4.DAT_34.z = sVar2;
+                        return;
+                    case 38:
+                        oVar4.DAT_164 = bVar1;
+                        return;
+                    case 39:
+                        oVar4.DAT_165 = bVar1;
+                        return;
+                    case 40:
+                        oVar4.DAT_166 = bVar1;
+                        return;
+                    case 41:
+                        oVar4.DAT_167 = bVar1;
+                        return;
+                    case 42:
+                        oVar4.DAT_1A7 = bVar1;
+                        return;
+                }
+
+                break;
+            case 3:
+                oVar5 = SceneManager.instance.DAT_7CDC[param1 & 0xffff];
+
+                switch (param2)
+                {
+                    case 0:
+                        oVar5.flags = (uint)param3;
+                        return;
+                    case 1:
+                        oVar5.DAT_2E = bVar1;
+                        return;
+                    case 2:
+                        oVar5.DAT_2F = bVar1;
+                        return;
+                    case 3:
+                        oVar5.screen.x = sVar2;
+                        return;
+                    case 4:
+                        oVar5.screen.y = sVar2;
+                        return;
+                    case 5:
+                        oVar5.screen.z = sVar2;
+                        return;
+                    case 6:
+                        oVar5.vr.x = sVar2;
+                        return;
+                    case 7:
+                        oVar5.vr.y = sVar2;
+                        return;
+                    case 8:
+                        oVar5.vr.z = sVar2;
+                        return;
+                    default:
+                        return;
+                    case 10:
+                        oVar5.tags = (sbyte)bVar1;
+                        return;
+                    case 14:
+                        oVar5.DAT_48 = bVar1;
+                        return;
+                    case 15:
+                        oVar5.DAT_4A = uVar3;
+                        return;
+                    case 27:
+                        oVar5.DAT_74 = oVar5.DAT_74 & 0xffffff00 | bVar1;
+                        return;
+                    case 28:
+                        oVar5.DAT_74 = oVar5.DAT_74 & 0xffff00ff | (uint)bVar1 >> 8;
+                        return;
+                    case 29:
+                        oVar5.DAT_74 = oVar5.DAT_74 & 0xff00ffff | (uint)bVar1 >> 0x10;
+                        return;
+                    case 30:
+                        oVar5.DAT_74 = oVar5.DAT_74 & 0x00ffffff | (uint)bVar1 >> 0x18;
+                        return;
+                    case 31:
+                        oVar5.DAT_78 = bVar1;
+                        return;
+                }
+            case 4:
+                //...
+                break;
+            case 5:
+                oVar6 = SceneManager.instance.cCamera;
+
+                switch (param2)
+                {
+                    case 0:
+                        oVar6.screen.x = sVar2;
+                        return;
+                    case 1:
+                        oVar6.screen.y = sVar2;
+                        return;
+                    case 2:
+                        oVar6.screen.z = sVar2;
+                        return;
+                    case 3:
+                        oVar6.vr.x = sVar2;
+                        return;
+                    case 4:
+                        oVar6.vr.y = sVar2;
+                        return;
+                    case 5:
+                        oVar6.vr.z = sVar2;
+                        return;
+                    case 6:
+                        oVar6.DAT_58 = (sbyte)bVar1;
+                        return;
+                    case 7:
+                        oVar6.DAT_59 = (sbyte)bVar1;
+                        return;
+                    case 8:
+                        oVar6.DAT_5A = (sbyte)bVar1;
+                        return;
+                    case 9:
+                        oVar6.DAT_5B = (sbyte)bVar1;
+                        return;
+                    case 10:
+                        oVar6.DAT_83 = bVar1;
+                        return;
+                    case 11:
+                        oVar6.DAT_68 = bVar1;
+                        return;
+                    case 12:
+                        oVar6.DAT_38 = sVar2;
+                        return;
+                    case 13:
+                        oVar6.DAT_3A = sVar2;
+                        return;
+                    case 14:
+                        oVar6.DAT_3A = sVar2;
+                        return;
+                    case 15:
+                        oVar6.DAT_30.x = sVar2;
+                        return;
+                    case 16:
+                        oVar6.DAT_30.y = sVar2;
+                        return;
+                    case 17:
+                        oVar6.DAT_30.z = sVar2;
+                        return;
+                    default:
+                        return;
+                }
+            case 6:
+                //...
+                break;
+            case 7:
+                //...
+                break;
+            case 8:
+                //...
+                break;
+        }
+    }
+
     private int FUN_55DC8(uint param1, int param2)
     {
         CriPlayer oVar1;
@@ -99,7 +490,7 @@ public class CriMovie : MonoBehaviour
                     case 6:
                         return (ushort)GameManager.instance.DAT_28 | (ushort)GameManager.instance.DAT_2A << 0x10;
                     case 7:
-                        return GameManager.instance.DAT_9ADC | GameManager.instance.DAT_9ADD << 8;
+                        return GameManager.instance.DAT_9ADC;
                     case 8:
                         return GameManager.instance.DAT_20;
                     case 9:
@@ -329,6 +720,69 @@ public class CriMovie : MonoBehaviour
         }
 
         return 0;
+    }
+
+    private int FUN_56584(int param1, int param2, int param3)
+    {
+        switch (param3)
+        {
+            case 0:
+                return param1 + param2;
+            case 1:
+                return param1 - param2;
+            case 2:
+                return param1 * param2;
+            case 3:
+                break;
+            case 4:
+                if (param2 == 0)
+                    return 0; //trap(0x1c00)
+
+                if (param2 == -1 && param2 == -0x80000000)
+                    return 0; //trap(0x1800)
+
+                return param1 % param2;
+            case 5:
+                return param1 | param2;
+            case 6:
+                return param1 & param2;
+            case 7:
+                return param1 ^ param2;
+            case 8:
+                return ~param1;
+            case 9:
+                return param1 << (param2 & 0x1f);
+            case 10:
+            case 11:
+                return param1 >> (param2 & 0x1f);
+            default:
+                return param1;
+        }
+
+        if (param2 == 0)
+            return 0; //trap(0x1c00)
+
+        if (param2 == -1 && param1 == -0x80000000)
+            return 0; //trap(0x1800)
+
+        return param1 / param2;
+    }
+
+    private void FUN_5666C(int param1, int param2)
+    {
+        byte bVar1;
+
+        bVar1 = 0x2a;
+
+        if (param1 != param2)
+        {
+            if (param1 < param2)
+                bVar1 = 0x70;
+            else
+                bVar1 = 0x4c;
+        }
+
+        DAT_06 = bVar1;
     }
 
     private bool FUN_56698()
@@ -622,13 +1076,13 @@ public class CriMovie : MonoBehaviour
         iVar3 = mVar3.DAT_04;
 
         if (iVar2 == iVar3)
-            bVar1 = 42;
+            bVar1 = 0x2a;
         else
         {
-            bVar1 = 112;
+            bVar1 = 0x70;
 
             if (iVar3 <= iVar2)
-                bVar1 = 76;
+                bVar1 = 0x4c;
         }
 
         DAT_06 = bVar1;
@@ -870,6 +1324,89 @@ public class CriMovie : MonoBehaviour
                 break;
         }
 
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_57604()
+    {
+        int iVar1;
+        MovContainer5 mVar2;
+
+        mVar2 = (MovContainer5)PTR_58[0].CONTAINERS[DAT_58[0]];
+        iVar1 = FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar2.DAT_02);
+        FUN_5666C(iVar1, mVar2.DAT_04);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5766C()
+    {
+        FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B,
+                  ((MovContainer5)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02,
+                  ((MovContainer5)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_04);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_576C0()
+    {
+        int iVar1;
+        MovContainer5 mVar2;
+
+        mVar2 = (MovContainer5)PTR_58[0].CONTAINERS[DAT_58[0]];
+        iVar1 = FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar2.DAT_02);
+        iVar1 = FUN_56584(iVar1, mVar2.DAT_04, mVar2.DAT_01);
+        FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, mVar2.DAT_02, iVar1);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5774C()
+    {
+        byte bVar1;
+        CriObject oVar2;
+        MovContainer4 mVar3;
+
+        mVar3 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+
+        if (mVar3.DAT_02 == 1)
+        {
+            bVar1 = DAT_0A;
+
+            if (bVar1 == 3)
+                oVar2 = SceneManager.instance.DAT_7CDC[DAT_0B];
+            else
+            {
+                if (bVar1 < 4)
+                {
+                    oVar2 = null;
+
+                    if (bVar1 == 2)
+                        oVar2 = SceneManager.instance.DAT_27C[DAT_0B];
+                }
+                else
+                {
+                    oVar2 = null;
+
+                    if (bVar1 == 4)
+                        oVar2 = SceneManager.instance.DAT_5FCC[DAT_0B];
+                }
+            }
+
+            //sound
+        }
+        else
+            ; //FUN_5C860
+
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_57870()
+    {
+        SceneManager.instance.triggers[((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01].DAT_13 =
+            ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_03 != 0;
         DAT_58[0]++;
         return false;
     }

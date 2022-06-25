@@ -51,6 +51,7 @@ public class CriCamera : MonoBehaviour
     private delegate void FUN_99404(CameraMotion m);
     private FUN_18448[] PTR_FUN_18448;
     private FUN_99404[] PTR_FUN_99404;
+    public static CameraMotion DAT_99498;
 
     private void Awake()
     {
@@ -380,7 +381,7 @@ public class CriCamera : MonoBehaviour
         SceneManager.instance.FUN_269C8(DAT_40, DAT_48);
     }
 
-    private void FUN_26B18(CameraMotion[] param1)
+    public void FUN_26B18(CameraMotion[] param1)
     {
         byte bVar1;
         byte bVar2;

@@ -60,6 +60,7 @@ public class CriSkinned : CriObject
     public Vector2Int shadowSize; //0x170
     public byte DAT_174; //0x174
     public byte DAT_175; //0x175
+    public byte DAT_176; //0x176
     public byte DAT_177; //0x177
     public CriBone[] DAT_184; //0x184
     public byte DAT_18C; //0x18C
@@ -208,6 +209,7 @@ public class CriSkinned : CriObject
         shadowSize = Vector2Int.zero;
         DAT_174 = 0;
         DAT_175 = 0;
+        DAT_176 = 0;
         DAT_177 = 0;
         DAT_184[0] = null;
         DAT_184[1] = null;
@@ -221,6 +223,27 @@ public class CriSkinned : CriObject
         DAT_1A3 = 0;
         DAT_1A5 = 0;
         DAT_1A7 = 0;
+    }
+
+    public void FUN_60278()
+    {
+        bool bVar1;
+        int iVar2;
+        CriBone oVar3;
+
+        oVar3 = skeleton;
+        iVar2 = boneCount - 2;
+
+        if (boneCount != 0)
+        {
+            do
+            {
+                oVar3.flags = 0;
+                oVar3 = (CriBone)oVar3.next;
+                bVar1 = iVar2 != -1;
+                iVar2--;
+            } while (bVar1);
+        }
     }
 
     public void FUN_60444()

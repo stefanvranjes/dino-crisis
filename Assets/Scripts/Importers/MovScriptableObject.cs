@@ -66,6 +66,36 @@ public class MovContainer10 : MovContainer4
     public TriggerScriptableObject DAT_04;
 }
 
+public class MovContainer11 : MovContainer
+{
+    public Vector3Int DAT_02;
+    public Vector3Int DAT_08;
+    public short DAT_10;
+    public short DAT_12;
+}
+
+public class MovContainer12 : MovContainer4
+{
+    public short DAT_04;
+}
+
+public class MovContainer13 : MovContainer
+{
+    public short DAT_02;
+    public short DAT_04;
+    public short DAT_06;
+}
+
+public class MovContainer14 : MovContainer4
+{
+    public Vector3Int[] DAT_04;
+}
+
+public class MovContainer15 : MovContainer4
+{
+    public ushort DAT_04;
+}
+
 public class MovScriptableObject : ScriptableObject
 {
     public MovContainer[] CONTAINERS;

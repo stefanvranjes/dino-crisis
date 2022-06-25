@@ -206,6 +206,31 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    public void FUN_55700()
+    {
+        bool bVar1;
+        CriMovie oVar2;
+
+        oVar2 = DAT_D7C0[9];
+        do
+        {
+            bVar1 = oVar2.PTR_FUN_9E540[oVar2.PTR_58[0].CONTAINERS[oVar2.DAT_58[0]].DAT_00]();
+        } while (!bVar1);
+    }
+
+    public void FUN_55580(sbyte param1, int param2)
+    {
+        int iVar1;
+        MovScriptableObject oVar3;
+
+        iVar1 = param1;
+        DAT_D7C0[iVar1].DAT_05 = 1;
+        oVar3 = (MovScriptableObject)scn.OBJECTS[(param2 << 16) >> 14];
+        DAT_D7C0[iVar1].DAT_AC = 1;
+        DAT_D7C0[iVar1].PTR_58[0] = oVar3;
+        DAT_D7C0[iVar1].DAT_58[0] = 0;
+    }
+
     public void FUN_555E8()
     {
         byte bVar1;
@@ -336,6 +361,82 @@ public class SceneManager : MonoBehaviour
         {
             oVar2.DAT_7C = oVar2.DAT_40;
             oVar2.DAT_84 = oVar2.DAT_48;
+        }
+    }
+
+    public void FUN_26EBC(byte param1, byte param2)
+    {
+        byte bVar1;
+        CameraMotion oVar5;
+        CriCamera oVar6;
+
+        oVar6 = cCamera;
+        bVar1 = cCamera.DAT_72;
+        cCamera.DAT_70 = param1;
+        cCamera.DAT_71 = param2;
+        cCamera.DAT_56 = 0;
+        cCamera.DAT_52 = 0;
+        cCamera.DAT_2E = 0;
+        cCamera.DAT_3E = 0;
+        cCamera.DAT_58 = 0;
+        cCamera.DAT_73 = 0;
+        cCamera.DAT_68 = 0;
+        cCamera.DAT_8A = 0;
+        cCamera.DAT_8B = 0;
+        cCamera.DAT_92 = 0;
+        cCamera.DAT_90 = 0;
+        cCamera.DAT_72 = (byte)(bVar1 & 0xfe);
+
+        if (param1 == 0)
+        {
+            cCamera.motion = motions.MOTIONS[cCamera.DAT_6A];
+            oVar6.FUN_26B18(motions.MOTIONS);
+
+            if (param2 == 0)
+            {
+                cCamera.DAT_8A = 0;
+                cCamera.DAT_8B = 0;
+            }
+            else
+            {
+                cCamera.DAT_8A = 2;
+                cCamera.DAT_8B = 2;
+            }
+
+            oVar5 = motions.MOTIONS[cCamera.DAT_6A];
+            cCamera.motion = oVar5;
+            cCamera.DAT_68 = oVar5.DAT_02;
+            cCamera.DAT_73 = 0;
+            cCamera.DAT_72 &= 0xfe;
+            cCamera.DAT_69 = oVar5.DAT_00;
+            FUN_55580(9, oVar5.DAT_02);
+            FUN_55700();
+        }
+        else
+            cCamera.motion = CriCamera.DAT_99498;
+
+        InventoryManager.FUN_4A7E8(2, 0x14, false);
+    }
+
+    public void FUN_264C4(short param1, short param2, short param3, short param4)
+    {
+        cCamera.DAT_40 = new Vector3Int(param2, param3, param4);
+
+        if (param1 == 0)
+        {
+            cCamera.DAT_30 = new Vector3Int(param2, param3, param4);
+            cCamera.DAT_7C = new Vector3Int(param2, param3, param4);
+        }
+    }
+
+    public void FUN_26504(short param1, short param2, short param3, short param4)
+    {
+        cCamera.DAT_48 = new Vector3Int(param2, param3, param4);
+
+        if (param1 == 0)
+        {
+            cCamera.screen = new Vector3Int(param2, param3, param4);
+            cCamera.DAT_84 = new Vector3Int(param2, param3, param4);
         }
     }
 
@@ -491,26 +592,6 @@ public class SceneManager : MonoBehaviour
         param1.x += local_30.x;
         param1.y += local_30.y;
         param1.z += local_30.z;
-    }
-
-    public void FUN_26504(short param1, short param2, short param3, short param4)
-    {
-        CriCamera oVar1;
-
-        oVar1 = cCamera;
-        cCamera.DAT_48.x = param2;
-        oVar1.DAT_48.y = param3;
-        oVar1.DAT_48.z = param4;
-
-        if (param1 == 0)
-        {
-            oVar1.screen.x = param2;
-            oVar1.DAT_84.x = param2;
-            oVar1.screen.y = param3;
-            oVar1.DAT_84.y = param3;
-            oVar1.screen.z = param4;
-            oVar1.DAT_84.z = param4;
-        }
     }
 
     public byte FUN_47864()

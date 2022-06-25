@@ -609,6 +609,13 @@ public class CriPlayer : CriSkinned
         DAT_244 = new ushort[3];
     }
 
+    public void FUN_6016C()
+    {
+        flags = 0;
+        FUN_60278();
+        ResetValues();
+    }
+
     public void FUN_4CFDC()
     {
         byte bVar1;
@@ -2954,7 +2961,7 @@ public class CriPlayer : CriSkinned
         oVar9.vr.y = uVar2 & 0xfff;
     }
 
-    private void FUN_5348C(sbyte param1, sbyte param2)
+    public void FUN_5348C(sbyte param1, sbyte param2)
     {
         CriBone oVar1;
 
@@ -2979,6 +2986,189 @@ public class CriPlayer : CriSkinned
 
         oVar1 = Utilities.FUN_601C8(skeleton, 7) as CriBone;
         oVar1.DAT_43 = true;
+    }
+
+    public void FUN_53520(byte param1, sbyte param2, sbyte param3)
+    {
+        CriBone oVar1;
+
+        DAT_210 = param1;
+        DAT_164 = 9;
+
+        if (param2 == -1)
+        {
+            FUN_66208();
+            SceneManager.instance.DAT_27C[param1].FUN_66208();
+            FUN_52FD0();
+            DAT_218 = true;
+            DAT_20C.x = DAT_204.x;
+            DAT_20C.y = DAT_204.z;
+        }
+        else
+        {
+            DAT_1FA = param2;
+            DAT_1FB = param3;
+        }
+
+        oVar1 = (CriBone)Utilities.FUN_601C8(skeleton, 7);
+        oVar1.DAT_43 = true;
+    }
+
+    public void FUN_535E4(sbyte param1, sbyte param2)
+    {
+        CriBone oVar1;
+
+        oVar1 = (CriBone)Utilities.FUN_601C8(skeleton, 7);
+        DAT_164 = 0;
+
+        if (param1 == -1)
+        {
+            DAT_20C.x = oVar1.vr.x;
+            DAT_20C.y = oVar1.vr.y;
+        }
+        else
+        {
+            DAT_1FA = param1;
+            DAT_1FB = param2;
+        }
+
+        oVar1.DAT_43 = false;
+    }
+
+    public void FUN_53674(sbyte param1, sbyte param2)
+    {
+        CriBone oVar1;
+
+        DAT_204.x = 0;
+        DAT_204.y = 0;
+
+        if (param1 == -1)
+        {
+            DAT_20C.x = 0;
+            DAT_20C.y = 0;
+        }
+        else
+        {
+            DAT_1FA = param1;
+            DAT_1FB = param2;
+        }
+
+        oVar1 = (CriBone)Utilities.FUN_601C8(skeleton, 7);
+        oVar1.DAT_43 = true;
+        DAT_164 = 3;
+    }
+
+    public void FUN_536DC(uint param1, uint param2, byte param3)
+    {
+        byte bVar1;
+        byte bVar2;
+
+        if (DAT_164 != 4)
+        {
+            if ((param2 & 0xffff) == 0)
+                return; //trap(0x1c00)
+
+            bVar1 = DAT_210;
+            bVar2 = (byte)DAT_1FA;
+            DAT_210 = param3;
+            DAT_1FA = (sbyte)param2;
+            DAT_212 = bVar1;
+            DAT_216 = (byte)((uint)bVar2 >> 4);
+            DAT_211 = (byte)((param1 & 0xffff) / (param2 & 0xffff));
+            DAT_217 = DAT_164;
+            DAT_164 = 4;
+            DAT_1F9 = 0;
+        }
+    }
+
+    public void FUN_53748(uint param1, uint param2, byte param3)
+    {
+        byte bVar1;
+        byte bVar2;
+
+        if (DAT_164 != 5)
+        {
+            if ((param2 & 0xffff) == 0)
+                return; //trap(0x1c00)
+
+            bVar1 = DAT_210;
+            bVar2 = (byte)DAT_1FB;
+            DAT_210 = param3;
+            DAT_1FB = (sbyte)param2;
+            DAT_212 = bVar1;
+            DAT_216 = (byte)((uint)bVar2 >> 4);
+            DAT_211 = (byte)((param1 & 0xffff) / (param2 & 0xffff));
+            DAT_217 = DAT_164;
+            DAT_164 = 5;
+            DAT_1F9 = 0;
+        }
+    }
+
+    public void FUN_537B4(Vector3Int param1, sbyte param2, sbyte param3)
+    {
+        CriBone oVar1;
+        DAT_1FC = param1;
+
+        if (param2 == -1)
+        {
+            FUN_66208();
+            FUN_52BA4();
+            DAT_20C.x = DAT_204.x;
+            DAT_20C.y = DAT_204.z;
+        }
+        else
+        {
+            DAT_1FA = param2;
+            DAT_1FB = param3;
+        }
+
+        oVar1 = (CriBone)Utilities.FUN_601C8(skeleton, 7);
+        oVar1.DAT_43 = true;
+        DAT_164 = 7;
+    }
+
+    public void FUN_53854(short param1, short param2, sbyte param3, sbyte param4)
+    {
+        CriBone oVar1;
+
+        DAT_204.x = param1;
+        DAT_204.y = param2;
+
+        if (param3 == -1)
+        {
+            DAT_20C.x = DAT_204.x;
+            DAT_20C.y = DAT_204.z;
+        }
+        else
+        {
+            DAT_1FA = param3;
+            DAT_1FB = param4;
+        }
+
+        oVar1 = (CriBone)Utilities.FUN_601C8(skeleton, 7);
+        oVar1.DAT_43 = true;
+        DAT_164 = 3;
+    }
+
+    public void FUN_538DC(sbyte param1, sbyte param2)
+    {
+        CriBone oVar1;
+
+        oVar1 = (CriBone)Utilities.FUN_601C8(skeleton, 7);
+
+        if (param1 == -1)
+        {
+            DAT_20C.x = oVar1.vr.x;
+            DAT_20C.y = oVar1.vr.y;
+        }
+        else
+        {
+            DAT_1FA = param1;
+            DAT_1FB = param2;
+        }
+
+        DAT_1F8 = 0;
+        DAT_164 = 2;
     }
 
     private void FUN_52538()

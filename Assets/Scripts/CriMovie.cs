@@ -30,6 +30,8 @@ public class CriMovie : MonoBehaviour
     public int[] DAT_58; //0x58
     public MovScriptableObject[] PTR_58; //0x58
     public int DAT_AC; //0xAC
+    public delegate bool FUN_9E540();
+    public FUN_9E540[] PTR_FUN_9E540;
 
     private void Awake()
     {
@@ -1410,4 +1412,281 @@ public class CriMovie : MonoBehaviour
         DAT_58[0]++;
         return false;
     }
+
+    private bool FUN_578B8()
+    {
+        CriCamera oVar1;
+        MovContainer11 mVar2;
+
+        oVar1 = SceneManager.instance.cCamera;
+        mVar2 = (MovContainer11)PTR_58[0].CONTAINERS[DAT_58[0]];
+        SceneManager.instance.FUN_26EBC(2, 0);
+        oVar1.DAT_36 = mVar2.DAT_10;
+        oVar1.DAT_26 = mVar2.DAT_12;
+        SceneManager.instance.FUN_264C4(oVar1.DAT_36,
+            (short)mVar2.DAT_02.x, (short)mVar2.DAT_02.y, (short)mVar2.DAT_02.z);
+        SceneManager.instance.FUN_26504(oVar1.DAT_26, 
+            (short)mVar2.DAT_08.x, (short)mVar2.DAT_08.y, (short)mVar2.DAT_08.z);
+        oVar1.DAT_73 = 1;
+        oVar1.DAT_72 |= 1;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_57E84()
+    {
+        byte bVar1;
+        CriObject oVar2;
+        MovContainer4 mVar3;
+
+        mVar3 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        bVar1 = mVar3.DAT_01;
+
+        if (bVar1 == 3)
+            oVar2 = SceneManager.instance.DAT_7CDC[mVar3.DAT_02];
+        else
+        {
+            if (bVar1 < 4)
+            {
+                if (bVar1 != 2) goto LAB_57FBC;
+
+                ((CriPlayer)SceneManager.instance.DAT_27C[mVar3.DAT_02]).FUN_6016C();
+                oVar2 = SceneManager.instance.DAT_27C[mVar3.DAT_02];
+            }
+            else
+            {
+                if (bVar1 == 4)
+                    oVar2 = SceneManager.instance.DAT_5FCC[mVar3.DAT_02];
+                else
+                {
+                    if (bVar1 != 8) goto LAB_57FBC;
+
+                    //...
+                    oVar2 = null; //tmp
+                }
+            }
+        }
+
+        oVar2.ResetValues();
+        LAB_57FBC:
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_57970()
+    {
+        SceneManager.instance.FUN_26EBC(((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01,
+                                        ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_579BC()
+    {
+        byte bVar1;
+        CriObject oVar2;
+
+        bVar1 = DAT_0A;
+
+        if (bVar1 == 3)
+            oVar2 = SceneManager.instance.DAT_7CDC[DAT_0B];
+        else
+        {
+            if (bVar1 < 4)
+            {
+                if (bVar1 != 2) goto LAB_57B04;
+
+                oVar2 = SceneManager.instance.DAT_27C[DAT_0B];
+            }
+            else
+            {
+                if (bVar1 != 4)
+                {
+                    if (bVar1 == 7)
+                    {
+                        //...
+                    }
+
+                    goto LAB_57B04;
+                }
+
+                oVar2 = SceneManager.instance.DAT_5FCC[DAT_0B];
+            }
+        }
+
+        oVar2.screen.x += DAT_0C;
+        oVar2.screen.y += DAT_0E;
+        oVar2.screen.z += DAT_10;
+        LAB_57B04:
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_57B28()
+    {
+        DAT_0C += DAT_12;
+        DAT_0E += DAT_14;
+        DAT_10 += DAT_16;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_57B6C()
+    {
+        byte bVar1;
+        CriObject oVar2;
+
+        bVar1 = DAT_0A;
+
+        if (bVar1 == 3)
+            oVar2 = SceneManager.instance.DAT_7CDC[DAT_0B];
+        else
+        {
+            if (bVar1 < 4)
+            {
+                if (bVar1 != 2) goto LAB_57C54;
+
+                oVar2 = SceneManager.instance.DAT_27C[DAT_0B];
+            }
+            else
+            {
+                if (bVar1 != 4) goto LAB_57C54;
+
+                oVar2 = SceneManager.instance.DAT_5FCC[DAT_0B];
+            }
+        }
+
+        oVar2.vr.x += DAT_18;
+        oVar2.vr.y += DAT_1A;
+        oVar2.vr.z += DAT_1C;
+        LAB_57C54:
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_57C6C()
+    {
+        DAT_18 += DAT_1E;
+        DAT_1A += DAT_20;
+        DAT_1C += DAT_22;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_57CB0()
+    {
+        MovContainer12 mVar1;
+
+        mVar1 = (MovContainer12)PTR_58[0].CONTAINERS[DAT_58[0]];
+        GameManager.instance.FUN_46C0C(mVar1.DAT_01, (uint)(int)mVar1.DAT_04, mVar1.DAT_02);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_57D00()
+    {
+        CriSkinned oVar1;
+        MovContainer13 mVar2;
+
+        mVar2 = (MovContainer13)PTR_58[0].CONTAINERS[DAT_58[0]];
+        FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, 3, mVar2.DAT_02);
+        FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, 4, mVar2.DAT_04);
+        FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, 5, mVar2.DAT_06);
+
+        if (DAT_0A == 2)
+        {
+            oVar1 = SceneManager.instance.DAT_27C[DAT_0B];
+            oVar1.DAT_13C.x = mVar2.DAT_02;
+            oVar1.DAT_13C.y = mVar2.DAT_06;
+        }
+
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_57DE8()
+    {
+        MovContainer13 mVar1;
+
+        mVar1 = (MovContainer13)PTR_58[0].CONTAINERS[DAT_58[0]];
+        FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, 6, mVar1.DAT_02);
+        FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, 7, mVar1.DAT_04);
+        FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, 8, mVar1.DAT_06);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_57FE8()
+    {
+        //...
+        DAT_AC++;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58048()
+    {
+        //...
+        DAT_AC--;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_580A8()
+    {
+        CriSkinned oVar1;
+        MovContainer14 mVar2;
+        uint uVar3;
+
+        mVar2 = (MovContainer14)PTR_58[0].CONTAINERS[DAT_58[0]];
+        oVar1 = SceneManager.instance.DAT_27C[DAT_0B];
+        oVar1.PTR_190 = mVar2.DAT_04;
+        oVar1.DAT_190 = 0;
+        oVar1.DAT_18F = 1;
+        oVar1.DAT_176 = mVar2.DAT_03;
+        uVar3 = (uint)mVar2.DAT_02 << 8 | 4;
+        oVar1.DAT_3C = (byte)uVar3;
+        oVar1.DAT_3D = (byte)(uVar3 >> 8);
+        oVar1.DAT_3E = (byte)(uVar3 >> 0x10);
+        oVar1.DAT_3F = (byte)(uVar3 >> 0x18);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5811C()
+    {
+        CriPlayer oVar1;
+        uint uVar2;
+
+        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[DAT_0B];
+        uVar2 = (uint)((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01 << 8 | 1;
+        oVar1.DAT_3C = (byte)uVar2;
+        oVar1.DAT_3D = (byte)(uVar2 >> 8);
+        oVar1.DAT_3E = (byte)(uVar2 >> 0x10);
+        oVar1.DAT_3F = (byte)(uVar2 >> 0x18);
+
+        if (DAT_0B == 10)
+        {
+            oVar1.FUN_5348C(0x70, 0x70);
+            oVar1.flags |= 2;
+        }
+
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_581C0()
+    {
+        CriStatic oVar1;
+        MovContainer15 mVar2;
+
+        mVar2 = (MovContainer15)PTR_58[0].CONTAINERS[DAT_58[0]];
+        oVar1 = SceneManager.instance.DAT_7CDC[mVar2.DAT_01];
+        oVar1.DAT_48 = mVar2.DAT_02;
+        oVar1.DAT_4A = mVar2.DAT_04;
+        DAT_58[0]++;
+        return false;
+    }
+
+
 }

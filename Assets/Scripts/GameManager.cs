@@ -64,7 +64,12 @@ public class GameManager : MonoBehaviour
     public Vector3Int playerSpawnPos; //gp+4ch
     public short playerSpawnRotY; //gp+52h
     public byte DAT_55; //gp+55h
+    public uint DAT_64; //gp+64h
+    public uint DAT_68; //gp+68h
+    public byte DAT_6C; //gp+6ch
     public bool DAT_6D; //gp+6dh
+    public byte DAT_6E; //gp+6eh
+    public byte DAT_6F; //gp+6fh
     public int DAT_78; //gp+78h
     public FUN_148 PTR_FUN_148; //gp+148h
     public FUN_14C PTR_FUN_14C; //gp+14ch
@@ -184,6 +189,26 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         FUN_7302C();
+    }
+
+    public void FUN_46C0C(int param1, uint param2, byte param3)
+    {
+        if (param1 == 0)
+            DAT_68 = 0x10000000;
+        else
+        {
+            if (param1 == 1)
+                DAT_68 = 0;
+        }
+
+        if (param2 == 0)
+            return; //trap(0x1c00)
+
+        DAT_6D = true;
+        DAT_6E = (byte)(param2 - 1);
+        DAT_6C = (byte)param1;
+        DAT_6F = param3;
+        DAT_64 = 0x1000000 / param2;
     }
 
     public Vector2Int[] FUN_813F0(Vector2Int[] param1, WallCollider param2)

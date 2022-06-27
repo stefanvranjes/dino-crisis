@@ -5,6 +5,7 @@ using UnityEngine;
 public class CriStatic : CriObject
 {
     public TmdScriptableObject cMesh; //0x3C
+    public CriObject DAT_40; //0x40
     public BoxColliderScriptableObject cCollider; //0x44
     public byte DAT_48; //0x48
     public ushort DAT_4A; //0x4A
@@ -39,6 +40,7 @@ public class CriStatic : CriObject
     {
         base.ResetValues();
         cMesh = null;
+        DAT_40 = null;
         cCollider = null;
         DAT_48 = 0;
         DAT_4A = 0;

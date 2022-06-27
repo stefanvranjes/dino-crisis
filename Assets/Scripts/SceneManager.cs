@@ -667,6 +667,35 @@ public class SceneManager : MonoBehaviour
         oVar3.materials[0x3C] = mat2;
     }
 
+    public void FUN_4A784(int param1, int param2, short param3, short param4, 
+        short param5, short param6, short param7, short param8)
+    {
+        CriSkinned oVar1;
+
+        oVar1 = DAT_27C[param2];
+
+        switch (param1)
+        {
+            case 0:
+                oVar1.DAT_EC.x = param6;
+                oVar1.DAT_F2.x = param7;
+                oVar1.DAT_F8.x = param8;
+                break;
+            case 1:
+                oVar1.DAT_EC.y = param6;
+                oVar1.DAT_F2.y = param7;
+                oVar1.DAT_F8.y = param8;
+                break;
+            case 2:
+                oVar1.DAT_EC.z = param6;
+                oVar1.DAT_EC.z = param7;
+                oVar1.DAT_EC.z = param8;
+                break;
+        }
+
+        oVar1.DAT_B4[param1] = new Vector3Int(param3, param4, param5);
+    }
+
     private void FUN_570A0(_STATIC_OBJ_DATA data)
     {
         CriStatic oVar1;
@@ -1362,6 +1391,11 @@ public class SceneManager : MonoBehaviour
         return false;
     }
 
+    public FloorCollider FUN_645C8(uint param1, uint param2)
+    {
+        return sceneCollision.FLOOR_SEGMENT.FLOOR_COLLIDERS[param2 & 0xff];
+    }
+
     private bool FUN_8037C(WallCollider param1, Hit param2)
     {
         bool bVar1;
@@ -1635,5 +1669,20 @@ public class SceneManager : MonoBehaviour
         }
 
         return local_30;
+    }
+
+    public void FUN_8133C(uint param1, ushort param2, byte param3)
+    {
+        WallCollider wVar1;
+
+        wVar1 = sceneCollision.WALL_SEGMENTS[0].WALL_COLLIDERS[param1 & 0xff];
+
+        if (param3 != 0)
+        {
+            wVar1.flags |= param2;
+            return;
+        }
+
+        wVar1.flags &= (ushort)~param2;
     }
 }

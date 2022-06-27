@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
     public FUN_148 PTR_FUN_148; //gp+148h
     public FUN_14C PTR_FUN_14C; //gp+14ch
     public byte DAT_922C; //gp+922ch
+    public byte DAT_9234; //gp+9234h
     public byte DAT_9AA0; //gp+9aa0h
     public byte DAT_9AA1; //gp+9aa1h
     public _DIFFICULTY difficulty; //gp+9aa8h

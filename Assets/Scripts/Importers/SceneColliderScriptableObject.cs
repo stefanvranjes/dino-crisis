@@ -23,7 +23,7 @@ public class FloorCollider
 {
     public byte DAT_00; //0x00
     public byte DAT_01; //0x01
-    public Vector2Int[] DAT_04; //0x00
+    public Vector2Int[] DAT_04; //0x00 -writable
 }
 
 [System.Serializable]
@@ -35,9 +35,10 @@ public class WallCollider
     public byte DAT_03; //0x03
     public Vector2Int DAT_04; //0x04
     public Vector2Int DAT_08; //0x08
-    public ushort flags; //0x0C
+    public ushort flags; //0x0C -writable
 }
 
+//writable class (must be instantiated!)
 public class SceneColliderScriptableObject : ScriptableObject
 {
     public string prefabName;

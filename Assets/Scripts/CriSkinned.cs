@@ -31,6 +31,10 @@ public class CriSkinned : CriObject
     public Tmd2ScriptableObject cSkin; //0x9C
     public Vector3Int skinSize; //0xA4
     public Color32 tint; //0xB0
+    public Vector3Int[] DAT_B4; //0xB4
+    public Vector3Int DAT_EC; //0xEC
+    public Vector3Int DAT_F2; //0xF2
+    public Vector3Int DAT_F8; //0xF8
     public short DAT_112; //0x112
     public short health; //0x118
     public short maxHealth; //0x11A
@@ -86,6 +90,7 @@ public class CriSkinned : CriObject
     {
         base.Awake();
         DAT_184 = new CriBone[2];
+        DAT_B4 = new Vector3Int[3];
     }
 
     protected override void Start()
@@ -180,6 +185,10 @@ public class CriSkinned : CriObject
         cSkin = null;
         skinSize = Vector3Int.zero;
         tint = Color.clear;
+        DAT_B4 = new Vector3Int[3];
+        DAT_EC = Vector3Int.zero;
+        DAT_F2 = Vector3Int.zero;
+        DAT_F8 = Vector3Int.zero;
         DAT_112 = 0;
         health = 0;
         maxHealth = 0;

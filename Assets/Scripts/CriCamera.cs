@@ -27,6 +27,7 @@ public class CriCamera : MonoBehaviour
     public sbyte DAT_5A; //0x5A
     public sbyte DAT_5B; //0x5B
     public CameraMotion motion; //0x5C
+    public CriObject DAT_64; //0x64
     public byte DAT_68; //0x68
     public byte DAT_69; //0x69
     public byte DAT_6A; //0x6A

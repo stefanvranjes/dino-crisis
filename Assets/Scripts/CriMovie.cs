@@ -1688,5 +1688,469 @@ public class CriMovie : MonoBehaviour
         return false;
     }
 
+    private bool FUN_58214()
+    {
+        CriPlayer oVar1;
+        MovContainer16 mVar2;
 
+        mVar2 = (MovContainer16)PTR_58[0].CONTAINERS[DAT_58[0]];
+        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[DAT_0B];
+
+        switch (mVar2.DAT_01)
+        {
+            case 0:
+                oVar1.FUN_53674((sbyte)mVar2.DAT_0A, (sbyte)mVar2.DAT_0B);
+                break;
+            case 1:
+                oVar1.FUN_5348C((sbyte)mVar2.DAT_0A, (sbyte)mVar2.DAT_0B);
+                break;
+            case 2:
+                oVar1.FUN_536DC((uint)(int)mVar2.DAT_04.x, mVar2.DAT_0A, mVar2.DAT_02);
+                break;
+            case 3:
+                oVar1.FUN_53748((uint)(int)mVar2.DAT_04.y, mVar2.DAT_0B, mVar2.DAT_02);
+                break;
+            case 4:
+                oVar1.FUN_53854((short)mVar2.DAT_04.x, (short)mVar2.DAT_04.y, (sbyte)mVar2.DAT_0A, (sbyte)mVar2.DAT_0B);
+                break;
+            case 5:
+                oVar1.FUN_53520((byte)mVar2.DAT_04.z, (sbyte)mVar2.DAT_0A, (sbyte)mVar2.DAT_0B);
+                break;
+            case 6:
+                oVar1.FUN_537B4(mVar2.DAT_04, (sbyte)mVar2.DAT_0A, (sbyte)mVar2.DAT_0B);
+                break;
+            case 7:
+                oVar1.FUN_535E4((sbyte)mVar2.DAT_0A, (sbyte)mVar2.DAT_0B);
+                break;
+            case 8:
+                oVar1.FUN_538DC((sbyte)mVar2.DAT_0A, (sbyte)mVar2.DAT_0B);
+                break;
+        }
+
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58384()
+    {
+        //FUN_2984C
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_583CC()
+    {
+        MovContainer15 mVar1;
+
+        mVar1 = (MovContainer15)PTR_58[0].CONTAINERS[DAT_58[0]];
+        SceneManager.instance.FUN_8133C(mVar1.DAT_01, mVar1.DAT_04, mVar1.DAT_03);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5841C()
+    {
+        MovContainer17 mVar1;
+
+        mVar1 = (MovContainer17)PTR_58[0].CONTAINERS[DAT_58[0]];
+        SceneManager.instance.FUN_4A784(mVar1.DAT_01, mVar1.DAT_02, mVar1.DAT_06,
+                                        mVar1.DAT_08, mVar1.DAT_0A, mVar1.DAT_03,
+                                        mVar1.DAT_04, mVar1.DAT_05);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58494()
+    {
+        FloorCollider fVar1;
+
+        fVar1 = SceneManager.instance.FUN_645C8(((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01,
+                                               ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
+        fVar1.DAT_04[1].x = 0;
+        fVar1.DAT_04[1].y = 0;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_584E8()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58688()
+    {
+        MovContainer18 mVar2;
+
+        mVar2 = (MovContainer18)PTR_58[0].CONTAINERS[DAT_58[0]];
+        DAT_0C = mVar2.DAT_02;
+        DAT_0E = mVar2.DAT_04;
+        DAT_10 = mVar2.DAT_06;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_586C4()
+    {
+        MovContainer18 mVar2;
+
+        mVar2 = (MovContainer18)PTR_58[0].CONTAINERS[DAT_58[0]];
+        DAT_12 = mVar2.DAT_02;
+        DAT_14 = mVar2.DAT_04;
+        DAT_16 = mVar2.DAT_06;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58700()
+    {
+        MovContainer18 mVar2;
+
+        mVar2 = (MovContainer18)PTR_58[0].CONTAINERS[DAT_58[0]];
+        DAT_18 = mVar2.DAT_02;
+        DAT_1A = mVar2.DAT_04;
+        DAT_1C = mVar2.DAT_06;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5873C()
+    {
+        MovContainer18 mVar2;
+
+        mVar2 = (MovContainer18)PTR_58[0].CONTAINERS[DAT_58[0]];
+        DAT_1E = mVar2.DAT_02;
+        DAT_20 = mVar2.DAT_04;
+        DAT_22 = mVar2.DAT_06;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58778()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_587DC()
+    {
+        bool bVar1;
+        uint uVar2;
+        int iVar3;
+        uint uVar4;
+        MovContainer4 mVar5;
+        CriSkinned oVar5;
+        CriBone oVar6;
+
+        mVar5 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        uVar2 = (uint)FUN_55DC8((uint)mVar5.DAT_01 << 0x10 | mVar5.DAT_02, 0);
+
+        if (uVar2 != 0)
+        {
+            bVar1 = mVar5.DAT_03 != 1;
+
+            if (bVar1)
+                uVar2 &= 0xfffffffd;
+            else
+                uVar2 |= 2;
+
+            FUN_557B4((uint)mVar5.DAT_01 << 0x10 | mVar5.DAT_02, 0, (int)uVar2);
+
+            if (mVar5.DAT_01 == 2)
+            {
+                oVar5 = SceneManager.instance.DAT_27C[mVar5.DAT_02];
+                iVar3 = oVar5.boneCount;
+                oVar6 = oVar5.skeleton;
+                uVar4 = 1;
+
+                if (!bVar1)
+                    uVar4 = 3;
+
+                if (iVar3 != 0)
+                {
+                    iVar3 -= 2;
+
+                    do
+                    {
+                        oVar6.flags = uVar4;
+                        oVar6 = (CriBone)oVar6.next;
+                        bVar1 = iVar3 != -1;
+                        iVar3--;
+                    } while (bVar1);
+                }
+            }
+        }
+
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_588FC()
+    {
+        byte bVar1;
+        uint uVar2;
+        MovContainer4 mVar3;
+
+        mVar3 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        uVar2 = (uint)FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar3.DAT_01);
+        bVar1 = 2;
+
+        if ((uVar2 & 1 << (mVar3.DAT_02 & 0x1f)) == 0)
+            bVar1 = 0x40;
+
+        DAT_06 = bVar1;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58974()
+    {
+        byte bVar1;
+        MovContainer4 mVar2;
+        CriObject oVar3;
+
+        mVar2 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        bVar1 = mVar2.DAT_01;
+
+        if (bVar1 == 3)
+            oVar3 = SceneManager.instance.DAT_7CDC[mVar2.DAT_02];
+        else
+        {
+            if (bVar1 < 4)
+            {
+                if (bVar1 != 2) goto LAB_58A24;
+
+                oVar3 = SceneManager.instance.DAT_27C[mVar2.DAT_02];
+            }
+            else
+            {
+                if (bVar1 != 4) goto LAB_58A24;
+
+                oVar3 = SceneManager.instance.DAT_5FCC[mVar2.DAT_02];
+            }
+        }
+
+        SceneManager.instance.cCamera.DAT_64 = oVar3;
+        LAB_58A24:
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58A3C()
+    {
+        CriCamera oVar1;
+        MovContainer19 mVar2;
+
+        oVar1 = SceneManager.instance.cCamera;
+        mVar2 = (MovContainer19)PTR_58[0].CONTAINERS[DAT_58[0]];
+        SceneManager.instance.FUN_26EBC(4, 0);
+        oVar1.DAT_46 = mVar2.DAT_04;
+        oVar1.DAT_74 = mVar2.DAT_06;
+        oVar1.DAT_76 = mVar2.DAT_08;
+        oVar1.DAT_78 = mVar2.DAT_0A;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58ACC()
+    {
+        CriCamera oVar1;
+        MovContainer20 mVar2;
+
+        oVar1 = SceneManager.instance.cCamera;
+        mVar2 = (MovContainer20)PTR_58[0].CONTAINERS[DAT_58[0]];
+        SceneManager.instance.FUN_26EBC(2, 0);
+        oVar1.DAT_36 = mVar2.DAT_08;
+        oVar1.DAT_3E = mVar2.DAT_0A;
+        oVar1.DAT_50 = mVar2.DAT_0C;
+        oVar1.DAT_52 = mVar2.DAT_0E;
+        SceneManager.instance.FUN_264C4(oVar1.DAT_36, 
+            (short)mVar2.DAT_02.x, (short)mVar2.DAT_02.y, (short)mVar2.DAT_02.z);
+        oVar1.DAT_26 = mVar2.DAT_18;
+        oVar1.DAT_2E = mVar2.DAT_1A;
+        oVar1.DAT_54 = mVar2.DAT_1C;
+        oVar1.DAT_56 = mVar2.DAT_1E;
+        SceneManager.instance.FUN_26504(oVar1.DAT_26, 
+            (short)mVar2.DAT_12.x, (short)mVar2.DAT_12.y, (short)mVar2.DAT_12.z);
+        oVar1.DAT_73 = 1;
+        oVar1.DAT_72 |= 1;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58BC8()
+    {
+        CriCamera oVar1;
+        MovContainer13 mVar2;
+
+        oVar1 = SceneManager.instance.cCamera;
+        mVar2 = (MovContainer13)PTR_58[0].CONTAINERS[DAT_58[0]];
+
+        if ((mVar2.DAT_01 & 1) != 0)
+            oVar1.DAT_36 = mVar2.DAT_02;
+
+        if ((mVar2.DAT_01 & 2) != 0)
+            oVar1.DAT_3E = mVar2.DAT_04;
+
+        if ((mVar2.DAT_01 & 4) != 0)
+            oVar1.DAT_26 = mVar2.DAT_02;
+
+        if ((mVar2.DAT_01 & 8) != 0)
+            oVar1.DAT_2E = mVar2.DAT_04;
+
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58C6C()
+    {
+        CriCamera oVar1;
+        MovContainer13 mVar2;
+
+        oVar1 = SceneManager.instance.cCamera;
+        mVar2 = (MovContainer13)PTR_58[0].CONTAINERS[DAT_58[0]];
+
+        if ((mVar2.DAT_01 & 1) != 0)
+            oVar1.DAT_50 = mVar2.DAT_02;
+
+        if ((mVar2.DAT_01 & 2) != 0)
+            oVar1.DAT_52 = mVar2.DAT_04;
+
+        if ((mVar2.DAT_01 & 4) != 0)
+            oVar1.DAT_54 = mVar2.DAT_02;
+
+        if ((mVar2.DAT_01 & 8) != 0)
+            oVar1.DAT_56 = mVar2.DAT_04;
+
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58D10()
+    {
+        int iVar1;
+        int iVar2;
+        MovContainer21 mVar3;
+
+        mVar3 = (MovContainer21)PTR_58[0].CONTAINERS[DAT_58[0]];
+        iVar1 = FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar3.DAT_02);
+        iVar2 = FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar3.DAT_05);
+        FUN_5666C(iVar1, iVar2);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58D98()
+    {
+        int iVar1;
+        MovContainer21 mVar2;
+
+        mVar2 = (MovContainer21)PTR_58[0].CONTAINERS[DAT_58[0]];
+        iVar1 = FUN_55DC8((uint)mVar2.DAT_03 << 0x10 | mVar2.DAT_04, mVar2.DAT_05);
+        FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, mVar2.DAT_02, iVar1);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58E14()
+    {
+        int iVar1;
+        int iVar2;
+        MovContainer21 mVar3;
+
+        mVar3 = (MovContainer21)PTR_58[0].CONTAINERS[DAT_58[0]];
+        iVar1 = FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar3.DAT_02);
+        iVar2 = FUN_55DC8((uint)mVar3.DAT_03 << 0x10 | mVar3.DAT_04, mVar3.DAT_05);
+        iVar1 = FUN_56584(iVar1, iVar2, mVar3.DAT_01);
+        FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, mVar3.DAT_02, iVar1);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58EC8()
+    {
+        byte bVar1;
+        bool bVar2;
+
+        bVar2 = InventoryManager.FUN_4A87C(11, 
+            ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01);
+        bVar1 = 2;
+
+        if (!bVar2)
+            bVar1 = 0x40;
+
+        DAT_06 = bVar1;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58F20()
+    {
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_58F38()
+    {
+        byte bVar1;
+        MovContainer4 mVar2;
+        CriObject oVar3;
+
+        mVar2 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+
+        if (DAT_0A != 3)
+        {
+            if (DAT_0A != 4) goto LAB_590D4;
+
+            bVar1 = mVar2.DAT_01;
+
+            if (bVar1 == 3)
+                oVar3 = SceneManager.instance.DAT_7CDC[mVar2.DAT_02];
+            else
+            {
+                if (bVar1 < 4)
+                {
+                    if (bVar1 != 2) goto LAB_590D4;
+
+                    oVar3 = SceneManager.instance.DAT_27C[mVar2.DAT_02];
+                }
+                else
+                {
+                    if (bVar1 != 4) goto LAB_590D4;
+
+                    oVar3 = SceneManager.instance.DAT_5FCC[mVar2.DAT_02];
+                }
+            }
+
+            //...
+            goto LAB_590D4;
+        }
+
+        bVar1 = mVar2.DAT_01;
+
+        if (bVar1 == 3)
+            oVar3 = SceneManager.instance.DAT_7CDC[mVar2.DAT_02];
+        else
+        {
+            if (bVar1 < 4)
+            {
+                if (bVar1 != 2) goto LAB_590D4;
+
+                oVar3 = SceneManager.instance.DAT_27C[mVar2.DAT_02];
+            }
+            else
+            {
+                if (bVar1 != 4) goto LAB_590D4;
+
+                oVar3 = SceneManager.instance.DAT_5FCC[mVar2.DAT_02];
+            }
+        }
+
+        SceneManager.instance.DAT_7CDC[DAT_0B].DAT_40 = oVar3;
+        LAB_590D4:
+        DAT_58[0]++;
+        return false;
+    }
 }

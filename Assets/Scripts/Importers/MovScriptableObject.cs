@@ -81,6 +81,7 @@ public class MovContainer12 : MovContainer4
 
 public class MovContainer13 : MovContainer
 {
+    public byte DAT_01;
     public short DAT_02;
     public short DAT_04;
     public short DAT_06;
@@ -94,6 +95,58 @@ public class MovContainer14 : MovContainer4
 public class MovContainer15 : MovContainer4
 {
     public ushort DAT_04;
+}
+
+public class MovContainer16 : MovContainer4
+{
+    public Vector3Int DAT_04;
+    public byte DAT_0A;
+    public byte DAT_0B;
+}
+
+public class MovContainer17: MovContainer4
+{
+    public byte DAT_04;
+    public byte DAT_05;
+    public short DAT_06;
+    public short DAT_08;
+    public short DAT_0A;
+}
+
+public class MovContainer18 : MovContainer
+{
+    public byte DAT_01;
+    public short DAT_02;
+    public short DAT_04;
+    public short DAT_06;
+}
+
+public class MovContainer19 : MovContainer4
+{
+    public short DAT_04;
+    public short DAT_06;
+    public short DAT_08;
+    public ushort DAT_0A;
+}
+
+public class MovContainer20 : MovContainer
+{
+    public Vector3Int DAT_02;
+    public short DAT_08;
+    public short DAT_0A;
+    public short DAT_0C;
+    public short DAT_0E;
+    public Vector3Int DAT_12;
+    public short DAT_18;
+    public short DAT_1A;
+    public short DAT_1C;
+    public short DAT_1E;
+}
+
+public class MovContainer21 : MovContainer4
+{
+    public byte DAT_04;
+    public byte DAT_05;
 }
 
 public class MovScriptableObject : ScriptableObject

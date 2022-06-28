@@ -1185,7 +1185,7 @@ public class CriPlayer : CriSkinned
         }
     }
 
-    private void FUN_4FE90(uint param1)
+    public void FUN_4FE90(uint param1)
     {
         sbyte sVar1;
         CriBone oVar2;
@@ -3183,24 +3183,6 @@ public class CriPlayer : CriSkinned
             oVar2 = Utilities.FUN_601C8(oVar1.skeleton, oVar1.DAT_175 & 0xf) as CriBone;
             DAT_1FC = oVar2.screen;
         }
-    }
-
-    private void FUN_535E4(sbyte param1, sbyte param2)
-    {
-        CriBone oVar1;
-
-        oVar1 = (CriBone)Utilities.FUN_601C8(skeleton, 7);
-        DAT_164 = 0;
-
-        if (param1 == -1)
-            DAT_20C = new Vector2Int(vr.x, vr.y);
-        else
-        {
-            DAT_1FA = param1;
-            DAT_1FB = param2;
-        }
-
-        oVar1.DAT_43 = false;
     }
 
     public void FUN_5397C(byte param1)

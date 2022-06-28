@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_9EEB; //gp+9eebh
     public byte[] DAT_A090; //gp+a090h
     public ushort DAT_A0E0; //gp+a0e0h
+    public ushort DAT_A0E2; //gp+a0e2h
     public short playerHealth; //gp+a0f0h
     public short DAT_A0F2; //gp+a0f2h
     public uint DAT_A0F4; //gp+a0f4h
@@ -96,6 +97,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_A100; //gp+a100h
     public byte DAT_A2CF; //gp+a2cfh
     public bool DAT_A2D0; //gp+a2d0h
+    public bool DAT_A2D1; //gp+a2d1h
     public byte DAT_A2D3; //gp+a2d3h
     public Packet[] DAT_C3380;
     public Frame[] DAT_C3384;

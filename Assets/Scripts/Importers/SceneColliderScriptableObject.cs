@@ -30,7 +30,7 @@ public class FloorCollider
 public class WallCollider
 {
     public byte DAT_00; //0x00
-    public byte DAT_01; //0x01
+    public byte DAT_01; //0x01 -writable
     public byte DAT_02; //0x02
     public byte DAT_03; //0x03
     public Vector2Int DAT_04; //0x04

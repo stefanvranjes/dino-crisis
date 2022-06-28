@@ -149,6 +149,15 @@ public class MovContainer21 : MovContainer4
     public byte DAT_05;
 }
 
+public class MovContainer22 : MovContainer
+{
+    public byte DAT_01;
+    public byte DAT_15;
+    public byte DAT_19;
+    public byte DAT_1A;
+    public short DAT_22;
+}
+
 public class MovScriptableObject : ScriptableObject
 {
     public MovContainer[] CONTAINERS;

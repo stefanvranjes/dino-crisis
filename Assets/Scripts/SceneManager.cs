@@ -26,6 +26,7 @@ public class SceneManager : MonoBehaviour
     public int DAT_C51CC;
     public int DAT_C51D0;
     public int DAT_C51D4;
+    public byte DAT_C51D8;
     public CriMovie[] DAT_D7C0; //gp+d7c0h...gp+dea0h (0x800C51E0)
 
     private byte[] DAT_AA484 = new byte[]
@@ -1684,5 +1685,20 @@ public class SceneManager : MonoBehaviour
         }
 
         wVar1.flags &= (ushort)~param2;
+    }
+
+    public void FUN_81390(uint param1, byte param2, byte param3)
+    {
+        FloorCollider fVar1;
+
+        fVar1 = sceneCollision.FLOOR_SEGMENT.FLOOR_COLLIDERS[param1 & 0xff];
+
+        if (param3 != 0)
+        {
+            fVar1.DAT_01 |= param2;
+            return;
+        }
+
+        fVar1.DAT_01 &= (byte)~param2;
     }
 }

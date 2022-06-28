@@ -2153,4 +2153,400 @@ public class CriMovie : MonoBehaviour
         DAT_58[0]++;
         return false;
     }
+
+    private bool FUN_590EC()
+    {
+        byte bVar1;
+        MovContainer19 mVar3;
+        Vector3Int local_248;
+
+        mVar3 = (MovContainer19)PTR_58[0].CONTAINERS[DAT_58[0]];
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_591B8()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_59420()
+    {
+        byte bVar1;
+        CriPlayer oVar2;
+        MovContainer4 mVar3;
+        uint uVar4;
+        uint uVar5;
+
+        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        mVar3 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        bVar1 = mVar3.DAT_01;
+
+        if (bVar1 == 1)
+        {
+            if (mVar3.DAT_02 == 1)
+                oVar2.DAT_1C0 |= 4;
+            else
+                oVar2.DAT_1C0 &= 0xfffffffb;
+        }
+        else
+        {
+            if (bVar1 < 2)
+            {
+                if (bVar1 == 0)
+                {
+                    if (mVar3.DAT_02 == 0)
+                    {
+                        SceneManager.instance.DAT_C51D8 = oVar2.DAT_240;
+                        oVar2.DAT_240 = 0;
+                        uVar4 = 0;
+                    }
+                    else
+                    {
+                        oVar2.DAT_240 = SceneManager.instance.DAT_C51D8;
+                        uVar4 = SceneManager.instance.DAT_C51D8;
+                    }
+
+                    oVar2.FUN_4FE90(uVar4);
+                }
+            }
+            else
+            {
+                if (bVar1 == 2)
+                {
+                    InventoryManager.FUN_4A7E8(2, 9, false);
+                    InventoryManager.FUN_4A7E8(2, 10, false);
+                    InventoryManager.FUN_4A7E8(2, 11, false);
+                    bVar1 = oVar2.DAT_1D7;
+
+                    if (bVar1 == 1)
+                    {
+                        if ((oVar2.DAT_1C0 & 8) == 0)
+                            uVar5 = 10;
+                        else
+                            uVar5 = 11;
+                    }
+                    else
+                    {
+                        if (bVar1 < 2)
+                        {
+                            if (bVar1 != 0) goto LAB_595CC;
+
+                            uVar5 = 9;
+                        }
+                        else
+                        {
+                            if (bVar1 != 2) goto LAB_595CC;
+
+                            if ((oVar2.DAT_1C0 & 8) == 0)
+                                uVar5 = 10;
+                            else
+                                uVar5 = 11;
+                        }
+                    }
+
+                    InventoryManager.FUN_4A7E8(2, uVar5, true);
+                }
+            }
+        }
+
+        LAB_595CC:
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_595FC()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_59994()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_59BFC()
+    {
+        uint uVar1;
+        CriSkinned oVar2;
+        MovContainer14 mVar3;
+
+        mVar3 = (MovContainer14)PTR_58[0].CONTAINERS[DAT_58[0]];
+        oVar2 = SceneManager.instance.DAT_27C[10];
+        uVar1 = (uint)mVar3.DAT_01 << 8 | 4;
+        oVar2.DAT_3C = (byte)uVar1;
+        oVar2.DAT_3D = (byte)(uVar1 >> 8);
+        oVar2.DAT_3E = (byte)(uVar1 >> 0x10);
+        oVar2.DAT_3F = (byte)(uVar1 >> 0x18);
+        oVar2.PTR_190 = mVar3.DAT_04;
+        oVar2.DAT_190 = 0;
+        oVar2.DAT_176 = mVar3.DAT_02;
+        oVar2.DAT_18F = mVar3.DAT_03;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_59D28()
+    {
+        byte bVar1;
+        bool bVar5;
+        int iVar5;
+        CriPlayer oVar5;
+        CriSkinned pcVar7;
+        uint uVar8;
+        MovContainer22 mVar10;
+        uint uVar11;
+
+        /*oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        mVar10 = (MovContainer22)PTR_58[0].CONTAINERS[DAT_58[0]];
+        
+        if ((oVar5.DAT_11E & 0x80) != 0)
+        {
+            DAT_58[0]++;
+            return false;
+        }
+
+        if (mVar10.DAT_22 == 0 && (mVar10.DAT_19 & 2) == 0)
+        {
+            bVar5 = InventoryManager.FUN_4A87C(2, 0x15);
+
+            if (!bVar5 || mVar10.DAT_1A != SceneManager.instance.cCamera.DAT_68)
+            {
+                DAT_58[0]++;
+                return false;
+            }
+
+            InventoryManager.FUN_4A7E8(2, 0x15, false);
+        }
+
+        switch (mVar10.DAT_22)
+        {
+            case 0:
+                uVar8 = 0;
+
+                if ((SceneManager.instance.DAT_27C[mVar10.DAT_01].flags & 1) != 0)
+                {
+                    DAT_58[0]++;
+                    return false;
+                }
+
+                uVar11 = 0;
+
+                if (uVar8 < 10)
+                {
+                    do
+                    {
+                        pcVar7 = SceneManager.instance.DAT_27C[uVar8];
+
+                        if ((pcVar7.flags & 1) != 0 && -1 < pcVar7.DAT_198)
+                            uVar11++;
+
+                        uVar8++;
+                    } while (uVar8 < 10);
+                }
+
+                bVar1 = mVar10.DAT_15;
+                iVar5 = (int)GameManager.FUN_64650();
+
+        }*/
+
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5A5B4()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5A60C()
+    {
+        MovContainer4 mVar2;
+
+        mVar2 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        GameManager.instance.DAT_2E = mVar2.DAT_02;
+        GameManager.instance.DAT_39 = mVar2.DAT_01;
+        InventoryManager.FUN_4A7E8(2, 0xf, true);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5A66C()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5A6A8()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5A764()
+    {
+        GameManager.instance.DAT_21 = ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5A794()
+    {
+        MovContainer4 mVar1;
+        CriSkinned oVar2;
+
+        mVar1 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        oVar2 = SceneManager.instance.DAT_27C[DAT_0B];
+
+        if (mVar1.DAT_01 == 1)
+            oVar2.DAT_5C |= mVar1.DAT_02;
+        else
+            oVar2.DAT_5C &= (byte)~mVar1.DAT_02;
+
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5A814()
+    {
+        //FUN_1D988
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5A85C()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5A9B0()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5AAD4()
+    {
+        TriggerScriptableObject tVar1;
+
+        tVar1 = SceneManager.instance.triggers
+            [((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01 + 4];
+
+        if (tVar1 != null && tVar1.DAT_13)
+            DialogManager.instance.PTR_FUN_99028[tVar1.DAT_10](tVar1);
+
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5AB68()
+    {
+        byte bVar1;
+        CriSkinned oVar2;
+        MovContainer4 mVar3;
+
+        mVar3 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        bVar1 = mVar3.DAT_01;
+        oVar2 = SceneManager.instance.DAT_27C[DAT_0B];
+        oVar2.DAT_18C = bVar1;
+
+        if ((mVar3.DAT_01 & 0xe0) != 0)
+            oVar2.DAT_18C = (byte)(bVar1 | mVar3.DAT_02);
+
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5AA08()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5ABD8()
+    {
+        MovContainer4 mVar1;
+        CriPlayer oVar2;
+
+        mVar1 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        if (mVar1.DAT_02 == 0)
+            oVar2.DAT_98 = oVar2.DAT_1E0;
+        else
+            SceneManager.instance.DAT_27C[mVar1.DAT_01].FUN_65C4C(oVar2);
+
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5AC6C()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5ACDC()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5AD28()
+    {
+        GameManager.instance.DAT_A0E2 = ((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02;
+        GameManager.instance.DAT_39 = 2;
+        InventoryManager.FUN_4A7E8(2, 0xf, true);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5AD90()
+    {
+        MovContainer4 mVar1;
+
+        mVar1 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        SceneManager.instance.FUN_81390(mVar1.DAT_01, mVar1.DAT_02, mVar1.DAT_03);
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5ADE0()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5AE44()
+    {
+        GameManager.instance.DAT_9234 = ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01;
+        DAT_58[0]++;
+        return false;
+    }
+
+    private bool FUN_5AE78()
+    {
+        //...
+        DAT_58[0]++;
+        return false;
+    }
 }

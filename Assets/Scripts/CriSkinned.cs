@@ -851,6 +851,17 @@ public class CriSkinned : CriObject
         return uVar6;
     }
 
+    public void FUN_65C4C(CriPlayer param1)
+    {
+        param1.DAT_1DC = (CriPlayer)this;
+
+        if (param1.DAT_98 != DAT_98)
+        {
+            param1.DAT_1E0 = param1.DAT_98;
+            param1.DAT_98 = DAT_98;
+        }
+    }
+
     public void FUN_66208()
     {
         long lVar3;

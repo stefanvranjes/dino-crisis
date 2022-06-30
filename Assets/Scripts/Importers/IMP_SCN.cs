@@ -11,6 +11,7 @@ using UnityEngine;
 public class IMP_SCN : ScriptedImporter
 {
     public RamScriptableObject ram;
+    public int[] movieIds;
 
     public override void OnImportAsset(AssetImportContext ctx)
     {

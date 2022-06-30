@@ -28,7 +28,7 @@ public class CriMovie : MonoBehaviour
     public int[] DAT_30; //0x30
     public int[] DAT_44; //0x44
     public int[] DAT_58; //0x58
-    public MovScriptableObject[] PTR_58; //0x58
+    public _MOVIE_DATA[] PTR_58; //0x58
     public int DAT_AC; //0xAC
     public delegate bool FUN_9E540();
     public FUN_9E540[] PTR_FUN_9E540;
@@ -39,7 +39,124 @@ public class CriMovie : MonoBehaviour
         DAT_30 = new int[5];
         DAT_44 = new int[5];
         DAT_58 = new int[21];
-        PTR_58 = new MovScriptableObject[21];
+        PTR_58 = new _MOVIE_DATA[21];
+        PTR_FUN_9E540 = new FUN_9E540[114]
+        {
+            FUN_56698,
+            FUN_566EC,
+            FUN_567E4,
+            FUN_5680C,
+            FUN_56824,
+            FUN_5687C,
+            FUN_568F8,
+            FUN_56960,
+            FUN_569C0,
+            FUN_56A1C,
+            FUN_56A70,
+            FUN_56AE0,
+            FUN_56B1C,
+            FUN_56B3C,
+            FUN_56B54,
+            FUN_56B98,
+            FUN_56BF4,
+            FUN_56C20,
+            FUN_56C28,
+            FUN_56E9C,
+            FUN_56C80,
+            FUN_56CDC,
+            FUN_56D5C,
+            FUN_56DB4,
+            FUN_56E44,
+            FUN_56698,
+            FUN_56698,
+            FUN_56698,
+            FUN_56698,
+            FUN_56698,
+            FUN_56698,
+            FUN_56698,
+            FUN_56EB4,
+            FUN_57018,
+            FUN_57070,
+            FUN_570A0,
+            FUN_57188,
+            FUN_57218,
+            FUN_57268,
+            FUN_572C4,
+            FUN_57398,
+            FUN_57604,
+            FUN_5766C,
+            FUN_576C0,
+            FUN_5774C,
+            FUN_57870,
+            FUN_578B8,
+            FUN_57E84,
+            FUN_57970,
+            FUN_579BC,
+            FUN_57B28,
+            FUN_57B6C,
+            FUN_57C6C,
+            FUN_57CB0,
+            FUN_57D00,
+            FUN_57DE8,
+            FUN_57FE8,
+            FUN_58048,
+            FUN_580A8,
+            FUN_5811C,
+            FUN_581C0,
+            FUN_58214,
+            FUN_58384,
+            FUN_583CC,
+            FUN_5841C,
+            FUN_58494,
+            FUN_584E8,
+            FUN_58688,
+            FUN_586C4,
+            FUN_58700,
+            FUN_5873C,
+            FUN_58778,
+            FUN_587DC,
+            FUN_588FC,
+            FUN_58974,
+            FUN_58A3C,
+            FUN_58ACC,
+            FUN_58BC8,
+            FUN_58C6C,
+            FUN_58D10,
+            FUN_58D98,
+            FUN_58E14,
+            FUN_58EC8,
+            FUN_58F20,
+            FUN_58F38,
+            FUN_590EC,
+            FUN_591B8,
+            FUN_59420,
+            FUN_595FC,
+            FUN_59994,
+            FUN_59BFC,
+            FUN_59D28,
+            FUN_5A5B4,
+            FUN_5A60C,
+            FUN_5A66C,
+            FUN_5A6A8,
+            FUN_5A764,
+            FUN_5A794,
+            FUN_5A814,
+            FUN_5A85C,
+            FUN_5A9B0,
+            FUN_5AAD4,
+            FUN_5AB68,
+            FUN_5AA08,
+            FUN_5ABD8,
+            FUN_5AC6C,
+            FUN_5ACDC,
+            FUN_5AD28,
+            FUN_5AD90,
+            FUN_5ADE0,
+            FUN_5AE44,
+            FUN_5AE78,
+            FUN_56698,
+            FUN_56698
+        };
     }
 
     // Start is called before the first frame update
@@ -76,7 +193,7 @@ public class CriMovie : MonoBehaviour
         DAT_30 = new int[5];
         DAT_44 = new int[5];
         DAT_58 = new int[21];
-        PTR_58 = new MovScriptableObject[21];
+        PTR_58 = new _MOVIE_DATA[21];
     }
 
     private void FUN_557B4(uint param1, int param2, int param3)
@@ -812,7 +929,7 @@ public class CriMovie : MonoBehaviour
                 iVar2 = (int)SceneManager.instance.FUN_566B0();
 
             SceneManager.instance.DAT_D7C0[iVar2].DAT_05 = 1;
-            SceneManager.instance.DAT_D7C0[iVar2].PTR_58[0] = (MovScriptableObject)SceneManager.instance.scn.OBJECTS[uVar1];
+            SceneManager.instance.DAT_D7C0[iVar2].PTR_58[0] = SceneManager.instance.scn.GetMovie(uVar1);
             SceneManager.instance.DAT_D7C0[iVar2].DAT_58[0] = 0;
             SceneManager.instance.DAT_D7C0[iVar2].DAT_AC = 1 + mVar4.DAT_01 / 4;
         }
@@ -868,8 +985,8 @@ public class CriMovie : MonoBehaviour
         if (!bVar1)
         {
             DAT_AC = 1;
-            PTR_58[0] = (MovScriptableObject)SceneManager.instance.scn.OBJECTS
-                [((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02];
+            PTR_58[0] = SceneManager.instance.scn.GetMovie
+                (((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
             DAT_58[0] = 0;
         }
         else
@@ -997,8 +1114,8 @@ public class CriMovie : MonoBehaviour
         DAT_58[piVar1] = DAT_58[0] + 1;
         PTR_58[piVar1] = PTR_58[0];
         DAT_AC = piVar1 + 1;
-        PTR_58[0] = (MovScriptableObject)SceneManager.instance.scn.OBJECTS
-            [((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02];
+        PTR_58[0] = SceneManager.instance.scn.GetMovie
+            (((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
         DAT_58[0] = 0;
         return false;
     }

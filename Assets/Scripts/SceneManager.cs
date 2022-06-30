@@ -222,11 +222,11 @@ public class SceneManager : MonoBehaviour
     public void FUN_55580(sbyte param1, int param2)
     {
         int iVar1;
-        MovScriptableObject oVar3;
+        _MOVIE_DATA oVar3;
 
         iVar1 = param1;
         DAT_D7C0[iVar1].DAT_05 = 1;
-        oVar3 = (MovScriptableObject)scn.OBJECTS[(param2 << 16) >> 14];
+        oVar3 = scn.GetMovie((param2 << 16) >> 14);
         DAT_D7C0[iVar1].DAT_AC = 1;
         DAT_D7C0[iVar1].PTR_58[0] = oVar3;
         DAT_D7C0[iVar1].DAT_58[0] = 0;

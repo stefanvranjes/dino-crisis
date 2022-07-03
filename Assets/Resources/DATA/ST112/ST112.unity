@@ -179,6 +179,7 @@ MonoBehaviour:
   tags: 0
   vr: {x: 0, y: 0, z: 0}
   DAT_2E: 0
+  DAT_2F: 0
   flags: 0
 --- !u!4 &451172097
 Transform:
@@ -383,6 +384,8 @@ MonoBehaviour:
   DAT_2E: 0
   DAT_30: {x: 0, y: 0, z: 0}
   DAT_36: 0
+  DAT_38: 0
+  DAT_3A: 0
   DAT_3C: 0
   DAT_3E: 0
   DAT_40: {x: 0, y: 0, z: 0}
@@ -410,6 +413,7 @@ MonoBehaviour:
     DAT_32: 0
     DAT_34: {x: 0, y: 0, z: 0}
     DAT_3C: {x: 0, y: 0, z: 0}
+  DAT_64: {fileID: 0}
   DAT_68: 0
   DAT_69: 0
   DAT_6A: 0
@@ -460,13 +464,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scn: {fileID: -4406283935363021935, guid: 11bdbed0b1e961f4f8c2c35ee71b12a7, type: 3}
   database: {fileID: 11400000, guid: 536651ecb139fdf4ba707b4c44b49643, type: 2}
+  DAT_AC: 
   cCamera: {fileID: 0}
   sceneCollision: {fileID: -6028080052161987059, guid: 879851d3ff2d9d248bd201b9776c0852, type: 3}
+  lightSource: {fileID: -7488134631618437631, guid: efb5b01c2ec45c64f871fc78e36255dc, type: 3}
   motions: {fileID: 9013893561334630828, guid: 49c148669d55a534e936a792b0d1d34f, type: 3}
+  triggers: []
+  DAT_270: 0
   DAT_27C: []
   DAT_1C9C: []
   DAT_5FCC: []
   DAT_7CDC: []
+  DAT_C51B8: 0
+  DAT_C51BC: 0
+  DAT_C51C0: 0
+  DAT_C51C4: 0
+  DAT_C51C8: 0
+  DAT_C51CC: 0
+  DAT_C51D0: 0
+  DAT_C51D4: 0
+  DAT_C51D8: 0
+  DAT_D7C0: []
 --- !u!4 &1678437249
 Transform:
   m_ObjectHideFlags: 0
@@ -493,6 +511,7 @@ GameObject:
   - component: {fileID: 1873808890}
   - component: {fileID: 1873808889}
   - component: {fileID: 1873808891}
+  - component: {fileID: 1873808892}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -519,7 +538,29 @@ MonoBehaviour:
   DAT_1f800028: 0
   DAT_1f80002a: 0
   DAT_1f80002c: {x: 0, y: 0, z: 0}
+  DAT_1f800034_2: {x: 0, y: 0, z: 0}
   DAT_1f800034:
+    V00: 0
+    V01: 0
+    V02: 0
+    V10: 0
+    V11: 0
+    V12: 0
+    V20: 0
+    V21: 0
+    V22: 0
+    skewed: 0
+    _V00: 0
+    _V01: 0
+    _V02: 0
+    _V10: 0
+    _V11: 0
+    _V12: 0
+    _V20: 0
+    _V21: 0
+    _V22: 0
+  DAT_1f800044: {x: 0, y: 0, z: 0}
+  DAT_1f80004c:
     V00: 0
     V01: 0
     V02: 0
@@ -543,17 +584,51 @@ MonoBehaviour:
   DAT_1f800388: {x: 0, y: 0, z: 0}
   DAT_1f800390: {x: 0, y: 0, z: 0}
   todUncomp: []
+  DAT_0C:
+    DAT_00: 0
+    DAT_01: 0
+    DAT_02: 0
+    DAT_03: 0
+    DAT_04: {x: 0, y: 0, z: 0}
+    DAT_0A: 0
+    DAT_0E: 0
+  DAT_20: 0
   DAT_21: 0
   DAT_28: 0
+  DAT_2A: 0
+  DAT_2C: 0
+  DAT_2E: 0
   DAT_38: 0
+  DAT_39: 0
+  DAT_3B: 0
   DAT_40: 0
   playerSpawnPos: {x: 0, y: 0, z: 0}
   playerSpawnRotY: 0
   DAT_55: 0
+  DAT_64: 0
+  DAT_68: 0
+  DAT_6C: 0
+  DAT_6D: 0
+  DAT_6E: 0
+  DAT_6F: 0
+  DAT_78: 0
+  DAT_922C: 0
+  DAT_9234: 0
   DAT_9AA0: 0
   DAT_9AA1: 0
   difficulty: 0
-  DAT_9ADD: 0
+  DAT_9AAA: 0
+  DAT_9ADC: 0
+  DAT_9ADE: 0
+  DAT_9ADF: 0
+  DAT_9EAC: 
+  DAT_9EE8: 0
+  DAT_9EE9: 0
+  DAT_9EEA: 0
+  DAT_9EEB: 0
+  DAT_A090: 
+  DAT_A0E0: 0
+  DAT_A0E2: 0
   playerHealth: 0
   DAT_A0F2: 0
   DAT_A0F4: 0
@@ -561,6 +636,7 @@ MonoBehaviour:
   DAT_A100: 0
   DAT_A2CF: 0
   DAT_A2D0: 0
+  DAT_A2D1: 0
   DAT_A2D3: 0
   DAT_C3380: []
   DAT_C3384: []
@@ -863,5 +939,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2167e1bf6d58af848a23591f11e88c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1873808892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873808888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c49d7b5751379674d87f0a84f1f21449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

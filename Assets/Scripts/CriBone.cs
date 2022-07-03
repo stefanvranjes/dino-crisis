@@ -11,6 +11,7 @@ public class CriBone : CriObject
     public bool DAT_43; //0x43
     public Vector3Int DAT_44; //0x44
     public Vector3Int DAT_4C; //0x4C
+    public Vector3Int[] DAT_54; //0x54
     public Matrix3x3 lightMatrix; //0x6C
     public Matrix3x3 colorMatrix; //0x8C
 
@@ -21,6 +22,11 @@ public class CriBone : CriObject
     private List<Color> colorList;
     private List<int> triangleList;
     public Material[] materials;
+
+    private void Awake()
+    {
+        DAT_54 = new Vector3Int[3];
+    }
 
     protected override void Start()
     {
@@ -95,6 +101,7 @@ public class CriBone : CriObject
         DAT_43 = false;
         DAT_44 = Vector3Int.zero;
         DAT_4C = Vector3Int.zero;
+        DAT_54 = new Vector3Int[3];
         lightMatrix = new Matrix3x3();
         colorMatrix = new Matrix3x3();
     }

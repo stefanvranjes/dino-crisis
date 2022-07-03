@@ -11,6 +11,7 @@ public class SceneManager : MonoBehaviour
     public byte[] DAT_AC; //gp+ach
     public CriCamera cCamera; //gp+b4h
     public SceneColliderScriptableObject sceneCollision; //gp+154h
+    public LightScriptableObject lightSource;
     public SceneCameraScriptableObject motions; //gp+164h, gp+160h -> motions.Length
     public TriggerScriptableObject[] triggers; //gp+1e8h
     public byte DAT_270; //gp+270h
@@ -69,7 +70,7 @@ public class SceneManager : MonoBehaviour
             FUN_570A0(scn.staticObjs[i]);
         }
 
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < 80; i++)
         {
             GameObject obj = new GameObject();
             DAT_1C9C[i] = obj.AddComponent<CriBone>();
@@ -695,6 +696,69 @@ public class SceneManager : MonoBehaviour
         }
 
         oVar1.DAT_B4[param1] = new Vector3Int(param3, param4, param5);
+    }
+
+    public void FUN_4AEFC()
+    {
+        CriBone oVar4;
+        int iVar5;
+        CriSkinned piVar6;
+        uint uVar7;
+
+        uVar7 = 0;
+
+        if (uVar7 < 11)
+        {
+            do
+            {
+                piVar6 = DAT_27C[uVar7];
+
+                if (piVar6 != null && (piVar6.flags & 2) != 0)
+                {
+                    iVar5 = piVar6.boneCount;
+                    oVar4 = piVar6.skeleton;
+
+                    while (--iVar5 != -1)
+                    {
+                        GameManager.instance.DAT_1f80002c = oVar4.screen;
+                        GameManager.instance.FUN_4A8B8(lightSource, ref oVar4.colorMatrix, oVar4.DAT_54);
+                        Coprocessor.rotationMatrix.rt11 = cCamera.cTransform.rotation.V00;
+                        Coprocessor.rotationMatrix.rt12 = cCamera.cTransform.rotation.V01;
+                        Coprocessor.rotationMatrix.rt13 = cCamera.cTransform.rotation.V02;
+                        Coprocessor.rotationMatrix.rt21 = cCamera.cTransform.rotation.V10;
+                        Coprocessor.rotationMatrix.rt22 = cCamera.cTransform.rotation.V11;
+                        Coprocessor.rotationMatrix.rt23 = cCamera.cTransform.rotation.V12;
+                        Coprocessor.rotationMatrix.rt31 = cCamera.cTransform.rotation.V20;
+                        Coprocessor.rotationMatrix.rt32 = cCamera.cTransform.rotation.V21;
+                        Coprocessor.rotationMatrix.rt33 = cCamera.cTransform.rotation.V22;
+                        Coprocessor.vector0.vx0 = (short)oVar4.DAT_54[0].x;
+                        Coprocessor.vector0.vy0 = (short)oVar4.DAT_54[0].y;
+                        Coprocessor.vector0.vz0 = (short)oVar4.DAT_54[0].z;
+                        Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+                        oVar4.lightMatrix.V00 = Coprocessor.accumulator.ir1;
+                        oVar4.lightMatrix.V01 = Coprocessor.accumulator.ir2;
+                        oVar4.lightMatrix.V02 = Coprocessor.accumulator.ir3;
+                        Coprocessor.vector0.vx0 = (short)oVar4.DAT_54[1].x;
+                        Coprocessor.vector0.vy0 = (short)oVar4.DAT_54[1].y;
+                        Coprocessor.vector0.vz0 = (short)oVar4.DAT_54[1].z;
+                        Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+                        oVar4.lightMatrix.V10 = Coprocessor.accumulator.ir1;
+                        oVar4.lightMatrix.V11 = Coprocessor.accumulator.ir2;
+                        oVar4.lightMatrix.V12 = Coprocessor.accumulator.ir3;
+                        Coprocessor.vector0.vx0 = (short)oVar4.DAT_54[2].x;
+                        Coprocessor.vector0.vy0 = (short)oVar4.DAT_54[2].y;
+                        Coprocessor.vector0.vz0 = (short)oVar4.DAT_54[2].z;
+                        Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+                        oVar4.lightMatrix.V20 = Coprocessor.accumulator.ir1;
+                        oVar4.lightMatrix.V21 = Coprocessor.accumulator.ir2;
+                        oVar4.lightMatrix.V22 = Coprocessor.accumulator.ir3;
+                        oVar4 = (CriBone)oVar4.next;
+                    }
+                }
+
+                uVar7++;
+            } while (uVar7 < 11);
+        }
     }
 
     private void FUN_570A0(_STATIC_OBJ_DATA data)

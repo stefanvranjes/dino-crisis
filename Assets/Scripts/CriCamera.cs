@@ -125,11 +125,6 @@ public class CriCamera : MonoBehaviour
             (-transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
     }
 
-    private void FixedUpdate()
-    {
-        FUN_27210();
-    }
-
     public void FUN_27210()
     {
         FUN_18448[] local_30;

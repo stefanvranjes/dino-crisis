@@ -2062,6 +2062,64 @@ public static class Utilities
         param3.z &= 0xfff;
     }
 
+    public static Vector3Int FUN_4ACF0(Vector3Int param1, Vector3Int param2)
+    {
+        int iVar1;
+        long lVar2;
+        int iVar3;
+        long lVar4;
+
+        iVar1 = param2.x - param1.x;
+
+        if (iVar1 < 0)
+            iVar1 = -iVar1;
+
+        iVar3 = param1.z - param2.z;
+
+        if (iVar3 < 0)
+            iVar3 = -iVar3;
+
+        iVar3 = iVar1 * iVar1 + iVar3 * iVar3;
+        iVar1 = (int)FUN_4AE0C(iVar3);
+
+        if (iVar1 != 0)
+        {
+            if (iVar1 == 0)
+                return Vector3Int.zero; //trap(0x1c00)
+
+            if (iVar1 == -1 && iVar3 == -0x80000000)
+                return Vector3Int.zero; //trap(0x1800)
+
+            iVar1 = iVar3 / iVar1 + iVar1 >> 1;
+        }
+
+        lVar2 = Ratan2(param2.y - param1.y, iVar1);
+        lVar4 = Ratan2(param2.x - param1.x, param2.z - param1.z);
+        return new Vector3Int((short)lVar2, (short)(lVar4 + 0x800), 0);
+    }
+
+    public static uint FUN_4AE0C(int param1)
+    {
+        uint uVar1;
+
+        uVar1 = (uint)LeadingZeros(param1);
+
+        if (uVar1 != 0x20)
+        {
+            uVar1 &= 0xfffffffe;
+
+            if ((int)(uVar1 - 0x18) < 0)
+                param1 >>= 0x18 - (int)uVar1 & 0x1f;
+            else
+                param1 <<= (int)uVar1 - 0x18 & 0x1f;
+
+            return (uint)(DAT_AC658[param1 - 0x40] << 
+                ((int)(0x1f - uVar1) >> 1 & 0x1f)) >> 12;
+        }
+
+        return 0;
+    }
+
     public static uint FUN_2630C(Vector3Int param1, Vector3Int param2)
     {
         int iVar1;

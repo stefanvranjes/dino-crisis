@@ -46,11 +46,15 @@ public class GameManager : MonoBehaviour
     public ushort DAT_1f800028;
     public ushort DAT_1f80002a;
     public Vector3Int DAT_1f80002c;
+    public Vector3Int DAT_1f800034_2;
     public Matrix3x3 DAT_1f800034;
+    public Vector3Int DAT_1f800044;
+    public Matrix3x3 DAT_1f80004c;
     public Vector3Int DAT_1f800380;
     public Vector3Int DAT_1f800388;
     public Vector3Int DAT_1f800390;
     public List<Vector3Int> todUncomp;
+    public LightSource DAT_0C; //gp+0ch
     public byte DAT_20; //gp+20h
     public byte DAT_21; //gp+21h
     public short DAT_28; //gp+28h
@@ -191,6 +195,7 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        FUN_4A4FC();
         FUN_7302C();
     }
 
@@ -212,6 +217,178 @@ public class GameManager : MonoBehaviour
         DAT_6C = (byte)param1;
         DAT_6F = param3;
         DAT_64 = 0x1000000 / param2;
+    }
+
+    public void FUN_4A4FC()
+    {
+        bool bVar1;
+
+        //bVar1 = InventoryManager.FUN_4A87C(2, 0x14);
+
+        //if (!bVar1)
+        //{
+            //...
+        //}
+
+        SceneManager.instance.cCamera.FUN_27210();
+        //InventoryManager.FUN_4A7E8(2, 0x10, false);
+        //bVar1 = InventoryManager.FUN_4A87C(1, 6);
+
+        //if (!bVar1)
+            SceneManager.instance.FUN_4AEFC();
+    }
+
+    public void FUN_4A8B8(LightScriptableObject param1, ref Matrix3x3 param2, Vector3Int[] param3)
+    {
+        bool bVar1;
+        uint puVar2;
+        uint uVar3;
+
+        param2.V00 = 0;
+        param2.V01 = 0;
+        param2.V02 = 0;
+        param2.V10 = 0;
+        param2.V11 = 0;
+        param2.V12 = 0;
+        param2.V20 = 0;
+        param2.V21 = 0;
+        param2.V22 = 0;
+        //...
+        puVar2 = 0;
+        
+        if ((param1.DAT_06 & 1) == 0)
+        {
+            uVar3 = param1.DAT_00;
+
+            while (uVar3 != 0)
+            {
+                uVar3--;
+
+                if (param1.DAT_24[puVar2].DAT_03 != 0)
+                {
+                    bVar1 = FUN_4AAD8(param1.DAT_24[puVar2], 0, ref param2, param3);
+
+                    if (bVar1)
+                    {
+                        puVar2 += uVar3 + 1;
+                        break;
+                    }
+                }
+
+                puVar2++;
+            }
+        }
+        else
+        {
+            param3[0] = param1.DAT_0C;
+            param2.V00 = (short)(param1.DAT_18 << 7);
+            param2.V10 = (short)(param1.DAT_19 << 7);
+            param2.V20 = (short)(param1.DAT_1A << 7);
+        }
+
+        if ((param1.DAT_06 & 2) == 0)
+        {
+            uVar3 = param1.DAT_02;
+
+            while (uVar3 != 0)
+            {
+                uVar3--;
+
+                if (param1.DAT_24[puVar2].DAT_03 == 0 ||
+                    !FUN_4AAD8(param1.DAT_24[puVar2], 1, ref param2, param3))
+                    puVar2++;
+            }
+        }
+        else
+        {
+            param3[0] = param1.DAT_12;
+            param2.V01 = (short)(param1.DAT_1E << 7);
+            param2.V11 = (short)(param1.DAT_1F << 7);
+            param2.V21 = (short)(param1.DAT_20 << 7);
+        }
+
+        if ((DAT_0C.DAT_03 & 1) != 0)
+            FUN_4AAD8(DAT_0C, 2, ref param2, param3);
+    }
+
+    public bool FUN_4AAD8(LightSource param1, int param2, ref Matrix3x3 param3, Vector3Int[] param4)
+    {
+        int iVar1;
+        int iVar2;
+        int iVar3;
+        bool bVar4;
+        short sVar6;
+        int iVar7;
+        int iVar10;
+        short sVar13;
+        int iVar14;
+        int iVar15;
+        uint uVar17;
+        uint uVar18;
+
+        DAT_1f800044 = param1.DAT_04;
+        iVar10 = DAT_1f800044.z;
+        iVar15 = DAT_1f80002c.z;
+        sVar6 = (short)DAT_1f800044.x;
+        sVar13 = (short)DAT_1f80002c.x;
+        iVar1 = sVar6 - sVar13;
+        iVar7 = DAT_1f800044.y;
+        iVar14 = DAT_1f80002c.y;
+        iVar2 = iVar7 - iVar14;
+        iVar3 = iVar10 - iVar15;
+        uVar17 = (uint)(int)param1.DAT_0A;
+        bVar4 = false;
+
+        if ((uint)(iVar1 * iVar1 + iVar2 * iVar2 + iVar3 * iVar3) <= uVar17 * uVar17)
+        {
+            param3.SetValue16(param2, param1.DAT_00 << 7);
+            param3.SetValue16(param2 + 3, param1.DAT_01 << 7);
+            param3.SetValue16(param2 + 6, param1.DAT_02 << 7);
+            iVar1 = sVar13 - sVar6;
+            iVar14 -= iVar7;
+            iVar15 -= iVar10;
+            iVar1 = (int)Utilities.FUN_4AE0C(iVar1 * iVar1 + iVar14 * iVar14 + iVar15 * iVar15);
+            DAT_1f800034_2 = Utilities.FUN_4ACF0(DAT_1f800044, DAT_1f80002c);
+            Utilities.RotMatrixYXZ_gte(ref DAT_1f800034_2, ref DAT_1f80004c);
+            Coprocessor.rotationMatrix.rt11 = DAT_1f80004c.V00;
+            Coprocessor.rotationMatrix.rt12 = DAT_1f80004c.V01;
+            Coprocessor.rotationMatrix.rt13 = DAT_1f80004c.V02;
+            Coprocessor.rotationMatrix.rt21 = DAT_1f80004c.V10;
+            Coprocessor.rotationMatrix.rt22 = DAT_1f80004c.V11;
+            Coprocessor.rotationMatrix.rt23 = DAT_1f80004c.V12;
+            Coprocessor.rotationMatrix.rt31 = DAT_1f80004c.V20;
+            Coprocessor.rotationMatrix.rt32 = DAT_1f80004c.V21;
+            Coprocessor.rotationMatrix.rt33 = DAT_1f80004c.V22;
+            Coprocessor.vector0.vx0 = 0;
+            Coprocessor.vector0.vy0 = 0;
+            Coprocessor.vector0.vz0 = param1.DAT_0E;
+            Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+            DAT_1f800034_2.x = Coprocessor.accumulator.ir1;
+            DAT_1f800034_2.y = Coprocessor.accumulator.ir2;
+            DAT_1f800034_2.z = Coprocessor.accumulator.ir3;
+            uVar18 = (uint)(iVar1 << 12) / uVar17;
+
+            if (uVar17 == 0)
+                return false; //trap(0x1c00)
+
+            Coprocessor.accumulator.ir0 = (short)(0x1000 - uVar18);
+            Coprocessor.accumulator.ir1 = (short)(DAT_1f800034_2.x & 0xffff);
+            Coprocessor.accumulator.ir2 = (short)(DAT_1f800034_2.y & 0xffff);
+            Coprocessor.accumulator.ir3 = (short)(DAT_1f800034_2.z & 0xffff);
+            Coprocessor.ExecuteGPF(12, false);
+            Coprocessor.accumulator.ir0 = (short)uVar18;
+            Coprocessor.accumulator.ir1 = 0;
+            Coprocessor.accumulator.ir2 = 0;
+            Coprocessor.accumulator.ir3 = 0;
+            Coprocessor.ExecuteGPL(12, false);
+            param4[param2] = new Vector3Int
+                (Coprocessor.accumulator.ir1, 
+                Coprocessor.accumulator.ir2, 
+                Coprocessor.accumulator.ir3);
+            bVar4 = true;
+        }
+
+        return bVar4;
     }
 
     public Vector2Int[] FUN_813F0(Vector2Int[] param1, WallCollider param2)

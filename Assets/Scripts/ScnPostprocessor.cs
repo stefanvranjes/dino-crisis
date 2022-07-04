@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 public class ScnPostprocessor : AssetPostprocessor
 {
     public static List<int> movieIds;
@@ -20,3 +21,4 @@ public class ScnPostprocessor : AssetPostprocessor
         }
     }
 }
+#endif

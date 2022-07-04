@@ -1,7 +1,10 @@
 using System.IO;
+#if UNITY_EDITOR
 using UnityEditor.AssetImporters;
+#endif
 using UnityEngine;
 
+#if UNITY_EDITOR
 [ScriptedImporter(1, "lgh")]
 public class IMP_LGT : ScriptedImporter
 {
@@ -51,3 +54,4 @@ public class IMP_LGT : ScriptedImporter
         }
     }
 }
+#endif

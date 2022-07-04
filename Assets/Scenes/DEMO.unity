@@ -153,10 +153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
+  m_HorizontalAxis: P1_LEFT
+  m_VerticalAxis: P1_UP
+  m_SubmitButton: P1_CROSS
+  m_CancelButton: P1_TRIANGLE
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
@@ -472,7 +472,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ST100
+  m_Text: ST10D
 --- !u!222 &149213301
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -552,11 +552,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "WASD / Arrows:\t\tMovement\nQ / E: \t\t\t\t\t\tUp/Down (local space)\nR
-    / F:\t\t\t\t\t\tUp/Down (world space)\nPgUp / PgDown:\t\tUp/Down (world space)\nHold
-    Shift:\t\t\t\tEnable fast movement mode\nRight Mouse: \t\t\tEnable free look\nMouse:
-    \t\t\t\t\tFree look / rotation\nC: \t\t\t\t\t\t\tToggle colors\nESC: \t\t\t\t\t\tReturn
-    / Quit"
+  m_Text: "Arrows:\t\tMovement\nC: \t\t\tToggle colors\nESC: \t\tReturn / Quit"
 --- !u!222 &327765534
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1249,245 +1245,11 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: ST100
-      m_Image: {fileID: 0}
-    - m_Text: ST101
-      m_Image: {fileID: 0}
-    - m_Text: ST102
-      m_Image: {fileID: 0}
-    - m_Text: ST103
-      m_Image: {fileID: 0}
-    - m_Text: ST104
-      m_Image: {fileID: 0}
-    - m_Text: ST105
-      m_Image: {fileID: 0}
-    - m_Text: ST106
-      m_Image: {fileID: 0}
-    - m_Text: ST107
-      m_Image: {fileID: 0}
-    - m_Text: ST108
-      m_Image: {fileID: 0}
-    - m_Text: ST109
-      m_Image: {fileID: 0}
-    - m_Text: ST10A
-      m_Image: {fileID: 0}
-    - m_Text: ST10B
-      m_Image: {fileID: 0}
-    - m_Text: ST10C
-      m_Image: {fileID: 0}
     - m_Text: ST10D
       m_Image: {fileID: 0}
     - m_Text: ST10E
       m_Image: {fileID: 0}
-    - m_Text: ST10F
-      m_Image: {fileID: 0}
-    - m_Text: ST110
-      m_Image: {fileID: 0}
-    - m_Text: ST111
-      m_Image: {fileID: 0}
     - m_Text: ST112
-      m_Image: {fileID: 0}
-    - m_Text: ST113
-      m_Image: {fileID: 0}
-    - m_Text: ST114
-      m_Image: {fileID: 0}
-    - m_Text: ST200
-      m_Image: {fileID: 0}
-    - m_Text: ST201
-      m_Image: {fileID: 0}
-    - m_Text: ST202
-      m_Image: {fileID: 0}
-    - m_Text: ST203
-      m_Image: {fileID: 0}
-    - m_Text: ST204
-      m_Image: {fileID: 0}
-    - m_Text: ST205
-      m_Image: {fileID: 0}
-    - m_Text: ST206
-      m_Image: {fileID: 0}
-    - m_Text: ST300
-      m_Image: {fileID: 0}
-    - m_Text: ST301
-      m_Image: {fileID: 0}
-    - m_Text: ST302
-      m_Image: {fileID: 0}
-    - m_Text: ST303
-      m_Image: {fileID: 0}
-    - m_Text: ST304
-      m_Image: {fileID: 0}
-    - m_Text: ST305
-      m_Image: {fileID: 0}
-    - m_Text: ST306
-      m_Image: {fileID: 0}
-    - m_Text: ST307
-      m_Image: {fileID: 0}
-    - m_Text: ST308
-      m_Image: {fileID: 0}
-    - m_Text: ST309
-      m_Image: {fileID: 0}
-    - m_Text: ST30A
-      m_Image: {fileID: 0}
-    - m_Text: ST30B
-      m_Image: {fileID: 0}
-    - m_Text: ST30C
-      m_Image: {fileID: 0}
-    - m_Text: ST30D
-      m_Image: {fileID: 0}
-    - m_Text: ST30E
-      m_Image: {fileID: 0}
-    - m_Text: ST400
-      m_Image: {fileID: 0}
-    - m_Text: ST401
-      m_Image: {fileID: 0}
-    - m_Text: ST402
-      m_Image: {fileID: 0}
-    - m_Text: ST403
-      m_Image: {fileID: 0}
-    - m_Text: ST404
-      m_Image: {fileID: 0}
-    - m_Text: ST405
-      m_Image: {fileID: 0}
-    - m_Text: ST406
-      m_Image: {fileID: 0}
-    - m_Text: ST407
-      m_Image: {fileID: 0}
-    - m_Text: ST408
-      m_Image: {fileID: 0}
-    - m_Text: ST409
-      m_Image: {fileID: 0}
-    - m_Text: ST40A
-      m_Image: {fileID: 0}
-    - m_Text: ST40B
-      m_Image: {fileID: 0}
-    - m_Text: ST40C
-      m_Image: {fileID: 0}
-    - m_Text: ST500
-      m_Image: {fileID: 0}
-    - m_Text: ST501
-      m_Image: {fileID: 0}
-    - m_Text: ST502
-      m_Image: {fileID: 0}
-    - m_Text: ST503
-      m_Image: {fileID: 0}
-    - m_Text: ST504
-      m_Image: {fileID: 0}
-    - m_Text: ST505
-      m_Image: {fileID: 0}
-    - m_Text: ST506
-      m_Image: {fileID: 0}
-    - m_Text: ST507
-      m_Image: {fileID: 0}
-    - m_Text: ST508
-      m_Image: {fileID: 0}
-    - m_Text: ST509
-      m_Image: {fileID: 0}
-    - m_Text: ST50A
-      m_Image: {fileID: 0}
-    - m_Text: ST50B
-      m_Image: {fileID: 0}
-    - m_Text: ST50C
-      m_Image: {fileID: 0}
-    - m_Text: ST50D
-      m_Image: {fileID: 0}
-    - m_Text: ST50E
-      m_Image: {fileID: 0}
-    - m_Text: ST50F
-      m_Image: {fileID: 0}
-    - m_Text: ST510
-      m_Image: {fileID: 0}
-    - m_Text: ST511
-      m_Image: {fileID: 0}
-    - m_Text: ST600
-      m_Image: {fileID: 0}
-    - m_Text: ST601
-      m_Image: {fileID: 0}
-    - m_Text: ST602
-      m_Image: {fileID: 0}
-    - m_Text: ST603
-      m_Image: {fileID: 0}
-    - m_Text: ST604
-      m_Image: {fileID: 0}
-    - m_Text: ST605
-      m_Image: {fileID: 0}
-    - m_Text: ST606
-      m_Image: {fileID: 0}
-    - m_Text: ST607
-      m_Image: {fileID: 0}
-    - m_Text: ST608
-      m_Image: {fileID: 0}
-    - m_Text: ST609
-      m_Image: {fileID: 0}
-    - m_Text: ST60A
-      m_Image: {fileID: 0}
-    - m_Text: ST60B
-      m_Image: {fileID: 0}
-    - m_Text: ST60C
-      m_Image: {fileID: 0}
-    - m_Text: ST60D
-      m_Image: {fileID: 0}
-    - m_Text: ST60F
-      m_Image: {fileID: 0}
-    - m_Text: ST610
-      m_Image: {fileID: 0}
-    - m_Text: ST611
-      m_Image: {fileID: 0}
-    - m_Text: ST612
-      m_Image: {fileID: 0}
-    - m_Text: ST613
-      m_Image: {fileID: 0}
-    - m_Text: ST614
-      m_Image: {fileID: 0}
-    - m_Text: ST615
-      m_Image: {fileID: 0}
-    - m_Text: ST701
-      m_Image: {fileID: 0}
-    - m_Text: ST702
-      m_Image: {fileID: 0}
-    - m_Text: ST703
-      m_Image: {fileID: 0}
-    - m_Text: ST704
-      m_Image: {fileID: 0}
-    - m_Text: ST705
-      m_Image: {fileID: 0}
-    - m_Text: ST706
-      m_Image: {fileID: 0}
-    - m_Text: ST707
-      m_Image: {fileID: 0}
-    - m_Text: ST709
-      m_Image: {fileID: 0}
-    - m_Text: ST70D
-      m_Image: {fileID: 0}
-    - m_Text: ST800
-      m_Image: {fileID: 0}
-    - m_Text: ST801
-      m_Image: {fileID: 0}
-    - m_Text: ST802
-      m_Image: {fileID: 0}
-    - m_Text: ST804
-      m_Image: {fileID: 0}
-    - m_Text: ST805
-      m_Image: {fileID: 0}
-    - m_Text: ST806
-      m_Image: {fileID: 0}
-    - m_Text: ST807
-      m_Image: {fileID: 0}
-    - m_Text: ST808
-      m_Image: {fileID: 0}
-    - m_Text: ST900
-      m_Image: {fileID: 0}
-    - m_Text: ST902
-      m_Image: {fileID: 0}
-    - m_Text: ST903
-      m_Image: {fileID: 0}
-    - m_Text: ST904
-      m_Image: {fileID: 0}
-    - m_Text: ST905
-      m_Image: {fileID: 0}
-    - m_Text: ST906
-      m_Image: {fileID: 0}
-    - m_Text: ST908
-      m_Image: {fileID: 0}
-    - m_Text: ST910
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2654,7 +2416,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: BUILT @ 11:03:25 ON MAY 21 2022
+  m_Text: BUILT @ 20:26:45 ON JUL 04 2022
 --- !u!222 &2103896427
 CanvasRenderer:
   m_ObjectHideFlags: 0

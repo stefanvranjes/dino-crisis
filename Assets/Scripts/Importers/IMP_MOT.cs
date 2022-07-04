@@ -1,9 +1,11 @@
 using System.IO;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor.AssetImporters;
+#endif
 using UnityEngine;
-using UnityEditor;
 
+#if UNITY_EDITOR
 [ScriptedImporter(1, "mot")]
 public class IMP_MOT : ScriptedImporter
 {
@@ -65,3 +67,4 @@ public class IMP_MOT : ScriptedImporter
             ScnPostprocessor.movieIds.Add(id);
     }
 }
+#endif

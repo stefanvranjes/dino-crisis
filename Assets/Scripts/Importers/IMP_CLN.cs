@@ -1,7 +1,10 @@
 using System.IO;
+#if UNITY_EDITOR
 using UnityEditor.AssetImporters;
+#endif
 using UnityEngine;
 
+#if UNITY_EDITOR
 [ScriptedImporter(1, "cln")]
 public class IMP_CLN : ScriptedImporter
 {
@@ -77,3 +80,4 @@ public class IMP_CLN : ScriptedImporter
         }
     }
 }
+#endif

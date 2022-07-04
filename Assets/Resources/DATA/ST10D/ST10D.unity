@@ -133,6 +133,8 @@ GameObject:
   m_Component:
   - component: {fileID: 650395831}
   - component: {fileID: 650395830}
+  - component: {fileID: 650395833}
+  - component: {fileID: 650395832}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -152,11 +154,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85de5e7f7052e340b740f831a33b3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DAT_1f800008: 0
+  DAT_1f80000a: 0
   DAT_1f800024: 0
   DAT_1f800026: 0
   DAT_1f800028: 0
   DAT_1f80002a: 0
   DAT_1f80002c: {x: 0, y: 0, z: 0}
+  DAT_1f800034_2: {x: 0, y: 0, z: 0}
   DAT_1f800034:
     V00: 0
     V01: 0
@@ -177,9 +182,104 @@ MonoBehaviour:
     _V20: 0
     _V21: 0
     _V22: 0
+  DAT_1f800044: {x: 0, y: 0, z: 0}
+  DAT_1f80004c:
+    V00: 0
+    V01: 0
+    V02: 0
+    V10: 0
+    V11: 0
+    V12: 0
+    V20: 0
+    V21: 0
+    V22: 0
+    skewed: 0
+    _V00: 0
+    _V01: 0
+    _V02: 0
+    _V10: 0
+    _V11: 0
+    _V12: 0
+    _V20: 0
+    _V21: 0
+    _V22: 0
+  DAT_1f800380: {x: 0, y: 0, z: 0}
+  DAT_1f800388: {x: 0, y: 0, z: 0}
+  DAT_1f800390: {x: 0, y: 0, z: 0}
+  todUncomp: []
+  DAT_0C:
+    DAT_00: 0
+    DAT_01: 0
+    DAT_02: 0
+    DAT_03: 0
+    DAT_04: {x: 0, y: 0, z: 0}
+    DAT_0A: 0
+    DAT_0E: 0
+  DAT_20: 0
+  DAT_21: 0
+  DAT_28: 0
+  DAT_2A: 0
+  DAT_2C: 0
+  DAT_2E: 0
   DAT_38: 0
-  DAT_B4: {fileID: 1854218756}
-  DAT_1AA0: 0
+  DAT_39: 0
+  DAT_3B: 0
+  DAT_40: 0
+  playerSpawnPos: {x: 3219, y: 0, z: -462}
+  playerSpawnRotY: 2048
+  DAT_55: 0
+  DAT_64: 0
+  DAT_68: 0
+  DAT_6C: 0
+  DAT_6D: 0
+  DAT_6E: 0
+  DAT_6F: 0
+  DAT_78: 0
+  DAT_922C: 0
+  DAT_9234: 0
+  DAT_9AA0: 0
+  DAT_9AA1: 0
+  difficulty: 0
+  DAT_9AAA: 0
+  DAT_9ADC: 0
+  DAT_9ADE: 0
+  DAT_9ADF: 0
+  DAT_9EAC: 
+  DAT_9EE8: 0
+  DAT_9EE9: 0
+  DAT_9EEA: 0
+  DAT_9EEB: 0
+  DAT_A090: 
+  DAT_A0E0: 0
+  DAT_A0E2: 0
+  playerHealth: 0
+  DAT_A0F2: 0
+  DAT_A0F4: 0
+  DAT_A0F8: 
+  DAT_A100: 0
+  DAT_A2CF: 0
+  DAT_A2D0: 0
+  DAT_A2D1: 0
+  DAT_A2D3: 0
+  DAT_C3380: []
+  DAT_C3384: []
+  DAT_C3388:
+    DAT_00: {x: 0, y: 0, z: 0}
+    DAT_06: {x: 0, y: 0, z: 0}
+    COMP: 
+  DAT_C338C: []
+  DAT_C3390: 0
+  DAT_C33A0: []
+  DAT_C33A4: []
+  DAT_C33A8:
+    DAT_00: {x: 0, y: 0, z: 0}
+    DAT_06: {x: 0, y: 0, z: 0}
+    COMP: 
+  DAT_C33AC: []
+  DAT_C33B0: 0
+  skinnedVertices: []
+  skinnedColors: []
+  skinnedList: []
   disableColors: 0
   materials:
   - {fileID: 2100000, guid: cb2090ab002423541a031bc005801511, type: 2}
@@ -452,6 +552,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &650395832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650395829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c49d7b5751379674d87f0a84f1f21449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &650395833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650395829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2167e1bf6d58af848a23591f11e88c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1223960080
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,10 +605,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b79fc90ccc61ef4687689063fb043c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: -4406283935363021935, guid: b27b6b8894d5a1b4d8d29aee072e40e9, type: 3}
+  scn: {fileID: -4406283935363021935, guid: b27b6b8894d5a1b4d8d29aee072e40e9, type: 3}
+  database: {fileID: 11400000, guid: 536651ecb139fdf4ba707b4c44b49643, type: 2}
+  DAT_AC: 
+  cCamera: {fileID: 0}
+  sceneCollision: {fileID: -6028080052161987059, guid: 695439e953ff10a45bb5f5bcf3686851, type: 3}
+  lightSource: {fileID: -7488134631618437631, guid: 809006b2df20a7349b24ce62bf3e1fe6, type: 3}
+  motions: {fileID: 9013893561334630828, guid: 95ad2a861941bc64baa7381e2b8776d8, type: 3}
+  triggers: []
+  DAT_270: 0
   DAT_27C: []
+  DAT_1C9C: []
   DAT_5FCC: []
   DAT_7CDC: []
+  DAT_C51B8: 0
+  DAT_C51BC: 0
+  DAT_C51C0: 0
+  DAT_C51C4: 0
+  DAT_C51C8: 0
+  DAT_C51CC: 0
+  DAT_C51D0: 0
+  DAT_C51D4: 0
+  DAT_C51D8: 0
+  DAT_D7C0: []
 --- !u!4 &1223960082
 Transform:
   m_ObjectHideFlags: 0
@@ -553,13 +696,11 @@ MonoBehaviour:
     padding: 0
     position: {x: 0, y: 0, z: 0}
   screen: {x: 0, y: 0, z: 0}
+  tags: 0
   vr: {x: 0, y: 0, z: 0}
   DAT_2E: 0
+  DAT_2F: 0
   flags: 0
-  cMesh: {fileID: 0}
-  DAT_48: 0
-  DAT_4A: 0
-  materials: []
 --- !u!4 &1854218757
 Transform:
   m_ObjectHideFlags: 0
@@ -588,6 +729,7 @@ GameObject:
   - component: {fileID: 1896123107}
   - component: {fileID: 1896123106}
   - component: {fileID: 1896123105}
+  - component: {fileID: 1896123110}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -602,7 +744,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896123104}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2c25e7c2ac40cf41949ce54df676507, type: 3}
   m_Name: 
@@ -626,7 +768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cfuStatus: PSXEffects v1.15.5 - update available (click to update).
   sections: 01010100
-  customRes: {x: 804, y: 422}
+  customRes: {x: 793, y: 422}
   resolutionFactor: 1
   limitFramerate: -1
   skipFrames: 0
@@ -721,3 +863,93 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1896123110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896123104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a6d5fad6fb3654f912c559117a8e97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cTransform:
+    rotation:
+      V00: 0
+      V01: 0
+      V02: 0
+      V10: 0
+      V11: 0
+      V12: 0
+      V20: 0
+      V21: 0
+      V22: 0
+      skewed: 0
+      _V00: 0
+      _V01: 0
+      _V02: 0
+      _V10: 0
+      _V11: 0
+      _V12: 0
+      _V20: 0
+      _V21: 0
+      _V22: 0
+    padding: 0
+    position: {x: 0, y: 0, z: 0}
+  screen: {x: 0, y: 0, z: 0}
+  DAT_26: 0
+  vr: {x: 0, y: 0, z: 0}
+  DAT_2E: 0
+  DAT_30: {x: 0, y: 0, z: 0}
+  DAT_36: 0
+  DAT_38: 0
+  DAT_3A: 0
+  DAT_3C: 0
+  DAT_3E: 0
+  DAT_40: {x: 0, y: 0, z: 0}
+  DAT_46: 0
+  DAT_48: {x: 0, y: 0, z: 0}
+  DAT_50: 0
+  DAT_52: 0
+  DAT_54: 0
+  DAT_56: 0
+  DAT_58: 0
+  DAT_59: 0
+  DAT_5A: 0
+  DAT_5B: 0
+  motion:
+    DAT_00: 0
+    DAT_01: 0
+    DAT_02: 0
+    DAT_03: 0
+    DAT_04: []
+    DAT_24: 0
+    DAT_25: 0
+    DAT_26: 0
+    DAT_27: 0
+    DAT_2C: {x: 0, y: 0, z: 0}
+    DAT_32: 0
+    DAT_34: {x: 0, y: 0, z: 0}
+    DAT_3C: {x: 0, y: 0, z: 0}
+  DAT_64: {fileID: 0}
+  DAT_68: 0
+  DAT_69: 0
+  DAT_6A: 0
+  DAT_6B: 0
+  DAT_70: 0
+  DAT_71: 0
+  DAT_72: 0
+  DAT_73: 0
+  DAT_74: 0
+  DAT_76: 0
+  DAT_78: 0
+  DAT_7C: {x: 0, y: 0, z: 0}
+  DAT_82: 0
+  DAT_83: 0
+  DAT_84: {x: 0, y: 0, z: 0}
+  DAT_8A: 0
+  DAT_8B: 0
+  DAT_90: 0
+  DAT_92: 0

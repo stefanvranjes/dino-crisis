@@ -602,8 +602,8 @@ MonoBehaviour:
   DAT_39: 0
   DAT_3B: 0
   DAT_40: 0
-  playerSpawnPos: {x: 0, y: 0, z: 0}
-  playerSpawnRotY: 0
+  playerSpawnPos: {x: 2745, y: 0, z: 2523}
+  playerSpawnRotY: 2048
   DAT_55: 0
   DAT_64: 0
   DAT_68: 0

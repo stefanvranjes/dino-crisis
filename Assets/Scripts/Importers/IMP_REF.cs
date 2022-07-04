@@ -1,7 +1,10 @@
 using System.IO;
+#if UNITY_EDITOR
 using UnityEditor.AssetImporters;
+#endif
 using UnityEngine;
 
+#if UNITY_EDITOR
 [ScriptedImporter(1, "ref")]
 public class IMP_REF : ScriptedImporter
 {
@@ -40,3 +43,4 @@ public class IMP_REF : ScriptedImporter
         }
     }
 }
+#endif

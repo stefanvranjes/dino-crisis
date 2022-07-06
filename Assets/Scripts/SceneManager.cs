@@ -28,7 +28,7 @@ public class SceneManager : MonoBehaviour
     public int DAT_C51D0;
     public int DAT_C51D4;
     public byte DAT_C51D8;
-    public CriMovie[] DAT_D7C0; //gp+d7c0h...gp+dea0h (0x800C51E0)
+    public CriScene[] DAT_D7C0; //gp+d7c0h...gp+dea0h (0x800C51E0)
 
     private byte[] DAT_AA484 = new byte[]
     {
@@ -63,7 +63,7 @@ public class SceneManager : MonoBehaviour
         DAT_1C9C = new CriBone[100];
         DAT_5FCC = new CriObject[60];
         DAT_7CDC = new CriStatic[40];
-        DAT_D7C0 = new CriMovie[10];
+        DAT_D7C0 = new CriScene[10];
 
         for (int i = 0; i < scn.staticObjs.Count; i++)
         {
@@ -79,7 +79,7 @@ public class SceneManager : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             GameObject obj = new GameObject();
-            DAT_D7C0[i] = obj.AddComponent<CriMovie>();
+            DAT_D7C0[i] = obj.AddComponent<CriScene>();
         }
 
         FUN_47BE0();
@@ -211,7 +211,7 @@ public class SceneManager : MonoBehaviour
     public void FUN_55700()
     {
         bool bVar1;
-        CriMovie oVar2;
+        CriScene oVar2;
 
         oVar2 = DAT_D7C0[9];
         do
@@ -223,11 +223,11 @@ public class SceneManager : MonoBehaviour
     public void FUN_55580(sbyte param1, int param2)
     {
         int iVar1;
-        _MOVIE_DATA oVar3;
+        _SCENE_OBJ_DATA oVar3;
 
         iVar1 = param1;
         DAT_D7C0[iVar1].DAT_05 = 1;
-        oVar3 = scn.GetMovie((param2 << 16) >> 14);
+        oVar3 = scn.GetData((param2 << 16) >> 14);
         DAT_D7C0[iVar1].DAT_AC = 1;
         DAT_D7C0[iVar1].PTR_58[0] = oVar3;
         DAT_D7C0[iVar1].DAT_58[0] = 0;
@@ -238,7 +238,7 @@ public class SceneManager : MonoBehaviour
         byte bVar1;
         ushort uVar2;
         bool bVar3;
-        CriMovie psVar5;
+        CriScene psVar5;
         uint uVar6;
 
         if ((GameManager.instance.DAT_40 & 0x80) == 0)
@@ -288,7 +288,7 @@ public class SceneManager : MonoBehaviour
     public uint FUN_566B0()
     {
         uint uVar1;
-        CriMovie mVar2;
+        CriScene mVar2;
 
         uVar1 = 1;
         do

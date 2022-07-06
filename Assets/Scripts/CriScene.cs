@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CriMovie : MonoBehaviour
+public class CriScene : MonoBehaviour
 {
     public ushort DAT_00; //0x00
     public byte DAT_05; //0x05
@@ -28,7 +28,7 @@ public class CriMovie : MonoBehaviour
     public int[] DAT_30; //0x30
     public int[] DAT_44; //0x44
     public int[] DAT_58; //0x58
-    public _MOVIE_DATA[] PTR_58; //0x58
+    public _SCENE_OBJ_DATA[] PTR_58; //0x58
     public int DAT_AC; //0xAC
     public delegate bool FUN_9E540();
     public FUN_9E540[] PTR_FUN_9E540;
@@ -39,7 +39,7 @@ public class CriMovie : MonoBehaviour
         DAT_30 = new int[5];
         DAT_44 = new int[5];
         DAT_58 = new int[21];
-        PTR_58 = new _MOVIE_DATA[21];
+        PTR_58 = new _SCENE_OBJ_DATA[21];
         PTR_FUN_9E540 = new FUN_9E540[114]
         {
             FUN_56698,
@@ -193,7 +193,7 @@ public class CriMovie : MonoBehaviour
         DAT_30 = new int[5];
         DAT_44 = new int[5];
         DAT_58 = new int[21];
-        PTR_58 = new _MOVIE_DATA[21];
+        PTR_58 = new _SCENE_OBJ_DATA[21];
     }
 
     private void FUN_557B4(uint param1, int param2, int param3)
@@ -915,13 +915,13 @@ public class CriMovie : MonoBehaviour
         ushort uVar1;
         bool bVar2;
         int iVar2;
-        MovContainer2 mVar4;
+        DataContainer2 mVar4;
 
         bVar2 = InventoryManager.FUN_4A87C(10, 9);
 
         if (!bVar2)
         {
-            mVar4 = (MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]];
+            mVar4 = (DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]];
             uVar1 = mVar4.DAT_02;
             iVar2 = mVar4.DAT_01;
 
@@ -929,7 +929,7 @@ public class CriMovie : MonoBehaviour
                 iVar2 = (int)SceneManager.instance.FUN_566B0();
 
             SceneManager.instance.DAT_D7C0[iVar2].DAT_05 = 1;
-            SceneManager.instance.DAT_D7C0[iVar2].PTR_58[0] = SceneManager.instance.scn.GetMovie(uVar1);
+            SceneManager.instance.DAT_D7C0[iVar2].PTR_58[0] = SceneManager.instance.scn.GetData(uVar1);
             SceneManager.instance.DAT_D7C0[iVar2].DAT_58[0] = 0;
             SceneManager.instance.DAT_D7C0[iVar2].DAT_AC = 1 + mVar4.DAT_01 / 4;
         }
@@ -943,7 +943,7 @@ public class CriMovie : MonoBehaviour
         ushort uVar1;
 
         DAT_05 = 2;
-        uVar1 = ((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02;
+        uVar1 = ((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02;
         DAT_58[0]++;
         DAT_00 = uVar1;
         return true;
@@ -985,8 +985,8 @@ public class CriMovie : MonoBehaviour
         if (!bVar1)
         {
             DAT_AC = 1;
-            PTR_58[0] = SceneManager.instance.scn.GetMovie
-                (((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
+            PTR_58[0] = SceneManager.instance.scn.GetData
+                (((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
             DAT_58[0] = 0;
         }
         else
@@ -998,7 +998,7 @@ public class CriMovie : MonoBehaviour
     private bool FUN_568F8()
     {
         SceneManager.instance.DAT_D7C0
-            [((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01].ResetValues();
+            [((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01].ResetValues();
         DAT_58[0]++;
         return false;
     }
@@ -1007,7 +1007,7 @@ public class CriMovie : MonoBehaviour
     {
         int iVar1;
 
-        iVar1 = ((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01;
+        iVar1 = ((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01;
 
         if (SceneManager.instance.DAT_D7C0[iVar1].DAT_05 != 0)
             SceneManager.instance.DAT_D7C0[iVar1].DAT_05 = 0x80;
@@ -1020,7 +1020,7 @@ public class CriMovie : MonoBehaviour
     {
         int iVar1;
 
-        iVar1 = ((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01;
+        iVar1 = ((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01;
 
         if (SceneManager.instance.DAT_D7C0[iVar1].DAT_05 == 0x80)
             SceneManager.instance.DAT_D7C0[iVar1].DAT_05 = 1;
@@ -1031,9 +1031,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_56A1C()
     {
-        MovContainer3 mVar1;
+        DataContainer3 mVar1;
 
-        mVar1 = (MovContainer3)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar1 = (DataContainer3)PTR_58[0].CONTAINERS[DAT_58[0]];
         DAT_24[DAT_08] = mVar1.DAT_04;
         DAT_30[DAT_08] = PTR_58[0].GetContainer(DAT_58[0], mVar1.DAT_02);
         DAT_58[0]++;
@@ -1046,10 +1046,10 @@ public class CriMovie : MonoBehaviour
         sbyte sVar1;
         int iVar2;
         ushort uVar3;
-        MovContainer2 mVar4;
+        DataContainer2 mVar4;
 
         iVar2 = DAT_08 - 1;
-        mVar4 = (MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar4 = (DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]];
         uVar3 = (ushort)(DAT_24[iVar2] - 1);
         DAT_24[iVar2] = uVar3;
 
@@ -1069,7 +1069,7 @@ public class CriMovie : MonoBehaviour
     private bool FUN_56AE0()
     {
         DAT_44[DAT_09] = DAT_58[0] + PTR_58[0].GetContainer
-            (DAT_58[0], ((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
+            (DAT_58[0], ((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
         DAT_58[0]++;
         DAT_09++;
         return false;
@@ -1078,7 +1078,7 @@ public class CriMovie : MonoBehaviour
     private bool FUN_56B1C()
     {
         DAT_58[0]+= PTR_58[0].GetContainer
-            (DAT_58[0], ((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
+            (DAT_58[0], ((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
         return false;
     }
 
@@ -1091,9 +1091,9 @@ public class CriMovie : MonoBehaviour
     private bool FUN_56B54()
     {
         int iVar1;
-        MovContainer2 mVar1;
+        DataContainer2 mVar1;
 
-        mVar1 = (MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar1 = (DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]];
 
         if ((DAT_06 >> (mVar1.DAT_01 & 0x1f) & 1) == 0 &&
             mVar1.DAT_01 != 0)
@@ -1114,8 +1114,8 @@ public class CriMovie : MonoBehaviour
         DAT_58[piVar1] = DAT_58[0] + 1;
         PTR_58[piVar1] = PTR_58[0];
         DAT_AC = piVar1 + 1;
-        PTR_58[0] = SceneManager.instance.scn.GetMovie
-            (((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
+        PTR_58[0] = SceneManager.instance.scn.GetData
+            (((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
         DAT_58[0] = 0;
         return false;
     }
@@ -1171,8 +1171,8 @@ public class CriMovie : MonoBehaviour
         byte bVar1;
         bool bVar2;
 
-        bVar2 = InventoryManager.FUN_4A87C(((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01,
-                                           ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
+        bVar2 = InventoryManager.FUN_4A87C(((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01,
+                                           ((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
         bVar1 = 2;
 
         if (!bVar2)
@@ -1188,9 +1188,9 @@ public class CriMovie : MonoBehaviour
         byte bVar1;
         int iVar2;
         int iVar3;
-        MovContainer5 mVar3;
+        DataContainer5 mVar3;
 
-        mVar3 = (MovContainer5)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar3 = (DataContainer5)PTR_58[0].CONTAINERS[DAT_58[0]];
         iVar2 = (int)FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar3.DAT_02);
         iVar3 = mVar3.DAT_04;
 
@@ -1215,7 +1215,7 @@ public class CriMovie : MonoBehaviour
 
         DAT_05 = 2;
         uVar1 = (ushort)FUN_55DC8((uint)DAT_05 << 0x10 | DAT_0B, 
-            ((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01);
+            ((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01);
         DAT_00 = uVar1;
         DAT_58[0]++;
         return true;
@@ -1224,9 +1224,9 @@ public class CriMovie : MonoBehaviour
     private bool FUN_56DB4()
     {
         ushort uVar1;
-        MovContainer2 mVar2;
+        DataContainer2 mVar2;
 
-        mVar2 = (MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]];
         uVar1 = (ushort)FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar2.DAT_01);
         DAT_24[DAT_08] = uVar1;
         DAT_30[DAT_08] = DAT_58[0] + mVar2.DAT_02;
@@ -1239,8 +1239,8 @@ public class CriMovie : MonoBehaviour
     {
         bool bVar1;
 
-        bVar1 = InventoryManager.FUN_4A87C(((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01,
-                                           ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
+        bVar1 = InventoryManager.FUN_4A87C(((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01,
+                                           ((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
 
         if (bVar1)
             DAT_58[0]++;
@@ -1250,10 +1250,10 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_56EB4()
     {
-        MovContainer6 mVar4;
+        DataContainer6 mVar4;
         CriSkinned oVar3;
 
-        mVar4 = (MovContainer6)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar4 = (DataContainer6)PTR_58[0].CONTAINERS[DAT_58[0]];
 
         if (mVar4.DAT_04 == 0 || !InventoryManager.FUN_4A87C(4, mVar4.DAT_04))
         {
@@ -1295,9 +1295,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_57070()
     {
-        MovContainer4 mVar2;
+        DataContainer4 mVar2;
 
-        mVar2 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
         DAT_0A = mVar2.DAT_01;
         DAT_0B = mVar2.DAT_02;
         DAT_58[0]++;
@@ -1307,9 +1307,9 @@ public class CriMovie : MonoBehaviour
     private bool FUN_570A0()
     {
         CriStatic oVar1;
-        MovContainer8 mVar2;
+        DataContainer8 mVar2;
 
-        mVar2 = (MovContainer8)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer8)PTR_58[0].CONTAINERS[DAT_58[0]];
         oVar1 = SceneManager.instance.DAT_7CDC[mVar2.DAT_01];
         oVar1.flags = 3;
         oVar1.DAT_2E = mVar2.DAT_02;
@@ -1330,11 +1330,11 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_57188()
     {
-        MovContainer9 mVar1;
+        DataContainer9 mVar1;
         CriSkinned oVar2;
 
         oVar2 = SceneManager.instance.DAT_27C[DAT_0B];
-        mVar1 = (MovContainer9)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar1 = (DataContainer9)PTR_58[0].CONTAINERS[DAT_58[0]];
         oVar2.DAT_40 = new Vector3Int(0, 0, 0);
         oVar2.DAT_3C = 4;
         oVar2.DAT_3D = 0;
@@ -1347,9 +1347,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_57218()
     {
-        MovContainer4 mVar1;
+        DataContainer4 mVar1;
 
-        mVar1 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar1 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
         InventoryManager.FUN_4A7E8(mVar1.DAT_01, mVar1.DAT_02, mVar1.DAT_03 != 0);
         DAT_58[0]++;
         return false;
@@ -1360,8 +1360,8 @@ public class CriMovie : MonoBehaviour
         byte bVar1;
         bool bVar2;
 
-        bVar2 = InventoryManager.FUN_4A87C(((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01,
-                                           ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
+        bVar2 = InventoryManager.FUN_4A87C(((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01,
+                                           ((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
         bVar1 = 2;
 
         if (!bVar2)
@@ -1375,9 +1375,9 @@ public class CriMovie : MonoBehaviour
     private bool FUN_572C4()
     {
         int iVar1;
-        MovContainer2 mVar2;
+        DataContainer2 mVar2;
 
-        mVar2 = (MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]];
         iVar1 = Utilities.Rand();
 
         switch (mVar2.DAT_01)
@@ -1414,10 +1414,10 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_57398()
     {
-        MovContainer10 mVar1;
+        DataContainer10 mVar1;
         int iVar2;
 
-        mVar1 = (MovContainer10)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar1 = (DataContainer10)PTR_58[0].CONTAINERS[DAT_58[0]];
         iVar2 = mVar1.DAT_01 + 4;
         SceneManager.instance.triggers[iVar2] = mVar1.DAT_04;
         mVar1.DAT_04.DAT_13 = true;
@@ -1450,9 +1450,9 @@ public class CriMovie : MonoBehaviour
     private bool FUN_57604()
     {
         int iVar1;
-        MovContainer5 mVar2;
+        DataContainer5 mVar2;
 
-        mVar2 = (MovContainer5)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer5)PTR_58[0].CONTAINERS[DAT_58[0]];
         iVar1 = FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar2.DAT_02);
         FUN_5666C(iVar1, mVar2.DAT_04);
         DAT_58[0]++;
@@ -1462,8 +1462,8 @@ public class CriMovie : MonoBehaviour
     private bool FUN_5766C()
     {
         FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B,
-                  ((MovContainer5)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02,
-                  ((MovContainer5)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_04);
+                  ((DataContainer5)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02,
+                  ((DataContainer5)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_04);
         DAT_58[0]++;
         return false;
     }
@@ -1471,9 +1471,9 @@ public class CriMovie : MonoBehaviour
     private bool FUN_576C0()
     {
         int iVar1;
-        MovContainer5 mVar2;
+        DataContainer5 mVar2;
 
-        mVar2 = (MovContainer5)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer5)PTR_58[0].CONTAINERS[DAT_58[0]];
         iVar1 = FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar2.DAT_02);
         iVar1 = FUN_56584(iVar1, mVar2.DAT_04, mVar2.DAT_01);
         FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, mVar2.DAT_02, iVar1);
@@ -1485,9 +1485,9 @@ public class CriMovie : MonoBehaviour
     {
         byte bVar1;
         CriObject oVar2;
-        MovContainer4 mVar3;
+        DataContainer4 mVar3;
 
-        mVar3 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar3 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
 
         if (mVar3.DAT_02 == 1)
         {
@@ -1524,8 +1524,8 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_57870()
     {
-        SceneManager.instance.triggers[((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01].DAT_13 =
-            ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_03 != 0;
+        SceneManager.instance.triggers[((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01].DAT_13 =
+            ((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_03 != 0;
         DAT_58[0]++;
         return false;
     }
@@ -1533,10 +1533,10 @@ public class CriMovie : MonoBehaviour
     private bool FUN_578B8()
     {
         CriCamera oVar1;
-        MovContainer11 mVar2;
+        DataContainer11 mVar2;
 
         oVar1 = SceneManager.instance.cCamera;
-        mVar2 = (MovContainer11)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer11)PTR_58[0].CONTAINERS[DAT_58[0]];
         SceneManager.instance.FUN_26EBC(2, 0);
         oVar1.DAT_36 = mVar2.DAT_10;
         oVar1.DAT_26 = mVar2.DAT_12;
@@ -1554,9 +1554,9 @@ public class CriMovie : MonoBehaviour
     {
         byte bVar1;
         CriObject oVar2;
-        MovContainer4 mVar3;
+        DataContainer4 mVar3;
 
-        mVar3 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar3 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
         bVar1 = mVar3.DAT_01;
 
         if (bVar1 == 3)
@@ -1592,8 +1592,8 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_57970()
     {
-        SceneManager.instance.FUN_26EBC(((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01,
-                                        ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
+        SceneManager.instance.FUN_26EBC(((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01,
+                                        ((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
         DAT_58[0]++;
         return false;
     }
@@ -1692,9 +1692,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_57CB0()
     {
-        MovContainer12 mVar1;
+        DataContainer12 mVar1;
 
-        mVar1 = (MovContainer12)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar1 = (DataContainer12)PTR_58[0].CONTAINERS[DAT_58[0]];
         GameManager.instance.FUN_46C0C(mVar1.DAT_01, (uint)(int)mVar1.DAT_04, mVar1.DAT_02);
         DAT_58[0]++;
         return false;
@@ -1703,9 +1703,9 @@ public class CriMovie : MonoBehaviour
     private bool FUN_57D00()
     {
         CriSkinned oVar1;
-        MovContainer13 mVar2;
+        DataContainer13 mVar2;
 
-        mVar2 = (MovContainer13)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer13)PTR_58[0].CONTAINERS[DAT_58[0]];
         FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, 3, mVar2.DAT_02);
         FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, 4, mVar2.DAT_04);
         FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, 5, mVar2.DAT_06);
@@ -1723,9 +1723,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_57DE8()
     {
-        MovContainer13 mVar1;
+        DataContainer13 mVar1;
 
-        mVar1 = (MovContainer13)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar1 = (DataContainer13)PTR_58[0].CONTAINERS[DAT_58[0]];
         FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, 6, mVar1.DAT_02);
         FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, 7, mVar1.DAT_04);
         FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, 8, mVar1.DAT_06);
@@ -1752,10 +1752,10 @@ public class CriMovie : MonoBehaviour
     private bool FUN_580A8()
     {
         CriSkinned oVar1;
-        MovContainer14 mVar2;
+        DataContainer14 mVar2;
         uint uVar3;
 
-        mVar2 = (MovContainer14)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer14)PTR_58[0].CONTAINERS[DAT_58[0]];
         oVar1 = SceneManager.instance.DAT_27C[DAT_0B];
         oVar1.PTR_190 = mVar2.DAT_04;
         oVar1.DAT_190 = 0;
@@ -1776,7 +1776,7 @@ public class CriMovie : MonoBehaviour
         uint uVar2;
 
         oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[DAT_0B];
-        uVar2 = (uint)((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01 << 8 | 1;
+        uVar2 = (uint)((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01 << 8 | 1;
         oVar1.DAT_3C = (byte)uVar2;
         oVar1.DAT_3D = (byte)(uVar2 >> 8);
         oVar1.DAT_3E = (byte)(uVar2 >> 0x10);
@@ -1795,9 +1795,9 @@ public class CriMovie : MonoBehaviour
     private bool FUN_581C0()
     {
         CriStatic oVar1;
-        MovContainer15 mVar2;
+        DataContainer15 mVar2;
 
-        mVar2 = (MovContainer15)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer15)PTR_58[0].CONTAINERS[DAT_58[0]];
         oVar1 = SceneManager.instance.DAT_7CDC[mVar2.DAT_01];
         oVar1.DAT_48 = mVar2.DAT_02;
         oVar1.DAT_4A = mVar2.DAT_04;
@@ -1808,9 +1808,9 @@ public class CriMovie : MonoBehaviour
     private bool FUN_58214()
     {
         CriPlayer oVar1;
-        MovContainer16 mVar2;
+        DataContainer16 mVar2;
 
-        mVar2 = (MovContainer16)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer16)PTR_58[0].CONTAINERS[DAT_58[0]];
         oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[DAT_0B];
 
         switch (mVar2.DAT_01)
@@ -1857,9 +1857,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_583CC()
     {
-        MovContainer15 mVar1;
+        DataContainer15 mVar1;
 
-        mVar1 = (MovContainer15)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar1 = (DataContainer15)PTR_58[0].CONTAINERS[DAT_58[0]];
         SceneManager.instance.FUN_8133C(mVar1.DAT_01, mVar1.DAT_04, mVar1.DAT_03);
         DAT_58[0]++;
         return false;
@@ -1867,9 +1867,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_5841C()
     {
-        MovContainer17 mVar1;
+        DataContainer17 mVar1;
 
-        mVar1 = (MovContainer17)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar1 = (DataContainer17)PTR_58[0].CONTAINERS[DAT_58[0]];
         SceneManager.instance.FUN_4A784(mVar1.DAT_01, mVar1.DAT_02, mVar1.DAT_06,
                                         mVar1.DAT_08, mVar1.DAT_0A, mVar1.DAT_03,
                                         mVar1.DAT_04, mVar1.DAT_05);
@@ -1881,8 +1881,8 @@ public class CriMovie : MonoBehaviour
     {
         FloorCollider fVar1;
 
-        fVar1 = SceneManager.instance.FUN_645C8(((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01,
-                                               ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
+        fVar1 = SceneManager.instance.FUN_645C8(((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01,
+                                               ((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
         fVar1.DAT_04[1].x = 0;
         fVar1.DAT_04[1].y = 0;
         DAT_58[0]++;
@@ -1898,9 +1898,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_58688()
     {
-        MovContainer18 mVar2;
+        DataContainer18 mVar2;
 
-        mVar2 = (MovContainer18)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer18)PTR_58[0].CONTAINERS[DAT_58[0]];
         DAT_0C = mVar2.DAT_02;
         DAT_0E = mVar2.DAT_04;
         DAT_10 = mVar2.DAT_06;
@@ -1910,9 +1910,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_586C4()
     {
-        MovContainer18 mVar2;
+        DataContainer18 mVar2;
 
-        mVar2 = (MovContainer18)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer18)PTR_58[0].CONTAINERS[DAT_58[0]];
         DAT_12 = mVar2.DAT_02;
         DAT_14 = mVar2.DAT_04;
         DAT_16 = mVar2.DAT_06;
@@ -1922,9 +1922,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_58700()
     {
-        MovContainer18 mVar2;
+        DataContainer18 mVar2;
 
-        mVar2 = (MovContainer18)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer18)PTR_58[0].CONTAINERS[DAT_58[0]];
         DAT_18 = mVar2.DAT_02;
         DAT_1A = mVar2.DAT_04;
         DAT_1C = mVar2.DAT_06;
@@ -1934,9 +1934,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_5873C()
     {
-        MovContainer18 mVar2;
+        DataContainer18 mVar2;
 
-        mVar2 = (MovContainer18)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer18)PTR_58[0].CONTAINERS[DAT_58[0]];
         DAT_1E = mVar2.DAT_02;
         DAT_20 = mVar2.DAT_04;
         DAT_22 = mVar2.DAT_06;
@@ -1957,11 +1957,11 @@ public class CriMovie : MonoBehaviour
         uint uVar2;
         int iVar3;
         uint uVar4;
-        MovContainer4 mVar5;
+        DataContainer4 mVar5;
         CriSkinned oVar5;
         CriBone oVar6;
 
-        mVar5 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar5 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
         uVar2 = (uint)FUN_55DC8((uint)mVar5.DAT_01 << 0x10 | mVar5.DAT_02, 0);
 
         if (uVar2 != 0)
@@ -2008,9 +2008,9 @@ public class CriMovie : MonoBehaviour
     {
         byte bVar1;
         uint uVar2;
-        MovContainer4 mVar3;
+        DataContainer4 mVar3;
 
-        mVar3 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar3 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
         uVar2 = (uint)FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar3.DAT_01);
         bVar1 = 2;
 
@@ -2025,10 +2025,10 @@ public class CriMovie : MonoBehaviour
     private bool FUN_58974()
     {
         byte bVar1;
-        MovContainer4 mVar2;
+        DataContainer4 mVar2;
         CriObject oVar3;
 
-        mVar2 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
         bVar1 = mVar2.DAT_01;
 
         if (bVar1 == 3)
@@ -2058,10 +2058,10 @@ public class CriMovie : MonoBehaviour
     private bool FUN_58A3C()
     {
         CriCamera oVar1;
-        MovContainer19 mVar2;
+        DataContainer19 mVar2;
 
         oVar1 = SceneManager.instance.cCamera;
-        mVar2 = (MovContainer19)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer19)PTR_58[0].CONTAINERS[DAT_58[0]];
         SceneManager.instance.FUN_26EBC(4, 0);
         oVar1.DAT_46 = mVar2.DAT_04;
         oVar1.DAT_74 = mVar2.DAT_06;
@@ -2074,10 +2074,10 @@ public class CriMovie : MonoBehaviour
     private bool FUN_58ACC()
     {
         CriCamera oVar1;
-        MovContainer20 mVar2;
+        DataContainer20 mVar2;
 
         oVar1 = SceneManager.instance.cCamera;
-        mVar2 = (MovContainer20)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer20)PTR_58[0].CONTAINERS[DAT_58[0]];
         SceneManager.instance.FUN_26EBC(2, 0);
         oVar1.DAT_36 = mVar2.DAT_08;
         oVar1.DAT_3E = mVar2.DAT_0A;
@@ -2100,10 +2100,10 @@ public class CriMovie : MonoBehaviour
     private bool FUN_58BC8()
     {
         CriCamera oVar1;
-        MovContainer13 mVar2;
+        DataContainer13 mVar2;
 
         oVar1 = SceneManager.instance.cCamera;
-        mVar2 = (MovContainer13)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer13)PTR_58[0].CONTAINERS[DAT_58[0]];
 
         if ((mVar2.DAT_01 & 1) != 0)
             oVar1.DAT_36 = mVar2.DAT_02;
@@ -2124,10 +2124,10 @@ public class CriMovie : MonoBehaviour
     private bool FUN_58C6C()
     {
         CriCamera oVar1;
-        MovContainer13 mVar2;
+        DataContainer13 mVar2;
 
         oVar1 = SceneManager.instance.cCamera;
-        mVar2 = (MovContainer13)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer13)PTR_58[0].CONTAINERS[DAT_58[0]];
 
         if ((mVar2.DAT_01 & 1) != 0)
             oVar1.DAT_50 = mVar2.DAT_02;
@@ -2149,9 +2149,9 @@ public class CriMovie : MonoBehaviour
     {
         int iVar1;
         int iVar2;
-        MovContainer21 mVar3;
+        DataContainer21 mVar3;
 
-        mVar3 = (MovContainer21)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar3 = (DataContainer21)PTR_58[0].CONTAINERS[DAT_58[0]];
         iVar1 = FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar3.DAT_02);
         iVar2 = FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar3.DAT_05);
         FUN_5666C(iVar1, iVar2);
@@ -2162,9 +2162,9 @@ public class CriMovie : MonoBehaviour
     private bool FUN_58D98()
     {
         int iVar1;
-        MovContainer21 mVar2;
+        DataContainer21 mVar2;
 
-        mVar2 = (MovContainer21)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer21)PTR_58[0].CONTAINERS[DAT_58[0]];
         iVar1 = FUN_55DC8((uint)mVar2.DAT_03 << 0x10 | mVar2.DAT_04, mVar2.DAT_05);
         FUN_557B4((uint)DAT_0A << 0x10 | DAT_0B, mVar2.DAT_02, iVar1);
         DAT_58[0]++;
@@ -2175,9 +2175,9 @@ public class CriMovie : MonoBehaviour
     {
         int iVar1;
         int iVar2;
-        MovContainer21 mVar3;
+        DataContainer21 mVar3;
 
-        mVar3 = (MovContainer21)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar3 = (DataContainer21)PTR_58[0].CONTAINERS[DAT_58[0]];
         iVar1 = FUN_55DC8((uint)DAT_0A << 0x10 | DAT_0B, mVar3.DAT_02);
         iVar2 = FUN_55DC8((uint)mVar3.DAT_03 << 0x10 | mVar3.DAT_04, mVar3.DAT_05);
         iVar1 = FUN_56584(iVar1, iVar2, mVar3.DAT_01);
@@ -2192,7 +2192,7 @@ public class CriMovie : MonoBehaviour
         bool bVar2;
 
         bVar2 = InventoryManager.FUN_4A87C(11, 
-            ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01);
+            ((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01);
         bVar1 = 2;
 
         if (!bVar2)
@@ -2212,10 +2212,10 @@ public class CriMovie : MonoBehaviour
     private bool FUN_58F38()
     {
         byte bVar1;
-        MovContainer4 mVar2;
+        DataContainer4 mVar2;
         CriObject oVar3;
 
-        mVar2 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
 
         if (DAT_0A != 3)
         {
@@ -2274,10 +2274,10 @@ public class CriMovie : MonoBehaviour
     private bool FUN_590EC()
     {
         byte bVar1;
-        MovContainer19 mVar3;
+        DataContainer19 mVar3;
         Vector3Int local_248;
 
-        mVar3 = (MovContainer19)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar3 = (DataContainer19)PTR_58[0].CONTAINERS[DAT_58[0]];
         //...
         DAT_58[0]++;
         return false;
@@ -2294,12 +2294,12 @@ public class CriMovie : MonoBehaviour
     {
         byte bVar1;
         CriPlayer oVar2;
-        MovContainer4 mVar3;
+        DataContainer4 mVar3;
         uint uVar4;
         uint uVar5;
 
         oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
-        mVar3 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar3 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
         bVar1 = mVar3.DAT_01;
 
         if (bVar1 == 1)
@@ -2393,9 +2393,9 @@ public class CriMovie : MonoBehaviour
     {
         uint uVar1;
         CriSkinned oVar2;
-        MovContainer14 mVar3;
+        DataContainer14 mVar3;
 
-        mVar3 = (MovContainer14)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar3 = (DataContainer14)PTR_58[0].CONTAINERS[DAT_58[0]];
         oVar2 = SceneManager.instance.DAT_27C[10];
         uVar1 = (uint)mVar3.DAT_01 << 8 | 4;
         oVar2.DAT_3C = (byte)uVar1;
@@ -2418,7 +2418,7 @@ public class CriMovie : MonoBehaviour
         CriPlayer oVar5;
         CriSkinned pcVar7;
         uint uVar8;
-        MovContainer22 mVar10;
+        DataContainer22 mVar10;
         uint uVar11;
 
         /*oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
@@ -2488,9 +2488,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_5A60C()
     {
-        MovContainer4 mVar2;
+        DataContainer4 mVar2;
 
-        mVar2 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar2 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
         GameManager.instance.DAT_2E = mVar2.DAT_02;
         GameManager.instance.DAT_39 = mVar2.DAT_01;
         InventoryManager.FUN_4A7E8(2, 0xf, true);
@@ -2514,17 +2514,17 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_5A764()
     {
-        GameManager.instance.DAT_21 = ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01;
+        GameManager.instance.DAT_21 = ((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01;
         DAT_58[0]++;
         return false;
     }
 
     private bool FUN_5A794()
     {
-        MovContainer4 mVar1;
+        DataContainer4 mVar1;
         CriSkinned oVar2;
 
-        mVar1 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar1 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
         oVar2 = SceneManager.instance.DAT_27C[DAT_0B];
 
         if (mVar1.DAT_01 == 1)
@@ -2562,7 +2562,7 @@ public class CriMovie : MonoBehaviour
         TriggerScriptableObject tVar1;
 
         tVar1 = SceneManager.instance.triggers
-            [((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01 + 4];
+            [((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01 + 4];
 
         if (tVar1 != null && tVar1.DAT_13)
             DialogManager.instance.PTR_FUN_99028[tVar1.DAT_10](tVar1);
@@ -2575,9 +2575,9 @@ public class CriMovie : MonoBehaviour
     {
         byte bVar1;
         CriSkinned oVar2;
-        MovContainer4 mVar3;
+        DataContainer4 mVar3;
 
-        mVar3 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar3 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
         bVar1 = mVar3.DAT_01;
         oVar2 = SceneManager.instance.DAT_27C[DAT_0B];
         oVar2.DAT_18C = bVar1;
@@ -2598,10 +2598,10 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_5ABD8()
     {
-        MovContainer4 mVar1;
+        DataContainer4 mVar1;
         CriPlayer oVar2;
 
-        mVar1 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar1 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
         oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
 
         if (mVar1.DAT_02 == 0)
@@ -2629,7 +2629,7 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_5AD28()
     {
-        GameManager.instance.DAT_A0E2 = ((MovContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02;
+        GameManager.instance.DAT_A0E2 = ((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02;
         GameManager.instance.DAT_39 = 2;
         InventoryManager.FUN_4A7E8(2, 0xf, true);
         DAT_58[0]++;
@@ -2638,9 +2638,9 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_5AD90()
     {
-        MovContainer4 mVar1;
+        DataContainer4 mVar1;
 
-        mVar1 = (MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
+        mVar1 = (DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]];
         SceneManager.instance.FUN_81390(mVar1.DAT_01, mVar1.DAT_02, mVar1.DAT_03);
         DAT_58[0]++;
         return false;
@@ -2655,7 +2655,7 @@ public class CriMovie : MonoBehaviour
 
     private bool FUN_5AE44()
     {
-        GameManager.instance.DAT_9234 = ((MovContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01;
+        GameManager.instance.DAT_9234 = ((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01;
         DAT_58[0]++;
         return false;
     }

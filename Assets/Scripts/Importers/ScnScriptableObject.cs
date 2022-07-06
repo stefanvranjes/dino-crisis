@@ -3,39 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class _STATIC_OBJ_DATA
-{
-    public byte DAT_00; //0x00
-    public byte DAT_01; //0x01
-    public byte DAT_02; //0x02
-    public byte DAT_03; //0x03
-    public ushort DAT_04; //0x04
-    public TmdScriptableObject DAT_08; //0x08;
-    public Vector3Int DAT_0C; //0x0C
-    public Vector3Int DAT_12; //0x12
-}
-
-[System.Serializable]
-public class MovContainer
+public class DataContainer
 {
     public byte DAT_00;
 }
 
 [System.Serializable]
-public class MovContainer2 : MovContainer
+public class DataContainer2 : DataContainer
 {
     public sbyte DAT_01;
     public ushort DAT_02;
 }
 
 [System.Serializable]
-public class MovContainer3 : MovContainer2
+public class DataContainer3 : DataContainer2
 {
     public ushort DAT_04;
 }
 
 [System.Serializable]
-public class MovContainer4 : MovContainer
+public class DataContainer4 : DataContainer
 {
     public byte DAT_01;
     public byte DAT_02;
@@ -43,13 +30,13 @@ public class MovContainer4 : MovContainer
 }
 
 [System.Serializable]
-public class MovContainer5 : MovContainer4
+public class DataContainer5 : DataContainer4
 {
     public int DAT_04;
 }
 
 [System.Serializable]
-public class MovContainer6 : MovContainer4
+public class DataContainer6 : DataContainer4
 {
     public byte DAT_04;
     public byte DAT_05;
@@ -61,13 +48,13 @@ public class MovContainer6 : MovContainer4
 }
 
 [System.Serializable]
-public class MovContainer7 : MovContainer2
+public class DataContainer7 : DataContainer2
 {
     public int DAT_04;
 }
 
 [System.Serializable]
-public class MovContainer8 : MovContainer4
+public class DataContainer8 : DataContainer4
 {
     public ushort DAT_04;
     public TmdScriptableObject DAT_08;
@@ -77,19 +64,19 @@ public class MovContainer8 : MovContainer4
 }
 
 [System.Serializable]
-public class MovContainer9 : MovContainer4
+public class DataContainer9 : DataContainer4
 {
     public TodScriptableObject DAT_04;
 }
 
 [System.Serializable]
-public class MovContainer10 : MovContainer4
+public class DataContainer10 : DataContainer4
 {
     public TriggerScriptableObject DAT_04;
 }
 
 [System.Serializable]
-public class MovContainer11 : MovContainer
+public class DataContainer11 : DataContainer
 {
     public Vector3Int DAT_02;
     public Vector3Int DAT_08;
@@ -98,13 +85,13 @@ public class MovContainer11 : MovContainer
 }
 
 [System.Serializable]
-public class MovContainer12 : MovContainer4
+public class DataContainer12 : DataContainer4
 {
     public short DAT_04;
 }
 
 [System.Serializable]
-public class MovContainer13 : MovContainer
+public class DataContainer13 : DataContainer
 {
     public byte DAT_01;
     public short DAT_02;
@@ -113,19 +100,19 @@ public class MovContainer13 : MovContainer
 }
 
 [System.Serializable]
-public class MovContainer14 : MovContainer4
+public class DataContainer14 : DataContainer4
 {
     public Vector3Int[] DAT_04;
 }
 
 [System.Serializable]
-public class MovContainer15 : MovContainer4
+public class DataContainer15 : DataContainer4
 {
     public ushort DAT_04;
 }
 
 [System.Serializable]
-public class MovContainer16 : MovContainer4
+public class DataContainer16 : DataContainer4
 {
     public Vector3Int DAT_04;
     public byte DAT_0A;
@@ -133,7 +120,7 @@ public class MovContainer16 : MovContainer4
 }
 
 [System.Serializable]
-public class MovContainer17 : MovContainer4
+public class DataContainer17 : DataContainer4
 {
     public byte DAT_04;
     public byte DAT_05;
@@ -143,7 +130,7 @@ public class MovContainer17 : MovContainer4
 }
 
 [System.Serializable]
-public class MovContainer18 : MovContainer
+public class DataContainer18 : DataContainer
 {
     public byte DAT_01;
     public short DAT_02;
@@ -152,7 +139,7 @@ public class MovContainer18 : MovContainer
 }
 
 [System.Serializable]
-public class MovContainer19 : MovContainer4
+public class DataContainer19 : DataContainer4
 {
     public short DAT_04;
     public short DAT_06;
@@ -161,7 +148,7 @@ public class MovContainer19 : MovContainer4
 }
 
 [System.Serializable]
-public class MovContainer20 : MovContainer
+public class DataContainer20 : DataContainer
 {
     public Vector3Int DAT_02;
     public short DAT_08;
@@ -176,14 +163,14 @@ public class MovContainer20 : MovContainer
 }
 
 [System.Serializable]
-public class MovContainer21 : MovContainer4
+public class DataContainer21 : DataContainer4
 {
     public byte DAT_04;
     public byte DAT_05;
 }
 
 [System.Serializable]
-public class MovContainer22 : MovContainer
+public class DataContainer22 : DataContainer
 {
     public byte DAT_01;
     public byte DAT_15;
@@ -193,10 +180,10 @@ public class MovContainer22 : MovContainer
 }
 
 [System.Serializable]
-public class _MOVIE_DATA
+public class _SCENE_OBJ_DATA
 {
     public int index;
-    public MovContainer[] CONTAINERS;
+    public DataContainer[] CONTAINERS;
 
     public int GetContainer(int container, int offset)
     {
@@ -208,15 +195,14 @@ public class ScnScriptableObject : ScriptableObject
 {
     public string prefabName;
 
-    public List<_STATIC_OBJ_DATA> staticObjs;
-    public List<_MOVIE_DATA> movies;
+    public List<_SCENE_OBJ_DATA> data;
 
-    public _MOVIE_DATA GetMovie(int index)
+    public _SCENE_OBJ_DATA GetData(int index)
     {
-        for (int i = 0; i < movies.Count; i++)
+        for (int i = 0; i < data.Count; i++)
         {
-            if (movies[i].index == index)
-                return movies[i];
+            if (data[i].index == index)
+                return data[i];
         }
 
         return null;

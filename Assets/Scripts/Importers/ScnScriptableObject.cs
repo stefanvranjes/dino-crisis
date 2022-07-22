@@ -60,7 +60,7 @@ public class DataContainer8 : DataContainer4
     public TmdScriptableObject DAT_08;
     public Vector3Int DAT_0C;
     public Vector3Int DAT_12;
-    public BoxColliderScriptableObject DAT_18;
+    public BoxCollider DAT_18;
 }
 
 [System.Serializable]

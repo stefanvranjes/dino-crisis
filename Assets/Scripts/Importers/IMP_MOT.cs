@@ -48,7 +48,7 @@ public class IMP_MOT : ScriptedImporter
                     reader.Seek(2, SeekOrigin.Current);
                     m.DAT_3C = reader.ReadSVector();
                     reader.Seek(2, SeekOrigin.Current);
-                    FeedPostprocessor(m.DAT_02);
+                    //FeedPostprocessor(m.DAT_02);
                     mot.MOTIONS[i] = m;
                 }
 
@@ -56,15 +56,6 @@ public class IMP_MOT : ScriptedImporter
                 ctx.SetMainObject(mot);
             }
         }
-    }
-
-    private void FeedPostprocessor(int id)
-    {
-        if (ScnPostprocessor.movieIds == null)
-            ScnPostprocessor.movieIds = new List<int>();
-
-        if (!ScnPostprocessor.movieIds.Contains(id))
-            ScnPostprocessor.movieIds.Add(id);
     }
 }
 #endif

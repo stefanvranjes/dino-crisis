@@ -2,11 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class BoxCollider
+{
+    public string prefabName;
+
+    public Vector3Int DAT_00; //0x00
+    public short DAT_06; //0x06
+}
+
 public class CriStatic : CriObject
 {
     public TmdScriptableObject cMesh; //0x3C
     public CriObject DAT_40; //0x40
-    public BoxColliderScriptableObject cCollider; //0x44
+    public BoxCollider cCollider; //0x44
     public byte DAT_48; //0x48
     public ushort DAT_4A; //0x4A
     public uint DAT_74;

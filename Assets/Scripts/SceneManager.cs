@@ -65,10 +65,10 @@ public class SceneManager : MonoBehaviour
         DAT_7CDC = new CriStatic[40];
         DAT_D7C0 = new CriScene[10];
 
-        for (int i = 0; i < scn.staticObjs.Count; i++)
+        /*for (int i = 0; i < scn.staticObjs.Count; i++)
         {
             FUN_570A0(scn.staticObjs[i]);
-        }
+        }*/
 
         for (int i = 0; i < 80; i++)
         {
@@ -761,7 +761,7 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    private void FUN_570A0(_STATIC_OBJ_DATA data)
+    /*private void FUN_570A0(_STATIC_OBJ_DATA data)
     {
         CriStatic oVar1;
 
@@ -792,8 +792,8 @@ public class SceneManager : MonoBehaviour
                 }
             }
         }
-    }
-
+    }*/
+    
     public CriBone FUN_601F0()
     {
         int iVar1;

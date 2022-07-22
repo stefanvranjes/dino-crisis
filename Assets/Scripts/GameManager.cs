@@ -430,7 +430,7 @@ public class GameManager : MonoBehaviour
     private void FUN_81720(CriStatic param1, Vector2Int[] param2)
     {
         int iVar3;
-        BoxColliderScriptableObject psVar4;
+        BoxCollider psVar4;
         Matrix3x3 MStack64;
         Vector3Int local_48;
 
@@ -699,7 +699,7 @@ public class GameManager : MonoBehaviour
         short sVar2;
         bool bVar3;
         int iVar4;
-        BoxColliderScriptableObject psVar5;
+        BoxCollider psVar5;
         uint uVar6;
         int iVar7;
         uint uVar8;

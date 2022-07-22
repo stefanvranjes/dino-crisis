@@ -102,7 +102,7 @@ public class CriScene : MonoBehaviour
             FUN_58048,
             FUN_580A8,
             FUN_5811C,
-            FUN_581C0,
+            FUN_581C0, //60
             FUN_58214,
             FUN_58384,
             FUN_583CC,
@@ -112,7 +112,7 @@ public class CriScene : MonoBehaviour
             FUN_58688,
             FUN_586C4,
             FUN_58700,
-            FUN_5873C,
+            FUN_5873C, //70
             FUN_58778,
             FUN_587DC,
             FUN_588FC,
@@ -122,7 +122,7 @@ public class CriScene : MonoBehaviour
             FUN_58BC8,
             FUN_58C6C,
             FUN_58D10,
-            FUN_58D98,
+            FUN_58D98, //80
             FUN_58E14,
             FUN_58EC8,
             FUN_58F20,
@@ -132,7 +132,7 @@ public class CriScene : MonoBehaviour
             FUN_59420,
             FUN_595FC,
             FUN_59994,
-            FUN_59BFC,
+            FUN_59BFC, //90
             FUN_59D28,
             FUN_5A5B4,
             FUN_5A60C,
@@ -142,7 +142,7 @@ public class CriScene : MonoBehaviour
             FUN_5A794,
             FUN_5A814,
             FUN_5A85C,
-            FUN_5A9B0,
+            FUN_5A9B0, //100
             FUN_5AAD4,
             FUN_5AB68,
             FUN_5AA08,

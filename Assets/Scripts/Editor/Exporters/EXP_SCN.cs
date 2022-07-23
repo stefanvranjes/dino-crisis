@@ -6,7 +6,68 @@ using UnityEditor;
 
 public class EXP_SCN
 {
-    public static void ExtractSCN(string inFile, string timFile, string clutFile, string outDir)
+    public static void ExtractSCN(string inFile, string outDir)
+    {
+        using (BinaryReader reader = new BinaryReader(File.Open(inFile, FileMode.Open)))
+        {
+            // lgh
+            int exportCount = 1;
+            reader.BaseStream.Seek(0, SeekOrigin.Begin);
+            uint lghPosition = reader.ReadUInt32();
+            reader.BaseStream.Seek(lghPosition, SeekOrigin.Begin);
+            int lghSize = (reader.ReadUInt16() + reader.ReadUInt16()) * 0x10 + 0x24;
+            string lghFile = outDir + Path.DirectorySeparatorChar;
+            lghFile += Path.GetFileNameWithoutExtension(inFile);
+            lghFile += "_" + exportCount.ToString("D2") + ".lgh";
+            reader.BaseStream.Seek(lghPosition, SeekOrigin.Begin);
+            File.WriteAllBytes(lghFile, reader.ReadBytes(lghSize));
+
+            // cln
+            exportCount++;
+            reader.BaseStream.Seek(8, SeekOrigin.Begin);
+            uint clnPosition = reader.ReadUInt32();
+            int clnSize = (int)(reader.ReadUInt32() - clnPosition);
+            string clnFile = outDir + Path.DirectorySeparatorChar;
+            clnFile += Path.GetFileNameWithoutExtension(inFile);
+            clnFile += "_" + exportCount.ToString("D2") + ".cln";
+            reader.BaseStream.Seek(lghPosition, SeekOrigin.Begin);
+            File.WriteAllBytes(clnFile, reader.ReadBytes(clnSize));
+
+            // mot
+            exportCount++;
+            reader.BaseStream.Seek(0xc, SeekOrigin.Begin);
+            uint motPosition = reader.ReadUInt32();
+            int motSize = (int)(reader.ReadUInt32() - motPosition);
+            string motFile = outDir + Path.DirectorySeparatorChar;
+            motFile += Path.GetFileNameWithoutExtension(inFile);
+            motFile += "_" + exportCount.ToString("D2") + ".mot";
+            reader.BaseStream.Seek(motPosition, SeekOrigin.Begin);
+            File.WriteAllBytes(motFile, reader.ReadBytes(motSize));
+
+            // scn
+            exportCount++;
+            reader.BaseStream.Seek(0x14, SeekOrigin.Begin);
+            uint scnPosition = reader.ReadUInt32();
+            int scnSize = (int)(reader.BaseStream.Length + 0x80100000 - scnPosition);
+            string scnFile = outDir + Path.DirectorySeparatorChar;
+            scnFile += Path.GetFileNameWithoutExtension(inFile);
+            scnFile += "_" + exportCount.ToString("D2") + ".scn";
+            reader.BaseStream.Seek(scnPosition, SeekOrigin.Begin);
+            File.WriteAllBytes(scnFile, reader.ReadBytes(scnSize));
+
+            //ram
+            RamScriptableObject ram = ScriptableObject.CreateInstance("RamScriptableObject") as RamScriptableObject;
+            ram.objects = new UIntObjectDictionary();
+            string ramFile = outDir + "/RAM.asset";
+            if (ramFile.StartsWith(Application.dataPath))
+                ramFile = "Assets" + ramFile.Substring(Application.dataPath.Length);
+            AssetDatabase.CreateAsset(ram, ramFile);
+
+            AssetDatabase.Refresh();
+        }
+    }
+
+    public static void ExtractSCN2(string inFile, string timFile, string clutFile, string outDir)
     {
         using (BinaryReader reader = new BinaryReader(File.Open(inFile, FileMode.Open)))
         {

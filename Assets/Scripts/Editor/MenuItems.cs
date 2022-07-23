@@ -30,6 +30,6 @@ public class MenuItems
         string save = EditorUtility.SaveFolderPanel("Save location", defaultSavePath2, "");
         defaultSavePath2 = Path.GetDirectoryName(save);
 
-        EXP_SCN.ExtractSCN(file, tim, clut, save);
+        //EXP_SCN.ExtractSCN(file, tim, clut, save);
     }
 }

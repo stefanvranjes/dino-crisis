@@ -2323,6 +2323,16 @@ public class BufferedBinaryReader : IDisposable
         return val;
     }
 
+    public byte[] ReadBytes(int length)
+    {
+        byte[] bytes = new byte[length];
+
+        for (int i = 0; i < length; i++)
+            bytes[i] = ReadByte();
+
+        return bytes;
+    }
+
     public short ReadInt16()
     {
         var val = (short)((int)buffer[bufferOffset] | (int)buffer[bufferOffset + 1] << 8);

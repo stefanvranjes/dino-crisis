@@ -6,7 +6,7 @@ using UnityEngine;
 public class DialogManager : MonoBehaviour
 {
     public ushort[] DAT_B12C0;
-    public TriggerScriptableObject DAT_B1388;
+    public Trigger DAT_B1388;
     public byte DAT_B138C;
     public byte DAT_B138D;
     public byte DAT_B138E;
@@ -45,8 +45,8 @@ public class DialogManager : MonoBehaviour
     public static int[] DAT_9E9C0;
     public static ushort[] DAT_9F0EC;
     public static ushort[] DAT_A593C;
-    public delegate bool FUN_99028(TriggerScriptableObject t);
-    public delegate void FUN_99058(TriggerScriptableObject t);
+    public delegate bool FUN_99028(Trigger t);
+    public delegate void FUN_99058(Trigger t);
     public FUN_99028[] PTR_FUN_99028;
     public FUN_99058[] PTR_FUN_99058;
 
@@ -96,7 +96,7 @@ public class DialogManager : MonoBehaviour
         
     }
 
-    public void FUN_1BAB4(byte param1, TriggerScriptableObject param2)
+    public void FUN_1BAB4(byte param1, Trigger param2)
     {
         DAT_B1388 = param2;
         DAT_B138C = param1;
@@ -198,15 +198,17 @@ public class DialogManager : MonoBehaviour
         InventoryManager.FUN_4A7E8(2, 0, true);
     }
 
-    private bool FUN_1AB50(TriggerScriptableObject param1)
+    private bool FUN_1AB50(Trigger param1)
     {
         bool bVar1;
         int iVar2;
         byte bVar3;
         int iVar4;
+        Trigger2 tVar5;
 
+        tVar5 = (Trigger2)param1;
         InventoryManager.FUN_4A7E8(1, 0xb, true);
-        bVar3 = param1.BDAT_24;
+        bVar3 = tVar5.DAT_24;
 
         if (bVar3 < 9)
         {
@@ -228,19 +230,19 @@ public class DialogManager : MonoBehaviour
                 if (bVar1)
                     bVar3 = 8;
 
-                if (bVar3 < (uint)param1.BDAT_24)
+                if (bVar3 < (uint)tVar5.DAT_24)
                 {
                     FUN_1BAB4(0, param1);
                     //sound
                     FUN_1BCA4(DAT_98628, 1190);
                     DAT_B12C0[41] = (ushort)(DAT_98628
-                        [DAT_98594[1]] - (param1.BDAT_24 - 6 << 1));
+                        [DAT_98594[1]] - (tVar5.DAT_24 - 6 << 1));
                     FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
                     DAT_B1390++;
                     return false;
                 }
 
-                InventoryManager.FUN_4A7E8(9, param1.DAT_23, true);
+                InventoryManager.FUN_4A7E8(9, tVar5.DAT_23, true);
                 //sound
                 FUN_1BAB4(7, param1);
                 return false;
@@ -248,7 +250,7 @@ public class DialogManager : MonoBehaviour
 
             if (bVar3 == 1)
             {
-                bVar1 = InventoryManager.FUN_4A87C(9, param1.DAT_23);
+                bVar1 = InventoryManager.FUN_4A87C(9, tVar5.DAT_23);
 
                 if (!bVar1)
                 {
@@ -270,11 +272,11 @@ public class DialogManager : MonoBehaviour
             {
                 if (bVar3 == 2)
                 {
-                    bVar1 = InventoryManager.FUN_4A87C(9, param1.DAT_23);
+                    bVar1 = InventoryManager.FUN_4A87C(9, tVar5.DAT_23);
 
                     if (!bVar1)
                     {
-                        InventoryManager.FUN_4A7E8(9, param1.DAT_23, true);
+                        InventoryManager.FUN_4A7E8(9, tVar5.DAT_23, true);
                         iVar2 = FUN_1CC54(12);
                         FUN_1E2D8(DAT_98628, iVar2, 0, 0xffff);
                         //sound
@@ -286,7 +288,7 @@ public class DialogManager : MonoBehaviour
 
                 if (bVar3 == 3)
                 {
-                    bVar1 = InventoryManager.FUN_4A87C(9, param1.DAT_23);
+                    bVar1 = InventoryManager.FUN_4A87C(9, tVar5.DAT_23);
 
                     if (!bVar1)
                     {
@@ -335,29 +337,29 @@ public class DialogManager : MonoBehaviour
             }
         }
 
-        bVar1 = InventoryManager.FUN_4A87C(9, param1.DAT_23);
+        bVar1 = InventoryManager.FUN_4A87C(9, tVar5.DAT_23);
 
         if (!bVar1)
         {
-            bVar1 = InventoryManager.FUN_4A87C(11, param1.BDAT_24);
+            bVar1 = InventoryManager.FUN_4A87C(11, tVar5.DAT_24);
 
             if (!bVar1)
             {
                 FUN_1BAB4(0, param1);
                 //sound
                 FUN_1BCA4(DAT_98628, 44);
-                iVar2 = FUN_67988(param1.BDAT_24);
+                iVar2 = FUN_67988(tVar5.DAT_24);
                 FUN_1BCA4(DAT_9F0EC, iVar2);
                 iVar4 = 60;
             }
             else
             {
-                InventoryManager.FUN_4A7E8(9, param1.DAT_23, true);
-                InventoryManager.FUN_4A7E8(11, param1.BDAT_24, false);
+                InventoryManager.FUN_4A7E8(9, tVar5.DAT_23, true);
+                InventoryManager.FUN_4A7E8(11, tVar5.DAT_24, false);
                 FUN_1BAB4(0, param1);
                 //sound
                 FUN_1BCA4(DAT_98628, 23);
-                iVar2 = FUN_67988(param1.BDAT_24);
+                iVar2 = FUN_67988(tVar5.DAT_24);
                 FUN_1BCA4(DAT_9F0EC, iVar2);
                 iVar4 = 4;
             }
@@ -368,11 +370,11 @@ public class DialogManager : MonoBehaviour
         }
 
         LAB_1AFA0:
-        //FUN_1AFC4
+        SceneManager.instance.FUN_1AFC4(tVar5);
         return false;
     }
 
-    private bool FUN_1B2A8(TriggerScriptableObject param1)
+    private bool FUN_1B2A8(Trigger param1)
     {
         InventoryManager.FUN_4A7E8(1, 11, true);
         SceneManager.instance.DAT_27C[10].DAT_3C = 1;
@@ -380,32 +382,40 @@ public class DialogManager : MonoBehaviour
         return false;
     }
 
-    private bool FUN_1B304(TriggerScriptableObject param1)
+    private bool FUN_1B304(Trigger param1)
     {
-        InventoryManager.FUN_4A7E8(param1.DAT_18, param1.DAT_19, param1.DAT_1A == 0 ? false : true);
+        Trigger4 tVar1;
+
+        tVar1 = (Trigger4)param1;
+        InventoryManager.FUN_4A7E8(tVar1.DAT_18, tVar1.DAT_19, tVar1.DAT_1A);
         return true;
     }
 
-    private bool FUN_1B334(TriggerScriptableObject param1)
+    private bool FUN_1B334(Trigger param1)
     {
-        //FUN_55580
+        Trigger5 tVar1;
+
+        tVar1 = (Trigger5)param1;
+        SceneManager.instance.FUN_55580((sbyte)tVar1.DAT_18, tVar1.DAT_1A);
         return false;
     }
 
-    private bool FUN_1B360(TriggerScriptableObject param1)
+    private bool FUN_1B360(Trigger param1)
     {
         byte bVar1;
         ushort uVar2;
         bool bVar3;
         uint uVar4;
+        Trigger6 tVar5;
 
+        tVar5 = (Trigger6)param1;
         InventoryManager.FUN_4A7E8(1, 0xb, true);
-        DAT_B138E = param1.DAT_18;
+        DAT_B138E = (byte)tVar5.DAT_18;
         bVar3 = true;
 
-        if ((param1.DAT_18 | param1.DAT_19 << 8) == 0xff)
+        if ((tVar5.DAT_18 << 8) == 0xff)
         {
-            uVar4 = param1.DAT_1C - 0xbdU & 0xffffU;
+            uVar4 = tVar5.DAT_1C - 0xbdU & 0xffffU;
 
             if ((GameManager.instance.DAT_A090[uVar4] & 0x40) == 0)
             {
@@ -415,15 +425,14 @@ public class DialogManager : MonoBehaviour
 
             DAT_B138E = (byte)(GameManager.instance.DAT_A090[uVar4] & 0x3f);
             uVar2 = FUN_47808(DAT_B138E);
-            param1.DAT_1A = (byte)uVar2;
-            param1.DAT_1B = (byte)(uVar2 >> 8);
+            tVar5.DAT_1A = uVar2;
         }
 
-        if (param1.IDAT_24 == 0 || (SceneManager.instance.DAT_7CDC[param1.DAT_1E].flags & 2) != 0)
+        if (tVar5.DAT_24 == 0 || (SceneManager.instance.DAT_7CDC[tVar5.DAT_1E].flags & 2) != 0)
         {
-            if (param1.DAT_1F == 0)
+            if (tVar5.DAT_1F == 0)
             {
-                FUN_1B4CC(param1);
+                FUN_1B4CC(tVar5);
                 bVar3 = false;
             }
             else
@@ -436,16 +445,19 @@ public class DialogManager : MonoBehaviour
         return bVar3;
     }
 
-    private bool FUN_1B7C8(TriggerScriptableObject param1)
+    private bool FUN_1B7C8(Trigger param1)
     {
+        Trigger7 tVar1;
+
+        tVar1 = (Trigger7)param1;
         InventoryManager.FUN_4A7E8(1, 0xb, true);
         param1.DAT_13 = false;
-        ((CriPlayer)SceneManager.instance.DAT_27C[10]).FUN_5397C(param1.DAT_18);
+        ((CriPlayer)SceneManager.instance.DAT_27C[10]).FUN_5397C(tVar1.DAT_18);
         //sound
         return false;
     }
 
-    private bool FUN_1B820(TriggerScriptableObject param1)
+    private bool FUN_1B820(Trigger param1)
     {
         int iVar2;
         CriPlayer oVar4;
@@ -463,24 +475,30 @@ public class DialogManager : MonoBehaviour
         return false;
     }
 
-    private bool FUN_1B8B8(TriggerScriptableObject param1)
+    private bool FUN_1B8B8(Trigger param1)
     {
+        Trigger9 tVar1;
+
+        tVar1 = (Trigger9)param1;
         InventoryManager.FUN_4A7E8(1, 0xb, true);
 
-        if (param1.DAT_28 == 0xff)
-            InventoryManager.FUN_4A7E8(param1.DAT_28, param1.DAT_29, true);
+        if (tVar1.DAT_28 == 0xff)
+            InventoryManager.FUN_4A7E8(tVar1.DAT_28, tVar1.DAT_29, true);
 
         //FUN_1F0C4
         return false;
     }
 
-    private bool FUN_1B93C(TriggerScriptableObject param1)
+    private bool FUN_1B93C(Trigger param1)
     {
+        Trigger10 tVar1;
+
+        tVar1 = (Trigger10)param1;
         InventoryManager.FUN_4A7E8(1, 0xb, true);
 
-        if (param1.DAT_19 == 0 || InventoryManager.FUN_4A87C(9, param1.DAT_18 + 0x2fU))
+        if (!tVar1.DAT_19 || InventoryManager.FUN_4A87C(9, tVar1.DAT_18 + 0x2fU))
         {
-            GameManager.instance.DAT_2E = param1.DAT_18;
+            GameManager.instance.DAT_2E = tVar1.DAT_18;
             GameManager.instance.DAT_39 = 5;
             InventoryManager.FUN_4A7E8(1, 0xb, false);
             InventoryManager.FUN_4A7E8(2, 0xf, true);
@@ -491,13 +509,13 @@ public class DialogManager : MonoBehaviour
         return false;
     }
 
-    private bool FUN_1B9DC(TriggerScriptableObject param1)
+    private bool FUN_1B9DC(Trigger param1)
     {
         InventoryManager.FUN_4A7E8(1, 0xb, true);
         return false;
     }
 
-    private bool FUN_1BA04(TriggerScriptableObject param1)
+    private bool FUN_1BA04(Trigger param1)
     {
         bool bVar1;
         bool bVar2;
@@ -515,14 +533,14 @@ public class DialogManager : MonoBehaviour
         return bVar2;
     }
 
-    private bool FUN_1BA74(TriggerScriptableObject param1)
+    private bool FUN_1BA74(Trigger param1)
     {
         InventoryManager.FUN_4A7E8(1, 0xb, true);
         FUN_1BAB4(4, param1);
         return false;
     }
 
-    private void FUN_1BD1C(TriggerScriptableObject param1)
+    private void FUN_1BD1C(Trigger param1)
     {
         bool bVar1;
 
@@ -532,20 +550,23 @@ public class DialogManager : MonoBehaviour
             InventoryManager.FUN_1BBCC();
     }
 
-    private void FUN_1BD58(TriggerScriptableObject param1)
+    private void FUN_1BD58(Trigger param1)
     {
         int iVar2;
         bool bVar2;
         int puVar3;
+        Trigger10 tVar4;
+
+        tVar4 = (Trigger10)param1;
 
         switch (DAT_B1390)
         {
             case 0:
-                if (param1.DAT_18 < 8U)
+                if (tVar4.DAT_18 < 8U)
                     iVar2 = 153;
                 else
                 {
-                    if (param1.DAT_18 < 13U)
+                    if (tVar4.DAT_18 < 13U)
                         iVar2 = 199;
                     else
                         iVar2 = 256;
@@ -561,14 +582,14 @@ public class DialogManager : MonoBehaviour
 
                 DAT_B138D = 0;
 
-                if (param1.DAT_19 == 1)
+                if (tVar4.DAT_19)
                 {
                     puVar3 = 322;
                     goto LAB_1BFD8;
                 }
 
                 FUN_1BCA4(DAT_98628, 369);
-                DAT_B12C0[11] = (ushort)(DAT_98628[DAT_98594[0]] + param1.DAT_19 * 2);
+                DAT_B12C0[11] = (ushort)(DAT_98628[DAT_98594[0]] + (tVar4.DAT_19 ? 1 : 0) * 2);
                 goto LAB_1BFE0;
             case 2:
                 bVar2 = InventoryManager.FUN_4A87C(2, 0);
@@ -576,7 +597,7 @@ public class DialogManager : MonoBehaviour
                 if (bVar2)
                     return;
 
-                if ((uint)param1.DAT_19 <= GameManager.instance.DAT_A0E0)
+                if ((uint)(tVar4.DAT_19 ? 1 : 0) <= GameManager.instance.DAT_A0E0)
                 {
                     DAT_B1390 = 3;
                     return;
@@ -598,13 +619,13 @@ public class DialogManager : MonoBehaviour
                 if (bVar2)
                 {
                     InventoryManager.FUN_1BBCC();
-                    InventoryManager.FUN_4A7E8(9, param1.DAT_18, true);
-                    GameManager.instance.DAT_A0E0 -= param1.DAT_19;
+                    InventoryManager.FUN_4A7E8(9, tVar4.DAT_18, true);
+                    GameManager.instance.DAT_A0E0 -= (ushort)(tVar4.DAT_19 ? 1 : 0);
 
                     if (GameManager.instance.DAT_A0E0 == 0)
                         InventoryManager.FUN_4A7E8(11, 0x2b, false);
 
-                    GameManager.instance.DAT_2E = param1.DAT_18;
+                    GameManager.instance.DAT_2E = tVar4.DAT_18;
                     GameManager.instance.DAT_39 = 5;
                     InventoryManager.FUN_4A7E8(1, 0xb, false);
                     InventoryManager.FUN_4A7E8(2, 0xf, true);
@@ -641,11 +662,13 @@ public class DialogManager : MonoBehaviour
         DAT_B1390++;
     }
 
-    private void FUN_1C040(TriggerScriptableObject param1)
+    private void FUN_1C040(Trigger param1)
     {
         CriPlayer oVar1;
         bool bVar1;
+        Trigger12 tVar2;
 
+        tVar2 = (Trigger12)param1;
         oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
         switch (DAT_B1390)
         {
@@ -669,7 +692,7 @@ public class DialogManager : MonoBehaviour
                     {
                         FUN_1BCA4(DAT_98628, 477);
                         FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
-                        GameManager.instance.DAT_9ADF = param1.DAT_18;
+                        GameManager.instance.DAT_9ADF = tVar2.DAT_18;
                         InventoryManager.FUN_4A7E8(11, 0x41, false);
                         InventoryManager.FUN_4A7E8(11, 0x42, true);
                         DAT_B1390 = 2;
@@ -704,7 +727,7 @@ public class DialogManager : MonoBehaviour
                 {
                     //sound
                     DAT_B1390++;
-                    GameManager.instance.DAT_9ADF = param1.DAT_18;
+                    GameManager.instance.DAT_9ADF = tVar2.DAT_18;
                 }
 
                 bVar1 = InventoryManager.FUN_4A87C(2, 5);
@@ -758,12 +781,14 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    private void FUN_1C3B0(TriggerScriptableObject param1)
+    private void FUN_1C3B0(Trigger param1)
     {
         int iVar1;
         bool bVar2;
         CriPlayer oVar2;
+        Trigger6 tVar3;
 
+        tVar3 = (Trigger6)param1;
         oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
 
         if (DAT_B1390 == 1)
@@ -772,7 +797,7 @@ public class DialogManager : MonoBehaviour
 
             if (!bVar2)
             {
-                if ((param1.DAT_1F & 0x80) == 0)
+                if ((tVar3.DAT_1F & 0x80) == 0)
                     InventoryManager.FUN_1BBCC();
                 else
                 {
@@ -824,15 +849,17 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    private void FUN_1C580(TriggerScriptableObject param1)
+    private void FUN_1C580(Trigger param1)
     {
         int iVar1;
         uint uVar2;
         int iVar3;
         bool bVar3;
         byte bVar4;
+        Trigger13 tVar5;
 
         bVar4 = 0;
+        tVar5 = (Trigger13)param1;
 
         if (DAT_B1390 == 1)
         {
@@ -879,17 +906,17 @@ public class DialogManager : MonoBehaviour
                     if (bVar3)
                     {
                         //sound
-                        bVar3 = InventoryManager.FUN_4A87C(param1.DAT_18, param1.DAT_19);
+                        bVar3 = InventoryManager.FUN_4A87C(tVar5.DAT_18, tVar5.DAT_19);
 
                         if (!bVar3)
                         {
-                            iVar1 = param1.DAT_18;
-                            uVar2 = param1.DAT_19;
+                            iVar1 = tVar5.DAT_18;
+                            uVar2 = tVar5.DAT_19;
                         }
                         else
                         {
-                            iVar1 = param1.DAT_18;
-                            uVar2 = param1.DAT_19;
+                            iVar1 = tVar5.DAT_18;
+                            uVar2 = tVar5.DAT_19;
                         }
 
                         InventoryManager.FUN_4A7E8(iVar1, uVar2, !bVar3);
@@ -903,11 +930,11 @@ public class DialogManager : MonoBehaviour
             if (DAT_B1390 != 0)
                 return;
 
-            bVar3 = InventoryManager.FUN_4A87C(0, param1.DAT_1B);
+            bVar3 = InventoryManager.FUN_4A87C(0, tVar5.DAT_1B);
 
             if (bVar3)
             {
-                if (param1.DAT_1A == 0)
+                if (tVar5.DAT_1A == 0)
                 {
                     FUN_1BCA4(DAT_98628, 867);
                     FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
@@ -929,11 +956,11 @@ public class DialogManager : MonoBehaviour
                     if (bVar3)
                         bVar4 = 8;
 
-                    if (bVar4 < param1.DAT_1A)
+                    if (bVar4 < tVar5.DAT_1A)
                     {
                         //sound
                         FUN_1BCA4(DAT_98628, 1110);
-                        DAT_B12C0[41] = (ushort)(DAT_98628[DAT_98594[1]] - (param1.DAT_1A - 6 * 2));
+                        DAT_B12C0[41] = (ushort)(DAT_98628[DAT_98594[1]] - (tVar5.DAT_1A - 6 * 2));
                         FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
                         DAT_B1390 = 2;
                         return;
@@ -956,12 +983,14 @@ public class DialogManager : MonoBehaviour
         DAT_B1390++;
     }
 
-    private void FUN_1C888(TriggerScriptableObject param1)
+    private void FUN_1C888(Trigger param1)
     {
         int iVar1;
         bool bVar2;
         CriPlayer oVar2;
+        Trigger6 tVar3;
 
+        tVar3 = (Trigger6)param1;
         oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
 
         if (DAT_B1390 == 1)
@@ -974,7 +1003,7 @@ public class DialogManager : MonoBehaviour
 
                 if (!bVar2)
                 {
-                    if ((param1.DAT_1F & 0x80) == 0)
+                    if ((tVar3.DAT_1F & 0x80) == 0)
                         InventoryManager.FUN_1BBCC();
                     else
                         DAT_B1390 = 2;
@@ -982,7 +1011,7 @@ public class DialogManager : MonoBehaviour
                 else
                 {
                     InventoryManager.FUN_1BBCC();
-                    FUN_1B550(param1);
+                    FUN_1B550(tVar3);
                 }
             }
         }
@@ -1029,10 +1058,12 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    private void FUN_1CA74(TriggerScriptableObject param1)
+    private void FUN_1CA74(Trigger param1)
     {
         CriPlayer oVar1;
+        Trigger6 tVar2;
 
+        tVar2 = (Trigger6)param1;
         oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
 
         if (DAT_B1390 == 1)
@@ -1055,7 +1086,7 @@ public class DialogManager : MonoBehaviour
                     InventoryManager.FUN_4A7E8(1, 0, false);
                     InventoryManager.FUN_4A7E8(1, 1, true);
 
-                    if ((param1.DAT_1F & 0x80) != 0)
+                    if ((tVar2.DAT_1F & 0x80) != 0)
                         DAT_B1390 = 1;
                 }
             }
@@ -1068,15 +1099,19 @@ public class DialogManager : MonoBehaviour
                     if (DAT_B1391 == 0)
                     {
                         InventoryManager.FUN_1BBCC();
-                        FUN_1B4CC(param1);
+                        FUN_1B4CC(tVar2);
                     }
                 }
             }
         }
     }
 
-    private void FUN_1CBA4(TriggerScriptableObject param1)
+    private void FUN_1CBA4(Trigger param1)
     {
+        Trigger2 tVar1;
+
+        tVar1 = (Trigger2)param1;
+
         if (DAT_B1390 == 0)
         {
             InventoryManager.FUN_4A7E8(1, 0, false);
@@ -1093,13 +1128,13 @@ public class DialogManager : MonoBehaviour
                 if (DAT_B1391 == 0)
                 {
                     InventoryManager.FUN_1BBCC();
-                    //FUN_1AFC4
+                    SceneManager.instance.FUN_1AFC4(tVar1);
                 }
             }
         }
     }
 
-    private void FUN_1B4CC(TriggerScriptableObject param1)
+    private void FUN_1B4CC(Trigger6 param1)
     {
         int iVar1;
         byte bVar2;
@@ -1109,7 +1144,7 @@ public class DialogManager : MonoBehaviour
         {
             local_10 = new byte[3];
             local_10[0] = DAT_B138E;
-            local_10[1] = param1.DAT_1A;
+            local_10[1] = (byte)param1.DAT_1A;
             local_10[2] = FUN_6FCA8(DAT_B138E);
             iVar1 = (int)FUN_68028(local_10);
             bVar2 = 5;
@@ -1123,7 +1158,7 @@ public class DialogManager : MonoBehaviour
             FUN_1B550(param1);
     }
 
-    private void FUN_1B550(TriggerScriptableObject param1)
+    private void FUN_1B550(Trigger6 param1)
     {
         int iVar1;
         CriObject oVar2;
@@ -1136,19 +1171,19 @@ public class DialogManager : MonoBehaviour
             switch (DAT_B138E)
             {
                 case 0x20:
-                    GameManager.instance.DAT_9EE8 += param1.DAT_1A;
+                    GameManager.instance.DAT_9EE8 += (byte)param1.DAT_1A;
                     break;
                 case 0x21:
-                    GameManager.instance.DAT_9EE9 += param1.DAT_1A;
+                    GameManager.instance.DAT_9EE9 += (byte)param1.DAT_1A;
                     break;
                 case 0x22:
-                    GameManager.instance.DAT_9EEA += param1.DAT_1A;
+                    GameManager.instance.DAT_9EEA += (byte)param1.DAT_1A;
                     break;
                 case 0x23:
-                    GameManager.instance.DAT_9EEB += param1.DAT_1A;
+                    GameManager.instance.DAT_9EEB += (byte)param1.DAT_1A;
                     break;
                 case 0x2b:
-                    GameManager.instance.DAT_A0E0 += (ushort)(param1.DAT_1A | param1.DAT_1B << 8);
+                    GameManager.instance.DAT_A0E0 += param1.DAT_1A;
                     break;
             }
 
@@ -1157,14 +1192,14 @@ public class DialogManager : MonoBehaviour
 
         param1.DAT_13 = false;
 
-        if ((ushort)(param1.DAT_18 | param1.DAT_19 << 8) == 0xff)
+        if (param1.DAT_1A == 0xff)
             iVar1 = 8;
         else
             iVar1 = 7;
 
         InventoryManager.FUN_4A7E8(iVar1, param1.DAT_1C, true);
         InventoryManager.FUN_4A7E8(11, DAT_B138E, true);
-        GameManager.instance.DAT_2E = (short)(DAT_B138E | (param1.DAT_1A | param1.DAT_1B << 8) << 8);
+        GameManager.instance.DAT_2E = (short)(DAT_B138E | param1.DAT_1A << 8);
         InventoryManager.FUN_4A7E8(1, 0xb, false);
         InventoryManager.FUN_4A7E8(2, 0xf, true);
 

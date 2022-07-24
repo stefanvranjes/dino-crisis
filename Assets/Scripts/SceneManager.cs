@@ -13,12 +13,13 @@ public class SceneManager : MonoBehaviour
     public SceneColliderScriptableObject sceneCollision; //gp+154h
     public LightScriptableObject lightSource;
     public SceneCameraScriptableObject motions; //gp+164h, gp+160h -> motions.Length
-    public TriggerScriptableObject[] triggers; //gp+1e8h
+    public Trigger[] triggers; //gp+1e8h
     public byte DAT_270; //gp+270h
     public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriObject[] DAT_5FCC; //gp+5fcch...gp+7cdch
     public CriStatic[] DAT_7CDC; //gp+7cdch...gp+8ffch
+    public CriTrigger[] DAT_9EEC; //gp+9eech...gp+9fdch
     public int DAT_C51B8;
     public int DAT_C51BC;
     public int DAT_C51C0;
@@ -59,26 +60,46 @@ public class SceneManager : MonoBehaviour
     void Start()
     {
         GameManager.sceneManager = this;
+        triggers = new Trigger[32];
         DAT_27C = new CriSkinned[11];
         DAT_1C9C = new CriBone[100];
         DAT_5FCC = new CriObject[60];
         DAT_7CDC = new CriStatic[40];
+        DAT_9EEC = new CriTrigger[10];
         DAT_D7C0 = new CriScene[10];
 
-        /*for (int i = 0; i < scn.staticObjs.Count; i++)
-        {
-            FUN_570A0(scn.staticObjs[i]);
-        }*/
-
-        for (int i = 0; i < 80; i++)
+        for (int i = 0; i < 11; i++)
         {
             GameObject obj = new GameObject();
+            obj.name = "CriSkinned (Instance)";
+            DAT_27C[i] = obj.AddComponent<CriPlayer>();
+        }
+
+        for (int i = 0; i < 100; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriBone (Instance)";
             DAT_1C9C[i] = obj.AddComponent<CriBone>();
+        }
+
+        for (int i = 0; i < 40; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriStatic (Instance)";
+            DAT_7CDC[i] = obj.AddComponent<CriStatic>();
         }
 
         for (int i = 0; i < 10; i++)
         {
             GameObject obj = new GameObject();
+            obj.name = "CriTrigger (Instance)";
+            DAT_9EEC[i] = obj.AddComponent<CriTrigger>();
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriScene (Instance)";
             DAT_D7C0[i] = obj.AddComponent<CriScene>();
         }
 
@@ -97,7 +118,7 @@ public class SceneManager : MonoBehaviour
         CriPlayer oVar4;
         byte bVar5;
         bool bVar6;
-        TriggerScriptableObject tVar6;
+        Trigger tVar6;
         uint uVar7;
         bool bVar8;
         Vector3Int psVar9;
@@ -208,6 +229,157 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    public void FUN_1AFC4(Trigger2 param1)
+    {
+        short sVar1;
+        uint uVar2;
+        ushort uVar3;
+        uint uVar5;
+
+        uVar2 = 0x113;
+
+        if (param1.DAT_18 == 0x309 && 
+            GameManager.instance.DAT_9AA0 == 0x113)
+        {
+            uVar5 = uVar2;
+        }
+        else
+        {
+            uVar3 = param1.DAT_18;
+
+            if (uVar3 == 0x604)
+            {
+                uVar2 = 0x113;
+
+                if (GameManager.instance.DAT_9AA0 == 0x113)
+                {
+                    uVar5 = uVar2;
+                    goto LAB_1B0D8;
+                }
+                else if (GameManager.instance.DAT_9AA0 == 0x309)
+                {
+                    uVar2 = 0x309;
+                    uVar5 = uVar2;
+                    goto LAB_1B0D8;
+                }
+
+                uVar3 = param1.DAT_18;
+            }
+
+            if (uVar3 == 0x309)
+            {
+                uVar2 = 0x50b;
+
+                if (GameManager.instance.DAT_9AA0 == 0x50b)
+                {
+                    uVar5 = uVar2;
+                    goto LAB_1B0D8;
+                }
+            }
+
+            uVar3 = param1.DAT_18;
+
+            if (uVar3 == 0x604)
+            {
+                uVar2 = 0x50b;
+
+                if (GameManager.instance.DAT_9AA0 == 0x50b)
+                {
+                    uVar5 = uVar2;
+                    goto LAB_1B0D8;
+                }
+
+                uVar3 = param1.DAT_18;
+            }
+
+            uVar5 = 0;
+
+            if (uVar3 == 0x309)
+            {
+                uVar2 = 0x604;
+
+                if (GameManager.instance.DAT_9AA0 == 0x604)
+                {
+                    uVar5 = uVar2;
+                    goto LAB_1B0D8;
+                }
+            }
+        }
+
+        LAB_1B0D8:
+        FUN_597FC();
+        GameManager.instance.FUN_61374();
+
+        if (uVar5 == 0x309)
+        {
+            GameManager.instance.DAT_98B4 = 0x5cb;
+            GameManager.instance.DAT_98B8 = -0x8ac;
+            sVar1 = 0x8da;
+        }
+        else
+        {
+            if (uVar5 < 0x30a)
+            {
+                if (uVar5 != 0x113) goto LAB_1B1D4;
+
+                GameManager.instance.DAT_98B4 = 0xdaa;
+                GameManager.instance.DAT_98B8 = -0xa27;
+                sVar1 = 0x7d0;
+            }
+            else
+            {
+                if (uVar5 == 0x50b)
+                {
+                    GameManager.instance.DAT_98B4 = -0xfd7;
+                    GameManager.instance.DAT_98B8 = -0x13ab;
+                    sVar1 = 0x7fc;
+                }
+                else
+                {
+                    if (uVar5 != 0x604) goto LAB_1B1D4;
+
+                    GameManager.instance.DAT_98B4 = -0xf75;
+                    GameManager.instance.DAT_98B8 = 0xd55;
+                    sVar1 = 0x891;
+                }
+            }
+        }
+
+        GameManager.instance.DAT_98BA = sVar1;
+        LAB_1B1D4:
+        GameManager.instance.DAT_9ADC = GameManager.instance.DAT_9AA0;
+        GameManager.instance.DAT_9AA0 = param1.DAT_18;
+        GameManager.instance.DAT_47 = param1.DAT_22;
+        GameManager.instance.playerSpawnPos = param1.DAT_1A;
+        GameManager.instance.playerSpawnRotY = param1.DAT_20;
+
+        if (GameManager.instance.DAT_56 == 0)
+        {
+            sVar1 = 6;
+
+            if (param1.DAT_25)
+                sVar1 = 7;
+
+            GameManager.instance.DAT_28 = sVar1;
+        }
+        else
+        {
+            GameManager.instance.DAT_56 = 0;
+            GameManager.instance.DAT_28 = 6;
+        }
+
+        uVar2 = 0;
+        GameManager.instance.DAT_2A = 0;
+        GameManager.instance.DAT_2C = 0;
+        GameManager.instance.DAT_2E = 0;
+
+        do
+        {
+            triggers[uVar2] = null;
+            uVar2++;
+        } while (uVar2 < 32);
+    }
+
     public void FUN_55700()
     {
         bool bVar1;
@@ -302,6 +474,57 @@ public class SceneManager : MonoBehaviour
         } while (uVar1 < 10);
 
         return 8;
+    }
+
+    private void FUN_597FC()
+    {
+        int iVar1;
+        uint uVar2;
+        int iVar3;
+        CriTrigger oVar4;
+        CriSkinned psVar5;
+        uint uVar6;
+
+        uVar6 = 0;
+
+        if (uVar6 < 10)
+        {
+            do
+            {
+                psVar5 = DAT_27C[uVar6];
+
+                if ((psVar5.flags & 1) != 0 && -1 < psVar5.DAT_198)
+                {
+                    oVar4 = DAT_9EEC[psVar5.DAT_198];
+                    oVar4.DAT_01 = (byte)GameManager.instance.DAT_9AA0;
+                    oVar4.DAT_04 = psVar5.screen;
+                    oVar4.DAT_0A = psVar5.health;
+                    oVar4.DAT_0C = (short)psVar5.vr.y;
+                    oVar4.DAT_0E = psVar5.DAT_194;
+                    oVar4.DAT_10 = psVar5.DAT_196;
+                    oVar4.DAT_12 = psVar5.DAT_19A;
+                    oVar4.DAT_14 = psVar5.DAT_1A6;
+                    iVar3 = DAT_27C[10].screen.x - psVar5.screen.x;
+
+                    if (iVar3 < 0)
+                        iVar3 = psVar5.screen.x - DAT_27C[10].screen.x;
+
+                    iVar1 = DAT_27C[10].screen.z - psVar5.screen.z;
+
+                    if (iVar1 < 0)
+                        iVar1 = psVar5.screen.z - DAT_27C[10].screen.z;
+
+                    uVar2 = (uint)Utilities.SquareRoot0(iVar3 * iVar3 + iVar1 * iVar1);
+
+                    if (0x7ffe < uVar2)
+                        uVar2 = 0x7ffe;
+
+                    oVar4.DAT_16 = (ushort)uVar2;
+                }
+
+                uVar6++;
+            } while (uVar6 < 10);
+        }
     }
 
     public void FUN_27A1C(Vector3Int param1, Vector3Int param2)
@@ -639,7 +862,7 @@ public class SceneManager : MonoBehaviour
         GameManager.instance.DAT_28++;
         //FUN_6E6C8
 
-        if (GameManager.instance.DAT_9AA1 != (byte)(GameManager.instance.DAT_9ADC >> 8))
+        if ((byte)(GameManager.instance.DAT_9AA0 >> 8) != (byte)(GameManager.instance.DAT_9ADC >> 8))
         {
             //FUN_1802C
         }
@@ -761,6 +984,73 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    public void FUN_57488(Trigger6 param1, int param2)
+    {
+        bool bVar1;
+        CriStatic oVar1;
+        Trigger tVar2;
+        Vector3Int local_18;
+
+        if (param1.DAT_1C == 0)
+        {
+            FUN_57540();
+        }
+        else
+        {
+            if (param1.DAT_18 == 0xff)
+            {
+                if ((GameManager.instance.DAT_A090[param1.DAT_1C] & 0x80) == 0) //???
+                {
+                    bVar1 = InventoryManager.FUN_4A87C(8, param1.DAT_1C);
+
+                    if (!bVar1)
+                    {
+                        FUN_57540();
+                        return;
+                    }
+
+                    tVar2 = triggers[param2];
+                }
+                else
+                    tVar2 = triggers[param2];
+            }
+            else
+            {
+                bVar1 = InventoryManager.FUN_4A87C(7, param1.DAT_1C);
+
+                if (!bVar1)
+                {
+                    FUN_57540();
+                    return;
+                }
+
+                tVar2 = triggers[param2];
+            }
+
+            tVar2.DAT_13 = false;
+        }
+
+        void FUN_57540()
+        {
+            local_18 = new Vector3Int();
+            local_18.y = 0;
+            local_18.x = param1.DAT_00[2].x + ((param1.DAT_00[0].x - param1.DAT_00[2].x) / 2);
+            local_18.z = param1.DAT_00[2].y + ((param1.DAT_00[0].y - param1.DAT_00[2].y) / 2);
+
+            if (param1.DAT_1E != 0xff)
+            {
+                oVar1 = DAT_7CDC[param1.DAT_1E];
+                param1.FUN_1A638(oVar1, local_18);
+
+                if (param1.DAT_24 != 0)
+                {
+                    oVar1.DAT_2F = 1;
+                    oVar1.flags &= 0xfffffffd;
+                }
+            }
+        }
+    }
+
     /*private void FUN_570A0(_STATIC_OBJ_DATA data)
     {
         CriStatic oVar1;
@@ -793,7 +1083,7 @@ public class SceneManager : MonoBehaviour
             }
         }
     }*/
-    
+
     public CriBone FUN_601F0()
     {
         int iVar1;

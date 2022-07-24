@@ -72,7 +72,7 @@ public class DataContainer9 : DataContainer4
 [System.Serializable]
 public class DataContainer10 : DataContainer4
 {
-    public TriggerScriptableObject DAT_04;
+    public Trigger DAT_04;
 }
 
 [System.Serializable]

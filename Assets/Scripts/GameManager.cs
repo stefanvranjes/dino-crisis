@@ -65,9 +65,11 @@ public class GameManager : MonoBehaviour
     public byte DAT_39; //gp+39h
     public byte DAT_3B; //gp+3bh
     public uint DAT_40; //gp+40h
+    public byte DAT_47; //gp+47h
     public Vector3Int playerSpawnPos; //gp+4ch
     public short playerSpawnRotY; //gp+52h
     public byte DAT_55; //gp+55h
+    public byte DAT_56; //gp+56h
     public uint DAT_64; //gp+64h
     public uint DAT_68; //gp+68h
     public byte DAT_6C; //gp+6ch
@@ -79,8 +81,10 @@ public class GameManager : MonoBehaviour
     public FUN_14C PTR_FUN_14C; //gp+14ch
     public byte DAT_922C; //gp+922ch
     public byte DAT_9234; //gp+9234h
-    public byte DAT_9AA0; //gp+9aa0h
-    public byte DAT_9AA1; //gp+9aa1h
+    public short DAT_98B4; //gp+98b4h
+    public short DAT_98B8; //gp+98b8h
+    public short DAT_98BA; //gp+98bah
+    public ushort DAT_9AA0; //gp+9aa0h
     public _DIFFICULTY difficulty; //gp+9aa8h
     public byte DAT_9AAA; //gp+9aaah
     public ushort DAT_9ADC; //gp+9adch
@@ -94,6 +98,10 @@ public class GameManager : MonoBehaviour
     public byte[] DAT_A090; //gp+a090h
     public ushort DAT_A0E0; //gp+a0e0h
     public ushort DAT_A0E2; //gp+a0e2h
+    public short DAT_A0E8; //gp+a0e8h
+    public sbyte DAT_A0EA; //gp+a0eah
+    public short DAT_A0EC; //gp+a0ech
+    public short DAT_A0EE; //gp+a0eeh
     public short playerHealth; //gp+a0f0h
     public short DAT_A0F2; //gp+a0f2h
     public uint DAT_A0F4; //gp+a0f4h
@@ -389,6 +397,26 @@ public class GameManager : MonoBehaviour
         }
 
         return bVar4;
+    }
+
+    public void FUN_61374()
+    {
+        CriPlayer oVar1;
+
+        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        DAT_A0E8 = (short)oVar1.screen.x;
+        DAT_A0EC = (short)oVar1.screen.z;
+        DAT_A0EE = (short)oVar1.vr.y;
+        playerHealth = oVar1.health;
+        DAT_A0EA = oVar1.DAT_48;
+        DAT_A0F4 = oVar1.DAT_1C0;
+        DAT_A0F2 = oVar1.DAT_1E8;
+        DAT_A100 = oVar1.DAT_240;
+        DAT_A0F8[0] = oVar1.DAT_244[0];
+        DAT_A0F8[1] = oVar1.DAT_244[1];
+        DAT_A0F8[2] = oVar1.DAT_244[2];
+        DAT_A0F8[3] = oVar1.DAT_244[3];
+        //copying...
     }
 
     public Vector2Int[] FUN_813F0(Vector2Int[] param1, WallCollider param2)

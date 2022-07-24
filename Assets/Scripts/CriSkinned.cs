@@ -73,9 +73,13 @@ public class CriSkinned : CriObject
     public byte DAT_18F; //0x18F
     public int DAT_190; //0x190
     public Vector3Int[] PTR_190; //0x190
+    public short DAT_194; //0x194
+    public short DAT_196; //0x196
     public sbyte DAT_198; //0x198
+    public short DAT_19A; //0x19A
     public byte DAT_1A3; //0x1A3
     public byte DAT_1A5; //0x1A5
+    public byte DAT_1A6; //0x1A6
     public byte DAT_1A7; //0x1A7
 
     private List<byte> commandList;
@@ -228,9 +232,13 @@ public class CriSkinned : CriObject
         DAT_18F = 0;
         DAT_190 = 0;
         PTR_190 = null;
+        DAT_194 = 0;
+        DAT_196 = 0;
         DAT_198 = 0;
+        DAT_19A = 0;
         DAT_1A3 = 0;
         DAT_1A5 = 0;
+        DAT_1A6 = 0;
         DAT_1A7 = 0;
     }
 

@@ -538,7 +538,7 @@ public class CriPlayer : CriSkinned
             FUN_53CD8,
             FUN_54E38
         };
-        DAT_244 = new ushort[3];
+        DAT_244 = new ushort[4];
     }
 
     protected override void Start()
@@ -606,7 +606,7 @@ public class CriPlayer : CriSkinned
         DAT_226 = 0;
         DAT_227 = 0;
         DAT_240 = 0;
-        DAT_244 = new ushort[3];
+        DAT_244 = new ushort[4];
     }
 
     public void FUN_6016C()
@@ -711,9 +711,9 @@ public class CriPlayer : CriSkinned
         DAT_240 = GameManager.instance.DAT_A100;
         DAT_1C0 = GameManager.instance.DAT_A0F4;
         DAT_1E8 = GameManager.instance.DAT_A0F2;
-        DAT_244 = new ushort[3] { GameManager.instance.DAT_A0F8[0],
-                                  GameManager.instance.DAT_A0F8[1],
-                                  GameManager.instance.DAT_A0F8[2] };
+        DAT_244[0] = GameManager.instance.DAT_A0F8[0];
+        DAT_244[1] = GameManager.instance.DAT_A0F8[1];
+        DAT_244[2] = GameManager.instance.DAT_A0F8[2];
         //FUN_4FE90(DAT_240);
         FUN_4FE90(0x20); //tmp
         FUN_65984(11, 14);

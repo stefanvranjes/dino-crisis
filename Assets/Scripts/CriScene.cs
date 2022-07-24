@@ -1439,7 +1439,8 @@ public class CriScene : MonoBehaviour
             default:
                 return false;
             case 4:
-                SceneManager.instance.triggers[iVar2].FUN_57488(iVar2);
+                SceneManager.instance.FUN_57488
+                    ((Trigger6)SceneManager.instance.triggers[iVar2], iVar2);
                 break;
         }
 
@@ -2559,7 +2560,7 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_5AAD4()
     {
-        TriggerScriptableObject tVar1;
+        Trigger tVar1;
 
         tVar1 = SceneManager.instance.triggers
             [((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01 + 4];

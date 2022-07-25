@@ -5,6 +5,8 @@ using UnityEngine;
 public class CriTrigger : MonoBehaviour
 {
     public byte DAT_01; //0x00
+    public byte DAT_02; //0x02
+    public byte DAT_03; //0x03
     public Vector3Int DAT_04; //0x04
     public short DAT_0A; //0x0A
     public short DAT_0C; //0x0C
@@ -17,6 +19,8 @@ public class CriTrigger : MonoBehaviour
     public void ResetValues()
     {
         DAT_01 = 0;
+        DAT_02 = 0;
+        DAT_03 = 0;
         DAT_04 = Vector3Int.zero;
         DAT_0A = 0;
         DAT_0C = 0;

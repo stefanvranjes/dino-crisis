@@ -168,6 +168,7 @@ public class CriSkinned : CriObject
         DAT_3D = 0;
         DAT_3E = 0;
         DAT_3F = 0;
+        DAT_40 = Vector3Int.zero;
         DAT_46 = 0;
         DAT_48 = 0;
         skeleton = null;

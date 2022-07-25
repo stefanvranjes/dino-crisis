@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_6E; //gp+6eh
     public byte DAT_6F; //gp+6fh
     public int DAT_78; //gp+78h
+    public ushort DAT_7C; //gp+7ch
     public FUN_148 PTR_FUN_148; //gp+148h
     public FUN_14C PTR_FUN_14C; //gp+14ch
     public byte DAT_922C; //gp+922ch
@@ -1323,6 +1324,29 @@ public class GameManager : MonoBehaviour
         }
 
         return bVar4;
+    }
+
+    public void FUN_767A8()
+    {
+        CriParticle oVar1;
+
+        oVar1 = SceneManager.instance.FUN_5FFA0();
+        oVar1.DAT_65 = 0x80;
+        oVar1.tags = 1;
+        oVar1.DAT_54 = 0x7df4;
+        oVar1.DAT_56 = 0x1e;
+        oVar1.DAT_50.a = 0x1e;
+        oVar1.screen = new Vector3Int(0xa0, 0xdc, 1);
+        oVar1.flags |= 2;
+        //FUN_606A8
+        DAT_7C = 1;
+        DAT_78 = 0;
+    }
+
+    public int FUN_7683C()
+    {
+        DAT_7C = 0;
+        return DAT_78;
     }
 
     public bool FUN_768C8(Vector3Int param1, Vector2Int[] param2)

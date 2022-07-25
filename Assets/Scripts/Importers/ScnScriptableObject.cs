@@ -179,6 +179,25 @@ public class DataContainer22 : DataContainer
     public short DAT_22;
 }
 
+public class DataContainer23 : DataContainer16
+{
+    public short DAT_0C;
+    public uint DAT_10;
+}
+
+public class DataContainer24 : DataContainer4
+{
+    public Vector3Int DAT_04;
+    public short DAT_0A;
+    public byte DAT_0C;
+    public byte DAT_0D;
+    public ushort DAT_0E;
+    public ushort DAT_10;
+    public ushort DAT_12;
+    //unknown 0x14
+    public uint DAT_18;
+}
+
 [System.Serializable]
 public class _SCENE_OBJ_DATA
 {
@@ -196,6 +215,8 @@ public class ScnScriptableObject : ScriptableObject
     public string prefabName;
 
     public List<_SCENE_OBJ_DATA> data;
+    public int bufferOffset;
+    public ushort[] endBuffer;
 
     public _SCENE_OBJ_DATA GetData(int index)
     {

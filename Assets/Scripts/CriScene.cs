@@ -204,6 +204,9 @@ public class CriScene : MonoBehaviour
         CriPlayer oVar4;
         CriStatic oVar5;
         CriCamera oVar6;
+        CriParticle oVar7;
+        CriTrigger oVar8;
+        LightSource lVar9;
 
         if (8 < param1 >> 0x10)
             return;
@@ -507,8 +510,76 @@ public class CriScene : MonoBehaviour
                         return;
                 }
             case 4:
-                //...
-                break;
+                oVar7 = SceneManager.instance.DAT_5FCC[param1 & 0xffff];
+
+                switch (param2)
+                {
+                    case 0:
+                        oVar7.flags = (uint)param3;
+                        return;
+                    case 1:
+                        oVar7.tags = (sbyte)bVar1;
+                        return;
+                    case 2:
+                        oVar7.DAT_2F = bVar1;
+                        return;
+                    case 3:
+                        oVar7.screen.x = sVar2;
+                        return;
+                    case 4:
+                        oVar7.screen.y = sVar2;
+                        return;
+                    case 5:
+                        oVar7.screen.z = sVar2;
+                        return;
+                    case 6:
+                        oVar7.vr.x = sVar2;
+                        return;
+                    case 7:
+                        oVar7.vr.y = sVar2;
+                        return;
+                    case 8:
+                        oVar7.vr.z = sVar2;
+                        return;
+                    default:
+                        return;
+                    case 10:
+                        oVar7.DAT_3C = bVar1;
+                        return;
+                    case 11:
+                        oVar7.DAT_3D = bVar1;
+                        return;
+                    case 12:
+                        oVar7.DAT_3E = bVar1;
+                        return;
+                    case 13:
+                        oVar7.DAT_3F = bVar1;
+                        return;
+                    case 23:
+                        oVar7.DAT_40.x = sVar2;
+                        return;
+                    case 24:
+                        oVar7.DAT_40.y = sVar2;
+                        return;
+                    case 25:
+                        oVar7.DAT_40.z = sVar2;
+                        return;
+                    case 27:
+                        oVar7.DAT_68 = bVar1;
+                        return;
+                    case 28:
+                        oVar7.DAT_69 = bVar1;
+                        return;
+                    case 29:
+                        oVar7.DAT_6A = bVar1;
+                        return;
+                    case 30:
+                        oVar7.DAT_6B = bVar1;
+                        return;
+                    case 31:
+                        oVar7.DAT_6C = bVar1;
+                        return;
+                }
             case 5:
                 oVar6 = SceneManager.instance.cCamera;
 
@@ -572,11 +643,62 @@ public class CriScene : MonoBehaviour
                         return;
                 }
             case 6:
-                //...
+                oVar8 = SceneManager.instance.DAT_9EEC[param1 & 0xffff];
+
+                switch (param2)
+                {
+                    case 0:
+                        oVar8.DAT_03 = bVar1;
+                        return;
+                    case 1:
+                        oVar8.DAT_01 = bVar1;
+                        return;
+                    case 2:
+                        oVar8.DAT_02 = bVar1;
+                        return;
+                    case 3:
+                        oVar8.DAT_04.x = sVar2;
+                        return;
+                    case 4:
+                        oVar8.DAT_04.y = sVar2;
+                        return;
+                    case 5:
+                        oVar8.DAT_04.z = sVar2;
+                        return;
+                    case 6:
+                        oVar8.DAT_0C = sVar2;
+                        return;
+                    case 7:
+                        oVar8.DAT_0A = sVar2;
+                        return;
+                }
                 break;
             case 7:
-                //...
-                break;
+                lVar9 = SceneManager.instance.FUN_55790((int)param1 & 0xffff);
+
+                switch (param2)
+                {
+                    case 0:
+                        lVar9.DAT_04.x = sVar2;
+                        return;
+                    case 1:
+                        lVar9.DAT_04.y = sVar2;
+                        return;
+                    case 2:
+                        lVar9.DAT_04.z = sVar2;
+                        return;
+                    case 3:
+                        lVar9.DAT_00 = bVar1;
+                        return;
+                    case 4:
+                        lVar9.DAT_01 = bVar1;
+                        return;
+                    case 5:
+                        lVar9.DAT_02 = bVar1;
+                        return;
+                    default:
+                        return;
+                }
             case 8:
                 //...
                 break;
@@ -588,6 +710,9 @@ public class CriScene : MonoBehaviour
         CriPlayer oVar1;
         CriStatic oVar2;
         CriCamera oVar3;
+        CriParticle oVar4;
+        CriTrigger oVar5;
+        LightSource lVar6;
 
         switch (param1 >> 0x10)
         {
@@ -781,7 +906,53 @@ public class CriScene : MonoBehaviour
 
                 break;
             case 4:
-                //...
+                oVar4 = SceneManager.instance.DAT_5FCC[param1 & 0xffff];
+
+                switch (param2)
+                {
+                    case 0:
+                        return (int)(oVar4.flags & 1);
+                    case 1:
+                        return (byte)oVar4.tags;
+                    case 2:
+                        return oVar4.DAT_2F;
+                    case 3:
+                        return oVar4.screen.x;
+                    case 4:
+                        return oVar4.screen.y;
+                    case 5:
+                        return oVar4.screen.z;
+                    case 6:
+                        return oVar4.vr.x;
+                    case 7:
+                        return oVar4.vr.y;
+                    case 8:
+                        return oVar4.vr.z;
+                    case 10:
+                        return oVar4.DAT_3C;
+                    case 11:
+                        return oVar4.DAT_3D;
+                    case 12:
+                        return oVar4.DAT_3E;
+                    case 13:
+                        return oVar4.DAT_3F;
+                    case 23:
+                        return oVar4.DAT_40.x;
+                    case 24:
+                        return oVar4.DAT_40.y;
+                    case 25:
+                        return oVar4.DAT_40.z;
+                    case 27:
+                        return oVar4.DAT_68;
+                    case 28:
+                        return oVar4.DAT_69;
+                    case 29:
+                        return oVar4.DAT_6A;
+                    case 30:
+                        return oVar4.DAT_6B;
+                    case 31:
+                        return oVar4.DAT_6C;
+                }
                 break;
             case 5:
                 oVar3 = SceneManager.instance.cCamera;
@@ -828,10 +999,46 @@ public class CriScene : MonoBehaviour
 
                 break;
             case 6:
-                //...
+                oVar5 = SceneManager.instance.DAT_9EEC[(int)param1 & 0xffff];
+
+                switch (param2)
+                {
+                    case 0:
+                        return oVar5.DAT_03;
+                    case 1:
+                        return oVar5.DAT_01;
+                    case 2:
+                        return oVar5.DAT_02;
+                    case 3:
+                        return oVar5.DAT_04.x;
+                    case 4:
+                        return oVar5.DAT_04.y;
+                    case 5:
+                        return oVar5.DAT_04.z;
+                    case 6:
+                        return oVar5.DAT_0C;
+                    case 7:
+                        return oVar5.DAT_0A;
+                }
                 break;
             case 7:
-                //...
+                lVar6 = SceneManager.instance.FUN_55790((int)param1 & 0xffff);
+
+                switch (param2)
+                {
+                    case 0:
+                        return lVar6.DAT_04.x;
+                    case 1:
+                        return lVar6.DAT_04.y;
+                    case 2:
+                        return lVar6.DAT_04.z;
+                    case 3:
+                        return lVar6.DAT_00;
+                    case 4:
+                        return lVar6.DAT_01;
+                    case 5:
+                        return lVar6.DAT_02;
+                }
                 break;
             case 8:
                 //...
@@ -1279,7 +1486,7 @@ public class CriScene : MonoBehaviour
 
             oVar3.maxHealth = mVar4.DAT_06;
             oVar3.DAT_18E = mVar4.DAT_05;
-            //...
+            //... (requires level script - ST1-9)
         }
 
         DAT_58[0]++;
@@ -1288,7 +1495,11 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_57018()
     {
-        //...
+        DataContainer7 mVar1;
+
+        mVar1 = (DataContainer7)PTR_58[0].CONTAINERS[DAT_58[0]];
+        DialogManager.instance.FUN_1E2D8(SceneManager.instance.scn.endBuffer,
+            mVar1.DAT_04 - SceneManager.instance.scn.bufferOffset, 0, mVar1.DAT_02);
         DAT_58[0]++;
         return false;
     }
@@ -1603,6 +1814,7 @@ public class CriScene : MonoBehaviour
     {
         byte bVar1;
         CriObject oVar2;
+        LightSource lVar3;
 
         bVar1 = DAT_0A;
 
@@ -1622,7 +1834,10 @@ public class CriScene : MonoBehaviour
                 {
                     if (bVar1 == 7)
                     {
-                        //...
+                        lVar3 = SceneManager.instance.FUN_55790(DAT_0B);
+                        lVar3.DAT_04.x += DAT_0C;
+                        lVar3.DAT_04.y += DAT_0E;
+                        lVar3.DAT_04.z += DAT_10;
                     }
 
                     goto LAB_57B04;
@@ -1892,7 +2107,50 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_584E8()
     {
-        //...
+        short sVar1;
+        CriParticle oVar2;
+        CriBone oVar3;
+        DataContainer23 mVar4;
+
+        mVar4 = (DataContainer23)PTR_58[0].CONTAINERS[DAT_58[0]];
+
+        if ((sbyte)mVar4.DAT_01 == -1)
+        {
+            oVar2 = SceneManager.instance.FUN_5FFA0();
+
+            if (oVar2 == null) goto LAB_58660;
+        }
+        else
+            oVar2 = SceneManager.instance.DAT_5FCC[mVar4.DAT_01];
+
+        oVar2.ResetValues();
+        oVar2.flags = 1;
+        oVar2.tags = (sbyte)mVar4.DAT_02;
+        oVar2.DAT_2F = mVar4.DAT_03;
+        oVar2.screen = mVar4.DAT_04;
+
+        if (mVar4.DAT_0A == 2)
+        {
+            oVar3 = (CriBone)Utilities.FUN_601C8
+                (SceneManager.instance.DAT_27C[mVar4.DAT_0B & 0xf].skeleton, (int)((uint)mVar4.DAT_0B >> 4));
+            oVar2.DAT_4C = oVar3;
+        }
+        else
+        {
+            if (mVar4.DAT_0A == 3)
+                oVar2.DAT_4C = SceneManager.instance.DAT_7CDC[mVar4.DAT_0B & 0xf];
+            else
+                oVar2.DAT_4C = null;
+        }
+
+        oVar2.DAT_68 = (byte)mVar4.DAT_10;
+        oVar2.DAT_69 = (byte)(mVar4.DAT_10 >> 8);
+        oVar2.DAT_6A = (byte)(mVar4.DAT_10 >> 0x10);
+        oVar2.DAT_6B = (byte)(mVar4.DAT_10 >> 0x18);
+        sVar1 = mVar4.DAT_0C;
+        oVar2.DAT_50 = new Color32(0x80, 0x80, 0x80, 0x2c);
+        oVar2.vr.y = sVar1;
+        LAB_58660:
         DAT_58[0]++;
         return false;
     }
@@ -1947,7 +2205,11 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_58778()
     {
-        //...
+        if (((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01 == 1)
+            GameManager.instance.FUN_767A8();
+        else
+            GameManager.instance.FUN_7683C();
+
         DAT_58[0]++;
         return false;
     }
@@ -2242,7 +2504,7 @@ public class CriScene : MonoBehaviour
                 }
             }
 
-            //...
+            SceneManager.instance.DAT_5FCC[DAT_0B].DAT_4C = oVar3;
             goto LAB_590D4;
         }
 
@@ -2286,7 +2548,66 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_591B8()
     {
-        //...
+        ushort uVar1;
+        short sVar2;
+        CriParticle oVar3;
+        CriObject oVar4;
+        DataContainer24 mVar5;
+
+        mVar5 = (DataContainer24)PTR_58[0].CONTAINERS[DAT_58[0]];
+
+        if ((sbyte)mVar5.DAT_01 == -1)
+        {
+            oVar3 = SceneManager.instance.FUN_5FFA0();
+
+            if (oVar3 == null) goto LAB_593F8;
+        }
+        else
+            oVar3 = SceneManager.instance.DAT_5FCC[mVar5.DAT_01];
+
+        oVar3.ResetValues();
+        oVar3.flags = 1;
+        oVar3.tags = (sbyte)mVar5.DAT_02;
+        oVar3.DAT_2F = mVar5.DAT_03;
+
+        if (mVar5.DAT_0C == 2)
+        {
+            oVar4 = Utilities.FUN_601C8(SceneManager.instance.DAT_27C[mVar5.DAT_0D & 0xf].skeleton, mVar5.DAT_0D & 0xf);
+            oVar3.screen.x = oVar4.screen.x + mVar5.DAT_04.x;
+            oVar3.screen.y = oVar4.screen.y + mVar5.DAT_04.y;
+            sVar2 = (short)(oVar4.screen.z + mVar5.DAT_04.z);
+        }
+        else
+        {
+            if (mVar5.DAT_0C == 3)
+            {
+                oVar3.screen.x = SceneManager.instance.DAT_7CDC[mVar5.DAT_0D].screen.x + mVar5.DAT_04.x;
+                oVar3.screen.y = SceneManager.instance.DAT_7CDC[mVar5.DAT_0D].screen.y + mVar5.DAT_04.y;
+                sVar2 = (short)(SceneManager.instance.DAT_7CDC[mVar5.DAT_0D].screen.z + mVar5.DAT_04.z);
+            }
+            else
+            {
+                oVar3.screen.x = mVar5.DAT_04.x;
+                oVar3.screen.y = mVar5.DAT_04.y;
+                sVar2 = (short)mVar5.DAT_04.z;
+            }
+        }
+
+        oVar3.screen.z = sVar2;
+        oVar3.DAT_68 = (byte)mVar5.DAT_18;
+        oVar3.DAT_69 = (byte)(mVar5.DAT_18 >> 8);
+        oVar3.DAT_6A = (byte)(mVar5.DAT_18 >> 0x10);
+        oVar3.DAT_6B = (byte)(mVar5.DAT_18 >> 0x18);
+        oVar3.vr.y = mVar5.DAT_0A;
+        oVar3.DAT_56 = (ushort)(mVar5.DAT_0E | 0x60);
+        oVar3.DAT_54 = mVar5.DAT_10;
+        uVar1 = mVar5.DAT_12;
+        oVar3.DAT_62 = uVar1;
+        oVar3.DAT_60 = uVar1;
+        //FUN_606A8
+        oVar3.DAT_50 = new Color32(0x80, 0x80, 0x80, 0x2c);
+        oVar3.DAT_4C = null;
+        LAB_593F8:
         DAT_58[0]++;
         return false;
     }

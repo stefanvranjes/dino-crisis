@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//writable class; needs intantiating!!!
 [System.Serializable]
 public class LightSource
 {
-    public byte DAT_00;
-    public byte DAT_01;
-    public byte DAT_02;
+    public byte DAT_00; //writable
+    public byte DAT_01; //writable
+    public byte DAT_02; //writable
     public byte DAT_03;
-    public Vector3Int DAT_04;
+    public Vector3Int DAT_04; //writable
     public short DAT_0A;
     public short DAT_0E;
 }

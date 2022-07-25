@@ -11,13 +11,13 @@ public class SceneManager : MonoBehaviour
     public byte[] DAT_AC; //gp+ach
     public CriCamera cCamera; //gp+b4h
     public SceneColliderScriptableObject sceneCollision; //gp+154h
-    public LightScriptableObject lightSource;
+    public LightScriptableObject lightSource; //gp+15ch
     public SceneCameraScriptableObject motions; //gp+164h, gp+160h -> motions.Length
     public Trigger[] triggers; //gp+1e8h
     public byte DAT_270; //gp+270h
     public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
-    public CriObject[] DAT_5FCC; //gp+5fcch...gp+7cdch
+    public CriParticle[] DAT_5FCC; //gp+5fcch...gp+7cdch
     public CriStatic[] DAT_7CDC; //gp+7cdch...gp+8ffch
     public CriTrigger[] DAT_9EEC; //gp+9eech...gp+9fdch
     public int DAT_C51B8;
@@ -63,7 +63,7 @@ public class SceneManager : MonoBehaviour
         triggers = new Trigger[32];
         DAT_27C = new CriSkinned[11];
         DAT_1C9C = new CriBone[100];
-        DAT_5FCC = new CriObject[60];
+        DAT_5FCC = new CriParticle[60];
         DAT_7CDC = new CriStatic[40];
         DAT_9EEC = new CriTrigger[10];
         DAT_D7C0 = new CriScene[10];
@@ -80,6 +80,13 @@ public class SceneManager : MonoBehaviour
             GameObject obj = new GameObject();
             obj.name = "CriBone (Instance)";
             DAT_1C9C[i] = obj.AddComponent<CriBone>();
+        }
+
+        for (int i = 0; i < 60; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriParticle (Instance)";
+            DAT_5FCC[i] = obj.AddComponent<CriParticle>();
         }
 
         for (int i = 0; i < 40; i++)
@@ -380,6 +387,11 @@ public class SceneManager : MonoBehaviour
         } while (uVar2 < 32);
     }
 
+    public LightSource FUN_55790(int param1)
+    {
+        return lightSource.DAT_24[param1];
+    }
+
     public void FUN_55700()
     {
         bool bVar1;
@@ -525,6 +537,37 @@ public class SceneManager : MonoBehaviour
                 uVar6++;
             } while (uVar6 < 10);
         }
+    }
+
+    public CriParticle FUN_5FFA0()
+    {
+        int iVar1;
+        CriParticle puVar2;
+        int iVar3;
+
+        iVar1 = ~GameManager.instance.DAT_9234 + 0x3c;
+        iVar3 = DAT_5FCC.Length - 1;
+
+        if (iVar1 != -1)
+        {
+            do
+            {
+                puVar2 = DAT_5FCC[iVar3];
+                iVar1--;
+
+                if ((puVar2.flags & 1) == 0)
+                {
+                    puVar2.ResetValues();
+                    puVar2.flags = 1;
+                    puVar2.DAT_50 = new Color32(0x80, 0x80, 0x80, 0x2c);
+                    return puVar2;
+                }
+
+                iVar3--;
+            } while (iVar1 != -1);
+        }
+
+        return null;
     }
 
     public void FUN_27A1C(Vector3Int param1, Vector3Int param2)

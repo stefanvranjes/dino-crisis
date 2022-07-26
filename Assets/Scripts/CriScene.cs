@@ -52,7 +52,7 @@ public class CriScene : MonoBehaviour
             FUN_56960,
             FUN_569C0,
             FUN_56A1C,
-            FUN_56A70,
+            FUN_56A70, //10
             FUN_56AE0,
             FUN_56B1C,
             FUN_56B3C,
@@ -62,7 +62,7 @@ public class CriScene : MonoBehaviour
             FUN_56C20,
             FUN_56C28,
             FUN_56E9C,
-            FUN_56C80,
+            FUN_56C80, //20
             FUN_56CDC,
             FUN_56D5C,
             FUN_56DB4,
@@ -72,7 +72,7 @@ public class CriScene : MonoBehaviour
             FUN_56698,
             FUN_56698,
             FUN_56698,
-            FUN_56698,
+            FUN_56698, //30
             FUN_56698,
             FUN_56EB4,
             FUN_57018,
@@ -82,7 +82,7 @@ public class CriScene : MonoBehaviour
             FUN_57218,
             FUN_57268,
             FUN_572C4,
-            FUN_57398,
+            FUN_57398, //40
             FUN_57604,
             FUN_5766C,
             FUN_576C0,
@@ -92,7 +92,7 @@ public class CriScene : MonoBehaviour
             FUN_57E84,
             FUN_57970,
             FUN_579BC,
-            FUN_57B28,
+            FUN_57B28, //50
             FUN_57B6C,
             FUN_57C6C,
             FUN_57CB0,
@@ -2706,7 +2706,51 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_59994()
     {
-        //...
+        byte bVar1;
+        CriTrigger puVar2;
+        DataContainer25 mVar6;
+        CriSkinned oVar7;
+        uint uVar9;
+        uint uVar10;
+
+        mVar6 = (DataContainer25)PTR_58[0].CONTAINERS[DAT_58[0]];
+        puVar2 = SceneManager.instance.FUN_596E8(mVar6.DAT_10);
+
+        if (puVar2 != null)
+        {
+            puVar2.DAT_03 |= 1;
+            oVar7 = SceneManager.instance.DAT_27C[mVar6.DAT_01];
+            ((CriPlayer)oVar7).ResetValues();
+            oVar7.flags = 1;
+            oVar7.tags = (sbyte)mVar6.DAT_02;
+            oVar7.DAT_2F = mVar6.DAT_03;
+            oVar7.cSkin = mVar6.DAT_04;
+            oVar7.FUN_604A4(mVar6.DAT_04);
+            oVar7.DAT_98 = mVar6.DAT_08;
+            oVar7.screen = puVar2.DAT_04;
+            oVar7.vr.y = puVar2.DAT_0C;
+            oVar7.DAT_163 = puVar2.DAT_02;
+            oVar7.DAT_198 = puVar2.DAT_00;
+            oVar7.maxHealth = puVar2.DAT_0A;
+            oVar7.DAT_194 = puVar2.DAT_0E;
+            oVar7.DAT_196 = puVar2.DAT_10;
+            oVar7.DAT_19A = puVar2.DAT_12;
+            bVar1 = puVar2.DAT_14;
+            oVar7.DAT_18E = 0;
+            oVar7.DAT_1A6 = bVar1;
+
+            if (oVar7.DAT_196 == 0)
+            {
+                //...
+            }
+
+            oVar7.DAT_34.z = oVar7.screen.z;
+            oVar7.DAT_34.x = oVar7.screen.x;
+            oVar7.DAT_13C.x = oVar7.screen.x;
+            oVar7.DAT_13C.y = oVar7.screen.z;
+            //...(requires level script - ST1-9)
+        }
+
         DAT_58[0]++;
         return false;
     }
@@ -2803,7 +2847,17 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_5A5B4()
     {
-        //...
+        byte bVar1;
+        int iVar2;
+
+        iVar2 = SceneManager.instance.FUN_59C74
+            (((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01);
+        bVar1 = 2;
+
+        if (iVar2 == 0)
+            bVar1 = 0x40;
+
+        DAT_06 = bVar1;
         DAT_58[0]++;
         return false;
     }
@@ -2829,7 +2883,24 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_5A6A8()
     {
-        //...
+        LightSource puVar1;
+        DataContainer16 mVar2;
+
+        mVar2 = (DataContainer16)PTR_58[0].CONTAINERS[DAT_58[0]];
+        puVar1 = SceneManager.instance.FUN_55790(mVar2.DAT_01);
+
+        if (puVar1.DAT_02 == 0)
+            puVar1.DAT_04 = mVar2.DAT_04;
+        else
+        {
+            if (mVar2.DAT_02 == 1)
+            {
+                puVar1.DAT_00 = (byte)mVar2.DAT_04.x;
+                puVar1.DAT_01 = (byte)mVar2.DAT_04.y;
+                puVar1.DAT_02 = (byte)mVar2.DAT_04.z;
+            }
+        }
+
         DAT_58[0]++;
         return false;
     }
@@ -2970,7 +3041,11 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_5ADE0()
     {
-        //...
+        if (((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01 == 1)
+            SceneManager.instance.FUN_26E1C();
+        else
+            SceneManager.instance.FUN_26E6C();
+
         DAT_58[0]++;
         return false;
     }

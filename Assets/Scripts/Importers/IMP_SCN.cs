@@ -7,11 +7,48 @@ using UnityEditor.AssetImporters;
 #endif
 using UnityEngine;
 
+public class ContainerIdentifier : IEquatable<ContainerIdentifier>, IComparable<ContainerIdentifier>
+{
+    public uint ramAddress;
+    public int dataObjectIndex;
+    public int dataContainerIndex;
+    public int arrayIndex;
+    public Type refType;
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null) return false;
+        ContainerIdentifier objAsIdentifier = obj as ContainerIdentifier;
+        if (objAsIdentifier == null) return false;
+        else return Equals(objAsIdentifier);
+    }
+
+    public int CompareTo(ContainerIdentifier compareIdentifier)
+    {
+        if (compareIdentifier == null)
+            return 1;
+        else
+            return this.ramAddress.CompareTo(compareIdentifier.ramAddress);
+    }
+
+    public override int GetHashCode()
+    {
+        return (int)ramAddress;
+    }
+
+    public bool Equals(ContainerIdentifier other)
+    {
+        if (other == null) return false;
+        return (this.ramAddress.Equals(other.ramAddress));
+    }
+}
+
 #if UNITY_EDITOR
 [ScriptedImporter(1, "scn")]
 public class IMP_SCN : ScriptedImporter
 {
     public RamScriptableObject ram;
+    public DatabaseScriptableObject db;
 
     public override void OnImportAsset(AssetImportContext ctx)
     {
@@ -31,9 +68,12 @@ public class IMP_SCN : ScriptedImporter
                     ScnScriptableObject scn = ScriptableObject.CreateInstance("ScnScriptableObject") as ScnScriptableObject;
 
                     scn.data = new List<_SCENE_OBJ_DATA>();
+                    int i = 0;
+                    int j;
                     int dataLength = reader.ReadInt32(0) / 4;
+                    List<ContainerIdentifier> addrPairs = new List<ContainerIdentifier>();
 
-                    for (int i = 0; i < dataLength; i++)
+                    for (; i < dataLength; i++)
                     {
                         reader.Seek(i * 4, SeekOrigin.Begin);
                         int offset = reader.ReadInt32();
@@ -43,6 +83,7 @@ public class IMP_SCN : ScriptedImporter
                         d.index = i;
                         byte type = reader.ReadByte();
                         List<DataContainer> containers = new List<DataContainer>();
+                        j = 0;
 
                         while (reader.Position != end)
                         {
@@ -63,10 +104,30 @@ public class IMP_SCN : ScriptedImporter
                                     containers.Add(c);
                                     break;
                                 case 1:
+                                case 2:
+                                case 3:
+                                case 4:
+                                case 5:
+                                case 6:
+                                case 7:
+                                case 8:
                                 case 10:
+                                case 11:
+                                case 12:
+                                case 13:
                                 case 14:
+                                case 15:
+                                case 16:
+                                case 18:
+                                case 19:
+                                case 22:
                                 case 23:
                                 case 39:
+                                case 49:
+                                case 50:
+                                case 51:
+                                case 52:
+                                case 107:
                                     DataContainer2 c2 = new DataContainer2();
                                     c2.DAT_00 = type;
                                     c2.DAT_01 = reader.ReadSByte();
@@ -93,12 +154,14 @@ public class IMP_SCN : ScriptedImporter
                                 case 48:
                                 case 59:
                                 case 65:
+                                case 71:
                                 case 72:
                                 case 73:
                                 case 74:
                                 case 82:
                                 case 84:
                                 case 87:
+                                case 92:
                                 case 93:
                                 case 96:
                                 case 97:
@@ -106,6 +169,7 @@ public class IMP_SCN : ScriptedImporter
                                 case 102:
                                 case 104:
                                 case 108:
+                                case 109:
                                 case 110:
                                     DataContainer4 c4 = new DataContainer4();
                                     c4.DAT_00 = type;
@@ -137,9 +201,17 @@ public class IMP_SCN : ScriptedImporter
                                     c6.DAT_06 = reader.ReadInt16();
                                     c6.DAT_08 = reader.ReadSVector();
                                     c6.DAT_0E = reader.ReadInt16();
-                                    c6.DAT_10 = (Tmd2ScriptableObject)GetAssetDatabaseObject(reader.ReadUInt32(), typeof(Tmd2ScriptableObject));
-                                    c6.DAT_14 = GetTodArray(reader.ReadUInt32());
+                                    GetAssetDatabaseObject(reader.ReadUInt32(), typeof(Tmd2ScriptableObject));
+                                    GetTodArray(reader.ReadUInt32());
                                     containers.Add(c6);
+                                    break;
+                                case 33:
+                                    DataContainer7 c7 = new DataContainer7();
+                                    c7.DAT_00 = type;
+                                    c7.DAT_01 = reader.ReadSByte();
+                                    c7.DAT_02 = reader.ReadUInt16();
+                                    c7.DAT_04 = reader.ReadInt32();
+                                    containers.Add(c7);
                                     break;
                                 case 35:
                                     DataContainer8 c8 = new DataContainer8();
@@ -149,7 +221,7 @@ public class IMP_SCN : ScriptedImporter
                                     c8.DAT_03 = reader.ReadByte();
                                     c8.DAT_04 = reader.ReadUInt16();
                                     reader.Seek(2, SeekOrigin.Current);
-                                    c8.DAT_08 = (TmdScriptableObject)GetAssetDatabaseObject(reader.ReadUInt32(), typeof(TmdScriptableObject));
+                                    GetAssetDatabaseObject(reader.ReadUInt32(), typeof(TmdScriptableObject));
                                     c8.DAT_0C = reader.ReadSVector();
                                     c8.DAT_12 = reader.ReadSVector();
                                     BoxCollider box = new BoxCollider();
@@ -164,7 +236,7 @@ public class IMP_SCN : ScriptedImporter
                                     c9.DAT_01 = reader.ReadByte();
                                     c9.DAT_02 = reader.ReadByte();
                                     c9.DAT_03 = reader.ReadByte();
-                                    c9.DAT_04 = (TodScriptableObject)GetAssetDatabaseObject(reader.ReadUInt32(), typeof(TodScriptableObject));
+                                    GetAssetDatabaseObject(reader.ReadUInt32(), typeof(TodScriptableObject));
                                     containers.Add(c9);
                                     break;
                                 case 40:
@@ -233,6 +305,8 @@ public class IMP_SCN : ScriptedImporter
                                     containers.Add(c15);
                                     break;
                                 case 61:
+                                case 83:
+                                case 95:
                                     DataContainer16 c16 = new DataContainer16();
                                     c16.DAT_00 = type;
                                     c16.DAT_01 = reader.ReadByte();
@@ -311,203 +385,208 @@ public class IMP_SCN : ScriptedImporter
                                     reader.Seek(2, SeekOrigin.Current);
                                     containers.Add(c21);
                                     break;
+                                case 66:
+                                    DataContainer23 c23 = new DataContainer23();
+                                    c23.DAT_00 = type;
+                                    c23.DAT_01 = reader.ReadByte();
+                                    c23.DAT_02 = reader.ReadByte();
+                                    c23.DAT_03 = reader.ReadByte();
+                                    c23.DAT_04 = reader.ReadSVector();
+                                    c23.DAT_0A = reader.ReadByte();
+                                    c23.DAT_0B = reader.ReadByte();
+                                    c23.DAT_0C = reader.ReadInt16();
+                                    reader.Seek(2, SeekOrigin.Current);
+                                    c23.DAT_10 = reader.ReadUInt32();
+                                    containers.Add(c23);
+                                    break;
                             }
+                            j++;
                         }
 
                         d.CONTAINERS = containers.ToArray();
                         scn.data.Add(d);
                     }
-                }
 
-                UnityEngine.Object GetAssetDatabaseObject(uint address, Type objectType)
-                {
-                    uint fileAddress = address - 0x80100000;
+                    addrPairs.Sort();
 
-                    if (ram.objects.ContainsKey(address))
-                        return ram.objects[address];
-                    else
+                    //**********************************************************************************************************///
+                    void GetAssetDatabaseObject(uint address, Type objectType)
                     {
-                        if (objectType == typeof(TmdScriptableObject))
+                        addrPairs.Add(new ContainerIdentifier()
                         {
-                            reader2.Seek(fileAddress + 8, SeekOrigin.Begin);
-                            exportCount++;
-                            int tris = reader2.ReadUInt16();
-                            int quads = reader2.ReadUInt16();
-                            int size = tris * 0x28 + quads * 0x34;
-                            string tmdFile = directory + "/" + fileName.Substring(0, fileName.Length - 2) + 
-                                exportCount.ToString("D2") + ".tmd";
-                            reader2.Seek(fileAddress, SeekOrigin.Begin);
-                            File.WriteAllBytes(tmdFile, reader2.ReadBytes(size + 0xc));
-                        }
-                        else if (objectType == typeof(Tmd2ScriptableObject))
-                        {
-                            reader2.Seek(fileAddress + 0xc, SeekOrigin.Begin);
-                            exportCount++;
-                            uint quadOffset = reader2.ReadUInt32();
-                            reader2.Seek(2, SeekOrigin.Current);
-                            int quadCount = reader2.ReadUInt16();
-                            string tmd2File = directory + "/" + fileName.Substring(0, fileName.Length - 2) +
-                                exportCount.ToString("D2") + ".tmd2";
-                            reader2.Seek(fileAddress, SeekOrigin.Begin);
-                            File.WriteAllBytes(tmd2File, reader.ReadBytes((int)(quadOffset - address + quadCount * 0x14)));
-                        }
-                        else if (objectType == typeof(TodScriptableObject))
-                        {
-
-                        }
+                            ramAddress = address,
+                            dataObjectIndex = i,
+                            dataContainerIndex = j,
+                            arrayIndex = -1, //check if not an array
+                            refType = objectType
+                        });
                     }
-                    return null; //tmp
-                }
+                    //*****************************************************************************************************************//
 
-                TodScriptableObject[] GetTodArray(uint address)
-                {
-                    return null; //tmp
-                }
-
-                Trigger GetTrigger(int type)
-                {
-                    long jump = reader.Position;
-
-                    switch (type)
+                    void GetTodArray(uint address)
                     {
-                        case 0:
-                            jump += 0x2c;
-                            break;
-                        case 1:
-                            jump += 0x24;
-                            break;
-                        case 2:
-                        case 5:
-                        case 6:
-                        case 8:
-                        case 9:
-                        case 10:
-                        case 11:
-                            jump += 0x1c;
-                            break;
-                        case 3:
-                            jump += 0x20;
-                            break;
-                        case 4:
-                            jump += 0x28;
-                            break;
-                        case 7:
-                            jump += 0x30;
-                            break;
+                        uint fileAddress = address - 0x80100000;
+                        reader2.Seek(fileAddress, SeekOrigin.Begin);
+                        int k = 0;
+
+                        do
+                        {
+                            addrPairs.Add(new ContainerIdentifier()
+                            {
+                                ramAddress = reader2.ReadUInt32(),
+                                dataObjectIndex = i,
+                                dataContainerIndex = j,
+                                arrayIndex = k++,
+                                refType = typeof(TodScriptableObject)
+                            });
+                        } while (reader2.ReadUInt32(4) > 0x80100000);
                     }
 
-                    switch(reader.ReadByte(0x10))
+                    Trigger GetTrigger(int type)
                     {
-                        case 0:
-                            Trigger2 t1 = new Trigger2();
-                            SetInheritedValues(t1);
-                            t1.DAT_18 = reader.ReadUInt16();
-                            t1.DAT_1A = reader.ReadSVector();
-                            t1.DAT_20 = reader.ReadInt16();
-                            t1.DAT_22 = reader.ReadByte();
-                            t1.DAT_23 = reader.ReadByte();
-                            t1.DAT_24 = reader.ReadByte();
-                            t1.DAT_25 = reader.ReadByte() == 1 ? true : false;
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return t1;
-                        case 1:
-                            Trigger3 t2 = new Trigger3();
-                            SetInheritedValues(t2);
-                            t2.DAT_18 = reader.ReadInt32();
-                            t2.DAT_1C = reader.ReadInt32();
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return t2;
-                        case 2:
-                            Trigger4 t3 = new Trigger4();
-                            SetInheritedValues(t3);
-                            t3.DAT_18 = reader.ReadByte();
-                            t3.DAT_19 = reader.ReadByte();
-                            t3.DAT_1A = reader.ReadByte() == 1 ? true : false;
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return t3;
-                        case 3:
-                            Trigger5 t4 = new Trigger5();
-                            SetInheritedValues(t4);
-                            t4.DAT_18 = reader.ReadByte();
-                            reader.Seek(1, SeekOrigin.Current);
-                            t4.DAT_1A = reader.ReadUInt16();
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return t4;
-                        case 4:
-                            Trigger6 t5 = new Trigger6();
-                            SetInheritedValues(t5);
-                            t5.DAT_18 = reader.ReadUInt16();
-                            t5.DAT_1A = reader.ReadUInt16();
-                            t5.DAT_1C = reader.ReadUInt16();
-                            t5.DAT_1E = reader.ReadByte();
-                            t5.DAT_1F = reader.ReadByte();
-                            t5.DAT_20 = GetAssetDatabaseObject(reader.ReadUInt32(), typeof(TmdScriptableObject)) as TmdScriptableObject;
-                            t5.DAT_24 = reader.ReadInt32();
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return t5;
-                        case 5:
-                            Trigger7 t6 = new Trigger7();
-                            t6.DAT_18 = reader.ReadByte();
-                            t6.DAT_19 = reader.ReadByte();
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return t6;
-                        case 6:
-                            Trigger8 t7 = new Trigger8();
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return t7;
-                        case 7:
-                            Trigger9 t8 = new Trigger9();
-                            t8.DAT_18 = reader.ReadInt16();
-                            t8.DAT_1A = reader.ReadInt16();
-                            t8.DAT_1C = reader.ReadInt16();
-                            t8.DAT_1E = reader.ReadInt16();
+                        long jump = reader.Position;
+
+                        switch (type)
+                        {
+                            case 0:
+                                jump += 0x2c;
+                                break;
+                            case 1:
+                                jump += 0x24;
+                                break;
+                            case 2:
+                            case 5:
+                            case 6:
+                            case 8:
+                            case 9:
+                            case 10:
+                            case 11:
+                                jump += 0x1c;
+                                break;
+                            case 3:
+                                jump += 0x20;
+                                break;
+                            case 4:
+                                jump += 0x28;
+                                break;
+                            case 7:
+                                jump += 0x30;
+                                break;
+                        }
+
+                        switch (reader.ReadByte(0x10))
+                        {
+                            case 0:
+                                Trigger2 t1 = new Trigger2();
+                                SetInheritedValues(t1);
+                                t1.DAT_18 = reader.ReadUInt16();
+                                t1.DAT_1A = reader.ReadSVector();
+                                t1.DAT_20 = reader.ReadInt16();
+                                t1.DAT_22 = reader.ReadByte();
+                                t1.DAT_23 = reader.ReadByte();
+                                t1.DAT_24 = reader.ReadByte();
+                                t1.DAT_25 = reader.ReadByte() == 1 ? true : false;
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return t1;
+                            case 1:
+                                Trigger3 t2 = new Trigger3();
+                                SetInheritedValues(t2);
+                                t2.DAT_18 = reader.ReadInt32();
+                                t2.DAT_1C = reader.ReadInt32();
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return t2;
+                            case 2:
+                                Trigger4 t3 = new Trigger4();
+                                SetInheritedValues(t3);
+                                t3.DAT_18 = reader.ReadByte();
+                                t3.DAT_19 = reader.ReadByte();
+                                t3.DAT_1A = reader.ReadByte() == 1 ? true : false;
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return t3;
+                            case 3:
+                                Trigger5 t4 = new Trigger5();
+                                SetInheritedValues(t4);
+                                t4.DAT_18 = reader.ReadByte();
+                                reader.Seek(1, SeekOrigin.Current);
+                                t4.DAT_1A = reader.ReadUInt16();
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return t4;
+                            case 4:
+                                Trigger6 t5 = new Trigger6();
+                                SetInheritedValues(t5);
+                                t5.DAT_18 = reader.ReadUInt16();
+                                t5.DAT_1A = reader.ReadUInt16();
+                                t5.DAT_1C = reader.ReadUInt16();
+                                t5.DAT_1E = reader.ReadByte();
+                                t5.DAT_1F = reader.ReadByte();
+                                GetAssetDatabaseObject(reader.ReadUInt32(), typeof(TmdScriptableObject));
+                                t5.DAT_24 = reader.ReadInt32();
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return t5;
+                            case 5:
+                                Trigger7 t6 = new Trigger7();
+                                t6.DAT_18 = reader.ReadByte();
+                                t6.DAT_19 = reader.ReadByte();
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return t6;
+                            case 6:
+                                Trigger8 t7 = new Trigger8();
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return t7;
+                            case 7:
+                                Trigger9 t8 = new Trigger9();
+                                t8.DAT_18 = reader.ReadInt16();
+                                t8.DAT_1A = reader.ReadInt16();
+                                t8.DAT_1C = reader.ReadInt16();
+                                t8.DAT_1E = reader.ReadInt16();
+                                reader.Seek(4, SeekOrigin.Current);
+                                t8.DAT_24 = reader.ReadInt32();
+                                t8.DAT_28 = reader.ReadByte();
+                                t8.DAT_29 = reader.ReadByte();
+                                t8.DAT_2A = reader.ReadUInt16();
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return t8;
+                            case 8:
+                                Trigger10 t9 = new Trigger10();
+                                t9.DAT_18 = reader.ReadByte();
+                                t9.DAT_19 = reader.ReadByte() == 1 ? true : false;
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return t9;
+                            case 9:
+                                Trigger11 t10 = new Trigger11();
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return t10;
+                            case 10:
+                                Trigger12 t11 = new Trigger12();
+                                t11.DAT_18 = reader.ReadByte();
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return t11;
+                            case 11:
+                                Trigger13 t12 = new Trigger13();
+                                t12.DAT_18 = reader.ReadByte();
+                                t12.DAT_19 = reader.ReadByte();
+                                t12.DAT_1A = reader.ReadByte();
+                                t12.DAT_1B = reader.ReadByte();
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return t12;
+                            default:
+                                reader.Seek(jump, SeekOrigin.Begin);
+                                return null;
+                        }
+
+                        void SetInheritedValues(Trigger t)
+                        {
+                            t.DAT_00 = new Vector2Int[4];
+                            t.DAT_00[0] = new Vector2Int(reader.ReadInt16(), reader.ReadInt16());
+                            t.DAT_00[1] = new Vector2Int(reader.ReadInt16(), reader.ReadInt16());
+                            t.DAT_00[2] = new Vector2Int(reader.ReadInt16(), reader.ReadInt16());
+                            t.DAT_00[3] = new Vector2Int(reader.ReadInt16(), reader.ReadInt16());
+                            t.DAT_10 = reader.ReadByte();
+                            t.DAT_11 = reader.ReadByte();
+                            t.DAT_12 = reader.ReadByte();
+                            t.DAT_13 = reader.ReadByte() == 1 ? true : false;
                             reader.Seek(4, SeekOrigin.Current);
-                            t8.DAT_24 = reader.ReadInt32();
-                            t8.DAT_28 = reader.ReadByte();
-                            t8.DAT_29 = reader.ReadByte();
-                            t8.DAT_2A = reader.ReadUInt16();
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return t8;
-                        case 8:
-                            Trigger10 t9 = new Trigger10();
-                            t9.DAT_18 = reader.ReadByte();
-                            t9.DAT_19 = reader.ReadByte() == 1 ? true : false;
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return t9;
-                        case 9:
-                            Trigger11 t10 = new Trigger11();
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return t10;
-                        case 10:
-                            Trigger12 t11 = new Trigger12();
-                            t11.DAT_18 = reader.ReadByte();
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return t11;
-                        case 11:
-                            Trigger13 t12 = new Trigger13();
-                            t12.DAT_18 = reader.ReadByte();
-                            t12.DAT_19 = reader.ReadByte();
-                            t12.DAT_1A = reader.ReadByte();
-                            t12.DAT_1B = reader.ReadByte();
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return t12;
-                        default:
-                            reader.Seek(jump, SeekOrigin.Begin);
-                            return null;
-                    }
-
-                    void SetInheritedValues(Trigger t)
-                    {
-                        t.DAT_00 = new Vector2Int[4];
-                        t.DAT_00[0] = new Vector2Int(reader.ReadInt16(), reader.ReadInt16());
-                        t.DAT_00[1] = new Vector2Int(reader.ReadInt16(), reader.ReadInt16());
-                        t.DAT_00[2] = new Vector2Int(reader.ReadInt16(), reader.ReadInt16());
-                        t.DAT_00[3] = new Vector2Int(reader.ReadInt16(), reader.ReadInt16());
-                        t.DAT_10 = reader.ReadByte();
-                        t.DAT_11 = reader.ReadByte();
-                        t.DAT_12 = reader.ReadByte();
-                        t.DAT_13 = reader.ReadByte() == 1 ? true : false;
-                        reader.Seek(4, SeekOrigin.Current);
+                        }
                     }
                 }
             }

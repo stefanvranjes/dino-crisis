@@ -20,6 +20,7 @@ public class SceneManager : MonoBehaviour
     public CriParticle[] DAT_5FCC; //gp+5fcch...gp+7cdch
     public CriStatic[] DAT_7CDC; //gp+7cdch...gp+8ffch
     public CriTrigger[] DAT_9EEC; //gp+9eech...gp+9fdch
+    public CriCamera DAT_C3230;
     public int DAT_C51B8;
     public int DAT_C51BC;
     public int DAT_C51C0;
@@ -488,6 +489,57 @@ public class SceneManager : MonoBehaviour
         return 8;
     }
 
+    public CriTrigger FUN_596E8(uint param1)
+    {
+        bool bVar1;
+        int iVar1;
+        int iVar2;
+        uint uVar3;
+        CriTrigger oVar4;
+        uint uVar5;
+        uint uVar6;
+        CriTrigger oVar7;
+
+        uVar6 = 0xffffffff;
+        oVar7 = null;
+        uVar5 = 0;
+
+        do
+        {
+            oVar4 = DAT_9EEC[uVar5];
+
+            if (oVar4.DAT_01 == param1)
+            {
+                bVar1 = InventoryManager.FUN_4A87C(4, oVar4.DAT_02);
+
+                if (!bVar1 && (oVar4.DAT_03 & 1) == 0)
+                {
+                    iVar1 = oVar4.DAT_04.x - GameManager.instance.DAT_9FDC.x;
+
+                    if (iVar1 < 0)
+                        iVar1 = -iVar1;
+
+                    iVar2 = oVar4.DAT_04.z - GameManager.instance.DAT_9FDC.y;
+
+                    if (iVar2 < 0)
+                        iVar2 = -iVar2;
+
+                    uVar3 = (uint)(iVar1 * iVar1 + iVar2 * iVar2);
+
+                    if (uVar3 < uVar6)
+                    {
+                        uVar6 = uVar3;
+                        oVar7 = oVar4;
+                    }
+                }
+            }
+
+            uVar5++;
+        } while (uVar5 < 10);
+
+        return oVar7;
+    }
+
     private void FUN_597FC()
     {
         int iVar1;
@@ -537,6 +589,37 @@ public class SceneManager : MonoBehaviour
                 uVar6++;
             } while (uVar6 < 10);
         }
+    }
+
+    public int FUN_59C74(uint param1)
+    {
+        bool bVar1;
+        CriTrigger puVar2;
+        uint uVar3;
+        int iVar4;
+
+        iVar4 = 0;
+        uVar3 = 0;
+        
+        if (uVar3 < DAT_9EEC.Length)
+        {
+            do
+            {
+                puVar2 = DAT_9EEC[uVar3];
+
+                if (puVar2.DAT_01 == param1)
+                {
+                    bVar1 = InventoryManager.FUN_4A87C(4, puVar2.DAT_02);
+
+                    if (!bVar1)
+                        iVar4++;
+                }
+
+                uVar3++;
+            } while (uVar3 < DAT_9EEC.Length);
+        }
+
+        return iVar4;
     }
 
     public CriParticle FUN_5FFA0()
@@ -684,6 +767,102 @@ public class SceneManager : MonoBehaviour
             cCamera.motion = CriCamera.DAT_99498;
 
         InventoryManager.FUN_4A7E8(2, 0x14, false);
+    }
+
+    public void FUN_26E6C()
+    {
+        DAT_C3230.cTransform.rotation = cCamera.cTransform.rotation;
+        DAT_C3230.cTransform.position = cCamera.cTransform.position;
+        DAT_C3230.screen = cCamera.screen;
+        DAT_C3230.DAT_26 = cCamera.DAT_26;
+        DAT_C3230.vr = cCamera.vr;
+        DAT_C3230.DAT_2E = cCamera.DAT_2E;
+        DAT_C3230.DAT_30 = cCamera.DAT_30;
+        DAT_C3230.DAT_36 = cCamera.DAT_36;
+        DAT_C3230.DAT_38 = cCamera.DAT_38;
+        DAT_C3230.DAT_38 = cCamera.DAT_38;
+        DAT_C3230.DAT_3A = cCamera.DAT_3A;
+        DAT_C3230.DAT_3C = cCamera.DAT_3C;
+        DAT_C3230.DAT_3E = cCamera.DAT_3E;
+        DAT_C3230.DAT_40 = cCamera.DAT_40;
+        DAT_C3230.DAT_46 = cCamera.DAT_46;
+        DAT_C3230.DAT_48 = cCamera.DAT_48;
+        DAT_C3230.DAT_50 = cCamera.DAT_50;
+        DAT_C3230.DAT_52 = cCamera.DAT_52;
+        DAT_C3230.DAT_54 = cCamera.DAT_54;
+        DAT_C3230.DAT_56 = cCamera.DAT_56;
+        DAT_C3230.DAT_58 = cCamera.DAT_58;
+        DAT_C3230.DAT_59 = cCamera.DAT_59;
+        DAT_C3230.DAT_5A = cCamera.DAT_5A;
+        DAT_C3230.DAT_5B = cCamera.DAT_5B;
+        DAT_C3230.DAT_64 = cCamera.DAT_64;
+        DAT_C3230.DAT_68 = cCamera.DAT_68;
+        DAT_C3230.DAT_69 = cCamera.DAT_69;
+        DAT_C3230.DAT_6A = cCamera.DAT_6A;
+        DAT_C3230.DAT_6B = cCamera.DAT_6B;
+        DAT_C3230.DAT_70 = cCamera.DAT_70;
+        DAT_C3230.DAT_71 = cCamera.DAT_71;
+        DAT_C3230.DAT_72 = cCamera.DAT_72;
+        DAT_C3230.DAT_73 = cCamera.DAT_73;
+        DAT_C3230.DAT_74 = cCamera.DAT_74;
+        DAT_C3230.DAT_76 = cCamera.DAT_76;
+        DAT_C3230.DAT_78 = cCamera.DAT_78;
+        DAT_C3230.DAT_7C = cCamera.DAT_7C;
+        DAT_C3230.DAT_82 = cCamera.DAT_82;
+        DAT_C3230.DAT_83 = cCamera.DAT_83;
+        DAT_C3230.DAT_84 = cCamera.DAT_84;
+        DAT_C3230.DAT_8A = cCamera.DAT_8A;
+        DAT_C3230.DAT_8B = cCamera.DAT_8B;
+        DAT_C3230.DAT_90 = cCamera.DAT_90;
+        DAT_C3230.DAT_92 = cCamera.DAT_92;
+    }
+
+    public void FUN_26E1C()
+    {
+        cCamera.cTransform.rotation = DAT_C3230.cTransform.rotation;
+        cCamera.cTransform.position = DAT_C3230.cTransform.position;
+        cCamera.screen = DAT_C3230.screen;
+        cCamera.DAT_26 = DAT_C3230.DAT_26;
+        cCamera.vr = DAT_C3230.vr;
+        cCamera.DAT_2E = DAT_C3230.DAT_2E;
+        cCamera.DAT_30 = DAT_C3230.DAT_30;
+        cCamera.DAT_36 = DAT_C3230.DAT_36;
+        cCamera.DAT_38 = DAT_C3230.DAT_38;
+        cCamera.DAT_38 = DAT_C3230.DAT_38;
+        cCamera.DAT_3A = DAT_C3230.DAT_3A;
+        cCamera.DAT_3C = DAT_C3230.DAT_3C;
+        cCamera.DAT_3E = DAT_C3230.DAT_3E;
+        cCamera.DAT_40 = DAT_C3230.DAT_40;
+        cCamera.DAT_46 = DAT_C3230.DAT_46;
+        cCamera.DAT_48 = DAT_C3230.DAT_48;
+        cCamera.DAT_50 = DAT_C3230.DAT_50;
+        cCamera.DAT_52 = DAT_C3230.DAT_52;
+        cCamera.DAT_54 = DAT_C3230.DAT_54;
+        cCamera.DAT_56 = DAT_C3230.DAT_56;
+        cCamera.DAT_58 = DAT_C3230.DAT_58;
+        cCamera.DAT_59 = DAT_C3230.DAT_59;
+        cCamera.DAT_5A = DAT_C3230.DAT_5A;
+        cCamera.DAT_5B = DAT_C3230.DAT_5B;
+        cCamera.DAT_64 = DAT_C3230.DAT_64;
+        cCamera.DAT_68 = DAT_C3230.DAT_68;
+        cCamera.DAT_69 = DAT_C3230.DAT_69;
+        cCamera.DAT_6A = DAT_C3230.DAT_6A;
+        cCamera.DAT_6B = DAT_C3230.DAT_6B;
+        cCamera.DAT_70 = DAT_C3230.DAT_70;
+        cCamera.DAT_71 = DAT_C3230.DAT_71;
+        cCamera.DAT_72 = DAT_C3230.DAT_72;
+        cCamera.DAT_73 = DAT_C3230.DAT_73;
+        cCamera.DAT_74 = DAT_C3230.DAT_74;
+        cCamera.DAT_76 = DAT_C3230.DAT_76;
+        cCamera.DAT_78 = DAT_C3230.DAT_78;
+        cCamera.DAT_7C = DAT_C3230.DAT_7C;
+        cCamera.DAT_82 = DAT_C3230.DAT_82;
+        cCamera.DAT_83 = DAT_C3230.DAT_83;
+        cCamera.DAT_84 = DAT_C3230.DAT_84;
+        cCamera.DAT_8A = DAT_C3230.DAT_8A;
+        cCamera.DAT_8B = DAT_C3230.DAT_8B;
+        cCamera.DAT_90 = DAT_C3230.DAT_90;
+        cCamera.DAT_92 = DAT_C3230.DAT_92;
     }
 
     public void FUN_264C4(short param1, short param2, short param3, short param4)

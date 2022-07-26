@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_9EE9; //gp+9ee9h
     public byte DAT_9EEA; //gp+9eeah
     public byte DAT_9EEB; //gp+9eebh
+    public Vector2Int DAT_9FDC; //gp+9fdch
     public byte[] DAT_A090; //gp+a090h
     public ushort DAT_A0E0; //gp+a0e0h
     public ushort DAT_A0E2; //gp+a0e2h

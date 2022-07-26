@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CriTrigger : MonoBehaviour
 {
+    public sbyte DAT_00; //0x00
     public byte DAT_01; //0x00
     public byte DAT_02; //0x02
     public byte DAT_03; //0x03
@@ -18,6 +19,7 @@ public class CriTrigger : MonoBehaviour
 
     public void ResetValues()
     {
+        DAT_00 = 0;
         DAT_01 = 0;
         DAT_02 = 0;
         DAT_03 = 0;

@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 #if UNITY_EDITOR
+using UnityEditor;
 using UnityEditor.AssetImporters;
 #endif
 using UnityEngine;
@@ -13,6 +14,7 @@ public class ContainerIdentifier : IEquatable<ContainerIdentifier>, IComparable<
     public int dataObjectIndex;
     public int dataContainerIndex;
     public int arrayIndex;
+    public byte containerType;
     public Type refType;
 
     public override bool Equals(object obj)
@@ -202,7 +204,7 @@ public class IMP_SCN : ScriptedImporter
                                     c6.DAT_08 = reader.ReadSVector();
                                     c6.DAT_0E = reader.ReadInt16();
                                     GetAssetDatabaseObject(reader.ReadUInt32(), typeof(Tmd2ScriptableObject));
-                                    GetTodArray(reader.ReadUInt32());
+                                    c6.DAT_14 = new TodScriptableObject[GetTodArray(reader.ReadUInt32())];
                                     containers.Add(c6);
                                     break;
                                 case 33:
@@ -408,6 +410,56 @@ public class IMP_SCN : ScriptedImporter
                     }
 
                     addrPairs.Sort();
+                    reader2.Seek(0, SeekOrigin.Begin);
+                    uint scnPosition = reader2.ReadUInt32(0x14);
+
+                    for (i = 0; i < addrPairs.Count; i++)
+                    {
+                        reader2.Seek(addrPairs[i].ramAddress, SeekOrigin.Begin);
+                        string extension = ".asset";
+
+                        if (addrPairs[i].refType == typeof(TmdScriptableObject))
+                            extension = ".tmd";
+                        else if (addrPairs[i].refType == typeof(Tmd2ScriptableObject))
+                            extension = ".tmd2";
+                        else if (addrPairs[i].refType == typeof(TodScriptableObject))
+                            extension = ".tod";
+
+                        string path = directory + "/" + fileName.Substring(0, fileName.Length - 3) + "_" + exportCount++ + extension;
+                        File.WriteAllBytes(path, reader2.ReadBytes(i != addrPairs.Count - 1 ? 
+                                            (int)(addrPairs[i + 1].ramAddress - addrPairs[i].ramAddress) : 
+                                              (int)(scnPosition - addrPairs[i].ramAddress)));
+
+                        if (path.StartsWith(Application.dataPath))
+                            path = "Assets" + path.Substring(Application.dataPath.Length);
+
+                        if (addrPairs[i].refType == typeof(TmdScriptableObject))
+                        {
+                            AssetDatabase.Refresh();
+                            TmdScriptableObject tmd = AssetDatabase.LoadAssetAtPath(path, typeof(TmdScriptableObject)) as TmdScriptableObject;
+
+                            if (addrPairs[i].containerType == 7)
+                                ((DataContainer8)scn.data[addrPairs[i].dataObjectIndex].CONTAINERS[addrPairs[i].dataContainerIndex]).DAT_08 = tmd;
+                        }
+                        else if (addrPairs[i].refType == typeof(Tmd2ScriptableObject))
+                        {
+                            AssetDatabase.Refresh();
+                            Tmd2ScriptableObject tmd2 = AssetDatabase.LoadAssetAtPath(path, typeof(Tmd2ScriptableObject)) as Tmd2ScriptableObject;
+
+                            if (addrPairs[i].containerType == 5)
+                                ((DataContainer6)scn.data[addrPairs[i].dataObjectIndex].CONTAINERS[addrPairs[i].dataContainerIndex]).DAT_10 = tmd2;
+                        }
+                        else if (addrPairs[i].refType == typeof(TodScriptableObject))
+                        {
+                            AssetDatabase.Refresh();
+                            TodScriptableObject tod = AssetDatabase.LoadAssetAtPath(path, typeof(TodScriptableObject)) as TodScriptableObject;
+
+                            if (addrPairs[i].containerType == 8)
+                                ((DataContainer9)scn.data[addrPairs[i].dataObjectIndex].CONTAINERS[addrPairs[i].dataContainerIndex]).DAT_04 = tod;
+                            else if (addrPairs[i].containerType == 5)
+                                ((DataContainer6)scn.data[addrPairs[i].dataObjectIndex].CONTAINERS[addrPairs[i].dataContainerIndex]).DAT_14[addrPairs[i].arrayIndex] = tod;
+                        }
+                    }
 
                     //**********************************************************************************************************///
                     void GetAssetDatabaseObject(uint address, Type objectType)
@@ -423,7 +475,7 @@ public class IMP_SCN : ScriptedImporter
                     }
                     //*****************************************************************************************************************//
 
-                    void GetTodArray(uint address)
+                    int GetTodArray(uint address)
                     {
                         uint fileAddress = address - 0x80100000;
                         reader2.Seek(fileAddress, SeekOrigin.Begin);
@@ -440,6 +492,8 @@ public class IMP_SCN : ScriptedImporter
                                 refType = typeof(TodScriptableObject)
                             });
                         } while (reader2.ReadUInt32(4) > 0x80100000);
+
+                        return k;
                     }
 
                     Trigger GetTrigger(int type)

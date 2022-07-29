@@ -680,7 +680,7 @@ public class DialogManager : MonoBehaviour
                 oVar1.DAT_3E = 0;
                 oVar1.DAT_3F = 0;
                 oVar1.DAT_40 = new Vector3Int(0, 0, 0);
-                oVar1.FUN_6103C(SceneManager.instance.database.DAT_1860CC, 0, 0, 10);
+                oVar1.FUN_6103C((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801860CC], 0, 0, 10);
                 DAT_B1391 = 30;
                 goto LAB_1C360;
             case 1:
@@ -760,7 +760,7 @@ public class DialogManager : MonoBehaviour
                 oVar1.DAT_3E = 0;
                 oVar1.DAT_3F = 0;
                 oVar1.DAT_40 = new Vector3Int(0, 0, 0);
-                oVar1.FUN_6103C(SceneManager.instance.database.DAT_1860CC, 2, 0x18, 10);
+                oVar1.FUN_6103C((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801860CC], 2, 0x18, 10);
                 DAT_B1391 = 25;
                 LAB_1C360:
                 DAT_B1390++;
@@ -841,7 +841,7 @@ public class DialogManager : MonoBehaviour
 
                 InventoryManager.FUN_4A7E8(1, 0, false);
                 InventoryManager.FUN_4A7E8(1, 1, true);
-                oVar2.FUN_6103C(SceneManager.instance.database.DAT_1860CC, 2, 25, 10);
+                oVar2.FUN_6103C((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801860CC], 2, 25, 10);
                 DAT_B1391 = 30;
             }
 
@@ -1050,7 +1050,7 @@ public class DialogManager : MonoBehaviour
 
                 InventoryManager.FUN_4A7E8(1, 0, false);
                 InventoryManager.FUN_4A7E8(1, 1, true);
-                oVar2.FUN_6103C(SceneManager.instance.database.DAT_1860CC, 2, 25, 10);
+                oVar2.FUN_6103C((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801860CC], 2, 25, 10);
                 DAT_B1391 = 30;
             }
 
@@ -1073,7 +1073,7 @@ public class DialogManager : MonoBehaviour
             oVar1.DAT_3E = 0;
             oVar1.DAT_3F = 0;
             oVar1.DAT_40 = new Vector3Int(0, 0, 0);
-            oVar1.FUN_6103C(SceneManager.instance.database.DAT_1860CC, 0, 0, 10);
+            oVar1.FUN_6103C((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801860CC], 0, 0, 10);
             DAT_B1391 = 30;
             DAT_B1390++;
         }

@@ -18,10 +18,10 @@ public class IMP_TMD : ScriptedImporter
 
         using (BufferedBinaryReader reader = new BufferedBinaryReader(buffer))
         {
+            TmdScriptableObject tmd = ScriptableObject.CreateInstance("TmdScriptableObject") as TmdScriptableObject;
+
             if (grid != null && clut != null)
             {
-                TmdScriptableObject tmd = ScriptableObject.CreateInstance("TmdScriptableObject") as TmdScriptableObject;
-
                 tmd.TRI_OFFSET = reader.ReadUInt32(0) - ramAddress;
                 tmd.QUAD_OFFSET = reader.ReadUInt32(4) - ramAddress;
                 tmd.TRI_COUNT = reader.ReadUInt16(8);
@@ -135,10 +135,10 @@ public class IMP_TMD : ScriptedImporter
                     tmd.QUADS[i * 6 + 4] = triEnd * 3 + i * 4 + 2;
                     tmd.QUADS[i * 6 + 5] = triEnd * 3 + i * 4 + 1;
                 }
-
-                ctx.AddObjectToAsset("tmd", tmd);
-                ctx.SetMainObject(tmd);
             }
+
+            ctx.AddObjectToAsset("tmd", tmd);
+            ctx.SetMainObject(tmd);
         }
     }
 }

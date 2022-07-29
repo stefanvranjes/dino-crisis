@@ -13,14 +13,14 @@ public static class Utilities
 {
     public static TodScriptableObject[] DAT_18770 = new TodScriptableObject[]
     {
-        SceneManager.instance.database.DAT_18466C, 
-        SceneManager.instance.database.DAT_18539C, 
-        SceneManager.instance.database.DAT_184D04, 
-        SceneManager.instance.database.DAT_185A34, 
-        SceneManager.instance.database.DAT_19113C, 
-        SceneManager.instance.database.DAT_191884, 
-        SceneManager.instance.database.DAT_1914E0, 
-        SceneManager.instance.database.DAT_191C28
+        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018466C], 
+        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018539C], 
+        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80184D04], 
+        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80185A34], 
+        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8019113C], 
+        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80191884], 
+        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801914E0], 
+        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80191C28]
     };
     public static short[] DAT_18790 = new short[]
     {

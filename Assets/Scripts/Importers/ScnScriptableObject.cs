@@ -19,6 +19,7 @@ public class DataContainer2 : DataContainer
 public class DataContainer3 : DataContainer2
 {
     public ushort DAT_04;
+    public ushort DAT_06;
 }
 
 [System.Serializable]
@@ -66,7 +67,9 @@ public class DataContainer8 : DataContainer4
 [System.Serializable]
 public class DataContainer9 : DataContainer4
 {
-    public TodScriptableObject DAT_04;
+    public TodScriptableObject PTR_04;
+    public int DAT_04;
+    public bool hasPointer;
 }
 
 [System.Serializable]
@@ -167,6 +170,8 @@ public class DataContainer21 : DataContainer4
 {
     public byte DAT_04;
     public byte DAT_05;
+    public byte DAT_06;
+    public byte DAT_07;
 }
 
 [System.Serializable]

@@ -18,10 +18,10 @@ public class IMP_TMD2 : ScriptedImporter
 
         using (BufferedBinaryReader reader = new BufferedBinaryReader(buffer))
         {
+            Tmd2ScriptableObject tmd = ScriptableObject.CreateInstance("Tmd2ScriptableObject") as Tmd2ScriptableObject;
+
             if (grid != null && clut != null)
             {
-                Tmd2ScriptableObject tmd = ScriptableObject.CreateInstance("Tmd2ScriptableObject") as Tmd2ScriptableObject;
-
                 tmd.VERT_OFFSET = reader.ReadUInt32(0) - ramAddress;
                 tmd.NRML_OFFSET = reader.ReadUInt32(4) - ramAddress;
                 tmd.TRI_OFFSET = reader.ReadUInt32(8) - ramAddress;
@@ -146,10 +146,10 @@ public class IMP_TMD2 : ScriptedImporter
                     uv4.y = pageY + uv4.y - vramY;
                     tmd.UVS[triEnd * 3 + i * 4 + 3] = new Vector2(uv4.x / width, 1f - uv4.y / height);
                 }
-
-                ctx.AddObjectToAsset("tmd2", tmd);
-                ctx.SetMainObject(tmd);
             }
+
+            ctx.AddObjectToAsset("tmd2", tmd);
+            ctx.SetMainObject(tmd);
         }
     }
 }

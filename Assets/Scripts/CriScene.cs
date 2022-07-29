@@ -152,7 +152,7 @@ public class CriScene : MonoBehaviour
             FUN_5AD28,
             FUN_5AD90,
             FUN_5ADE0,
-            FUN_5AE44,
+            FUN_5AE44, //110
             FUN_5AE78,
             FUN_56698,
             FUN_56698
@@ -1551,7 +1551,12 @@ public class CriScene : MonoBehaviour
         oVar2.DAT_3D = 0;
         oVar2.DAT_3E = 0;
         oVar2.DAT_3F = 0;
-        oVar2.FUN_6103C(mVar1.DAT_04, mVar1.DAT_01, mVar1.DAT_02, mVar1.DAT_03);
+
+        if (mVar1.hasPointer)
+            oVar2.FUN_6103C(mVar1.PTR_04, mVar1.DAT_01, mVar1.DAT_02, mVar1.DAT_03);
+        else
+            oVar2.FUN_6103C(mVar1.DAT_04, mVar1.DAT_01, mVar1.DAT_02, mVar1.DAT_03);
+
         DAT_58[0]++;
         return false;
     }
@@ -2066,7 +2071,7 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_58384()
     {
-        //FUN_2984C
+        //FUN_2984C (voice acting)
         DAT_58[0]++;
         return false;
     }

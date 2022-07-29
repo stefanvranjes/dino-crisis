@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-#if UNITY_EDITOR
-public class TmdPostprocessor : AssetPostprocessor
+public class Tmd2Postprocessor : AssetPostprocessor
 {
     public static bool script;
     public static uint address;
@@ -13,13 +12,12 @@ public class TmdPostprocessor : AssetPostprocessor
     {
         if (assetImporter.importSettingsMissing)
         {
-            IMP_TMD tmdImporter = assetImporter as IMP_TMD;
+            IMP_TMD2 tmd2Importer = assetImporter as IMP_TMD2;
 
-            if (tmdImporter != null && script)
+            if (tmd2Importer != null && script)
             {
-                tmdImporter.ramAddress = address;
+                tmd2Importer.ramAddress = address;
             }
         }
     }
 }
-#endif

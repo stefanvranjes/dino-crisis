@@ -14,18 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabName: 
   objects:
-    m_keys: 482a1080d46a1080207c108020a810800cc61080d0d010801c1611806c041080701710801c001080300210802c791180d8871180
-    m_values:
-    - {fileID: -222693453202378655, guid: 8840f087ba4750445b6df6c2d9914da9, type: 3}
-    - {fileID: -222693453202378655, guid: e53aa7ba64c8f0f4e8e5b8e6d934d0c0, type: 3}
-    - {fileID: -222693453202378655, guid: 29afbf8b59ca51a43b22dc1e0f736f89, type: 3}
-    - {fileID: -222693453202378655, guid: 608c1e9cf19680c4c9d6d3b7c803853b, type: 3}
-    - {fileID: -222693453202378655, guid: cbe0f09e0712952448cad6eae788e676, type: 3}
-    - {fileID: -222693453202378655, guid: 9a76d219dd5c3cc468f4fdf6dba9405a, type: 3}
-    - {fileID: -222693453202378655, guid: 2ef1373c9b61fc6449390b51c75b3304, type: 3}
-    - {fileID: -222693453202378655, guid: 83d939eb920661b4f8dd3a8d04ad9449, type: 3}
-    - {fileID: -222693453202378655, guid: e5e0c5c388805634dbcdadcd89347530, type: 3}
-    - {fileID: -222693453202378655, guid: 05125e5c250a38e459780dd8db4fd4d2, type: 3}
-    - {fileID: -222693453202378655, guid: 357307540ed63834b816c83d61c724e8, type: 3}
-    - {fileID: -222693453202378655, guid: f976807ea78525b499e30af70fd3512d, type: 3}
-    - {fileID: -222693453202378655, guid: 2f0ed9b4b568f40408e0fdddb765102e, type: 3}
+    m_keys: 
+    m_values: []

@@ -200,10 +200,10 @@ public class CriPlayer : CriSkinned
         new RefScriptableObject[4], //PTR_9CF78, 
         new RefScriptableObject[4]
         {
-            SceneManager.instance.database.DAT_17B83C,
-            SceneManager.instance.database.DAT_17B83C,
-            SceneManager.instance.database.DAT_17B83C,
-            SceneManager.instance.database.DAT_17B83C
+            (RefScriptableObject)SceneManager.instance.database.common.objects[0x8017B83C],
+            (RefScriptableObject)SceneManager.instance.database.common.objects[0x8017B83C],
+            (RefScriptableObject)SceneManager.instance.database.common.objects[0x8017B83C],
+            (RefScriptableObject)SceneManager.instance.database.common.objects[0x8017B83C]
         }, //PTR_9CF88
         new RefScriptableObject[4] //PTR_9CF98
     };
@@ -699,7 +699,7 @@ public class CriPlayer : CriSkinned
 
         flags = 1;
         tags = 0;
-        FUN_604A4(SceneManager.instance.database.playerSkin);
+        FUN_604A4((Tmd2ScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018066C]);
         sVar2 = 1200;
 
         if (GameManager.instance.difficulty != _DIFFICULTY.Normal)
@@ -908,7 +908,7 @@ public class CriPlayer : CriSkinned
     {
         DAT_1C0 &= 0xfffffffe;
         DAT_11E |= 0x80;
-        FUN_609C8(SceneManager.instance.database.DAT_19C230, 0, 0);
+        FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8019C230], 0, 0);
         DAT_40.z = -200;
         DAT_3D++;
     }
@@ -927,7 +927,7 @@ public class CriPlayer : CriSkinned
             }
 
             //sound...
-            FUN_609C8(SceneManager.instance.database.DAT_19C388, 0, 0);
+            FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8019C388], 0, 0);
             DAT_3D++;
         }
     }
@@ -959,7 +959,7 @@ public class CriPlayer : CriSkinned
 
         if (bVar1)
         {
-            FUN_609C8(SceneManager.instance.database.DAT_19CF60, 0, 0);
+            FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8019CF60], 0, 0);
             DAT_3D++;
         }
     }
@@ -972,7 +972,7 @@ public class CriPlayer : CriSkinned
 
         if (bVar1)
         {
-            FUN_609C8(SceneManager.instance.database.DAT_19D2B0, 0, 0);
+            FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8019D2B0], 0, 0);
             DAT_3D++;
         }
     }
@@ -988,7 +988,7 @@ public class CriPlayer : CriSkinned
 
         if (bVar1)
         {
-            FUN_609C8(SceneManager.instance.database.DAT_1860CC, 2, 0);
+            FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801860CC], 2, 0);
             DAT_3D++;
         }
     }
@@ -1286,8 +1286,8 @@ public class CriPlayer : CriSkinned
 
         local_18 = new TodScriptableObject[2]
         {
-            SceneManager.instance.database.DAT_189774,
-            SceneManager.instance.database.DAT_18A058
+            (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80189774],
+            (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018A058]
         };
 
         if (DAT_3E == 0)
@@ -1441,7 +1441,7 @@ public class CriPlayer : CriSkinned
 
                 if (bVar2 == 0)
                 {
-                    FUN_609C8(SceneManager.instance.database.playerIdle, 1, 0);
+                    FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80190604], 1, 0);
                     DAT_1C0 &= 0xfffffffe;
                     uVar4 = (uint)Utilities.Rand();
                     bVar3 = Utilities.DAT_187BC[(uVar4 & 3) * 2];
@@ -2057,7 +2057,7 @@ public class CriPlayer : CriSkinned
             case 3:
                 uVar2 = 2;
                 LAB_4F028:
-                FUN_609C8(SceneManager.instance.database.DAT_1860CC, (byte)uVar2, 0);
+                FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801860CC], (byte)uVar2, 0);
                 DAT_3E++;
                 break;
             case 4:
@@ -4258,7 +4258,7 @@ public class CriPlayer : CriSkinned
     private void FUN_2C4F0()
     {
         DAT_98 = DAT_1E0;
-        FUN_609C8(SceneManager.instance.database.DAT_1860CC, 6, 0);
+        FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801860CC], 6, 0);
         DAT_3E++;
     }
 
@@ -4784,7 +4784,7 @@ public class CriPlayer : CriSkinned
             else
             {
                 DAT_98 = DAT_1E0;
-                FUN_609C8((TodScriptableObject)SceneManager.instance.database.DAT_19D2B0, 0, 0);
+                FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8019D2B0], 0, 0);
                 DAT_3C = 2;
                 DAT_3D = 6;
                 DAT_3E = 0;

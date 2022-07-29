@@ -17,10 +17,10 @@ public class IMP_TOD : ScriptedImporter
 
         using (BufferedBinaryReader reader = new BufferedBinaryReader(buffer))
         {
+            TodScriptableObject tod = ScriptableObject.CreateInstance("TodScriptableObject") as TodScriptableObject;
+
             if (boneCount != 0)
             {
-                TodScriptableObject tod = ScriptableObject.CreateInstance("TodScriptableObject") as TodScriptableObject;
-
                 tod.PACKET_OFFSET = reader.ReadUInt32() - ramAddress;
                 tod.FRAME_COUNT = reader.ReadInt32();
                 tod.FRAMES = new Frame[tod.FRAME_COUNT + 1];
@@ -53,10 +53,10 @@ public class IMP_TOD : ScriptedImporter
 
                     tod.PACKETS[i] = p;
                 }
-
-                ctx.AddObjectToAsset("tod", tod);
-                ctx.SetMainObject(tod);
             }
+
+            ctx.AddObjectToAsset("tod", tod);
+            ctx.SetMainObject(tod);
         }
     }
 }

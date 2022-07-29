@@ -13,9 +13,9 @@ public class EXP_SCN
             // lgh
             int exportCount = 1;
             reader.BaseStream.Seek(0, SeekOrigin.Begin);
-            uint lghPosition = reader.ReadUInt32();
+            uint lghPosition = reader.ReadUInt32() - 0x80100000;
             reader.BaseStream.Seek(lghPosition, SeekOrigin.Begin);
-            int lghSize = (reader.ReadUInt16() + reader.ReadUInt16()) * 0x10 + 0x24;
+            int lghSize = (reader.ReadUInt16() + reader.ReadUInt16()) * 0x14 + 0x24;
             string lghFile = outDir + Path.DirectorySeparatorChar;
             lghFile += Path.GetFileNameWithoutExtension(inFile);
             lghFile += "_" + exportCount.ToString("D2") + ".lgh";
@@ -27,10 +27,11 @@ public class EXP_SCN
             reader.BaseStream.Seek(8, SeekOrigin.Begin);
             uint clnPosition = reader.ReadUInt32();
             int clnSize = (int)(reader.ReadUInt32() - clnPosition);
+            clnPosition -= 0x80100000;
             string clnFile = outDir + Path.DirectorySeparatorChar;
             clnFile += Path.GetFileNameWithoutExtension(inFile);
             clnFile += "_" + exportCount.ToString("D2") + ".cln";
-            reader.BaseStream.Seek(lghPosition, SeekOrigin.Begin);
+            reader.BaseStream.Seek(clnPosition, SeekOrigin.Begin);
             File.WriteAllBytes(clnFile, reader.ReadBytes(clnSize));
 
             // mot
@@ -38,6 +39,7 @@ public class EXP_SCN
             reader.BaseStream.Seek(0xc, SeekOrigin.Begin);
             uint motPosition = reader.ReadUInt32();
             int motSize = (int)(reader.ReadUInt32() - motPosition);
+            motPosition -= 0x80100000;
             string motFile = outDir + Path.DirectorySeparatorChar;
             motFile += Path.GetFileNameWithoutExtension(inFile);
             motFile += "_" + exportCount.ToString("D2") + ".mot";
@@ -47,8 +49,8 @@ public class EXP_SCN
             // scn
             exportCount++;
             reader.BaseStream.Seek(0x14, SeekOrigin.Begin);
-            uint scnPosition = reader.ReadUInt32();
-            int scnSize = (int)(reader.BaseStream.Length + 0x80100000 - scnPosition);
+            uint scnPosition = reader.ReadUInt32() - 0x80100000;
+            int scnSize = (int)(reader.BaseStream.Length - scnPosition);
             string scnFile = outDir + Path.DirectorySeparatorChar;
             scnFile += Path.GetFileNameWithoutExtension(inFile);
             scnFile += "_" + exportCount.ToString("D2") + ".scn";
@@ -123,8 +125,8 @@ public class EXP_SCN
             if (clutFile.StartsWith(Application.dataPath))
                 clutFile = "Assets" + clutFile.Substring(Application.dataPath.Length);
 
-            TmdPostprocessor.grid = (GridScriptableObject)AssetDatabase.LoadAssetAtPath(timFile, typeof(GridScriptableObject));
-            TmdPostprocessor.clut = (ClutScriptableObject)AssetDatabase.LoadAssetAtPath(clutFile, typeof(ClutScriptableObject));
+            //TmdPostprocessor.grid = (GridScriptableObject)AssetDatabase.LoadAssetAtPath(timFile, typeof(GridScriptableObject));
+            //TmdPostprocessor.clut = (ClutScriptableObject)AssetDatabase.LoadAssetAtPath(clutFile, typeof(ClutScriptableObject));
 
             for (int i = 0; i < pointerList.Count; i++)
             {

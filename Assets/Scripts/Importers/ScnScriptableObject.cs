@@ -45,7 +45,7 @@ public class DataContainer6 : DataContainer4
     public Vector3Int DAT_08;
     public short DAT_0E;
     public Tmd2ScriptableObject DAT_10;
-    public TodScriptableObject[] DAT_14;
+    public RefScriptableObject DAT_14;
 }
 
 [System.Serializable]
@@ -184,12 +184,14 @@ public class DataContainer22 : DataContainer
     public short DAT_22;
 }
 
+[System.Serializable]
 public class DataContainer23 : DataContainer16
 {
     public short DAT_0C;
     public uint DAT_10;
 }
 
+[System.Serializable]
 public class DataContainer24 : DataContainer4
 {
     public Vector3Int DAT_04;
@@ -209,6 +211,7 @@ public class SVECTOR_SERIALIZED_ARRAY
     public Vector2Int[] sv2;
 }
 
+[System.Serializable]
 public class DataContainer25 : DataContainer4
 {
     public Tmd2ScriptableObject DAT_04;
@@ -221,7 +224,8 @@ public class DataContainer25 : DataContainer4
 public class _SCENE_OBJ_DATA
 {
     public int index;
-    public DataContainer[] CONTAINERS;
+    [SerializeReference]
+    public List<DataContainer> CONTAINERS;
 
     public int GetContainer(int container, int offset)
     {

@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,55 +9,8 @@ public class EXP_SCN
 {
     public static void ExtractSCN(string inFile, string outDir)
     {
-        using (BinaryReader reader = new BinaryReader(File.Open(inFile, FileMode.Open)))
+        using (BufferedBinaryReader reader2 = new BufferedBinaryReader(File.ReadAllBytes(inFile)))
         {
-            // lgh
-            int exportCount = 1;
-            reader.BaseStream.Seek(0, SeekOrigin.Begin);
-            uint lghPosition = reader.ReadUInt32() - 0x80100000;
-            reader.BaseStream.Seek(lghPosition, SeekOrigin.Begin);
-            int lghSize = (reader.ReadUInt16() + reader.ReadUInt16()) * 0x14 + 0x24;
-            string lghFile = outDir + Path.DirectorySeparatorChar;
-            lghFile += Path.GetFileNameWithoutExtension(inFile);
-            lghFile += "_" + exportCount.ToString("D2") + ".lgh";
-            reader.BaseStream.Seek(lghPosition, SeekOrigin.Begin);
-            File.WriteAllBytes(lghFile, reader.ReadBytes(lghSize));
-
-            // cln
-            exportCount++;
-            reader.BaseStream.Seek(8, SeekOrigin.Begin);
-            uint clnPosition = reader.ReadUInt32();
-            int clnSize = (int)(reader.ReadUInt32() - clnPosition);
-            clnPosition -= 0x80100000;
-            string clnFile = outDir + Path.DirectorySeparatorChar;
-            clnFile += Path.GetFileNameWithoutExtension(inFile);
-            clnFile += "_" + exportCount.ToString("D2") + ".cln";
-            reader.BaseStream.Seek(clnPosition, SeekOrigin.Begin);
-            File.WriteAllBytes(clnFile, reader.ReadBytes(clnSize));
-
-            // mot
-            exportCount++;
-            reader.BaseStream.Seek(0xc, SeekOrigin.Begin);
-            uint motPosition = reader.ReadUInt32();
-            int motSize = (int)(reader.ReadUInt32() - motPosition);
-            motPosition -= 0x80100000;
-            string motFile = outDir + Path.DirectorySeparatorChar;
-            motFile += Path.GetFileNameWithoutExtension(inFile);
-            motFile += "_" + exportCount.ToString("D2") + ".mot";
-            reader.BaseStream.Seek(motPosition, SeekOrigin.Begin);
-            File.WriteAllBytes(motFile, reader.ReadBytes(motSize));
-
-            // scn
-            exportCount++;
-            reader.BaseStream.Seek(0x14, SeekOrigin.Begin);
-            uint scnPosition = reader.ReadUInt32() - 0x80100000;
-            int scnSize = (int)(reader.BaseStream.Length - scnPosition);
-            string scnFile = outDir + Path.DirectorySeparatorChar;
-            scnFile += Path.GetFileNameWithoutExtension(inFile);
-            scnFile += "_" + exportCount.ToString("D2") + ".scn";
-            reader.BaseStream.Seek(scnPosition, SeekOrigin.Begin);
-            File.WriteAllBytes(scnFile, reader.ReadBytes(scnSize));
-
             //ram
             RamScriptableObject ram = ScriptableObject.CreateInstance("RamScriptableObject") as RamScriptableObject;
             ram.objects = new UIntObjectDictionary();
@@ -65,7 +19,427 @@ public class EXP_SCN
                 ramFile = "Assets" + ramFile.Substring(Application.dataPath.Length);
             AssetDatabase.CreateAsset(ram, ramFile);
 
+            // lgh
+            int exportCount = 1;
+            reader2.Seek(0, SeekOrigin.Begin);
+            uint lghPosition = reader2.ReadUInt32() - 0x80100000;
+            reader2.Seek(lghPosition, SeekOrigin.Begin);
+            int lghSize = (reader2.ReadUInt16() + reader2.ReadUInt16()) * 0x14 + 0x24;
+            string lghFile = outDir + Path.DirectorySeparatorChar;
+            lghFile += Path.GetFileNameWithoutExtension(inFile);
+            lghFile += "_" + exportCount.ToString("D2") + ".lgh";
+            reader2.Seek(lghPosition, SeekOrigin.Begin);
+            File.WriteAllBytes(lghFile, reader2.ReadBytes(lghSize));
+
+            // cln
+            exportCount++;
+            reader2.Seek(8, SeekOrigin.Begin);
+            uint clnPosition = reader2.ReadUInt32();
+            int clnSize = (int)(reader2.ReadUInt32() - clnPosition);
+            clnPosition -= 0x80100000;
+            string clnFile = outDir + Path.DirectorySeparatorChar;
+            clnFile += Path.GetFileNameWithoutExtension(inFile);
+            clnFile += "_" + exportCount.ToString("D2") + ".cln";
+            reader2.Seek(clnPosition, SeekOrigin.Begin);
+            File.WriteAllBytes(clnFile, reader2.ReadBytes(clnSize));
+
+            // mot
+            exportCount++;
+            reader2.Seek(0xc, SeekOrigin.Begin);
+            uint motPosition = reader2.ReadUInt32();
+            int motSize = (int)(reader2.ReadUInt32() - motPosition);
+            motPosition -= 0x80100000;
+            string motFile = outDir + Path.DirectorySeparatorChar;
+            motFile += Path.GetFileNameWithoutExtension(inFile);
+            motFile += "_" + exportCount.ToString("D2") + ".mot";
+            reader2.Seek(motPosition, SeekOrigin.Begin);
+            File.WriteAllBytes(motFile, reader2.ReadBytes(motSize));
             AssetDatabase.Refresh();
+
+            // scn
+            exportCount++;
+            reader2.Seek(0x14, SeekOrigin.Begin);
+            uint scnPosition = reader2.ReadUInt32() - 0x80100000;
+            int scnSize = (int)(reader2.Length - scnPosition);
+            string scnFile = outDir + Path.DirectorySeparatorChar;
+            scnFile += Path.GetFileNameWithoutExtension(inFile);
+            scnFile += "_" + exportCount.ToString("D2") + ".scn";
+            reader2.Seek(scnPosition, SeekOrigin.Begin);
+            byte[] buffer = reader2.ReadBytes(scnSize);
+            File.WriteAllBytes(scnFile, buffer);
+
+            using (BufferedBinaryReader reader = new BufferedBinaryReader(buffer))
+            {
+                int i = 0;
+                int j;
+                int dataLength = reader.ReadInt32(0) / 4;
+                List<ContainerIdentifier> addrPairs = new List<ContainerIdentifier>();
+                string fileName = Path.GetFileNameWithoutExtension(inFile);
+
+                for (; i < dataLength; i++)
+                {
+                    reader.Seek(i * 4, SeekOrigin.Begin);
+                    int offset = reader.ReadInt32();
+                    int end = (i < dataLength - 1) ? reader.ReadInt32() : (int)reader.Length;
+                    reader.Seek(offset, SeekOrigin.Begin);
+                    j = 0;
+                    bool breakLoop = false;
+
+                    while (reader.Position != end && !breakLoop)
+                    {
+                        byte type = reader.ReadByte();
+
+                        switch (type)
+                        {
+                            case 0:
+                            case 25:
+                            case 26:
+                            case 27:
+                            case 28:
+                            case 29:
+                            case 30:
+                            case 31:
+                            case 112:
+                            case 113:
+                                break;
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                            case 6:
+                            case 7:
+                            case 8:
+                            case 10:
+                            case 11:
+                            case 12:
+                            case 13:
+                            case 14:
+                            case 15:
+                            case 16:
+                            case 18:
+                            case 19:
+                            case 22:
+                            case 23:
+                            case 39:
+                            case 49:
+                            case 50:
+                            case 51:
+                            case 52:
+                            case 62: //tmp
+                            case 107:
+                                reader.Seek(3, SeekOrigin.Current);
+                                if (type == 4) breakLoop = true;
+                                break;
+                            case 9:
+                            case 99: //tmp
+                            case 106: //tmp
+                                reader.Seek(7, SeekOrigin.Current);
+                                break;
+                            case 20:
+                            case 24:
+                            case 34:
+                            case 37:
+                            case 38:
+                            case 44:
+                            case 45:
+                            case 47:
+                            case 48:
+                            case 59:
+                            case 65:
+                            case 71:
+                            case 72:
+                            case 73:
+                            case 74:
+                            case 82:
+                            case 84:
+                            case 87:
+                            case 92:
+                            case 93:
+                            case 96:
+                            case 97:
+                            case 101:
+                            case 102:
+                            case 104:
+                            case 108:
+                            case 109:
+                            case 110:
+                            case 111: //tmp
+                                reader.Seek(3, SeekOrigin.Current);
+                                break;
+                            case 21:
+                            case 41:
+                            case 42:
+                            case 43:
+                                reader.Seek(7, SeekOrigin.Current);
+                                break;
+                            case 32:
+                                reader.Seek(0xf, SeekOrigin.Current);
+                                GetContainerIdentifier(reader.ReadUInt32(), typeof(Tmd2ScriptableObject), 5);
+                                GetContainerIdentifierTodArray(reader.ReadUInt32(), 5);
+                                break;
+                            case 33:
+                                reader.Seek(7, SeekOrigin.Current);
+                                break;
+                            case 35:
+                                reader.Seek(7, SeekOrigin.Current);
+                                GetContainerIdentifier(reader.ReadUInt32(), typeof(TmdScriptableObject), 7);
+                                reader.Seek(0x14, SeekOrigin.Current);
+                                break;
+                            case 36:
+                                reader.Seek(3, SeekOrigin.Current);
+                                uint pAddress = reader.ReadUInt32();
+
+                                if (pAddress >= 0x80000000)
+                                    GetContainerIdentifier(pAddress, typeof(TodScriptableObject), 8);
+
+                                break;
+                            case 40:
+                                reader.Seek(1, SeekOrigin.Current);
+
+                                if (reader.ReadByte(0xe) == 4)
+                                {
+                                    reader.Seek(0x1e, SeekOrigin.Current);
+                                    GetContainerIdentifier(reader.ReadUInt32(), typeof(TmdScriptableObject), 9);
+                                }
+
+                                switch (reader.ReadByte())
+                                {
+                                    case 0:
+                                        reader.Seek(0x29, SeekOrigin.Current);
+                                        break;
+                                    case 1:
+                                        reader.Seek(0x21, SeekOrigin.Current);
+                                        break;
+                                    case 2:
+                                    case 5:
+                                    case 6:
+                                    case 8:
+                                    case 9:
+                                    case 10:
+                                    case 11:
+                                        reader.Seek(0x19, SeekOrigin.Current);
+                                        break;
+                                    case 3:
+                                        reader.Seek(0x1d, SeekOrigin.Current);
+                                        break;
+                                    case 4:
+                                        reader.Seek(0x25, SeekOrigin.Current);
+                                        break;
+                                    case 7:
+                                        reader.Seek(0x2d, SeekOrigin.Current);
+                                        break;
+                                }
+
+                                break;
+                            case 46:
+                                reader.Seek(0x13, SeekOrigin.Current);
+                                break;
+                            case 53:
+                                reader.Seek(7, SeekOrigin.Current);
+                                break;
+                            case 54:
+                            case 55:
+                            case 77:
+                            case 78:
+                                reader.Seek(7, SeekOrigin.Current);
+                                break;
+                            case 58:
+                            case 90:
+                                reader.Seek(11, SeekOrigin.Current);
+                                break;
+                            case 60:
+                            case 63:
+                                reader.Seek(7, SeekOrigin.Current);
+                                break;
+                            case 61:
+                            case 83:
+                            case 95:
+                                reader.Seek(11, SeekOrigin.Current);
+                                break;
+                            case 64:
+                                reader.Seek(11, SeekOrigin.Current);
+                                break;
+                            case 67:
+                            case 68:
+                            case 69:
+                            case 70:
+                                reader.Seek(7, SeekOrigin.Current);
+                                break;
+                            case 75:
+                            case 85:
+                                reader.Seek(11, SeekOrigin.Current);
+                                break;
+                            case 76:
+                                reader.Seek(0x1f, SeekOrigin.Current);
+                                break;
+                            case 79:
+                            case 80:
+                            case 81:
+                            case 88: //tmp
+                                reader.Seek(7, SeekOrigin.Current);
+                                break;
+                            case 66:
+                                reader.Seek(0x13, SeekOrigin.Current);
+                                break;
+                            default:
+                                Debug.Log("Unknown case: " + type);
+                                break;
+                        }
+                        j++;
+                    }
+                }
+
+                addrPairs.Sort();
+                reader2.Seek(0, SeekOrigin.Begin);
+                lghPosition = reader2.ReadUInt32(0);
+
+                for (i = 0; i < addrPairs.Count; i++)
+                {
+                    if (ram.objects.ContainsKey(addrPairs[i].ramAddress) &&
+                        ram.objects[addrPairs[i].ramAddress] != null)
+                        continue;
+
+                    reader2.Seek(addrPairs[i].ramAddress - 0x80100000, SeekOrigin.Begin);
+                    string extension = ".asset";
+
+                    if (addrPairs[i].refType == typeof(TmdScriptableObject))
+                    {
+                        extension = ".tmd";
+                        TmdPostprocessor.script = true;
+                        TmdPostprocessor.address = addrPairs[i].ramAddress;
+                    }
+                    else if (addrPairs[i].refType == typeof(Tmd2ScriptableObject))
+                    {
+                        extension = ".tmd2";
+                        Tmd2Postprocessor.script = true;
+                        Tmd2Postprocessor.address = addrPairs[i].ramAddress;
+                    }
+                    else if (addrPairs[i].refType == typeof(TodScriptableObject))
+                    {
+                        extension = ".tod";
+                        TodPostprocessor.script = true;
+                        TodPostprocessor.address = addrPairs[i].ramAddress;
+                    }
+                    else if (addrPairs[i].refType == typeof(RefScriptableObject))
+                    {
+                        extension = ".ref";
+                        RefPostprocessor.script = true;
+                        RefPostprocessor.ram = new RamScriptableObject[] { ram };
+                    }
+
+                    int fileSize = 0;
+
+                    for (int k = i + 1; k < addrPairs.Count; k++)
+                    {
+                        if (addrPairs[i].ramAddress != addrPairs[k].ramAddress)
+                        {
+                            fileSize = (int)(addrPairs[k].ramAddress - addrPairs[i].ramAddress);
+                            break;
+                        }
+                    }
+
+                    if (fileSize == 0)
+                        fileSize = (int)(lghPosition - addrPairs[i].ramAddress);
+
+                    string path = outDir + "/" + fileName + "_" + (++exportCount).ToString("D2") + extension;
+                    File.WriteAllBytes(path, reader2.ReadBytes(fileSize));
+                    AssetDatabase.Refresh();
+
+                    if (path.StartsWith(Application.dataPath))
+                        path = "Assets" + path.Substring(Application.dataPath.Length);
+
+                    if (addrPairs[i].refType == typeof(TmdScriptableObject))
+                    {
+                        TmdScriptableObject tmd = AssetDatabase.LoadAssetAtPath(path, typeof(TmdScriptableObject)) as TmdScriptableObject;
+                        TmdPostprocessor.script = false;
+
+                        if (ram.objects.ContainsKey(addrPairs[i].ramAddress))
+                        {
+                            if (ram.objects[addrPairs[i].ramAddress] == null)
+                                ram.objects[addrPairs[i].ramAddress] = tmd;
+                        }
+                        else
+                            ram.objects.Add(addrPairs[i].ramAddress, tmd);
+                    }
+                    else if (addrPairs[i].refType == typeof(Tmd2ScriptableObject))
+                    {
+                        Tmd2ScriptableObject tmd2 = AssetDatabase.LoadAssetAtPath(path, typeof(Tmd2ScriptableObject)) as Tmd2ScriptableObject;
+                        Tmd2Postprocessor.script = false;
+
+                        if (ram.objects.ContainsKey(addrPairs[i].ramAddress))
+                        {
+                            if (ram.objects[addrPairs[i].ramAddress] == null)
+                                ram.objects[addrPairs[i].ramAddress] = tmd2;
+                        }
+                        else
+                            ram.objects.Add(addrPairs[i].ramAddress, tmd2);
+                    }
+                    else if (addrPairs[i].refType == typeof(TodScriptableObject))
+                    {
+                        TodScriptableObject tod = AssetDatabase.LoadAssetAtPath(path, typeof(TodScriptableObject)) as TodScriptableObject;
+                        TodPostprocessor.script = false;
+
+                        if (ram.objects.ContainsKey(addrPairs[i].ramAddress))
+                        {
+                            if (ram.objects[addrPairs[i].ramAddress] == null)
+                                ram.objects[addrPairs[i].ramAddress] = tod;
+                        }
+                        else
+                            ram.objects.Add(addrPairs[i].ramAddress, tod);
+                    }
+                    else if (addrPairs[i].refType == typeof(RefScriptableObject))
+                    {
+                        RefScriptableObject _ref = AssetDatabase.LoadAssetAtPath(path, typeof(RefScriptableObject)) as RefScriptableObject;
+                        RefPostprocessor.script = false;
+
+                        if (ram.objects.ContainsKey(addrPairs[i].ramAddress))
+                        {
+                            if (ram.objects[addrPairs[i].ramAddress] == null)
+                                ram.objects[addrPairs[i].ramAddress] = _ref;
+                        }
+                        else
+                            ram.objects.Add(addrPairs[i].ramAddress, _ref);
+                    }
+                }
+
+                void GetContainerIdentifier(uint address, Type objectType, byte containerId)
+                {
+                    if (address < 0x80100000 || address > 0x80100000 + reader2.Length)
+                        return;
+
+                    addrPairs.Add(new ContainerIdentifier()
+                    {
+                        ramAddress = address,
+                        refType = objectType
+                    });
+                }
+
+                void GetContainerIdentifierTodArray(uint address, byte containerId)
+                {
+                    uint fileAddress = address - 0x80100000;
+                    addrPairs.Add(new ContainerIdentifier()
+                    {
+                        ramAddress = address,
+                        refType = typeof(RefScriptableObject)
+                    });
+                    reader2.Seek(fileAddress, SeekOrigin.Begin);
+
+                    do
+                    {
+                        uint todAddress = reader2.ReadUInt32();
+
+                        if (todAddress < 0x80100000 || todAddress > 0x80100000 + reader2.Length)
+                            continue;
+
+                        addrPairs.Add(new ContainerIdentifier()
+                        {
+                            ramAddress = todAddress,
+                            refType = typeof(TodScriptableObject)
+                        });
+                    } while (reader2.ReadUInt32(4) > 0x80100000 && reader2.ReadUInt32(4) != 0xffffffff);
+                }
+            }
         }
     }
 

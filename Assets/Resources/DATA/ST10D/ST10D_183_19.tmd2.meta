@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: c6d32b18e8a8257409da7e5f2d304d53
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: ddf91a512cec24540a65ac548fcc14b7, type: 3}
+  ramAddress: 2148643900
+  grid: {instanceID: 0}
+  clut: {instanceID: 0}

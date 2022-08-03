@@ -53,6 +53,7 @@ public class Trigger6 : Trigger
     public byte DAT_1F;
     public TmdScriptableObject DAT_20;
     public int DAT_24;
+    public ushort DAT_28;
 
     public void FUN_1A638(CriStatic param1, Vector3Int param2)
     {

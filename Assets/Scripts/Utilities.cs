@@ -1610,6 +1610,34 @@ public static class Utilities
             Coprocessor.mathsAccumulator.mac3);
     }
 
+    //FUN_8F580
+    public static void SetFarColor(long rfc, long gfc, long bfc)
+    {
+        Coprocessor.farColor._rfc = (int)(rfc << 4);
+        Coprocessor.farColor._gfc = (int)(gfc << 4);
+        Coprocessor.farColor._bfc = (int)(bfc << 4);
+    }
+
+    //FUN_8F560
+    public static void SetBackColor(long rbk, long gbk, long bbk)
+    {
+        Coprocessor.backgroundColor._rbk = (int)(rbk << 4);
+        Coprocessor.backgroundColor._gbk = (int)(gbk << 4);
+        Coprocessor.backgroundColor._bbk = (int)(bbk << 4);
+    }
+
+    //FUN_8F528
+    public static void SetDQA(int param1)
+    {
+        Coprocessor.depthQueingA = (short)param1;
+    }
+
+    //FUN_8F534
+    public static void SetDQB(int param1)
+    {
+        Coprocessor.depthQueingB = (uint)param1;
+    }
+
     //FUN_8F2A0
     public static Matrix3x3 ScaleMatrix(ref Matrix3x3 m, ref Vector3Int v)
     {
@@ -1701,6 +1729,50 @@ public static class Utilities
         }
 
         return 0;
+    }
+
+    //FUN_8E930
+    public static void SetFogNearFar(long a, long b, long h)
+    {
+        int iVar1;
+        int iVar2;
+        int iVar3;
+
+        iVar2 = (int)(b - a);
+
+        if (99 < iVar2)
+        {
+            if (iVar2 == 0)
+                return; //trap(0x1c00)
+
+            if (iVar2 == -1 && (-a * b == -0x80000000))
+                return; //trap(0x1800)
+
+            if (iVar2 == 0)
+                return; //trap(0x1c00)
+
+            if (iVar2 == -1 && (b << 12 == -0x80000000))
+                return; //trap(0x1800)
+
+            iVar1 = (int)(-a * b) / iVar2 << 8;
+
+            if (h == 0)
+                return; //trap(0x1c00)
+
+            if (h == -1 && iVar1 == -0x80000000)
+                return; //trap(0x1800)
+
+            iVar3 = (int)(iVar1 / h);
+
+            if (iVar3 < -0x8000)
+                iVar3 = -0x8000;
+
+            if (0x7fff < iVar3)
+                iVar3 = 0x7fff;
+
+            SetDQA(iVar3);
+            SetDQB((int)(b << 12) / iVar2 << 12);
+        }
     }
 
     public static int LeadingZeros(int x)

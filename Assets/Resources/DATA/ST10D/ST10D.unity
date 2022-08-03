@@ -225,9 +225,11 @@ MonoBehaviour:
   DAT_39: 0
   DAT_3B: 0
   DAT_40: 0
+  DAT_47: 0
   playerSpawnPos: {x: 3219, y: 0, z: -462}
   playerSpawnRotY: 2048
   DAT_55: 0
+  DAT_56: 0
   DAT_64: 0
   DAT_68: 0
   DAT_6C: 0
@@ -235,10 +237,13 @@ MonoBehaviour:
   DAT_6E: 0
   DAT_6F: 0
   DAT_78: 0
+  DAT_7C: 0
   DAT_922C: 0
   DAT_9234: 0
+  DAT_98B4: 0
+  DAT_98B8: 0
+  DAT_98BA: 0
   DAT_9AA0: 0
-  DAT_9AA1: 0
   difficulty: 0
   DAT_9AAA: 0
   DAT_9ADC: 0
@@ -249,9 +254,14 @@ MonoBehaviour:
   DAT_9EE9: 0
   DAT_9EEA: 0
   DAT_9EEB: 0
+  DAT_9FDC: {x: 0, y: 0}
   DAT_A090: 
   DAT_A0E0: 0
   DAT_A0E2: 0
+  DAT_A0E8: 0
+  DAT_A0EA: 0
+  DAT_A0EC: 0
+  DAT_A0EE: 0
   playerHealth: 0
   DAT_A0F2: 0
   DAT_A0F4: 0
@@ -605,19 +615,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b79fc90ccc61ef4687689063fb043c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scn: {fileID: -4406283935363021935, guid: b27b6b8894d5a1b4d8d29aee072e40e9, type: 3}
+  scn: {fileID: -4406283935363021935, guid: 93563eec9f5bc614ea41fe7418ad5a8a, type: 3}
   database: {fileID: 11400000, guid: 536651ecb139fdf4ba707b4c44b49643, type: 2}
   DAT_AC: 
   cCamera: {fileID: 0}
-  sceneCollision: {fileID: -6028080052161987059, guid: 695439e953ff10a45bb5f5bcf3686851, type: 3}
-  lightSource: {fileID: -7488134631618437631, guid: 809006b2df20a7349b24ce62bf3e1fe6, type: 3}
-  motions: {fileID: 9013893561334630828, guid: 95ad2a861941bc64baa7381e2b8776d8, type: 3}
-  triggers: []
+  sceneCollision: {fileID: -6028080052161987059, guid: a21e0bee172176443860d64df6dfe894, type: 3}
+  lightSource: {fileID: -7488134631618437631, guid: 303738c09b11fb04fbe3572f106f9942, type: 3}
+  motions: {fileID: 9013893561334630828, guid: f5377b8f0f633e544bb5674379cda917, type: 3}
   DAT_270: 0
   DAT_27C: []
   DAT_1C9C: []
   DAT_5FCC: []
   DAT_7CDC: []
+  DAT_9EEC: []
+  DAT_C3230: {fileID: 0}
   DAT_C51B8: 0
   DAT_C51BC: 0
   DAT_C51C0: 0
@@ -768,7 +779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cfuStatus: PSXEffects v1.15.5 - update available (click to update).
   sections: 01010100
-  customRes: {x: 793, y: 422}
+  customRes: {x: 782, y: 422}
   resolutionFactor: 1
   limitFramerate: -1
   skipFrames: 0

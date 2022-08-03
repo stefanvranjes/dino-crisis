@@ -29,6 +29,20 @@ public class Hit
     public CriPlayer DAT_34; //0x34
 }
 
+[System.Serializable]
+public class LoadScriptContainer
+{
+    public ushort DAT_02; //0x02
+    public string scriptName; //0x08
+    public List<LoadSceneContainer> scenes; //0x0C
+}
+
+[System.Serializable]
+public class LoadSceneContainer
+{
+    public byte DAT_08; //0x08
+}
+
 public delegate void FUN_148(CriPlayer p);
 public delegate void FUN_14C(CriPlayer p);
 
@@ -57,6 +71,7 @@ public class GameManager : MonoBehaviour
     public LightSource DAT_0C; //gp+0ch
     public byte DAT_20; //gp+20h
     public byte DAT_21; //gp+21h
+    public bool DAT_23; //gp+23h
     public short DAT_28; //gp+28h
     public short DAT_2A; //gp+2ah
     public short DAT_2C; //gp+2ch
@@ -64,6 +79,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_38; //gp+38h
     public byte DAT_39; //gp+39h
     public byte DAT_3B; //gp+3bh
+    public int DAT_3C; //gp+3ch
     public uint DAT_40; //gp+40h
     public byte DAT_47; //gp+47h
     public Vector3Int playerSpawnPos; //gp+4ch
@@ -123,6 +139,7 @@ public class GameManager : MonoBehaviour
     public Packet DAT_C33A8;
     public Frame[] DAT_C33AC;
     public ushort DAT_C33B0;
+    public List<LoadScriptContainer> DAT_9E0A0;
     public List<Vector3> skinnedVertices; //0x800C6F90
     public List<Color> skinnedColors; //0x800C75D0
     public List<CriSkinned> skinnedList; //0x800C7C10
@@ -419,6 +436,46 @@ public class GameManager : MonoBehaviour
         DAT_A0F8[2] = oVar1.DAT_244[2];
         DAT_A0F8[3] = oVar1.DAT_244[3];
         //copying...
+    }
+
+    public void FUN_6E6C8()
+    {
+        int puVar1;
+        uint uVar3;
+        int iVar4;
+        byte[] local_10;
+
+        local_10 = new byte[6] { 0x15, 7, 0xf, 0xe, 0x12, 0x16 };
+        uVar3 = 0;
+
+        if ((byte)(DAT_9AA0 >> 8) < 7U)
+        {
+            iVar4 = 0;
+
+            if ((byte)(DAT_9AA0 >> 8) != 1)
+            {
+                puVar1 = 0;
+
+                do
+                {
+                    uVar3++;
+                    iVar4 += local_10[puVar1];
+                    puVar1 = (int)uVar3;
+                } while (uVar3 < (byte)(DAT_9AA0 >> 8) - 1);
+            }
+
+            iVar4 += (byte)DAT_9AA0;
+
+            if (DAT_47 != 0x12)
+            {
+                if (iVar4 != 0x5a || InventoryManager.FUN_4A87C(0, 0x82))
+                    InventoryManager.FUN_4A7E8(12, (uint)iVar4, true);
+
+                if ((byte)(DAT_9AA0 >> 8) == (byte)(DAT_A0E2 >> 8) && 
+                    (byte)DAT_9AA0 == (byte)DAT_A0E2)
+                    DAT_A0E2 = 0;
+            }
+        }
     }
 
     public Vector2Int[] FUN_813F0(Vector2Int[] param1, WallCollider param2)

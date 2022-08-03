@@ -20,6 +20,7 @@ public class LightScriptableObject : ScriptableObject
     public ushort DAT_00;
     public ushort DAT_02;
     public byte DAT_06;
+    public Color32 DAT_08;
     public Vector3Int DAT_0C;
     public Vector3Int DAT_12;
     public byte DAT_18;

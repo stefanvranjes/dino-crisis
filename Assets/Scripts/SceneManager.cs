@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -2294,6 +2295,111 @@ public class SceneManager : MonoBehaviour
     public FloorCollider FUN_645C8(uint param1, uint param2)
     {
         return sceneCollision.FLOOR_SEGMENT.FLOOR_COLLIDERS[param2 & 0xff];
+    }
+
+    public bool FUN_80030(CriSkinned param1, bool param2, byte param3)
+    {
+        byte bVar2;
+        uint uVar3;
+        CriSkinned pcVar4;
+        uint uVar5;
+        uint uVar6;
+        bool bVar7;
+        bool bVar8;
+
+        uVar5 = 0;
+        param1.DAT_128 = 0;
+        param1.DAT_12A = 0;
+        param1.DAT_12B = 0;
+        param1.FUN_66208();
+        bVar7 = false;
+        bVar8 = bVar7;
+
+        if (param1.PTR_120 != null && param1.DAT_177 == 0)
+        {
+            uVar6 = 10;
+
+            if (param1 == DAT_27C[uVar6])
+            {
+                if ((param1.DAT_12C & 0x40) == 0)
+                {
+                    uVar6 = 0;
+                    bVar8 = bVar7;
+
+                    if (uVar6 < Array.IndexOf(DAT_27C, param1))
+                    {
+                        do
+                        {
+                            pcVar4 = DAT_27C[uVar5];
+
+                            if ((pcVar4.flags & 1) != 0 && (pcVar4.DAT_12C & 0x10) == 0 &&
+                                pcVar4.DAT_177 == 0)
+                            {
+                                bVar2 = GameManager.instance.FUN_7FB78(param1, pcVar4, param2, param3);
+                                param1.DAT_12A = bVar2;
+
+                                if (bVar2 != 0)
+                                {
+                                    bVar8 = true;
+                                    param1.DAT_128 |= (ushort)(1 << (int)(uVar5 & 0x1f));
+                                }
+                            }
+
+                            uVar5++;
+                            uVar6++;
+                        } while (uVar5 < 10);
+                    }
+                }
+            }
+            else
+            {
+                if ((param1.DAT_12C & 0x40) == 0)
+                {
+                    uVar3 = 0;
+
+                    if (uVar3 < uVar6)
+                    {
+                        do
+                        {
+                            pcVar4 = DAT_27C[uVar5];
+
+                            if ((pcVar4.flags & 1) != 0 && param1 != DAT_27C[uVar3] &&
+                                (pcVar4.DAT_12C & 0x40) == 0 && pcVar4.DAT_177 == 0)
+                            {
+                                bVar2 = GameManager.instance.FUN_7FB78(param1, pcVar4, param2, param3);
+                                param1.DAT_12A = bVar2;
+
+                                if (bVar2 != 0)
+                                {
+                                    bVar7 = true;
+                                    param1.DAT_128 |= (ushort)(1 << (int)(uVar5 & 0x1f));
+                                }
+                            }
+
+                            uVar5++;
+                            uVar3++;
+                        } while (uVar5 < 10);
+                    }
+
+                    bVar8 = bVar7;
+
+                    if ((param1.DAT_12C & 0x10) == 0 && (DAT_27C[10].DAT_12C & 0x40) == 0 && 
+                        DAT_27C[10].DAT_177 == 0)
+                    {
+                        bVar2 = GameManager.instance.FUN_7FB78(param1, DAT_27C[uVar6], param2, param3);
+                        param1.DAT_12B = bVar2;
+
+                        if (bVar2 != 0)
+                        {
+                            bVar8 = true;
+                            param1.DAT_128 |= 0x400;
+                        }
+                    }
+                }
+            }
+        }
+
+        return bVar8;
     }
 
     private bool FUN_8037C(WallCollider param1, Hit param2)

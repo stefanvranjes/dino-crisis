@@ -602,7 +602,7 @@ public class GameManager : MonoBehaviour
 
     private sbyte FUN_82834(CriPlayer param1, CriStatic param2)
     {
-        bool bVar1;
+        sbyte sVar1;
         ushort uVar2;
         sbyte sVar3;
         byte bVar4;
@@ -623,16 +623,16 @@ public class GameManager : MonoBehaviour
         MStack128 = new Matrix3x3();
         Utilities.RotMatrix_gte(ref local_88, ref MStack128);
         v0 = param1.DAT_120;
-        bVar1 = param1.DAT_12E;
+        sVar1 = param1.DAT_12E;
         local_58 = new Hit();
         local_58.DAT_0C = new Vector2Int[4];
         FUN_81720(param2, local_58.DAT_0C);
         local_60 = new short[4];
         FUN_82730(local_60, local_58.DAT_0C);
-        sVar3 = (sbyte)((bVar1 ? 1 : 0) - 1);
+        sVar3 = (sbyte)(sVar1 - 1);
         local_58.DAT_00 = new Vector2Int[3];
 
-        if (bVar1)
+        if (sVar1 != 0)
         {
             do
             {
@@ -1435,6 +1435,219 @@ public class GameManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public byte FUN_7FB78(CriSkinned param1, CriSkinned param2, bool param3, byte param4)
+    {
+        short sVar1;
+        ushort uVar2;
+        ushort uVar3;
+        short sVar4;
+        int iVar5;
+        CriObject oVar5;
+        int iVar6;
+        CriObject oVar6;
+        long lVar7;
+        int iVar8;
+        int iVar9;
+        int iVar10;
+        CapsuleCollider pSVar11;
+        CapsuleCollider pSVar12;
+        int iVar13;
+        Vector3Int v0;
+        short local_b8;
+        short local_b6;
+        short local_a8;
+        short local_a6;
+        Vector3Int local_58;
+        bool local_50;
+        byte local_4f;
+        byte local_48;
+        byte local_40;
+        sbyte local_38;
+        Vector3Int local_30;
+        uint local_2c;
+        byte local_28;
+        Matrix3x3 MStack152;
+        Matrix3x3 MStack120;
+
+        if (param1.PTR_120 != null)
+        {
+            if (param2.PTR_120 == null)
+                return 0;
+
+            iVar5 = param1.screen.x - param2.screen.x;
+
+            if (iVar5 < 0)
+                iVar5 = param2.screen.x - param1.screen.x;
+
+            if (10000 < iVar5)
+                return 0;
+
+            iVar5 = param1.screen.z - param2.screen.z;
+
+            if (iVar5 < 0)
+                iVar5 = param2.screen.z - param1.screen.z;
+
+            if (iVar5 <= 10000)
+            {
+                local_50 = param3;
+                local_4f = param4;
+                MStack152 = new Matrix3x3();
+                MStack120 = new Matrix3x3();
+                Utilities.RotMatrix_gte(ref param1.vr, ref MStack152);
+                Utilities.RotMatrix_gte(ref param2.vr, ref MStack120);
+                local_40 = 0;
+                local_48 = 0;
+
+                if (local_4f == 0)
+                    return 0;
+
+                do
+                {
+                    local_38 = param2.DAT_12E;
+                    pSVar12 = param1.PTR_120[param1.DAT_120 + local_48];
+                    local_30 = pSVar12.pos;
+                    local_58 = Utilities.ApplyMatrixSV(ref MStack152, ref local_30);
+                    oVar5 = null;
+
+                    if (pSVar12.bone != -1)
+                        oVar5 = Utilities.FUN_601C8(param1.skeleton, pSVar12.bone);
+
+                    local_38--;
+
+                    if (local_38 != -1)
+                    {
+                        local_2c = local_48;
+                        local_28 = 0;
+
+                        do
+                        {
+                            pSVar11 = param2.PTR_120[param2.DAT_120 + local_28];
+                            v0 = pSVar11.pos;
+
+                            if (oVar5 == null)
+                            {
+                                local_b8 = (short)param1.screen.x;
+                                local_b6 = (short)param1.screen.y;
+                                sVar4 = (short)param1.screen.z;
+                            }
+                            else
+                            {
+                                local_b8 = (short)oVar5.screen.x;
+                                local_b6 = (short)oVar5.screen.y;
+                                sVar4 = (short)oVar5.screen.z;
+                            }
+
+                            local_b6 += (short)local_58.y;
+                            local_b8 += (short)local_58.x;
+                            sVar4 += (short)local_58.z;
+                            local_58 = Utilities.ApplyMatrixSV(ref MStack120, ref v0);
+
+                            if (pSVar11.bone == -1)
+                            {
+                                local_a8 = (short)(param2.screen.x + local_58.x);
+                                local_a6 = (short)(param2.screen.y + local_58.y);
+                                sVar1 = (short)param2.screen.z;
+                            }
+                            else
+                            {
+                                oVar6 = Utilities.FUN_601C8(param2.skeleton, pSVar11.bone);
+                                local_a8 = (short)(oVar6.screen.x + local_58.x);
+                                local_a6 = (short)(oVar6.screen.y + local_58.y);
+                                sVar1 = (short)oVar6.screen.z;
+                            }
+
+                            iVar9 = local_b8 - local_a8;
+                            iVar10 = sVar4 - (short)(sVar1 + local_58.z);
+                            uVar2 = pSVar12.radius;
+                            uVar3 = pSVar11.radius;
+                            lVar7 = Utilities.SquareRoot0(iVar9 * iVar9 + iVar10 * iVar10);
+                            iVar6 = (int)(uVar2 + uVar3 - lVar7);
+
+                            if (0 < iVar6)
+                            {
+                                iVar8 = local_b6 - local_a6;
+
+                                if (iVar8 < 0)
+                                    uVar2 = pSVar11.height;
+                                else
+                                    uVar2 = pSVar12.height;
+
+                                if (iVar8 < 0)
+                                    iVar8 = -iVar8;
+
+                                if (iVar8 < uVar2)
+                                {
+                                    iVar8 = (int)(lVar7 + 1);
+                                    local_40 |= (byte)(1 << (int)(local_2c & 0x1f));
+
+                                    if (iVar8 == 0)
+                                        return 0; //trap(0x1c00)
+
+                                    if (iVar8 == -1 && iVar9 * iVar6 == -0x80000000)
+                                        return 0; //trap(0x1800)
+
+                                    iVar13 = (iVar9 * iVar6) / iVar8;
+
+                                    if (param2.screen.x != param2.DAT_34.x)
+                                    {
+                                        if (iVar13 < 0)
+                                        {
+                                            if (iVar13 < -100)
+                                                iVar13 = -100;
+                                        }
+                                        else
+                                        {
+                                            if (100 < iVar13)
+                                                iVar13 = 100;
+                                        }
+                                    }
+
+                                    if (iVar8 == 0)
+                                        return 0; //trap(0x1c00)
+
+                                    if (iVar8 == -1 && iVar10 * iVar6 == -0x80000000)
+                                        return 0; //trap(0x1800)
+
+                                    iVar9 = (iVar10 * iVar6) / iVar8;
+
+                                    if (param2.screen.z != param2.DAT_34.z)
+                                    {
+                                        if (iVar9 < 0)
+                                        {
+                                            if (iVar9 < -100)
+                                                iVar9 = -100;
+                                        }
+                                        else
+                                        {
+                                            if (100 < iVar9)
+                                                iVar9 = 100;
+                                        }
+                                    }
+
+                                    if (local_50 && (param1.DAT_12C & 0x100) == 0)
+                                    {
+                                        param1.screen.x += iVar13;
+                                        param1.screen.z += iVar9;
+                                        param1.FUN_66208();
+                                    }
+                                }
+                            }
+
+                            local_38--;
+                            local_28++;
+                        } while (local_38 != -1);
+                    }
+
+                    local_48++;
+                } while (local_48 < local_4f);
+
+                return local_40;
+            }
+        }
+
+        return 0;
     }
 
     public void FUN_7302C()

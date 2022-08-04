@@ -656,7 +656,7 @@ public class CriPlayer : CriSkinned
             if ((DAT_1C0 & 1) != 0 && (DAT_3C == 1 || DAT_3C == 4))
                 FUN_65A28();
 
-            //FUN_80030
+            SceneManager.instance.FUN_80030(this, DAT_18D, 1);
             FUN_52618();
             local_18 = null;
             local_14 = 0;
@@ -739,7 +739,7 @@ public class CriPlayer : CriSkinned
         DAT_130 = 1;
         PTR_130 = DAT_9CDB0;
         DAT_18D = true;
-        DAT_12E = true;
+        DAT_12E = 1;
         DAT_12F = true;
         DAT_46 = 320;
         flags |= 2;
@@ -3772,6 +3772,58 @@ public class CriPlayer : CriSkinned
         DAT_3D = 0;
     }
 
+    public void FUN_54EF8()
+    {
+        byte bVar1;
+        byte bVar2;
+        CriBone oVar4;
+        uint uVar5;
+        CriBone oVar6;
+
+        if ((GameManager.instance.DAT_40 & 0x400) == 0)
+        {
+            DAT_34 = screen;
+            FUN_5211C(DAT_1CF);
+        }
+
+        vr.y &= 0xfff;
+        Utilities.RotMatrix(ref vr, ref cTransform.rotation);
+
+        if ((GameManager.instance.DAT_40 & 0x400) == 0)
+        {
+            oVar4 = (CriBone)Utilities.FUN_601C8(skeleton, 11);
+            oVar6 = skeleton;
+            DAT_184[0] = oVar4;
+            oVar4 = (CriBone)Utilities.FUN_601C8(oVar6, 14);
+            DAT_184[1] = oVar4;
+            FUN_659D0();
+            //...
+            bVar1 = frames[frameNum].DAT_03;
+
+            if ((bVar1 & 3) != 0)
+            {
+                bVar2 = DAT_18E;
+                uVar5 = 0xbc;
+
+                if (bVar2 != 0)
+                {
+                    uVar5 = 0xc2;
+
+                    if (bVar2 == 1)
+                        uVar5 = 0xb6;
+                }
+
+                //FUN_5D0C4
+                DAT_1C0 ^= 2;
+            }
+
+            FUN_62F3C(ref DAT_40);
+            SceneManager.instance.FUN_80030(this, false, 1);
+            FUN_65A28();
+            FUN_52618();
+        }
+    }
+
     private void FUN_2F800(CriPlayer param1)
     {
         if (param1.DAT_98 == DAT_98)
@@ -4857,7 +4909,7 @@ public class CriPlayer : CriSkinned
         DAT_124 = 0;
         DAT_120 = 0;
         DAT_12F = false;
-        DAT_12E = false;
+        DAT_12E = 0;
         DAT_11E |= 0x81;
         DAT_227 &= 0x7f;
         //FUN_5C94C

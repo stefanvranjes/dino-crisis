@@ -43,8 +43,11 @@ public class CriSkinned : CriObject
     public CapsuleCollider[] PTR_120;
     public int DAT_124; //0x124
     public CapsuleCollider[] PTR_124;
+    public ushort DAT_128; //0x128
+    public byte DAT_12A; //0x12A
+    public byte DAT_12B; //0x12B
     public ushort DAT_12C; //0x12C
-    public bool DAT_12E; //0x12E
+    public sbyte DAT_12E; //0x12E
     public bool DAT_12F; //0x12F
     public int DAT_130; //0x130
     public CapsuleCollider[] PTR_130;
@@ -202,8 +205,11 @@ public class CriSkinned : CriObject
         PTR_120 = null;
         DAT_124 = 0;
         PTR_124 = null;
+        DAT_128 = 0;
+        DAT_12A = 0;
+        DAT_12B = 0;
         DAT_12C = 0;
-        DAT_12E = false;
+        DAT_12E = 0;
         DAT_12F = false;
         DAT_130 = 0;
         PTR_130 = null;

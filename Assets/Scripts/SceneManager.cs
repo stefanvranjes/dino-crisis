@@ -20,6 +20,7 @@ public class SceneManager : MonoBehaviour
     public ushort DAT_A4; //gp+a4h
     public byte[] DAT_AC; //gp+ach
     public CriCamera cCamera; //gp+b4h
+    public WaypointScriptableObject waypoints; //gp+150h
     public SceneColliderScriptableObject sceneCollision; //gp+154h
     public LightScriptableObject lightSource; //gp+15ch
     public SceneCameraScriptableObject motions; //gp+164h, gp+160h -> motions.Length

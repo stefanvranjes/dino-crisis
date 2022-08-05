@@ -2038,6 +2038,24 @@ public static class Utilities
         return (uint)(iVar1 * iVar1 + iVar2 * iVar2);
     }
 
+    public static uint FUN_631AC(Vector3Int param1, Vector3Int param2)
+    {
+        int iVar1;
+        int iVar2;
+
+        iVar1 = param2.x - param1.x;
+
+        if (iVar1 < 0)
+            iVar1 = -iVar1;
+
+        iVar2 = param2.z - param1.z;
+
+        if (iVar2 < 0)
+            iVar2 = -iVar2;
+
+        return (uint)SquareRoot0(iVar1 * iVar1 + iVar2 * iVar2);
+    }
+
     public static uint FUN_64838(int param1, uint param2, int param3)
     {
         uint uVar1;

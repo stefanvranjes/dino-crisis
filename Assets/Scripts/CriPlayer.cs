@@ -8,6 +8,7 @@ public class CriPlayer : CriSkinned
     public sbyte DAT_1C4; //0x1C4
     public byte DAT_1C5; //0x1C5
     public byte DAT_1C6; //0x1C6
+    public sbyte DAT_1C7; //0x1C7
     public sbyte DAT_1C8; //0x1C8
     public byte DAT_1C9; //0x1C9
     public short DAT_1CA; //0x1CA
@@ -36,6 +37,7 @@ public class CriPlayer : CriSkinned
     public Vector3Int DAT_1FC; //0x1FC
     public Vector3Int DAT_204; //0x204
     public Vector2Int DAT_20C; //0x20C
+    public int IDAT_20C; //0x20C
     public byte DAT_210; //0x210
     public byte DAT_211; //0x211
     public byte DAT_212; //0x212
@@ -44,6 +46,7 @@ public class CriPlayer : CriSkinned
     public byte DAT_217; //0x217
     public bool DAT_218; //0x218
     public byte DAT_219; //0x219
+    public Vector4Int V4_21C; //0x21C
     public Object[] REFS;
     public int DAT_21C; //0x21C
     public int DAT_220; //0x220
@@ -95,6 +98,7 @@ public class CriPlayer : CriSkinned
     private delegate void FUN_9D1A0();
     private delegate void FUN_9D1AC();
     private delegate void FUN_9D1B8();
+    private delegate void FUN_9D1F4();
     private FUN_9AD14[] PTR_FUN_9AD14;
     private FUN_9AD60[] PTR_FUN_9AD60;
     private FUN_9AD6C[] PTR_FUN_9AD6C;
@@ -138,6 +142,7 @@ public class CriPlayer : CriSkinned
     private FUN_9D1A0[] PTR_FUN_9D1A0;
     private FUN_9D1AC[] PTR_FUN_9D1AC;
     private FUN_9D1B8[] PTR_FUN_9D1B8;
+    private FUN_9D1F4[] PTR_FUN_9D1F4;
 
     private static byte DAT_9CDC6;
     private static CapsuleCollider[] DAT_9CDB0 = new CapsuleCollider[]
@@ -211,6 +216,18 @@ public class CriPlayer : CriSkinned
     {
         0x50, 0x30, 0x20, 0
     };
+    private static CapsuleCollider[] DAT_9D1C8 = new CapsuleCollider[1]
+    {
+        new CapsuleCollider()
+        {
+            pos = new Vector3Int(0, 0x4a1, 0),
+            radius = 320,
+            height = 1770,
+            bone = 8,
+            flags = 0x80
+        }
+    };
+    private static Object[] DAT_9D1D4 = new Object[2] { null, null };
 
     protected override void Awake()
     {
@@ -538,6 +555,15 @@ public class CriPlayer : CriSkinned
             FUN_53CD8,
             FUN_54E38
         };
+        PTR_FUN_9D1F4 = new FUN_9D1F4[6]
+        {
+            FUN_55078,
+            FUN_55150,
+            null,
+            null,
+            FUN_53B30,
+            FUN_55170
+        };
         DAT_244 = new ushort[4];
     }
 
@@ -563,6 +589,7 @@ public class CriPlayer : CriSkinned
         DAT_1C4 = 0;
         DAT_1C5 = 0;
         DAT_1C6 = 0;
+        DAT_1C7 = 0;
         DAT_1C8 = 0;
         DAT_1C9 = 0;
         DAT_1CA = 0;
@@ -591,6 +618,7 @@ public class CriPlayer : CriSkinned
         DAT_1FC = Vector3Int.zero;
         DAT_204 = Vector3Int.zero;
         DAT_20C = Vector2Int.zero;
+        IDAT_20C = 0;
         DAT_210 = 0;
         DAT_211 = 0;
         DAT_212 = 0;
@@ -599,6 +627,7 @@ public class CriPlayer : CriSkinned
         DAT_217 = 0;
         DAT_218 = false;
         DAT_219 = 0;
+        V4_21C = Vector4Int.zero;
         REFS = null;
         DAT_21C = 0;
         DAT_220 = 0;
@@ -3797,7 +3826,7 @@ public class CriPlayer : CriSkinned
             oVar4 = (CriBone)Utilities.FUN_601C8(oVar6, 14);
             DAT_184[1] = oVar4;
             FUN_659D0();
-            //...
+            PTR_FUN_9D1F4[DAT_3C]();
             bVar1 = frames[frameNum].DAT_03;
 
             if ((bVar1 & 3) != 0)
@@ -3824,6 +3853,39 @@ public class CriPlayer : CriSkinned
         }
     }
 
+    private void FUN_55078()
+    {
+        REFS = DAT_9D1D4;
+        DAT_21C = 0;
+        DAT_220 = 1;
+        PTR_120 = DAT_9D1C8;
+        DAT_120 = 0;
+        DAT_12E = 1;
+        health = 1000;
+        maxHealth = 1000;
+        DAT_1D7 = 0;
+        DAT_3F = 0;
+        DAT_3E = 0;
+        DAT_3D = 0;
+        DAT_175 = 0x87;
+        FUN_5342C();
+        FUN_535E4(-0x80, -0x80);
+        FUN_65984(11, 14);
+        FUN_609C8((TodScriptableObject)REFS[DAT_220], 0, 0);
+        FUN_66404(8, 0x1000, 0x1000);
+        DAT_3C++;
+    }
+
+    private void FUN_55150()
+    {
+        FUN_60AB4();
+    }
+
+    private void FUN_55170()
+    {
+        //...
+    }
+
     private void FUN_2F800(CriPlayer param1)
     {
         if (param1.DAT_98 == DAT_98)
@@ -3834,6 +3896,58 @@ public class CriPlayer : CriSkinned
         param1.DAT_152 = 0;
         DAT_152 = 0;
         param1.DAT_11E &= 0xf7;
+    }
+
+    public void FUN_2FAB0()
+    {
+        byte bVar1;
+        sbyte sVar4;
+        int iVar7;
+        Vector3Int plVar11;
+
+        Utilities.RotMatrix(ref vr, ref cTransform.rotation);
+
+        if (DAT_3C != 0)
+        {
+            if ((GameManager.instance.DAT_40 & 2) != 0)
+            {
+                FUN_66208();
+                return;
+            }
+
+            if ((DAT_18E & 0x80) != 0)
+            {
+                FUN_66208();
+                goto LAB_2FE28;
+            }
+        }
+
+        if (DAT_3C == 1 && DAT_3D == 0x19)
+            plVar11 = (Vector3Int)V4_21C;
+        else
+            plVar11 = SceneManager.instance.DAT_27C[10].screen;
+
+        sVar4 = GameManager.instance.FUN_774CC(this, plVar11);
+        DAT_1C7 = sVar4;
+
+        if (DAT_1C7 == -1)
+        {
+            GameManager.instance.FUN_77238((byte)DAT_48, ref V4_21C);
+            sVar4 = GameManager.instance.FUN_774CC(this, (Vector3Int)V4_21C);
+            DAT_1C7 = sVar4;
+        }
+
+        DAT_34 = screen;
+        iVar7 = (int)Utilities.FUN_631AC(screen, SceneManager.instance.DAT_27C[10].screen);
+        bVar1 = DAT_177;
+        IDAT_20C = iVar7;
+
+        if (bVar1 != 0)
+            DAT_177 = (byte)(bVar1 - 1);
+
+        //...
+
+        LAB_2FE28:;
     }
 
     private void FUN_2B828()

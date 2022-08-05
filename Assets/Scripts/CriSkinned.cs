@@ -35,6 +35,7 @@ public class CriSkinned : CriObject
     public Vector3Int DAT_EC; //0xEC
     public Vector3Int DAT_F2; //0xF2
     public Vector3Int DAT_F8; //0xF8
+    public Vector3Int DAT_10C; //0x10C
     public short DAT_112; //0x112
     public short health; //0x118
     public short maxHealth; //0x11A
@@ -55,6 +56,8 @@ public class CriSkinned : CriObject
     public Vector2Int DAT_13C; //0x13C
     public ushort DAT_140; //0x140
     public sbyte DAT_142; //0x142
+    public ushort DAT_144; //0x144
+    public ushort DAT_148; //0x148
     public Vector3Int DAT_14C; //0x14C
     public short DAT_152; //0x152
     public CriSkinned DAT_154; //0x154
@@ -197,6 +200,7 @@ public class CriSkinned : CriObject
         DAT_EC = Vector3Int.zero;
         DAT_F2 = Vector3Int.zero;
         DAT_F8 = Vector3Int.zero;
+        DAT_10C = Vector3Int.zero;
         DAT_112 = 0;
         health = 0;
         maxHealth = 0;
@@ -217,6 +221,8 @@ public class CriSkinned : CriObject
         DAT_13C = Vector2Int.zero;
         DAT_140 = 0;
         DAT_142 = 0;
+        DAT_144 = 0;
+        DAT_148 = 0;
         DAT_14C = Vector3Int.zero;
         DAT_152 = 0;
         DAT_154 = null;

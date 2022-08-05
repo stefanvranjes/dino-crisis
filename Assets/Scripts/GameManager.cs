@@ -51,8 +51,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public static SceneManager sceneManager;
 
-    private static ushort DAT_B58BA;
-
     public ushort DAT_1f800008;
     public ushort DAT_1f80000a;
     public ushort DAT_1f800024;
@@ -244,6 +242,27 @@ public class GameManager : MonoBehaviour
         DAT_6C = (byte)param1;
         DAT_6F = param3;
         DAT_64 = 0x1000000 / param2;
+    }
+
+    private void FUN_4A3C4()
+    {
+        CriPlayer pbVar1;
+        int iVar2;
+        int iVar3;
+
+        iVar3 = 10;
+        iVar2 = 0;
+
+        do
+        {
+            pbVar1 = (CriPlayer)SceneManager.instance.DAT_27C[iVar2];
+
+            if ((pbVar1.flags & 1) != 0)
+                LevelManager.instance.PTR_FUN_B58C0[pbVar1.tags](pbVar1);
+
+            iVar3--;
+            iVar2++;
+        } while (iVar3 != -1);
     }
 
     public void FUN_4A4FC()
@@ -1437,6 +1456,178 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    private sbyte FUN_769B0(CriSkinned param1, WaypointContainer param2, sbyte[] param3, Vector2Int param4, Vector3Int param5)
+    {
+        return 0; //tmp
+    }
+
+    public sbyte FUN_77238(uint param1, ref Vector4Int param2)
+    {
+        ushort uVar1;
+        short sVar2;
+        uint uVar3;
+        int iVar4;
+        int psVar5;
+        uint uVar6;
+        WaypointContainer pbVar7;
+
+        if (SceneManager.instance.waypoints == null)
+            uVar3 = 0xff;
+        else
+        {
+            pbVar7 = SceneManager.instance.waypoints.WAYPOINTS[param1 & 0xff];
+            uVar6 = pbVar7.DAT_00;
+            uVar3 = 0xff;
+
+            if (uVar6 != 0)
+            {
+                iVar4 = (int)FUN_64650();
+
+                if (uVar6 == 0)
+                    return -1; //trap(0x1c00)
+
+                if (uVar6 == 0xffffffff && iVar4 == -0x80000000)
+                    return -1; //trap(0x1800)
+
+                uVar3 = (uint)(iVar4 % (int)uVar6 & 0xff);
+                psVar5 = (int)(uVar3 * 24);
+                uVar1 = pbVar7.OFF_02[psVar5 + 2];
+                sVar2 = (short)pbVar7.OFF_02[psVar5];
+                param2.y = 0;
+                param2.x = sVar2 + (short)((uint)uVar1 >> 1);
+                uVar1 = pbVar7.OFF_02[psVar5 + 3];
+                sVar2 = (short)pbVar7.OFF_02[psVar5 + 1];
+                param2.w = (iVar4 % (int)uVar6) & 0xff;
+                param2.z = sVar2 + (short)((uint)uVar1 >> 1);
+            }
+        }
+
+        return (sbyte)uVar3;
+    } 
+
+    private sbyte FUN_7732C(ushort param1, ushort param2, uint param3)
+    {
+        WaypointContainer pbVar1;
+        int puVar2;
+        int psVar3;
+        uint uVar4;
+
+        if (SceneManager.instance.waypoints != null)
+        {
+            pbVar1 = SceneManager.instance.waypoints.WAYPOINTS[param3 & 0xff];
+            uVar4 = pbVar1.DAT_00;
+
+            if (uVar4 != 0)
+            {
+                psVar3 = (int)(uVar4 * 24);
+                puVar2 = psVar3 - 24;
+
+                do
+                {
+                    psVar3 -= 24;
+                    uVar4--;
+
+                    if ((uint)(pbVar1.OFF_02[psVar3] + pbVar1.OFF_02[puVar2 - 1] - param1) < pbVar1.OFF_02[puVar2 - 1] &&
+                        (uint)(pbVar1.OFF_02[puVar2 - 2] + pbVar1.OFF_02[puVar2] - param2) < pbVar1.OFF_02[puVar2])
+                        return (sbyte)(uVar4 & 0xff);
+
+                    puVar2 -= 24;
+                } while ((uVar4 & 0xffff) != 0);
+            }
+        }
+
+        return -1;
+    }
+
+    public sbyte FUN_774CC(CriSkinned param1, Vector3Int param2)
+    {
+        ushort uVar1;
+        ushort uVar2;
+        CriBone oVar3;
+        long lVar4;
+        uint uVar5;
+        CapsuleCollider psVar6;
+        WaypointContainer pcVar7;
+        Vector3Int local_30;
+        Vector3Int local_28;
+        sbyte[] local_20;
+        Vector2Int local_1c;
+        Matrix3x3 MStack80;
+
+        uVar1 = param1.DAT_144;
+
+        if ((uVar1 & 0x8000) != 0)
+        {
+            if ((uVar1 & 0x1f) == 0)
+            {
+                pcVar7 = SceneManager.instance.waypoints.WAYPOINTS[param1.DAT_48];
+
+                if (pcVar7.DAT_00 == 0)
+                    return -1;
+
+                psVar6 = param1.PTR_130[param1.DAT_130];
+                local_28 = new Vector3Int();
+
+                if (param1.PTR_130 == null)
+                {
+                    local_28.x = param1.screen.x;
+                    local_28.z = param1.screen.z;
+                }
+                else
+                {
+                    local_30 = new Vector3Int(0, param1.vr.y, 0);
+                    MStack80 = new Matrix3x3();
+                    Utilities.RotMatrix(ref local_30, ref MStack80);
+                    local_30 = new Vector3Int(psVar6.pos.x, 0, psVar6.pos.z);
+                    local_30 = Utilities.ApplyMatrixSV(ref MStack80, ref local_30);
+
+                    if (psVar6.bone == -1)
+                    {
+                        local_28.x = param1.screen.x + local_30.x;
+                        local_28.z = param1.screen.z + local_30.z;
+                    }
+                    else
+                    {
+                        oVar3 = (CriBone)Utilities.FUN_601C8(param1.skeleton, psVar6.bone);
+                        local_28.x = oVar3.screen.x + local_30.x;
+                        local_28.z = oVar3.screen.z + local_30.z;
+                    }
+                }
+
+                local_20 = new sbyte[2];
+                local_20[0] = FUN_7732C((ushort)local_28.x, (ushort)local_28.z, (byte)param1.DAT_48);
+                local_20[1] = FUN_7732C((ushort)param2.x, (ushort)param2.z, (byte)param1.DAT_48);
+
+                if (local_20[0] != -1 && local_20[1] != -1)
+                {
+                    if (local_20[0] == local_20[1])
+                    {
+                        param1.DAT_10C.x = param2.x;
+                        param1.DAT_10C.z = param2.z;
+                        lVar4 = Utilities.SquareRoot0(param2.x - local_28.x * param2.x - local_28.x +
+                                                      param2.z - local_28.z * param2.z - local_28.z);
+                        uVar5 = 0;
+                        uVar2 = (ushort)(uVar5 >> 0x10);
+                    }
+                    else
+                    {
+                        local_1c = new Vector2Int(param2.x, param2.z);
+                        uVar5 = (byte)FUN_769B0(param1, pcVar7, local_20, local_1c, local_28);
+                        uVar2 = (ushort)(uVar5 >> 0x10);
+                    }
+
+                    param1.DAT_148 = uVar2;
+                    param1.DAT_144 |= (ushort)(param1.DAT_144 >> 10 & 0x1f);
+                    return (sbyte)(uVar5 & 0xff);
+                }
+            }
+            else
+                param1.DAT_144 = (ushort)(uVar1 - 1);
+        }
+
+        return -2;
+    }
+
     public byte FUN_7FB78(CriSkinned param1, CriSkinned param2, bool param3, byte param4)
     {
         short sVar1;
@@ -2149,9 +2340,9 @@ public class GameManager : MonoBehaviour
         uint uVar1;
         uint uVar2;
 
-        uVar1 = DAT_B58BA * 3U;
-        uVar2 = DAT_B58BA + ((uVar1 & 0xffff) >> 8) & 0xff;
-        DAT_B58BA = (ushort)(uVar2 | uVar1 & 0xff00U);
+        uVar1 = LevelManager.instance.DAT_B58BA * 3U;
+        uVar2 = LevelManager.instance.DAT_B58BA + ((uVar1 & 0xffff) >> 8) & 0xff;
+        LevelManager.instance.DAT_B58BA = (ushort)(uVar2 | uVar1 & 0xff00U);
         return uVar2;
     }
 }

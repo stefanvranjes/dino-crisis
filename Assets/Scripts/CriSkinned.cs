@@ -57,6 +57,7 @@ public class CriSkinned : CriObject
     public ushort DAT_140; //0x140
     public sbyte DAT_142; //0x142
     public ushort DAT_144; //0x144
+    public ushort DAT_146; //0x146
     public ushort DAT_148; //0x148
     public Vector3Int DAT_14C; //0x14C
     public short DAT_152; //0x152
@@ -222,6 +223,7 @@ public class CriSkinned : CriObject
         DAT_140 = 0;
         DAT_142 = 0;
         DAT_144 = 0;
+        DAT_146 = 0;
         DAT_148 = 0;
         DAT_14C = Vector3Int.zero;
         DAT_152 = 0;

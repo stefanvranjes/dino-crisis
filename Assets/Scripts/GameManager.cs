@@ -1456,9 +1456,316 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    private sbyte FUN_769B0(CriSkinned param1, WaypointContainer param2, sbyte[] param3, Vector2Int param4, Vector3Int param5)
+    private uint FUN_769B0(CriSkinned param1, WaypointContainer param2, sbyte[] param3, Vector2Int param4, Vector3Int param5)
     {
-        return 0; //tmp
+        byte bVar1;
+        uint uVar2;
+        bool bVar3;
+        bool bVar4;
+        int iVar4;
+        long lVar5;
+        ushort uVar6;
+        int psVar7;
+        int iVar8;
+        ushort uVar9;
+        int puVar10;
+        uint uVar11;
+        int iVar12;
+        uint uVar13;
+        int iVar14;
+        int iVar15;
+        Vector3Int local_180;
+        Vector3Int local_178;
+        Vector2Int[] local_170;
+        Vector2Int[] local_168;
+        ushort[] local_158;
+        byte[] local_98;
+        byte[] local_88;
+        byte local_70;
+        byte local_68;
+        ushort local_60;
+        ushort local_58;
+        int local_50;
+        short local_48;
+        short local_40;
+        short local_38;
+        short local_36;
+        byte local_30;
+        Vector4Int auStack352;
+
+        local_50 = 0x7fffffff;
+        local_36 = 0;
+        local_38 = 0;
+        local_30 = 0;
+        local_40 = 0;
+        local_48 = 0;
+        local_70 = (byte)param3[1];
+        iVar12 = (byte)param3[1] * 24;
+        uVar11 = param2.OFF_02[iVar12 + 20];
+        local_68 = (byte)param3[0];
+        uVar6 = (ushort)param4.x;
+        local_60 = uVar6;
+        uVar9 = (ushort)param4.y;
+        uVar13 = 0;
+        local_58 = uVar9;
+        local_98 = new byte[16];
+        local_88 = new byte[16];
+
+        if (uVar11 != 0)
+        {
+            do
+            {
+                if ((uVar11 & 1) != 0)
+                {
+                    psVar7 = param2.OFF_02[iVar12 + (uVar13 & 0xff) / 2 + 4];
+                    psVar7 = ((uVar13 & 0xff) % 2 == 0 ? psVar7 & 0xff : psVar7 >> 8) * 4;
+                    iVar8 = (short)param2.OFF_04[psVar7] - (short)uVar6;
+                    iVar4 = (short)param2.OFF_04[psVar7 + 1] - (short)uVar9;
+                    lVar5 = Utilities.SquareRoot0(iVar8 * iVar8 + iVar4 * iVar4);
+                    local_98[uVar13 & 0xff] = (byte)(lVar5 >> 8);
+                }
+
+                uVar11 >>= 1;
+                uVar13++;
+            } while (uVar11 != 0);
+        }
+
+        iVar12 = local_68 * 24;
+        uVar11 = param2.OFF_02[iVar12 + 20];
+        uVar13 = 0;
+
+        while (uVar11 != 0)
+        {
+            if ((uVar11 & 1) != 0)
+            {
+                psVar7 = param2.OFF_02[iVar12 + (uVar13 & 0xff) / 2 + 4];
+                psVar7 = ((uVar13 & 0xff) % 2 == 0 ? psVar7 & 0xff : psVar7 >> 8) * 4;
+                iVar8 = (short)param2.OFF_04[psVar7] - param5.x;
+                iVar4 = (short)param2.OFF_04[psVar7 + 1] - param5.z;
+                lVar5 = Utilities.SquareRoot0(iVar8 * iVar8 + iVar4 * iVar4);
+                local_88[uVar13 & 0xff] = (byte)(lVar5 >> 8);
+            }
+
+            uVar11 >>= 1;
+            uVar13++;
+        }
+
+        local_158 = new ushort[16];
+        local_158[3] = (ushort)(1 << (local_68 & 0x1f));
+        local_158[2] = param2.OFF_02[iVar12 + 20];
+        local_158[0] = (ushort)param5.x;
+        local_158[4] = 0;
+        local_158[5] = (ushort)(local_68 | 0xff00);
+        local_158[1] = (ushort)param5.z;
+        uVar11 = local_68;
+        puVar10 = 0;
+
+        while(local_158[2] != 0 || puVar10 != 0)
+        {
+            iVar12 = 0;
+
+            if ((uVar11 & 0xff) == local_70)
+            {
+                iVar12 = local_98[(byte)local_158[puVar10 - 1]] + local_158[puVar10 + 4];
+
+                if (iVar12 < local_50)
+                {
+                    local_50 = iVar12;
+                    local_158[puVar10 + 6] = local_60;
+                    local_158[puVar10 + 7] = local_58;
+                    local_48 = (short)local_158[6];
+                    local_40 = (short)local_158[7];
+                    local_30 = (byte)(local_158[11] >> 8);
+                    local_38 = (short)local_158[12];
+                    local_36 = (short)local_158[13];
+                }
+            }
+
+            if (local_158[puVar10 + 2] == 0 || iVar12 != 0)
+            {
+                puVar10 -= 6;
+                uVar11 = (byte)local_158[puVar10 + 5];
+            }
+            else
+            {
+                uVar13 = 0;
+
+                if ((local_158[puVar10 + 2] & 1) == 0)
+                {
+                    uVar2 = 0;
+
+                    do
+                    {
+                        uVar13 = uVar2;
+                        uVar2 = uVar13 + 1;
+                    } while ((local_158[puVar10 + 2] >> (int)(uVar13 & 0x1f) & 1) == 0);
+                }
+
+                local_158[puVar10 + 2] &= (ushort)~(1 << (int)(uVar13 & 0x1f));
+
+                if ((uVar11 & 0xff) == local_68)
+                    local_158[puVar10 + 10] = local_88[uVar13 & 0xff];
+                else
+                {
+                    iVar12 = (int)(uVar11 & 0xff) * 24;
+                    iVar14 = param2.OFF_02[iVar12 + local_158[puVar10 - 1] / 2 + 12];
+                    iVar14 = (byte)(local_158[puVar10 - 1] % 2 == 0 ? iVar14 : iVar14 >> 8);
+                    iVar15 = param2.OFF_02[iVar12 + (uVar13 & 0xff) / 2 + 12];
+                    iVar15 = (byte)((uVar13 & 0xff) % 2 == 0 ? iVar15 : iVar15 >> 8);
+                    local_158[puVar10 + 10] = param2.OFF_06[param2.OFF_02[iVar12 + 21] +
+                        (iVar14 * (byte)param2.OFF_02[iVar12 + 22] & 0xff) + iVar15];
+                }
+
+                iVar12 = (int)(uVar13 & 0xff) * 24;
+                local_158[puVar10 + 10] += local_158[puVar10 + 4];
+                uVar6 = (ushort)(local_158[puVar10 + 3] | (1 << (int)(uVar13 & 0x1f)));
+                local_158[puVar10 + 9] = uVar6;
+                local_158[puVar10 + 8] = (ushort)(param2.OFF_02[iVar12 + 20] & ~uVar6);
+                iVar14 = param2.OFF_02[iVar12 + (uVar11 & 0xff) / 2 + 4];
+                bVar1 = (byte)((uVar11 & 0xff) % 2 == 0 ? iVar14 : iVar14 >> 8);
+                local_158[puVar10 + 11] = (ushort)((byte)uVar13 | (bVar1 & 0xff00));
+                local_158[puVar10 + 6] = param2.OFF_04[bVar1 * 4];
+                uVar6 = param2.OFF_04[bVar1 * 4 + 1];
+                local_158[puVar10 + 7] = uVar6;
+                uVar11 = uVar13;
+                puVar10 += 6;
+            }
+        }
+
+        if (local_50 == 0x7fffffff)
+            return 0xffff00ff;
+
+        local_180 = new Vector3Int(local_38, 0, local_36);
+        local_178 = FUN_77128(param5, local_180, param1.DAT_146);
+        iVar14 = local_30 * 4;
+        iVar12 = param2.OFF_04[iVar14 + 2] - param1.DAT_146;
+
+        if (iVar12 < 0)
+            iVar12 = 100;
+
+        local_170 = new Vector2Int[2];
+        local_168 = new Vector2Int[2];
+        local_170[1].y = iVar12;
+
+        if ((byte)param2.OFF_04[iVar14 + 3] == 0)
+        {
+            local_170[0].x = local_48 + local_170[1].y;
+            local_170[1].x = local_48 - local_170[1].y;
+            local_170[0].y = local_40;
+            local_170[1].y = local_40;
+        }
+        else
+        {
+            local_170[0].x = local_48;
+            local_170[1].x = local_48;
+            local_170[0].y = local_40 + local_170[1].y;
+            local_170[1].y = local_40 - local_170[1].y;
+        }
+
+        local_168[0].x = param5.x + local_178.x;
+        local_168[1].y = local_180.z;
+        local_168[0].y = param5.y + local_178.z;
+        local_168[1].x = local_180.x;
+        auStack352 = new Vector4Int();
+        bVar4 = FUN_84008(local_170, local_168, ref auStack352);
+
+        if (bVar4)
+        {
+            local_168[0].x += local_178.x * -2;
+            local_168[0].y += local_178.z * -2;
+            bVar4 = FUN_84008(local_170, local_168, ref auStack352);
+
+            if (bVar4)
+            {
+                param1.DAT_10C.x = local_38;
+                goto LAB_770C0;
+            }
+        }
+        
+        if ((byte)param2.OFF_04[iVar14 + 3] == 0)
+        {
+            if ((uint)(local_170[0].x - param5.x) < (uint)(iVar12 << 1))
+            {
+                param1.DAT_10C.z = local_40;
+                param1.DAT_10C.x = param1.screen.x;
+                return (uint)(local_50 << 0x10 | 1);
+            }
+        }
+        else
+        {
+            if ((uint)(local_170[0].y - param5.z) < (uint)(iVar12 << 1))
+            {
+                param1.DAT_10C.x = local_48;
+                param1.DAT_10C.z = param1.screen.z;
+                return (uint)(local_50 << 0x10 | 1);
+            }
+        }
+
+        local_180.x = local_48;
+        local_180.z = local_40;
+        local_178 = FUN_77128(param5, local_180, param1.DAT_146);
+        bVar1 = local_68;
+        uVar6 = (ushort)-local_178.x;
+        uVar9 = (ushort)-local_178.z;
+        bVar3 = FUN_773F0((short)(((param5.x + local_178.x) * 0x10000) >> 0x10),
+                          (short)(((param5.z + local_178.z) * 0x10000) >> 0x10),
+                          (byte)param1.DAT_48, local_68);
+
+        if (!bVar3)
+        {
+            param1.DAT_10C.x = local_48 + (short)uVar6;
+            param1.DAT_10C.z = local_40 + (short)uVar9;
+            return (uint)(local_50 << 0x10 | 1);
+        }
+        else
+        {
+            bVar3 = FUN_773F0((short)(((param5.x - local_178.x) * 0x10000) >> 0x10),
+                              (short)(((param5.z - local_178.z) * 0x10000) >> 0x10),
+                              (byte)param1.DAT_48, bVar1);
+            uVar6 = (ushort)local_178.x;
+            uVar9 = (ushort)local_178.z;
+
+            if (!bVar3)
+            {
+                param1.DAT_10C.x = local_48 + (short)uVar6;
+                param1.DAT_10C.z = local_40 + (short)uVar9;
+                return (uint)(local_50 << 0x10 | 1);
+            }
+        }
+
+        param1.DAT_10C.x = local_48;
+        local_36 = local_40;
+        LAB_770C0:
+        param1.DAT_10C.z = local_36;
+        return (uint)(local_50 << 0x10 | 1);
+    }
+
+    private Vector3Int FUN_77128(Vector3Int param1, Vector3Int param2, int param3)
+    {
+        long lVar1;
+        int iVar2;
+        int iVar3;
+        int iVar4;
+
+        iVar4 = param2.z - param1.z >> 1;
+        iVar3 = param2.x - param1.x >> 1;
+        lVar1 = Utilities.SquareRoot0(iVar4 * iVar4 + iVar3 * iVar3);
+        iVar2 = (int)lVar1 + 1;
+
+        if (iVar2 == 0)
+            return Vector3Int.zero; //trap(0x1c00)
+
+        if (iVar2 == -1 && iVar4 << 8 == -0x80000000)
+            return Vector3Int.zero; //trap(0x1800)
+
+        if (iVar2 == 0)
+            return Vector3Int.zero; //trap(0x1c00)
+
+        if (iVar2 == -1 && iVar3 << 8 == -0x80000000)
+            return Vector3Int.zero; //trap(0x1800)
+
+        return new Vector3Int(((iVar4 << 8) / iVar2) * param3 >> 8, 0,
+                              ((iVar3 << 8) / iVar2) * param3 >> 8);
     }
 
     public sbyte FUN_77238(uint param1, ref Vector4Int param2)
@@ -1539,6 +1846,27 @@ public class GameManager : MonoBehaviour
         return -1;
     }
 
+    private bool FUN_773F0(short param1, short param2, uint param3, uint param4)
+    {
+        bool bVar1;
+        WaypointContainer wVar2;
+        int psVar3;
+
+        wVar2 = SceneManager.instance.waypoints.WAYPOINTS[param3 & 0xff];
+        psVar3 = (int)(param4 & 0xff) * 24;
+        bVar1 = false;
+
+        if ((uint)(wVar2.OFF_02[psVar3] + wVar2.OFF_02[psVar3 + 2] - param1) < wVar2.OFF_02[psVar3 + 2])
+        {
+            bVar1 = true;
+
+            if (wVar2.OFF_02[psVar3 + 3] <= (uint)(wVar2.OFF_02[psVar3 + 1] + wVar2.OFF_02[psVar3 + 3] - param2))
+                bVar1 = false;
+        }
+
+        return bVar1;
+    }
+
     public sbyte FUN_774CC(CriSkinned param1, Vector3Int param2)
     {
         ushort uVar1;
@@ -1607,12 +1935,12 @@ public class GameManager : MonoBehaviour
                         lVar4 = Utilities.SquareRoot0(param2.x - local_28.x * param2.x - local_28.x +
                                                       param2.z - local_28.z * param2.z - local_28.z);
                         uVar5 = 0;
-                        uVar2 = (ushort)(uVar5 >> 0x10);
+                        uVar2 = (ushort)(lVar4 >> 0x10);
                     }
                     else
                     {
                         local_1c = new Vector2Int(param2.x, param2.z);
-                        uVar5 = (byte)FUN_769B0(param1, pcVar7, local_20, local_1c, local_28);
+                        uVar5 = FUN_769B0(param1, pcVar7, local_20, local_1c, local_28);
                         uVar2 = (ushort)(uVar5 >> 0x10);
                     }
 

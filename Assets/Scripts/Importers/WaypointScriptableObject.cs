@@ -8,7 +8,7 @@ public class WaypointContainer
     public byte DAT_00;
     public ushort[] OFF_02;
     public ushort[] OFF_04;
-    public ushort[] OFF_06;
+    public byte[] OFF_06;
 }
 
 public class WaypointScriptableObject : ScriptableObject

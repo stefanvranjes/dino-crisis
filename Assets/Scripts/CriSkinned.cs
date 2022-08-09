@@ -885,6 +885,14 @@ public class CriSkinned : CriObject
         }
     }
 
+    public void FUN_65CF8(byte param1, byte param2, byte param3)
+    {
+        DAT_164 = param1;
+        DAT_165 = 0;
+        DAT_166 = param2;
+        DAT_167 = param3;
+    }
+
     public void FUN_66208()
     {
         long lVar3;

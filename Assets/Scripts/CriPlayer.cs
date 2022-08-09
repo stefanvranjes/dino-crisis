@@ -20,6 +20,7 @@ public class CriPlayer : CriSkinned
     public byte DAT_1D7; //0x1D7
     public CriStatic DAT_1D8; //0x1D8
     public CriPlayer DAT_1DC; //0x1DC
+    public byte DAT_1DE; //0x1DE
     public TodScriptableObject[] DAT_1E0; //0x1E0
     public byte DAT_1E4; //0x1E4
     public short DAT_1E6; //0x1E6
@@ -30,12 +31,15 @@ public class CriPlayer : CriSkinned
     public byte DAT_1F5; //0x1F5
     public byte DAT_1F6; //0x1F6
     public byte DAT_1F7; //0x1F7
+    public short SDAT_1F8; //0x1F8
     public byte DAT_1F8; //0x1F8
     public byte DAT_1F9; //0x1F9
     public sbyte DAT_1FA; //0x1FA
     public sbyte DAT_1FB; //0x1FB
     public Vector3Int DAT_1FC; //0x1FC
+    public short DAT_202; //0x202
     public Vector3Int DAT_204; //0x204
+    public uint DAT_208; //0x208
     public Vector2Int DAT_20C; //0x20C
     public int IDAT_20C; //0x20C
     public byte DAT_210; //0x210
@@ -601,6 +605,7 @@ public class CriPlayer : CriSkinned
         DAT_1D7 = 0;
         DAT_1D8 = null;
         DAT_1DC = null;
+        DAT_1DE = 0;
         DAT_1E0 = null;
         DAT_1E4 = 0;
         DAT_1E6 = 0;
@@ -611,12 +616,15 @@ public class CriPlayer : CriSkinned
         DAT_1F5 = 0;
         DAT_1F6 = 0;
         DAT_1F7 = 0;
+        SDAT_1F8 = 0;
         DAT_1F8 = 0;
         DAT_1F9 = 0;
         DAT_1FA = 0;
         DAT_1FB = 0;
         DAT_1FC = Vector3Int.zero;
+        DAT_202 = 0;
         DAT_204 = Vector3Int.zero;
+        DAT_208 = 0;
         DAT_20C = Vector2Int.zero;
         IDAT_20C = 0;
         DAT_210 = 0;
@@ -3898,10 +3906,72 @@ public class CriPlayer : CriSkinned
         param1.DAT_11E &= 0xf7;
     }
 
+    private void FUN_2F848()
+    {
+        uint uVar2;
+        CriPlayer oVar3;
+
+        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        if (oVar3.DAT_3C != 5)
+            return;
+
+        if (oVar3.DAT_1DC != this)
+            return;
+
+        switch (oVar3.DAT_3D)
+        {
+            case 0:
+            case 3:
+                if (1 < oVar3.DAT_3E) goto case 1;
+
+                FUN_2F800(oVar3);
+
+                if (oVar3.DAT_3D == 0)
+                    uVar2 = 0;
+                else
+                    uVar2 = 2;
+
+                goto LAB_2F984;
+            case 1:
+            case 4:
+            case 14:
+                oVar3.DAT_1D6 = 1;
+                break;
+            case 6:
+            case 7:
+                oVar3.DAT_3C = 5;
+                oVar3.DAT_3D = 8;
+                oVar3.DAT_3E = 0;
+                oVar3.DAT_3F = 0;
+                SceneManager.instance.cCamera.DAT_72 &= 0xfb;
+                break;
+            case 12:
+            case 13:
+                if ((DAT_208 & 0x8000000) != 0)
+                {
+                    DAT_208 &= 0xf7ffffff;
+                    SceneManager.instance.FUN_26E6C();
+                }
+
+                goto case 16;
+            case 16:
+                FUN_2F800(oVar3);
+                uVar2 = 0;
+                oVar3.vr.y = vr.y + 0x800 & 0xfff;
+            LAB_2F984:
+                FUN_53A2C(1, uVar2);
+                break;
+        }
+    }
+
     public void FUN_2FAB0()
     {
         byte bVar1;
+        short sVar2;
+        ushort uVar2;
         sbyte sVar4;
+        short sVar6;
         int iVar7;
         Vector3Int plVar11;
 
@@ -3945,7 +4015,60 @@ public class CriPlayer : CriSkinned
         if (bVar1 != 0)
             DAT_177 = (byte)(bVar1 - 1);
 
-        //...
+        GameManager.instance.FUN_40C60(this);
+
+        if (SDAT_1F8 < 80)
+            SDAT_1F8++;
+
+        sVar2 = DAT_194;
+
+        if (0 < DAT_194)
+        {
+            bVar1 = DAT_3C;
+
+            if (bVar1 != 3 && bVar1 != 4)
+            {
+                DAT_194 = (short)(sVar2 - 1);
+
+                if (sVar2 == 1)
+                {
+                    if (bVar1 != 2)
+                    {
+                        uVar2 = (ushort)(DAT_3D << 8 | DAT_3C);
+
+                        if (uVar2 != 0xe01 && uVar2 != 0x1b01 && uVar2 != 0x2201 && uVar2 != 0x2301 
+                            && uVar2 != 0x2401 && (DAT_3E == 0 || (uVar2 != 0xb01 && uVar2 != 0xc01 && 
+                            uVar2 != 0xd01 && uVar2 != 0x1501 && uVar2 != 0x1701 && uVar2 != 0x2001 && 
+                            uVar2 != 0x1001 && uVar2 != 0x1101 && uVar2 != 0x1e01 && uVar2 != 0x1f01 
+                            && uVar2 != 0x1801)))
+                        {
+                            DAT_194 = 0;
+                            DAT_3C = 5;
+                            DAT_3D = 0;
+                            DAT_3E = 0;
+                            DAT_3F = 0;
+                            FUN_65CF8(0, 0, 30);
+                            FUN_2F848();
+                            return;
+                        }
+
+                        DAT_194 = 1;
+                    }
+                }
+            }
+        }
+
+        sVar6 = DAT_202;
+
+        if (0 < DAT_202)
+        {
+            DAT_202 = sVar6;
+
+            if (sVar6 << 0x10 < 0)
+                DAT_202 = 0;
+        }
+
+        
 
         LAB_2FE28:;
     }

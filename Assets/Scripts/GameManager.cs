@@ -437,6 +437,15 @@ public class GameManager : MonoBehaviour
         return bVar4;
     }
 
+    public void FUN_40C60(CriPlayer param1)
+    {
+        if ((param1.DAT_1DE & 1) != 0 && !DAT_6D)
+        {
+            param1.DAT_1DE &= 0xfe;
+            DAT_28 = 4;
+        }
+    }
+
     public void FUN_61374()
     {
         CriPlayer oVar1;

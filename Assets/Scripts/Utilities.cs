@@ -50,6 +50,8 @@ public static class Utilities
     {
         3, 9, 2, 6
     };
+    public static ushort[] DAT_9B4A0 = new ushort[] { };
+    public static ushort[] DAT_9B500 = new ushort[] { };
     public static short[] DAT_AC658 = new short[]
     {
         4096, 4127, 4159, 4190, 4222, 4252, 4283, 4314, 4344,

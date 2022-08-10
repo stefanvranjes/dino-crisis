@@ -126,6 +126,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_A2CF; //gp+a2cfh
     public bool DAT_A2D0; //gp+a2d0h
     public bool DAT_A2D1; //gp+a2d1h
+    public bool DAT_A2D2; //gp+a2d2h
     public byte DAT_A2D3; //gp+a2d3h
     public Packet[] DAT_C3380;
     public Frame[] DAT_C3384;

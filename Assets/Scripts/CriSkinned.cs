@@ -39,6 +39,7 @@ public class CriSkinned : CriObject
     public short DAT_112; //0x112
     public short health; //0x118
     public short maxHealth; //0x11A
+    public short DAT_11C; //0x11C
     public byte DAT_11E; //0x11E
     public int DAT_120; //0x120
     public CapsuleCollider[] PTR_120;
@@ -84,6 +85,8 @@ public class CriSkinned : CriObject
     public short DAT_196; //0x196
     public sbyte DAT_198; //0x198
     public short DAT_19A; //0x19A
+    public byte DAT_1A0; //0x1A0
+    public byte DAT_1A1; //0x1A1
     public byte DAT_1A3; //0x1A3
     public byte DAT_1A5; //0x1A5
     public byte DAT_1A6; //0x1A6
@@ -205,6 +208,7 @@ public class CriSkinned : CriObject
         DAT_112 = 0;
         health = 0;
         maxHealth = 0;
+        DAT_11C = 0;
         DAT_11E = 0;
         DAT_120 = 0;
         PTR_120 = null;
@@ -251,6 +255,8 @@ public class CriSkinned : CriObject
         DAT_196 = 0;
         DAT_198 = 0;
         DAT_19A = 0;
+        DAT_1A0 = 0;
+        DAT_1A1 = 0;
         DAT_1A3 = 0;
         DAT_1A5 = 0;
         DAT_1A6 = 0;

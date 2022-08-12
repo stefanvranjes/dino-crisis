@@ -290,4 +290,12 @@ public class CriObject : MonoBehaviour
         screen.y += local_10.y;
         screen.z += local_10.z;
     }
+
+    public short FUN_64804(Vector3Int param1)
+    {
+        short sVar1;
+
+        sVar1 = (short)Utilities.FUN_615EC(screen, param1);
+        return (short)(sVar1 - vr.y & 0xfff);
+    }
 }

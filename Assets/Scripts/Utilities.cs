@@ -2212,6 +2212,53 @@ public static class Utilities
         return 0;
     }
 
+    public static uint FUN_22EF4(CriSkinned param1, uint param2)
+    {
+        return (uint)((ushort)param1.DAT_19A >> (int)(param2 & 0x1f) & 1);
+    }
+
+    public static uint FUN_22F08(CriSkinned param1, uint param2)
+    {
+        uint uVar1;
+        uint uVar2;
+        uint uVar3;
+
+        param2 &= 0xff;
+
+        if (param2 < 3)
+        {
+            uVar2 = 0;
+            uVar1 = param2 * 4;
+
+            while(((ushort)param1.DAT_19A >> (int)(uVar1 & 0x1f) & 1) != 0)
+            {
+                uVar2++;
+                uVar1 = uVar2 + param2 * 4;
+
+                if (3 < (uVar2 & 0xff))
+                    return 0xff;
+            }
+        }
+        else
+        {
+            uVar3 = 0;
+            uVar1 = param2 * 4;
+
+            do
+            {
+                uVar2 = uVar3;
+
+                if (((ushort)param1.DAT_19A >> (int)(uVar1 & 0x1f) & 1) == 0) break;
+
+                uVar3++;
+                uVar1 = uVar3 + param2 * 4;
+                uVar2 = 0xff;
+            } while ((uVar3 & 0xff) < 3);
+        }
+
+        return uVar2 & 0xff;
+    }
+
     public static uint FUN_2630C(Vector3Int param1, Vector3Int param2)
     {
         int iVar1;

@@ -2184,7 +2184,9 @@ public class CriPlayer : CriSkinned
 
     private void FUN_40A1C()
     {
+        bool bVar1;
         sbyte sVar1;
+        byte bVar2;
         short sVar3;
         int iVar4;
         int iVar5;
@@ -2248,7 +2250,23 @@ public class CriPlayer : CriSkinned
 
             if ((uVar6 & 0xff) == 0xff)
             {
+                SceneManager.instance.FUN_23068((byte)iVar4, (byte)(uVar7 & 0xff));
+                uVar6 = uVar7;
+            }
+        }
 
+        bVar1 = Utilities.FUN_2EC6C(this, (byte)iVar4, (byte)uVar6);
+
+        if (bVar1)
+        {
+            bVar2 = (byte)(DAT_199 + 1);
+            DAT_199 = bVar2;
+            DAT_19A |= (ushort)(1 << ((int)uVar6 + iVar4 * 4 & 0x1f));
+
+            if (4 < bVar2)
+            {
+                DAT_199 = 4;
+                SceneManager.instance.FUN_22F9C();
             }
         }
     }
@@ -3558,7 +3576,7 @@ public class CriPlayer : CriSkinned
         if ((DAT_208 & 0x4000) != 0)
             BDAT_1D8++;
 
-        
+        FUN_40A1C();
     }
 
     private void FUN_4444C()
@@ -3574,7 +3592,7 @@ public class CriPlayer : CriSkinned
             if (1 < bVar1)
                 DAT_194 = 1;
 
-            
+            FUN_44150();
         }
     }
 

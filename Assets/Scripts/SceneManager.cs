@@ -30,6 +30,7 @@ public class SceneManager : MonoBehaviour
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriParticle[] DAT_5FCC; //gp+5fcch...gp+7cdch
     public CriStatic[] DAT_7CDC; //gp+7cdch...gp+8ffch
+    public CriUnknown[] DAT_8FFC; //gp+8ffch...gp+9164h
     public CriTrigger[] DAT_9EEC; //gp+9eech...gp+9fdch
     public Trigger6[] DAT_9FE0; //gp+9fe0...gp+a09ch
     public CriCamera DAT_C3230;
@@ -79,6 +80,7 @@ public class SceneManager : MonoBehaviour
         DAT_1C9C = new CriBone[100];
         DAT_5FCC = new CriParticle[60];
         DAT_7CDC = new CriStatic[40];
+        DAT_8FFC = new CriUnknown[10];
         DAT_9EEC = new CriTrigger[10];
         DAT_D7C0 = new CriScene[10];
 
@@ -681,6 +683,60 @@ public class SceneManager : MonoBehaviour
         }
 
         return iVar4;
+    }
+
+    public CriStatic FUN_5FE78()
+    {
+        int iVar1;
+        CriStatic puVar2;
+        int iVar3;
+
+        iVar1 = 35;
+        iVar3 = 31;
+
+        do
+        {
+            puVar2 = DAT_7CDC[iVar3];
+            iVar1--;
+
+            if ((puVar2.flags & 1) == 0)
+            {
+                puVar2.ResetValues();
+                puVar2.flags = 1;
+                return puVar2;
+            }
+
+            iVar3--;
+        } while (iVar1 != -1);
+
+        return null;
+    }
+
+    public CriUnknown FUN_5FF08()
+    {
+        int iVar1;
+        CriUnknown pbVar2;
+        int iVar3;
+
+        iVar3 = 10;
+        iVar1 = ~GameManager.instance.DAT_9235 + 10;
+
+        while (true)
+        {
+            if (iVar1 == -1)
+                return null;
+
+            iVar1--;
+            pbVar2 = DAT_8FFC[iVar3];
+
+            if ((pbVar2.DAT_00 & 1) == 0) break;
+
+            iVar3--;
+        }
+
+        pbVar2.ResetValues();
+        pbVar2.DAT_00 = 1;
+        return pbVar2;
     }
 
     public CriParticle FUN_5FFA0()
@@ -1286,6 +1342,71 @@ public class SceneManager : MonoBehaviour
         InventoryManager.FUN_4A7E8(2, 20, false);
     }
 
+    public void FUN_23068(byte param1, byte param2)
+    {
+        CriUnknown pcVar1;
+        CriUnknown pbVar2;
+        int pbVar3;
+        int iVar4;
+        CriSkinned oVar4;
+
+        iVar4 = 9;
+        pbVar3 = 0;
+
+        do
+        {
+            pcVar1 = DAT_8FFC[pbVar3];
+            pbVar2 = pcVar1;
+
+            if ((pcVar1.DAT_00 & 1) != 0 && pcVar1.DAT_01 == 12 &&
+                pcVar1.DAT_18 == param1 && pcVar1.DAT_19 == param2)
+                break;
+
+            iVar4--;
+            pbVar3++;
+        } while (iVar4 != -1);
+
+        oVar4 = pbVar2.DAT_20;
+        oVar4.DAT_19A &= (ushort)~(1 << (pbVar2.DAT_19 + pbVar2.DAT_18 * 4 & 0x1f));
+        oVar4.DAT_199--;
+        pcVar1.DAT_03 = 2;
+    }
+
+    public void FUN_22F9C()
+    {
+        CriUnknown pbVar1;
+        int pbVar2;
+        int iVar3;
+        short sVar4;
+        CriUnknown pbVar5;
+
+        iVar3 = 9;
+        pbVar2 = 0;
+        pbVar1 = DAT_8FFC[pbVar2];
+        pbVar5 = pbVar1;
+
+        do
+        {
+            sVar4 = pbVar1.DAT_08;
+
+            if ((pbVar1.DAT_00 & 1) != 0 && pbVar1.DAT_01 == 12 && pbVar1.DAT_03 < 2)
+            {
+                if (pbVar1.DAT_08 < sVar4)
+                {
+                    pbVar5 = pbVar1;
+                    sVar4 = pbVar1.DAT_08;
+                }
+            }
+
+            pbVar2++;
+            iVar3--;
+            pbVar1 = DAT_8FFC[pbVar2];
+        } while (iVar3 != -1);
+
+        pbVar5.DAT_20.DAT_19A &= (ushort)~(1 << (pbVar5.DAT_19 + pbVar5.DAT_18 * 4 & 0x1f));
+        pbVar5.DAT_03 = 2;
+    }
+
     public byte FUN_47864()
     {
         byte bVar1;
@@ -1362,6 +1483,13 @@ public class SceneManager : MonoBehaviour
             GameObject obj = new GameObject();
             obj.name = "CriStatic (Instance)";
             DAT_7CDC[i] = obj.AddComponent<CriStatic>();
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriUnknown (Instance)";
+            DAT_8FFC[i] = obj.AddComponent<CriUnknown>();
         }
 
         for (int i = 0; i < 10; i++)

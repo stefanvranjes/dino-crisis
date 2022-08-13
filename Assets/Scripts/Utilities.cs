@@ -50,6 +50,7 @@ public static class Utilities
     {
         3, 9, 2, 6
     };
+    public static UNK_9B314[] DAT_9B314 = new UNK_9B314[] { };
     public static ushort[] DAT_9B4A0 = new ushort[] { };
     public static ushort[] DAT_9B500 = new ushort[] { };
     public static short[] DAT_AC658 = new short[]
@@ -2214,7 +2215,7 @@ public static class Utilities
 
     public static uint FUN_22EF4(CriSkinned param1, uint param2)
     {
-        return (uint)((ushort)param1.DAT_19A >> (int)(param2 & 0x1f) & 1);
+        return (uint)(param1.DAT_19A >> (int)(param2 & 0x1f) & 1);
     }
 
     public static uint FUN_22F08(CriSkinned param1, uint param2)
@@ -2230,7 +2231,7 @@ public static class Utilities
             uVar2 = 0;
             uVar1 = param2 * 4;
 
-            while(((ushort)param1.DAT_19A >> (int)(uVar1 & 0x1f) & 1) != 0)
+            while((param1.DAT_19A >> (int)(uVar1 & 0x1f) & 1) != 0)
             {
                 uVar2++;
                 uVar1 = uVar2 + param2 * 4;
@@ -2248,7 +2249,7 @@ public static class Utilities
             {
                 uVar2 = uVar3;
 
-                if (((ushort)param1.DAT_19A >> (int)(uVar1 & 0x1f) & 1) == 0) break;
+                if ((param1.DAT_19A >> (int)(uVar1 & 0x1f) & 1) == 0) break;
 
                 uVar3++;
                 uVar1 = uVar3 + param2 * 4;
@@ -2355,6 +2356,11 @@ public static class Utilities
             param4 = (ushort)-(short)param4;
 
         return (short)param4;
+    }
+
+    public static bool FUN_2EC6C(CriSkinned param1, byte param2, byte param3)
+    {
+        return param1.FUN_65D78(ref DAT_9B314[param2 * 4 + param3], param2, param3);
     }
 }
 

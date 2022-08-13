@@ -17,6 +17,13 @@ public struct CapsuleCollider
     public byte flags; //0x0B
 }
 
+public struct UNK_9B314
+{
+    public ushort bone; //0x00
+    public Vector3Int screen; //0x02
+    public Vector3Int vr; //0x08
+}
+
 public class Hit
 {
     public Vector2Int[] DAT_00; //0x00
@@ -96,6 +103,7 @@ public class GameManager : MonoBehaviour
     public FUN_14C PTR_FUN_14C; //gp+14ch
     public byte DAT_922C; //gp+922ch
     public byte DAT_9234; //gp+9234h
+    public byte DAT_9235; //gp+9235h
     public short DAT_98B4; //gp+98b4h
     public short DAT_98B8; //gp+98b8h
     public short DAT_98BA; //gp+98bah

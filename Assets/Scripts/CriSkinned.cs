@@ -84,7 +84,8 @@ public class CriSkinned : CriObject
     public short DAT_194; //0x194
     public short DAT_196; //0x196
     public sbyte DAT_198; //0x198
-    public short DAT_19A; //0x19A
+    public byte DAT_199; //0x199
+    public ushort DAT_19A; //0x19A
     public byte DAT_1A0; //0x1A0
     public byte DAT_1A1; //0x1A1
     public byte DAT_1A3; //0x1A3
@@ -254,6 +255,7 @@ public class CriSkinned : CriObject
         DAT_194 = 0;
         DAT_196 = 0;
         DAT_198 = 0;
+        DAT_199 = 0;
         DAT_19A = 0;
         DAT_1A0 = 0;
         DAT_1A1 = 0;
@@ -897,6 +899,41 @@ public class CriSkinned : CriObject
         DAT_165 = 0;
         DAT_166 = param2;
         DAT_167 = param3;
+    }
+
+    public bool FUN_65D78(ref UNK_9B314 param1, byte param2, byte param3)
+    {
+        bool bVar2;
+        CriStatic oVar3;
+        CriUnknown oVar4;
+        CriBone oVar5;
+
+        oVar3 = SceneManager.instance.FUN_5FE78();
+        bVar2 = false;
+
+        if (oVar3 != null)
+        {
+            oVar4 = SceneManager.instance.FUN_5FF08();
+            bVar2 = oVar4 != null;
+
+            if (bVar2)
+            {
+                oVar3.flags = 3;
+                oVar5 = (CriBone)Utilities.FUN_601C8(skeleton, param1.bone);
+                oVar3.DAT_40 = oVar5;
+                oVar3.screen = param1.screen;
+                oVar3.vr = param1.vr;
+                oVar3.cMesh = (TmdScriptableObject)SceneManager.instance.database.playerCore.objects[0x80180178];
+                oVar4.DAT_01 = 12;
+                oVar4.DAT_1C = oVar3;
+                oVar4.DAT_20 = this;
+                oVar4.DAT_18 = param2;
+                oVar4.DAT_19 = param3;
+                oVar4.DAT_16 = param1.bone;
+            }
+        }
+
+        return bVar2;
     }
 
     public void FUN_66208()

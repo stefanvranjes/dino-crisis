@@ -13,7 +13,7 @@ public class CriTrigger : MonoBehaviour
     public short DAT_0C; //0x0C
     public short DAT_0E; //0x0E
     public short DAT_10; //0x10
-    public short DAT_12; //0x12
+    public ushort DAT_12; //0x12
     public byte DAT_14; //0x14
     public ushort DAT_16; //0x16
 

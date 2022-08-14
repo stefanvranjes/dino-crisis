@@ -85,6 +85,7 @@ public class CriPlayer : CriSkinned
     private delegate void FUN_9B000();
     private delegate void FUN_9B008();
     private delegate void FUN_9B010();
+    private delegate void FUN_9C67C();
     private delegate void FUN_9CDE4();
     private delegate void FUN_9CE2C();
     private delegate void FUN_9CE04();
@@ -129,6 +130,7 @@ public class CriPlayer : CriSkinned
     private FUN_9B000[] PTR_FUN_9B000;
     private FUN_9B008[] PTR_FUN_9B008;
     private FUN_9B010[] PTR_FUN_9B010;
+    private FUN_9C67C[] PTR_FUN_9C67C;
     private FUN_9CDE4[] PTR_FUN_9CDE4;
     private FUN_9CE2C[] PTR_FUN_9CE2C;
     private FUN_9CE04[] PTR_FUN_9CE04;
@@ -378,6 +380,15 @@ public class CriPlayer : CriSkinned
         {
             FUN_2D634,
             FUN_2B3E4
+        };
+        PTR_FUN_9C67C = new FUN_9C67C[6]
+        {
+            FUN_42A38,
+            FUN_43500,
+            FUN_4444C,
+            FUN_444B8,
+            FUN_44508,
+            FUN_44558
         };
         PTR_FUN_9CDE4 = new FUN_9CDE4[8]
         {
@@ -2303,9 +2314,715 @@ public class CriPlayer : CriSkinned
         health = 160;
     }
 
-    private void FUN_429F8()
+    private void FUN_40D94()
     {
 
+    }
+
+    private void FUN_40DDC()
+    {
+        byte bVar2;
+        short sVar3;
+        int iVar4;
+        int iVar5;
+        ushort uVar6;
+        uint uVar7;
+        uint uVar8;
+        int puVar9;
+        ushort[] aVar9;
+        int iVar10;
+        ushort uVar11;
+
+        if ((DAT_11E & 1) != 0)
+        {
+            DAT_11E |= 4;
+            goto LAB_41B40;
+        }
+
+        iVar4 = (int)GameManager.FUN_64650();
+        BDAT_1DC = 4;
+        DAT_1D5 = 0;
+
+        if (!GameManager.instance.DAT_A2D2)
+        {
+            aVar9 = Utilities.DAT_9B4A0;
+            puVar9 = 0x10;
+            iVar10 = 5;
+        }
+        else
+        {
+            aVar9 = Utilities.DAT_9B500;
+            puVar9 = 0x10;
+            iVar10 = 60;
+        }
+
+        if (DAT_3C != 2 && (ushort)(DAT_3C | DAT_3D << 8) != 0xe01)
+            DAT_1C3 = -1;
+
+        uVar6 = (ushort)(DAT_1A0 & 0xf);
+
+        if (uVar6 == 1)
+        {
+            iVar5 = (int)GameManager.FUN_64650();
+
+            if (iVar10 == 0)
+                return; //trap(0x1c00)
+
+            if (iVar10 == -1 && iVar5 == -0x80000000)
+                return; //trap(0x1800)
+
+            uVar8 = (uint)(iVar5 % iVar10);
+        }
+        else
+        {
+            uVar8 = 1;
+
+            if (uVar6 == 3)
+            {
+                iVar5 = (int)GameManager.FUN_64650();
+
+                if (iVar10 == 0)
+                    return; //trap(0x1c00)
+
+                if (iVar10 == -1 && iVar5 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar8 = (uint)(iVar5 % iVar10);
+            }
+        }
+
+        uVar11 = (ushort)(DAT_3C | DAT_3D << 8);
+
+        if (uVar11 == 0xc01)
+        {
+            if (8U < DAT_60)
+            {
+                if (DAT_60 - 9U < 10)
+                {
+                    if ((uVar8 & 0xff) == 0)
+                    {
+                        iVar4 = (int)GameManager.FUN_64650();
+                        uVar8 = aVar9[puVar9 + 7];
+
+                        if (uVar8 == 0)
+                            return; //trap(0x1c00)
+
+                        if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                            return; //trap(0x1800)
+
+                        uVar8 = (uint)(aVar9[puVar9 + 6] + iVar4 % (int)uVar8);
+                        DAT_11C = (short)uVar8;
+                        DAT_1C3 = 3;
+                        health -= (short)(((uVar8 & 0xffff) * 130) / 100);
+                        goto LAB_41930;
+                    }
+
+                    iVar4 = (int)GameManager.FUN_64650();
+                    uVar8 = aVar9[puVar9 + 3];
+
+                    if (uVar8 == 0)
+                        return; //trap(0x1c00)
+
+                    if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                        return; //trap(0x1800)
+
+                    iVar4 = aVar9[puVar9 + 2] + iVar4 % (int)uVar8;
+                    iVar10 = (ushort)health - iVar4;
+                    health = (short)iVar10;
+                    DAT_11C = (short)iVar4;
+
+                    if (iVar10 * 0x10000 < 1)
+                    {
+                        DAT_1C3 = 3;
+                        goto LAB_41930;
+                    }
+
+                    DAT_11E |= 4;
+                    uVar8 = DAT_208;
+                    uVar7 = 0x400000;
+                }
+                else
+                {
+                    if ((uVar8 & 0xff) == 0)
+                    {
+                        iVar4 = (int)GameManager.FUN_64650();
+                        uVar8 = aVar9[puVar9 + 7];
+
+                        if (uVar8 == 0)
+                            return; //trap(0x1c00)
+
+                        if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                            return; //trap(0x1800)
+
+                        uVar11 = (ushort)(iVar4 % (int)uVar8);
+                        uVar6 = aVar9[puVar9 + 6];
+                        DAT_1C3 = 3;
+                        sVar3 = (short)(health - (uVar6 + uVar11));
+                        DAT_11C = (short)(uVar6 + uVar11);
+                        health = sVar3;
+                        goto LAB_41930;
+                    }
+
+                    iVar4 = (int)GameManager.FUN_64650();
+                    uVar8 = aVar9[puVar9 + 7];
+
+                    if (uVar8 == 0)
+                        return; //trap(0x1c00)
+
+                    if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                        return; //trap(0x1800)
+
+                    uVar8 = (uint)(aVar9[puVar9 + 6] + iVar4 % (int)uVar8);
+                    DAT_11C = (short)uVar8;
+                    iVar4 = (ushort)health - (int)((uVar8 & 0xffff) >> 1);
+                    health = (short)iVar4;
+
+                    if (iVar4 * 0x10000 < 1)
+                    {
+                        DAT_1C3 = 3;
+                        goto LAB_41930;
+                    }
+
+                    DAT_11E |= 4;
+                    uVar8 = DAT_208;
+                    uVar7 = 0x400000;
+                }
+
+                DAT_208 = uVar8 | uVar7;
+                goto LAB_41930;
+            }
+
+            if ((uVar8 & 0xff) == 0)
+            {
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 3];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar6 = aVar9[puVar9 + 2];
+                DAT_1C3 = 2;
+                DAT_208 &= 0xfffffffb;
+                uVar11 = (ushort)(uVar6 + (iVar4 % (int)uVar8));
+                sVar3 = (short)(health - uVar11);
+                DAT_11C = (short)uVar11;
+            }
+            else
+            {
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 1];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar6 = aVar9[puVar9];
+                DAT_11E |= 4;
+                DAT_208 |= 0x400000;
+                uVar11 = (ushort)(uVar6 + (iVar4 % (int)uVar8));
+                sVar3 = (short)(health - uVar11);
+                DAT_11C = (short)uVar11;
+            }
+
+            health = sVar3;
+        }
+        else
+        {
+            if (uVar11 == 0x1d01)
+            {
+                if (1499 < UDAT_20C)
+                    return;
+
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 7];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar11 = (ushort)(iVar4 % (int)uVar8);
+                uVar6 = aVar9[puVar9 + 6];
+                DAT_1C3 = 1;
+                sVar3 = (short)(health - (uVar6 + uVar11));
+                DAT_11C = (short)(uVar6 + uVar11);
+                health = sVar3;
+                goto LAB_41930;
+            }
+
+            if (uVar11 == 0x1a01 || uVar11 == 0x1c01)
+            {
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 3];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar6 = aVar9[puVar9 + 2];
+                DAT_1C3 = 4;
+                DAT_208 |= 0x20000;
+                uVar11 = (ushort)(uVar6 + (iVar4 % (int)uVar8));
+                sVar3 = (short)(health - uVar11);
+                DAT_11C = (short)uVar11;
+                health = sVar3;
+            }
+
+            if (uVar11 == 0x1b01)
+            {
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 3];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar11 = (ushort)(iVar4 % (int)uVar8);
+                uVar6 = aVar9[puVar9 + 2];
+                bVar2 = (byte)(DAT_11E | 4);
+                DAT_11E = bVar2;
+                sVar3 = (short)(health - (uVar6 + uVar11));
+                DAT_11C = (short)(uVar6 + uVar11);
+                health = sVar3;
+                goto LAB_41930;
+            }
+
+            if (uVar11 == 0x1201 || uVar11 == 0x1301 || uVar11 == 0x1401)
+            {
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 3];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar11 = (ushort)(iVar4 % (int)uVar8);
+                uVar6 = aVar9[puVar9 + 2];
+                DAT_1C3 = 5;
+                sVar3 = (short)(health - (uVar6 + uVar11));
+                DAT_11C = (short)(uVar6 + uVar11);
+                health = sVar3;
+                goto LAB_41930;
+            }
+
+            if ((uVar11 == 0x1001 || uVar11 == 0x1101) && (DAT_208 & 0x10000) != 0)
+            {
+                if ((uVar8 & 0xff) == 0)
+                {
+                    iVar4 = (int)GameManager.FUN_64650();
+                    uVar8 = aVar9[puVar9 + 3];
+
+                    if (uVar8 == 0)
+                        return; //trap(0x1c00)
+
+                    if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                        return; //trap(0x1800)
+
+                    uVar6 = aVar9[puVar9 + 2];
+                    DAT_1C3 = 2;
+                    DAT_208 &= 0xfffffffb;
+                    uVar11 = (ushort)(uVar6 + (iVar4 % (int)uVar8));
+                    sVar3 = (short)(health - uVar11);
+                    DAT_11C = (short)uVar11;
+                    health = sVar3;
+                    goto LAB_41930;
+                }
+
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 1];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar6 = aVar9[puVar9];
+                bVar2 = (byte)(DAT_11E | 4);
+                DAT_11E = bVar2;
+                sVar3 = (short)(health - (uVar6 + uVar11));
+                DAT_11C = (short)(uVar6 + uVar11);
+                health = sVar3;
+                goto LAB_41930;
+            }
+
+            if (DAT_3C == 2 || (uVar11 = (ushort)(DAT_3C | DAT_3D << 8)) == 0xe01)
+            {
+                if (DAT_3C == 2 && DAT_3D == 2)
+                {
+                    if ((uVar8 & 0xff) != 0)
+                    {
+                        iVar4 = (int)GameManager.FUN_64650();
+                        uVar8 = aVar9[puVar9 + 1];
+
+                        if (uVar8 == 0)
+                            return; //trap(0x1c00)
+
+                        if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                            return; //trap(0x1800)
+
+                        iVar4 = aVar9[puVar9] + iVar4 % (int)uVar8;
+                        iVar10 = (ushort)health - iVar4;
+                        health = (short)iVar10;
+                        DAT_11C = (short)iVar4;
+
+                        if (iVar10 * 0x10000 < 1)
+                            DAT_1C3 = 1;
+                        else
+                            DAT_11E |= 4;
+
+                        goto LAB_41930;
+                    }
+
+                    iVar4 = (int)GameManager.FUN_64650();
+                    uVar8 = aVar9[puVar9 + 7];
+                    uVar11 = (ushort)(iVar4 % (int)uVar8);
+
+                    if (uVar8 == 0)
+                        return; //trap(0x1c00)
+
+                    if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                        return;
+
+                    uVar6 = aVar9[puVar9 + 6];
+                    DAT_1C3 = 1;
+                    sVar3 = (short)(health - (uVar6 + uVar11));
+                    DAT_11C = (short)(uVar6 + uVar11);
+                    health = sVar3;
+                    goto LAB_41930;
+                }
+
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 1];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar6 = aVar9[puVar9];
+                bVar2 = (byte)(DAT_11E | 4);
+                DAT_11E = bVar2;
+                sVar3 = (short)(health - (uVar6 + uVar11));
+                DAT_11C = (short)(uVar6 + uVar11);
+                health = sVar3;
+                goto LAB_41930;
+            }
+
+            if (uVar11 == 0x2301 || uVar11 == 0x2401 || uVar11 == 0x604)
+            {
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 3];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar11 = (ushort)(iVar4 % (int)uVar8);
+                uVar6 = aVar9[puVar9 + 2];
+                bVar2 = (byte)(DAT_11E | 4);
+                DAT_11E = bVar2;
+                sVar3 = (short)(health - (uVar6 + uVar11));
+                DAT_11C = (short)(uVar6 + uVar11);
+                health = sVar3;
+                goto LAB_41930;
+            }
+
+            if (uVar11 == 0x2201)
+            {
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 5];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar11 = (ushort)(iVar4 % (int)uVar8);
+                uVar6 = aVar9[puVar9 + 4];
+                DAT_1C3 = 3;
+                sVar3 = (short)(health - (uVar6 + uVar11));
+                DAT_11C = (short)(uVar6 + uVar11);
+                health = sVar3;
+                goto LAB_41930;
+            }
+
+            if (uVar11 == 5)
+            {
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 1];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar6 = aVar9[puVar9];
+                bVar2 = (byte)(DAT_11E | 4);
+                DAT_11E = bVar2;
+                sVar3 = (short)(health - (uVar6 + uVar11));
+                DAT_11C = (short)(uVar6 + uVar11);
+                health = sVar3;
+                goto LAB_41930;
+            }
+
+            if (uVar11 == 0x105)
+            {
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 1];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar6 = aVar9[puVar9];
+                DAT_1C3 = 4;
+                uVar11 = (ushort)(uVar6 + (iVar4 % (int)uVar8));
+                DAT_11C = (short)uVar11;
+                health -= (short)uVar11;
+                uVar8 = GameManager.FUN_64650();
+
+                if ((uVar8 & 1) == 0)
+                {
+                    uVar8 = DAT_208;
+                    uVar7 = 0x20000;
+                    DAT_196 = 0;
+                    DAT_208 = uVar8 | uVar7;
+                    goto LAB_41930;
+                }
+
+                DAT_208 &= 0xfffdffff;
+            }
+            else
+            {
+                uVar7 = (uint)((iVar4 % 10) * 100 & 0xffff);
+
+                if (DAT_3C - 3U < 2)
+                {
+                    DAT_11E |= 4;
+                    goto LAB_41930;
+                }
+
+                if (uVar7 + 3500 <= UDAT_20C)
+                {
+                    if (UDAT_20C < uVar7 + 5000)
+                    {
+                        if ((uVar8 & 0xff) == 0)
+                        {
+                            iVar4 = (int)GameManager.FUN_64650();
+                            uVar8 = aVar9[puVar9 + 7];
+
+                            if (uVar8 == 0)
+                                return; //trap(0x1c00)
+
+                            if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                                return; //trap(0x1800)
+
+                            uVar11 = (ushort)(iVar4 % (int)uVar8);
+                            uVar6 = aVar9[puVar9 + 6];
+                            DAT_1C3 = 1;
+                            sVar3 = (short)(health - (uVar6 + uVar11));
+                            DAT_11C = (short)(uVar6 + uVar11);
+                            health = sVar3;
+                            goto LAB_41930;
+                        }
+
+                        iVar4 = (int)GameManager.FUN_64650();
+                        uVar8 = aVar9[puVar9 + 3];
+
+                        if (uVar8 == 0)
+                            return; //trap(0x1c00)
+
+                        if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                            return; //trap(0x1800)
+
+                        uVar6 = aVar9[puVar9 + 2];
+                        DAT_1C3 = 2;
+                        DAT_208 &= 0xfffffffb;
+                        uVar11 = (ushort)(uVar6 + (iVar4 % (int)uVar8));
+                        sVar3 = (short)(health - uVar11);
+                        DAT_11C = (short)uVar11;
+                    }
+                    else
+                    {
+                        if ((uVar8 & 0xff) != 0)
+                        {
+                            iVar4 = (int)GameManager.FUN_64650();
+                            uVar8 = aVar9[puVar9 + 1];
+
+                            if (uVar8 == 0)
+                                return; //trap(0x1c00)
+
+                            if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                                return; //trap(0x1800)
+
+                            uVar6 = aVar9[puVar9];
+                            bVar2 = (byte)(DAT_11E | 4);
+                            DAT_11E = bVar2;
+                            sVar3 = (short)(health - (uVar6 + uVar11));
+                            DAT_11C = (short)(uVar6 + uVar11);
+                            health = sVar3;
+                            goto LAB_41930;
+                        }
+
+                        iVar4 = (int)GameManager.FUN_64650();
+                        uVar8 = aVar9[puVar9 + 3];
+
+                        if (uVar8 == 0)
+                            return; //trap(0x1c00)
+
+                        if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                            return; //trap(0x1800)
+
+                        uVar6 = aVar9[puVar9 + 2];
+                        DAT_1C3 = 2;
+                        DAT_208 &= 0xfffffffb;
+                        uVar11 = (ushort)(uVar6 + (iVar4 % (int)uVar8));
+                        sVar3 = (short)(health - uVar11);
+                        DAT_11C = (short)uVar11;
+                    }
+
+                    health = sVar3;
+                    goto LAB_41930;
+                }
+
+                if ((uVar8 & 0xff) == 0)
+                {
+                    iVar4 = (int)GameManager.FUN_64650();
+                    uVar8 = aVar9[puVar9 + 7];
+
+                    if (uVar8 == 0)
+                        return; //trap(0x1c00)
+
+                    if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                        return; //trap(0x1800)
+
+                    uVar11 = (ushort)(iVar4 % (int)uVar8);
+                    uVar6 = aVar9[puVar9 + 6];
+                    DAT_1C3 = 1;
+                    sVar3 = (short)(health - (uVar6 + uVar11));
+                    DAT_11C = (short)(uVar6 + uVar11);
+                    health = sVar3;
+                    goto LAB_41930;
+                }
+
+                iVar4 = (int)GameManager.FUN_64650();
+                uVar8 = aVar9[puVar9 + 5];
+
+                if (uVar8 == 0)
+                    return; //trap(0x1c00)
+
+                if (uVar8 == 0xffffffff && iVar4 == -0x80000000)
+                    return; //trap(0x1800)
+
+                uVar6 = aVar9[puVar9 + 4];
+                DAT_1C3 = 0;
+                uVar11 = (ushort)(uVar6 + (iVar4 % (int)uVar8));
+                DAT_11C = (short)uVar11;
+                health -= (short)uVar11;
+            }
+        }
+
+        LAB_41930:
+        if (0 < health) goto LAB_41B40;
+
+        uVar8 = DAT_208;
+        uVar7 = uVar8 & 0xffffffef;
+        DAT_208 = uVar7;
+
+        if ((byte)DAT_1C3 < 2U || DAT_1C3 == 3)
+        {
+            if ((uVar8 & 0x10000000) != 0) goto LAB_41B40;
+
+            DAT_208 = uVar7 | 0x10000000;
+            uVar8 = GameManager.FUN_64650();
+
+            if ((uVar8 & 1) == 0 && DAT_1A6 == 0)
+            {
+                DAT_1A6 = 1;
+                DAT_208 |= 0x10;
+                FUN_40CA4();
+                goto LAB_41B40;
+            }
+
+            InventoryManager.FUN_4A7E8(4, DAT_163, true);
+        }
+        else
+        {
+            if ((DAT_11E & 4) == 0)
+                uVar11 = (ushort)(DAT_3C | DAT_3D << 8);
+            else if (DAT_3C - 2U < 2 || (uVar11 = (ushort)(DAT_3C | DAT_3D << 8)) == 0x604)
+                InventoryManager.FUN_4A7E8(4, DAT_163, true);
+            else if (uVar11 == 0x2301 || uVar11 == 0x2401)
+                health = 1;
+            else
+            {
+                if (1U < (byte)DAT_1C3 && DAT_1C3 != 3)
+                {
+                    FUN_65CF8(0, 0, 30);
+
+                    if ((byte)DAT_1C3 - 4U < 2 || (DAT_3C == 5 && DAT_3D == 0 && 79U < DAT_60) || 
+                        DAT_3C == 1 && DAT_3D == 0x1b)
+                    {
+                        DAT_3C = 3;
+                        DAT_3D = 0;
+                        DAT_3E = 0;
+                        DAT_3F = 0;
+                        DAT_11E |= 0x44;
+                        FUN_2F848();
+                    }
+                    else
+                    {
+                        DAT_3C = 3;
+                        DAT_3D = 1;
+                        DAT_3E = 0;
+                        DAT_3F = 0;
+                        uVar8 = GameManager.FUN_64650();
+
+                        if ((uVar8 & 1) == 0 && DAT_1A6 == 0)
+                        {
+                            DAT_1A6 = 1;
+                            DAT_208 |= 0x10;
+                            FUN_40CA4();
+                            return;
+                        }
+
+                        DAT_208 &= 0xffffffef;
+                        DAT_11E |= 0x44;
+                    }
+
+                    InventoryManager.FUN_4A7E8(4, DAT_163, true);
+                    return;
+                }
+            }
+        }
+
+        LAB_41B40:
+        
+    }
+
+    private void FUN_429F8()
+    {
+        PTR_FUN_9C67C[DAT_1A1 & 0xf]();
     }
 
     private void FUN_42A38()
@@ -3594,6 +4311,250 @@ public class CriPlayer : CriSkinned
 
             FUN_44150();
         }
+    }
+
+    private void FUN_444B8()
+    {
+        if (DAT_3C != 5 && (DAT_3C != 4 || DAT_3D == 6))
+        {
+            BDAT_1DC = 1;
+            DAT_194 = 1;
+            FUN_44150();
+        }
+    }
+
+    private void FUN_44508()
+    {
+        if (DAT_3C != 5 && (DAT_3C != 4 || DAT_3D == 6))
+        {
+            BDAT_1DC = 2;
+            DAT_194 = 1;
+            FUN_44150();
+        }
+    }
+
+    private void FUN_44558()
+    {
+        sbyte sVar1;
+        uint uVar2;
+        uint uVar3;
+        int iVar4;
+        ushort uVar5;
+        uint uVar6;
+
+        if ((DAT_11E & 1) != 0)
+        {
+            DAT_11E |= 4;
+            goto LAB_448C8;
+        }
+
+        if (DAT_3C == 4 && (ushort)(DAT_3C | DAT_3D << 8) != 0x604)
+            return;
+
+        health = -1;
+
+        if ((ushort)(DAT_3C | DAT_3D << 8) != 0x2301 &&
+            (ushort)(DAT_3C | DAT_3D << 8) != 0x2401)
+            DAT_1A6 = 1;
+
+        GameManager.FUN_64650();
+        BDAT_1DC = 3;
+        DAT_1D5 = 0;
+
+        if (DAT_3C == 2)
+            uVar5 = (ushort)(DAT_3C | DAT_3D << 8);
+        else
+        {
+            uVar5 = (ushort)(DAT_3C | DAT_3D << 8);
+
+            if (uVar5 != 0xe01)
+            {
+                DAT_1C3 = -1;
+                uVar5 = (ushort)(DAT_3C | DAT_3D << 8);
+            }
+        }
+
+        if (uVar5 == 0xc01)
+        {
+            if (DAT_60 < 9)
+                DAT_1C3 = 0;
+            else
+                DAT_1C3 = 3;
+        }
+        else
+        {
+            if (uVar5 == 0x1a01 || uVar5 == 0x1c01)
+            {
+                DAT_1C3 = 4;
+                uVar2 = DAT_208;
+                DAT_208 = uVar2 | 0x20000;
+            }
+            else 
+            {
+                if (uVar5 == 0x1201 || uVar5 == 0x1301 || uVar5 == 0x1401)
+                    DAT_1C3 = 5;
+                else
+                {
+                    if (uVar5 == 0x105)
+                    {
+                        DAT_1C3 = 4;
+                        uVar2 = DAT_208;
+                        DAT_196 = 0;
+                        DAT_208 = uVar2 | 0x20000;
+                    }
+                    else if (DAT_3C - 2U < 3 || uVar5 == 0xe01 || uVar5 == 0x2301 ||
+                             uVar5 == 0x2401 || uVar5 == 5 || uVar5 == 0x1b01)
+                        DAT_11E |= 4;
+                    else
+                    {
+                        if (uVar5 != 0x2201)
+                            DAT_1C3 = 0;
+                        else
+                            DAT_1C3 = 3;
+                    }
+                }
+            }
+        }
+
+        if (0 < health) goto LAB_448C8;
+
+        uVar2 = DAT_208;
+        uVar6 = uVar2 & 0xffffffef;
+        DAT_208 = uVar6;
+
+        if (DAT_1C3 < 2 || DAT_1C3 == 3)
+        {
+            if ((uVar2 & 0x10000000) != 0) goto LAB_448C8;
+
+            DAT_208 = uVar6 | 0x10000000;
+            uVar2 = GameManager.FUN_64650();
+
+            if ((uVar2 & 1) == 0 && DAT_1A6 == 0)
+            {
+                DAT_1A6 = 1;
+                DAT_208 |= 0x10;
+                FUN_40CA4();
+                goto LAB_448C8;
+            }
+
+            InventoryManager.FUN_4A7E8(4, DAT_163, true);
+        }
+        else
+        {
+            if ((DAT_11E & 4) == 0)
+                uVar5 = (ushort)(DAT_3C | DAT_3D << 8);
+            else if (DAT_3C - 2U < 2 || (uVar5 = (ushort)(DAT_3C | DAT_3D << 8)) == 0x1b01 || uVar5 == 0x604)
+                InventoryManager.FUN_4A7E8(4, DAT_163, true);
+            else if (uVar5 == 0x2301 || uVar5 == 0x2401)
+                health = 1;
+            else
+            {
+                if (1U < (byte)DAT_1C3 && DAT_1C3 != 3)
+                {
+                    FUN_65CF8(0, 0, 30);
+
+                    if ((byte)DAT_1C3 - 4U < 2)
+                    {
+                        DAT_3C = 3;
+                        DAT_3D = 0;
+                        DAT_3E = 0;
+                        DAT_3F = 0;
+                        DAT_11E |= 0x44;
+                        FUN_2F848();
+                    }
+                    else
+                    {
+                        uVar3 = 0x103;
+
+                        if (DAT_3C == 5 && DAT_3D == 0)
+                        {
+                            uVar3 = 0x502;
+
+                            if (79U < DAT_60)
+                            {
+                                DAT_3C = 3;
+                                DAT_3D = 0;
+                                DAT_3E = 0;
+                                DAT_3F = 0;
+                                DAT_11E |= 0x44;
+                                FUN_2F848();
+                                goto LAB_448C8;
+                            }
+                        }
+
+                        DAT_3C = (byte)uVar3;
+                        DAT_3D = (byte)(uVar3 >> 8);
+                        DAT_3E = (byte)(uVar3 >> 0x10);
+                        DAT_3F = (byte)(uVar3 >> 0x18);
+                        DAT_208 &= 0xffffffef;
+                        DAT_11E |= 0x44;
+                    }
+
+                    InventoryManager.FUN_4A7E8(4, DAT_163, true);
+                    return;
+                }
+            }
+        }
+
+        LAB_448C8:
+        if ((DAT_11E & 4) == 0)
+        {
+            if (DAT_3C == 1 && DAT_3D == 7)
+            {
+                iVar4 = DAT_1EC;
+
+                if (iVar4 < 0)
+                    iVar4 += 31;
+
+                vr.y = (short)(vr.y + (iVar4 >> 5) * DAT_60 & 0xfff);
+            }
+
+            sVar1 = DAT_1C3;
+
+            if (sVar1 == 2)
+            {
+                DAT_3C = 2;
+                DAT_3D = 3;
+                DAT_3E = 0;
+                DAT_3F = 0;
+            }
+            else
+            {
+                if (sVar1 == 3)
+                {
+                    DAT_3C = 2;
+                    DAT_3D = 1;
+                    DAT_3E = 0;
+                    DAT_3F = 0;
+                }
+                else
+                {
+                    if ((byte)sVar1 - 4U < 2)
+                    {
+                        DAT_3C = 2;
+                        DAT_3D = 4;
+                        DAT_3E = 0;
+                        DAT_3F = 0;
+                    }
+                    else
+                    {
+                        DAT_3C = 2;
+                        DAT_3D = 0;
+                        DAT_3E = 0;
+                        DAT_3F = 0;
+                    }
+                }
+            }
+
+            FUN_2F848();
+            FUN_65CF8(0, 0, 30);
+            DAT_11E |= 4;
+        }
+
+        if ((DAT_208 & 0x4000) != 0)
+            BDAT_1D8++;
+
+        FUN_40A1C();
     }
 
     public void FUN_50FE4(TodScriptableObject param1, TodScriptableObject param2, TodScriptableObject param3, byte param4, byte param5)

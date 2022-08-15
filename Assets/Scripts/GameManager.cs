@@ -17,6 +17,17 @@ public struct CapsuleCollider
     public byte flags; //0x0B
 }
 
+public struct UNK_9B084
+{
+    public byte DAT_00;
+    public sbyte DAT_01;
+    public byte DAT_02;
+    public byte DAT_03;
+    public Vector3Int DAT_04;
+    public ushort DAT_0A;
+    public int DAT_0C;
+}
+
 public struct UNK_9B314
 {
     public ushort bone; //0x00

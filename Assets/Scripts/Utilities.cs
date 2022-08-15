@@ -50,6 +50,10 @@ public static class Utilities
     {
         3, 9, 2, 6
     };
+    public static UNK_9B084[] DAT_9B084 = new UNK_9B084[] { };
+    public static byte[] DAT_9B144 = new byte[] { 0, 1, 5, 6, 7, 0, 0, 0 };
+    public static byte[] DAT_9B14C = new byte[] { 2, 3, 8, 9, 10, 0, 0, 0 };
+    public static byte[] DAT_9B154 = new byte[] { 6, 7, 11, 0 };
     public static UNK_9B314[] DAT_9B314 = new UNK_9B314[] { };
     public static ushort[] DAT_9B4A0 = new ushort[] { };
     public static ushort[] DAT_9B500 = new ushort[] { };

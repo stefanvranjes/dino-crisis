@@ -770,6 +770,68 @@ public class SceneManager : MonoBehaviour
         return null;
     }
 
+    public void FUN_2E7D0(CriSkinned param1)
+    {
+        ushort uVar1;
+        short sVar2;
+        int iVar3;
+        CriParticle oVar3;
+        CriObject oVar4;
+        uint uVar5;
+        int iVar6;
+        byte[] puVar7;
+
+        sVar2 = param1.FUN_64804(DAT_27C[10].screen);
+
+        if ((ushort)(sVar2 - 0x200) < 0xa00U)
+        {
+            if ((ushort)(sVar2 - 0x200) < 0x400U)
+            {
+                iVar3 = (int)GameManager.FUN_64650();
+                uVar5 = (uint)(iVar3 % 5);
+                puVar7 = Utilities.DAT_9B144;
+            }
+            else
+            {
+                if ((ushort)(sVar2 - 0x600) < 0x400)
+                {
+                    iVar3 = (int)GameManager.FUN_64650();
+                    uVar5 = (uint)(iVar3 % 3);
+                    puVar7 = Utilities.DAT_9B154;
+                }
+                else
+                {
+                    iVar3 = (int)GameManager.FUN_64650();
+                    uVar5 = (uint)(iVar3 % 5);
+                    puVar7 = Utilities.DAT_9B14C;
+                }
+            }
+
+            uVar5 = puVar7[uVar5 & 0xff];
+        }
+        else
+        {
+            iVar3 = (int)GameManager.FUN_64650();
+            uVar5 = (uint)(iVar3 % 5 & 0xff);
+        }
+
+        iVar6 = (int)uVar5;
+        oVar3 = FUN_5FFA0();
+
+        if (oVar3 != null)
+        {
+            oVar3.tags = Utilities.DAT_9B084[iVar6].DAT_01;
+            oVar3.DAT_2F = Utilities.DAT_9B084[iVar6].DAT_02;
+            oVar4 = Utilities.FUN_601C8(param1.skeleton, Utilities.DAT_9B084[iVar6].DAT_03);
+            oVar3.DAT_4C = oVar4;
+            oVar3.screen = Utilities.DAT_9B084[iVar6].DAT_04;
+            uVar1 = Utilities.DAT_9B084[iVar6].DAT_0A;
+            oVar3.DAT_60 = uVar1;
+            oVar3.DAT_62 = uVar1;
+            oVar3.DAT_6C = (byte)Utilities.DAT_9B084[iVar6].DAT_0C; //0x6c should be int?
+        }
+    }
+
     private void FUN_290E0()
     {
         ushort uVar1;

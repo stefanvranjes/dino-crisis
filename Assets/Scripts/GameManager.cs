@@ -849,7 +849,7 @@ public class GameManager : MonoBehaviour
         {
             bVar9 = 0;
 
-            if (param1.DAT_120 != 0)
+            if (param1.PTR_120 != null)
             {
                 local_128 = new short[36];
                 local_e0 = new byte[40];

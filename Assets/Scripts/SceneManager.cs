@@ -2489,6 +2489,30 @@ public class SceneManager : MonoBehaviour
         return sceneCollision.FLOOR_SEGMENT.FLOOR_COLLIDERS[param2 & 0xff];
     }
 
+    public CriSkinned FUN_65B30(CriSkinned param1)
+    {
+        CriSkinned psVar1;
+        int iVar2;
+        int iVar3;
+
+        iVar3 = 10;
+        iVar2 = 0;
+        psVar1 = DAT_27C[iVar2];
+
+        while((psVar1.flags & 1) == 0 || psVar1.tags != param1.tags || 
+            param1 == psVar1 || psVar1.health < 1)
+        {
+            iVar3--;
+            iVar2++;
+            psVar1 = DAT_27C[iVar2];
+
+            if (iVar3 == -1)
+                return null;
+        }
+
+        return psVar1;
+    }
+
     public bool FUN_80030(CriSkinned param1, bool param2, byte param3)
     {
         byte bVar2;

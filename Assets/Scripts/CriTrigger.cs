@@ -14,7 +14,7 @@ public class CriTrigger : MonoBehaviour
     public short DAT_0E; //0x0E
     public short DAT_10; //0x10
     public ushort DAT_12; //0x12
-    public byte DAT_14; //0x14
+    public bool DAT_14; //0x14
     public ushort DAT_16; //0x16
 
     public void ResetValues()
@@ -29,7 +29,7 @@ public class CriTrigger : MonoBehaviour
         DAT_0E = 0;
         DAT_10 = 0;
         DAT_12 = 0;
-        DAT_14 = 0;
+        DAT_14 = false;
         DAT_16 = 0;
     }
 

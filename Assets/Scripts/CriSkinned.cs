@@ -50,7 +50,7 @@ public class CriSkinned : CriObject
     public byte DAT_12B; //0x12B
     public ushort DAT_12C; //0x12C
     public sbyte DAT_12E; //0x12E
-    public bool DAT_12F; //0x12F
+    public byte DAT_12F; //0x12F
     public int DAT_130; //0x130
     public CapsuleCollider[] PTR_130;
     public WallCollider DAT_134; //0x134
@@ -86,11 +86,12 @@ public class CriSkinned : CriObject
     public sbyte DAT_198; //0x198
     public byte DAT_199; //0x199
     public ushort DAT_19A; //0x19A
+    public ushort DAT_19E; //0x19E
     public byte DAT_1A0; //0x1A0
     public byte DAT_1A1; //0x1A1
     public byte DAT_1A3; //0x1A3
     public byte DAT_1A5; //0x1A5
-    public byte DAT_1A6; //0x1A6
+    public bool DAT_1A6; //0x1A6
     public byte DAT_1A7; //0x1A7
 
     private List<byte> commandList;
@@ -220,7 +221,7 @@ public class CriSkinned : CriObject
         DAT_12B = 0;
         DAT_12C = 0;
         DAT_12E = 0;
-        DAT_12F = false;
+        DAT_12F = 0;
         DAT_130 = 0;
         PTR_130 = null;
         DAT_134 = null;
@@ -257,11 +258,12 @@ public class CriSkinned : CriObject
         DAT_198 = 0;
         DAT_199 = 0;
         DAT_19A = 0;
+        DAT_19E = 0;
         DAT_1A0 = 0;
         DAT_1A1 = 0;
         DAT_1A3 = 0;
         DAT_1A5 = 0;
-        DAT_1A6 = 0;
+        DAT_1A6 = false;
         DAT_1A7 = 0;
     }
 
@@ -1029,6 +1031,45 @@ public class CriSkinned : CriObject
     {
         DAT_174 = (byte)(param1 | 0x80);
         shadowSize = new Vector2Int(param2, param3);
+    }
+
+    public void FUN_77784(uint param1, ushort param2)
+    {
+        int iVar1;
+        uint uVar2;
+
+        iVar1 = (int)GameManager.FUN_64650();
+        uVar2 = param1 & 0xff;
+
+        if (uVar2 == 0)
+            return; //trap(0x1c00)
+
+        if (uVar2 == 0xffffffff && iVar1 == -0x80000000)
+            return; //trap(0x1800)
+
+        DAT_146 = param2;
+        DAT_144 = (ushort)(((param1 & 0xff) - 1) * 400 | 0x8000 | (ushort)(iVar1 & (int)uVar2));
+    }
+
+    public void FUN_2D704()
+    {
+        short sVar1;
+        int iVar2;
+        uint uVar3;
+
+        iVar2 = (int)GameManager.FUN_64650();
+        sVar1 = 850;
+
+        if (iVar2 == (iVar2 / 3) * 3)
+        {
+            uVar3 = GameManager.FUN_64650();
+            sVar1 = 1000;
+
+            if ((uVar3 & 2) == 0)
+                sVar1 = 750;
+        }
+
+        maxHealth = sVar1;
     }
 
     public void FUN_7569C(Tmd2ScriptableObject param1)

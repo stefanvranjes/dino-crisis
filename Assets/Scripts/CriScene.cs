@@ -2711,7 +2711,7 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_59994()
     {
-        byte bVar1;
+        bool bVar1;
         CriTrigger puVar2;
         DataContainer25 mVar6;
         CriSkinned oVar7;

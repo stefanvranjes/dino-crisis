@@ -57,6 +57,7 @@ public static class Utilities
     public static UNK_9B314[] DAT_9B314 = new UNK_9B314[] { };
     public static ushort[] DAT_9B4A0 = new ushort[] { };
     public static ushort[] DAT_9B500 = new ushort[] { };
+    public static ushort[] DAT_9B560 = new ushort[] { 0xfa0, 0xfa0, 0xfa0, 0x1194, 0x1194, 0x1194, 0x1194, 0x1194, 0x1194, 0 };
     public static short[] DAT_AC658 = new short[]
     {
         4096, 4127, 4159, 4190, 4222, 4252, 4283, 4314, 4344,
@@ -2000,6 +2001,58 @@ public static class Utilities
         return (int)(lVar1 & 0xfff);
     }
 
+    public static bool FUN_617D4(Vector2Int[] param1, ref Vector2Int param2)
+    {
+        short sVar1;
+        short sVar2;
+        int iVar3;
+        int iVar4;
+        bool bVar5;
+        int iVar6;
+        int iVar7;
+        int iVar8;
+        int iVar9;
+        int iVar10;
+
+        iVar10 = param1[1].x - param1[0].x;
+        iVar9 = param1[3].y - param1[2].y;
+        iVar8 = param1[1].y - param1[0].y;
+        iVar3 = param1[3].x - param1[2].x;
+        sVar1 = (short)param1[1].y;
+        sVar2 = (short)param1[0].y;
+        iVar7 = iVar10 * iVar9 - iVar8 * iVar3;
+        iVar6 = param1[0].y - param1[2].y;
+
+        if (iVar7 == 0)
+            bVar5 = false;
+        else
+        {
+            iVar4 = param1[0].x - param1[2].x;
+            iVar3 = iVar6 * iVar3 - iVar4 * iVar9;
+            iVar6 = iVar6 * iVar10 - iVar4 * iVar8;
+            bVar5 = false;
+
+            if (((0 < iVar7 && -1 < iVar3 && iVar3 <= iVar7) || 
+                iVar7 < 0 && iVar7 <= iVar3 && iVar3 < 1) && 
+                ((0 < iVar7 && -1 < iVar6 && iVar6 <= iVar7) || 
+                (iVar7 < 0 && iVar7 <= iVar6 && iVar6 < 1)))
+            {
+                if (iVar7 == 0)
+                    return false; //trap(0x1c00)
+
+                if (iVar7 == -1 && iVar3 * 100 == -0x80000000)
+                    return false; //trap(0x1800)
+
+                iVar6 = (iVar3 * 100) / iVar7;
+                bVar5 = true;
+                param2.x = param1[0].x + (((param1[1].x - param1[0].x) * iVar6) / 100);
+                param2.y = sVar2 + (((sVar1 - sVar2) * iVar6) / 100);
+            }
+        }
+
+        return bVar5;
+    }
+
     public static bool FUN_61FDC(Vector4Int param1, Vector4Int param2, ref Vector2Int param3)
     {
         bool bVar1;
@@ -2025,6 +2078,101 @@ public static class Utilities
         }
 
         return bVar1;
+    }
+
+    public static int FUN_62D20(Vector2Int[] param1, Vector4Int param2, ref Vector2Int param3)
+    {
+        bool bVar1;
+        int iVar2;
+        int iVar3;
+        uint uVar4;
+        int iVar5;
+        int iVar6;
+        uint uVar7;
+        int iVar8;
+        Vector2Int[] local_40;
+        Vector2Int local_30;
+        Vector2Int local_28;
+
+        local_40 = new Vector2Int[4];
+        local_30 = new Vector2Int();
+        local_28 = new Vector2Int();
+        local_40[0].x = param2.x;
+        iVar8 = 0;
+        local_40[0].y = param2.y;
+        iVar5 = 0;
+        local_40[1].x = param2.z;
+        uVar7 = 0xffffffff;
+        local_40[1].y = param2.w;
+        iVar6 = 3;
+
+        do
+        {
+            if (iVar6 == 1)
+            {
+                local_40[2].x = param1[0].x;
+                local_40[2].y = param1[0].y;
+                local_40[3].x = param1[2].x;
+                local_40[3].y = param1[2].y;
+                iVar5 = 3;
+            }
+            else
+            {
+                if (iVar6 == 0)
+                {
+                    local_40[2].x = param1[1].x;
+                    local_40[2].y = param1[1].y;
+                    local_40[3].x = param1[3].x;
+                    local_40[3].y = param1[3].y;
+                    iVar5 = 4;
+                }
+                else
+                {
+                    if (iVar6 == 2)
+                    {
+                        local_40[2].x = param1[2].x;
+                        local_40[2].y = param1[2].y;
+                        local_40[3].x = param1[3].x;
+                        local_40[3].y = param1[3].y;
+                        iVar5 = 2;
+                    }
+                    else
+                    {
+                        if (iVar6 == 3)
+                        {
+                            local_40[2].x = param1[0].x;
+                            local_40[2].y = param1[0].y;
+                            local_40[3].x = param1[1].x;
+                            local_40[3].y = param1[1].y;
+                            iVar5 = 1;
+                        }
+                    }
+                }
+            }
+
+            bVar1 = FUN_617D4(local_40, ref local_30);
+
+            if (bVar1)
+            {
+                iVar2 = (local_30.x - param2.x) * 0x10000 >> 0x10;
+                iVar3 = (local_30.y - param2.y) * 0x10000 >> 0x10;
+                uVar4 = (uint)(iVar2 * iVar2 + iVar3 * iVar3);
+
+                if (uVar4 < uVar7)
+                {
+                    local_28 = local_30;
+                    uVar7 = uVar4;
+                    iVar8 = iVar5;
+                }
+            }
+
+            iVar6--;
+        } while (iVar6 != -1);
+
+        if (iVar8 != 0)
+            param3 = local_28;
+
+        return iVar8;
     }
 
     public static uint FUN_63160(Vector3Int param1, Vector3Int param2)

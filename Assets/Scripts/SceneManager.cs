@@ -2489,6 +2489,56 @@ public class SceneManager : MonoBehaviour
         return sceneCollision.FLOOR_SEGMENT.FLOOR_COLLIDERS[param2 & 0xff];
     }
 
+    public byte FUN_64D20(CriSkinned param1, Vector3Int param2, ref Vector2Int param3)
+    {
+        byte bVar1;
+        uint uVar8;
+        WallCollider pbVar7;
+        uint uVar9;
+        uint uVar10;
+        Vector4Int local_40;
+
+        local_40 = new Vector4Int(param1.screen.x, param1.screen.z, param2.x, param2.z);
+        uVar10 = 0;
+        uVar8 = 0xffff;
+        uVar9 = 0;
+        bVar1 = sceneCollision.WALL_SEGMENTS[0].WALL_COUNT;
+        
+        if (bVar1 != 0)
+        {
+            do
+            {
+                pbVar7 = sceneCollision.WALL_SEGMENTS[0].WALL_COLLIDERS[uVar9];
+
+                if ((pbVar7.flags & 0x8000) == 0)
+                {
+                    if (pbVar7.DAT_03 == 0)
+                    {
+
+                    }
+                }
+            }
+        }
+    }
+
+    private bool FUN_65138(Vector4Int param1, WallCollider param2)
+    {
+        Vector2Int[] local_18;
+        Vector2Int local_8;
+
+        local_18 = new Vector2Int[4];
+        local_8 = new Vector2Int();
+        local_18[0].x = param2.DAT_04.x;
+        local_18[0].y = param2.DAT_04.y + param2.DAT_08.y;
+        local_18[1].x = param2.DAT_04.x + param2.DAT_08.x;
+        local_18[1].y = param2.DAT_04.y + param2.DAT_08.y;
+        local_18[2].x = param2.DAT_04.x;
+        local_18[2].y = param2.DAT_04.y;
+        local_18[3].x = param2.DAT_04.x + param2.DAT_08.x;
+        local_18[3].y = param2.DAT_04.y;
+        return Utilities.FUN_62D20(local_18, param1, ref local_8) != 0;
+    }
+
     public CriSkinned FUN_65B30(CriSkinned param1)
     {
         CriSkinned psVar1;

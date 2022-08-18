@@ -46,6 +46,10 @@ public class SceneManager : MonoBehaviour
     public byte DAT_C51D8;
     public CriScene[] DAT_D7C0; //gp+d7c0h...gp+dea0h (0x800C51E0)
 
+    private delegate bool FUN_9E96C(Vector4Int v4, WallCollider c, ref Vector2Int v2);
+
+    private FUN_9E96C[] PTR_FUN_9E96C;
+
     private byte[] DAT_AA484 = new byte[]
     {
         4, 1, 3, 3, 3, 3, 4, 0
@@ -69,6 +73,17 @@ public class SceneManager : MonoBehaviour
         {
             instance = this;
         }
+
+        PTR_FUN_9E96C = new FUN_9E96C[7]
+        {
+            FUN_65138,
+            FUN_651D8,
+            FUN_6521C,
+            FUN_652AC,
+            FUN_6533C,
+            FUN_653CC,
+            FUN_6545C
+        };
     }
 
     // Start is called before the first frame update
@@ -2489,16 +2504,25 @@ public class SceneManager : MonoBehaviour
         return sceneCollision.FLOOR_SEGMENT.FLOOR_COLLIDERS[param2 & 0xff];
     }
 
-    public byte FUN_64D20(CriSkinned param1, Vector3Int param2, ref Vector2Int param3)
+    public sbyte FUN_64D20(CriSkinned param1, Vector3Int param2, ref Vector2Int param3)
     {
         byte bVar1;
+        bool bVar2;
+        uint uVar3;
+        uint uVar4;
+        int iVar5;
+        WallSegment wVar5;
         uint uVar8;
         WallCollider pbVar7;
         uint uVar9;
         uint uVar10;
         Vector4Int local_40;
+        Vector3Int local_38;
+        Vector2Int local_30;
 
         local_40 = new Vector4Int(param1.screen.x, param1.screen.z, param2.x, param2.z);
+        local_38 = new Vector3Int();
+        local_30 = new Vector2Int();
         uVar10 = 0;
         uVar8 = 0xffff;
         uVar9 = 0;
@@ -2514,20 +2538,138 @@ public class SceneManager : MonoBehaviour
                 {
                     if (pbVar7.DAT_03 == 0)
                     {
+                        bVar2 = PTR_FUN_9E96C[pbVar7.DAT_00](local_40, pbVar7, ref local_30);
 
+                        if (bVar2)
+                        {
+                            local_38.x = local_30.x;
+                            local_38.y = 0;
+                            local_38.z = local_30.y;
+                            uVar3 = Utilities.FUN_631AC(param1.screen, local_38);
+
+                            if (uVar3 < uVar8)
+                            {
+                                param3.x = local_30.x;
+                                uVar10 = 0xff;
+                                param3.y = local_30.y;
+                                uVar8 = uVar3;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (pbVar7.DAT_02 <= (uint)(byte)param1.DAT_48 && (uint)(byte)param1.DAT_48 < pbVar7.DAT_03)
+                        {
+                            bVar2 = PTR_FUN_9E96C[pbVar7.DAT_00](local_40, pbVar7, ref local_30);
+
+                            if (bVar2)
+                            {
+                                local_38.x = local_30.x;
+                                local_38.y = 0;
+                                local_38.z = local_30.y;
+                                uVar3 = Utilities.FUN_631AC(param1.screen, local_38);
+
+                                if (uVar3 < uVar8)
+                                {
+                                    param3 = local_30;
+
+                                    if (pbVar7.DAT_02 < (uint)(byte)param1.DAT_48)
+                                        iVar5 = pbVar7.DAT_03 - (byte)param1.DAT_48;
+                                    else
+                                        iVar5 = pbVar7.DAT_03 - pbVar7.DAT_02;
+
+                                    uVar8 = uVar3;
+                                    uVar10 = 0xff;
+
+                                    if ((iVar5 + 1) * 0x1000000 >> 0x18 < 6)
+                                        uVar10 = (uint)(iVar5 + 1);
+                                }
+                            }
+                        }
                     }
                 }
-            }
+
+                uVar9++;
+            } while (uVar9 < bVar1);
         }
+
+        uVar9 = 0;
+        wVar5 = sceneCollision.WALL_SEGMENTS[param1.DAT_48 + 1];
+        uVar3 = wVar5.WALL_COUNT;
+
+        if (uVar3 != 0)
+        {
+            do
+            {
+                pbVar7 = wVar5.WALL_COLLIDERS[uVar9];
+
+                if ((pbVar7.flags & 0x8000) == 0)
+                {
+                    if (pbVar7.DAT_03 == 0)
+                    {
+                        bVar2 = PTR_FUN_9E96C[pbVar7.DAT_00](local_40, pbVar7, ref local_30);
+
+                        if (bVar2)
+                        {
+                            local_38.x = local_30.x;
+                            local_38.y = 0;
+                            local_38.z = local_30.y;
+                            uVar4 = Utilities.FUN_631AC(param1.screen, local_38);
+
+                            if (uVar4 < uVar8)
+                            {
+                                param3.x = local_30.x;
+                                uVar10 = 1;
+                                param3.y = local_30.y;
+                                uVar8 = uVar4;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (pbVar7.DAT_02 <= (uint)(byte)param1.DAT_48 && (uint)(byte)param1.DAT_48 < pbVar7.DAT_03)
+                        {
+                            bVar2 = PTR_FUN_9E96C[pbVar7.DAT_00](local_40, pbVar7, ref local_30);
+
+                            if (bVar2)
+                            {
+                                local_38.x = local_30.x;
+                                local_38.y = 0;
+                                local_38.z = local_30.y;
+                                uVar4 = Utilities.FUN_631AC(param1.screen, local_38);
+
+                                if (uVar4 < uVar8)
+                                {
+                                    param3 = local_30;
+
+                                    if (pbVar7.DAT_02 < (uint)(byte)param1.DAT_48)
+                                        iVar5 = pbVar7.DAT_03 - (byte)param1.DAT_48;
+                                    else
+                                        iVar5 = pbVar7.DAT_03 - pbVar7.DAT_02;
+
+                                    uVar8 = uVar4;
+                                    uVar10 = 0xff;
+
+                                    if ((iVar5 + 1) * 0x1000000 >> 0x18 < 6)
+                                        uVar10 = (uint)(iVar5 + 1);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                uVar9++;
+            } while (uVar9 < uVar3);
+        }
+
+        return (sbyte)uVar10;
     }
 
-    private bool FUN_65138(Vector4Int param1, WallCollider param2)
+    private bool FUN_65138(Vector4Int param1, WallCollider param2, ref Vector2Int param3)
     {
         Vector2Int[] local_18;
-        Vector2Int local_8;
 
         local_18 = new Vector2Int[4];
-        local_8 = new Vector2Int();
         local_18[0].x = param2.DAT_04.x;
         local_18[0].y = param2.DAT_04.y + param2.DAT_08.y;
         local_18[1].x = param2.DAT_04.x + param2.DAT_08.x;
@@ -2536,7 +2678,91 @@ public class SceneManager : MonoBehaviour
         local_18[2].y = param2.DAT_04.y;
         local_18[3].x = param2.DAT_04.x + param2.DAT_08.x;
         local_18[3].y = param2.DAT_04.y;
-        return Utilities.FUN_62D20(local_18, param1, ref local_8) != 0;
+        return Utilities.FUN_62D20(local_18, param1, ref param3) != 0;
+    }
+
+    private bool FUN_651D8(Vector4Int param1, WallCollider param2, ref Vector2Int param3)
+    {
+        Vector4Int local_10;
+
+        local_10 = new Vector4Int(param2.DAT_04.x, 0, param2.DAT_04.y, param2.DAT_08.x);
+        return Utilities.FUN_61BC0(param1, local_10, ref param3);
+    }
+
+    private bool FUN_6521C(Vector4Int param1, WallCollider param2, ref Vector2Int param3)
+    {
+        Vector2Int[] local_28;
+
+        local_28 = new Vector2Int[4];
+        local_28[0].x = param2.DAT_04.x;
+        local_28[0].y = param2.DAT_04.y;
+        local_28[1].x = param2.DAT_04.x + param2.DAT_08.x;
+        local_28[1].y = param2.DAT_04.y;
+        local_28[3].x = param2.DAT_04.x;
+        local_28[3].y = param2.DAT_04.y - param2.DAT_08.y;
+        local_28[2] = local_28[0];
+        return Utilities.FUN_62AB0(local_28, param1, ref param3) != 0;
+    }
+
+    private bool FUN_652AC(Vector4Int param1, WallCollider param2, ref Vector2Int param3)
+    {
+        Vector2Int[] local_28;
+
+        local_28 = new Vector2Int[4];
+        local_28[0].x = param2.DAT_04.x - param2.DAT_08.x;
+        local_28[0].y = param2.DAT_04.y;
+        local_28[1].x = param2.DAT_04.x;
+        local_28[1].y = param2.DAT_04.y;
+        local_28[2].x = param2.DAT_04.x;
+        local_28[2].y = param2.DAT_04.y + param2.DAT_08.y;
+        local_28[3] = local_28[1];
+        return Utilities.FUN_62AB0(local_28, param1, ref param3) != 0;
+    }
+
+    private bool FUN_6533C(Vector4Int param1, WallCollider param2, ref Vector2Int param3)
+    {
+        Vector2Int[] local_28;
+
+        local_28 = new Vector2Int[4];
+        local_28[0].x = param2.DAT_04.x;
+        local_28[0].y = param2.DAT_04.y;
+        local_28[1].x = param2.DAT_04.x + param2.DAT_08.x;
+        local_28[1].y = param2.DAT_04.y;
+        local_28[2].x = param2.DAT_04.x;
+        local_28[2].y = param2.DAT_04.y + param2.DAT_08.y;
+        local_28[3] = local_28[0];
+        return Utilities.FUN_62AB0(local_28, param1, ref param3) != 0;
+    }
+
+    private bool FUN_653CC(Vector4Int param1, WallCollider param2, ref Vector2Int param3)
+    {
+        Vector2Int[] local_28;
+
+        local_28 = new Vector2Int[4];
+        local_28[0].x = param2.DAT_04.x;
+        local_28[0].y = param2.DAT_04.y;
+        local_28[2].x = param2.DAT_04.x - param2.DAT_08.x;
+        local_28[2].y = param2.DAT_04.y;
+        local_28[1].x = param2.DAT_04.x;
+        local_28[1].y = param2.DAT_04.y - param2.DAT_08.y;
+        local_28[3] = local_28[0];
+        return Utilities.FUN_62AB0(local_28, param1, ref param3) != 0;
+    }
+
+    private bool FUN_6545C(Vector4Int param1, WallCollider param2, ref Vector2Int param3)
+    {
+        Vector2Int[] local_18;
+
+        local_18 = new Vector2Int[4];
+        local_18[0].x = param2.DAT_04.x + param2.DAT_08.x;
+        local_18[0].y = param2.DAT_04.y;
+        local_18[1].x = param2.DAT_04.x;
+        local_18[1].y = param2.DAT_04.y - param2.DAT_08.y;
+        local_18[2].x = param2.DAT_04.x;
+        local_18[2].y = param2.DAT_04.y + param2.DAT_08.y;
+        local_18[3].x = param2.DAT_04.x - param2.DAT_08.x;
+        local_18[3].y = param2.DAT_04.y;
+        return Utilities.FUN_62D20(local_18, param1, ref param3) != 0;
     }
 
     public CriSkinned FUN_65B30(CriSkinned param1)

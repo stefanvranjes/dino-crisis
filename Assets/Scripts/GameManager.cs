@@ -165,6 +165,7 @@ public class GameManager : MonoBehaviour
     public Material[] materials;
 
     private delegate sbyte FUN_AA4D0(CriPlayer p, CriStatic o);
+    
     private FUN_AA4D0[] PTR_FUN_AA4D0;
 
     private byte[] DAT_AA44C = new byte[]

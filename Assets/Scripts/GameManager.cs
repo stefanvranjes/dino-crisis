@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour
     public FUN_148 PTR_FUN_148; //gp+148h
     public FUN_14C PTR_FUN_14C; //gp+14ch
     public byte DAT_922C; //gp+922ch
+    public CriPlayer DAT_9230; //gp+9230h
     public byte DAT_9234; //gp+9234h
     public byte DAT_9235; //gp+9235h
     public short DAT_98B4; //gp+98b4h
@@ -485,6 +486,15 @@ public class GameManager : MonoBehaviour
         DAT_A0F8[2] = oVar1.DAT_244[2];
         DAT_A0F8[3] = oVar1.DAT_244[3];
         //copying...
+    }
+
+    public void FUN_65CB0(CriPlayer param1)
+    {
+        if (param1 == DAT_9230)
+        {
+            DAT_922C &= 0xfd;
+            DAT_9230 = null;
+        }
     }
 
     public void FUN_6E6C8()

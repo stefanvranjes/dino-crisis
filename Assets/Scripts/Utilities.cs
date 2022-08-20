@@ -58,6 +58,12 @@ public static class Utilities
     public static ushort[] DAT_9B4A0 = new ushort[] { };
     public static ushort[] DAT_9B500 = new ushort[] { };
     public static ushort[] DAT_9B560 = new ushort[] { 0xfa0, 0xfa0, 0xfa0, 0x1194, 0x1194, 0x1194, 0x1194, 0x1194, 0x1194, 0 };
+    public static ushort[] DAT_9BB78 = new ushort[] { 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0 };
+    public static ushort[] DAT_9BB8C = new ushort[] { 0xdac, 0xdac, 0xdac, 0x1194, 0x1194, 0x1194, 0x1194, 0x1194, 0x1194, 0 };
+    public static ushort[] DAT_9BBA0 = new ushort[] { 0x1770, 0x1770, 0x1770, 0x1770, 0x1770, 0x1770, 0x1770, 0x1770, 0x1770, 0 };
+    public static ushort[] DAT_9BBB4 = new ushort[] { 0xfa0, 0xfa0, 0xfa0, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0 };
+    public static ushort[] DAT_9BC88 = new ushort[] { 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0 };
+    public static ushort[] DAT_9BC9C = new ushort[] { 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0 };
     public static short[] DAT_AC658 = new short[]
     {
         4096, 4127, 4159, 4190, 4222, 4252, 4283, 4314, 4344,
@@ -2443,6 +2449,14 @@ public static class Utilities
         }
 
         return uVar2 & 0xffff;
+    }
+
+    public static bool FUN_64C0C(Vector3Int param1, Vector3Int param2, short param3, short param4)
+    {
+        short sVar1;
+
+        sVar1 = (short)FUN_615EC(param1, param2);
+        return (uint)((sVar1 - param3) + param4 & 0xfff) < (uint)(param4 << 1);
     }
 
     public static void FUN_665D8(ref Vector3Int param1, ref Vector3Int param2, ref Vector3Int param3, int param4)

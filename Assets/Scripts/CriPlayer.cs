@@ -10773,6 +10773,158 @@ public class CriPlayer : CriSkinned
         PTR_FUN_9BD58[DAT_2F]();
     }
 
+    private void FUN_344B0()
+    {
+        short sVar2;
+        bool bVar3;
+        int iVar3;
+        short sVar5;
+        uint uVar6;
+        CriPlayer oVar7;
+        int iVar8;
+
+        if ((GameManager.instance.DAT_922C & 2) != 0 && GameManager.instance.DAT_9230 != this)
+        {
+            DAT_3C = 1;
+            DAT_3D = 0x16;
+            DAT_3E = 0;
+            DAT_3F = 0;
+            return;
+        }
+
+        oVar7 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        if ((oVar7.DAT_11E & 0x80) != 0)
+            return;
+
+        bVar3 = SceneManager.instance.FUN_81014(screen, oVar7.screen, (byte)(DAT_48 << 4 | 0xf), false);
+
+        if (bVar3)
+            return;
+
+        if (14U < DAT_60 && (DAT_162 & 1) != 0)
+        {
+            sVar2 = oVar7.FUN_64804(screen);
+
+            if (DAT_1C4 != 0) goto LAB_3482C;
+
+            if ((DAT_12B & 4) == 0 || 0x15U < DAT_60)
+            {
+                if (DAT_1C4 != 0) goto LAB_3482C;
+
+                DAT_1C4 = 1;
+
+                if (oVar7.DAT_98 == DAT_98)
+                    oVar7.DAT_98 = oVar7.DAT_1E0;
+
+                if ((ushort)(sVar2 - 0x201) < 0x400U)
+                    uVar6 = 1;
+                else
+                {
+                    if ((ushort)(sVar2 - 0xa01) < 0x400U)
+                        uVar6 = 3;
+                    else
+                    {
+                        if ((ushort)(sVar2 - 0xa01) < 0x400U)
+                            uVar6 = 2;
+                        else
+                            uVar6 = 0;
+                    }
+                }
+
+                oVar7.FUN_53A2C(1, uVar6);
+                //...
+            }
+            else
+            {
+                DAT_1C4 = 1;
+
+                if (oVar7.DAT_98 == DAT_98)
+                    oVar7.DAT_98 = oVar7.DAT_1E0;
+
+                if ((ushort)(sVar2 - 0x201) < 0x400U)
+                {
+                    uVar6 = 1;
+                    oVar7.FUN_53A2C(1, uVar6);
+                    //...
+                    goto LAB_34704;
+                }
+
+                if ((ushort)(sVar2 - 0xa01) < 0x400U)
+                {
+                    uVar6 = 3;
+                    oVar7.FUN_53A2C(1, uVar6);
+                    //...
+                    goto LAB_34704;
+                }
+
+                if (0xbffU < (ushort)(sVar2 - 0x201))
+                {
+                    uVar6 = 0;
+                    oVar7.FUN_53A2C(1, uVar6);
+                    //...
+                    goto LAB_34704;
+                }
+
+                GameManager.instance.PTR_FUN_148 = GameManager.FUN_2B6F4;
+                oVar7.DAT_3C = 5;
+                oVar7.DAT_3D = 9;
+                oVar7.DAT_3E = 0;
+                oVar7.DAT_3F = 0;
+                oVar7.DAT_1F0 = this;
+                FUN_65C4C(oVar7);
+                //...
+            }
+
+            LAB_34704:
+            //FUN_1D988
+            //sound
+
+            if ((oVar7.DAT_11E & 1) == 0 && 0 < oVar7.health)
+            {
+                if (oVar7.DAT_3C == 5 && oVar7.DAT_3D == 9)
+                {
+                    iVar3 = (int)GameManager.FUN_64650();
+                    iVar8 = (int)((ulong)((long)iVar3 * 0x51eb851f) >> 0x20);
+                    sVar5 = (short)(oVar7.health - 150);
+                }
+                else
+                {
+                    iVar3 = (int)GameManager.FUN_64650();
+                    iVar8 = (int)((ulong)((long)iVar3 * 0x51eb851f) >> 0x20);
+                    sVar5 = (short)(oVar7.health - 125);
+                }
+
+                oVar7.health = (short)(sVar5 - (iVar3 + (iVar8 >> 4) - (iVar3 >> 31)) * -50);
+                oVar7.FUN_4FE30();
+
+                if (oVar7.health < 1)
+                {
+                    if (oVar7.DAT_3C != 5 || oVar7.DAT_3D != 9)
+                    {
+                        oVar7.DAT_3C = 3;
+                        oVar7.DAT_3D = 0;
+                        oVar7.DAT_3E = 0;
+                        oVar7.DAT_3F = 0;
+
+                        if ((ushort)(sVar2 - 0x400) < 0x800U)
+                            oVar7.DAT_3F = 0;
+                        else
+                            oVar7.DAT_3F = 1;
+                    }
+
+                    //FUN_2ECAC
+                }
+            }
+        }
+
+        if (DAT_1C4 == 0)
+            return;
+
+        LAB_3482C:;
+        //FUN_2F9A0
+    }
+
     private void FUN_4FD74()
     {
         DAT_227 &= 0x7f;

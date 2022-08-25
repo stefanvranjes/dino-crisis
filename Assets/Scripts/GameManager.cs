@@ -1233,7 +1233,7 @@ public class GameManager : MonoBehaviour
         return local_48;
     }
 
-    private bool FUN_84008(Vector2Int[] param1, Vector2Int[] param2, ref Vector4Int param3)
+    public bool FUN_84008(Vector2Int[] param1, Vector2Int[] param2, ref Vector4Int param3)
     {
         short sVar1;
         short sVar2;

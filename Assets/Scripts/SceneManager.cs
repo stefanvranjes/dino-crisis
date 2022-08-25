@@ -50,6 +50,14 @@ public class SceneManager : MonoBehaviour
 
     private FUN_9E96C[] PTR_FUN_9E96C;
 
+    private byte[] DAT_AA44C = new byte[]
+    {
+        1, 2, 2, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 0, 1, 1, 1, 1, 2, 1, 1, 1, 0, 1, 1, 2, 1, 0
+    };
+    private byte[] DAT_AA468 = new byte[]
+    {
+        2, 2, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 0, 1, 1, 2, 1, 0, 1
+    };
     private byte[] DAT_AA484 = new byte[]
     {
         4, 1, 3, 3, 3, 3, 4, 0
@@ -2917,6 +2925,129 @@ public class SceneManager : MonoBehaviour
         }
 
         return bVar1;
+    }
+
+    public bool FUN_81014(Vector3Int param1, Vector3Int param2, byte param3, bool param4)
+    {
+        short sVar1;
+        bool bVar2;
+        uint uVar4;
+        int iVar6;
+        WallSegment wVar6;
+        int iVar8;
+        WallSegment wVar8;
+        uint uVar9;
+        int pbVar10;
+        WallCollider pbVar11;
+        WallCollider[][] local_68;
+        int[] local_60;
+        Vector2Int[] local_58;
+        Vector4Int local_50;
+        short[] local_40;
+        short[] local_38;
+        Vector4Int auStack72;
+
+        local_50 = new Vector4Int();
+        local_58 = new Vector2Int[2];
+        local_58[0] = new Vector2Int(param1.x, param1.z);
+        local_58[1] = new Vector2Int(param2.x, param2.z);
+        local_40 = new short[2];
+        local_38 = new short[2];
+        local_60 = new int[2];
+        local_68 = new WallCollider[2][];
+        wVar6 = sceneCollision.WALL_SEGMENTS[0];
+        local_60[0] = wVar6.WALL_COUNT;
+        local_68[1] = wVar6.WALL_COLLIDERS;
+        local_68[0] = local_68[1];
+
+        if (param3 < 0x10)
+        {
+            wVar8 = sceneCollision.WALL_SEGMENTS[((uint)param3 >> 4) + 1];
+            local_60[1] = wVar8.WALL_COUNT;
+            local_68[1] = wVar6.WALL_COLLIDERS;
+        }
+        else
+            local_60[1] = 0;
+
+        iVar6 = 0;
+
+        do
+        {
+            uVar4 = (uint)(local_60[iVar6] - 1);
+            local_60[iVar6] = (int)uVar4;
+
+            if (uVar4 != 0xffffffff)
+            {
+                pbVar10 = 0;
+
+                do
+                {
+                    pbVar11 = local_68[iVar6][pbVar10];
+
+                    if ((pbVar11.flags & 0x2000) != 0)
+                    {
+                        iVar8 = -1;
+
+                        do
+                        {
+                            sVar1 = (short)iVar8;
+                            iVar8++;
+                            local_40[iVar8] = (short)(pbVar11.DAT_04.x + pbVar11.DAT_08.x * sVar1);
+                            local_38[iVar8] = (short)(pbVar11.DAT_04.y + pbVar11.DAT_08.y * sVar1);
+                        } while (iVar8 < 2);
+
+                        uVar4 = DAT_AA484[pbVar11.DAT_00];
+
+                        while (uVar4 != 0)
+                        {
+                            uVar9 = uVar4 - 1;
+
+                            if (pbVar11.DAT_00 == 1)
+                            {
+                                local_50.x = pbVar11.DAT_04.x;
+                                local_50.z = pbVar11.DAT_04.y;
+                                local_50.w = pbVar11.DAT_08.x;
+                                bVar2 = GameManager.instance.FUN_84338(local_58, local_50);
+                            }
+                            else
+                            {
+                                local_50.x = local_40[DAT_AA44C[pbVar11.DAT_00 * 4 + uVar9]];
+                                local_50.y = local_38[DAT_AA468[pbVar11.DAT_00 * 4 + uVar9]];
+                                local_50.z = local_40[DAT_AA44C[pbVar11.DAT_00 * 4 + (uVar4 & 3)]];
+                                local_50.w = local_38[DAT_AA468[pbVar11.DAT_00 * 4 + (uVar4 & 3)]];
+                                auStack72 = new Vector4Int();
+                                bVar2 = GameManager.instance.FUN_84008(local_58, 
+                                    new Vector2Int[2] { new Vector2Int(local_50.x, local_50.y), new Vector2Int(local_50.z, local_50.w) }, 
+                                    ref auStack72);
+                            }
+
+                            uVar4 = uVar9;
+
+                            if (bVar2)
+                            {
+                                if (param4 && (pbVar11.flags & 0x4000) != 0)
+                                    return false;
+
+                                if (param3 == 0xff)
+                                    return true;
+
+                                if (pbVar11.DAT_03 == 0 || (uint)(param3 & 0xf) < pbVar11.DAT_03)
+                                    return true;
+                            }
+                        }
+                    }
+
+                    pbVar10++;
+                    uVar4 = (uint)(local_60[iVar6] - 1);
+                    local_60[iVar6] = (int)uVar4;
+                } while (uVar4 != 0xffffffff);
+            }
+
+            iVar6++;
+
+            if (1 < iVar6)
+                return false;
+        } while (true);
     }
 
     /*public bool FUN_80D48(Vector3Int param1, Vector3Int param2, uint param3)

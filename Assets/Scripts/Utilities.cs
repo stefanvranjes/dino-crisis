@@ -50,6 +50,8 @@ public static class Utilities
     {
         3, 9, 2, 6
     };
+    public static byte[] DAT_9B018 = new byte[] { 4, 3, 2, 0, 4, 3, 2, 0, 4, 3, 2, 0, 3, 3, 1, 2, 3, 3, 1, 2, 3, 3, 1, 2, 2, 2, 1, 4, 3, 2, 1, 3, 3, 2, 1, 3 };
+    public static ushort[] DAT_9B03C = new ushort[] { 0x1194, 0x1194, 0x1194, 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0 };
     public static UNK_9B084[] DAT_9B084 = new UNK_9B084[] { };
     public static byte[] DAT_9B144 = new byte[] { 0, 1, 5, 6, 7, 0, 0, 0 };
     public static byte[] DAT_9B14C = new byte[] { 2, 3, 8, 9, 10, 0, 0, 0 };
@@ -64,7 +66,6 @@ public static class Utilities
     public static ushort[] DAT_9BBB4 = new ushort[] { 0xfa0, 0xfa0, 0xfa0, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0 };
     public static ushort[] DAT_9BC88 = new ushort[] { 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0 };
     public static ushort[] DAT_9BC9C = new ushort[] { 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0 };
-    
     public static short[] DAT_AC658 = new short[]
     {
         4096, 4127, 4159, 4190, 4222, 4252, 4283, 4314, 4344,

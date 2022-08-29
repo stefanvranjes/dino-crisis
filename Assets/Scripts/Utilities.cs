@@ -60,6 +60,7 @@ public static class Utilities
     public static ushort[] DAT_9B4A0 = new ushort[] { };
     public static ushort[] DAT_9B500 = new ushort[] { };
     public static ushort[] DAT_9B560 = new ushort[] { 0xfa0, 0xfa0, 0xfa0, 0x1194, 0x1194, 0x1194, 0x1194, 0x1194, 0x1194, 0 };
+    public static byte[] DAT_9BAB8 = new byte[] { 0, 5, 15, 25, 35 };
     public static ushort[] DAT_9BB78 = new ushort[] { 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0 };
     public static ushort[] DAT_9BB8C = new ushort[] { 0xdac, 0xdac, 0xdac, 0x1194, 0x1194, 0x1194, 0x1194, 0x1194, 0x1194, 0 };
     public static ushort[] DAT_9BBA0 = new ushort[] { 0x1770, 0x1770, 0x1770, 0x1770, 0x1770, 0x1770, 0x1770, 0x1770, 0x1770, 0 };

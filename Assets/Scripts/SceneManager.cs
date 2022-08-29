@@ -2797,6 +2797,26 @@ public class SceneManager : MonoBehaviour
         return psVar1;
     }
 
+    public uint FUN_65FD8(CriSkinned param1)
+    {
+        int iVar1;
+        int iVar2;
+
+        iVar2 = 9;
+        iVar1 = 0;
+
+        do
+        {
+            if (DAT_27C[iVar1] == param1)
+                return 10 - (uint)iVar2 & 0xff;
+
+            iVar2--;
+            iVar1++;
+        } while (iVar2 != -1);
+
+        return 0;
+    }
+
     public bool FUN_80030(CriSkinned param1, bool param2, byte param3)
     {
         byte bVar2;

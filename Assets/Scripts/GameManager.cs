@@ -1852,7 +1852,7 @@ public class GameManager : MonoBehaviour
         return (sbyte)uVar3;
     } 
 
-    private sbyte FUN_7732C(ushort param1, ushort param2, uint param3)
+    public sbyte FUN_7732C(ushort param1, ushort param2, uint param3)
     {
         WaypointContainer pbVar1;
         int puVar2;

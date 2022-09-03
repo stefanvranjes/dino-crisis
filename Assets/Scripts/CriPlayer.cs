@@ -42,6 +42,7 @@ public class CriPlayer : CriSkinned
     public TodScriptableObject[] DAT_1E0; //0x1E0
     public ushort UDAT_1E0; //0x1E0
     public ushort DAT_1E2; //0x1E2
+    public ushort UDAT_1E4; //0x1E4
     public byte DAT_1E4; //0x1E4
     public short DAT_1E6; //0x1E6
     public short DAT_1E8; //0x1E8
@@ -114,7 +115,11 @@ public class CriPlayer : CriSkinned
     private delegate void FUN_9BB70();
     private delegate void FUN_9BBC8();
     private delegate void FUN_9BC80();
+    private delegate void FUN_9BCE0();
+    private delegate void FUN_9BCE8();
     private delegate void FUN_9BCFC();
+    private delegate void FUN_9BD14(CriPlayer p);
+    private delegate void FUN_9BD38();
     private delegate void FUN_9BD58();
     private delegate void FUN_9C660();
     private delegate void FUN_9C674();
@@ -169,7 +174,11 @@ public class CriPlayer : CriSkinned
     private FUN_9BB70[] PTR_FUN_9BB70;
     private FUN_9BBC8[] PTR_FUN_9BBC8;
     private FUN_9BC80[] PTR_FUN_9BC80;
+    private FUN_9BCE0[] PTR_FUN_9BCE0;
+    private FUN_9BCE8[] PTR_FUN_9BCE8;
     private FUN_9BCFC[] PTR_FUN_9BCFC;
+    private FUN_9BD14[] PTR_FUN_9BD14;
+    private FUN_9BD38[] PTR_FUN_9BD38;
     private FUN_9BD58[] PTR_FUN_9BD58;
     private FUN_9C660[] PTR_FUN_9C660;
     private FUN_9C674[] PTR_FUN_9C674;
@@ -520,6 +529,16 @@ public class CriPlayer : CriSkinned
             FUN_31868,
             FUN_318F4
         };
+        PTR_FUN_9BCE0 = new FUN_9BCE0[2]
+        {
+            FUN_31D3C,
+            FUN_31DA8
+        };
+        PTR_FUN_9BCE8 = new FUN_9BCE8[2]
+        {
+            FUN_31F6C,
+            FUN_31FC0
+        };
         PTR_FUN_9BCFC = new FUN_9BCFC[9]
         {
             FUN_320E8,
@@ -531,6 +550,23 @@ public class CriPlayer : CriSkinned
             FUN_32214,
             FUN_32214,
             FUN_320E8
+        };
+        PTR_FUN_9BD14 = new FUN_9BD14[9]
+        {
+            FUN_322C0,
+            FUN_322C0,
+            FUN_322C0,
+            FUN_32448,
+            FUN_32448,
+            FUN_322C0,
+            FUN_32448,
+            FUN_32448,
+            FUN_322C0
+        };
+        PTR_FUN_9BD38 = new FUN_9BD38[2]
+        {
+            FUN_326BC,
+            FUN_32734
         };
         PTR_FUN_9BD58 = new FUN_9BD58[9]
         {
@@ -825,6 +861,7 @@ public class CriPlayer : CriSkinned
         DAT_1E0 = null;
         UDAT_1E0 = 0;
         DAT_1E2 = 0;
+        UDAT_1E4 = 0;
         DAT_1E4 = 0;
         DAT_1E6 = 0;
         DAT_1E8 = 0;
@@ -2396,6 +2433,100 @@ public class CriPlayer : CriSkinned
             DAT_3E = 0;
             DAT_3F = 0;
         }
+    }
+
+    private bool FUN_40834(Vector2Int param1, byte param2)
+    {
+        short sVar1;
+        ushort uVar2;
+        uint uVar3;
+        Vector3Int local_20;
+
+        sVar1 = FUN_64804(SceneManager.instance.DAT_27C[10].screen);
+
+        if (param2 - 2U < 3)
+        {
+            if (UDAT_20C < 5000)
+            {
+                if (0xc00U < (ushort)(sVar1 - 0x200))
+                {
+                    DAT_3C = 1;
+                    DAT_3D = 12;
+                    DAT_3E = 0;
+                    DAT_3F = 0;
+                    DAT_1E6 = 120;
+                    uVar2 = (ushort)((param2 - 1) * 50 + 50);
+                    DAT_1E8 = (short)uVar2;
+
+                    if (uVar2 < 100U)
+                        DAT_1E8 = 100;
+
+                    DAT_208 |= 0x200;
+                    GameManager.instance.FUN_65C7C(this);
+                    return true;
+                }
+
+                return false;
+            }
+        }
+        else
+        {
+            if (3 < param2 - 2U)
+            {
+                if (2 < param2 - 1U)
+                    return false;
+
+                if (4999 < UDAT_20C)
+                    return false;
+
+                if (0xc00U < (ushort)(sVar1 - 0x200))
+                {
+                    DAT_3C = 1;
+                    DAT_3D = 12;
+                    DAT_3E = 0;
+                    DAT_3F = 0;
+                    DAT_1E6 = 120;
+                    uVar2 = (ushort)((param2 - 1) * 50 + 50);
+                    DAT_1E8 = (short)uVar2;
+
+                    if (uVar2 < 100U)
+                        DAT_1E8 = 100;
+
+                    DAT_208 |= 0x200;
+                    GameManager.instance.FUN_65C7C(this);
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        if ((ushort)(sVar1 - 0x200) < 0xc01U)
+            return false;
+
+        local_20 = new Vector3Int(param1.x, 0, param1.y);
+        uVar3 = Utilities.FUN_631AC(screen, local_20);
+
+        if (uVar3 << 1 <= UDAT_20C)
+        {
+            if (2199 < uVar3)
+                return false;
+
+            uVar3 = (uVar3 + 800) / 22;
+            UDAT_1E4 = (ushort)uVar3;
+
+            if ((uVar3 & 0xffff) < 60)
+                UDAT_1E4 = 60;
+
+            DAT_1E8 = (short)((param2 - 2) * 50 + 100);
+            DAT_3C = 1;
+            DAT_3D = 34;
+            DAT_3E = 0;
+            DAT_3F = 0;
+            return true;
+        }
+
+        return false;
     }
 
     private void FUN_40A1C()
@@ -7441,6 +7572,64 @@ public class CriPlayer : CriSkinned
         //...
     }
 
+    private void FUN_2E07C()
+    {
+        CriPlayer oVar1;
+        uint uVar2;
+        int iVar3;
+
+        if (DAT_1C5 == 0)
+            return;
+
+        oVar1 = (CriPlayer)SceneManager.instance.FUN_65B30(this);
+
+        if (oVar1 == null)
+            return;
+
+        if ((oVar1.DAT_208 & 0x2000000) == 0)
+            return;
+
+        if (UDAT_20C < 5000)
+            uVar2 = oVar1.UDAT_20C;
+        else
+            uVar2 = oVar1.UDAT_20C;
+
+        if (uVar2 < 5000)
+        {
+            iVar3 = (int)GameManager.FUN_64650();
+
+            if (iVar3 == (iVar3 / 3) * 3)
+            {
+                if (oVar1.UDAT_20C <= UDAT_20C)
+                {
+                    oVar1.DAT_1C5 = 0;
+                    DAT_1C5 = 1;
+                    return;
+                }
+            }
+            else
+            {
+                if (UDAT_20C <= oVar1.UDAT_20C)
+                {
+                    oVar1.DAT_1C5 = 0;
+                    DAT_1C5 = 1;
+                    return;
+                }
+            }
+
+            oVar1.DAT_1C5 = 1;
+        }
+        else
+        {
+            if (oVar1.DAT_1C5 != 0)
+                return;
+
+            oVar1.DAT_1C5 = 1;
+        }
+
+        DAT_1C5 = 0;
+    }
+
     private bool FUN_2E284()
     {
         short sVar1;
@@ -10162,7 +10351,13 @@ public class CriPlayer : CriSkinned
 
     private void FUN_31DA8()
     {
+        short sVar1;
         ushort uVar2;
+        int iVar3;
+        Vector3Int local_48;
+        Vector3Int local_40;
+        Vector3Int local_38;
+        Matrix3x3 MStack48;
 
         FUN_60AB4();
         uVar2 = DAT_60;
@@ -10173,7 +10368,90 @@ public class CriPlayer : CriSkinned
         if (uVar2 == 15)
             ; //sound
 
-        
+        DAT_40.z = Utilities.DAT_9BCB0[DAT_60];
+        FUN_2B57C();
+        local_48 = new Vector3Int(DAT_10C.x, screen.y, DAT_10C.z);
+
+        if (DAT_1C6 != 0)
+        {
+            local_40 = new Vector3Int(0, 0, (short)DAT_206);
+            local_38 = new Vector3Int(0, (short)UDAT_204, 0);
+            MStack48 = new Matrix3x3();
+            Utilities.RotMatrix(ref local_38, ref MStack48);
+            local_40 = Utilities.ApplyMatrixSV(ref MStack48, ref local_40);
+            local_48.x += local_40.x;
+            local_48.z += local_40.z;
+        }
+
+        sVar1 = (short)Utilities.FUN_615EC(screen, local_48);
+        iVar3 = (int)GameManager.FUN_64650();
+        uVar2 = (ushort)Utilities.FUN_64838(vr.y, (uint)((iVar3 % 15 + 50) * 0x10000 >> 0x10), sVar1);
+        vr.y = (short)(vr.y + uVar2 & 0xfff);
+    }
+
+    private void FUN_31F30()
+    {
+        PTR_FUN_9BCE0[DAT_3E]();
+    }
+
+    private void FUN_31F6C()
+    {
+        FUN_609C8(7, 1, 10);
+        //sound
+        DAT_40 = new Vector3Int(0, 0, 0);
+        DAT_3E++;
+    }
+
+    private void FUN_31FC0()
+    {
+        sbyte sVar1;
+        short sVar2;
+        bool bVar3;
+        uint uVar4;
+        CriPlayer oVar4;
+        Vector3Int local_20;
+        Vector2Int auStack24;
+
+        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        bVar3 = FUN_60AB4();
+
+        if (bVar3)
+        {
+            auStack24 = new Vector2Int();
+            sVar1 = SceneManager.instance.FUN_64D20(this, oVar4.screen, ref auStack24);
+
+            if (sVar1 == 0)
+                local_20 = oVar4.screen;
+            else
+                local_20 = new Vector3Int(DAT_10C.x, screen.y, DAT_10C.z);
+
+            sVar2 = FUN_64804(local_20);
+
+            if ((ushort)(sVar2 - 0x300) < 0xa01U)
+            {
+                uVar4 = 0x701;
+
+                if (0x400U < (ushort)(sVar2 - 0x600))
+                    uVar4 = 0x801;
+            }
+            else
+                uVar4 = 0x201;
+
+            DAT_3C = (byte)uVar4;
+            DAT_3D = (byte)(uVar4 >> 8);
+            DAT_3E = (byte)(uVar4 >> 0x10);
+            DAT_3F = (byte)(uVar4 >> 0x18);
+        }
+
+        if (DAT_60 < 11U)
+            DAT_40.z = 0x30;
+        else
+            DAT_40.z = 0;
+    }
+
+    private void FUN_320AC()
+    {
+        PTR_FUN_9BCE8[DAT_3E]();
     }
 
     private void FUN_320E8()
@@ -10241,6 +10519,220 @@ public class CriPlayer : CriSkinned
     private void FUN_32284()
     {
         PTR_FUN_9BCFC[DAT_2F]();
+    }
+
+    private void FUN_322C0(CriPlayer param1)
+    {
+        sbyte sVar2;
+        bool bVar2;
+        Vector2Int auStack24;
+
+        auStack24 = new Vector2Int();
+        sVar2 = SceneManager.instance.FUN_64D20(this, param1.screen, ref auStack24);
+
+        if ((GameManager.instance.DAT_922C & 2) == 0 || GameManager.instance.DAT_9230 == this)
+        {
+            if (UDAT_20C <= 4500 && sVar2 == 0)
+            {
+                bVar2 = FUN_2E284();
+
+                if (!bVar2 && (param1.DAT_11E & 0x80) == 0)
+                {
+                    DAT_3C = 1;
+                    DAT_3D = 12;
+                    DAT_3E = 0;
+                    DAT_3F = 0;
+                    DAT_1E6 = 100;
+                    DAT_1E8 = 100;
+                    DAT_208 &= 0xfffffdff;
+                    GameManager.instance.FUN_65C7C(this);
+                }
+                else
+                {
+                    DAT_3C = 1;
+                    DAT_3D = 2;
+                    DAT_3E = 0;
+                    DAT_3F = 0;
+                    GameManager.instance.FUN_65CB0(this);
+                }
+            }
+            else
+            {
+                if (sVar2 == -1 || (DAT_18E & 0x20) != 0 || !FUN_40834(auStack24, (byte)sVar2))
+                {
+                    DAT_3C = 1;
+                    DAT_3D = 9;
+                    DAT_3E = 0;
+                    DAT_3F = 0;
+                    V2_1F0 = new Vector2Int(param1.screen.x, param1.screen.z);
+                    V2_1F4 = new Vector2Int(screen.x, screen.z);
+                    DAT_208 &= 0xfbffffff;
+                }
+            }
+        }
+        else
+        {
+            DAT_3C = 1;
+            DAT_3D = 0x16;
+            DAT_3E = 0;
+            DAT_3F = 0;
+        }
+
+        FUN_65CF8(0, 0, 30);
+    }
+
+    private void FUN_32448(CriPlayer param1)
+    {
+        CriPlayer oVar2;
+        sbyte sVar3;
+        bool bVar3;
+        Vector2Int auStack24;
+
+        auStack24 = new Vector2Int();
+        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        sVar3 = SceneManager.instance.FUN_64D20(this, param1.screen, ref auStack24);
+
+        if ((GameManager.instance.DAT_922C & 2) != 0 && GameManager.instance.DAT_9230 != this)
+        {
+            DAT_3C = 1;
+            DAT_3D = 0x16;
+            DAT_3E = 0;
+            DAT_3F = 0;
+            goto LAB_32698;
+        }
+
+        if (((param1.DAT_3C == 5 && param1.DAT_3D == 9) || (param1.DAT_3C == 5 && param1.DAT_3D == 10)) && 
+            param1.DAT_1F0 == this)
+        {
+            if (2200 < UDAT_20C)
+            {
+                DAT_3C = 1;
+                DAT_3D = 9;
+                DAT_3E = 0;
+                DAT_3F = 0;
+                V2_1F0 = new Vector2Int(param1.screen.x, param1.screen.z);
+                V2_1F4 = new Vector2Int(screen.x, screen.z);
+                goto LAB_32698;
+            }
+
+            DAT_3C = 1;
+            DAT_3D = 0x16;
+            DAT_3E = 0;
+            DAT_3F = 0;
+            BDAT_1CA = 0;
+            V2_1F0 = new Vector2Int(oVar2.screen.x, oVar2.screen.z);
+            FUN_2E07C();
+        }
+        else
+        {
+            if (param1.DAT_1C8 == 0)
+            {
+                if (4500 < UDAT_20C || sVar3 != 0)
+                {
+                    if (sVar3 != -1 || (DAT_18E & 0x20) != 0 || !FUN_40834(auStack24, (byte)sVar3))
+                    {
+                        DAT_3C = 1;
+                        DAT_3D = 9;
+                        DAT_3E = 0;
+                        DAT_3F = 0;
+                        V2_1F0 = new Vector2Int(param1.screen.x, param1.screen.z);
+                        V2_1F4 = new Vector2Int(screen.x, screen.z);
+                        DAT_208 &= 0xfbffffff;
+                    }
+
+                    goto LAB_32698;
+                }
+
+                bVar3 = FUN_2E284();
+
+                if (!bVar3 && (param1.DAT_11E & 0x80) == 0)
+                {
+                    DAT_3C = 1;
+                    DAT_3D = 12;
+                    DAT_3E = 0;
+                    DAT_3F = 0;
+                    DAT_1E6 = 100;
+                    DAT_1E8 = 100;
+                    DAT_208 &= 0xfffffdff;
+                    GameManager.instance.FUN_65C7C(this);
+                    goto LAB_32698;
+                }
+
+                DAT_3C = 1;
+                DAT_3D = 2;
+                DAT_3E = 0;
+                DAT_3F = 0;
+            }
+            else
+            {
+                DAT_3C = 1;
+                DAT_3D = 0x16;
+                DAT_3E = 0;
+                DAT_3F = 0;
+                BDAT_1CA = 0;
+                V2_1F0 = new Vector2Int(oVar2.screen.x, oVar2.screen.z);
+                param1.DAT_1C8 = 0;
+                FUN_2E07C();
+            }
+        }
+
+        GameManager.instance.FUN_65CB0(this);
+        LAB_32698:
+        FUN_65CF8(0, 0, 30);
+    }
+
+    private void FUN_326BC()
+    {
+        int iVar1;
+
+        if ((DAT_208 & 0x100) == 0)
+            iVar1 = 8;
+        else
+            iVar1 = 9;
+
+        FUN_609C8(iVar1, 1, 10);
+        DAT_40 = new Vector3Int(0, 0, 0);
+        FUN_65CF8(6, 0, 30);
+        DAT_3E++;
+    }
+
+    private void FUN_32734()
+    {
+        short sVar1;
+        short sVar2;
+        bool bVar3;
+        int iVar4;
+        uint uVar6;
+        CriPlayer oVar11;
+
+        oVar11 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        bVar3 = FUN_60AB4();
+
+        if (bVar3)
+            PTR_FUN_9BD14[DAT_2F](oVar11);
+
+        if (DAT_60 == 20)
+            ; //sound
+
+        uVar6 = DAT_2F;
+
+        if (uVar6 / 3 != 0 && (uVar6 - (((uint)((ulong)uVar6 * 0xaaaaaaab >> 0x20) & 0xfffffffe) + uVar6 / 3) & 0xff) != 2)
+        {
+            if (DAT_60 - 2U < 0x19)
+                DAT_40.z = Utilities.DAT_184F0[DAT_60 - 2] << 1;
+            else
+                DAT_40.z = 0;
+        }
+
+        sVar1 = (short)Utilities.FUN_615EC(screen, oVar11.screen);
+        iVar4 = (int)GameManager.FUN_64650();
+        sVar2 = (short)Utilities.FUN_64838(vr.y, (uint)((iVar4 % 15 + 20) * 0x10000 >> 0x10), sVar1);
+        vr.y = (short)(vr.y + sVar2 & 0xfff);
+    }
+
+    private void FUN_32950()
+    {
+        PTR_FUN_9BD38[DAT_3E]();
     }
 
     private void FUN_3302C()

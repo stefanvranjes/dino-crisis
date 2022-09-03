@@ -488,6 +488,12 @@ public class GameManager : MonoBehaviour
         //copying...
     }
 
+    public void FUN_65C7C(CriPlayer param1)
+    {
+        DAT_922C |= 2;
+        DAT_9230 = param1;
+    }
+
     public void FUN_65CB0(CriPlayer param1)
     {
         if (param1 == DAT_9230)

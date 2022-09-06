@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
     public short DAT_A0EC; //gp+a0ech
     public short DAT_A0EE; //gp+a0eeh
     public short playerHealth; //gp+a0f0h
-    public short DAT_A0F2; //gp+a0f2h
+    public ushort DAT_A0F2; //gp+a0f2h
     public uint DAT_A0F4; //gp+a0f4h
     public ushort[] DAT_A0F8; //gp+a0f8h
     public byte DAT_A100; //gp+a100h

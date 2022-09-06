@@ -798,6 +798,23 @@ public class CriSkinned : CriObject
         }
     }
 
+    private void FUN_65618(CriSkinned param1)
+    {
+        GameManager.instance.DAT_1f80002c = DAT_64;
+        Utilities.RotMatrix_gte(ref vr, ref GameManager.instance.DAT_1f800034);
+        GameManager.instance.DAT_1f80002c = Utilities.ApplyMatrixSV
+            (ref GameManager.instance.DAT_1f800034, ref GameManager.instance.DAT_1f80002c);
+        DAT_14C.x = screen.x - GameManager.instance.DAT_1f80002c.x;
+        DAT_14C.y = screen.y - GameManager.instance.DAT_1f80002c.y;
+        DAT_14C.z = screen.z - GameManager.instance.DAT_1f80002c.z;
+        param1.DAT_14C = DAT_14C;
+    }
+
+    public void FUN_656EC()
+    {
+        FUN_65618(SceneManager.instance.DAT_27C[10]);
+    }
+
     public void FUN_65714()
     {
         GameManager.instance.DAT_1f80002c = DAT_64;

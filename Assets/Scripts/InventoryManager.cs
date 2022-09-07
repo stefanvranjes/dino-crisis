@@ -88,8 +88,8 @@ public class InventoryManager : MonoBehaviour
         if (param1 == 1 && param2 == 2)
         {
             InputManager.controllers[0].DAT_B58B8 = 0;
-            GameManager.instance.DAT_1f80000a = 0;
-            GameManager.instance.DAT_1f800008 = 0;
+            GameManager.DAT_1f80000a = 0;
+            GameManager.DAT_1f800008 = 0;
             InputManager.controllers[0].DAT_B5898 = 0;
         }
     }

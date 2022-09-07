@@ -800,13 +800,13 @@ public class CriSkinned : CriObject
 
     private void FUN_65618(CriSkinned param1)
     {
-        GameManager.instance.DAT_1f80002c = DAT_64;
-        Utilities.RotMatrix_gte(ref vr, ref GameManager.instance.DAT_1f800034);
-        GameManager.instance.DAT_1f80002c = Utilities.ApplyMatrixSV
-            (ref GameManager.instance.DAT_1f800034, ref GameManager.instance.DAT_1f80002c);
-        DAT_14C.x = screen.x - GameManager.instance.DAT_1f80002c.x;
-        DAT_14C.y = screen.y - GameManager.instance.DAT_1f80002c.y;
-        DAT_14C.z = screen.z - GameManager.instance.DAT_1f80002c.z;
+        GameManager.DAT_1f80002c = DAT_64;
+        Utilities.RotMatrix_gte(ref vr, ref GameManager.DAT_1f800034);
+        GameManager.DAT_1f80002c = Utilities.ApplyMatrixSV
+            (ref GameManager.DAT_1f800034, ref GameManager.DAT_1f80002c);
+        DAT_14C.x = screen.x - GameManager.DAT_1f80002c.x;
+        DAT_14C.y = screen.y - GameManager.DAT_1f80002c.y;
+        DAT_14C.z = screen.z - GameManager.DAT_1f80002c.z;
         param1.DAT_14C = DAT_14C;
     }
 
@@ -817,13 +817,13 @@ public class CriSkinned : CriObject
 
     public void FUN_65714()
     {
-        GameManager.instance.DAT_1f80002c = DAT_64;
-        Utilities.RotMatrix_gte(ref vr, ref GameManager.instance.DAT_1f800034);
-        GameManager.instance.DAT_1f80002c = Utilities.ApplyMatrixSV
-            (ref GameManager.instance.DAT_1f800034, ref GameManager.instance.DAT_1f80002c);
-        screen.x = DAT_14C.x + GameManager.instance.DAT_1f80002c.x;
-        screen.y = DAT_14C.y + GameManager.instance.DAT_1f80002c.y;
-        screen.z = DAT_14C.z + GameManager.instance.DAT_1f80002c.z;
+        GameManager.DAT_1f80002c = DAT_64;
+        Utilities.RotMatrix_gte(ref vr, ref GameManager.DAT_1f800034);
+        GameManager.DAT_1f80002c = Utilities.ApplyMatrixSV
+            (ref GameManager.DAT_1f800034, ref GameManager.DAT_1f80002c);
+        screen.x = DAT_14C.x + GameManager.DAT_1f80002c.x;
+        screen.y = DAT_14C.y + GameManager.DAT_1f80002c.y;
+        screen.z = DAT_14C.z + GameManager.DAT_1f80002c.z;
     }
 
     public void FUN_659D0()
@@ -1128,8 +1128,8 @@ public class CriSkinned : CriObject
             triangleList.Add(param1.TRIS[tri]);
             triangleList.Add(param1.TRIS[tri + 1]);
             triangleList.Add(param1.TRIS[tri + 2]);
-            GameManager.instance.DAT_1f800026++;
-            GameManager.instance.DAT_1f800024++;
+            GameManager.DAT_1f800026++;
+            GameManager.DAT_1f800024++;
 
             uv += 3;
             uv2++;
@@ -1160,8 +1160,8 @@ public class CriSkinned : CriObject
             triangleList.Add(param1.QUADS[tri + 3]);
             triangleList.Add(param1.QUADS[tri + 4]);
             triangleList.Add(param1.QUADS[tri + 5]);
-            GameManager.instance.DAT_1f80002a++;
-            GameManager.instance.DAT_1f800028++;
+            GameManager.DAT_1f80002a++;
+            GameManager.DAT_1f800028++;
 
             uv += 4;
             uv2++;

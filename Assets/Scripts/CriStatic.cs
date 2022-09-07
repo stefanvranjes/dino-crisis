@@ -116,8 +116,8 @@ public class CriStatic : CriObject
         int uv2 = begin;
         int clr = begin * 3;
         int tri = 0;
-        uVar12 = GameManager.instance.DAT_1f80002a;
-        uVar11 = GameManager.instance.DAT_1f800028;
+        uVar12 = GameManager.DAT_1f80002a;
+        uVar11 = GameManager.DAT_1f800028;
 
         while (true)
         {
@@ -156,8 +156,8 @@ public class CriStatic : CriObject
             uVar11++;
         }
 
-        GameManager.instance.DAT_1f800028 = (ushort)uVar11;
-        GameManager.instance.DAT_1f80002a = (ushort)uVar12;
+        GameManager.DAT_1f800028 = (ushort)uVar11;
+        GameManager.DAT_1f80002a = (ushort)uVar12;
     }
 
     public void FUN_75BEC(TmdScriptableObject param1, int param2)
@@ -171,8 +171,8 @@ public class CriStatic : CriObject
         int uv2 = 0;
         int clr = 0;
         int tri = 0;
-        uVar7 = GameManager.instance.DAT_1f800024;
-        uVar8 = GameManager.instance.DAT_1f800026;
+        uVar7 = GameManager.DAT_1f800024;
+        uVar8 = GameManager.DAT_1f800026;
         commandList.Clear();
         vertexList.Clear();
         uvList.Clear();
@@ -211,7 +211,7 @@ public class CriStatic : CriObject
             uVar7++;
         }
 
-        GameManager.instance.DAT_1f800024 = (ushort)uVar7;
-        GameManager.instance.DAT_1f800026 = (ushort)uVar8;
+        GameManager.DAT_1f800024 = (ushort)uVar7;
+        GameManager.DAT_1f800026 = (ushort)uVar8;
     }
 }

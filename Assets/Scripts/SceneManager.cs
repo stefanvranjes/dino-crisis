@@ -1704,7 +1704,7 @@ public class SceneManager : MonoBehaviour
 
                     while (--iVar5 != -1)
                     {
-                        GameManager.instance.DAT_1f80002c = oVar4.screen;
+                        GameManager.DAT_1f80002c = oVar4.screen;
                         GameManager.instance.FUN_4A8B8(lightSource, ref oVar4.colorMatrix, oVar4.DAT_54);
                         Coprocessor.rotationMatrix.rt11 = cCamera.cTransform.rotation.V00;
                         Coprocessor.rotationMatrix.rt12 = cCamera.cTransform.rotation.V01;
@@ -3184,12 +3184,12 @@ public class SceneManager : MonoBehaviour
 
             psVar11 = param1.PTR_130[param1.DAT_130];
             local_38 = param2;
-            Utilities.RotMatrix_gte(ref param1.vr, ref GameManager.instance.DAT_1f800034);
-            GameManager.instance.DAT_1f80002c.x = psVar11.pos.x;
-            GameManager.instance.DAT_1f80002c.z = psVar11.pos.z;
-            GameManager.instance.DAT_1f80002c.y = 0;
-            GameManager.instance.DAT_1f80002c = Utilities.ApplyMatrixSV
-                (ref GameManager.instance.DAT_1f800034, ref GameManager.instance.DAT_1f80002c);
+            Utilities.RotMatrix_gte(ref param1.vr, ref GameManager.DAT_1f800034);
+            GameManager.DAT_1f80002c.x = psVar11.pos.x;
+            GameManager.DAT_1f80002c.z = psVar11.pos.z;
+            GameManager.DAT_1f80002c.y = 0;
+            GameManager.DAT_1f80002c = Utilities.ApplyMatrixSV
+                (ref GameManager.DAT_1f800034, ref GameManager.DAT_1f80002c);
             local_70 = new Hit();
             local_70.DAT_00 = new Vector2Int[3];
             local_70.DAT_0C = new Vector2Int[4];
@@ -3198,15 +3198,15 @@ public class SceneManager : MonoBehaviour
 
             if (psVar11.bone == -1)
                 local_70.DAT_00[1] = new Vector2Int
-                    (param1.screen.x + GameManager.instance.DAT_1f80002c.x, param1.screen.z);
+                    (param1.screen.x + GameManager.DAT_1f80002c.x, param1.screen.z);
             else
             {
                 oVar6 = (CriBone)Utilities.FUN_601C8(param1.skeleton, psVar11.bone);
                 local_70.DAT_00[1] = new Vector2Int
-                    (oVar6.screen.x + GameManager.instance.DAT_1f80002c.x, oVar6.screen.z);
+                    (oVar6.screen.x + GameManager.DAT_1f80002c.x, oVar6.screen.z);
             }
 
-            local_70.DAT_00[1].y += GameManager.instance.DAT_1f80002c.z;
+            local_70.DAT_00[1].y += GameManager.DAT_1f80002c.z;
             local_70.DAT_00[0] = param1.DAT_13C;
             iVar10 = 0;
             local_70.DAT_2C = psVar11.radius;

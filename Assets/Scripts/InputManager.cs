@@ -188,13 +188,13 @@ public class InputManager : MonoBehaviour
             if ((controllers[0].DAT_B141A & 0x80) != 0)
                 controllers[0].DAT_B58B8 = (ushort)(controllers[0].DAT_B141A & 0xffef);
 
-            GameManager.instance.DAT_1f800008 = controllers[0].DAT_B1418;
-            GameManager.instance.DAT_1f80000a = controllers[0].DAT_B58B8;
+            GameManager.DAT_1f800008 = controllers[0].DAT_B1418;
+            GameManager.DAT_1f80000a = controllers[0].DAT_B58B8;
         }
         else
         {
-            GameManager.instance.DAT_1f800008 = 0;
-            GameManager.instance.DAT_1f80000a = 0;
+            GameManager.DAT_1f800008 = 0;
+            GameManager.DAT_1f80000a = 0;
         }
     }
 

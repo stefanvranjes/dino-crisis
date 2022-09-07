@@ -69,20 +69,20 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public static SceneManager sceneManager;
 
-    public ushort DAT_1f800008;
-    public ushort DAT_1f80000a;
-    public ushort DAT_1f800024;
-    public ushort DAT_1f800026;
-    public ushort DAT_1f800028;
-    public ushort DAT_1f80002a;
-    public Vector3Int DAT_1f80002c;
-    public Vector3Int DAT_1f800034_2;
-    public Matrix3x3 DAT_1f800034;
-    public Vector3Int DAT_1f800044;
-    public Matrix3x3 DAT_1f80004c;
-    public Vector3Int DAT_1f800380;
-    public Vector3Int DAT_1f800388;
-    public Vector3Int DAT_1f800390;
+    public static ushort DAT_1f800008;
+    public static ushort DAT_1f80000a;
+    public static ushort DAT_1f800024;
+    public static ushort DAT_1f800026;
+    public static ushort DAT_1f800028;
+    public static ushort DAT_1f80002a;
+    public static Vector3Int DAT_1f80002c;
+    public static Vector3Int DAT_1f800034_2;
+    public static Matrix3x3 DAT_1f800034;
+    public static Vector3Int DAT_1f800044;
+    public static Matrix3x3 DAT_1f80004c;
+    public static Vector3Int DAT_1f800380;
+    public static Vector3Int DAT_1f800388;
+    public static Vector3Int DAT_1f800390;
     public List<Vector3Int> todUncomp;
     public LightSource DAT_0C; //gp+0ch
     public byte DAT_20; //gp+20h
@@ -2718,5 +2718,10 @@ public class GameManager : MonoBehaviour
         uVar2 = LevelManager.instance.DAT_B58BA + ((uVar1 & 0xffff) >> 8) & 0xff;
         LevelManager.instance.DAT_B58BA = (ushort)(uVar2 | uVar1 & 0xff00U);
         return uVar2;
+    }
+
+    public static bool FUN_64C68()
+    {
+        return (DAT_1f80000a & 0xf0f0) != 0;
     }
 }

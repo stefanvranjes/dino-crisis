@@ -76,6 +76,7 @@ public static class Utilities
     public static ushort[] DAT_9BC9C = new ushort[] { 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0x157c, 0 };
     public static short[] DAT_9BCB0 = new short[] { };
     public static short[] DAT_9BF6C = new short[] { 50, 50, 180, 190, 200, 260, 350, 320, 170, 170, 170, 170, 50, 50, 180, 190, 200, 260, 350, 320, 170, 170, 170, 170 };
+    public static short[] DAT_9C094 = new short[] { 210, 230, 220, 200, 170, 140, 120, 90, 70, 50 };
     public static short[] DAT_AC658 = new short[]
     {
         4096, 4127, 4159, 4190, 4222, 4252, 4283, 4314, 4344,

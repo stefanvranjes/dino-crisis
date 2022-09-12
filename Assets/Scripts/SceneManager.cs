@@ -34,6 +34,7 @@ public class SceneManager : MonoBehaviour
     public CriTrigger[] DAT_9EEC; //gp+9eech...gp+9fdch
     public Trigger6[] DAT_9FE0; //gp+9fe0...gp+a09ch
     public CriCamera DAT_C3230;
+    public short DAT_C3358;
     public ushort DAT_C3360;
     public int DAT_C51B8;
     public int DAT_C51BC;

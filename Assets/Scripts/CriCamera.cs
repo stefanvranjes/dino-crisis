@@ -45,6 +45,8 @@ public class CriCamera : MonoBehaviour
     public Vector3Int DAT_84; //0x84
     public byte DAT_8A; //0x8A
     public byte DAT_8B; //0x8B
+    public delegate void FUN_8C();
+    public FUN_8C PTR_FUN_8C;
     public short DAT_90; //0x90
     public short DAT_92; //0x92
 
@@ -1049,5 +1051,29 @@ public class CriCamera : MonoBehaviour
         local_50.z += local_60.z;
         local_50.y = -param1.DAT_3C.y;
         SceneManager.instance.FUN_27A1C(local_60, local_50);
+    }
+
+    public void FUN_2EDE4()
+    {
+        CriObject oVar1;
+        CriPlayer oVar2;
+        Vector3Int local_50;
+        Vector3Int local_48;
+        Vector3Int local_40;
+        Matrix3x3 MStack56;
+
+        oVar1 = DAT_64;
+        local_50 = new Vector3Int(1000, 0, -1000);
+        MStack56 = new Matrix3x3();
+        Utilities.RotMatrix(ref oVar1.vr, ref MStack56);
+        local_50 = Utilities.ApplyMatrixSV(ref MStack56, ref local_50);
+        local_40 = new Vector3Int(oVar1.screen.x + local_50.x, oVar1.screen.y - 2000, oVar1.screen.z + local_50.z);
+        local_50 = new Vector3Int(-1000, 0, 0);
+        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        Utilities.RotMatrix(ref oVar2.vr, ref MStack56);
+        local_48 = new Vector3Int(oVar2.screen.x + local_50.x, oVar2.screen.y, oVar2.screen.z + local_50.z);
+        SceneManager.instance.FUN_264C4(0, (short)local_48.x, (short)local_48.y, (short)local_48.z);
+        SceneManager.instance.FUN_26504(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
+        SceneManager.instance.FUN_269C8(local_48, local_40);
     }
 }

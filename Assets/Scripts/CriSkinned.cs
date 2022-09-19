@@ -90,6 +90,7 @@ public class CriSkinned : CriObject
     public byte DAT_1A0; //0x1A0
     public byte DAT_1A1; //0x1A1
     public byte DAT_1A3; //0x1A3
+    public byte DAT_1A4; //0x1A4
     public byte DAT_1A5; //0x1A5
     public bool DAT_1A6; //0x1A6
     public byte DAT_1A7; //0x1A7
@@ -262,6 +263,7 @@ public class CriSkinned : CriObject
         DAT_1A0 = 0;
         DAT_1A1 = 0;
         DAT_1A3 = 0;
+        DAT_1A4 = 0;
         DAT_1A5 = 0;
         DAT_1A6 = false;
         DAT_1A7 = 0;

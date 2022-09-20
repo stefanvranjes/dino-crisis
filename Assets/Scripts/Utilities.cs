@@ -68,6 +68,8 @@ public static class Utilities
     public static short[] DAT_9B5CC = new short[] { -300, -300, -350, -350, -400, -350, -300, 200, 250, 300, 250, 250, 200, 200, 0, 0 };
     public static short[] DAT_9B5EC = new short[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, -200, -200, -300, -400, -400, -300, -200, -200, -100, -100, 400, 400, 400, 400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     public static short[] DAT_9B648 = new short[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 173, 240, 315, 380, 380, 315, 247, 200, 160, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    public static short[] DAT_9B6A4 = new short[] { 88, 88, 88, 88, 88, 88, 88, 88, 88, 88, 88, 88, 88, 46, 46, 40, 33, 26, 0, 0, 0, 0, 0, 0, 0, 0 };
+    public static short[] DAT_9B6D8 = new short[] { 50, 60, 70, 130, 200, 220, 230, 245, 250, 235, 220, 200, 130, 70, 70, 60, 50, 40, 0, 0, 0, 0, 0, 0, 0, 0 };
     public static byte[] DAT_9BAB8 = new byte[] { 0, 5, 15, 25, 35 };
     public static ushort[] DAT_9BB78 = new ushort[] { 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0x1388, 0 };
     public static ushort[] DAT_9BB8C = new ushort[] { 0xdac, 0xdac, 0xdac, 0x1194, 0x1194, 0x1194, 0x1194, 0x1194, 0x1194, 0 };
@@ -83,6 +85,8 @@ public static class Utilities
     public static byte[] DAT_9C2B4 = new byte[] { 0, 17, 35, 51, 69, 0, 0, 0 };
     public static short[] DAT_9C2BC = new short[] { 30, 20, 20, 10, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 10, 20, 20, 30, 30, 30, 45, 45, 45, 45, 45, 45, 45, 45, 45, 30, 30, 20, 20, 10, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 10, 20, 20, 30, 30, 30, 45, 45, 45, 45, 45, 45, 45, 45, 45, 30 };
     public static byte[] DAT_9C36C = new byte[] { 0, 3, 7, 13 };
+    public static short[] DAT_9C4C0 = new short[] { 30, 30, 30, 30, 30, 30, 30, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    public static short[] DAT_9C4F4 = new short[] { 30, 30, 30, 30, 30, 30, 30, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     public static short[] DAT_AC658 = new short[]
     {
         4096, 4127, 4159, 4190, 4222, 4252, 4283, 4314, 4344,

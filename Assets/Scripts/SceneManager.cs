@@ -856,6 +856,25 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    public void FUN_2EBF8(CriSkinned param1)
+    {
+        CriParticle oVar2;
+
+        oVar2 = FUN_5FFA0();
+
+        if (oVar2 != null)
+        {
+            oVar2.tags = 0;
+            oVar2.DAT_3C = 3;
+            oVar2.DAT_2F = 0;
+            oVar2.screen = param1.screen;
+            oVar2.DAT_68 = 120;
+            oVar2.DAT_62 = 0;
+            oVar2.DAT_60 = 0;
+            oVar2.DAT_69 = 76;
+        }
+    }
+
     private void FUN_290E0()
     {
         ushort uVar1;

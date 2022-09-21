@@ -166,7 +166,13 @@ public class CriPlayer : CriSkinned
     private delegate void FUN_9C46C(CriPlayer p);
     private delegate void FUN_9C490();
     private delegate void FUN_9C4A0();
+    private delegate void FUN_9C4A8();
     private delegate void FUN_9C528();
+    private delegate void FUN_9C530();
+    private delegate void FUN_9C538();
+    private delegate void FUN_9C540();
+    private delegate void FUN_9C548();
+    private delegate void FUN_9C558();
     private delegate void FUN_9C660();
     private delegate void FUN_9C674();
     private delegate void FUN_9C67C();
@@ -265,7 +271,13 @@ public class CriPlayer : CriSkinned
     private FUN_9C46C[] PTR_FUN_9C46C;
     private FUN_9C490[] PTR_FUN_9C490;
     private FUN_9C4A0[] PTR_FUN_9C4A0;
+    private FUN_9C4A8[] PTR_FUN_9C4A8;
     private FUN_9C528[] PTR_FUN_9C528;
+    private FUN_9C530[] PTR_FUN_9C530;
+    private FUN_9C538[] PTR_FUN_9C538;
+    private FUN_9C540[] PTR_FUN_9C540;
+    private FUN_9C548[] PTR_FUN_9C548;
+    private FUN_9C558[] PTR_FUN_9C558;
     private FUN_9C660[] PTR_FUN_9C660;
     private FUN_9C674[] PTR_FUN_9C674;
     private FUN_9C67C[] PTR_FUN_9C67C;
@@ -973,10 +985,46 @@ public class CriPlayer : CriSkinned
             FUN_3C3CC,
             FUN_3C488
         };
+        PTR_FUN_9C4A8 = new FUN_9C4A8[6]
+        {
+            FUN_3C5AC,
+            FUN_3CED4,
+            FUN_3CF10,
+            FUN_3D234,
+            FUN_3D6C4,
+            FUN_3D77C
+        };
         PTR_FUN_9C528 = new FUN_9C528[2]
         {
             FUN_3CBAC,
             FUN_3CCF4
+        };
+        PTR_FUN_9C530 = new FUN_9C530[2]
+        {
+            FUN_3D5AC,
+            FUN_3D5F8
+        };
+        PTR_FUN_9C538 = new FUN_9C538[2]
+        {
+            FUN_3D700,
+            FUN_3D748
+        };
+        PTR_FUN_9C540 = new FUN_9C540[2]
+        {
+            FUN_3D978,
+            FUN_3DB3C
+        };
+        PTR_FUN_9C548 = new FUN_9C548[4]
+        {
+            FUN_3D7F4,
+            FUN_3D858,
+            FUN_3D8B0,
+            FUN_2B3E4
+        };
+        PTR_FUN_9C558 = new FUN_9C558[2]
+        {
+            FUN_3D9B4,
+            FUN_3DA54
         };
         PTR_FUN_9C660 = new FUN_9C660[5]
         {
@@ -17151,6 +17199,11 @@ public class CriPlayer : CriSkinned
         PTR_FUN_9C4A0[DAT_3E]();
     }
 
+    private void FUN_3C570()
+    {
+        PTR_FUN_9C4A8[DAT_3D]();
+    }
+
     private void FUN_3C5AC()
     {
         byte bVar2;
@@ -17654,6 +17707,387 @@ public class CriPlayer : CriSkinned
         }
 
         DAT_3E++;
+    }
+
+    private void FUN_3D234()
+    {
+        byte bVar2;
+        byte bVar3;
+        byte bVar4;
+        bool bVar5;
+        CriPlayer oVar5;
+        int iVar5;
+        short sVar6;
+        uint uVar7;
+        int iVar8;
+
+        bVar3 = DAT_3E;
+
+        if (bVar3 == 1)
+        {
+            FUN_60AB4();
+
+            if (DAT_60 != 4)
+                return;
+        }
+        else
+        {
+            if (bVar3 < 2)
+            {
+                if (bVar3 != 0)
+                    return;
+
+                DAT_40 = new Vector3Int(0, 0, 0);
+                FUN_609C8(15, 1, 0);
+                DAT_12C = 0;
+                FUN_2D76C();
+                //sound
+                PTR_120 = DAT_9B404;
+                DAT_120 = 0;
+                DAT_12E = 3;
+                PTR_124 = DAT_9B404;
+                DAT_124 = 7;
+                bVar2 = DAT_3E;
+                DAT_12F = 2;
+                goto LAB_3D32C;
+            }
+
+            if (bVar3 != 2)
+            {
+                if (bVar3 != 3)
+                    return;
+
+                bVar5 = FUN_60AB4();
+
+                if (!bVar5)
+                    return;
+
+                GameManager.instance.FUN_65CB0(this);
+                DAT_12C &= 0xfff7;
+                oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+                if (health < 1)
+                {
+                    DAT_3C = 3;
+                    DAT_3D = 1;
+                    DAT_3E = 0;
+                    DAT_3F = 0;
+                    DAT_11E |= 0x44;
+                    FUN_65CF8(0, 0, 30);
+                    return;
+                }
+
+                if (DAT_48 == oVar5.DAT_48)
+                {
+                    if ((DAT_208 & 4) == 0)
+                    {
+                        DAT_3C = 1;
+                        DAT_3D = 2;
+                        DAT_3E = 0;
+                        DAT_3F = 0;
+                    }
+                    else
+                    {
+                        DAT_3C = 1;
+                        DAT_3D = 9;
+                        DAT_3E = 0;
+                        DAT_3F = 0;
+                        V2_1F0 = new Vector2Int(oVar5.screen.x, oVar5.screen.z);
+                        V2_1F4 = new Vector2Int(screen.x, screen.z);
+                    }
+
+                    if (SDAT_1F8 < 80)
+                    {
+                        bVar3 = (byte)(BDAT_1D0 + 1);
+                        BDAT_1D0 = bVar3;
+
+                        if ((uint)DAT_1D1 <= bVar3)
+                        {
+                            DAT_1D0 = 0;
+                            FUN_2DA0C(false);
+
+                            if (UDAT_20C < 2000 && (GameManager.instance.DAT_922C & 2) == 0 && 
+                                (oVar5.DAT_11E & 0x80) == 0)
+                            {
+                                DAT_1C2 = 2;
+                                DAT_208 |= 0x10000;
+                                sVar6 = FUN_64804(oVar5.screen);
+                                uVar7 = 0x1001;
+
+                                if ((sVar6 & 0x800) == 0)
+                                    uVar7 = 0x1101;
+
+                                DAT_3C = (byte)uVar7;
+                                DAT_3D = (byte)(uVar7 >> 8);
+                                DAT_3E = (byte)(uVar7 >> 0x10);
+                                DAT_3F = (byte)(uVar7 >> 0x18);
+                                GameManager.instance.FUN_65C7C(this);
+                                SDAT_1F8 = 0;
+                                goto LAB_3D574;
+                            }
+
+                            iVar8 = (int)GameManager.FUN_64650();
+                            bVar4 = 1;
+
+                            if (iVar8 == (iVar8 / 3) * 3)
+                            {
+                                bVar4 = 3;
+
+                                if (DAT_2F / 3 == 0)
+                                    bVar4 = 1;
+                            }
+
+                            DAT_1C2 = bVar4;
+                            DAT_3C = 1;
+                            DAT_3D = 9;
+                            DAT_3E = 0;
+                            DAT_3F = 0;
+                            V2_1F0 = new Vector2Int(oVar5.screen.x, oVar5.screen.z);
+                            V2_1F4 = new Vector2Int(screen.x, screen.z);
+                        }
+                    }
+                    else
+                    {
+                        BDAT_1D0 = 1;
+                        FUN_2DA0C(false);
+                    }
+                }
+                else
+                {
+                    DAT_3C = 1;
+                    DAT_3D = 35;
+                    DAT_3E = 0;
+                    DAT_3F = 0;
+                    DAT_1DB = DAT_48;
+                }
+
+                SDAT_1F8 = 0;
+                LAB_3D574:
+                DAT_1D2 = 0;
+                iVar5 = (int)GameManager.FUN_64650();
+                DAT_1D3 = (byte)(iVar5 + (iVar5 / 2) * -2 + 2);
+                return;
+            }
+
+            FUN_6103C(15, 2, 2, 0);
+        }
+
+        bVar2 = DAT_3E;
+        LAB_3D32C:
+        DAT_3E = (byte)(bVar2 + 1);
+    }
+
+    private void FUN_3D5AC()
+    {
+        FUN_609C8(22, 4, 5);
+        DAT_40 = new Vector3Int(0, 0, 0);
+        DAT_12C = 0;
+        DAT_3E++;
+    }
+
+    private void FUN_3D5F8()
+    {
+        bool bVar1;
+
+        bVar1 = FUN_60AB4();
+
+        if (bVar1)
+        {
+            GameManager.instance.FUN_65CB0(this);
+
+            if (health < 1)
+            {
+                DAT_3C = 3;
+                DAT_3D = 0;
+                DAT_3E = 0;
+                DAT_3F = 0;
+            }
+            else
+            {
+                if (DAT_1C3 == 5)
+                {
+                    DAT_3C = 2;
+                    DAT_3D = 2;
+                    DAT_3E = 0;
+                    DAT_3F = 0;
+                }
+                else
+                {
+                    if ((DAT_208 & 0x20000) == 0)
+                    {
+                        DAT_3C = 1;
+                        DAT_3D = 5;
+                        DAT_3E = 0;
+                        DAT_3F = 0;
+                        DAT_194 = 0;
+                    }
+                    else
+                    {
+                        DAT_3C = 1;
+                        DAT_3D = 27;
+                        DAT_3E = 0;
+                        DAT_3F = 0;
+                        bVar1 = InventoryManager.FUN_4A87C(5, DAT_163);
+
+                        if (bVar1)
+                            InventoryManager.FUN_4A7E8(5, DAT_163, false);
+
+                        if (DAT_12C != 0)
+                            DAT_12C = 0;
+                    }
+                }
+            }
+        }
+    }
+
+    private void FUN_3D6C4()
+    {
+        PTR_FUN_9C530[DAT_3E]();
+    }
+
+    private void FUN_3D700()
+    {
+        FUN_609C8(75, 0, 0);
+        DAT_40 = new Vector3Int(0, 0, 0);
+        DAT_3E++;
+    }
+
+    private void FUN_3D748()
+    {
+        bool bVar1;
+
+        bVar1 = FUN_60AB4();
+
+        if (bVar1)
+        {
+            DAT_3C = 3;
+            DAT_3D = 1;
+            DAT_3E = 0;
+            DAT_3F = 0;
+        }
+    }
+
+    private void FUN_3D77C()
+    {
+        PTR_FUN_9C538[DAT_3E]();
+    }
+
+    private void FUN_3D7B8()
+    {
+        PTR_FUN_9C540[DAT_3D]();
+    }
+
+    private void FUN_3D7F4()
+    {
+        FUN_609C8(19, 1, 10);
+        DAT_40 = new Vector3Int(0, 0, 0);
+        GameManager.instance.FUN_65CB0(this);
+        InventoryManager.FUN_4A7E8(4, DAT_163, true);
+        DAT_3E++;
+    }
+
+    private void FUN_3D858()
+    {
+        bool bVar1;
+
+        bVar1 = FUN_60AB4();
+
+        if (bVar1)
+            DAT_3E++;
+
+        if (DAT_60 == 14)
+            ; //sound
+    }
+
+    private void FUN_3D8B0()
+    {
+        CriPlayer oVar1;
+
+        if (DAT_1A3 == 0)
+            SceneManager.instance.FUN_2EBF8(this);
+
+        DAT_12C = 0xffff;
+        PTR_124 = null;
+        PTR_120 = null;
+        DAT_12F = 0;
+        DAT_12E = 0;
+        DAT_11E |= 0x40;
+        DAT_140 |= 0x8000;
+        oVar1 = SceneManager.instance.FUN_65B30(this) as CriPlayer;
+
+        if (oVar1 != null && (oVar1.DAT_208 & 0x2000000) != 0)
+        {
+            oVar1.DAT_1C5 = 1;
+            DAT_1C5 = 0;
+        }
+
+        DAT_144 &= 0x7fff;
+        FUN_65CF8(0, 0, 30);
+        DAT_3E++;
+    }
+
+    private void FUN_3D978()
+    {
+        PTR_FUN_9C548[DAT_3E]();
+    }
+
+    private void FUN_3D9B4()
+    {
+        int iVar1;
+        uint uVar2;
+
+        iVar1 = (int)GameManager.FUN_64650();
+        uVar2 = (uint)(iVar1 % 5 & 0xff);
+        FUN_6103C(20, 8, (byte)uVar2, 5);
+        DAT_60 = (ushort)(uVar2 << 1);
+        DAT_40 = new Vector3Int(0, 0, 0);
+        GameManager.instance.FUN_65CB0(this);
+        DAT_3E++;
+    }
+
+    private void FUN_3DA54()
+    {
+        bool bVar1;
+        CriPlayer oVar1;
+
+        bVar1 = FUN_60AB4();
+
+        if (bVar1)
+        {
+            if ((DAT_208 & 0x10) == 0 || DAT_48 != SceneManager.instance.DAT_27C[10].DAT_48)
+            {
+                DAT_208 &= 0xffffffef;
+                InventoryManager.FUN_4A7E8(4, DAT_163, true);
+                DAT_3C = 3;
+                DAT_3D = 0;
+                DAT_3E = 0;
+                DAT_3F = 0;
+            }
+            else
+            {
+                DAT_3C = 1;
+                DAT_3D = 18;
+                DAT_3E = 0;
+                DAT_3F = 0;
+                DAT_11E &= 0xbf;
+            }
+
+            oVar1 = SceneManager.instance.FUN_65B30(this) as CriPlayer;
+
+            if (oVar1 != null && (oVar1.DAT_208 & 0x2000000) != 0)
+            {
+                oVar1.DAT_1C5 = 1;
+                DAT_1C5 = 0;
+            }
+        }
+
+        if (DAT_60 == 32)
+            ; //sound
+    }
+
+    private void FUN_3DB3C()
+    {
+        PTR_FUN_9C558[DAT_3E]();
     }
 
     private void FUN_3DBB4()

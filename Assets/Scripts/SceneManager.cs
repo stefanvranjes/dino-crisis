@@ -794,6 +794,21 @@ public class SceneManager : MonoBehaviour
         return null;
     }
 
+    public void FUN_2E22C(CriPlayer param1)
+    {
+        CriPlayer oVar1;
+
+        oVar1 = FUN_65B30(param1) as CriPlayer;
+
+        if (oVar1 == null || (oVar1.DAT_208 & 0x2000000) == 0)
+            param1.DAT_1C5 = 1;
+        else
+        {
+            oVar1.DAT_1C5 = 1;
+            param1.DAT_1C5 = 0;
+        }
+    }
+
     public void FUN_2E7D0(CriSkinned param1)
     {
         ushort uVar1;

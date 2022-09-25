@@ -1076,4 +1076,9 @@ public class CriCamera : MonoBehaviour
         SceneManager.instance.FUN_26504(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
         SceneManager.instance.FUN_269C8(local_48, local_40);
     }
+
+    public void FUN_2EF18()
+    {
+        SceneManager.instance.FUN_269C8(DAT_40, DAT_48);
+    }
 }

@@ -87,6 +87,10 @@ public static class Utilities
     public static byte[] DAT_9C36C = new byte[] { 0, 3, 7, 13 };
     public static short[] DAT_9C4C0 = new short[] { 30, 30, 30, 30, 30, 30, 30, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     public static short[] DAT_9C4F4 = new short[] { 30, 30, 30, 30, 30, 30, 30, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    public static Vector3Int DAT_9C608 = new Vector3Int(600, 0, -1239);
+    public static Vector3Int DAT_9C610 = new Vector3Int(-1690, 0, -1807);
+    public static Vector3Int DAT_9C628 = new Vector3Int(600, 0, -1239);
+    public static Vector3Int DAT_9C630 = new Vector3Int(-1690, 0, -1280);
     public static short[] DAT_AC658 = new short[]
     {
         4096, 4127, 4159, 4190, 4222, 4252, 4283, 4314, 4344,

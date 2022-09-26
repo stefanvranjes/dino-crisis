@@ -54,6 +54,7 @@ public class CriCamera : MonoBehaviour
     private delegate void FUN_99404(CameraMotion m);
     private FUN_18448[] PTR_FUN_18448;
     private FUN_99404[] PTR_FUN_99404;
+    public FUN_8C[] PTR_FUN_9C618;
     public static CameraMotion DAT_99498;
 
     private void Awake()
@@ -110,6 +111,11 @@ public class CriCamera : MonoBehaviour
             FUN_289A4,
             FUN_289D8,
             FUN_28A0C
+        };
+        PTR_FUN_9C618 = new FUN_8C[2]
+        {
+            FUN_2EF40,
+            FUN_2EFE8
         };
     }
 
@@ -1080,5 +1086,33 @@ public class CriCamera : MonoBehaviour
     public void FUN_2EF18()
     {
         SceneManager.instance.FUN_269C8(DAT_40, DAT_48);
+    }
+
+    public void FUN_2EF40()
+    {
+        CriObject oVar1;
+        Vector3Int local_48;
+        Vector3Int local_40;
+        Vector3Int local_38;
+        Matrix3x3 MStack48;
+
+        oVar1 = DAT_64;
+        local_40 = new Vector3Int(0, 0, -500);
+        local_38 = new Vector3Int(0, 0, 0);
+        MStack48 = new Matrix3x3();
+        Utilities.RotMatrix(ref local_38, ref MStack48);
+        local_40 = Utilities.ApplyMatrixSV(ref MStack48, ref local_40);
+        local_48 = new Vector3Int(oVar1.screen.x + local_40.x, oVar1.screen.y - 1500, screen.z + local_40.z);
+        SceneManager.instance.FUN_269C8(local_48, DAT_48);
+    }
+
+    public void FUN_2EFE8()
+    {
+        CriObject oVar1;
+        Vector3Int local_10;
+
+        oVar1 = DAT_64;
+        local_10 = new Vector3Int(oVar1.screen.x, oVar1.screen.y - 500, oVar1.screen.z);
+        SceneManager.instance.FUN_269C8(local_10, DAT_48);
     }
 }

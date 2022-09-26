@@ -69,6 +69,7 @@ public class CriSkinned : CriObject
     public byte DAT_165; //0x165
     public byte DAT_166; //0x166
     public byte DAT_167; //0x167
+    public Vector3Int DAT_168; //0x168
     public Vector2Int shadowSize; //0x170
     public byte DAT_174; //0x174
     public byte DAT_175; //0x175
@@ -241,6 +242,7 @@ public class CriSkinned : CriObject
         DAT_165 = 0;
         DAT_166 = 0;
         DAT_167 = 0;
+        DAT_168 = Vector3Int.zero;
         shadowSize = Vector2Int.zero;
         DAT_174 = 0;
         DAT_175 = 0;

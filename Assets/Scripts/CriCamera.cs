@@ -1115,4 +1115,20 @@ public class CriCamera : MonoBehaviour
         local_10 = new Vector3Int(oVar1.screen.x, oVar1.screen.y - 500, oVar1.screen.z);
         SceneManager.instance.FUN_269C8(local_10, DAT_48);
     }
+
+    public void FUN_2F038()
+    {
+        CriObject oVar1;
+        Vector3Int local_40;
+        Vector3Int local_38;
+        Matrix3x3 MStack48;
+
+        oVar1 = DAT_64;
+        local_40 = new Vector3Int(1000, 0, 0);
+        MStack48 = new Matrix3x3();
+        Utilities.RotMatrix(ref oVar1.vr, ref MStack48);
+        local_40 = Utilities.ApplyMatrixSV(ref MStack48, ref local_40);
+        local_38 = new Vector3Int(oVar1.screen.x + local_40.x, oVar1.screen.y - 1800, oVar1.screen.z + local_40.z);
+        SceneManager.instance.FUN_269C8(local_38, DAT_48);
+    }
 }

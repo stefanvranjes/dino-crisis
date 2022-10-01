@@ -891,6 +891,25 @@ public class SceneManager : MonoBehaviour
         }
     }
 
+    public void FUN_2F7B8()
+    {
+        CriCamera oVar1;
+
+        oVar1 = cCamera;
+        oVar1.DAT_8A = 0;
+        oVar1.DAT_8B = 0;
+        oVar1.DAT_92 = 0;
+        oVar1.DAT_52 = 0;
+        oVar1.DAT_50 = 0;
+        oVar1.DAT_3E = 0;
+        oVar1.DAT_36 = 0;
+        oVar1.DAT_90 = 0;
+        oVar1.DAT_56 = 0;
+        oVar1.DAT_54 = 0;
+        oVar1.DAT_2E = 0;
+        oVar1.DAT_26 = 0;
+    }
+
     private void FUN_290E0()
     {
         ushort uVar1;

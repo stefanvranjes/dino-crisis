@@ -15,6 +15,7 @@ public class DialogManager : MonoBehaviour
     public byte DAT_B1391;
     public byte DAT_B1392;
     public byte DAT_B1393;
+    public int DAT_B1440;
     public ushort[] PTR_B146C;
     public int DAT_B146C;
     public ushort[] PTR_B1470;

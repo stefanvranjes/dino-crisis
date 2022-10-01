@@ -1059,6 +1059,21 @@ public class CriCamera : MonoBehaviour
         SceneManager.instance.FUN_27A1C(local_60, local_50);
     }
 
+    private void FUN_294B8(Vector2Int param1, short param2)
+    {
+        Vector3Int local_18;
+        Matrix3x3 MStack56;
+
+        local_18 = new Vector3Int(param1.x, param1.y, 0);
+        MStack56 = new Matrix3x3();
+        Utilities.RotMatrixYXZ(ref local_18, ref MStack56);
+        local_18 = new Vector3Int(0, 0, param2);
+        local_18 = Utilities.ApplyMatrixSV(ref MStack56, ref local_18);
+        screen.x = DAT_30.x + local_18.x;
+        screen.y = DAT_30.y + local_18.y;
+        screen.z = DAT_30.z + local_18.z;
+    }
+
     public void FUN_2EDE4()
     {
         CriObject oVar1;
@@ -1130,5 +1145,43 @@ public class CriCamera : MonoBehaviour
         local_40 = Utilities.ApplyMatrixSV(ref MStack48, ref local_40);
         local_38 = new Vector3Int(oVar1.screen.x + local_40.x, oVar1.screen.y - 1800, oVar1.screen.z + local_40.z);
         SceneManager.instance.FUN_269C8(local_38, DAT_48);
+    }
+
+    public void FUN_2F0D4()
+    {
+        if (0x200 < DAT_7C.y)
+        {
+            DAT_7C.y -= 10;
+            DAT_7C.z += 10;
+        }
+
+        SceneManager.instance.FUN_269C8(DAT_40, DAT_48);
+        FUN_294B8((Vector2Int)DAT_7C, (short)DAT_7C.z);
+        vr.x = DAT_7C.x;
+        vr.y = DAT_7C.y;
+        DAT_3C = (ushort)DAT_7C.z;
+    }
+
+    public void FUN_2F14C()
+    {
+        CriObject oVar1;
+        Vector3Int local_48;
+        Vector3Int local_40;
+        Vector3Int local_38;
+        Matrix3x3 MStack48;
+
+        oVar1 = DAT_64;
+        local_48 = new Vector3Int(2000, 0, 2500);
+        MStack48 = new Matrix3x3();
+        MStack48 = Utilities.RotMatrix(ref oVar1.vr, ref MStack48);
+        local_48 = Utilities.ApplyMatrixSV(ref MStack48, ref local_48);
+        local_40 = new Vector3Int(oVar1.screen.x + local_48.x, oVar1.screen.y - 1000, oVar1.screen.z + local_48.z);
+        local_48 = new Vector3Int(0, 0, 1000);
+        local_48 = Utilities.ApplyMatrixSV(ref MStack48, ref local_48);
+        local_38 = new Vector3Int(oVar1.screen.x + local_48.x, oVar1.screen.y - 1000, oVar1.screen.z + local_48.z);
+        SceneManager.instance.cCamera.DAT_8B = 0;
+        SceneManager.instance.cCamera.DAT_36 = 0;
+        SceneManager.instance.FUN_26504(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
+        SceneManager.instance.FUN_269C8(local_38, local_40);
     }
 }

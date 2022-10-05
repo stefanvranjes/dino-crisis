@@ -2478,6 +2478,63 @@ public static class Utilities
         return uVar2 & 0xffff;
     }
 
+    public static void FUN_64930(int param1, CriSkinned param2, uint param3, short param4, short param5)
+    {
+        uint uVar1;
+        uint uVar2;
+        uint uVar3;
+
+        uVar1 = (uint)(param1 - (param2.DAT_19E + param2.vr.y) & 0xfff);
+
+        if ((0x7ff < (int)uVar1 || ((int)(param3 << 0x10) >> 15 <= (int)(uVar3 = uVar1) &&
+            0x7ff < (int)(uVar3 = param3))) && 0x1000 - (short)uVar1 < (short)(uVar3 = param3))
+            uVar3 = 0x1000 - uVar1;
+
+        uVar2 = (uint)(param1 - param2.vr.y & 0xfff);
+
+        if ((int)uVar2 < 0xc00)
+        {
+            if (0x800 < uVar2)
+            {
+                uVar2 = (uint)-(int)uVar3;
+                goto LAB_649F4;
+            }
+
+            if ((int)uVar2 < 0x401)
+            {
+                uVar2 = (uint)-(int)uVar3;
+
+                if (0x800 < (int)uVar1) goto LAB_649F4;
+            }
+        }
+        else
+        {
+            uVar2 = (uint)-(int)uVar3;
+
+            if (0x800 < (int)uVar1) goto LAB_649F4;
+        }
+
+        uVar2 = uVar3;
+        LAB_649F4:
+        uVar2 = param2.DAT_19E + uVar2;
+        uVar1 = uVar2 & 0xfff;
+        param2.DAT_19E = (ushort)uVar1;
+
+        if ((uVar2 & 0x800) == 0)
+        {
+            if (param5 < param2.DAT_19E)
+                param2.DAT_19E = (ushort)param5;
+        }
+        else
+        {
+            if ((int)uVar1 < param4)
+            {
+                param2.DAT_19E = (ushort)param4;
+                return;
+            }
+        }
+    }
+
     public static bool FUN_64C0C(Vector3Int param1, Vector3Int param2, short param3, short param4)
     {
         short sVar1;

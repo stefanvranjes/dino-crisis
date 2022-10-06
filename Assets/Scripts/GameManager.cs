@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_3B; //gp+3bh
     public int DAT_3C; //gp+3ch
     public uint DAT_40; //gp+40h
+    public bool DAT_46; //gp+46h
     public byte DAT_47; //gp+47h
     public Vector3Int playerSpawnPos; //gp+4ch
     public short playerSpawnRotY; //gp+52h
@@ -120,8 +121,10 @@ public class GameManager : MonoBehaviour
     public short DAT_98B8; //gp+98b8h
     public short DAT_98BA; //gp+98bah
     public ushort DAT_9AA0; //gp+9aa0h
+    public byte DAT_9AA2; //gp+9aa2h
     public _DIFFICULTY difficulty; //gp+9aa8h
     public byte DAT_9AAA; //gp+9aaah
+    public byte[] DAT_9AB4; //gp+9ab4h
     public ushort DAT_9ADC; //gp+9adch
     public byte DAT_9ADE; //gp+9adeh
     public byte DAT_9ADF; //gp+9adfh
@@ -211,6 +214,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
 
+        DAT_9AB4 = new byte[8];
         DAT_A090 = new byte[80];
         DAT_A0F8 = new ushort[3];
         PTR_FUN_AA4D0 = new FUN_AA4D0[3]
@@ -1447,6 +1451,47 @@ public class GameManager : MonoBehaviour
         }
 
         return bVar4;
+    }
+
+    public void FUN_7669C(CriTrigger[] param1, int param2)
+    {
+        bool bVar1;
+        uint uVar2;
+        CriTrigger pcVar3;
+        int pcVar4;
+        uint uVar5;
+
+        pcVar4 = param2 - 1;
+        uVar5 = 0;
+
+        if (DAT_9AB4[pcVar4] != 0)
+        {
+            do
+            {
+                if (9 < uVar5)
+                    return;
+
+                pcVar3 = param1[uVar5];
+
+                if (pcVar3.DAT_02 != 0)
+                {
+                    bVar1 = InventoryManager.FUN_4A87C(4, pcVar3.DAT_02);
+
+                    if (bVar1)
+                    {
+                        uVar2 = FUN_64650();
+
+                        if ((uVar2 & 1) != 0)
+                        {
+                            InventoryManager.FUN_4A7E8(4, pcVar3.DAT_02, false);
+                            DAT_9AB4[pcVar4]--;
+                        }
+                    }
+                }
+
+                uVar5++;
+            } while (DAT_9AB4[pcVar4] != 0);
+        }
     }
 
     public void FUN_767A8()

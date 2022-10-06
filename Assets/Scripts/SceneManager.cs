@@ -19,6 +19,7 @@ public class SceneManager : MonoBehaviour
     public DatabaseScriptableObject database;
     public ushort DAT_A4; //gp+a4h
     public byte[] DAT_AC; //gp+ach
+    public uint[] DAT_B0; //gp+b0h
     public CriCamera cCamera; //gp+b4h
     public WaypointScriptableObject waypoints; //gp+150h
     public SceneColliderScriptableObject sceneCollision; //gp+154h

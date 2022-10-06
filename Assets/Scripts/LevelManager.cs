@@ -28,4 +28,19 @@ public class LevelManager : MonoBehaviour
     {
         
     }
+
+    public static void FUN_54EF8(CriPlayer param1)
+    {
+        param1.FUN_54EF8();
+    }
+
+    public static void FUN_4CFDC(CriPlayer param1)
+    {
+        param1.FUN_4CFDC();
+    }
+
+    public static void FUN_2FAB0(CriPlayer param1)
+    {
+        param1.FUN_2FAB0();
+    }
 }

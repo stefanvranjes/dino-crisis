@@ -18,8 +18,13 @@ public class CriStatic : CriObject
     public BoxCollider cCollider; //0x44
     public byte DAT_48; //0x48
     public ushort DAT_4A; //0x4A
+    public Vector3Int DAT_4C; //0x4C
     public uint DAT_74;
     public byte DAT_78;
+    private delegate void FUN_AA430();
+    private delegate void FUN_7B20(); //FUN_7B20 (ST1)
+    private FUN_AA430[] PTR_FUN_AA430;
+    private FUN_7B20[] PTR_FUN_7B20; //PTR_FUN_7B20 (ST1)
 
     private List<byte> commandList;
     private List<Vector3> vertexList;
@@ -28,6 +33,16 @@ public class CriStatic : CriObject
     private List<Color> colorList;
     private List<int> triangleList;
     public Material[] materials;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        PTR_FUN_AA430 = new FUN_AA430[2]
+        {
+            FUN_7F734,
+            FUN_7F748
+        };
+    }
 
     protected override void Start()
     {
@@ -213,5 +228,78 @@ public class CriStatic : CriObject
 
         GameManager.DAT_1f800024 = (ushort)uVar7;
         GameManager.DAT_1f800026 = (ushort)uVar8;
+    }
+
+    public void FUN_7F6F8()
+    {
+        PTR_FUN_AA430[tags]();
+    }
+
+    private void FUN_7F734()
+    {
+        uint uVar1;
+
+        DAT_74 &= 0xffffff00;
+        tags++;
+    }
+
+    private void FUN_7F748()
+    {
+        return;
+    }
+
+    public void FUN_7F750()
+    {
+        bool bVar1;
+
+        if (DAT_2F != 0)
+        {
+            bVar1 = InventoryManager.FUN_4A87C(2, 0x1b);
+
+            if (bVar1)
+            {
+                InventoryManager.FUN_4A7E8(2, 0x1b, false);
+                flags |= 2;
+            }
+        }
+
+        bVar1 = InventoryManager.FUN_4A87C(2, 2);
+
+        if (!bVar1)
+        {
+            bVar1 = InventoryManager.FUN_4A87C(2, 3);
+
+            if (!bVar1)
+                vr.y = vr.y + 0x40 & 0xfff;
+        }
+    }
+
+    public void FUN_7F7E4()
+    {
+        if (tags == 0)
+        {
+            tags++;
+            //DAT_74 = DAT_44; ???
+        }
+    }
+
+    //FUN_6C74 (ST1)
+    public void FUN_6C74()
+    {
+
+    }
+
+    //FUN_6CB0 (ST1)
+    private void FUN_6CB0()
+    {
+        tags++;
+        DAT_4C = new Vector3Int(0, 0, 0);
+        //FUN_6D14
+    }
+
+    //FUN_6D14 (ST1)
+    private void FUN_6D14()
+    {
+
     }
 }

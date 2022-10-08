@@ -121,7 +121,7 @@ public class CriCamera : MonoBehaviour
 
     void Start()
     {
-        SceneManager.instance.cCamera = this;
+        
     }
 
     void Update()

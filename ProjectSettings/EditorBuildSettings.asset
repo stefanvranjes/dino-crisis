@@ -8,43 +8,43 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DEMO.unity
     guid: 18a5c12e65b5b1745a791e258dd4104e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST100/ST100.unity
     guid: 804cc317a99829c4daae557fe4c33c8c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST101/ST101.unity
     guid: 2989457e8db46ec4d85d9e4968c14bef
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST102/ST102.unity
     guid: 1cd1e95a8f53a6647972205d5dc429ce
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST103/ST103.unity
     guid: 4fc27f84b2e4dad42abcee32643bf7f2
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST104/ST104.unity
     guid: d9114aa7c2eb3444f9b9c21dc769703d
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST105/ST105.unity
     guid: d7b4dc7c1a9a9454dbc2b2ad8dd351a5
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST106/ST106.unity
     guid: e47862b729b5df545adeaae78c6940d3
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST107/ST107.unity
     guid: 3468893221b9f6d4d8309df0630d46f6
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST108/ST108.unity
     guid: fb816fdaf529f964ebd6175d3c7773a5
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST109/ST109.unity
     guid: 53c640dee2acd4f459461ba0cdffa5f0
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST10A/ST10A.unity
     guid: 6dddf21573ff9664faeac07ddc349e18
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST10B/ST10B.unity
     guid: 684dca56bef4ed7479563043ee39425f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST10C/ST10C.unity
     guid: 587a0b85603f47f48819838d96961773
   - enabled: 1
@@ -53,22 +53,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/DATA/ST10E/ST10E.unity
     guid: bc87ffb7368446548b19902e6fb3cb9a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST10F/ST10F.unity
     guid: dba988c0ec938634e98c8cc215bfdfa2
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST110/ST110.unity
     guid: 2b3f1d6ed5dc21b45951e12efde1c7a4
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST111/ST111.unity
     guid: 2a088db1c737b194b81a5d8419cd6e02
   - enabled: 1
     path: Assets/Resources/DATA/ST112/ST112.unity
     guid: 7f01a7ff8dfa159458ea00c8f3a8c4a2
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST113/ST113.unity
     guid: c759ee320ccdc8749aa21b1dc51cc680
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/DATA/ST114/ST114.unity
     guid: 4fdf03db3bd6c73439e93e3c207e70fe
   - enabled: 0

@@ -148,6 +148,29 @@ public class DialogManager : MonoBehaviour
         return DAT_98594[param1];
     }
 
+    public void FUN_1DE48()
+    {
+        //FUN_1DED0
+        PTR_B146C = null;
+        PTR_B1470 = null;
+        DAT_B1478 = 0;
+        DAT_B147A = 0;
+        DAT_B147E = 0;
+        DAT_B147F = 0;
+        DAT_B1480 = 0;
+        DAT_B1481 = 0;
+        DAT_B1482 = 0;
+        DAT_B1483 = 0;
+        DAT_B1484 = 0;
+        DAT_B1485 = 0;
+        DAT_B1487 = 0;
+        DAT_B1488 = 0;
+        DAT_B1489 = 0;
+        DAT_B148A = 40;
+        DAT_B148B = 0;
+        DAT_B148C = 0;
+    }
+
     public void FUN_1E2D8(ushort[] param1, int param2, byte param3, ushort param4)
     {
         byte bVar1;

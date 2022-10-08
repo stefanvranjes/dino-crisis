@@ -20,6 +20,11 @@ public class Demo : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(room, LoadSceneMode.Single);
     }
 
+    public void GameStart()
+    {
+        GameManager.instance.gameStarted = true;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

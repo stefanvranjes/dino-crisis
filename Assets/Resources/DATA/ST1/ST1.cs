@@ -28,7 +28,7 @@ public class ST1 : LevelManager
     }
 
     //FUN_F4 (ST1)
-    private void FUN_F4()
+    public override void Initialize()
     {
         bool bVar2;
         uint uVar3;

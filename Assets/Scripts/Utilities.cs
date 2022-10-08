@@ -11,6 +11,10 @@ public delegate int _SORTING_CMP(byte[] arry, int cmp1, int cmp2);
 
 public static class Utilities
 {
+    public static Dictionary<string, Type> scriptComponents = new Dictionary<string, Type>()
+    {
+        { "ST1", typeof(ST1) }
+    };
     public static short[] DAT_184F0 = new short[]
     {
         -6, -7, -17, -18, -23, -24, -25, -26, -26, -26, -28, -28, -28, -28, -26, -27, -23, -24, -19, -19, -14, -15, -9, -10, -13, -13

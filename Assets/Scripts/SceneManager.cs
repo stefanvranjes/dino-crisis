@@ -109,8 +109,6 @@ public class SceneManager : MonoBehaviour
         DAT_8FFC = new CriUnknown[10];
         DAT_9EEC = new CriTrigger[10];
         DAT_D7C0 = new CriScene[10];
-
-        FUN_47BE0();
     }
 
     // Update is called once per frame
@@ -119,7 +117,7 @@ public class SceneManager : MonoBehaviour
         
     }
 
-    private void FUN_1A3A0()
+    public void FUN_1A3A0()
     {
         bool bVar1;
         CriParticle oVar2;
@@ -492,7 +490,7 @@ public class SceneManager : MonoBehaviour
         DAT_D7C0[iVar1].DAT_58[0] = 0;
     }
 
-    private void FUN_55548()
+    public void FUN_55548()
     {
         for (int i = 0; i < DAT_D7C0.Length; i++)
             DAT_D7C0[i].ResetValues();
@@ -500,7 +498,7 @@ public class SceneManager : MonoBehaviour
         FUN_55580(0, 0);
     }
 
-    private void FUN_553EC()
+    public void FUN_553EC()
     {
         DAT_A4 = GameManager.instance.DAT_9E0A0
             [(byte)(GameManager.instance.DAT_9AA0 >> 8)].scenes
@@ -911,7 +909,7 @@ public class SceneManager : MonoBehaviour
         oVar1.DAT_26 = 0;
     }
 
-    private void FUN_290E0()
+    public void FUN_290E0()
     {
         ushort uVar1;
         bool bVar2;
@@ -1458,7 +1456,14 @@ public class SceneManager : MonoBehaviour
         param1.z += local_30.z;
     }
 
-    private void FUN_261E0()
+    public void FUN_261BC()
+    {
+        GameObject obj = new GameObject();
+        obj.name = "CriCamera (Instance)";
+        cCamera = obj.AddComponent<CriCamera>();
+    }
+
+    public void FUN_261E0()
     {
         byte bVar1;
         CameraMotion mVar3;
@@ -1582,123 +1587,6 @@ public class SceneManager : MonoBehaviour
         return DAT_AC[puVar3];
     }
 
-    public void FUN_47BE0()
-    {
-        CriPlayer oVar3;
-        CriTrigger pbVar4;
-        uint uVar5;
-
-        GameManager.instance.DAT_55 = 0;
-        GameManager.instance.DAT_21 = 6;
-        GameManager.instance.DAT_28++;
-        GameManager.instance.FUN_6E6C8();
-
-        if ((byte)(GameManager.instance.DAT_9AA0 >> 8) != (byte)(GameManager.instance.DAT_9ADC >> 8))
-        {
-            //FUN_1802C
-        }
-
-        for (int i = 0; i < 11; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriSkinned (Instance)";
-            DAT_27C[i] = obj.AddComponent<CriPlayer>();
-        }
-
-        for (int i = 0; i < 100; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriBone (Instance)";
-            DAT_1C9C[i] = obj.AddComponent<CriBone>();
-        }
-
-        for (int i = 0; i < 60; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriParticle (Instance)";
-            DAT_5FCC[i] = obj.AddComponent<CriParticle>();
-        }
-
-        for (int i = 0; i < 40; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriStatic (Instance)";
-            DAT_7CDC[i] = obj.AddComponent<CriStatic>();
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriUnknown (Instance)";
-            DAT_8FFC[i] = obj.AddComponent<CriUnknown>();
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriTrigger (Instance)";
-            DAT_9EEC[i] = obj.AddComponent<CriTrigger>();
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriScene (Instance)";
-            DAT_D7C0[i] = obj.AddComponent<CriScene>();
-        }
-
-        //FUN_601A4
-        //FUN_5DDD0
-        GameObject obj2 = new GameObject();
-        oVar3 = obj2.AddComponent<CriPlayer>();
-        DAT_27C[10] = oVar3;
-        oVar3.screen = GameManager.instance.playerSpawnPos;
-        oVar3.DAT_34 = GameManager.instance.playerSpawnPos;
-        oVar3.vr.y = GameManager.instance.playerSpawnRotY;
-        oVar3.DAT_48 = (sbyte)-(oVar3.screen.y / 0x1a9);
-        oVar3.FUN_4CFDC();
-        oVar3.materials = new Material[255];
-        Tmd2ScriptableObject tmd = oVar3.cSkin;
-        Material mat1 = new Material(GameManager.instance.materials[0x34]);
-        Material mat2 = new Material(GameManager.instance.materials[0x3C]);
-        mat1.mainTexture = tmd.TEX_2D;
-        mat1.SetTexture("_Tex8", tmd.TEX8_2D);
-        mat1.SetTexture("_CLUT", tmd.CLUT_2D);
-        oVar3.materials[0x34] = mat1;
-        mat2.mainTexture = tmd.TEX_2D;
-        mat2.SetTexture("_Tex8", tmd.TEX8_2D);
-        mat2.SetTexture("_CLUT", tmd.CLUT_2D);
-        oVar3.materials[0x3C] = mat2;
-        //...
-        uVar5 = 0;
-
-        if (uVar5 < DAT_9EEC.Length)
-        {
-            do
-            {
-                pbVar4 = DAT_9EEC[uVar5];
-                uVar5++;
-                pbVar4.DAT_03 &= 2;
-            } while (uVar5 < DAT_9EEC.Length);
-        }
-
-        GameManager.instance.DAT_3C = 0;
-        FUN_553EC();
-        FUN_55548();
-        FUN_1A3A0();
-        FUN_4AEA0();
-        FUN_261E0();
-        GameManager.instance.DAT_23 = true;
-        GameManager.instance.FUN_46C0C(0, 20, 1);
-        GameManager.instance.DAT_2A = 0;
-
-        if ((byte)(GameManager.instance.DAT_9AA0 >> 8) == 4 &&
-            (byte)GameManager.instance.DAT_9AA0 == 9)
-            GameManager.instance.DAT_28 = 9;
-
-        FUN_290E0();
-    }
-
     public void FUN_4A784(int param1, int param2, short param3, short param4, 
         short param5, short param6, short param7, short param8)
     {
@@ -1728,7 +1616,7 @@ public class SceneManager : MonoBehaviour
         oVar1.DAT_B4[param1] = new Vector3Int(param3, param4, param5);
     }
 
-    private void FUN_4AEA0()
+    public void FUN_4AEA0()
     {
         LightScriptableObject lVar1;
 

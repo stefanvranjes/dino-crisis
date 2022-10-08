@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum _DIFFICULTY
 {
@@ -122,6 +124,7 @@ public class GameManager : MonoBehaviour
     public short DAT_98BA; //gp+98bah
     public ushort DAT_9AA0; //gp+9aa0h
     public byte DAT_9AA2; //gp+9aa2h
+    public int DAT_9AA4; //gp+9aa4h
     public _DIFFICULTY difficulty; //gp+9aa8h
     public byte DAT_9AAA; //gp+9aaah
     public byte[] DAT_9AB4; //gp+9ab4h
@@ -162,14 +165,18 @@ public class GameManager : MonoBehaviour
     public Frame[] DAT_C33AC;
     public ushort DAT_C33B0;
     public List<LoadScriptContainer> DAT_9E0A0;
+    public List<int> sceneIds;
     public List<Vector3> skinnedVertices; //0x800C6F90
     public List<Color> skinnedColors; //0x800C75D0
     public List<CriSkinned> skinnedList; //0x800C7C10
+    public bool gameStarted;
     public bool disableColors;
     public Material[] materials;
 
+    private delegate void FUN_9CBF0();
     private delegate sbyte FUN_AA4D0(CriPlayer p, CriStatic o);
-    
+
+    private FUN_9CBF0[] PTR_FUN_9CBF0;
     private FUN_AA4D0[] PTR_FUN_AA4D0;
 
     private byte[] DAT_AA44C = new byte[]
@@ -217,6 +224,23 @@ public class GameManager : MonoBehaviour
         DAT_9AB4 = new byte[8];
         DAT_A090 = new byte[80];
         DAT_A0F8 = new ushort[3];
+        PTR_FUN_9CBF0 = new FUN_9CBF0[14]
+        {
+            FUN_47950,
+            FUN_47B34,
+            FUN_47BE0,
+            FUN_47DE4,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        };
         PTR_FUN_AA4D0 = new FUN_AA4D0[3]
         {
             FUN_82834,
@@ -246,8 +270,8 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        FUN_4A4FC();
-        FUN_7302C();
+        if (gameStarted)
+            FUN_47900();
     }
 
     public void FUN_46C0C(int param1, uint param2, byte param3)
@@ -268,6 +292,247 @@ public class GameManager : MonoBehaviour
         DAT_6C = (byte)param1;
         DAT_6F = param3;
         DAT_64 = 0x1000000 / param2;
+    }
+
+    private void FUN_475E4(int param1)
+    {
+        uint uVar2;
+
+        uVar2 = (uint)(DAT_9AA4 + param1);
+        DAT_9AA4 = (int)uVar2;
+
+        if (0x14996c4 < uVar2)
+            uVar2 = 0x14996c4;
+
+        DAT_9AA4 = (int)uVar2;
+    }
+
+    private void FUN_47900()
+    {
+        PTR_FUN_9CBF0[DAT_28]();
+    }
+
+    private void FUN_47950()
+    {
+        //FUN_1802C
+        DAT_28++;
+        //...
+        InventoryManager.FUN_4A7E8(4, 0, true);
+        InventoryManager.FUN_4A7E8(9, 0, true);
+        DialogManager.instance.FUN_1DE48();
+        FUN_61374();
+    }
+
+    private void FUN_47B34()
+    {
+        DAT_28++;
+        SceneManager.instance.FUN_261BC();
+
+        if ((DAT_46 ? 1 : 0) != DAT_9AA0 >> 8)
+        {
+            FUN_55198();
+            LevelManager.instance.Initialize();
+        }
+    }
+
+    private void FUN_47BE0()
+    {
+        CriPlayer oVar3;
+        CriTrigger pbVar4;
+        uint uVar5;
+
+        DAT_55 = 0;
+        DAT_21 = 6;
+        DAT_28++;
+        FUN_6E6C8();
+
+        if ((byte)(DAT_9AA0 >> 8) != (byte)(DAT_9ADC >> 8))
+        {
+            //FUN_1802C
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriSkinned (Instance)";
+            SceneManager.instance.DAT_27C[i] = obj.AddComponent<CriPlayer>();
+        }
+
+        for (int i = 0; i < 100; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriBone (Instance)";
+            SceneManager.instance.DAT_1C9C[i] = obj.AddComponent<CriBone>();
+        }
+
+        for (int i = 0; i < 60; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriParticle (Instance)";
+            SceneManager.instance.DAT_5FCC[i] = obj.AddComponent<CriParticle>();
+        }
+
+        for (int i = 0; i < 40; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriStatic (Instance)";
+            SceneManager.instance.DAT_7CDC[i] = obj.AddComponent<CriStatic>();
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriUnknown (Instance)";
+            SceneManager.instance.DAT_8FFC[i] = obj.AddComponent<CriUnknown>();
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriTrigger (Instance)";
+            SceneManager.instance.DAT_9EEC[i] = obj.AddComponent<CriTrigger>();
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriScene (Instance)";
+            SceneManager.instance.DAT_D7C0[i] = obj.AddComponent<CriScene>();
+        }
+
+        //FUN_601A4
+        //FUN_5DDD0
+        GameObject obj2 = new GameObject();
+        obj2.name = "CriPlayer (Instance)";
+        oVar3 = obj2.AddComponent<CriPlayer>();
+        SceneManager.instance.DAT_27C[10] = oVar3;
+        oVar3.screen = playerSpawnPos;
+        oVar3.DAT_34 = playerSpawnPos;
+        oVar3.vr.y = playerSpawnRotY;
+        oVar3.DAT_48 = (sbyte)-(oVar3.screen.y / 0x1a9);
+        oVar3.FUN_4CFDC();
+        oVar3.materials = new Material[255];
+        Tmd2ScriptableObject tmd = oVar3.cSkin;
+        Material mat1 = new Material(materials[0x34]);
+        Material mat2 = new Material(materials[0x3C]);
+        mat1.mainTexture = tmd.TEX_2D;
+        mat1.SetTexture("_Tex8", tmd.TEX8_2D);
+        mat1.SetTexture("_CLUT", tmd.CLUT_2D);
+        oVar3.materials[0x34] = mat1;
+        mat2.mainTexture = tmd.TEX_2D;
+        mat2.SetTexture("_Tex8", tmd.TEX8_2D);
+        mat2.SetTexture("_CLUT", tmd.CLUT_2D);
+        oVar3.materials[0x3C] = mat2;
+        //...
+        uVar5 = 0;
+
+        if (uVar5 < SceneManager.instance.DAT_9EEC.Length)
+        {
+            do
+            {
+                pbVar4 = SceneManager.instance.DAT_9EEC[uVar5];
+                uVar5++;
+                pbVar4.DAT_03 &= 2;
+            } while (uVar5 < SceneManager.instance.DAT_9EEC.Length);
+        }
+
+        DAT_3C = 0;
+        SceneManager.instance.FUN_553EC();
+        SceneManager.instance.FUN_55548();
+        SceneManager.instance.FUN_1A3A0();
+        SceneManager.instance.FUN_4AEA0();
+        SceneManager.instance.FUN_261E0();
+        DAT_23 = true;
+        FUN_46C0C(0, 20, 1);
+        DAT_2A = 0;
+
+        if ((byte)(DAT_9AA0 >> 8) == 4 && (byte)DAT_9AA0 == 9)
+            DAT_28 = 9;
+
+        SceneManager.instance.FUN_290E0();
+    }
+
+    private void FUN_47DE4()
+    {
+        bool bVar3;
+
+        //FUN_47438
+        InventoryManager.FUN_4A7E8(1, 11, true);
+
+        if (!DAT_6D)
+        {
+            if ((DAT_1f80000a & 0x800) != 0)
+            {
+                bVar3 = InventoryManager.FUN_4A87C(1, 2);
+
+                if (!bVar3)
+                {
+                    bVar3 = InventoryManager.FUN_4A87C(2, 0x1d);
+                    InventoryManager.FUN_4A7E8(2, 0x1d, bVar3 == false);
+                }
+            }
+
+            if (!DAT_6D)
+            {
+                bVar3 = InventoryManager.FUN_4A87C(1, 2);
+
+                if (!bVar3 && (InputManager.controllers[0].DAT_C2556 & 4) != 0)
+                    InventoryManager.FUN_4A7E8(2, 0x1d, true);
+
+                if (!DAT_6D)
+                {
+                    bVar3 = InventoryManager.FUN_4A87C(2, 0x1d);
+
+                    if (!bVar3 && (DAT_1f80000a & 0x100) != 0)
+                        DAT_28 = 8;
+                }
+            }
+        }
+
+        //FUN_18000
+        bVar3 = InventoryManager.FUN_4A87C(2, 0x1d);
+
+        if (!bVar3)
+        {
+            FUN_475E4(2);
+            FUN_4A4FC();
+        }
+        else
+        {
+            //...
+        }
+
+        FUN_7302C();
+        //FUN_18014
+
+        if (!DAT_6D)
+        {
+            bVar3 = InventoryManager.FUN_4A87C(1, 11);
+
+            if (!bVar3)
+            {
+                bVar3 = InventoryManager.FUN_4A87C(2, 15);
+
+                if (!bVar3 && (DAT_1f80000a & 0x10) != 0)
+                {
+                    InventoryManager.FUN_4A7E8(2, 15, true);
+                    DAT_39 = 4;
+                }
+
+                bVar3 = InventoryManager.FUN_4A87C(2, 15);
+
+                if (bVar3)
+                {
+                    DAT_28 = 5;
+                    //sound
+                }
+            }
+        }
+
+        if (SceneManager.instance.DAT_27C[10].DAT_3C == 7)
+            DAT_28 = 4;
+
+        //...
     }
 
     private void FUN_4A3C4()
@@ -308,6 +573,8 @@ public class GameManager : MonoBehaviour
 
         //if (!bVar1)
             SceneManager.instance.FUN_4AEFC();
+
+        LevelManager.instance.FUN_4A3C4();
     }
 
     public void FUN_4A8B8(LightScriptableObject param1, ref Matrix3x3 param2, Vector3Int[] param3)
@@ -461,6 +728,13 @@ public class GameManager : MonoBehaviour
         }
 
         return bVar4;
+    }
+
+    private void FUN_55198()
+    {
+        DontDestroyOnLoad(gameObject);
+        gameObject.AddComponent(Utilities.scriptComponents[DAT_9E0A0[DAT_9AA0 >> 8].scriptName]);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[DAT_9E0A0[DAT_9AA0 >> 8].DAT_02], LoadSceneMode.Single);
     }
 
     public void FUN_40C60(CriPlayer param1)

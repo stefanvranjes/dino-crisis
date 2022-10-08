@@ -29,6 +29,32 @@ public class LevelManager : MonoBehaviour
         
     }
 
+    public virtual void Initialize()
+    {
+
+    }
+
+    public void FUN_4A3C4()
+    {
+        CriPlayer pbVar1;
+        int iVar2;
+        int iVar3;
+
+        iVar3 = 10;
+        iVar2 = 0;
+
+        do
+        {
+            pbVar1 = (CriPlayer)SceneManager.instance.DAT_27C[iVar2];
+
+            if ((pbVar1.flags & 1) != 0)
+                PTR_FUN_B58C0[pbVar1.tags](pbVar1);
+
+            iVar3--;
+            iVar2++;
+        } while (iVar3 != -1);
+    }
+
     public static void FUN_54EF8(CriPlayer param1)
     {
         param1.FUN_54EF8();

@@ -78,6 +78,11 @@ public class SceneManager : MonoBehaviour
         0, 1, 0, 0, 0, 0, 1, 0, 0, 0
     };
 
+    public static TodScriptableObject[] DAT_18770;
+    public static RefScriptableObject[][] PTR_9CFA8;
+
+    public static bool sceneLoaded = false;
+
     void Awake()
     {
         if (instance == null)
@@ -95,12 +100,33 @@ public class SceneManager : MonoBehaviour
             FUN_653CC,
             FUN_6545C
         };
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        GameManager.sceneManager = this;
+        DAT_18770 = new TodScriptableObject[]
+        {
+            (TodScriptableObject)database.playerCore.objects[0x8018466C],
+            (TodScriptableObject)database.playerCore.objects[0x8018539C],
+            (TodScriptableObject)database.playerCore.objects[0x80184D04],
+            (TodScriptableObject)database.playerCore.objects[0x80185A34],
+            (TodScriptableObject)database.playerCore.objects[0x8019113C],
+            (TodScriptableObject)database.playerCore.objects[0x80191884],
+            (TodScriptableObject)database.playerCore.objects[0x801914E0],
+            (TodScriptableObject)database.playerCore.objects[0x80191C28]
+        };
+
+        PTR_9CFA8 = new RefScriptableObject[][]
+        {
+            new RefScriptableObject[1], //PTR_9CF74
+            new RefScriptableObject[4], //PTR_9CF78, 
+            new RefScriptableObject[4]
+            {
+                (RefScriptableObject)database.common.objects[0x8017B83C],
+                (RefScriptableObject)database.common.objects[0x8017B83C],
+                (RefScriptableObject)database.common.objects[0x8017B83C],
+                (RefScriptableObject)database.common.objects[0x8017B83C]
+            }, //PTR_9CF88
+            new RefScriptableObject[4] //PTR_9CF98
+        };
+
         triggers = new Trigger[32];
         DAT_27C = new CriSkinned[11];
         DAT_1C9C = new CriBone[100];
@@ -109,6 +135,66 @@ public class SceneManager : MonoBehaviour
         DAT_8FFC = new CriUnknown[10];
         DAT_9EEC = new CriTrigger[10];
         DAT_D7C0 = new CriScene[10];
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriSkinned (Instance)";
+            DAT_27C[i] = obj.AddComponent<CriPlayer>();
+        }
+
+        for (int i = 0; i < 100; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriBone (Instance)";
+            DAT_1C9C[i] = obj.AddComponent<CriBone>();
+        }
+
+        for (int i = 0; i < 60; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriParticle (Instance)";
+            DAT_5FCC[i] = obj.AddComponent<CriParticle>();
+        }
+
+        for (int i = 0; i < 40; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriStatic (Instance)";
+            DAT_7CDC[i] = obj.AddComponent<CriStatic>();
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriUnknown (Instance)";
+            DAT_8FFC[i] = obj.AddComponent<CriUnknown>();
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriTrigger (Instance)";
+            DAT_9EEC[i] = obj.AddComponent<CriTrigger>();
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriScene (Instance)";
+            DAT_D7C0[i] = obj.AddComponent<CriScene>();
+        }
+
+        GameObject obj2 = new GameObject();
+        obj2.name = "CriPlayer (Instance)";
+        DAT_27C[10] = obj2.AddComponent<CriPlayer>();
+        sceneLoaded = true;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        GameManager.sceneManager = this;
     }
 
     // Update is called once per frame

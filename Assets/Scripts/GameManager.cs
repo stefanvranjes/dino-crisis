@@ -126,7 +126,9 @@ public class GameManager : MonoBehaviour
     public byte DAT_9AA2; //gp+9aa2h
     public int DAT_9AA4; //gp+9aa4h
     public _DIFFICULTY difficulty; //gp+9aa8h
+    public byte DAT_9AA9; //gp+9aa9h
     public byte DAT_9AAA; //gp+9aaah
+    public byte DAT_9AAB; //gp+9aabh
     public byte[] DAT_9AB4; //gp+9ab4h
     public ushort DAT_9ADC; //gp+9adch
     public byte DAT_9ADE; //gp+9adeh
@@ -154,6 +156,7 @@ public class GameManager : MonoBehaviour
     public bool DAT_A2D1; //gp+a2d1h
     public bool DAT_A2D2; //gp+a2d2h
     public byte DAT_A2D3; //gp+a2d3h
+    public byte DAT_A2D4; //gp+a2d4h
     public Packet[] DAT_C3380;
     public Frame[] DAT_C3384;
     public Packet DAT_C3388;
@@ -223,7 +226,7 @@ public class GameManager : MonoBehaviour
 
         DAT_9AB4 = new byte[8];
         DAT_A090 = new byte[80];
-        DAT_A0F8 = new ushort[3];
+        DAT_A0F8 = new ushort[4];
         PTR_FUN_9CBF0 = new FUN_9CBF0[14]
         {
             FUN_47950,
@@ -314,13 +317,20 @@ public class GameManager : MonoBehaviour
 
     private void FUN_47950()
     {
-        //FUN_1802C
-        DAT_28++;
-        //...
-        InventoryManager.FUN_4A7E8(4, 0, true);
-        InventoryManager.FUN_4A7E8(9, 0, true);
-        DialogManager.instance.FUN_1DE48();
-        FUN_61374();
+        if (!SceneManager.sceneLoaded)
+            FUN_55198(); //not in the original code
+        else
+        {
+            //FUN_1802C
+            SceneManager.sceneLoaded = false;
+            DAT_28++;
+            //...
+            FUN_61240();
+            InventoryManager.FUN_4A7E8(4, 0, true);
+            InventoryManager.FUN_4A7E8(9, 0, true);
+            DialogManager.instance.FUN_1DE48();
+            FUN_61374();
+        }
     }
 
     private void FUN_47B34()
@@ -330,7 +340,7 @@ public class GameManager : MonoBehaviour
 
         if ((DAT_46 ? 1 : 0) != DAT_9AA0 >> 8)
         {
-            FUN_55198();
+            //FUN_55198 - originally here
             LevelManager.instance.Initialize();
         }
     }
@@ -352,60 +362,29 @@ public class GameManager : MonoBehaviour
         }
 
         for (int i = 0; i < 10; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriSkinned (Instance)";
-            SceneManager.instance.DAT_27C[i] = obj.AddComponent<CriPlayer>();
-        }
+            SceneManager.instance.DAT_27C[i].ResetValues();
 
         for (int i = 0; i < 100; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriBone (Instance)";
-            SceneManager.instance.DAT_1C9C[i] = obj.AddComponent<CriBone>();
-        }
+            SceneManager.instance.DAT_1C9C[i].ResetValues();
 
         for (int i = 0; i < 60; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriParticle (Instance)";
-            SceneManager.instance.DAT_5FCC[i] = obj.AddComponent<CriParticle>();
-        }
+            SceneManager.instance.DAT_5FCC[i].ResetValues();
 
         for (int i = 0; i < 40; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriStatic (Instance)";
-            SceneManager.instance.DAT_7CDC[i] = obj.AddComponent<CriStatic>();
-        }
+            SceneManager.instance.DAT_7CDC[i].ResetValues();
 
         for (int i = 0; i < 10; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriUnknown (Instance)";
-            SceneManager.instance.DAT_8FFC[i] = obj.AddComponent<CriUnknown>();
-        }
+            SceneManager.instance.DAT_8FFC[i].ResetValues();
 
         for (int i = 0; i < 10; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriTrigger (Instance)";
-            SceneManager.instance.DAT_9EEC[i] = obj.AddComponent<CriTrigger>();
-        }
+            SceneManager.instance.DAT_9EEC[i].ResetValues();
 
         for (int i = 0; i < 10; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriScene (Instance)";
-            SceneManager.instance.DAT_D7C0[i] = obj.AddComponent<CriScene>();
-        }
+            SceneManager.instance.DAT_D7C0[i].ResetValues();
 
         //FUN_601A4
         //FUN_5DDD0
-        GameObject obj2 = new GameObject();
-        obj2.name = "CriPlayer (Instance)";
-        oVar3 = obj2.AddComponent<CriPlayer>();
-        SceneManager.instance.DAT_27C[10] = oVar3;
+        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
         oVar3.screen = playerSpawnPos;
         oVar3.DAT_34 = playerSpawnPos;
         oVar3.vr.y = playerSpawnRotY;
@@ -744,6 +723,44 @@ public class GameManager : MonoBehaviour
             param1.DAT_1DE &= 0xfe;
             DAT_28 = 4;
         }
+    }
+
+    private void FUN_61240()
+    {
+        CriPlayer oVar1;
+        short sVar3;
+
+        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        DAT_9AB4[0] = 2;
+        DAT_9AB4[1] = 1;
+        DAT_9AB4[2] = 3;
+        DAT_9AB4[3] = 0;
+        DAT_9AB4[4] = 3;
+        sVar3 = 1200;
+        DAT_9AB4[5] = 2;
+
+        if (difficulty != _DIFFICULTY.Normal)
+            sVar3 = 2400;
+
+        oVar1.health = sVar3;
+        oVar1.DAT_240 = 0x20;
+        oVar1.DAT_244[1] = 0x6ff;
+        oVar1.DAT_244[0] = 0xffff;
+        oVar1.DAT_244[2] = 0xffff;
+        oVar1.screen.x = 0x1cf0;
+        oVar1.screen.y = 0;
+        oVar1.screen.z = 0xebe0;
+        oVar1.vr.y = 0;
+        DAT_9AAA = 5;
+        //FUN_5B214
+
+        if (DAT_9AA9 == 0)
+        {
+            DAT_9AAB = 0;
+            DAT_A2D4 = 0;
+        }
+
+        DAT_9AA9 = 0;
     }
 
     public void FUN_61374()

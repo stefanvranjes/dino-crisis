@@ -19,17 +19,6 @@ public static class Utilities
     {
         -6, -7, -17, -18, -23, -24, -25, -26, -26, -26, -28, -28, -28, -28, -26, -27, -23, -24, -19, -19, -14, -15, -9, -10, -13, -13
     };
-    public static TodScriptableObject[] DAT_18770 = new TodScriptableObject[]
-    {
-        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018466C], 
-        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018539C], 
-        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80184D04], 
-        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80185A34], 
-        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8019113C], 
-        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80191884], 
-        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801914E0], 
-        (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80191C28]
-    };
     public static short[] DAT_18790 = new short[]
     {
         54, 46, 35

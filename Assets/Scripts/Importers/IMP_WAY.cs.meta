@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: b1032d1b85c13474ab96913d1dffd37f
+guid: a69519d9af7f4bc41ad0eb6bffbf6a4c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - DAT_74A4: {fileID: 6705742829566122623, guid: 1e6dd353ecc6c00428795621719f4302, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

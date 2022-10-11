@@ -6,6 +6,7 @@ using UnityEngine;
 public class WaypointContainer
 {
     public byte DAT_00;
+    public byte DAT_01;
     public ushort[] OFF_02;
     public ushort[] OFF_04;
     public byte[] OFF_06;

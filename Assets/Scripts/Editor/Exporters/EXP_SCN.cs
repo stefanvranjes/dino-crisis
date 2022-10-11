@@ -31,6 +31,18 @@ public class EXP_SCN
             reader2.Seek(lghPosition, SeekOrigin.Begin);
             File.WriteAllBytes(lghFile, reader2.ReadBytes(lghSize));
 
+            // way
+            exportCount++;
+            reader2.Seek(4, SeekOrigin.Begin);
+            uint wayPosition = reader2.ReadUInt32();
+            int waySize = (int)(reader2.ReadUInt32() - wayPosition);
+            wayPosition -= 0x80100000;
+            string wayFile = outDir + Path.DirectorySeparatorChar;
+            wayFile += Path.GetFileNameWithoutExtension(inFile);
+            wayFile += "_" + exportCount.ToString("D2") + ".way";
+            reader2.Seek(wayPosition, SeekOrigin.Begin);
+            File.WriteAllBytes(wayFile, reader2.ReadBytes(waySize));
+
             // cln
             exportCount++;
             reader2.Seek(8, SeekOrigin.Begin);

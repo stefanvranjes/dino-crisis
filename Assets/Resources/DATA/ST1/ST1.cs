@@ -35,6 +35,7 @@ public class ST1 : LevelManager
         CriTrigger puVar4;
         TriggerData puVar5;
 
+        DAT_74A4 = Resources.Load<TrgScriptableObject>("DATA/ST1/ST1_01");
         //...
         PTR_FUN_B58C0 = DAT_7680;
         //...

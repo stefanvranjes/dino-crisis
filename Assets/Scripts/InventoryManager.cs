@@ -5,19 +5,19 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance;
-    private static uint[] DAT_C1500;
-    private static uint[] DAT_B7A60;
-    private static uint[] DAT_B7A5C;
-    private static uint[] DAT_C15C8;
-    private static uint[] DAT_C1560;
-    private static uint[] DAT_C1580;
-    private static uint[] DAT_B7AA4;
-    private static uint[] DAT_C1520;
-    private static uint[] DAT_C1540;
-    private static uint[] DAT_C15A0;
-    private static uint[] DAT_C0C80;
-    private static uint[] DAT_C15A8;
-    private static uint[] DAT_C15D0;
+    private static uint[] DAT_C1500 = new uint[8];
+    private static uint[] DAT_B7A60 = new uint[17]; //unsure
+    private static uint[] DAT_B7A5C = new uint[1];
+    private static uint[] DAT_C15C8 = new uint[2];
+    private static uint[] DAT_C1560 = new uint[8];
+    private static uint[] DAT_C1580 = new uint[8];
+    private static uint[] DAT_B7AA4 = new uint[8]; //unsure
+    private static uint[] DAT_C1520 = new uint[8];
+    private static uint[] DAT_C1540 = new uint[8];
+    private static uint[] DAT_C15A0 = new uint[2];
+    private static uint[] DAT_C0C80 = new uint[8]; //unsure
+    private static uint[] DAT_C15A8 = new uint[8];
+    private static uint[] DAT_C15D0 = new uint[8]; //unsure
     private static uint[][] PTR_DAT_9CD18 = new uint[13][]
     {
         DAT_C1500, DAT_B7A60, DAT_B7A5C,

@@ -227,9 +227,197 @@ public class _SCENE_OBJ_DATA
     [SerializeReference]
     public List<DataContainer> CONTAINERS;
 
-    public int GetContainer(int container, int offset)
+    public int GetContainer(int container, int offset, bool prev = false)
     {
-        return 0; //tmp
+        while (offset != 0)
+        {
+            if (prev) container--;
+
+            switch (CONTAINERS[container].DAT_00)
+            {
+                case 0:
+                case 25:
+                case 26:
+                case 27:
+                case 28:
+                case 29:
+                case 30:
+                case 31:
+                case 112:
+                case 113:
+                    offset -= 1;
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 10:
+                case 11:
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                case 16:
+                case 18:
+                case 19:
+                case 22:
+                case 23:
+                case 39:
+                case 49:
+                case 50:
+                case 51:
+                case 52:
+                case 62: //tmp
+                case 107:
+                    offset -= 4;
+                    break;
+                case 9:
+                case 99: //tmp
+                case 106: //tmp
+                    offset -= 8;
+                    break;
+                case 20:
+                case 24:
+                case 34:
+                case 37:
+                case 38:
+                case 44:
+                case 45:
+                case 47:
+                case 48:
+                case 59:
+                case 65:
+                case 71:
+                case 72:
+                case 73:
+                case 74:
+                case 82:
+                case 84:
+                case 87:
+                case 92:
+                case 93:
+                case 96:
+                case 97:
+                case 101:
+                case 102:
+                case 104:
+                case 108:
+                case 109:
+                case 110:
+                case 111: //tmp
+                    offset -= 4;
+                    break;
+                case 21:
+                case 41:
+                case 42:
+                case 43:
+                    offset -= 8;
+                    break;
+                case 32:
+                    offset -= 0x18;
+                    break;
+                case 33:
+                    offset -= 8;
+                    break;
+                case 35:
+                    offset -= 0x20;
+                    break;
+                case 36:
+                    offset -= 8;
+                    break;
+                case 40:
+                    switch (((DataContainer10)CONTAINERS[container]).DAT_02)
+                    {
+                        case 0:
+                            offset -= 0x30;
+                            break;
+                        case 1:
+                            offset -= 0x28;
+                            break;
+                        case 2:
+                        case 5:
+                        case 6:
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                            offset -= 0x20;
+                            break;
+                        case 3:
+                            offset -= 0x24;
+                            break;
+                        case 4:
+                            offset -= 0x2c;
+                            break;
+                        case 7:
+                            offset -= 0x34;
+                            break;
+                    }
+
+                    break;
+                case 46:
+                    offset -= 0x14;
+                    break;
+                case 53:
+                    offset -= 8;
+                    break;
+                case 54:
+                case 55:
+                case 77:
+                case 78:
+                    offset -= 8;
+                    break;
+                case 58:
+                case 90:
+                    offset -= 0xc;
+                    break;
+                case 60:
+                case 63:
+                    offset -= 8;
+                    break;
+                case 61:
+                case 83:
+                case 95:
+                    offset -= 0xc;
+                    break;
+                case 64:
+                    offset -= 0xc;
+                    break;
+                case 67:
+                case 68:
+                case 69:
+                case 70:
+                    offset -= 8;
+                    break;
+                case 75:
+                case 85:
+                    offset -= 0xc;
+                    break;
+                case 76:
+                    offset -= 0x20;
+                    break;
+                case 79:
+                case 80:
+                case 81:
+                case 88:
+                    offset -= 8;
+                    break;
+                case 66:
+                    offset -= 0x14;
+                    break;
+                default:
+                    Debug.Log("Unknown case: " + CONTAINERS[container].DAT_00);
+                    break;
+            }
+
+            if (!prev) container++;
+        }
+
+        return container;
     }
 }
 

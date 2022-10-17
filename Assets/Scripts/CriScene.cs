@@ -1267,7 +1267,7 @@ public class CriScene : MonoBehaviour
             iVar2 = DAT_30[sVar1];
         }
         else
-            iVar2 = DAT_58[0] - PTR_58[0].GetContainer(DAT_58[0], mVar4.DAT_02);
+            iVar2 = PTR_58[0].GetContainer(DAT_58[0], mVar4.DAT_02, true);
 
         DAT_58[0] = iVar2;
         return false;
@@ -1275,7 +1275,7 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_56AE0()
     {
-        DAT_44[DAT_09] = DAT_58[0] + PTR_58[0].GetContainer
+        DAT_44[DAT_09] = PTR_58[0].GetContainer
             (DAT_58[0], ((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
         DAT_58[0]++;
         DAT_09++;
@@ -1284,7 +1284,7 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_56B1C()
     {
-        DAT_58[0]+= PTR_58[0].GetContainer
+        DAT_58[0] = PTR_58[0].GetContainer
             (DAT_58[0], ((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
         return false;
     }
@@ -1306,7 +1306,7 @@ public class CriScene : MonoBehaviour
             mVar1.DAT_01 != 0)
             iVar1 = DAT_58[0] + 1;
         else
-            iVar1 = DAT_58[0] + PTR_58[0].GetContainer(DAT_58[0], mVar1.DAT_02);
+            iVar1 = PTR_58[0].GetContainer(DAT_58[0], mVar1.DAT_02);
 
         DAT_58[0] = iVar1;
         return false;
@@ -1486,7 +1486,7 @@ public class CriScene : MonoBehaviour
 
             oVar3.maxHealth = mVar4.DAT_06;
             oVar3.DAT_18E = mVar4.DAT_05;
-            //... (requires level script - ST1-9)
+            LevelManager.instance.PTR_FUN_B58C0[oVar3.tags]((CriPlayer)oVar3);
         }
 
         DAT_58[0]++;

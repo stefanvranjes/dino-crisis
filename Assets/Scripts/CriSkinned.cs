@@ -530,6 +530,9 @@ public class CriSkinned : CriObject
         byte bVar2;
         uint uVar3;
 
+        if (param1 == null)
+            FUN_609C8(0, param2, param3);
+
         packets = param1.PACKETS;
         bVar1 = (byte)param1.FRAME_COUNT;
         frames = param1.FRAMES;

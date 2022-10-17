@@ -14,14 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabName: 
   objects:
-    m_keys: 1c0010808c261080c8321080b0361080b8421080204d1080684f10804450108094541080
-    m_values:
-    - {fileID: -222693453202378655, guid: 0004732020fc1954b9aab52a3ca122d7, type: 3}
-    - {fileID: -222693453202378655, guid: 1c0cc4922b7baec489342767048c6a09, type: 3}
-    - {fileID: -222693453202378655, guid: 91846360b64cf1045af72690d553fbd5, type: 3}
-    - {fileID: -222693453202378655, guid: fe571074175af9f4e9578d128282b82d, type: 3}
-    - {fileID: -222693453202378655, guid: 76bcbc3f1a8a7b740973f8a8fb439220, type: 3}
-    - {fileID: -222693453202378655, guid: 703b6b27bba1171498187daabdd135b0, type: 3}
-    - {fileID: -222693453202378655, guid: aba0a6c053702bf4cb5d920af0b63005, type: 3}
-    - {fileID: -222693453202378655, guid: 7a3422f9ecd914147806b168731dcd46, type: 3}
-    - {fileID: -222693453202378655, guid: cfa3320a5b26d22469efedfc9b98b0a5, type: 3}
+    m_keys: 
+    m_values: []

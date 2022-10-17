@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //writable class (needs instantiating upon start)
+[System.Serializable]
 public class Trigger
 {
     public string prefabName;
@@ -14,6 +15,7 @@ public class Trigger
     public bool DAT_13; //0x13 - writable
 }
 
+[System.Serializable]
 public class Trigger2 : Trigger
 {
     public ushort DAT_18;
@@ -25,12 +27,14 @@ public class Trigger2 : Trigger
     public bool DAT_25;
 }
 
+[System.Serializable]
 public class Trigger3 : Trigger
 {
     public int DAT_18;
     public int DAT_1C;
 }
 
+[System.Serializable]
 public class Trigger4 : Trigger
 {
     public byte DAT_18;
@@ -38,12 +42,14 @@ public class Trigger4 : Trigger
     public bool DAT_1A;
 }
 
+[System.Serializable]
 public class Trigger5 : Trigger
 {
     public byte DAT_18;
     public ushort DAT_1A;
 }
 
+[System.Serializable]
 public class Trigger6 : Trigger
 {
     public ushort DAT_18;
@@ -77,17 +83,20 @@ public class Trigger6 : Trigger
     }
 }
 
+[System.Serializable]
 public class Trigger7 : Trigger
 {
     public byte DAT_18;
     public byte DAT_19;
 }
 
+[System.Serializable]
 public class Trigger8 : Trigger
 {
 
 }
 
+[System.Serializable]
 public class Trigger9 : Trigger
 {
     public short DAT_18;
@@ -100,22 +109,26 @@ public class Trigger9 : Trigger
     public ushort DAT_2A;
 }
 
+[System.Serializable]
 public class Trigger10 : Trigger
 {
     public byte DAT_18;
     public bool DAT_19;
 }
 
+[System.Serializable]
 public class Trigger11 : Trigger
 {
 
 }
 
+[System.Serializable]
 public class Trigger12 : Trigger
 {
     public byte DAT_18;
 }
 
+[System.Serializable]
 public class Trigger13 : Trigger
 {
     public byte DAT_18;

@@ -543,7 +543,9 @@ public class GameManager : MonoBehaviour
 
         //if (!bVar1)
         //{
-            //...
+        //...
+        SceneManager.instance.FUN_555E8();
+        LevelManager.instance.FUN_4A3C4();
         //}
 
         SceneManager.instance.cCamera.FUN_27210();
@@ -552,8 +554,6 @@ public class GameManager : MonoBehaviour
 
         //if (!bVar1)
             SceneManager.instance.FUN_4AEFC();
-
-        LevelManager.instance.FUN_4A3C4();
     }
 
     public void FUN_4A8B8(LightScriptableObject param1, ref Matrix3x3 param2, Vector3Int[] param3)

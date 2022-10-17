@@ -134,6 +134,7 @@ public class SceneManager : MonoBehaviour
         DAT_7CDC = new CriStatic[40];
         DAT_8FFC = new CriUnknown[10];
         DAT_9EEC = new CriTrigger[10];
+        DAT_9FE0 = new Trigger6[4];
         DAT_D7C0 = new CriScene[10];
 
         for (int i = 0; i < 10; i++)
@@ -178,6 +179,11 @@ public class SceneManager : MonoBehaviour
             DAT_9EEC[i] = obj.AddComponent<CriTrigger>();
         }
 
+        for (int i = 0; i < 4; i++)
+        {
+            DAT_9FE0[i] = new Trigger6();
+        }
+
         for (int i = 0; i < 10; i++)
         {
             GameObject obj = new GameObject();
@@ -217,6 +223,7 @@ public class SceneManager : MonoBehaviour
         do
         {
             triggers[uVar6] = null;
+            uVar6++;
         } while (uVar6 < 32);
 
         uVar6 = 0;
@@ -619,8 +626,7 @@ public class SceneManager : MonoBehaviour
 
                         do
                         {
-                            //...
-                            bVar3 = true; //tmp
+                            bVar3 = psVar5.PTR_FUN_9E540[psVar5.PTR_58[0].CONTAINERS[psVar5.DAT_58[0]].DAT_00]();
                         } while (!bVar3);
                     }
                 }
@@ -630,8 +636,7 @@ public class SceneManager : MonoBehaviour
                     {
                         do
                         {
-                            //...
-                            bVar3 = true; //tmp
+                            bVar3 = psVar5.PTR_FUN_9E540[psVar5.PTR_58[0].CONTAINERS[psVar5.DAT_58[0]].DAT_00]();
                         } while (!bVar3);
                     }
                 }

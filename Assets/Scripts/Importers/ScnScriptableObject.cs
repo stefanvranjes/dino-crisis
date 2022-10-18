@@ -229,6 +229,14 @@ public class _SCENE_OBJ_DATA
 
     public int GetContainer(int container, int offset, bool prev = false)
     {
+        offset = (short)offset;
+
+        if (offset < 0)
+        {
+            offset = -offset;
+            prev = true;
+        }
+
         while (offset != 0)
         {
             if (prev) container--;

@@ -1482,7 +1482,13 @@ public class CriScene : MonoBehaviour
             }
 
             if (mVar4.DAT_14 != null)
-                oVar3.DAT_98 = mVar4.DAT_14.ASSET_REFS as TodScriptableObject[];
+            {
+                int length = mVar4.DAT_14.ASSET_REFS.Length;
+                oVar3.DAT_98 = new TodScriptableObject[length];
+
+                for (int i = 0; i < length; i++)
+                    oVar3.DAT_98[i] = mVar4.DAT_14.ASSET_REFS[i] as TodScriptableObject;
+            }
 
             oVar3.maxHealth = mVar4.DAT_06;
             oVar3.DAT_18E = mVar4.DAT_05;

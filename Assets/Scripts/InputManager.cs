@@ -183,7 +183,7 @@ public class InputManager : MonoBehaviour
         controllers[0].DAT_B5898 = controllers[0].DAT_B1418;
         controllers[0].DAT_B58B8 = controllers[0].DAT_B141A;
 
-        if ((GameManager.instance.DAT_40 & 4) == 0)
+        if ((InventoryManager.DAT_B7A60[0] & 4) == 0)
         {
             if ((controllers[0].DAT_B141A & 0x80) != 0)
                 controllers[0].DAT_B58B8 = (ushort)(controllers[0].DAT_B141A & 0xffef);

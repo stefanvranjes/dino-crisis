@@ -97,8 +97,6 @@ public class GameManager : MonoBehaviour
     public byte DAT_38; //gp+38h
     public byte DAT_39; //gp+39h
     public byte DAT_3B; //gp+3bh
-    public int DAT_3C; //gp+3ch
-    public uint DAT_40; //gp+40h
     public bool DAT_46; //gp+46h
     public byte DAT_47; //gp+47h
     public Vector3Int playerSpawnPos; //gp+4ch
@@ -415,7 +413,7 @@ public class GameManager : MonoBehaviour
             } while (uVar5 < SceneManager.instance.DAT_9EEC.Length);
         }
 
-        DAT_3C = 0;
+        InventoryManager.DAT_B7A5C[0] = 0;
         SceneManager.instance.FUN_553EC();
         SceneManager.instance.FUN_55548();
         SceneManager.instance.FUN_1A3A0();
@@ -546,6 +544,7 @@ public class GameManager : MonoBehaviour
         //...
         SceneManager.instance.FUN_555E8();
         LevelManager.instance.FUN_4A3C4();
+        DialogManager.instance.FUN_1E44C();
         //}
 
         SceneManager.instance.cCamera.FUN_27210();

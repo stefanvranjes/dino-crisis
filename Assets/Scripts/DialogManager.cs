@@ -26,11 +26,11 @@ public class DialogManager : MonoBehaviour
     public ushort DAT_B147A;
     public ushort DAT_B147C;
     public byte DAT_B147E;
-    public byte DAT_B147F;
-    public byte DAT_B1480;
-    public byte DAT_B1481;
+    public sbyte DAT_B147F;
+    public sbyte DAT_B1480;
+    public sbyte DAT_B1481;
     public byte DAT_B1482;
-    public byte DAT_B1483;
+    public sbyte DAT_B1483;
     public byte DAT_B1484;
     public byte DAT_B1485;
     public byte DAT_B1486;
@@ -175,7 +175,7 @@ public class DialogManager : MonoBehaviour
     {
         byte bVar1;
 
-        DAT_B147A = (ushort)GameManager.instance.DAT_40;
+        DAT_B147A = (ushort)InventoryManager.DAT_B7A60[0];
         DAT_B147E = 30;
         DAT_B1489 = 0;
         DAT_B148C = 0;
@@ -218,8 +218,203 @@ public class DialogManager : MonoBehaviour
         PTR_B1470 = PTR_B1474;
         DAT_B146C = DAT_B1474;
         PTR_B146C = PTR_B1474;
-        GameManager.instance.DAT_40 |= DAT_B1478;
+        InventoryManager.DAT_B7A60[0] |= DAT_B1478;
         InventoryManager.FUN_4A7E8(2, 0, true);
+    }
+
+    public void FUN_1E44C()
+    {
+        if ((DAT_B1482 & 2) == 0)
+        {
+            if (PTR_B1470 != null)
+            {
+                if ((InputManager.controllers[0].DAT_B58B8 & 0xe0) != 0 &&
+                    (DAT_B1482 & 1) == 0 && (DAT_B147C & 4) == 0)
+                {
+                    DAT_B1480 = 0;
+                    DAT_B147F = 0;
+                    DAT_B1481 = 0;
+                    DAT_B147C |= 3;
+                }
+
+                DAT_B1481--;
+
+                if (DAT_B1481 == -1)
+                {
+                    while (true)
+                    {
+                        if ((PTR_B146C[DAT_B146C] & 0x8000) == 0)
+                            FUN_1E774();
+                        else
+                            FUN_1E55C();
+
+                        DAT_B146C++;
+
+                        if (DAT_B147F != 0) break;
+
+                        DAT_B147C &= 0xfffe;
+                    }
+                }
+            }
+        }
+        else
+            ; //FUN_1F6B0
+    }
+
+    private void FUN_1E55C()
+    {
+        byte bVar1;
+        ushort uVar2;
+        byte bVar4;
+        uint uVar5;
+
+        uVar2 = PTR_B146C[DAT_B146C];
+
+        if ((uVar2 & 0x1000) != 0)
+        {
+            //FUN_1DED0
+            DAT_B1484 = 0;
+            DAT_B1485 = 0;
+        }
+
+        if ((uVar2 & 0xff) == 0)
+            DAT_B147F = 0;
+        else
+            DAT_B147F = DAT_B1480;
+
+        //...
+        bVar1 = DAT_B1484;
+        bVar4 = (byte)(bVar1 + 1);
+        DAT_B1484 = bVar4;
+
+        if (bVar4 == 41)
+            DAT_B1484 = bVar1;
+
+        if ((uVar2 & 0x2800) != 0)
+        {
+            if (GameManager.instance.DAT_28 == 6 || 
+                (DAT_B1482 == 0 && (DAT_B147C & 0x14) == 0 && (DAT_B147C & 1) == 0))
+            {
+                DAT_B147F = 1;
+                DAT_B1481 = 0;
+                DAT_B146C--;
+            }
+            else
+            {
+                //FUN_1DED0
+                uVar5 = InventoryManager.DAT_B7A60[0] & (uint)~DAT_B1478;
+                InventoryManager.DAT_B7A60[0] = uVar5;
+                InventoryManager.DAT_B7A60[0] = uVar5 | DAT_B147A;
+                DAT_B147F = 1;
+                DAT_B1485 = 0;
+                DAT_B1484 = 0;
+                DAT_B148C = 0;
+                DAT_B148B = 0;
+                DAT_B1488 = 0;
+                DAT_B147E = 0;
+                DAT_B1483 = 0;
+                DAT_B1482 = 0;
+                DAT_B147C = 0;
+                DAT_B1478 = 0;
+                DAT_B1480 = 0;
+                DAT_B147A = 0;
+                PTR_B146C = null;
+                DAT_B146C = 0;
+                PTR_B1470 = null;
+                DAT_B1470 = 0;
+                InventoryManager.FUN_4A7E8(2, 0, false);
+                InventoryManager.FUN_4A7E8(2, 0x11, true);
+                //...
+            }
+        }
+
+        if ((uVar2 & 0x4000) != 0)
+        {
+            DAT_B1484 = 1;
+            DAT_B1485++;
+        }
+
+        DAT_B147C &= 0xffef;
+        DAT_B1481 = DAT_B147F;
+    }
+
+    private void FUN_1E774()
+    {
+        ushort uVar1;
+        sbyte sVar2;
+
+        uVar1 = PTR_B146C[DAT_B146C];
+        DAT_B1481 = 0;
+
+        if ((uVar1 & 0x4000) == 0)
+        {
+            sVar2 = (sbyte)uVar1;
+
+            if ((uVar1 & 0x2000) == 0)
+            {
+                if ((uVar1 & 0x1000) == 0)
+                {
+                    if ((uVar1 & 0x800) != 0)
+                    {
+                        if ((DAT_B147C & 4) == 0)
+                        {
+                            DAT_B147F = 1;
+                            DAT_B146C--;
+                            DAT_B147C |= 4;
+                        }
+                        else
+                            ; //FUN_1E928
+                    }
+                }
+                else
+                {
+                    DAT_B1480 = sVar2;
+                    DAT_B147F = sVar2;
+                    DAT_B1481 = sVar2;
+                }
+            }
+            else
+                DAT_B1483 = sVar2;
+
+            if ((uVar1 & 0x100) != 0 && DAT_B1482 == 0)
+            {
+                uVar1 = DAT_B147C;
+
+                if ((uVar1 & 2) == 0 || (uVar1 & 1) == 0)
+                {
+                    if (15U < DAT_B147E)
+                    {
+                        if ((DAT_B147C & 8) == 0)
+                        {
+                            //...
+                            DAT_B147E = 7;
+                        }
+                        else
+                        {
+                            //...
+                            DAT_B147E = 0;
+                        }
+
+                        DAT_B147C ^= 8;
+                    }
+
+                    DAT_B147F = 1;
+                    DAT_B1481 = 0;
+                    DAT_B146C--;
+                    DAT_B147E++;
+                    DAT_B1484--;
+                }
+                else
+                    DAT_B147C = (ushort)(uVar1 & 0xfff5 | 0x10);
+            }
+        }
+        else
+            FUN_1E900();
+    }
+
+    private void FUN_1E900()
+    {
+        DAT_B148C = (byte)PTR_B146C[DAT_B146C];
     }
 
     private bool FUN_1AB50(Trigger param1)

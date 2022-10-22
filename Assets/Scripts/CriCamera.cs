@@ -168,7 +168,7 @@ public class CriCamera : MonoBehaviour
         local_30[ppcVar6 + 4] = FUN_278B4;
         local_30[ppcVar6 + 5] = pcVar7;
 
-        if ((GameManager.instance.DAT_40 & 8) == 0)
+        if ((InventoryManager.DAT_B7A60[0] & 8) == 0)
         {
             if ((DAT_72 & 2) != 0)
                 return;

@@ -1538,7 +1538,7 @@ public class CriPlayer : CriSkinned
         CriStatic local_18;
         byte local_14;
 
-        bVar3 = (byte)(((byte)GameManager.instance.DAT_40 ^ 1) & 1);
+        bVar3 = (byte)(((byte)InventoryManager.DAT_B7A60[0] ^ 1) & 1);
 
         if (bVar3 != 0)
         {
@@ -8107,7 +8107,7 @@ public class CriPlayer : CriSkinned
         uint uVar5;
         CriBone oVar6;
 
-        if ((GameManager.instance.DAT_40 & 0x400) == 0)
+        if ((InventoryManager.DAT_B7A60[0] & 0x400) == 0)
         {
             DAT_34 = screen;
             FUN_5211C(DAT_1CF);
@@ -8116,7 +8116,7 @@ public class CriPlayer : CriSkinned
         vr.y &= 0xfff;
         Utilities.RotMatrix(ref vr, ref cTransform.rotation);
 
-        if ((GameManager.instance.DAT_40 & 0x400) == 0)
+        if ((InventoryManager.DAT_B7A60[0] & 0x400) == 0)
         {
             oVar4 = (CriBone)Utilities.FUN_601C8(skeleton, 11);
             oVar6 = skeleton;
@@ -8755,7 +8755,7 @@ public class CriPlayer : CriSkinned
 
         if (DAT_3C != 0)
         {
-            if ((GameManager.instance.DAT_40 & 2) != 0)
+            if ((InventoryManager.DAT_B7A60[0] & 2) != 0)
             {
                 FUN_66208();
                 return;

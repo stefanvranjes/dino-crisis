@@ -302,7 +302,7 @@ public class SceneManager : MonoBehaviour
         oVar4 = (CriPlayer)DAT_27C[10];
 
         if (!GameManager.instance.DAT_6D && 
-            (GameManager.instance.DAT_40 & 0x20) == 0 && 
+            (InventoryManager.DAT_B7A60[0] & 0x20) == 0 && 
             oVar4.DAT_11E == 0)
         {
             bVar6 = InventoryManager.FUN_4A87C(2, 0xe);
@@ -606,7 +606,7 @@ public class SceneManager : MonoBehaviour
         CriScene psVar5;
         uint uVar6;
 
-        if ((GameManager.instance.DAT_40 & 0x80) == 0)
+        if ((InventoryManager.DAT_B7A60[0] & 0x80) == 0)
         {
             DAT_C51D0 = Utilities.Rand();
             uVar6 = 0;
@@ -1549,9 +1549,11 @@ public class SceneManager : MonoBehaviour
 
     public void FUN_261BC()
     {
+        /*
         GameObject obj = new GameObject();
         obj.name = "CriCamera (Instance)";
         cCamera = obj.AddComponent<CriCamera>();
+        */
     }
 
     public void FUN_261E0()

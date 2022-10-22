@@ -1172,6 +1172,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DAT_B12C0: 
+  DAT_B1388:
+    prefabName: 
+    DAT_00: []
+    DAT_10: 0
+    DAT_11: 0
+    DAT_12: 0
+    DAT_13: 0
   DAT_B138C: 0
   DAT_B138D: 0
   DAT_B138E: 0

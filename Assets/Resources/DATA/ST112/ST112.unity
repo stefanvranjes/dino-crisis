@@ -467,11 +467,12 @@ MonoBehaviour:
   DAT_A4: 0
   DAT_AC: 
   DAT_B0: 
-  cCamera: {fileID: 0}
+  cCamera: {fileID: 1582952279}
   waypoints: {fileID: -9104117707371806051, guid: f31a434a03c18f4458bcc734fe3913c7, type: 3}
   sceneCollision: {fileID: -6028080052161987059, guid: e4ec2297f2f495e46ba22691de59fde5, type: 3}
   lightSource: {fileID: -7488134631618437631, guid: 768a16471fb9e0446829bc8b4a505f5a, type: 3}
   motions: {fileID: 9013893561334630828, guid: e10d823f86c029344a6708a5ab441acd, type: 3}
+  triggers: []
   DAT_270: 0
   DAT_272: 0
   DAT_27C: []
@@ -480,6 +481,7 @@ MonoBehaviour:
   DAT_7CDC: []
   DAT_8FFC: []
   DAT_9EEC: []
+  DAT_9FE0: []
   DAT_C3230: {fileID: 0}
   DAT_C3358: 0
   DAT_C3360: 0

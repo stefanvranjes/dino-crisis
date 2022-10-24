@@ -210,7 +210,7 @@ public class DialogManager : MonoBehaviour
             DAT_B148C = 40;
             DAT_B1486 = 1;
             DAT_B1487 = 2;
-            DAT_B1474 += 2;
+            DAT_B1474++;
         }
 
         DAT_B1484 = 1;

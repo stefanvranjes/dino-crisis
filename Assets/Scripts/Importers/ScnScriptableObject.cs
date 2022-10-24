@@ -75,6 +75,7 @@ public class DataContainer9 : DataContainer4
 [System.Serializable]
 public class DataContainer10 : DataContainer4
 {
+    [SerializeReference]
     public Trigger DAT_04;
 }
 

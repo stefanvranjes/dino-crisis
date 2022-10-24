@@ -63,6 +63,26 @@ public class LoadSceneContainer
     public byte DAT_08; //0x08
 }
 
+[System.Serializable]
+public class LoadDoorContainer
+{
+    public TmdScriptableObject DAT_00; //0x00
+    public short DAT_0C; //0x0C
+    public Vector3Int DAT_0E; //0x0E
+    public Vector3Int DAT_14; //0x14
+    public Vector3Int DAT_1A; //0x1A
+}
+
+public class CoroutineLoader
+{
+    public short DAT_00; //0x00
+    public short DAT_02; //0x02
+    public short DAT_06; //0x06
+    public byte DAT_0C; //0x0C
+    public sbyte DAT_0D; //0x0D
+    public Vector3Int DAT_14; //0x14
+}
+
 public delegate void FUN_148(CriPlayer p);
 public delegate void FUN_14C(CriPlayer p);
 
@@ -167,9 +187,11 @@ public class GameManager : MonoBehaviour
     public ushort DAT_C33B0;
     public List<LoadScriptContainer> DAT_9E0A0;
     public List<int> sceneIds;
+    public List<LoadDoorContainer> DAT_A89A0;
     public List<Vector3> skinnedVertices; //0x800C6F90
     public List<Color> skinnedColors; //0x800C75D0
     public List<CriSkinned> skinnedList; //0x800C7C10
+    public CoroutineLoader loader; //0x800C7D30
     public bool gameStarted;
     public bool disableColors;
     public Material[] materials;
@@ -537,21 +559,28 @@ public class GameManager : MonoBehaviour
     {
         bool bVar1;
 
-        //bVar1 = InventoryManager.FUN_4A87C(2, 0x14);
+        bVar1 = InventoryManager.FUN_4A87C(2, 0x14);
 
-        //if (!bVar1)
-        //{
-        //...
-        SceneManager.instance.FUN_555E8();
-        LevelManager.instance.FUN_4A3C4();
-        DialogManager.instance.FUN_1E44C();
-        //}
+        if (!bVar1)
+        {
+            //...
+            SceneManager.instance.FUN_555E8();
+            //...
+            LevelManager.instance.FUN_4A3C4();
+            //...
+
+            if (DAT_28 == 6)
+                return;
+
+            DialogManager.instance.FUN_1E44C();
+            //...
+        }
 
         SceneManager.instance.cCamera.FUN_27210();
-        //InventoryManager.FUN_4A7E8(2, 0x10, false);
-        //bVar1 = InventoryManager.FUN_4A87C(1, 6);
+        InventoryManager.FUN_4A7E8(2, 0x10, false);
+        bVar1 = InventoryManager.FUN_4A87C(1, 6);
 
-        //if (!bVar1)
+        if (!bVar1)
             SceneManager.instance.FUN_4AEFC();
     }
 
@@ -2548,6 +2577,137 @@ public class GameManager : MonoBehaviour
         }
 
         return 0;
+    }
+
+    private void FUN_7A030(CoroutineLoader param1)
+    {
+        short sVar1;
+        sbyte sVar3;
+        byte bVar4;
+        uint uVar5;
+        bool bVar6;
+        CriStatic oVar6;
+        CriPlayer pVar6;
+        LoadDoorContainer dVar7;
+
+        uVar5 = DAT_47;
+        pVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar6 = SceneManager.instance.DAT_7CDC[0];
+        dVar7 = DAT_A89A0[(int)uVar5];
+        sVar1 = param1.DAT_02;
+
+        if (sVar1 != 1)
+        {
+            if (1 < sVar1)
+            {
+                if (sVar1 == 2)
+                {
+                    if (DAT_6D)
+                        return;
+
+                    bVar6 = InventoryManager.FUN_4A87C(2, 0xd);
+
+                    if (bVar6)
+                    {
+                        sVar3 = (sbyte)(param1.DAT_0D - 1);
+                        param1.DAT_0D = sVar3;
+
+                        if (sVar3 != -1)
+                            return;
+                    }
+
+                    param1.DAT_0D = 0;
+                    DAT_21 = 4;
+                    //...
+                    param1.DAT_14 = new Vector3Int(0x80, 0x80, 0x80);
+                    InventoryManager.FUN_4A7E8(2, 0xd, false);
+                    param1.DAT_02++;
+                    //unecessery stuff...
+
+                    if (dVar7.DAT_00 != null)
+                    {
+                        oVar6.flags = 3;
+                        oVar6.DAT_48 = 2;
+                        oVar6.DAT_2E = 0;
+                        oVar6.DAT_4A = 1000;
+                        oVar6.vr = new Vector3Int(0, 0, 0);
+                        oVar6.screen = new Vector3Int(0, 0, 0);
+                        oVar6.cCollider = null;
+                        oVar6.cMesh = dVar7.DAT_00;
+                    }
+
+                    SceneManager.instance.FUN_26EBC(2, 0);
+                    SceneManager.instance.FUN_264C4(0, (short)dVar7.DAT_0E.x, (short)dVar7.DAT_0E.y, (short)dVar7.DAT_0E.z);
+                    SceneManager.instance.FUN_26504(0, (short)dVar7.DAT_14.x, (short)dVar7.DAT_14.y, (short)dVar7.DAT_14.z);
+                    pVar6.screen = dVar7.DAT_1A;
+                    pVar6.DAT_12C |= 0x10;
+                    pVar6.flags |= 2;
+                    pVar6.DAT_3C = 4;
+                    pVar6.DAT_3D = 0;
+                    pVar6.DAT_3E = 0;
+                    pVar6.DAT_3F = 0;
+                    pVar6.DAT_140 |= 0x8000;
+                    pVar6.vr = new Vector3Int(0, 0, 0);
+                    pVar6.DAT_40 = new Vector3Int(0, 0, 0);
+                    pVar6.DAT_174 &= 0x7f;
+                    param1.DAT_0C = pVar6.DAT_1D7;
+                    bVar4 = (byte)(pVar6.DAT_1D7 - 1);
+
+                    if ((pVar6.DAT_1C0 & 8) == 0)
+                        return;
+
+                    param1.DAT_0C = bVar4;
+
+                    if (-1 < bVar4 << 0x18)
+                        return;
+
+                    param1.DAT_0C = 0;
+                    return;
+                }
+
+                if (sVar1 != 3)
+                    return;
+
+                param1.DAT_02 = 0;
+                param1.DAT_06 = 0;
+                param1.DAT_00++;
+
+                if (dVar7.DAT_00 == null)
+                    return;
+
+                oVar6.flags = 3;
+                oVar6.DAT_2E = 0;
+                oVar6.DAT_48 = 2;
+                oVar6.DAT_4A = 1000;
+                oVar6.cMesh = dVar7.DAT_00;
+                oVar6.cCollider = null;
+                oVar6.vr = new Vector3Int(0, 0, 0);
+                oVar6.screen = new Vector3Int(dVar7.DAT_0C, 0, 0);
+                return;
+            }
+
+            if (sVar1 != 0)
+                return;
+
+            param1.DAT_02++;
+            bVar6 = InventoryManager.FUN_4A87C(2, 2);
+
+            if (bVar6)
+                InventoryManager.FUN_4A7E8(2, 2, false);
+
+            bVar6 = InventoryManager.FUN_4A87C(2, 0xd);
+
+            if (!bVar6)
+                FUN_46C0C(1, 30, 1);
+            else
+                param1.DAT_0D = 30;
+
+            //load scene
+        }
+
+        //...
+        LAB_7A174:
+        param1.DAT_02++;
     }
 
     public void FUN_7302C()

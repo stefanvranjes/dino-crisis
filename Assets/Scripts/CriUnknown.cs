@@ -6,7 +6,9 @@ public class CriUnknown : MonoBehaviour
 {
     public byte DAT_00;
     public byte DAT_01;
+    public byte DAT_02;
     public sbyte DAT_03;
+    public byte DAT_04;
     public short DAT_08;
     public byte DAT_0A;
     public ushort DAT_16;
@@ -32,7 +34,9 @@ public class CriUnknown : MonoBehaviour
     {
         DAT_00 = 0;
         DAT_01 = 0;
+        DAT_02 = 0;
         DAT_03 = 0;
+        DAT_04 = 0;
         DAT_08 = 0;
         DAT_0A = 0;
         DAT_16 = 0;

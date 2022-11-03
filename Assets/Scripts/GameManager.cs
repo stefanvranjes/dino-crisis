@@ -67,6 +67,7 @@ public class LoadSceneContainer
 public class LoadDoorContainer
 {
     public TmdScriptableObject DAT_00; //0x00
+    public DoorEvent DAT_08; //0x08
     public short DAT_0C; //0x0C
     public Vector3Int DAT_0E; //0x0E
     public Vector3Int DAT_14; //0x14
@@ -77,7 +78,10 @@ public class CoroutineLoader
 {
     public short DAT_00; //0x00
     public short DAT_02; //0x02
+    public short DAT_04; //0x04
     public short DAT_06; //0x06
+    public short DAT_08; //0x08
+    public ushort DAT_0A; //0x0A
     public byte DAT_0C; //0x0C
     public sbyte DAT_0D; //0x0D
     public Vector3Int DAT_14; //0x14
@@ -85,6 +89,7 @@ public class CoroutineLoader
 
 public delegate void FUN_148(CriPlayer p);
 public delegate void FUN_14C(CriPlayer p);
+public delegate void DoorEvent(CoroutineLoader c);
 
 public class GameManager : MonoBehaviour
 {
@@ -186,6 +191,7 @@ public class GameManager : MonoBehaviour
     public Frame[] DAT_C33AC;
     public ushort DAT_C33B0;
     public List<LoadScriptContainer> DAT_9E0A0;
+    public List<ushort> DAT_AA2A0;
     public List<int> sceneIds;
     public List<LoadDoorContainer> DAT_A89A0;
     public List<Vector3> skinnedVertices; //0x800C6F90
@@ -2702,12 +2708,143 @@ public class GameManager : MonoBehaviour
             else
                 param1.DAT_0D = 30;
 
-            //load scene
+            //FUN_5DED4
+
+            if (DAT_AA2A0[DAT_47] == 0) goto LAB_7A174;
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[DAT_AA2A0[DAT_47]], LoadSceneMode.Single);
         }
 
         //...
         LAB_7A174:
         param1.DAT_02++;
+    }
+
+    private void FUN_7A460(CoroutineLoader param1)
+    {
+        short sVar1;
+        uint uVar4;
+        CriPlayer oVar5;
+
+        sVar1 = param1.DAT_02;
+
+        if (sVar1 == 1)
+        {
+            FUN_46C0C(1, 20, 1);
+            sVar1 = param1.DAT_02;
+        }
+        else
+        {
+            if (sVar1 < 2)
+            {
+                if (sVar1 == 0)
+                {
+                    DAT_A89A0[DAT_47].DAT_08(param1);
+                    uVar4 = DAT_47;
+
+                    if (uVar4 != 18 && uVar4 != 26 && 3 < uVar4 - 32)
+                    {
+                        //...
+                    }
+                }
+
+                goto LAB_7A5E4;
+            }
+
+            if (sVar1 != 2)
+            {
+                if (sVar1 == 3 && !DAT_6D)
+                {
+                    param1.DAT_02 = 0;
+                    param1.DAT_00++;
+                    oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+                    oVar5.FUN_609C8((TodScriptableObject)oVar5.REFS[oVar5.DAT_220], 1, 0);
+                    oVar5.FUN_60AB4();
+                }
+
+                goto LAB_7A5E4;
+            }
+
+            if ((param1.DAT_0A & 2U) == 0) goto LAB_7A5E4;
+
+            sVar1 = param1.DAT_02;
+            param1.DAT_04 = 0;
+        }
+
+        param1.DAT_02 = (short)(sVar1 + 1);
+        LAB_7A5E4:;
+        //FUN_7A670
+    }
+
+    private void FUN_7AB80(CoroutineLoader param1)
+    {
+        CriPlayer oVar2;
+        uint uVar3;
+        int iVar4;
+        LoadDoorContainer dVar4;
+        CriStatic oVar6;
+        short sVar5;
+        CriStatic oVar7;
+
+        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        dVar4 = DAT_A89A0[DAT_47];
+        sVar5 = param1.DAT_04;
+        oVar7 = SceneManager.instance.DAT_7CDC[1];
+
+        if (sVar5 == 1)
+        {
+            if (!DAT_6D)
+            {
+                param1.DAT_04++;
+                //sound
+            }
+        }
+        else
+        {
+            if (sVar5 < 2)
+            {
+                if (sVar5 == 0)
+                {
+                    uVar3 = (uint)Utilities.Rand();
+
+                    if ((uVar3 & 1) != 0)
+                        SceneManager.instance.FUN_26504(0, (short)dVar4.DAT_0E.x, (short)dVar4.DAT_0E.y, (short)dVar4.DAT_0E.z);
+
+                    oVar2.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801890dc], 1, 0);
+                    oVar2.FUN_60AB4();
+                    param1.DAT_08 = 1;
+                    param1.DAT_04++;
+                    FUN_46C0C(0, 20, 1);
+                    oVar6 = SceneManager.instance.DAT_7CDC[0];
+                    oVar6.vr.y = -0x400;
+                    oVar6 = SceneManager.instance.DAT_7CDC[1];
+                    oVar6.screen.x = oVar2.screen.x;
+                    oVar6.screen.z = oVar2.screen.z;
+                    oVar6.vr.y = 0x800;
+                    oVar6.DAT_48 = 1;
+                }
+            }
+            else
+            {
+                if (sVar5 == 2)
+                {
+                    oVar2.FUN_60AB4();
+                    iVar4 = oVar2.screen.y - ((short)oVar2.DAT_60 + 50);
+                    oVar2.screen.y = (short)iVar4;
+
+                    if (iVar4 * 0x10000 >> 0x10 < -2999)
+                        param1.DAT_02++;
+                }
+            }
+        }
+
+        sVar5 = -0x514;
+
+        if (-0x514 < oVar2.screen.y)
+            sVar5 = (short)oVar2.screen.y;
+
+        oVar7.screen.y = oVar2.screen.y;
+        SceneManager.instance.FUN_264C4(0, (short)oVar2.screen.x, (short)(sVar5 - 0x400), (short)oVar2.screen.z);
     }
 
     public void FUN_7302C()

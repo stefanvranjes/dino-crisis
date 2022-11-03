@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/DEMO.unity
     guid: 18a5c12e65b5b1745a791e258dd4104e
   - enabled: 1
+    path: Assets/Resources/DATA/DOOR06/DOOR06.unity
+    guid: 3250ad2daebb9874ea78a487e2b79e47
+  - enabled: 1
     path: Assets/Resources/DATA/ST100/ST100.unity
     guid: 804cc317a99829c4daae557fe4c33c8c
   - enabled: 1

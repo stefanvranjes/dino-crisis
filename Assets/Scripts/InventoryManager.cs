@@ -52,7 +52,7 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(DAT_B7A5C[0]);
+        
     }
 
     public static void FUN_1BBCC()

@@ -199,11 +199,12 @@ public class CriCamera : MonoBehaviour
             if (bVar1 != 0)
                 return;
 
-            //...
+            SceneManager.instance.FUN_55580(9, DAT_68);
+            SceneManager.instance.FUN_55700();
             mVar2 = SceneManager.instance.motions.MOTIONS[DAT_6A];
             DAT_72 &= 0xfe;
             motion = mVar2;
-            //FUN_4A7E8
+            InventoryManager.FUN_4A7E8(2, 0x14, false);
         }
 
         FUN_26B18(SceneManager.instance.motions.MOTIONS);

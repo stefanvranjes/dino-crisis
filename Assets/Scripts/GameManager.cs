@@ -90,6 +90,7 @@ public class CoroutineLoader
     public LoadSceneContainer DAT_10; //0x10
     public Vector3Int DAT_14; //0x14
     public bool DAT_1C; //0x1c
+    public bool exit;
 }
 
 public delegate void FUN_148(CriPlayer p);
@@ -205,6 +206,9 @@ public class GameManager : MonoBehaviour
     public bool gameStarted;
     public bool disableColors;
     public Material[] materials;
+    private bool pauseMain;
+    private List<CriSkinned> tmpSkinned;
+    private List<CriBone> tmpBones;
 
     private delegate void FUN_9CBF0();
     private delegate void FUN_9CC28();
@@ -303,6 +307,8 @@ public class GameManager : MonoBehaviour
         skinnedColors = new List<Color>();
         skinnedList = new List<CriSkinned>();
         todUncomp = new List<Vector3Int>();
+        tmpSkinned = new List<CriSkinned>();
+        tmpBones = new List<CriBone>();
         loader = new CoroutineLoader();
     }
 
@@ -319,7 +325,7 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (gameStarted)
+        if (gameStarted && !pauseMain)
             FUN_47900();
     }
 
@@ -368,7 +374,6 @@ public class GameManager : MonoBehaviour
         else
         {
             //FUN_1802C
-            SceneManager.sceneLoaded = false;
             DAT_28++;
             //...
             FUN_61240();
@@ -2643,8 +2648,18 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator FUN_79FC8()
     {
-        PTR_FUN_AA3E0[loader.DAT_00](loader);
-        loader.DAT_0F++;
+        do
+        {
+            if (SceneManager.sceneLoaded)
+            {
+                PTR_FUN_AA3E0[loader.DAT_00](loader);
+                loader.DAT_0F++;
+            }
+
+            yield return null;
+        }while (!loader.exit);
+
+        loader.exit = false;
         yield return null;
     }
 
@@ -2674,6 +2689,23 @@ public class GameManager : MonoBehaviour
                     if (DAT_6D)
                         return;
 
+                    for (int i = 0; i < tmpSkinned.Count; i++)
+                    {
+                        Destroy(SceneManager.instance.DAT_27C[i].gameObject);
+                        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(tmpSkinned[i].gameObject,
+                            UnityEngine.SceneManagement.SceneManager.GetActiveScene());
+                        SceneManager.instance.DAT_27C[i] = tmpSkinned[i];
+                    }
+
+                    for (int i = 0; i < tmpBones.Count; i++)
+                    {
+                        Destroy(SceneManager.instance.DAT_1C9C[i].gameObject);
+                        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(tmpBones[i].gameObject,
+                            UnityEngine.SceneManagement.SceneManager.GetActiveScene());
+                        SceneManager.instance.DAT_1C9C[i] = tmpBones[i];
+                    }
+
+                    pVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
                     bVar6 = InventoryManager.FUN_4A87C(2, 0xd);
 
                     if (bVar6)
@@ -2703,6 +2735,7 @@ public class GameManager : MonoBehaviour
                         oVar6.screen = new Vector3Int(0, 0, 0);
                         oVar6.cCollider = null;
                         oVar6.cMesh = dVar7.DAT_00;
+                        oVar6.SetMaterials();
                     }
 
                     SceneManager.instance.FUN_26EBC(2, 0);
@@ -2721,6 +2754,7 @@ public class GameManager : MonoBehaviour
                     pVar6.DAT_174 &= 0x7f;
                     param1.DAT_0C = pVar6.DAT_1D7;
                     bVar4 = (byte)(pVar6.DAT_1D7 - 1);
+                    pauseMain = false;
 
                     if ((pVar6.DAT_1C0 & 8) == 0)
                         return;
@@ -2752,6 +2786,7 @@ public class GameManager : MonoBehaviour
                 oVar6.cCollider = null;
                 oVar6.vr = new Vector3Int(0, 0, 0);
                 oVar6.screen = new Vector3Int(dVar7.DAT_0C, 0, 0);
+                oVar6.SetMaterials();
                 return;
             }
 
@@ -2774,6 +2809,24 @@ public class GameManager : MonoBehaviour
             //FUN_5DED4
 
             if (DAT_AA2A0[DAT_47] == 0) goto LAB_7A174;
+
+            DAT_6D = false; //not in the original code
+            pauseMain = true;
+            SceneManager.sceneLoaded = false;
+            tmpSkinned.Clear();
+            tmpBones.Clear();
+
+            for (int i = 0; i < SceneManager.instance.DAT_27C.Length; i++)
+            {
+                tmpSkinned.Add(SceneManager.instance.DAT_27C[i]);
+                DontDestroyOnLoad(tmpSkinned[i].gameObject);
+            }
+
+            for (int i = 0; i < SceneManager.instance.DAT_1C9C.Length; i++)
+            {
+                tmpBones.Add(SceneManager.instance.DAT_1C9C[i]);
+                DontDestroyOnLoad(tmpBones[i].gameObject);
+            }
 
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[DAT_AA2A0[DAT_47]], LoadSceneMode.Single);
         }
@@ -2849,6 +2902,7 @@ public class GameManager : MonoBehaviour
         //FUN_5543C - unnecessery
         DialogManager.instance.FUN_1DE48();
         //...
+        param1.exit = true;
     }
 
     private void FUN_7A670(CoroutineLoader param1)

@@ -69,6 +69,7 @@ public class LoadSceneContainer
 public class LoadDoorContainer
 {
     public TmdScriptableObject DAT_00; //0x00
+    public TmdScriptableObject DAT_04; //0x04 ???
     public UnityEvent DAT_08; //0x08
     public short DAT_0C; //0x0C
     public Vector3Int DAT_0E; //0x0E
@@ -89,7 +90,6 @@ public class CoroutineLoader
     public sbyte DAT_0F; //0x0F
     public LoadSceneContainer DAT_10; //0x10
     public Vector3Int DAT_14; //0x14
-    public bool DAT_1C; //0x1c
     public bool exit;
 }
 
@@ -203,6 +203,7 @@ public class GameManager : MonoBehaviour
     public List<Color> skinnedColors; //0x800C75D0
     public List<CriSkinned> skinnedList; //0x800C7C10
     public CoroutineLoader loader; //0x800C7D30
+    public bool DAT_C7D4C; //0x800C7D4C
     public bool gameStarted;
     public bool disableColors;
     public Material[] materials;
@@ -309,7 +310,6 @@ public class GameManager : MonoBehaviour
         todUncomp = new List<Vector3Int>();
         tmpSkinned = new List<CriSkinned>();
         tmpBones = new List<CriBone>();
-        loader = new CoroutineLoader();
     }
 
     private void Update()
@@ -2648,6 +2648,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator FUN_79FC8()
     {
+        loader = new CoroutineLoader();
+
         do
         {
             if (SceneManager.sceneLoaded)
@@ -2689,13 +2691,10 @@ public class GameManager : MonoBehaviour
                     if (DAT_6D)
                         return;
 
-                    for (int i = 0; i < tmpSkinned.Count; i++)
-                    {
-                        Destroy(SceneManager.instance.DAT_27C[i].gameObject);
-                        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(tmpSkinned[i].gameObject,
-                            UnityEngine.SceneManagement.SceneManager.GetActiveScene());
-                        SceneManager.instance.DAT_27C[i] = tmpSkinned[i];
-                    }
+                    Destroy(SceneManager.instance.DAT_27C[10].gameObject);
+                    UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(tmpSkinned[0].gameObject,
+                        UnityEngine.SceneManagement.SceneManager.GetActiveScene());
+                    SceneManager.instance.DAT_27C[10] = tmpSkinned[0];
 
                     for (int i = 0; i < tmpBones.Count; i++)
                     {
@@ -2775,7 +2774,7 @@ public class GameManager : MonoBehaviour
                 param1.DAT_06 = 0;
                 param1.DAT_00++;
 
-                if (dVar7.DAT_00 == null)
+                if (dVar7.DAT_04 == null)
                     return;
 
                 oVar6.flags = 3;
@@ -2810,17 +2809,13 @@ public class GameManager : MonoBehaviour
 
             if (DAT_AA2A0[DAT_47] == 0) goto LAB_7A174;
 
-            DAT_6D = false; //not in the original code
+            DAT_6D = false; //tmp
             pauseMain = true;
             SceneManager.sceneLoaded = false;
             tmpSkinned.Clear();
             tmpBones.Clear();
-
-            for (int i = 0; i < SceneManager.instance.DAT_27C.Length; i++)
-            {
-                tmpSkinned.Add(SceneManager.instance.DAT_27C[i]);
-                DontDestroyOnLoad(tmpSkinned[i].gameObject);
-            }
+            tmpSkinned.Add(SceneManager.instance.DAT_27C[10]);
+            DontDestroyOnLoad(tmpSkinned[0].gameObject);
 
             for (int i = 0; i < SceneManager.instance.DAT_1C9C.Length; i++)
             {
@@ -3137,7 +3132,7 @@ public class GameManager : MonoBehaviour
                 else
                     oVar7.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018ba00], 0, 0);
 
-                loader.DAT_1C = !bVar1;
+                DAT_C7D4C = !bVar1;
                 oVar7.FUN_60AB4();
                 param1.DAT_04++;
 
@@ -3162,6 +3157,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 FUN_46C0C(0, 20, 1);
+                DAT_6D = false; //tmp
                 break;
             case 1:
                 if (DAT_6D)
@@ -3180,7 +3176,7 @@ public class GameManager : MonoBehaviour
             case 2:
                 oVar7.FUN_60AB4();
 
-                if (oVar7.DAT_60 < local_28[(loader.DAT_1C ? 1 : 0) * 2])
+                if (oVar7.DAT_60 < local_28[(DAT_C7D4C ? 1 : 0) * 2])
                     return;
 
                 //sound
@@ -3193,7 +3189,7 @@ public class GameManager : MonoBehaviour
 
                 if (param1.DAT_08 == 3)
                 {
-                    sVar4 = (short)(oVar2.vr.y + local_28[(loader.DAT_1C ? 1 : 0) * 2 + 1]);
+                    sVar4 = (short)(oVar2.vr.y + local_28[(DAT_C7D4C ? 1 : 0) * 2 + 1]);
                     oVar2.vr.y = sVar4;
 
                     if (sVar4 < 0x2b3)
@@ -3203,7 +3199,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 oVar2 = SceneManager.instance.DAT_7CDC[1];
-                sVar4 = (short)(oVar2.vr.y + local_28[(loader.DAT_1C ? 1 : 0) * 2 + 1]);
+                sVar4 = (short)(oVar2.vr.y + local_28[(DAT_C7D4C ? 1 : 0) * 2 + 1]);
                 oVar2.vr.y = sVar4;
                 bVar1 = sVar4 < 0xab3;
                 goto LAB_7BE80;
@@ -3241,7 +3237,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 oVar2 = SceneManager.instance.DAT_7CDC[0];
-                sVar4 = (short)(oVar2.vr.y + local_28[(loader.DAT_1C ? 1 : 0) * 2 + 1]);
+                sVar4 = (short)(oVar2.vr.y + local_28[(DAT_C7D4C ? 1 : 0) * 2 + 1]);
                 oVar2.vr.y = sVar4;
                 bVar1 = sVar4 < 0x401;
                 
@@ -3290,6 +3286,8 @@ public class GameManager : MonoBehaviour
 
     public void FUN_7302C()
     {
+        CriSkinned oVar2;
+
         //FUN_72F78
         FUN_72C2C();
 
@@ -3298,6 +3296,16 @@ public class GameManager : MonoBehaviour
 
         if ((DAT_38 & 1) == 0)
             FUN_731E8();
+
+        //...
+
+        for (int i = 0; i < SceneManager.instance.DAT_27C.Length; i++)
+        {
+            oVar2 = SceneManager.instance.DAT_27C[i];
+
+            if ((oVar2.flags & 1) != 0)
+                oVar2.FUN_66208();
+        }
     }
 
     private void FUN_73EB8()

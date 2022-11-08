@@ -21,8 +21,8 @@ public class IMP_CLUT : ScriptedImporter
             clut.WIDTH = reader.ReadInt16();
             clut.HEIGHT = reader.ReadInt16();
             clut.PALETTE = new ushort[clut.WIDTH * clut.HEIGHT];
-            Texture2D texture = new Texture2D(clut.WIDTH, clut.HEIGHT, TextureFormat.RGBA32, false, false);
-            Color32[] pixels = new Color32[clut.WIDTH * clut.HEIGHT];
+            Texture2D texture = new Texture2D(256, clut.HEIGHT, TextureFormat.RGBA32, false, false);
+            Color32[] pixels = new Color32[256 * clut.HEIGHT];
             reader.Seek(8, SeekOrigin.Current);
 
             for (int i = 0; i < clut.PALETTE.Length; i++)
@@ -32,7 +32,7 @@ public class IMP_CLUT : ScriptedImporter
             {
                 for (int x = 0; x < clut.WIDTH; x++)
                 {
-                    int index = x + y * clut.WIDTH;
+                    int index = x + y * 256;
                     pixels[index] = GetColor32(clut.PALETTE[index]);
                 }
             }

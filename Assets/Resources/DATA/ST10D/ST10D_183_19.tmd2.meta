@@ -9,5 +9,5 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: ddf91a512cec24540a65ac548fcc14b7, type: 3}
   ramAddress: 2148632808
-  grid: {instanceID: 0}
-  clut: {instanceID: 0}
+  grid: {fileID: 4673482187186455597, guid: 98c382cb971fb1c43a8a7dea1474bd32, type: 3}
+  clut: {fileID: 5605554348678623116, guid: cecfa407a3063b244899b46773ad05a8, type: 3}

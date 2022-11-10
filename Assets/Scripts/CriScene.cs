@@ -1545,18 +1545,7 @@ public class CriScene : MonoBehaviour
         oVar1.DAT_48 = mVar2.DAT_03;
         oVar1.DAT_4A = mVar2.DAT_04;
         oVar1.cMesh = mVar2.DAT_08;
-        oVar1.materials = new Material[255];
-        TmdScriptableObject tmd = oVar1.cMesh;
-        Material mat1 = new Material(GameManager.instance.materials[0x34]);
-        Material mat2 = new Material(GameManager.instance.materials[0x3C]);
-        mat1.mainTexture = tmd.TEX_2D;
-        mat1.SetTexture("_Tex8", tmd.TEX8_2D);
-        mat1.SetTexture("_CLUT", tmd.CLUT_2D);
-        oVar1.materials[0x34] = mat1;
-        mat2.mainTexture = tmd.TEX_2D;
-        mat2.SetTexture("_Tex8", tmd.TEX8_2D);
-        mat2.SetTexture("_CLUT", tmd.CLUT_2D);
-        oVar1.materials[0x3C] = mat2;
+        oVar1.SetMaterials();
         oVar1.screen = mVar2.DAT_0C;
         oVar1.vr = mVar2.DAT_12;
 

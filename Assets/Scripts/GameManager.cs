@@ -264,7 +264,7 @@ public class GameManager : MonoBehaviour
         }
 
         DAT_9AB4 = new byte[8];
-        DAT_A090 = new byte[80];
+        DAT_A090 = new byte[256];
         DAT_A0F8 = new ushort[4];
         PTR_FUN_9CBF0 = new FUN_9CBF0[14]
         {
@@ -2868,9 +2868,9 @@ public class GameManager : MonoBehaviour
                 {
                     param1.DAT_02 = 0;
                     param1.DAT_00++;
-                    oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
-                    oVar5.FUN_609C8((TodScriptableObject)oVar5.REFS[oVar5.DAT_220], 1, 0);
-                    oVar5.FUN_60AB4();
+                    //oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+                    //oVar5.FUN_609C8((TodScriptableObject)oVar5.REFS[oVar5.DAT_220], 1, 0);
+                    //oVar5.FUN_60AB4();
                 }
 
                 goto LAB_7A5E4;
@@ -2948,11 +2948,15 @@ public class GameManager : MonoBehaviour
                 //...
                 param1.DAT_06++;
                 param1.DAT_0A |= 2;
+                pauseMain = false;
+                DAT_6D = false; //tmp
                 return;
             default:
                 return;
         }
 
+        pauseMain = true;
+        SceneManager.sceneLoaded = false;
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[puVar3.DAT_02], LoadSceneMode.Single);
         LAB_7A814:
         param1.DAT_06++;

@@ -129,7 +129,7 @@ public class CriSkinned : CriObject
 
     private void OnRenderObject()
     {
-        if (cSkin != null)
+        if (cSkin != null && (flags & 2) != 0)
         {
             GL.PushMatrix();
             GL.MultMatrix(Matrix4x4.identity);

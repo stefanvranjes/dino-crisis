@@ -74,7 +74,7 @@ public class CriStatic : CriObject
 
     private void OnRenderObject()
     {
-        if (cMesh != null)
+        if (cMesh != null && (flags & 3) == 3)
         {
             GL.PushMatrix();
             GL.MultMatrix(transform.localToWorldMatrix);
@@ -133,6 +133,7 @@ public class CriStatic : CriObject
         mat2.SetTexture("_Tex8", tmd.TEX8_2D);
         mat2.SetTexture("_CLUT", tmd.CLUT_2D);
         materials[0x3C] = mat2;
+        materials[0x3E] = mat2;
     }
 
     public void FUN_75F10(TmdScriptableObject param1, int param2)

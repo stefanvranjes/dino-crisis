@@ -577,7 +577,7 @@ public class SceneManager : MonoBehaviour
 
         iVar1 = param1;
         DAT_D7C0[iVar1].DAT_05 = 1;
-        oVar3 = scn.GetData((param2 << 16) >> 14);
+        oVar3 = scn.GetData(((param2 << 16) >> 14) / 4);
         DAT_D7C0[iVar1].DAT_AC = 1;
         DAT_D7C0[iVar1].PTR_58[0] = oVar3;
         DAT_D7C0[iVar1].DAT_58[0] = 0;

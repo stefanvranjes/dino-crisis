@@ -1760,7 +1760,7 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_57870()
     {
-        SceneManager.instance.triggers[((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01].DAT_13 =
+        SceneManager.instance.triggers[((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_01 + 4].DAT_13 =
             ((DataContainer4)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_03 != 0;
         DAT_58[0]++;
         return false;

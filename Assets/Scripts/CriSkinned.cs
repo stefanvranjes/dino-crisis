@@ -90,6 +90,7 @@ public class CriSkinned : CriObject
     public ushort DAT_19E; //0x19E
     public byte DAT_1A0; //0x1A0
     public byte DAT_1A1; //0x1A1
+    public bool DAT_1A2; //0x1A2
     public byte DAT_1A3; //0x1A3
     public byte DAT_1A4; //0x1A4
     public byte DAT_1A5; //0x1A5
@@ -264,6 +265,7 @@ public class CriSkinned : CriObject
         DAT_19E = 0;
         DAT_1A0 = 0;
         DAT_1A1 = 0;
+        DAT_1A2 = false;
         DAT_1A3 = 0;
         DAT_1A4 = 0;
         DAT_1A5 = 0;
@@ -631,46 +633,49 @@ public class CriSkinned : CriObject
             {
                 iVar4 = -1;
 
-                if (uVar1 - 1 < 14)
+                do
                 {
-                    switch (iVar4)
+                    if (uVar1 - 1 < 14)
                     {
-                        case 0:
-                            bVar5 = true;
-                            break;
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                        case 5:
-                        case 6:
-                            if ((DAT_5C & 0x40) != 0)
+                        switch (iVar4)
+                        {
+                            case 0:
                                 bVar5 = true;
+                                break;
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                            case 6:
+                                if ((DAT_5C & 0x40) != 0)
+                                    bVar5 = true;
 
-                            break;
-                        case 7:
-                            bVar5 = false;
-                            break;
-                        case 8:
-                        case 9:
-                        case 10:
-                        case 11:
-                        case 12:
-                        case 13:
-                            if ((DAT_5C & 0x80) != 0)
-                                bVar5 = true;
+                                break;
+                            case 7:
+                                bVar5 = false;
+                                break;
+                            case 8:
+                            case 9:
+                            case 10:
+                            case 11:
+                            case 12:
+                            case 13:
+                                if ((DAT_5C & 0x80) != 0)
+                                    bVar5 = true;
 
-                            break;
+                                break;
+                        }
                     }
-                }
 
-                Vector3Int temp = puVar3[(int)uVar1];
-                iVar6 = bVar5 ? param2 : 0x1000;
-                Utilities.FUN_665D8(ref oVar2.vr, ref temp, ref oVar2.vr, iVar6);
-                oVar2 = (CriBone)oVar2.next;
-                uVar1++;
-                iVar4++;
-            }while (uVar1 < param1) ;
+                    Vector3Int temp = puVar3[(int)uVar1];
+                    iVar6 = bVar5 ? param2 : 0x1000;
+                    Utilities.FUN_665D8(ref oVar2.vr, ref temp, ref oVar2.vr, iVar6);
+                    oVar2 = (CriBone)oVar2.next;
+                    uVar1++;
+                    iVar4++;
+                } while (uVar1 < param1);
+            }
         }
     }
 

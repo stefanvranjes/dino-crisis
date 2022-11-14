@@ -7251,7 +7251,7 @@ public class CriPlayer : CriSkinned
         {
             uVar8 = 0x180;
 
-            if (DAT_3C != 1 && DAT_3D != 5)
+            if (DAT_3C != 1 || DAT_3D != 5)
             {
                 iVar9 = 0x100;
                 uVar7 = 0x300;

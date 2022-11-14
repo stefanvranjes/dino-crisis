@@ -480,6 +480,7 @@ public class GameManager : MonoBehaviour
             DAT_28 = 9;
 
         SceneManager.instance.FUN_290E0();
+        DAT_6D = false; //tmp
     }
 
     private void FUN_47DE4()
@@ -635,6 +636,7 @@ public class GameManager : MonoBehaviour
             //...
             LevelManager.instance.FUN_4A3C4();
             //...
+            SceneManager.instance.FUN_1A8AC();
 
             if (DAT_28 == 6)
                 return;
@@ -3302,7 +3304,7 @@ public class GameManager : MonoBehaviour
             FUN_731E8();
 
         //...
-
+        
         for (int i = 0; i < SceneManager.instance.DAT_27C.Length; i++)
         {
             oVar2 = SceneManager.instance.DAT_27C[i];
@@ -3390,7 +3392,7 @@ public class GameManager : MonoBehaviour
                         Coprocessor.vector0.vy0 = (short)puVar10.DAT_44.y;
                         Coprocessor.vector0.vz0 = (short)puVar10.DAT_44.z;
                         Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
-                        puVar10.BoneTransform();
+                        
                         puVar10.cTransform.position.x = Coprocessor.mathsAccumulator.mac1;
                         puVar10.cTransform.position.y = Coprocessor.mathsAccumulator.mac2;
                         puVar10.cTransform.position.z = Coprocessor.mathsAccumulator.mac3;
@@ -3439,6 +3441,7 @@ public class GameManager : MonoBehaviour
                         Coprocessor.translationVector._trx = puVar10.cTransform.position.x;
                         Coprocessor.translationVector._try = puVar10.cTransform.position.y;
                         Coprocessor.translationVector._trz = puVar10.cTransform.position.z;
+                        puVar10.BoneTransform();
                         Matrix4x4 m = puVar10.transform.localToWorldMatrix;
                         iVar19 = puVar10.DAT_42 - 1;
 
@@ -3637,29 +3640,57 @@ public class GameManager : MonoBehaviour
     private void FUN_72C2C()
     {
         CriObject puVar8;
+        int iVar9;
         CriCamera oVar9;
+        CriSkinned pMVar12;
+        CriBone m;
 
         oVar9 = SceneManager.instance.cCamera;
-        Coprocessor.rotationMatrix.rt11 = oVar9.cTransform.rotation.V00;
-        Coprocessor.rotationMatrix.rt12 = oVar9.cTransform.rotation.V01;
-        Coprocessor.rotationMatrix.rt13 = oVar9.cTransform.rotation.V02;
-        Coprocessor.rotationMatrix.rt21 = oVar9.cTransform.rotation.V10;
-        Coprocessor.rotationMatrix.rt22 = oVar9.cTransform.rotation.V11;
-        Coprocessor.rotationMatrix.rt23 = oVar9.cTransform.rotation.V12;
-        Coprocessor.rotationMatrix.rt31 = oVar9.cTransform.rotation.V20;
-        Coprocessor.rotationMatrix.rt32 = oVar9.cTransform.rotation.V21;
-        Coprocessor.rotationMatrix.rt33 = oVar9.cTransform.rotation.V22;
+        Coprocessor.rotationMatrix.rt11 = 4095;
+        Coprocessor.rotationMatrix.rt12 = 0;
+        Coprocessor.rotationMatrix.rt13 = 0;
+        Coprocessor.rotationMatrix.rt21 = 0;
+        Coprocessor.rotationMatrix.rt22 = 4095;
+        Coprocessor.rotationMatrix.rt23 = 0;
+        Coprocessor.rotationMatrix.rt31 = 0;
+        Coprocessor.rotationMatrix.rt32 = 0;
+        Coprocessor.rotationMatrix.rt33 = 4095;
         oVar9.cTransform.position.x = oVar9.screen.x;
         oVar9.cTransform.position.y = oVar9.screen.y;
         oVar9.cTransform.position.z = oVar9.screen.z;
-        Coprocessor.translationVector._trx = oVar9.cTransform.position.x;
-        Coprocessor.translationVector._try = oVar9.cTransform.position.y;
-        Coprocessor.translationVector._trz = oVar9.cTransform.position.z;
-        DAT_1f80002c = oVar9.DAT_30;
+        Coprocessor.translationVector._trx = 0;
+        Coprocessor.translationVector._try = 0;
+        Coprocessor.translationVector._trz = 0;
+        DAT_1f80002c = new Vector3Int(0, 0, 0);
 
         for (int i = 0; i < sceneManager.DAT_27C.Length; i++)
         {
+            pMVar12 = sceneManager.DAT_27C[i];
 
+            if ((pMVar12.flags & 2) != 0)
+            {
+                if (!pMVar12.DAT_1A2)
+                    Utilities.RotMatrix(ref pMVar12.vr, ref DAT_1f800034);
+                else
+                    Utilities.RotMatrixYXZ(ref pMVar12.vr, ref DAT_1f800034);
+
+                FUN_72ADC(ref pMVar12.cTransform);
+                Utilities.ScaleMatrix(ref pMVar12.cTransform.rotation, ref pMVar12.skinSize);
+                m = pMVar12.skeleton;
+                iVar9 = pMVar12.boneCount - 1;
+
+                while (iVar9 != -1)
+                {
+                    if (!m.DAT_43)
+                        Utilities.RotMatrix(ref m.vr, ref m.cTransform.rotation);
+                    else
+                        Utilities.RotMatrixYXZ(ref m.vr, ref m.cTransform.rotation);
+
+                    iVar9--;
+                    m.DAT_4C = m.screen;
+                    m = m.next as CriBone;
+                }
+            }
         }
 
         for (int i = 0; i < sceneManager.DAT_7CDC.Length; i++)

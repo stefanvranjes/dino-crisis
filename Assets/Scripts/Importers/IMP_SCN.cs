@@ -125,7 +125,7 @@ public class IMP_SCN : ScriptedImporter
                                 c2.DAT_01 = reader.ReadSByte();
                                 c2.DAT_02 = reader.ReadUInt16();
                                 containers.Add(c2);
-                                if (type == 4) goto LAB_1;
+                                if (type == 4 && end == (int)reader.Length) goto LAB_1;
                                 break;
                             case 9:
                             case 99: //tmp

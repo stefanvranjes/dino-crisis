@@ -141,7 +141,7 @@ public class EXP_SCN
                             case 62: //tmp
                             case 107:
                                 reader.Seek(3, SeekOrigin.Current);
-                                if (type == 4) breakLoop = true;
+                                if (type == 4 && end == (int)reader.Length) breakLoop = true;
                                 break;
                             case 9:
                             case 99: //tmp

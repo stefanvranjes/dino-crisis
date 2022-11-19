@@ -207,21 +207,15 @@ public class EXP_SCN
 
                                 break;
                             case 40:
-                                reader.Seek(1, SeekOrigin.Current);
+                                reader.Seek(-1, SeekOrigin.Current);
 
-                                if (reader.ReadByte(0xe) == 4)
-                                {
-                                    reader.Seek(0x1e, SeekOrigin.Current);
-                                    GetContainerIdentifier(reader.ReadUInt32(), typeof(TmdScriptableObject), 9);
-                                }
-
-                                switch (reader.ReadByte())
+                                switch (reader.ReadByte(2))
                                 {
                                     case 0:
-                                        reader.Seek(0x29, SeekOrigin.Current);
+                                        reader.Seek(0x30, SeekOrigin.Current);
                                         break;
                                     case 1:
-                                        reader.Seek(0x21, SeekOrigin.Current);
+                                        reader.Seek(0x28, SeekOrigin.Current);
                                         break;
                                     case 2:
                                     case 5:
@@ -230,16 +224,17 @@ public class EXP_SCN
                                     case 9:
                                     case 10:
                                     case 11:
-                                        reader.Seek(0x19, SeekOrigin.Current);
+                                        reader.Seek(0x20, SeekOrigin.Current);
                                         break;
                                     case 3:
-                                        reader.Seek(0x1d, SeekOrigin.Current);
+                                        reader.Seek(0x24, SeekOrigin.Current);
                                         break;
                                     case 4:
-                                        reader.Seek(0x25, SeekOrigin.Current);
+                                        GetContainerIdentifier(reader.ReadUInt32(0x24), typeof(TmdScriptableObject), 9);
+                                        reader.Seek(0x2c, SeekOrigin.Current);
                                         break;
                                     case 7:
-                                        reader.Seek(0x2d, SeekOrigin.Current);
+                                        reader.Seek(0x34, SeekOrigin.Current);
                                         break;
                                 }
 

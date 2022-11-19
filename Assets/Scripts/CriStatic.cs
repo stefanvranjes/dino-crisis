@@ -123,18 +123,22 @@ public class CriStatic : CriObject
     {
         materials = new Material[255];
         TmdScriptableObject tmd = cMesh;
-        Material mat1 = new Material(GameManager.instance.materials[0x34]);
-        Material mat2 = new Material(GameManager.instance.materials[0x3C]);
-        mat1.mainTexture = tmd.TEX_2D;
-        mat1.SetTexture("_Tex8", tmd.TEX8_2D);
-        mat1.SetTexture("_CLUT", tmd.CLUT_2D);
-        materials[0x34] = mat1;
-        materials[0x36] = mat1;
-        mat2.mainTexture = tmd.TEX_2D;
-        mat2.SetTexture("_Tex8", tmd.TEX8_2D);
-        mat2.SetTexture("_CLUT", tmd.CLUT_2D);
-        materials[0x3C] = mat2;
-        materials[0x3E] = mat2;
+
+        if (tmd != null)
+        {
+            Material mat1 = new Material(GameManager.instance.materials[0x34]);
+            Material mat2 = new Material(GameManager.instance.materials[0x3C]);
+            mat1.mainTexture = tmd.TEX_2D;
+            mat1.SetTexture("_Tex8", tmd.TEX8_2D);
+            mat1.SetTexture("_CLUT", tmd.CLUT_2D);
+            materials[0x34] = mat1;
+            materials[0x36] = mat1;
+            mat2.mainTexture = tmd.TEX_2D;
+            mat2.SetTexture("_Tex8", tmd.TEX8_2D);
+            mat2.SetTexture("_CLUT", tmd.CLUT_2D);
+            materials[0x3C] = mat2;
+            materials[0x3E] = mat2;
+        }
     }
 
     public void FUN_75F10(TmdScriptableObject param1, int param2)

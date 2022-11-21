@@ -202,6 +202,10 @@ public class GameManager : MonoBehaviour
     public List<Vector3> skinnedVertices; //0x800C6F90
     public List<Color> skinnedColors; //0x800C75D0
     public List<CriSkinned> skinnedList; //0x800C7C10
+    public bool DAT_C7CF0; //0x800C7CF0
+    public Vector3Int DAT_C7CF8; //0x800C7CF8
+    public Vector3Int DAT_C7D00; //0x800C7D00
+    public byte DAT_C7D08; //0x800C7D08
     public CoroutineLoader loader; //0x800C7D30
     public bool DAT_C7D4C; //0x800C7D4C
     public bool gameStarted;
@@ -3443,6 +3447,215 @@ public class GameManager : MonoBehaviour
                 param1.DAT_02++;
                 break;
         }
+    }
+
+    private void FUN_7D250(CoroutineLoader param1)
+    {
+        uint uVar2;
+        uint uVar3;
+        CriPlayer oVar4;
+        Vector2Int[] local_20;
+
+        local_20 = new Vector2Int[4]
+        {
+            new Vector2Int(21, 28), 
+            new Vector2Int(20, 28), 
+            new Vector2Int(14, 19), 
+            new Vector2Int(14, 19)
+        };
+        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4.FUN_60AB4();
+
+        if (param1.DAT_0C != 0)
+        {
+            if (oVar4.DAT_60 == 13)
+                ; //sound
+            else
+            {
+                if (oVar4.DAT_60 == 28)
+                {
+                    //sound
+                    oVar4.screen.z -= 3;
+                }
+            }
+
+            uVar2 = 3;
+
+            if (oVar4.DAT_60 < 16U)
+                uVar2 = 2;
+
+            goto LAB_7D374;
+        }
+
+        if (oVar4.DAT_60 == 8)
+        {
+            uVar3 = 240;
+            //sound
+        }
+        else
+        {
+            if (oVar4.DAT_60 == 19)
+            {
+                uVar3 = 241;
+                //sound
+            }
+        }
+
+        uVar2 = (oVar4.DAT_60 < 11U ? 1U : 0) ^ 1;
+        LAB_7D374:
+        oVar4.screen.y -= local_20[uVar2].x;
+        oVar4.screen.z += local_20[uVar2].y;
+    }
+
+    private void FUN_7D3BC(CoroutineLoader param1, bool param2, int param3, bool param4)
+    {
+        sbyte sVar1;
+        CriStatic oVar2;
+        short sVar4;
+        CriPlayer oVar5;
+        int iVar5;
+        uint uVar6;
+        byte bVar7;
+        uint puVar8;
+        Vector3Int local_40;
+        Matrix3x3 MStack56;
+
+        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = SceneManager.instance.DAT_7CDC[0];
+
+        switch (param1.DAT_04)
+        {
+            case 0:
+                param1.DAT_08 = 2;
+                oVar2.DAT_48 = 1;
+                param1.DAT_04++;
+
+                if (!param2)
+                {
+                    if (param1.DAT_0C == 0)
+                    {
+                        oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80191fcc], 1, 0);
+                        oVar5.FUN_60AB4();
+                        puVar8 = 0x8018da38;
+                    }
+                    else
+                    {
+                        oVar5.FUN_609C8((TodScriptableObject)oVar5.REFS[oVar5.DAT_220], 1, 0);
+                        oVar5.FUN_60AB4();
+                        puVar8 = 0x8018e8b8;
+                    }
+
+                    bVar7 = 8;
+                }
+                else
+                {
+                    if (param1.DAT_0C == 0)
+                    {
+                        puVar8 = 0x8018da38;
+                        bVar7 = 0;
+                    }
+                    else
+                    {
+                        puVar8 = 0x8018e8b8;
+                        bVar7 = 0;
+                    }
+                }
+
+                oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[puVar8], 1, bVar7);
+                oVar5.FUN_60AB4();
+                FUN_46C0C(0, 20, 1);
+                DAT_C7CF8 = new Vector3Int(0, 0, -0xa00);
+                DAT_C7D00 = new Vector3Int(0, 0x100, 0);
+                iVar5 = Utilities.Rand();
+                DAT_C7D08 = (byte)(iVar5 + (iVar5 / 15) * -15);
+                uVar6 = (uint)Utilities.Rand();
+
+                if ((uVar6 & 1) == 0)
+                    DAT_C7CF0 = false;
+                else
+                    DAT_C7CF0 = true;
+
+                break;
+            case 1:
+                goto LAB_7D414;
+            case 2:
+                FUN_7D250(param1);
+
+                if (param3 <= oVar5.screen.y) break;
+
+                if (!param4)
+                {
+                    sVar4 = (short)(param1.DAT_02 + 1);
+                    goto LAB_7D7B8;
+                }
+
+                FUN_46C0C(1, 20, 1);
+                goto LAB_7D414;
+            case 3:
+                FUN_7D250(param1);
+
+                if (DAT_6D) break;
+
+                sVar4 = param1.DAT_04;
+                param1.DAT_14 = new Vector3Int(0, 0, 0);
+                goto LAB_7D724;
+            case 4:
+                FUN_7D250(param1);
+                //...
+                param1.DAT_14.x += 8;
+                param1.DAT_14.y += 8;
+                param1.DAT_14.z += 8;
+
+                if (0x80 < param1.DAT_14.x)
+                {
+                    param1.DAT_14 = new Vector3Int(0x80, 0x80, 0x80);
+                    param1.DAT_04++;
+                }
+
+                break;
+            case 5:
+                FUN_7D250(param1);
+                //...
+                sVar1 = param1.DAT_0D;
+                param1.DAT_0D = (sbyte)(sVar1 + 1);
+
+                if ((byte)sVar1 < 61U) break;
+
+                LAB_7D414:
+                sVar4 = param1.DAT_04;
+                LAB_7D724:
+                param1.DAT_04 = (short)(sVar4 + 1);
+                break;
+            case 6:
+                FUN_7D250(param1);
+                //...
+                param1.DAT_14.x -= 0x10;
+                param1.DAT_14.y -= 0x10;
+                param1.DAT_14.z -= 0x10;
+
+                if (-1 < param1.DAT_14.x) break;
+
+                param1.DAT_14 = new Vector3Int(0, 0, 0);
+                sVar4 = (short)(param1.DAT_02 + 2);
+                LAB_7D7B8:
+                param1.DAT_02 = sVar4;
+                break;
+        }
+
+        if (DAT_47 == 14)
+            DAT_C7D00.y = DAT_C7D00.y - DAT_C7D08 & 0xfff;
+
+        MStack56 = new Matrix3x3();
+        Utilities.RotMatrix(ref DAT_C7D00, ref MStack56);
+        local_40 = Utilities.ApplyMatrixSV(ref MStack56, ref DAT_C7CF8);
+        SceneManager.instance.FUN_26EBC(2, 0);
+        SceneManager.instance.FUN_264C4(0, (short)oVar5.screen.x, (short)(oVar5.screen.y - 0x400), (short)oVar5.screen.z);
+        SceneManager.instance.FUN_26504(0, (short)(local_40.x + oVar5.screen.x), (short)(local_40.y + oVar5.screen.y - 0x700), (short)(local_40.z + oVar5.screen.z));
+    }
+
+    public void FUN_7D894()
+    {
+        FUN_7D3BC(loader, false, -2200, false);
     }
 
     public void FUN_7302C()

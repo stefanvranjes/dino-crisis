@@ -3125,6 +3125,129 @@ public class GameManager : MonoBehaviour
         SceneManager.instance.FUN_264C4(0, (short)oVar5.screen.x, (short)(oVar5.screen.y - 0x400), (short)oVar5.screen.z);
     }
 
+    public void FUN_7B224()
+    {
+        CriStatic oVar1;
+        sbyte sVar2;
+        short sVar4;
+        uint uVar5;
+        CriPlayer oVar6;
+        CriBone oVar7;
+
+        CoroutineLoader param1 = loader;
+        oVar1 = SceneManager.instance.DAT_7CDC[0];
+        oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        switch (param1.DAT_04)
+        {
+            case 0:
+                oVar6.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80191fcc], 0x20, 0);
+                oVar6.FUN_60AB4();
+                FUN_46C0C(0, 20, 1);
+                param1.DAT_08 = 4;
+                param1.DAT_14 = new Vector3Int(0, 0, 0);
+                param1.DAT_04++;
+                goto LAB_7B278;
+            case 1:
+                if (DAT_6D) goto LAB_7B278;
+
+                break;
+            case 2:
+                oVar6.FUN_60AB4();
+                sVar2 = (sbyte)(param1.DAT_0D + 1);
+                param1.DAT_0D = sVar2;
+
+                if (sVar2 < 31) goto LAB_7B278;
+
+                //sound
+                break;
+            case 3:
+                oVar6.FUN_60AB4();
+                sVar4 = (short)(oVar1.screen.x - 50);
+                oVar1.screen.x = sVar4;
+
+                if (-1000 < sVar4) goto LAB_7B278;
+
+                break;
+            case 4:
+                oVar6.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80192664], 9, 10);
+                break;
+            case 5:
+                oVar6.FUN_60AB4();
+                oVar6.screen.z += 27;
+
+                if ((oVar6.frames[oVar6.frameNum].DAT_03 & 3) != 0)
+                {
+                    uVar5 = 244;
+
+                    if ((oVar6.DAT_1C0 & 2) != 0)
+                        uVar5 = 245;
+
+                    //sound
+                    oVar6.DAT_1C0 ^= 2;
+                }
+
+                sVar4 = (short)oVar6.screen.z;
+
+                if (0 < sVar4)
+                    param1.DAT_04++;
+
+                if (-500 < sVar4)
+                {
+                    //...
+                    param1.DAT_14.x += 8;
+                    param1.DAT_14.y += 8;
+                    param1.DAT_14.z += 8;
+
+                    if (0x80 < param1.DAT_14.x)
+                        param1.DAT_14 = new Vector3Int(0x80, 0x80, 0x80);
+                }
+
+                goto LAB_7B278;
+            case 6:
+                //...
+                oVar6.FUN_60AB4();
+                oVar6.screen.z += 27;
+
+                if ((oVar6.frames[oVar6.frameNum].DAT_03 & 3) != 0)
+                {
+                    uVar5 = 244;
+
+                    if ((oVar6.DAT_1C0 & 2) != 0)
+                        uVar5 = 245;
+
+                    //sound
+                    oVar6.DAT_1C0 ^= 2;
+                }
+
+                if (oVar6.screen.z < 2001)
+                {
+                    if (1300 < oVar6.screen.z)
+                    {
+                        param1.DAT_14.x -= 0x10;
+                        param1.DAT_14.y -= 0x10;
+                        param1.DAT_14.z -= 0x10;
+
+                        if (param1.DAT_14.x < 0)
+                            param1.DAT_14 = new Vector3Int(0, 0, 0);
+                    }
+                }
+                else
+                    param1.DAT_02++;
+
+                goto default;
+            default:
+                goto LAB_7B278;
+        }
+
+        param1.DAT_04++;
+        LAB_7B278:
+        oVar7 = (CriBone)Utilities.FUN_601C8(oVar6.skeleton, 7);
+        sVar4 = (short)(((oVar7.screen.y + 200) * 0x10000) >> 0x10);
+        SceneManager.instance.FUN_26504(0, (short)oVar6.screen.x, sVar4, (short)(oVar6.screen.z + 100));
+        SceneManager.instance.FUN_264C4(0, (short)oVar6.screen.x, sVar4, (short)(oVar6.screen.z + 1000));
+    }
+
     public void FUN_7B634()
     {
         bool bVar1;
@@ -3454,6 +3577,127 @@ public class GameManager : MonoBehaviour
                 param1.DAT_02++;
                 break;
         }
+    }
+
+    public void FUN_7C510()
+    {
+        short sVar1;
+        CriStatic oVar2;
+        uint uVar4;
+        CriPlayer oVar5;
+        CriBone oVar6;
+
+        CoroutineLoader param1 = loader;
+        oVar2 = SceneManager.instance.DAT_7CDC[0];
+        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        switch (param1.DAT_04)
+        {
+            case 0:
+                oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80191fcc], 0x20, 0);
+                oVar5.FUN_60AB4();
+                param1.DAT_08 = 4;
+                param1.DAT_04++;
+                FUN_46C0C(0, 20, 1);
+                goto LAB_7C8CC;
+            case 1:
+                if (DAT_6D) break;
+
+                goto LAB_7C650;
+            case 2:
+                oVar5.FUN_60AB4();
+
+                if (oVar5.DAT_60 < 9U) break;
+
+                //sound
+                goto LAB_7C650;
+            case 3:
+                oVar5.FUN_60AB4();
+                oVar2.screen.x -= 50;
+                SceneManager.instance.DAT_7CDC[1].screen.x += 50;
+
+                if (-910 < oVar2.screen.x) break;
+
+                LAB_7C650:
+                param1.DAT_04++;
+                break;
+            case 4:
+                oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80192664], 9, 10);
+                param1.DAT_04++;
+                oVar2.DAT_4A = 10;
+                SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
+                break;
+            case 5:
+                oVar5.FUN_60AB4();
+                oVar5.screen.z += 27;
+
+                if ((oVar5.frames[oVar5.frameNum].DAT_03 & 3) != 0)
+                {
+                    uVar4 = 244;
+
+                    if ((oVar5.DAT_1C0 & 2) != 0)
+                        uVar4 = 245;
+
+                    //sound
+                    oVar5.DAT_1C0 ^= 2;
+                }
+
+                sVar1 = (short)oVar5.screen.z;
+
+                if (0 < sVar1)
+                    param1.DAT_04++;
+
+                if (-500 < sVar1)
+                {
+                    //...
+                    param1.DAT_14.x += 8;
+                    param1.DAT_14.y += 8;
+                    param1.DAT_14.z += 8;
+
+                    if (0x80 < param1.DAT_14.x)
+                        param1.DAT_14 = new Vector3Int(0x80, 0x80, 0x80);
+                }
+
+                break;
+            case 6:
+                //...
+                oVar5.FUN_60AB4();
+                oVar5.screen.z += 27;
+
+                if ((oVar5.frames[oVar5.frameNum].DAT_03 & 3) != 0)
+                {
+                    uVar4 = 244;
+
+                    if ((oVar5.DAT_1C0 & 2) != 0)
+                        uVar4 = 245;
+
+                    //sound
+                    oVar5.DAT_1C0 ^= 2;
+                }
+
+                if (2000 < oVar5.screen.z)
+                {
+                    param1.DAT_02++;
+                    break;
+                }
+
+                if (oVar5.screen.z < 1301) break;
+
+                param1.DAT_14.x -= 0x10;
+                param1.DAT_14.y -= 0x10;
+                param1.DAT_14.z -= 0x10;
+
+                if (-1 < param1.DAT_14.x) break;
+
+                LAB_7C8CC:
+                param1.DAT_14 = new Vector3Int(0, 0, 0);
+                break;
+        }
+
+        oVar6 = (CriBone)Utilities.FUN_601C8(oVar5.skeleton, 7);
+        sVar1 = (short)(((oVar6.screen.y + 200) * 0x10000) >> 0x10);
+        SceneManager.instance.FUN_26504(0, (short)oVar5.screen.x, sVar1, (short)(oVar5.screen.z + 100));
+        SceneManager.instance.FUN_264C4(0, (short)oVar5.screen.x, sVar1, (short)(oVar5.screen.z + 1000));
     }
 
     private void FUN_7D250(CoroutineLoader param1)

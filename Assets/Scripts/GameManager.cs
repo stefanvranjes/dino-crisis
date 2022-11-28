@@ -3125,6 +3125,94 @@ public class GameManager : MonoBehaviour
         SceneManager.instance.FUN_264C4(0, (short)oVar5.screen.x, (short)(oVar5.screen.y - 0x400), (short)oVar5.screen.z);
     }
 
+    private void FUN_7AFB8(CoroutineLoader param1, short param2, bool param3, short param4)
+    {
+        sbyte sVar1;
+        short sVar2;
+        int iVar3;
+        CriPlayer oVar4;
+        CriStatic oVar5;
+
+        oVar5 = SceneManager.instance.DAT_7CDC[0];
+        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        switch (param1.DAT_04)
+        {
+            case 0:
+                oVar4.FUN_609C8((TodScriptableObject)oVar4.REFS[oVar4.DAT_220], 1, 0);
+                oVar4.FUN_60AB4();
+                FUN_46C0C(0, 20, 1);
+                sVar2 = param1.DAT_04;
+                param1.DAT_08 = 3;
+                goto LAB_7B14C;
+            case 1:
+                if (DAT_6D)
+                    return;
+
+                break;
+            case 2:
+                oVar4.FUN_60AB4();
+                sVar1 = (sbyte)(param1.DAT_0D + 1);
+                param1.DAT_0D = sVar1;
+
+                if (sVar1 < 31)
+                    return;
+
+                //sound
+                break;
+            case 3:
+                oVar4.FUN_60AB4();
+                iVar3 = oVar5.screen.x + param2;
+                oVar5.screen.x = iVar3;
+
+                if (!param3)
+                {
+                    if (iVar3 < param4)
+                        return;
+                }
+                else
+                {
+                    if (-param4 < iVar3)
+                        return;
+                }
+
+                break;
+            case 4:
+                oVar4.FUN_609C8((TodScriptableObject)oVar4.REFS[oVar4.DAT_220 + 1], 1, 10);
+                break;
+            case 5:
+                oVar4.FUN_60AB4();
+
+                if (param1.DAT_0C == 0)
+                    sVar2 = (short)(oVar4.screen.z + 54);
+                else
+                    sVar2 = (short)(oVar4.screen.z + 46);
+
+                oVar4.screen.z = sVar2;
+
+                if (500 < oVar4.screen.z)
+                    param1.DAT_02++;
+
+                goto default;
+            default:
+                return;
+        }
+
+        sVar2 = param1.DAT_04;
+        LAB_7B14C:
+        param1.DAT_04 = (short)(sVar2 + 1);
+    }
+
+    public void FUN_7B1D4()
+    {
+        FUN_7AFB8(loader, -50, true, 1500);
+    }
+
+    public void FUN_7B1FC()
+    {
+        FUN_7AFB8(loader, 50, false, 1500);
+    }
+
     public void FUN_7B224()
     {
         CriStatic oVar1;
@@ -3577,6 +3665,205 @@ public class GameManager : MonoBehaviour
                 param1.DAT_02++;
                 break;
         }
+    }
+
+    public void FUN_7BF78()
+    {
+        bool bVar1;
+        short sVar2;
+        CriStatic oVar3;
+        sbyte sVar4;
+        int iVar5;
+        CriPlayer oVar5;
+        int[] local_28;
+
+        CoroutineLoader param1 = loader;
+        oVar3 = SceneManager.instance.DAT_7CDC[0];
+        local_28 = new int[4] { 9, 23, 14, 15 };
+        sVar2 = param1.DAT_04;
+        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        if (sVar2 == 1)
+        {
+            if (DAT_6D)
+                return;
+
+            sVar4 = (sbyte)(param1.DAT_0D + 1);
+            param1.DAT_0D = sVar4;
+
+            if (sVar4 < 31)
+                return;
+        }
+        else
+        {
+            if (sVar2 < 2)
+            {
+                if (sVar2 != 0)
+                    return;
+
+                bVar1 = param1.DAT_0C == 0;
+                param1.DAT_08 = 3;
+
+                if (bVar1)
+                    oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801885ac], 0, 0);
+                else
+                    oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018ba00], 0, 0);
+
+                DAT_C7D4C = !bVar1;
+                oVar5.FUN_60AB4();
+                param1.DAT_04++;
+                FUN_46C0C(0, 20, 1);
+                return;
+            }
+
+            if (sVar2 != 2)
+            {
+                if (sVar2 != 3)
+                    return;
+
+                oVar5.FUN_60AB4();
+                iVar5 = oVar3.vr.y - local_28[(DAT_C7D4C ? 1 : 0) * 2 + 1];
+                oVar3.vr.y = iVar5;
+
+                if (-691 < iVar5 * 0x10000 >> 0x10)
+                    return;
+
+                param1.DAT_02++;
+                return;
+            }
+
+            oVar5.FUN_60AB4();
+
+            if (oVar5.DAT_60 < local_28[(DAT_C7D4C ? 1 : 0) * 2])
+                return;
+
+            //sound
+        }
+
+        param1.DAT_04++;
+    }
+
+    private void FUN_7C190(CoroutineLoader param1, short param2, int param3)
+    {
+        sbyte sVar1;
+        short sVar2;
+        short sVar3;
+        CriPlayer oVar4;
+        CriStatic oVar5;
+
+        oVar5 = SceneManager.instance.DAT_7CDC[0];
+        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        switch (param1.DAT_04)
+        {
+            case 0:
+                oVar4.FUN_609C8((TodScriptableObject)oVar4.REFS[oVar4.DAT_220], 1, 0);
+                oVar4.FUN_60AB4();
+                param1.DAT_04++;
+                sVar2 = 4;
+
+                if (DAT_9AA0 >> 8 == DAT_9ADC >> 8)
+                    sVar2 = 3;
+
+                param1.DAT_08 = sVar2;
+                FUN_46C0C(0, 20, 1);
+                break;
+            case 1:
+                if (DAT_6D)
+                    return;
+
+                goto LAB_7C338;
+            case 2:
+                oVar4.FUN_60AB4();
+                sVar1 = (sbyte)(param1.DAT_0D + 1);
+                param1.DAT_0D = sVar1;
+
+                if (sVar1 < 31)
+                    return;
+
+                sVar3 = param1.DAT_04;
+                param1.DAT_0D = 0;
+                goto LAB_7C340;
+            case 3:
+                oVar4.FUN_60AB4();
+
+                if (oVar4.DAT_60 < 9U)
+                    return;
+
+                //sound
+                goto LAB_7C338;
+            case 4:
+                oVar4.FUN_60AB4();
+                oVar5.screen.x -= param2;
+                SceneManager.instance.DAT_7CDC[1].screen.x += param2;
+
+                if (-param3 < oVar5.screen.x)
+                    return;
+
+                LAB_7C338:
+                sVar3 = param1.DAT_04;
+                LAB_7C340:
+                param1.DAT_04 = (short)(sVar3 + 1);
+                break;
+            case 5:
+                oVar4.FUN_609C8((TodScriptableObject)oVar4.REFS[oVar4.DAT_220 + 1], 1, 10);
+                param1.DAT_04++;
+                oVar5.DAT_4A = 10;
+                SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
+                break;
+            case 6:
+                oVar4.FUN_60AB4();
+
+                if (param1.DAT_0C == 0)
+                    sVar3 = (short)(oVar4.screen.z + 54);
+                else
+                    sVar3 = (short)(oVar4.screen.z + 46);
+
+                oVar4.screen.z = sVar3;
+
+                if (oVar4.screen.z < 1)
+                    return;
+
+                if (param1.DAT_08 != 3)
+                {
+                    param1.DAT_04++;
+                    //sound
+                    return;
+                }
+
+                if (oVar4.screen.z < 501)
+                    return;
+
+                goto LAB_7C470;
+            case 7:
+                oVar4.FUN_60AB4();
+
+                if (param1.DAT_0C == 0)
+                    sVar3 = (short)(oVar4.screen.z + 54);
+                else
+                    sVar3 = (short)(oVar4.screen.z + 46);
+
+                oVar4.screen.z = sVar3;
+                oVar5.screen.x += param2;
+                SceneManager.instance.DAT_7CDC[1].screen.x -= param2;
+
+                if (oVar5.screen.x < 0)
+                    return;
+
+                LAB_7C470:
+                param1.DAT_02++;
+                break;
+        }
+    }
+
+    public void FUN_7C4A4()
+    {
+        FUN_7C190(loader, 70, 2100);
+    }
+
+    public void FUN_7C4C8()
+    {
+        FUN_7C190(loader, 50, 910);
     }
 
     public void FUN_7C510()

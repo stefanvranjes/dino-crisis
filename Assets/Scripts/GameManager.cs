@@ -76,6 +76,7 @@ public class LoadDoorContainer
     public Vector3Int DAT_0E; //0x0E
     public Vector3Int DAT_14; //0x14
     public Vector3Int DAT_1A; //0x1A
+    public string DAT_20; //0x20
 }
 
 public class CoroutineLoader

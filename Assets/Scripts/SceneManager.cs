@@ -25,6 +25,7 @@ public class SceneManager : MonoBehaviour
     public SceneColliderScriptableObject sceneCollision; //gp+154h
     public LightScriptableObject lightSource; //gp+15ch
     public SceneCameraScriptableObject motions; //gp+164h, gp+160h -> motions.Length
+    
     public Trigger[] triggers; //gp+1e8h
     public byte DAT_270; //gp+270h
     public bool DAT_272; //gp+272h

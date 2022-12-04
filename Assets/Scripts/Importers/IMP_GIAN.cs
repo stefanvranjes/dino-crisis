@@ -7,6 +7,8 @@ using UnityEditor.AssetImporters;
 [ScriptedImporter(1, "gian")]
 public class IMP_GIAN : ScriptedImporter
 {
+    public int index;
+
     public override void OnImportAsset(AssetImportContext ctx)
     {
         byte[] buffer = File.ReadAllBytes(ctx.assetPath);
@@ -20,6 +22,7 @@ public class IMP_GIAN : ScriptedImporter
                 GianScriptableObject gian = ScriptableObject.CreateInstance("GianScriptableObject") as GianScriptableObject;
             
                 List<SpuVoiceAttr> list = new List<SpuVoiceAttr>();
+                gian.INDEX = index;
                 reader.Seek(0x90, SeekOrigin.Begin);
                 
                 while(reader.ReadUInt16(0x16) != 0)

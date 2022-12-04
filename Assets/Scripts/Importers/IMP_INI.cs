@@ -7,6 +7,8 @@ using UnityEditor.AssetImporters;
 [ScriptedImporter(1, "ini")]
 public class IMP_INI : ScriptedImporter
 {
+    public uint ramAddress;
+
     public override void OnImportAsset(AssetImportContext ctx)
     {
         byte[] buffer = File.ReadAllBytes(ctx.assetPath);
@@ -16,6 +18,7 @@ public class IMP_INI : ScriptedImporter
             IniScriptableObject ini = ScriptableObject.CreateInstance("IniScriptableObject") as IniScriptableObject;
 
             List<SoundData> list = new List<SoundData>();
+            ini.ADDR = ramAddress;
 
             while (reader.ReadUInt32(0) != 0)
             {

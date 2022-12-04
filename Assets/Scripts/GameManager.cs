@@ -197,6 +197,9 @@ public class GameManager : MonoBehaviour
     public Packet DAT_C33A8;
     public Frame[] DAT_C33AC;
     public ushort DAT_C33B0;
+    public sbyte[] DAT_C60A0;
+    public byte DAT_C60BB;
+    public uint DAT_C60E0;
     public List<LoadScriptContainer> DAT_9E0A0;
     public List<ushort> DAT_AA2A0;
     public List<int> sceneIds;
@@ -231,6 +234,7 @@ public class GameManager : MonoBehaviour
     private FUN_AA4D0[] PTR_FUN_AA4D0;
     private FUN_AA3E0[] PTR_FUN_AA3E0;
 
+    private GianScriptableObject[] PTR_DAT_9E708;
     private byte DAT_AA3EC;
     private byte[] DAT_AA44C = new byte[]
     {
@@ -266,6 +270,8 @@ public class GameManager : MonoBehaviour
     {
         0, 0, 0, 1, 0, 0, 2, 0, 80, 115, 17, 0, 0, 0, 69, 0
     };
+
+    private SoundData[] DAT_1FE900;
 
     private void Awake()
     {
@@ -312,6 +318,9 @@ public class GameManager : MonoBehaviour
             FUN_7A604
         };
         DAT_AA3EC = 0;
+        PTR_DAT_9E708 = new GianScriptableObject[7];
+        DAT_C60A0 = new sbyte[24];
+        DAT_1FE900 = new SoundData[256];
     }
 
     private void Start()
@@ -823,6 +832,193 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         gameObject.AddComponent(Utilities.scriptComponents[DAT_9E0A0[DAT_9AA0 >> 8].scriptName]);
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[DAT_9E0A0[DAT_9AA0 >> 8].DAT_02], LoadSceneMode.Single);
+    }
+
+    private void FUN_5C630(uint param1, uint param2, ref uint param3, ref uint param4)
+    {
+        uint uVar1;
+
+        if (param1 < 0x40)
+        {
+            param3 = 0x7e;
+            param1 += 0x3f;
+        }
+        else
+        {
+            param3 = 0xbe - param1;
+            param1 = 0x7e;
+        }
+
+        param4 = param1;
+
+        if ((DAT_C60E0 & 0x1000) == 0)
+        {
+            if (param3 < param4)
+                param3 = param4;
+            else
+                param4 = param3;
+        }
+
+        uVar1 = (param3 * param2 >> 1) / 0x3f;
+        param3 = uVar1 * uVar1 * 0x2080f >> 0x11;
+        uVar1 = (param4 * param2 >> 1) / 0x3f;
+        param4 = uVar1 * uVar1 * 0x2080f >> 0x11;
+    }
+
+    private void FUN_5C740(CriObject param1, uint param2, ref uint param3, ref uint param4, uint param5)
+    {
+        short sVar1;
+        uint uVar2;
+        uint uVar3;
+
+        if (param1 == null)
+            uVar2 = 0x3f;
+        else
+        {
+            uVar2 = Utilities.FUN_2630C(SceneManager.instance.cCamera.screen, param1.screen);
+
+            if (param5 < uVar2)
+            {
+                param4 = 0;
+                param3 = 0;
+                return;
+            }
+
+            param2 = (param2 * (param5 - uVar2)) / param5;
+
+            if (param5 == 0)
+                return; //trap(0x1c00)
+
+            sVar1 = (short)Utilities.FUN_615EC(SceneManager.instance.cCamera.screen, param1.screen);
+            uVar3 = (uint)(sVar1 - SceneManager.instance.cCamera.vr.y & 0xfff);
+            uVar2 = uVar3 - 0x400;
+
+            if (uVar2 < 0x800)
+                uVar2 = 0x7f - ((uVar2 & 0xfff) >> 4);
+            else
+                uVar2 = (uVar3 + 0x400 & 0xfff) >> 4;
+        }
+
+        FUN_5C630(uVar2, param2, ref param3, ref param4);
+    }
+
+    public void FUN_5C94C(CriObject param1, int param2)
+    {
+        byte bVar1;
+        SoundData pbVar2;
+        byte[] bStack16;
+        byte local_f;
+
+        pbVar2 = DAT_1FE900[param2];
+        local_f = (byte)(pbVar2.DAT_00 & 0x3f);
+        bVar1 = (byte)((uint)pbVar2.DAT_00 >> 6);
+        bStack16 = new byte[8];
+
+        if (bVar1 != 1)
+        {
+            if (bVar1 < 2)
+            {
+                if (bVar1 == 0)
+                    FUN_5D0BC(param1, pbVar2, PTR_DAT_9E708[local_f], bStack16);
+            }
+            else
+            {
+                if (bVar1 == 2)
+                    FUN_5CBA0(param1, pbVar2, PTR_DAT_9E708[local_f], bStack16);
+            }
+        }
+    }
+
+    private sbyte FUN_5CB30()
+    {
+        uint uVar1;
+        sbyte sVar2;
+        sbyte sVar3;
+        uint uVar4;
+
+        uVar4 = 100;
+        sVar3 = 100;
+        uVar1 = DAT_C60BB;
+        sVar2 = 100;
+
+        if ((int)uVar1 < 24)
+        {
+            do
+            {
+                sVar3 = DAT_C60A0[uVar1];
+
+                if (sVar3 == -1)
+                    return (sbyte)uVar1;
+
+                if (sVar3 < sVar2)
+                {
+                    uVar4 = uVar1;
+                    sVar2 = sVar3;
+                }
+
+                sVar3 = (sbyte)uVar4;
+                uVar1++;
+            } while ((int)uVar1 < 24);
+        }
+
+        return sVar3;
+    }
+
+    private void FUN_5CBA0(CriObject param1, SoundData param2, GianScriptableObject param3, byte[] param4)
+    {
+        byte bVar1;
+        sbyte sVar3;
+        uint uVar6;
+        SpuVoiceAttr vVar8;
+        uint uVar9;
+        uint local_40;
+        uint local_3c;
+
+        bVar1 = (byte)DAT_9AA0;
+        //...
+        param4[0] = (byte)(param2.DAT_03 & 0x1f);
+        param4[4] = (byte)(param2.DAT_02 & 0xf);
+        param4[2] = (byte)(param2.DAT_01 & 0x7f);
+        param4[3] = (byte)((uint)param2.DAT_02 >> 4);
+        param4[5] = (byte)(param2.DAT_01 & 0x80);
+        uVar9 = (uint)param2.DAT_03 >> 5 & 3;
+
+        if (uVar9 != 0xffffffff)
+        {
+            local_40 = 0;
+            local_3c = 0;
+
+            do
+            {
+                uVar6 = param4[0];
+                vVar8 = param3.ATTRS[param4[2] * 0x10 + param4[3]];
+
+                if (uVar6 == 0)
+                {
+                    sVar3 = FUN_5CB30();
+                    uVar6 = (uint)(int)(short)sVar3;
+                }
+
+                if (param4[4] < DAT_C60A0[uVar6])
+                    return;
+
+                //...
+
+                if (param4[5] == 0)
+                {
+                    if (param1.tags == 3)
+                    {
+                        sVar3 = (sbyte)vVar8.DAT_02;
+                        FUN_5C740(param1, (uint)(int)(short)sVar3, ref local_40, ref local_3c, 5000000);
+                    }
+                }
+            }
+        }
+    }
+
+    private void FUN_5D0BC(CriObject param1, SoundData param2, GianScriptableObject param3, byte[] param4)
+    {
+        return;
     }
 
     public void FUN_40C60(CriPlayer param1)

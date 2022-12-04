@@ -15,5 +15,6 @@ public class IniScriptableObject : ScriptableObject
 {
     public string prefabName;
 
+    public uint ADDR;
     public SoundData[] INIS;
 }

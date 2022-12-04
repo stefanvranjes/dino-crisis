@@ -19,5 +19,6 @@ public class GianScriptableObject : ScriptableObject
 {
     public string prefabName;
 
+    public int INDEX;
     public SpuVoiceAttr[] ATTRS;
 }

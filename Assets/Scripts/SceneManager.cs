@@ -50,6 +50,8 @@ public class SceneManager : MonoBehaviour
     public int DAT_C51D4;
     public byte DAT_C51D8;
     public CriScene[] DAT_D7C0; //gp+d7c0h...gp+dea0h (0x800C51E0)
+    public CriChannel[] DAT_DEB8; //gp+deb8h...gp+????h (0x800C58D8)
+    public CriSound cSound; //0x800C6098
 
     private delegate bool FUN_9E96C(Vector4Int v4, WallCollider c, ref Vector2Int v2);
 

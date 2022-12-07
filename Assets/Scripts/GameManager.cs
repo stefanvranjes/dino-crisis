@@ -95,6 +95,28 @@ public class CoroutineLoader
     public bool exit;
 }
 
+public struct SpuVoiceAttr2
+{
+    public int voice;
+    public uint mask;
+    public SpuVolume volume;
+    public SpuVolume volmode;
+    public SpuVolume volumex;
+    public ushort pitch;
+    public ushort note;
+    public ushort sample_note;
+    public uint addr;
+    public uint loop_addr;
+    public ushort adsr1;
+    public ushort adsr2;
+}
+
+public struct SpuVolume
+{
+    public short left;
+    public short right;
+}
+
 public delegate void FUN_148(CriPlayer p);
 public delegate void FUN_14C(CriPlayer p);
 
@@ -181,6 +203,7 @@ public class GameManager : MonoBehaviour
     public uint DAT_A0F4; //gp+a0f4h
     public ushort[] DAT_A0F8; //gp+a0f8h
     public byte DAT_A100; //gp+a100h
+    public byte DAT_A2CE; //gp+a2ceh
     public byte DAT_A2CF; //gp+a2cfh
     public bool DAT_A2D0; //gp+a2d0h
     public bool DAT_A2D1; //gp+a2d1h
@@ -197,9 +220,6 @@ public class GameManager : MonoBehaviour
     public Packet DAT_C33A8;
     public Frame[] DAT_C33AC;
     public ushort DAT_C33B0;
-    public sbyte[] DAT_C60A0;
-    public byte DAT_C60BB;
-    public uint DAT_C60E0;
     public List<LoadScriptContainer> DAT_9E0A0;
     public List<ushort> DAT_AA2A0;
     public List<int> sceneIds;
@@ -319,7 +339,6 @@ public class GameManager : MonoBehaviour
         };
         DAT_AA3EC = 0;
         PTR_DAT_9E708 = new GianScriptableObject[7];
-        DAT_C60A0 = new sbyte[24];
         DAT_1FE900 = new SoundData[256];
     }
 
@@ -851,7 +870,7 @@ public class GameManager : MonoBehaviour
 
         param4 = param1;
 
-        if ((DAT_C60E0 & 0x1000) == 0)
+        if ((SceneManager.instance.cSound.DAT_48 & 0x1000) == 0)
         {
             if (param3 < param4)
                 param3 = param4;
@@ -938,14 +957,14 @@ public class GameManager : MonoBehaviour
 
         uVar4 = 100;
         sVar3 = 100;
-        uVar1 = DAT_C60BB;
+        uVar1 = SceneManager.instance.cSound.DAT_23;
         sVar2 = 100;
 
         if ((int)uVar1 < 24)
         {
             do
             {
-                sVar3 = DAT_C60A0[uVar1];
+                sVar3 = SceneManager.instance.cSound.DAT_08[uVar1];
 
                 if (sVar3 == -1)
                     return (sbyte)uVar1;
@@ -968,11 +987,14 @@ public class GameManager : MonoBehaviour
     {
         byte bVar1;
         sbyte sVar3;
+        CriChannel oVar4;
         uint uVar6;
         SpuVoiceAttr vVar8;
         uint uVar9;
+        SpuVoiceAttr2 local_90;
         uint local_40;
         uint local_3c;
+        sbyte[] local_50;
 
         bVar1 = (byte)DAT_9AA0;
         //...
@@ -999,26 +1021,120 @@ public class GameManager : MonoBehaviour
                     uVar6 = (uint)(int)(short)sVar3;
                 }
 
-                if (param4[4] < DAT_C60A0[uVar6])
+                if (param4[4] < SceneManager.instance.cSound.DAT_08[uVar6])
                     return;
 
-                //...
+                oVar4 = SceneManager.instance.DAT_DEB8[uVar6];
+                oVar4.DAT_20 = false;
 
                 if (param4[5] == 0)
                 {
                     if (param1.tags == 3)
                     {
                         sVar3 = (sbyte)vVar8.DAT_02;
+                        oVar4.DAT_1B = sVar3;
                         FUN_5C740(param1, (uint)(int)(short)sVar3, ref local_40, ref local_3c, 5000000);
+                        local_90.voice = 1 << (int)(uVar6 & 31);
+                    }
+                    else
+                    {
+                        sVar3 = (sbyte)vVar8.DAT_02;
+                        oVar4.DAT_1B = sVar3;
+                        FUN_5C740(param1, (uint)(int)(short)sVar3, ref local_40, ref local_3c, 50000);
+                        FUN_5DB50(oVar4, ref local_40, ref local_3c);
+                        local_90.voice = 1 << (int)(uVar6 & 31);
                     }
                 }
-            }
+                else
+                {
+                    FUN_5C630(vVar8.DAT_03, vVar8.DAT_02, ref local_40, ref local_3c);
+                    local_90.voice = 1 << (int)(uVar6 & 31);
+                }
+
+                SceneManager.instance.cSound.DAT_30 |= (uint)local_90.voice;
+                SceneManager.instance.cSound.DAT_28 |= (uint)local_90.voice;
+
+                if (uVar6 < 0x10)
+                    oVar4.DAT_22 = 3;
+
+                local_90.mask = 0x600ef;
+                local_90.volmode.right = 0;
+                local_90.volmode.left = 0;
+                oVar4.DAT_1A = true;
+                oVar4.DAT_0A = (short)local_40;
+                local_90.volume.left = (short)(((uint)(local_40 * SceneManager.instance.cSound.DAT_25) * DAT_A2CE >> 4) / 0x7f);
+                oVar4.DAT_06 = local_90.volume.left;
+                local_90.volume.right = (short)(((uint)(local_3c * SceneManager.instance.cSound.DAT_25) * DAT_A2CE >> 4) / 0x7f);
+                oVar4.DAT_04 = local_90.volume.right;
+                local_90.note = vVar8.NOTE;
+
+                if (param4[7] - 0x30U < 0x60)
+                {
+                    local_50 = new sbyte[10] { 0, -3, -2, -1, 1, 2, -1, 2, -3, 1 };
+
+                    if (param1.GetType() == typeof(CriSkinned) && param1 != SceneManager.instance.DAT_27C[10])
+                        local_90.note = (ushort)((short)local_90.note + 
+                            local_50[((ulong)(Array.IndexOf(SceneManager.instance.DAT_27C, param1) * 0x260 >> 5) * 0xd794360 >> 0x20) & 0xff]);
+                }
+
+                local_90.sample_note = (ushort)(vVar8.SAMPLE_NOTE << 8);
+                local_90.addr = (uint)vVar8.ADDR << 3;
+                local_90.adsr1 = vVar8.ADSR1;
+                local_90.adsr2 = vVar8.ADSR2;
+                //SpuSetVoiceAttr
+
+                if (0xef < param4[7])
+                {
+                    local_90.volume.left = (short)((local_90.volume.left << 2) / 5);
+                    local_90.volume.right = (short)((local_90.volume.right << 2) / 5);
+                }
+
+                //...
+
+                SceneManager.instance.cSound.DAT_08[uVar6] = (sbyte)param4[4];
+
+                if (param4[0] != 0)
+                    param4[0]++;
+
+                uVar9--;
+                param4[3]++;
+            } while (uVar9 != 0xffffffff);
         }
     }
 
     private void FUN_5D0BC(CriObject param1, SoundData param2, GianScriptableObject param3, byte[] param4)
     {
         return;
+    }
+
+    private void FUN_5DB50(CriChannel param1, ref uint param2, ref uint param3)
+    {
+        sbyte sVar1;
+        int iVar2;
+
+        sVar1 = param1.DAT_13;
+
+        if (sVar1 == 2)
+        {
+            param2 = (uint)((int)param2 >> 1);
+            iVar2 = (int)param3 >> 1;
+        }
+        else
+        {
+            if (sVar1 < 3 || sVar1 != 3) goto LAB_5DBB8;
+
+            param2 <<= 1;
+            iVar2 = (int)param3 << 1;
+        }
+
+        param3 = (uint)iVar2;
+
+        LAB_5DBB8:
+        if (0x3fff < (int)param2)
+            param2 = 0x3fff;
+
+        if (0x3fff < (int)param3)
+            param3 = 0x3fff;
     }
 
     public void FUN_40C60(CriPlayer param1)

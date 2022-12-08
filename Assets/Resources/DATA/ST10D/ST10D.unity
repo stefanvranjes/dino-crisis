@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scn: {fileID: -4406283935363021935, guid: a115325bcb54cb543a5bdaaea5959397, type: 3}
+  vab: {fileID: 888843668273218188, guid: 9fa626d167f77304fafe0706c5342079, type: 3}
   database: {fileID: 11400000, guid: 536651ecb139fdf4ba707b4c44b49643, type: 2}
   DAT_A4: 0
   DAT_AC: 
@@ -162,6 +163,8 @@ MonoBehaviour:
   sceneCollision: {fileID: -6028080052161987059, guid: d6919895adac0494389e1e3902138178, type: 3}
   lightSource: {fileID: -7488134631618437631, guid: 303738c09b11fb04fbe3572f106f9942, type: 3}
   motions: {fileID: 9013893561334630828, guid: f505b951911e9814ca0c9dca11d277c9, type: 3}
+  gian: {fileID: 0}
+  ini: {fileID: 0}
   triggers: []
   DAT_270: 0
   DAT_272: 0
@@ -185,6 +188,8 @@ MonoBehaviour:
   DAT_C51D4: 0
   DAT_C51D8: 0
   DAT_D7C0: []
+  DAT_DEB8: []
+  cSound: {fileID: 0}
 --- !u!4 &1223960082
 Transform:
   m_ObjectHideFlags: 0

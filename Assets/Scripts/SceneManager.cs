@@ -16,6 +16,7 @@ public class SceneManager : MonoBehaviour
     public static short DAT_994EA = 0;
 
     public ScnScriptableObject scn; //gp+268h
+    public VabScriptableObject vab; //gp+26ch
     public DatabaseScriptableObject database;
     public ushort DAT_A4; //gp+a4h
     public byte[] DAT_AC; //gp+ach

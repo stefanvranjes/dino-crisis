@@ -248,7 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cfuStatus: PSXEffects v1.15.5 - update available (click to update).
   sections: 01010100
-  customRes: {x: 781, y: 423}
+  customRes: {x: 772, y: 423}
   resolutionFactor: 1
   limitFramerate: -1
   skipFrames: 0
@@ -463,6 +463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scn: {fileID: -4406283935363021935, guid: d5b914da77bb19240ac50914d39cdf88, type: 3}
+  vab: {fileID: 888843668273218188, guid: 86f41d53c1326fd4abd437275527b5a4, type: 3}
   database: {fileID: 11400000, guid: 536651ecb139fdf4ba707b4c44b49643, type: 2}
   DAT_A4: 0
   DAT_AC: 
@@ -472,6 +473,8 @@ MonoBehaviour:
   sceneCollision: {fileID: -6028080052161987059, guid: e4ec2297f2f495e46ba22691de59fde5, type: 3}
   lightSource: {fileID: -7488134631618437631, guid: 768a16471fb9e0446829bc8b4a505f5a, type: 3}
   motions: {fileID: 9013893561334630828, guid: e10d823f86c029344a6708a5ab441acd, type: 3}
+  gian: {fileID: 0}
+  ini: {fileID: 0}
   triggers: []
   DAT_270: 0
   DAT_272: 0
@@ -495,6 +498,8 @@ MonoBehaviour:
   DAT_C51D4: 0
   DAT_C51D8: 0
   DAT_D7C0: []
+  DAT_DEB8: []
+  cSound: {fileID: 0}
 --- !u!4 &1678437249
 Transform:
   m_ObjectHideFlags: 0

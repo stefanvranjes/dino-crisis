@@ -926,24 +926,25 @@ public class GameManager : MonoBehaviour
         byte bVar1;
         SoundData pbVar2;
         byte[] bStack16;
-        byte local_f;
 
-        pbVar2 = DAT_1FE900[param2];
-        local_f = (byte)(pbVar2.DAT_00 & 0x3f);
-        bVar1 = (byte)((uint)pbVar2.DAT_00 >> 6);
         bStack16 = new byte[8];
+        pbVar2 = DAT_1FE900[param2];
+        bStack16[7] = (byte)param2;
+        bStack16[6] = 0;
+        bStack16[1] = (byte)(pbVar2.DAT_00 & 0x3f);
+        bVar1 = (byte)((uint)pbVar2.DAT_00 >> 6);
 
         if (bVar1 != 1)
         {
             if (bVar1 < 2)
             {
                 if (bVar1 == 0)
-                    FUN_5D0BC(param1, pbVar2, PTR_DAT_9E708[local_f], bStack16);
+                    FUN_5D0BC(param1, pbVar2, PTR_DAT_9E708[bStack16[1]], bStack16);
             }
             else
             {
                 if (bVar1 == 2)
-                    FUN_5CBA0(param1, pbVar2, PTR_DAT_9E708[local_f], bStack16);
+                    FUN_5CBA0(param1, pbVar2, PTR_DAT_9E708[bStack16[1]], bStack16);
             }
         }
     }
@@ -1100,6 +1101,47 @@ public class GameManager : MonoBehaviour
                 param4[3]++;
             } while (uVar9 != 0xffffffff);
         }
+    }
+
+    public void FUN_5D0C4(CriSkinned param1, byte param2, byte param3)
+    {
+        byte bVar1;
+        bool bVar2;
+        VabScriptableObject pbVar3;
+        SoundSourceData pbVar4;
+        byte bVar5;
+        byte[] bStack40;
+
+        bVar5 = 0;
+        pbVar3 = SceneManager.instance.vab;
+        bVar1 = (byte)pbVar3.SRCS.Length;
+        
+        if (bVar1 != 0)
+        {
+            do
+            {
+                pbVar4 = pbVar3.SRCS[bVar5];
+
+                if (pbVar4.DAT_10 == param1.DAT_48)
+                {
+                    bVar2 = FUN_768C8(param1.screen, pbVar4.DAT_00);
+
+                    if (bVar2)
+                    {
+                        param2 = (byte)(param2 + pbVar4.DAT_11 * 2);
+                        break;
+                    }
+                }
+
+                bVar5++;
+            } while (bVar5 < bVar1);
+        }
+
+        bStack40 = new byte[8];
+        bStack40[1] = (byte)(DAT_1FE900[param2].DAT_00 & 0x3f);
+        bStack40[6] = param3;
+        bStack40[7] = param2;
+        FUN_5CBA0(param1, DAT_1FE900[param2], PTR_DAT_9E708[bStack40[1]], bStack40);
     }
 
     private void FUN_5D0BC(CriObject param1, SoundData param2, GianScriptableObject param3, byte[] param4)

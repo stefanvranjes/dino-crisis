@@ -11,6 +11,7 @@ public class CriChannel : MonoBehaviour
     public bool DAT_1A; //0x1A
     public sbyte DAT_1B; //0x1B
     public bool DAT_20; //0x20
+    public bool DAT_21; //0x21
     public byte DAT_22; //0x22
 
     // Start is called before the first frame update
@@ -34,6 +35,7 @@ public class CriChannel : MonoBehaviour
         DAT_1A = false;
         DAT_1B = 0;
         DAT_20 = false;
+        DAT_21 = false;
         DAT_22 = 0;
     }
 }

@@ -452,7 +452,7 @@ public class DialogManager : MonoBehaviour
                 if (bVar3 < (uint)tVar5.DAT_24)
                 {
                     FUN_1BAB4(0, param1);
-                    //sound
+                    GameManager.instance.FUN_5C94C(null, 222);
                     FUN_1BCA4(DAT_98628, 1190);
                     DAT_B12C0[41] = (ushort)(DAT_98628
                         [DAT_98594[1]] - (tVar5.DAT_24 - 6 << 1));
@@ -462,7 +462,7 @@ public class DialogManager : MonoBehaviour
                 }
 
                 InventoryManager.FUN_4A7E8(9, tVar5.DAT_23, true);
-                //sound
+                GameManager.instance.FUN_5C94C(null, 221);
                 FUN_1BAB4(7, param1);
                 return false;
             }
@@ -474,7 +474,7 @@ public class DialogManager : MonoBehaviour
                 if (!bVar1)
                 {
                     FUN_1BAB4(0, param1);
-                    //sound
+                    GameManager.instance.FUN_5C94C(null, 208);
                     iVar2 = FUN_1CC54(11);
                     FUN_1E2D8(DAT_98628, iVar2, 0, 0xffff);
                     return false;
@@ -498,7 +498,7 @@ public class DialogManager : MonoBehaviour
                         InventoryManager.FUN_4A7E8(9, tVar5.DAT_23, true);
                         iVar2 = FUN_1CC54(12);
                         FUN_1E2D8(DAT_98628, iVar2, 0, 0xffff);
-                        //sound
+                        GameManager.instance.FUN_5C94C(null, 210);
                         return false;
                     }
 
@@ -512,7 +512,7 @@ public class DialogManager : MonoBehaviour
                     if (!bVar1)
                     {
                         FUN_1BAB4(0, param1);
-                        //sound
+                        GameManager.instance.FUN_5C94C(null, 208);
                         iVar2 = FUN_1CC54(23);
                         FUN_1E2D8(DAT_98628, iVar2, 0, 0xffff);
                         return false;
@@ -537,7 +537,7 @@ public class DialogManager : MonoBehaviour
                 if (bVar3 == 0xfd)
                 {
                     FUN_1BAB4(0, param1);
-                    //sound
+                    GameManager.instance.FUN_5C94C(null, 208);
                     iVar2 = FUN_1CC54(25);
                     FUN_1E2D8(DAT_98628, iVar2, 0, 0xffff);
                     return false;
@@ -548,7 +548,7 @@ public class DialogManager : MonoBehaviour
                 if (bVar3 == 0xff)
                 {
                     FUN_1BAB4(0, param1);
-                    //sound
+                    GameManager.instance.FUN_5C94C(null, 208);
                     iVar2 = FUN_1CC54(24);
                     FUN_1E2D8(DAT_98628, iVar2, 0, 0xffff);
                     return false;
@@ -565,7 +565,7 @@ public class DialogManager : MonoBehaviour
             if (!bVar1)
             {
                 FUN_1BAB4(0, param1);
-                //sound
+                GameManager.instance.FUN_5C94C(null, 208);
                 FUN_1BCA4(DAT_98628, 44);
                 iVar2 = FUN_67988(tVar5.DAT_24);
                 FUN_1BCA4(DAT_9F0EC, iVar2);
@@ -576,7 +576,7 @@ public class DialogManager : MonoBehaviour
                 InventoryManager.FUN_4A7E8(9, tVar5.DAT_23, true);
                 InventoryManager.FUN_4A7E8(11, tVar5.DAT_24, false);
                 FUN_1BAB4(0, param1);
-                //sound
+                GameManager.instance.FUN_5C94C(null, 210);
                 FUN_1BCA4(DAT_98628, 23);
                 iVar2 = FUN_67988(tVar5.DAT_24);
                 FUN_1BCA4(DAT_9F0EC, iVar2);
@@ -672,7 +672,7 @@ public class DialogManager : MonoBehaviour
         InventoryManager.FUN_4A7E8(1, 0xb, true);
         param1.DAT_13 = false;
         ((CriPlayer)SceneManager.instance.DAT_27C[10]).FUN_5397C(tVar1.DAT_18);
-        //sound
+        GameManager.instance.FUN_5C94C(null, tVar1.DAT_19);
         return false;
     }
 
@@ -944,7 +944,7 @@ public class DialogManager : MonoBehaviour
 
                 if (bVar1)
                 {
-                    //sound
+                    GameManager.instance.FUN_5C94C(null, 2);
                     DAT_B1390++;
                     GameManager.instance.DAT_9ADF = tVar2.DAT_18;
                 }
@@ -1095,7 +1095,7 @@ public class DialogManager : MonoBehaviour
                 return;
             }
 
-            //sound
+            GameManager.instance.FUN_5C94C(null, 220);
             iVar3 = 897;
             DAT_B138D = 0;
         }
@@ -1124,7 +1124,7 @@ public class DialogManager : MonoBehaviour
 
                     if (bVar3)
                     {
-                        //sound
+                        GameManager.instance.FUN_5C94C(null, 220);
                         bVar3 = InventoryManager.FUN_4A87C(tVar5.DAT_18, tVar5.DAT_19);
 
                         if (!bVar3)
@@ -1177,7 +1177,7 @@ public class DialogManager : MonoBehaviour
 
                     if (bVar4 < tVar5.DAT_1A)
                     {
-                        //sound
+                        GameManager.instance.FUN_5C94C(null, 222);
                         FUN_1BCA4(DAT_98628, 1110);
                         DAT_B12C0[41] = (ushort)(DAT_98628[DAT_98594[1]] - (tVar5.DAT_1A - 6 * 2));
                         FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
@@ -1187,7 +1187,7 @@ public class DialogManager : MonoBehaviour
 
                     FUN_1BCA4(DAT_98628, 867);
                     FUN_1E2D8(DAT_B12C0, 0, 0, 0xffff);
-                    //sound
+                    GameManager.instance.FUN_5C94C(null, 221);
                 }
 
                 DAT_B1390 = 3;

@@ -9,6 +9,7 @@ public class CriSound : MonoBehaviour
     public sbyte DAT_25; //0x25
     public uint DAT_28; //0x28
     public uint DAT_30; //0x30
+    public uint DAT_34; //0x34
     public uint DAT_48; //0x48
 
     // Start is called before the first frame update
@@ -30,6 +31,7 @@ public class CriSound : MonoBehaviour
         DAT_25 = 0;
         DAT_28 = 0;
         DAT_30 = 0;
+        DAT_34 = 0;
         DAT_48 = 0;
     }
 }

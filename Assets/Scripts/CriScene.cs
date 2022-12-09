@@ -1749,10 +1749,10 @@ public class CriScene : MonoBehaviour
                 }
             }
 
-            //sound
+            GameManager.instance.FUN_5C94C(oVar2, mVar3.DAT_01);
         }
         else
-            ; //FUN_5C860
+            GameManager.instance.FUN_5C860(mVar3.DAT_01);
 
         DAT_58[0]++;
         return false;

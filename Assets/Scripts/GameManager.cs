@@ -595,7 +595,7 @@ public class GameManager : MonoBehaviour
                 if (bVar3)
                 {
                     DAT_28 = 5;
-                    //sound
+                    FUN_5C94C(null, 2);
                 }
             }
         }
@@ -921,6 +921,32 @@ public class GameManager : MonoBehaviour
         FUN_5C630(uVar2, param2, ref param3, ref param4);
     }
 
+    public void FUN_5C860(int param1)
+    {
+        byte bVar1;
+        uint uVar2;
+        uint uVar3;
+
+        if (1 < (int)((uint)DAT_1FE900[param1].DAT_00 >> 6) && 
+            (uint)DAT_1FE900[param1].DAT_00 >> 6 == 2)
+        {
+            uVar3 = DAT_1FE900[param1].DAT_03 & 0x1fU;
+            bVar1 = (byte)((uint)DAT_1FE900[param1].DAT_03 >> 5 & 3);
+            uVar2 = uVar3;
+
+            while (bVar1 != 0xff)
+            {
+                uVar3++;
+                SceneManager.instance.DAT_DEB8[uVar2].DAT_20 = true;
+                SceneManager.instance.DAT_DEB8[uVar2].DAT_21 = false;
+                SceneManager.instance.cSound.DAT_34 |= 1U << (int)(uVar2 & 31);
+                //...
+                bVar1--;
+                uVar2 = uVar3 & 0xff;
+            }
+        }
+    }
+
     public void FUN_5C94C(CriObject param1, int param2)
     {
         byte bVar1;
@@ -1091,7 +1117,6 @@ public class GameManager : MonoBehaviour
                 }
 
                 //...
-
                 SceneManager.instance.cSound.DAT_08[uVar6] = (sbyte)param4[4];
 
                 if (param4[0] != 0)
@@ -3259,7 +3284,7 @@ public class GameManager : MonoBehaviour
     private void FUN_7A604(CoroutineLoader param1)
     {
         if (param1.DAT_08 == 3)
-            ; //sound
+            FUN_5C94C(SceneManager.instance.DAT_27C[10], 241);
 
         InventoryManager.DAT_B7A60[0] = 0;
         DAT_2A++;
@@ -3352,7 +3377,7 @@ public class GameManager : MonoBehaviour
             if (!DAT_6D)
             {
                 param1.DAT_04++;
-                //sound
+                FUN_5C94C(oVar2, 240);
             }
         }
         else
@@ -3440,7 +3465,7 @@ public class GameManager : MonoBehaviour
             case 1:
                 if (DAT_6D) goto LAB_7ADF0;
 
-                //sound
+                FUN_5C94C(oVar5, 240);
                 break;
             case 2:
                 oVar5.FUN_60AB4();
@@ -3513,7 +3538,7 @@ public class GameManager : MonoBehaviour
                 if (sVar1 < 31)
                     return;
 
-                //sound
+                FUN_5C94C(oVar4, 240);
                 break;
             case 3:
                 oVar4.FUN_60AB4();
@@ -3602,7 +3627,7 @@ public class GameManager : MonoBehaviour
 
                 if (sVar2 < 31) goto LAB_7B278;
 
-                //sound
+                FUN_5C94C(oVar6, 240);
                 break;
             case 3:
                 oVar6.FUN_60AB4();
@@ -3626,7 +3651,7 @@ public class GameManager : MonoBehaviour
                     if ((oVar6.DAT_1C0 & 2) != 0)
                         uVar5 = 245;
 
-                    //sound
+                    FUN_5C94C(oVar6, (int)uVar5);
                     oVar6.DAT_1C0 ^= 2;
                 }
 
@@ -3659,7 +3684,7 @@ public class GameManager : MonoBehaviour
                     if ((oVar6.DAT_1C0 & 2) != 0)
                         uVar5 = 245;
 
-                    //sound
+                    FUN_5C94C(oVar6, (int)uVar5);
                     oVar6.DAT_1C0 ^= 2;
                 }
 
@@ -3751,7 +3776,7 @@ public class GameManager : MonoBehaviour
                 if (oVar5.DAT_60 < local_20[(DAT_C7D4C ? 1 : 0) * 2])
                     return;
 
-                //sound
+                FUN_5C94C(oVar5, 240);
                 break;
             case 3:
                 oVar5.FUN_60AB4();
@@ -3793,7 +3818,7 @@ public class GameManager : MonoBehaviour
                     if ((oVar5.DAT_1C0 & 2) != 0)
                         uVar4 = 0xf5;
 
-                    //sound
+                    FUN_5C94C(oVar5, (int)uVar4);
                     oVar5.DAT_1C0 ^= 2;
                 }
 
@@ -3820,7 +3845,7 @@ public class GameManager : MonoBehaviour
                     if ((oVar5.DAT_1C0 & 2) != 0)
                         uVar4 = 0xf5;
 
-                    //sound
+                    FUN_5C94C(oVar5, (int)uVar4);
                     oVar5.DAT_1C0 ^= 2;
                 }
 
@@ -3834,7 +3859,7 @@ public class GameManager : MonoBehaviour
                 if (0x7ff < sVar3)
                     return;
 
-                //sound
+                FUN_5C94C(oVar5, 241);
                 LAB_7BA80:
                 param1.DAT_02++;
                 goto default;
@@ -3917,7 +3942,7 @@ public class GameManager : MonoBehaviour
                 if (oVar7.DAT_60 < local_28[(DAT_C7D4C ? 1 : 0) * 2])
                     return;
 
-                //sound
+                FUN_5C94C(oVar7, 240);
                 sVar4 = param1.DAT_04;
                 param1.DAT_04 = (short)(sVar4 + 1);
                 break;
@@ -3970,7 +3995,7 @@ public class GameManager : MonoBehaviour
                     if ((oVar7.DAT_1C0 & 2) != 0)
                         uVar6 = 245;
 
-                    //sound
+                    FUN_5C94C(oVar7, (int)uVar6);
                     oVar7.DAT_1C0 ^= 2;
                 }
 
@@ -4004,7 +4029,7 @@ public class GameManager : MonoBehaviour
                     if ((oVar7.DAT_1C0 & 2) != 0)
                         uVar6 = 245;
 
-                    //sound
+                    FUN_5C94C(oVar7, (int)uVar6);
                     oVar7.DAT_1C0 ^= 2;
                 }
 
@@ -4015,7 +4040,7 @@ public class GameManager : MonoBehaviour
                 if (-1 < sVar5 << 0x10)
                     return;
 
-                //sound
+                FUN_5C94C(oVar7, 241);
                 LAB_7BF48:
                 param1.DAT_02++;
                 break;
@@ -4092,7 +4117,7 @@ public class GameManager : MonoBehaviour
             if (oVar5.DAT_60 < local_28[(DAT_C7D4C ? 1 : 0) * 2])
                 return;
 
-            //sound
+            FUN_5C94C(oVar5, 240);
         }
 
         param1.DAT_04++;
@@ -4145,7 +4170,7 @@ public class GameManager : MonoBehaviour
                 if (oVar4.DAT_60 < 9U)
                     return;
 
-                //sound
+                FUN_5C94C(oVar4, 240);
                 goto LAB_7C338;
             case 4:
                 oVar4.FUN_60AB4();
@@ -4182,7 +4207,7 @@ public class GameManager : MonoBehaviour
                 if (param1.DAT_08 != 3)
                 {
                     param1.DAT_04++;
-                    //sound
+                    FUN_5C94C(oVar4, 241);
                     return;
                 }
 
@@ -4256,7 +4281,7 @@ public class GameManager : MonoBehaviour
 
                 if (oVar5.DAT_60 < 9U) break;
 
-                //sound
+                FUN_5C94C(oVar5, 240);
                 goto LAB_7C650;
             case 3:
                 oVar5.FUN_60AB4();
@@ -4285,7 +4310,7 @@ public class GameManager : MonoBehaviour
                     if ((oVar5.DAT_1C0 & 2) != 0)
                         uVar4 = 245;
 
-                    //sound
+                    FUN_5C94C(oVar5, (int)uVar4);
                     oVar5.DAT_1C0 ^= 2;
                 }
 
@@ -4318,7 +4343,7 @@ public class GameManager : MonoBehaviour
                     if ((oVar5.DAT_1C0 & 2) != 0)
                         uVar4 = 245;
 
-                    //sound
+                    FUN_5C94C(oVar5, (int)uVar4);
                     oVar5.DAT_1C0 ^= 2;
                 }
 
@@ -4400,7 +4425,7 @@ public class GameManager : MonoBehaviour
 
                     if (0 < oVar3.screen.z)
                     {
-                        //sound
+                        FUN_5C94C(oVar3, 240);
                         param1.DAT_04++;
                     }
                 }
@@ -4469,7 +4494,7 @@ public class GameManager : MonoBehaviour
                 if (oVar3.DAT_60 < 9U)
                     return;
 
-                //sound
+                FUN_5C94C(oVar3, 240);
                 goto LAB_7CCC8;
             case 4:
                 oVar3.FUN_60AB4();
@@ -4542,7 +4567,7 @@ public class GameManager : MonoBehaviour
                 if (sVar1 < 31)
                     return;
 
-                //sound
+                FUN_5C94C(oVar3, 240);
                 sVar2 = param1.DAT_04;
                 param1.DAT_0D = 0;
                 goto LAB_7CEFC;
@@ -4587,7 +4612,7 @@ public class GameManager : MonoBehaviour
                     param1.DAT_02++;
 
                     if (param4)
-                        ; //FUN_5C860
+                        GameManager.instance.FUN_5C860(240);
                 }
 
                 goto default;
@@ -4686,7 +4711,7 @@ public class GameManager : MonoBehaviour
             if (oVar4.screen.z < 1)
                 return;
 
-            //sound
+            FUN_5C94C(oVar4, 240);
         }
 
         param1.DAT_04++;
@@ -4712,12 +4737,12 @@ public class GameManager : MonoBehaviour
         if (param1.DAT_0C != 0)
         {
             if (oVar4.DAT_60 == 13)
-                ; //sound
+                FUN_5C94C(oVar4, 240);
             else
             {
                 if (oVar4.DAT_60 == 28)
                 {
-                    //sound
+                    FUN_5C94C(oVar4, 241);
                     oVar4.screen.z -= 3;
                 }
             }
@@ -4733,14 +4758,14 @@ public class GameManager : MonoBehaviour
         if (oVar4.DAT_60 == 8)
         {
             uVar3 = 240;
-            //sound
+            FUN_5C94C(oVar4, (int)uVar3);
         }
         else
         {
             if (oVar4.DAT_60 == 19)
             {
                 uVar3 = 241;
-                //sound
+                FUN_5C94C(oVar4, (int)uVar3);
             }
         }
 
@@ -4996,12 +5021,12 @@ public class GameManager : MonoBehaviour
                     if (param1.DAT_0C == 0)
                     {
                         if (oVar6.DAT_60 == 11)
-                            ; //sound
+                            FUN_5C94C(oVar6, 240);
                         else
                         {
                             if (oVar6.DAT_60 == 0)
                             {
-                                //sound
+                                FUN_5C94C(oVar6, 241);
                                 oVar6.screen.z -= 3;
                             }
                         }
@@ -5012,14 +5037,14 @@ public class GameManager : MonoBehaviour
                     {
                         if (oVar6.DAT_60 == 16)
                         {
-                            //sound
+                            FUN_5C94C(oVar6, 240);
                             oVar6.screen.y -= 3;
                         }
                         else
                         {
                             if (oVar6.DAT_60 == 1)
                             {
-                                //sound
+                                FUN_5C94C(oVar6, 241);
                                 oVar6.screen.y -= 2;
                                 oVar6.screen.z -= 3;
                             }
@@ -5106,7 +5131,7 @@ public class GameManager : MonoBehaviour
                     oVar5.screen.y = sVar2;
 
                     if (oVar5.DAT_60 == 15 || oVar5.DAT_60 == 35)
-                        ; //sound
+                        FUN_5C94C(oVar5, 240);
                 }
                 else
                 {
@@ -5119,7 +5144,7 @@ public class GameManager : MonoBehaviour
 
                     if (oVar5.DAT_60 == 22 || oVar5.DAT_60 == 49)
                     {
-                        //sound
+                        FUN_5C94C(oVar5, 240);
                         oVar5.screen.y += 2;
                     }
                 }
@@ -5184,7 +5209,7 @@ public class GameManager : MonoBehaviour
                     oVar5.screen.y = sVar2;
 
                     if (oVar5.DAT_60 == 15 || oVar5.DAT_60 == 35)
-                        ; //sound
+                        FUN_5C94C(oVar5, 240);
                 }
                 else
                 {
@@ -5197,7 +5222,7 @@ public class GameManager : MonoBehaviour
 
                     if (oVar5.DAT_60 == 22 || oVar5.DAT_60 == 49)
                     {
-                        //sound
+                        FUN_5C94C(oVar5, 240);
                         oVar5.screen.y -= 2;
                     }
                 }
@@ -5224,7 +5249,7 @@ public class GameManager : MonoBehaviour
         {
             if (!DAT_6D)
             {
-                //sound
+                FUN_5C94C(oVar3, 240);
                 param1.DAT_04++;
             }
         }
@@ -5259,7 +5284,8 @@ public class GameManager : MonoBehaviour
                         if (oVar2.screen.y < -2299)
                         {
                             param1.DAT_02++;
-                            //...
+                            FUN_5C860(240);
+                            FUN_5C94C(oVar3, 241);
                         }
                     }
                 }
@@ -5428,7 +5454,7 @@ public class GameManager : MonoBehaviour
             SceneManager.instance.DAT_7CDC[0].flags = 0;
             oVar3.flags = 0;
             param1.DAT_14 = new Vector3Int(0, 0, 0);
-            //sound
+            FUN_5C94C(oVar8, 240);
         }
         else
         {
@@ -5481,7 +5507,7 @@ public class GameManager : MonoBehaviour
                 return;
 
             param1.DAT_04++;
-            //sound
+            FUN_5C94C(oVar6, 240);
             return;
         }
 
@@ -5533,12 +5559,12 @@ public class GameManager : MonoBehaviour
         if (param1.DAT_0C != 0)
         {
             if (oVar6.DAT_60 == 26)
-                ; //sound
+                FUN_5C94C(oVar6, 244);
             else
             {
                 if (oVar6.DAT_60 == 56)
                 {
-                    //sound
+                    FUN_5C94C(oVar6, 245);
                     oVar6.screen.z -= 3;
                 }
             }
@@ -5551,14 +5577,14 @@ public class GameManager : MonoBehaviour
         if (oVar6.DAT_60 == 16)
         {
             uVar5 = 244;
-            //sound
+            FUN_5C94C(oVar6, (int)uVar5);
         }
         else
         {
             if (oVar6.DAT_60 == 38)
             {
                 uVar5 = 245;
-                //sound
+                FUN_5C94C(oVar6, (int)uVar5);
             }
         }
 
@@ -5648,7 +5674,7 @@ public class GameManager : MonoBehaviour
                     if ((oVar5.DAT_1C0 & 2) != 0)
                         uVar6 = 245;
 
-                    //sound
+                    FUN_5C94C(oVar5, (int)uVar6);
                     oVar5.DAT_1C0 ^= 2;
                 }
 
@@ -5731,7 +5757,7 @@ public class GameManager : MonoBehaviour
                     if ((oVar4.DAT_1C0 & 2) != 0)
                         uVar2 = 245;
 
-                    //sound
+                    FUN_5C94C(oVar4, (int)uVar2);
                     oVar4.DAT_1C0 ^= 2;
                 }
 
@@ -5751,7 +5777,7 @@ public class GameManager : MonoBehaviour
                 if ((oVar4.DAT_1C0 & 2) != 0)
                     uVar2 = 245;
 
-                //sound
+                FUN_5C94C(oVar4, (int)uVar2);
                 oVar4.DAT_1C0 ^= 2;
             }
 

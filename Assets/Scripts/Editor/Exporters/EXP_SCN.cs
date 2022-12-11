@@ -12,12 +12,7 @@ public class EXP_SCN
         using (BufferedBinaryReader reader2 = new BufferedBinaryReader(File.ReadAllBytes(inFile)))
         {
             //ram
-            RamScriptableObject ram = ScriptableObject.CreateInstance("RamScriptableObject") as RamScriptableObject;
-            ram.objects = new UIntObjectDictionary();
-            string ramFile = outDir + "/RAM.asset";
-            if (ramFile.StartsWith(Application.dataPath))
-                ramFile = "Assets" + ramFile.Substring(Application.dataPath.Length);
-            AssetDatabase.CreateAsset(ram, ramFile);
+            RamScriptableObject ram = EXP_DAT.RAM;
 
             // lgh
             int exportCount = 1;
@@ -66,7 +61,6 @@ public class EXP_SCN
             motFile += "_" + exportCount.ToString("D2") + ".mot";
             reader2.Seek(motPosition, SeekOrigin.Begin);
             File.WriteAllBytes(motFile, reader2.ReadBytes(motSize));
-            AssetDatabase.Refresh();
 
             // scn
             exportCount++;
@@ -79,6 +73,18 @@ public class EXP_SCN
             reader2.Seek(scnPosition, SeekOrigin.Begin);
             byte[] buffer = reader2.ReadBytes(scnSize);
             File.WriteAllBytes(scnFile, buffer);
+
+            //vab
+            exportCount++;
+            reader2.Seek(0x18, SeekOrigin.Begin);
+            uint vabPosition = reader2.ReadUInt32() - 0x80100000;
+            int vabSize = (int)(reader2.ReadUInt32(-8) - vabPosition);
+            string vabFile = outDir + Path.DirectorySeparatorChar;
+            vabFile += Path.GetFileNameWithoutExtension(inFile);
+            vabFile += "_" + exportCount.ToString("D2") + ".vab";
+            reader2.Seek(vabPosition, SeekOrigin.Begin);
+            File.WriteAllBytes(vabFile, reader2.ReadBytes(vabSize));
+            AssetDatabase.Refresh();
 
             using (BufferedBinaryReader reader = new BufferedBinaryReader(buffer))
             {

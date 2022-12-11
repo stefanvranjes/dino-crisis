@@ -22,6 +22,7 @@ public static class EXP_DAT
             };
     private static ushort DAT_C3329; //originally a byte
     private static short DAT_C3330;
+    public static RamScriptableObject RAM;
 
     //FUN_2A990
     public static void ExtractDAT(string inFile, string outDir)
@@ -208,12 +209,13 @@ public static class EXP_DAT
         else
         {
             addr = DAT_C3329 * 0x800;
-            size = 0x800;
+            //size = 0x800;
         }
 
+        uint addr2 = reader.ReadUInt32(8);
         reader.Seek(addr, SeekOrigin.Begin);
         outFile += "_" + DAT_C3329.ToString("D2");
-        EXP_SND.ExtractSND(reader, outFile, size);
+        EXP_SND.ExtractSND(reader, RAM, outFile, addr2, size);
     }
 
     private static void FUN_2B024(BufferedBinaryReader reader, string outFile)

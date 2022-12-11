@@ -2,10 +2,12 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
 
 public static class EXP_SND
 {
-    public static void ExtractSND(BufferedBinaryReader reader, string outFile, int size)
+    public static void ExtractSND(BufferedBinaryReader reader, RamScriptableObject ram, string outFile, uint addr, int size)
     {
         List<string> pack_list = new List<string>();
 
@@ -27,6 +29,7 @@ public static class EXP_SND
             double s_1 = 0.0;
             double s_2 = 0.0;
             string wavApsolute = outFile + "_" + i.ToString("D2") + ".wav";
+            uint newAddr = addr + (uint)(reader.Position - startPosition);
 
             using (BinaryWriter writer = new BinaryWriter(File.Open(wavApsolute, FileMode.Create)))
             {
@@ -106,6 +109,8 @@ public static class EXP_SND
                         int d = (int)(samples[j] + 0.5);
                         writer.Write((short)d);
                     }
+
+                    if (flags == 3) break;
                 }
 
                 if (loopEnd == 0)
@@ -122,6 +127,14 @@ public static class EXP_SND
                 writer.Write(loopBegin);
                 writer.Write(loopEnd);
             }
+
+            if (wavApsolute.StartsWith(Application.dataPath))
+                wavApsolute = "Assets" + wavApsolute.Substring(Application.dataPath.Length);
+
+            i++;
+            AssetDatabase.Refresh();
+            AudioClip clip = AssetDatabase.LoadAssetAtPath(wavApsolute, typeof(AudioClip)) as AudioClip;
+            ram.objects.Add(newAddr, clip);
         }
     }
 }

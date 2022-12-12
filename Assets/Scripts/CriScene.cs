@@ -2732,8 +2732,13 @@ public class CriScene : MonoBehaviour
     {
         bool bVar1;
         CriTrigger puVar2;
+        int iVar3;
+        uint uVar4;
         DataContainer25 mVar6;
+        bool bVar6;
+        int iVar6;
         CriSkinned oVar7;
+        Vector2Int[] puVar8;
         uint uVar9;
         uint uVar10;
 
@@ -2765,7 +2770,26 @@ public class CriScene : MonoBehaviour
 
             if (oVar7.DAT_196 == 0)
             {
-                //...
+                uVar9 = 0;
+                uVar10 = (uint)mVar6.DAT_0C.Length;
+
+                if (uVar10 != 0)
+                {
+                    do
+                    {
+                        puVar8 = mVar6.DAT_0C[uVar9].sv2;
+                        bVar6 = GameManager.instance.FUN_768C8(puVar2.DAT_04, puVar8);
+
+                        if (bVar6)
+                        {
+                            iVar6 = (int)GameManager.FUN_64650();
+                            iVar3 = (int)GameManager.FUN_64650();
+                            //...
+                        }
+
+                        uVar9++;
+                    } while (uVar9 < uVar10);
+                }
             }
 
             oVar7.DAT_34.z = oVar7.screen.z;

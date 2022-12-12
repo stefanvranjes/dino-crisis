@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public static SceneManager sceneManager;
+    public static AudioSource[] voices = new AudioSource[24];
 
     public static ushort DAT_1f800008;
     public static ushort DAT_1f80000a;
@@ -254,7 +255,7 @@ public class GameManager : MonoBehaviour
     private FUN_AA4D0[] PTR_FUN_AA4D0;
     private FUN_AA3E0[] PTR_FUN_AA3E0;
 
-    private GianScriptableObject[] PTR_DAT_9E708;
+    public GianScriptableObject[] PTR_DAT_9E708;
     private byte DAT_AA3EC;
     private byte[] DAT_AA44C = new byte[]
     {
@@ -290,8 +291,12 @@ public class GameManager : MonoBehaviour
     {
         0, 0, 0, 1, 0, 0, 2, 0, 80, 115, 17, 0, 0, 0, 69, 0
     };
+    private ushort[] DAT_AA534 = new ushort[] 
+    { 
+        0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000 
+    };
 
-    private SoundData[] DAT_1FE900;
+    public SoundData[] DAT_1FE900;
 
     private void Awake()
     {
@@ -340,6 +345,9 @@ public class GameManager : MonoBehaviour
         DAT_AA3EC = 0;
         PTR_DAT_9E708 = new GianScriptableObject[7];
         DAT_1FE900 = new SoundData[256];
+
+        for (int i = 0; i < 24; i++)
+            voices[i] = gameObject.AddComponent<AudioSource>();
     }
 
     private void Start()
@@ -2230,6 +2238,175 @@ public class GameManager : MonoBehaviour
         }
 
         return bVar4;
+    }
+
+    //FUN_86E6C
+    private void SpuSetVoiceAttr(SpuVoiceAttr2 arg)
+    {
+        short sVar1;
+        bool bVar2;
+        ushort wVar3;
+        ushort uVar5;
+        ushort uVar6;
+        uint uVar9;
+        uint uVar10;
+        int puVar11;
+        short VOICE_00_LEFT;
+        short VOICE_00_RIGHT;
+
+        uVar10 = 0;
+        uVar9 = arg.mask;
+        puVar11 = 0;
+        bVar2 = uVar9 == 0;
+
+        do
+        {
+            if ((arg.voice & 1 << (int)(uVar10 & 31)) != 0)
+            {
+                if (bVar2 || (uVar9 & 0x10) != 0)
+                    voices[uVar10].pitch = (float)arg.pitch / 4096;
+
+                if (bVar2 || (uVar9 & 0x40) != 0)
+                    DAT_AA534[puVar11] = arg.sample_note;
+
+                if (bVar2 || (uVar9 & 0x20) != 0)
+                {
+                    wVar3 = (ushort)_spu_note2pitch(DAT_AA534[puVar11] >> 8, DAT_AA534[puVar11] & 0xff, arg.note >> 8, arg.note & 0xff);
+                    voices[uVar10].pitch = (float)wVar3 / 4096;
+                }
+
+                if (bVar2 || (uVar9 & 1) != 0)
+                {
+                    uVar6 = 0;
+                    uVar5 = (ushort)((ushort)arg.volume.left & 0x7fff);
+
+                    if (bVar2 || (uVar9 & 4) != 0)
+                    {
+                        switch ((int)(((ushort)arg.volmode.left - 1) * 0x10000) >> 0x10)
+                        {
+                            case 0:
+                                uVar6 = 0x8000;
+                                break;
+                            case 1:
+                                uVar6 = 0x9000;
+                                break;
+                            case 2:
+                                uVar6 = 0xa000;
+                                break;
+                            case 3:
+                                uVar6 = 0xb000;
+                                break;
+                            case 4:
+                                uVar6 = 0xc000;
+                                break;
+                            case 5:
+                                uVar6 = 0xd000;
+                                break;
+                            case 6:
+                                uVar6 = 0xe000;
+                                break;
+                        }
+                    }
+
+                    if (uVar6 != 0)
+                    {
+                        sVar1 = arg.volume.left;
+
+                        if (0x7f < sVar1) goto LAB_8700C;
+
+                        if (sVar1 < 0)
+                            uVar5 = 0;
+                    }
+
+                LAB_8700C:
+                    VOICE_00_LEFT = (short)(uVar5 | uVar6);
+                }
+
+                if (bVar2 || (uVar9 & 2) != 0)
+                {
+                    uVar6 = 0;
+                    uVar5 = (ushort)((ushort)arg.volume.right & 0x7fff);
+
+                    if (bVar2 || (uVar9 & 8) != 0)
+                    {
+                        switch ((int)(((ushort)arg.volmode.right - 1) * 0x10000) >> 0x10)
+                        {
+                            case 0:
+                                uVar6 = 0x8000;
+                                break;
+                            case 1:
+                                uVar6 = 0x9000;
+                                break;
+                            case 2:
+                                uVar6 = 0xa000;
+                                break;
+                            case 3:
+                                uVar6 = 0xb000;
+                                break;
+                            case 4:
+                                uVar6 = 0xc000;
+                                break;
+                            case 5:
+                                uVar6 = 0xd000;
+                                break;
+                            case 6:
+                                uVar6 = 0xe000;
+                                break;
+                        }
+                    }
+
+                    if (uVar6 != 0)
+                    {
+                        sVar1 = arg.volume.right;
+
+                        if (0x7f < sVar1) goto LAB_870EC;
+
+                        if (sVar1 < 0)
+                            uVar5 = 0;
+                    }
+
+                    LAB_870EC:
+                    VOICE_00_RIGHT = (short)(uVar5 | uVar6);
+                }
+
+                //...
+            }
+        } while (true);
+    }
+
+    private uint _spu_note2pitch(int param1, int param2, int param3, int param4)
+    {
+        short sVar1;
+        uint uVar2;
+        int iVar3;
+        int iVar4;
+        short sVar5;
+
+        iVar4 = (((param3 + (int)((uint)(param4 + param2 & 0xffff) >> 7)) - param1) * 0x10000) >> 0x10;
+        sVar1 = (short)(iVar4 / 12);
+        sVar5 = (short)(sVar1 - 2);
+        iVar4 %= 12;
+        iVar3 = iVar4;
+
+        if (iVar4 * 0x10000 < 0)
+        {
+            iVar3 = iVar4 + 12;
+            sVar5 = (short)(sVar1 - 3);
+        }
+
+        if (-1 < sVar5)
+        {
+            uVar2 = S_N2P_OBJ_C8(0x3fff);
+            return uVar2;
+        }
+
+        uVar2 = (uint)-sVar5;
+        return 0; //tmp
+
+        uint S_N2P_OBJ_C8(uint param1)
+        {
+            return param1 & 0xffff;
+        }
     }
 
     public void FUN_7669C(CriTrigger[] param1, int param2)

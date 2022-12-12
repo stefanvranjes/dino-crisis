@@ -87,8 +87,12 @@ public static class EXP_DAT
             }
         }
 
+        IniPostprocessor.script = true;
+        IniPostprocessor.address = reader.ReadUInt32(8);
         outFile += "_" + DAT_C3329.ToString("D2") + ".ini";
         File.WriteAllBytes(outFile, aVar3);
+        AssetDatabase.Refresh();
+        IniPostprocessor.script = false;
     }
 
     private static void FUN_2AC7C(BufferedBinaryReader reader, string outFile)
@@ -180,8 +184,12 @@ public static class EXP_DAT
             }
         }
 
+        GianPostprocessor.script = true;
+        GianPostprocessor.index = reader.ReadUInt16(14);
         outFile += "_" + DAT_C3329.ToString("D2") + ".gian";
         File.WriteAllBytes(outFile, aVar3);
+        AssetDatabase.Refresh();
+        GianPostprocessor.script = false;
     }
 
     private static void FUN_2AF7C(BufferedBinaryReader reader, string outFile)

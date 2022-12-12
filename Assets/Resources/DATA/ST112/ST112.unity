@@ -462,19 +462,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b79fc90ccc61ef4687689063fb043c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scn: {fileID: -4406283935363021935, guid: d5b914da77bb19240ac50914d39cdf88, type: 3}
-  vab: {fileID: 888843668273218188, guid: 86f41d53c1326fd4abd437275527b5a4, type: 3}
+  scn: {fileID: -4406283935363021935, guid: f8f69427ceab6a84bb571bf49715f86e, type: 3}
+  vab: {fileID: 888843668273218188, guid: f1c8f87ffc85cba41966e42891c7bb03, type: 3}
   database: {fileID: 11400000, guid: 536651ecb139fdf4ba707b4c44b49643, type: 2}
   DAT_A4: 0
   DAT_AC: 
   DAT_B0: 
   cCamera: {fileID: 1582952279}
-  waypoints: {fileID: -9104117707371806051, guid: f31a434a03c18f4458bcc734fe3913c7, type: 3}
-  sceneCollision: {fileID: -6028080052161987059, guid: e4ec2297f2f495e46ba22691de59fde5, type: 3}
-  lightSource: {fileID: -7488134631618437631, guid: 768a16471fb9e0446829bc8b4a505f5a, type: 3}
-  motions: {fileID: 9013893561334630828, guid: e10d823f86c029344a6708a5ab441acd, type: 3}
-  gian: {fileID: 0}
-  ini: {fileID: 0}
+  waypoints: {fileID: -9104117707371806051, guid: cb5e632ffa53a4941acdbc5c949c998e, type: 3}
+  sceneCollision: {fileID: -6028080052161987059, guid: 834ea71dd1d01e14d9f0cccf441b5945, type: 3}
+  lightSource: {fileID: -7488134631618437631, guid: c5afe2ec499915a4e8ba56ab396022c0, type: 3}
+  motions: {fileID: 9013893561334630828, guid: 3b55edf6af258c146b9967a2598802db, type: 3}
+  gian: {fileID: -5354861067182356112, guid: 647889ec4b8dcf547843e74fff88987e, type: 3}
+  ini: {fileID: -9147774878685956931, guid: d9e58e8709921c74d89998897555403b, type: 3}
   triggers: []
   DAT_270: 0
   DAT_272: 0

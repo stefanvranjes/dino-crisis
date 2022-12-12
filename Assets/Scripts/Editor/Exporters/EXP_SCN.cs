@@ -77,8 +77,9 @@ public class EXP_SCN
             //vab
             exportCount++;
             reader2.Seek(0x18, SeekOrigin.Begin);
-            uint vabPosition = reader2.ReadUInt32() - 0x80100000;
+            uint vabPosition = reader2.ReadUInt32();
             int vabSize = (int)(reader2.ReadUInt32(-8) - vabPosition);
+            vabPosition -= 0x80100000;
             string vabFile = outDir + Path.DirectorySeparatorChar;
             vabFile += Path.GetFileNameWithoutExtension(inFile);
             vabFile += "_" + exportCount.ToString("D2") + ".vab";

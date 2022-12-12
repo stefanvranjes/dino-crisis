@@ -132,6 +132,12 @@ public class SceneManager : MonoBehaviour
             new RefScriptableObject[4] //PTR_9CF98
         };
 
+        GameManager.instance.PTR_DAT_9E708[gian.INDEX] = gian;
+        int j = (int)(ini.ADDR - 0x801fe900) / 4;
+
+        for (int i = 0; i < ini.INIS.Length; i++)
+            GameManager.instance.DAT_1FE900[j + i] = ini.INIS[i];
+
         triggers = new Trigger[32];
         DAT_27C = new CriSkinned[11];
         DAT_1C9C = new CriBone[100];
@@ -196,9 +202,19 @@ public class SceneManager : MonoBehaviour
             DAT_D7C0[i] = obj.AddComponent<CriScene>();
         }
 
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriChannel (Instance)";
+            DAT_DEB8[i] = obj.AddComponent<CriChannel>();
+        }
+
         GameObject obj2 = new GameObject();
         obj2.name = "CriPlayer (Instance)";
         DAT_27C[10] = obj2.AddComponent<CriPlayer>();
+        GameObject obj3 = new GameObject();
+        obj3.name = "CriSound (Instance)";
+        cSound = obj3.AddComponent<CriSound>();
         sceneLoaded = true;
     }
 

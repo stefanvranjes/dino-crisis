@@ -89,6 +89,7 @@ public static class EXP_DAT
 
         IniPostprocessor.script = true;
         IniPostprocessor.address = reader.ReadUInt32(8);
+        IniPostprocessor.size = reader.ReadInt32(4);
         outFile += "_" + DAT_C3329.ToString("D2") + ".ini";
         File.WriteAllBytes(outFile, aVar3);
         AssetDatabase.Refresh();

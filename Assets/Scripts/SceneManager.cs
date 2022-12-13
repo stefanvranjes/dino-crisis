@@ -17,6 +17,7 @@ public class SceneManager : MonoBehaviour
 
     public ScnScriptableObject scn; //gp+268h
     public VabScriptableObject vab; //gp+26ch
+    public RamScriptableObject ram;
     public DatabaseScriptableObject database;
     public ushort DAT_A4; //gp+a4h
     public byte[] DAT_AC; //gp+ach
@@ -51,8 +52,6 @@ public class SceneManager : MonoBehaviour
     public int DAT_C51D4;
     public byte DAT_C51D8;
     public CriScene[] DAT_D7C0; //gp+d7c0h...gp+dea0h (0x800C51E0)
-    public CriChannel[] DAT_DEB8; //gp+deb8h...gp+????h (0x800C58D8)
-    public CriSound cSound; //0x800C6098
 
     private delegate bool FUN_9E96C(Vector4Int v4, WallCollider c, ref Vector2Int v2);
 
@@ -135,8 +134,8 @@ public class SceneManager : MonoBehaviour
         GameManager.instance.PTR_DAT_9E708[gian.INDEX] = gian;
         int j = (int)(ini.ADDR - 0x801fe900) / 4;
 
-        for (int i = 0; i < ini.INIS.Length; i++)
-            GameManager.instance.DAT_1FE900[j + i] = ini.INIS[i];
+        for (int i = 0; i < ini.DATA.Length; i++)
+            GameManager.instance.DAT_1FE900[j + i] = ini.DATA[i];
 
         triggers = new Trigger[32];
         DAT_27C = new CriSkinned[11];
@@ -202,19 +201,9 @@ public class SceneManager : MonoBehaviour
             DAT_D7C0[i] = obj.AddComponent<CriScene>();
         }
 
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriChannel (Instance)";
-            DAT_DEB8[i] = obj.AddComponent<CriChannel>();
-        }
-
         GameObject obj2 = new GameObject();
         obj2.name = "CriPlayer (Instance)";
         DAT_27C[10] = obj2.AddComponent<CriPlayer>();
-        GameObject obj3 = new GameObject();
-        obj3.name = "CriSound (Instance)";
-        cSound = obj3.AddComponent<CriSound>();
         sceneLoaded = true;
     }
 

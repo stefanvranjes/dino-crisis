@@ -204,13 +204,15 @@ public class GameManager : MonoBehaviour
     public uint DAT_A0F4; //gp+a0f4h
     public ushort[] DAT_A0F8; //gp+a0f8h
     public byte DAT_A100; //gp+a100h
+    public bool DAT_A2CC; //gp+a2cch
+    public byte DAT_A2CD; //gp+a2cdh
     public byte DAT_A2CE; //gp+a2ceh
     public byte DAT_A2CF; //gp+a2cfh
     public bool DAT_A2D0; //gp+a2d0h
     public bool DAT_A2D1; //gp+a2d1h
     public bool DAT_A2D2; //gp+a2d2h
     public byte DAT_A2D3; //gp+a2d3h
-    public byte DAT_A2D4; //gp+a2d4h
+    public bool DAT_A2D4; //gp+a2d4h
     public Packet[] DAT_C3380;
     public Frame[] DAT_C3384;
     public Packet DAT_C3388;
@@ -221,6 +223,8 @@ public class GameManager : MonoBehaviour
     public Packet DAT_C33A8;
     public Frame[] DAT_C33AC;
     public ushort DAT_C33B0;
+    public CriChannel[] DAT_DEB8; //gp+deb8h...gp+e218h (0x800C58D8)
+    public CriSound cSound; //0x800C6098
     public List<LoadScriptContainer> DAT_9E0A0;
     public List<ushort> DAT_AA2A0;
     public List<int> sceneIds;
@@ -345,9 +349,25 @@ public class GameManager : MonoBehaviour
         DAT_AA3EC = 0;
         PTR_DAT_9E708 = new GianScriptableObject[7];
         DAT_1FE900 = new SoundData[256];
+        DAT_DEB8 = new CriChannel[24];
+        GameObject obj2 = new GameObject();
+        obj2.name = "CriSound (Instance)";
+        cSound = obj2.AddComponent<CriSound>();
+        obj2.transform.parent = transform;
+
+        for (int i = 0; i < 24; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriChannel (Instance)";
+            DAT_DEB8[i] = obj.AddComponent<CriChannel>();
+            obj.transform.parent = transform;
+        }
 
         for (int i = 0; i < 24; i++)
             voices[i] = gameObject.AddComponent<AudioSource>();
+
+        FUN_4CF28(); //tmp
+        FUN_5AFCC(); //tmp
     }
 
     private void Start()
@@ -854,11 +874,61 @@ public class GameManager : MonoBehaviour
         return bVar4;
     }
 
+    private void FUN_4CF28()
+    {
+        DAT_A2CF = 0;
+        DAT_A2D0 = true;
+        DAT_A2D1 = true;
+        DAT_A2CC = true;
+        DAT_A2CD = 12;
+        DAT_A2CE = 12;
+        DAT_A2D4 = true;
+        DAT_A2D3 = 0;
+        FUN_5C1F8(DAT_A2CC);
+    }
+
     private void FUN_55198()
     {
         DontDestroyOnLoad(gameObject);
         gameObject.AddComponent(Utilities.scriptComponents[DAT_9E0A0[DAT_9AA0 >> 8].scriptName]);
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[DAT_9E0A0[DAT_9AA0 >> 8].DAT_02], LoadSceneMode.Single);
+    }
+
+    private void FUN_5AFCC()
+    {
+        CriChannel oVar2;
+        byte bVar3;
+
+        cSound.DAT_25 = 0x7f;
+        cSound.DAT_23 = 0x10;
+        cSound.DAT_22 = 3;
+        cSound.DAT_24 = 0;
+        cSound.DAT_20 = 0x3fff;
+        FUN_5C1F8(DAT_A2CC);
+        cSound.DAT_4E = 0xfff;
+        cSound.DAT_4C = 0xfff;
+        //...
+        bVar3 = 0;
+
+        do
+        {
+            oVar2 = DAT_DEB8[bVar3];
+            oVar2.ResetValues();
+            oVar2.DAT_0D = -1;
+            oVar2.DAT_22 = -1;
+            bVar3++;
+        } while (bVar3 < 24);
+    }
+
+    private void FUN_5C1F8(bool param1)
+    {
+        if (param1)
+        {
+            cSound.DAT_48 |= 0x1000;
+            return;
+        }
+
+        cSound.DAT_48 &= 0xffffefff;
     }
 
     private void FUN_5C630(uint param1, uint param2, ref uint param3, ref uint param4)
@@ -878,7 +948,7 @@ public class GameManager : MonoBehaviour
 
         param4 = param1;
 
-        if ((SceneManager.instance.cSound.DAT_48 & 0x1000) == 0)
+        if ((cSound.DAT_48 & 0x1000) == 0)
         {
             if (param3 < param4)
                 param3 = param4;
@@ -945,9 +1015,9 @@ public class GameManager : MonoBehaviour
             while (bVar1 != 0xff)
             {
                 uVar3++;
-                SceneManager.instance.DAT_DEB8[uVar2].DAT_20 = true;
-                SceneManager.instance.DAT_DEB8[uVar2].DAT_21 = false;
-                SceneManager.instance.cSound.DAT_34 |= 1U << (int)(uVar2 & 31);
+                DAT_DEB8[uVar2].DAT_20 = true;
+                DAT_DEB8[uVar2].DAT_21 = false;
+                cSound.DAT_34 |= 1U << (int)(uVar2 & 31);
                 //...
                 bVar1--;
                 uVar2 = uVar3 & 0xff;
@@ -992,14 +1062,14 @@ public class GameManager : MonoBehaviour
 
         uVar4 = 100;
         sVar3 = 100;
-        uVar1 = SceneManager.instance.cSound.DAT_23;
+        uVar1 = cSound.DAT_23;
         sVar2 = 100;
 
         if ((int)uVar1 < 24)
         {
             do
             {
-                sVar3 = SceneManager.instance.cSound.DAT_08[uVar1];
+                sVar3 = cSound.DAT_08[uVar1];
 
                 if (sVar3 == -1)
                     return (sbyte)uVar1;
@@ -1044,6 +1114,7 @@ public class GameManager : MonoBehaviour
         {
             local_40 = 0;
             local_3c = 0;
+            local_90 = new SpuVoiceAttr2();
 
             do
             {
@@ -1056,10 +1127,10 @@ public class GameManager : MonoBehaviour
                     uVar6 = (uint)(int)(short)sVar3;
                 }
 
-                if (param4[4] < SceneManager.instance.cSound.DAT_08[uVar6])
+                if (param4[4] < cSound.DAT_08[uVar6])
                     return;
 
-                oVar4 = SceneManager.instance.DAT_DEB8[uVar6];
+                oVar4 = DAT_DEB8[uVar6];
                 oVar4.DAT_20 = false;
 
                 if (param4[5] == 0)
@@ -1086,8 +1157,8 @@ public class GameManager : MonoBehaviour
                     local_90.voice = 1 << (int)(uVar6 & 31);
                 }
 
-                SceneManager.instance.cSound.DAT_30 |= (uint)local_90.voice;
-                SceneManager.instance.cSound.DAT_28 |= (uint)local_90.voice;
+                cSound.DAT_30 |= (uint)local_90.voice;
+                cSound.DAT_28 |= (uint)local_90.voice;
 
                 if (uVar6 < 0x10)
                     oVar4.DAT_22 = 3;
@@ -1097,9 +1168,9 @@ public class GameManager : MonoBehaviour
                 local_90.volmode.left = 0;
                 oVar4.DAT_1A = true;
                 oVar4.DAT_0A = (short)local_40;
-                local_90.volume.left = (short)(((uint)(local_40 * SceneManager.instance.cSound.DAT_25) * DAT_A2CE >> 4) / 0x7f);
+                local_90.volume.left = (short)(((uint)(local_40 * cSound.DAT_25) * DAT_A2CE >> 4) / 0x7f);
                 oVar4.DAT_06 = local_90.volume.left;
-                local_90.volume.right = (short)(((uint)(local_3c * SceneManager.instance.cSound.DAT_25) * DAT_A2CE >> 4) / 0x7f);
+                local_90.volume.right = (short)(((uint)(local_3c * cSound.DAT_25) * DAT_A2CE >> 4) / 0x7f);
                 oVar4.DAT_04 = local_90.volume.right;
                 local_90.note = vVar8.NOTE;
 
@@ -1116,7 +1187,7 @@ public class GameManager : MonoBehaviour
                 local_90.addr = (uint)vVar8.ADDR << 3;
                 local_90.adsr1 = vVar8.ADSR1;
                 local_90.adsr2 = vVar8.ADSR2;
-                //SpuSetVoiceAttr
+                SpuSetVoiceAttr(local_90);
 
                 if (0xef < param4[7])
                 {
@@ -1125,7 +1196,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 //...
-                SceneManager.instance.cSound.DAT_08[uVar6] = (sbyte)param4[4];
+                cSound.DAT_08[uVar6] = (sbyte)param4[4];
 
                 if (param4[0] != 0)
                     param4[0]++;
@@ -1253,7 +1324,7 @@ public class GameManager : MonoBehaviour
         if (DAT_9AA9 == 0)
         {
             DAT_9AAB = 0;
-            DAT_A2D4 = 0;
+            DAT_A2D4 = false;
         }
 
         DAT_9AA9 = 0;
@@ -2251,8 +2322,8 @@ public class GameManager : MonoBehaviour
         uint uVar9;
         uint uVar10;
         int puVar11;
-        short VOICE_00_LEFT;
-        short VOICE_00_RIGHT;
+        int VOICE_00_LEFT = 0;
+        int VOICE_00_RIGHT = 0;
 
         uVar10 = 0;
         uVar9 = arg.mask;
@@ -2318,7 +2389,7 @@ public class GameManager : MonoBehaviour
                             uVar5 = 0;
                     }
 
-                LAB_8700C:
+                    LAB_8700C:
                     VOICE_00_LEFT = (short)(uVar5 | uVar6);
                 }
 
@@ -2369,8 +2440,29 @@ public class GameManager : MonoBehaviour
                     VOICE_00_RIGHT = (short)(uVar5 | uVar6);
                 }
 
-                //...
+                //****************NOT IN OG CODE*******************//
+                VOICE_00_LEFT = (VOICE_00_LEFT & 0x7fff);
+
+                if (VOICE_00_LEFT > 0x3fff)
+                    VOICE_00_LEFT = -VOICE_00_LEFT & 0x7fff;
+
+                VOICE_00_RIGHT = (VOICE_00_RIGHT & 0x7fff);
+
+                if (VOICE_00_RIGHT > 0x3fff)
+                    VOICE_00_RIGHT = -VOICE_00_RIGHT & 0x7fff;
+
+                float _volL = (float)VOICE_00_LEFT / 0x4000;
+                float _volR = (float)VOICE_00_RIGHT / 0x4000;
+                voices[uVar10].volume = Mathf.Max(_volL, _volR);
+                voices[uVar10].panStereo = _volR - _volL;
+                voices[uVar10].clip = SceneManager.instance.ram.objects[arg.addr] as AudioClip;
+                //****************NOT IN OG CODE******************//
             }
+
+            uVar10++;
+
+            if (23 < (int)uVar10)
+                return;
         } while (true);
     }
 
@@ -2401,7 +2493,7 @@ public class GameManager : MonoBehaviour
         }
 
         uVar2 = (uint)-sVar5;
-        return 0; //tmp
+        return uVar2; //tmp
 
         uint S_N2P_OBJ_C8(uint param1)
         {

@@ -464,6 +464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scn: {fileID: -4406283935363021935, guid: f8f69427ceab6a84bb571bf49715f86e, type: 3}
   vab: {fileID: 888843668273218188, guid: f1c8f87ffc85cba41966e42891c7bb03, type: 3}
+  ram: {fileID: 11400000, guid: 1feb6eb174f84134c974642228cab8d7, type: 2}
   database: {fileID: 11400000, guid: 536651ecb139fdf4ba707b4c44b49643, type: 2}
   DAT_A4: 0
   DAT_AC: 

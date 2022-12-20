@@ -118,7 +118,7 @@ public class IMP_SCN : ScriptedImporter
                             case 50:
                             case 51:
                             case 52:
-                            case 62: //tmp
+                            case 62:
                             case 107:
                                 DataContainer2 c2 = new DataContainer2();
                                 c2.DAT_00 = type;

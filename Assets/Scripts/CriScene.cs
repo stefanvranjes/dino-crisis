@@ -2090,7 +2090,7 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_58384()
     {
-        //FUN_2984C (voice acting)
+        GameManager.instance.FUN_2984C(((DataContainer2)PTR_58[0].CONTAINERS[DAT_58[0]]).DAT_02);
         DAT_58[0]++;
         return false;
     }

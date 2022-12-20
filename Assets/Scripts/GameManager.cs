@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public static SceneManager sceneManager;
-    public static AudioSource[] voices = new AudioSource[24];
+    public static AudioSource[] voices = new AudioSource[25];
 
     public static ushort DAT_1f800008;
     public static ushort DAT_1f80000a;
@@ -225,6 +225,7 @@ public class GameManager : MonoBehaviour
     public ushort DAT_C33B0;
     public CriChannel[] DAT_DEB8; //gp+deb8h...gp+e218h (0x800C58D8)
     public CriSound cSound; //0x800C6098
+    public List<RamScriptableObject> speechLines;
     public List<LoadScriptContainer> DAT_9E0A0;
     public List<ushort> DAT_AA2A0;
     public List<int> sceneIds;
@@ -363,7 +364,7 @@ public class GameManager : MonoBehaviour
             obj.transform.parent = transform;
         }
 
-        for (int i = 0; i < 24; i++)
+        for (int i = 0; i < 25; i++)
             voices[i] = gameObject.AddComponent<AudioSource>();
 
         FUN_4CF28(); //tmp
@@ -395,6 +396,12 @@ public class GameManager : MonoBehaviour
     {
         if (gameStarted && !pauseMain)
             FUN_47900();
+    }
+
+    public void FUN_2984C(ushort param1)
+    {
+        voices[24].clip = speechLines[(DAT_9AA0 >> 8) - 1].objects[param1] as AudioClip;
+        voices[24].Play();
     }
 
     public void FUN_46C0C(int param1, uint param2, byte param3)
@@ -2342,8 +2349,8 @@ public class GameManager : MonoBehaviour
 
                 if (bVar2 || (uVar9 & 0x20) != 0)
                 {
-                    wVar3 = (ushort)_spu_note2pitch(DAT_AA534[puVar11] >> 8, DAT_AA534[puVar11] & 0xff, arg.note >> 8, arg.note & 0xff);
-                    voices[uVar10].pitch = (float)wVar3 / 4096;
+                    //wVar3 = (ushort)_spu_note2pitch(DAT_AA534[puVar11] >> 8, DAT_AA534[puVar11] & 0xff, arg.note >> 8, arg.note & 0xff);
+                    //voices[uVar10].pitch = (float)wVar3 / 4096;
                 }
 
                 if (bVar2 || (uVar9 & 1) != 0)
@@ -2456,6 +2463,7 @@ public class GameManager : MonoBehaviour
                 voices[uVar10].volume = Mathf.Max(_volL, _volR);
                 voices[uVar10].panStereo = _volR - _volL;
                 voices[uVar10].clip = SceneManager.instance.ram.objects[arg.addr] as AudioClip;
+                voices[uVar10].Play();
                 //****************NOT IN OG CODE******************//
             }
 

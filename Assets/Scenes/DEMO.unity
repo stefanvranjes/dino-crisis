@@ -822,6 +822,8 @@ MonoBehaviour:
   DAT_A0F4: 0
   DAT_A0F8: 
   DAT_A100: 0
+  DAT_A2CC: 0
+  DAT_A2CD: 0
   DAT_A2CE: 0
   DAT_A2CF: 0
   DAT_A2D0: 0
@@ -845,6 +847,15 @@ MonoBehaviour:
     COMP: 
   DAT_C33AC: []
   DAT_C33B0: 0
+  DAT_DEB8: []
+  cSound: {fileID: 0}
+  speechLines:
+  - {fileID: 11400000, guid: a6148959696177f4aa4861d484b9945e, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   DAT_9E0A0:
   - DAT_02: 326
     scriptName: ST0

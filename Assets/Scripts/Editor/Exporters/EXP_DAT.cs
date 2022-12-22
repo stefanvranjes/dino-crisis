@@ -62,34 +62,17 @@ public static class EXP_DAT
         int puVar3;
         byte[] aVar3;
 
-        if (reader.ReadInt32(4) < 0x801)
-        {
-            //puVar1 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
-            puVar1 = DAT_C3329 * 0x800 - (int)reader.Position;
-            aVar3 = new byte[0x800];
+        puVar1 = DAT_C3329 * 0x800 - (int)reader.Position;
+        aVar3 = new byte[reader.ReadInt32(4)];
 
-            for (puVar3 = 0; puVar3 < 0x800; puVar3++)
-            {
-                aVar3[puVar3] = reader.ReadByte(puVar1);
-                puVar1++;
-            }
-        }
-        else
+        for (puVar3 = 0; puVar3 < aVar3.Length; puVar3++)
         {
-            //puVar1 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
-            puVar1 = DAT_C3329 * 0x800 - (int)reader.Position;
-            aVar3 = new byte[reader.ReadInt32(4)];
-
-            for (puVar3 = 0; puVar3 < aVar3.Length; puVar3++)
-            {
-                aVar3[puVar3] = reader.ReadByte(puVar1);
-                puVar1++;
-            }
+            aVar3[puVar3] = reader.ReadByte(puVar1);
+            puVar1++;
         }
 
         IniPostprocessor.script = true;
         IniPostprocessor.address = reader.ReadUInt32(8);
-        IniPostprocessor.size = reader.ReadInt32(4);
         outFile += "_" + DAT_C3329.ToString("D2") + ".ini";
         File.WriteAllBytes(outFile, aVar3);
         AssetDatabase.Refresh();
@@ -160,29 +143,13 @@ public static class EXP_DAT
             DAT_C3330++;
         }
 
-        if (reader.ReadInt32(4) < 0x801)
-        {
-            //puVar2 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
-            puVar2 = DAT_C3329 * 0x800 - (int)reader.Position;
-            aVar3 = new byte[0x800];
+        puVar2 = DAT_C3329 * 0x800 - (int)reader.Position;
+        aVar3 = new byte[reader.ReadInt32(4)];
 
-            for (puVar3 = 0; puVar3 < 0x800; puVar3++)
-            {
-                aVar3[puVar3] = reader.ReadByte(puVar2);
-                puVar2++;
-            }
-        }
-        else
+        for (puVar3 = 0; puVar3 < aVar3.Length; puVar3++)
         {
-            //puVar2 = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
-            puVar2 = DAT_C3329 * 0x800 - (int)reader.Position;
-            aVar3 = new byte[0xA00];
-
-            for (puVar3 = 0; puVar3 < 0xA00; puVar3++)
-            {
-                aVar3[puVar3] = reader.ReadByte(puVar2);
-                puVar2++;
-            }
+            aVar3[puVar3] = reader.ReadByte(puVar2);
+            puVar2++;
         }
 
         GianPostprocessor.script = true;
@@ -229,7 +196,21 @@ public static class EXP_DAT
 
     private static void FUN_2B024(BufferedBinaryReader reader, string outFile)
     {
+        int puVar2;
+        int puVar3;
+        byte[] aVar3;
 
+        puVar2 = DAT_C3329 * 0x800 - (int)reader.Position;
+        aVar3 = new byte[reader.ReadInt32(4)];
+
+        for (puVar3 = 0; puVar3 < aVar3.Length; puVar3++)
+        {
+            aVar3[puVar3] = reader.ReadByte(puVar2);
+            puVar2++;
+        }
+
+        outFile += "_" + DAT_C3329.ToString("D2") + ".gnt";
+        File.WriteAllBytes(outFile, aVar3);
     }
 
     private static void FUN_2B13C(BufferedBinaryReader reader, string outFile)

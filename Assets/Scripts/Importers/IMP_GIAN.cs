@@ -25,7 +25,7 @@ public class IMP_GIAN : ScriptedImporter
                 gian.INDEX = index;
                 reader.Seek(0x90, SeekOrigin.Begin);
                 
-                while(reader.ReadUInt16(0x16) != 0)
+                while(reader.Position < reader.Length)
                 {
                     SpuVoiceAttr attr = new SpuVoiceAttr();
                     reader.Seek(1, SeekOrigin.Current);

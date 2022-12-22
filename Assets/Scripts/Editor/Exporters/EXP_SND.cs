@@ -19,9 +19,8 @@ public static class EXP_SND
                         { 122.0 / 64.0, -60.0 / 64.0 } };
         double[] samples = new double[28];
         int i = 0;
-        bool breakLoop = false;
 
-        while (reader.Position - startPosition < size && !breakLoop)
+        while (reader.Position - startPosition < size)
         {
             int samplesCount = 0;
             int loopBegin = 0;
@@ -77,7 +76,10 @@ public static class EXP_SND
                     int flags = reader.ReadByte();
 
                     if (flags == 7)
+                    {
+                        reader.Seek(0xE, SeekOrigin.Current);
                         break;
+                    }
                     else if (flags == 6)
                         loopBegin = samplesCount;
                     else if (flags == 3)
@@ -116,8 +118,6 @@ public static class EXP_SND
                 if (loopEnd == 0)
                     loopEnd = samplesCount;
 
-                reader.Seek(0xE, SeekOrigin.Current);
-                breakLoop = reader.ReadByte(0x11) == 4 ? false : true;
                 long sz = writer.BaseStream.Length;
                 writer.BaseStream.Seek(4, SeekOrigin.Begin);
                 writer.Write((int)(sz - 8));

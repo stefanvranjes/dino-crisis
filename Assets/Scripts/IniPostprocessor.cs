@@ -7,7 +7,6 @@ public class IniPostprocessor : AssetPostprocessor
 {
     public static bool script;
     public static uint address;
-    public static int size;
 
     private void OnPreprocessAsset()
     {
@@ -18,7 +17,6 @@ public class IniPostprocessor : AssetPostprocessor
             if (iniImporter != null && script)
             {
                 iniImporter.ramAddress = address;
-                iniImporter.size = size;
             }
         }
     }

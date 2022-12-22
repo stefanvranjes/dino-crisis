@@ -8,7 +8,6 @@ using UnityEditor.AssetImporters;
 public class IMP_INI : ScriptedImporter
 {
     public uint ramAddress;
-    public int size;
 
     public override void OnImportAsset(AssetImportContext ctx)
     {
@@ -20,9 +19,8 @@ public class IMP_INI : ScriptedImporter
 
             List<SoundData> list = new List<SoundData>();
             ini.ADDR = ramAddress;
-            ini.SIZE = size;
 
-            while (reader.Position < size)
+            while (reader.Position < reader.Length)
             {
                 SoundData snd = new SoundData();
                 snd.DAT_00 = reader.ReadByte();

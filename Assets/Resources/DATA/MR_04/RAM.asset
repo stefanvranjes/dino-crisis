@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe36aa5f44f593408332a9325cc2d5f, type: 3}
+  m_Name: RAM
+  m_EditorClassIdentifier: 
+  prefabName: 
+  objects:
+    m_keys: f03c010010c1010020e901003047020020a70200c0c00200700c0300
+    m_values:
+    - {fileID: 8300000, guid: 776b70e042f3ccc409c8041bd61e7ebc, type: 3}
+    - {fileID: 8300000, guid: 99b3fbead3c505846a82ff790bdbc9b2, type: 3}
+    - {fileID: 8300000, guid: 627ee691810b7514db103fe77b183323, type: 3}
+    - {fileID: 8300000, guid: cb7356b290e4356409a3c19cce18bdbe, type: 3}
+    - {fileID: 8300000, guid: e9450a5ce9f9363438bd293b24427215, type: 3}
+    - {fileID: 8300000, guid: 4daab1c98f58ffd4e9dd6c44ab722b88, type: 3}
+    - {fileID: 8300000, guid: 651553c413493b940936d50658dc196c, type: 3}

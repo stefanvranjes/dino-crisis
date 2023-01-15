@@ -23,7 +23,6 @@ public class MenuItems
             ram = "Assets" + ram.Substring(Application.dataPath.Length);
 
         EXP_DAT.RAM = AssetDatabase.LoadAssetAtPath(ram, typeof(RamScriptableObject)) as RamScriptableObject;
-
         EXP_DAT.ExtractDAT(file, save);
     }
 
@@ -41,7 +40,24 @@ public class MenuItems
             ram = "Assets" + ram.Substring(Application.dataPath.Length);
 
         EXP_DAT.RAM = AssetDatabase.LoadAssetAtPath(ram, typeof(RamScriptableObject)) as RamScriptableObject;
-
         EXP_SCN.ExtractSCN(file, save);
+    }
+
+    [MenuItem("Tools/Export COMMON")]
+    private static void ExportCOMMON()
+    {
+        string file1 = EditorUtility.OpenFilePanel("Open file to read from", defaultOpenPath, "");
+        defaultOpenPath = Path.GetDirectoryName(file1);
+        string file2 = EditorUtility.OpenFilePanel("Open file to write from", defaultOpenPath, "");
+        string ram = EditorUtility.OpenFilePanel("Open .RAM file", defaultSavePath, "");
+        defaultSavePath = Path.GetDirectoryName(ram);
+        string save = EditorUtility.SaveFolderPanel("Save location", defaultSavePath, "");
+        defaultSavePath = Path.GetDirectoryName(save);
+
+        if (ram.StartsWith(Application.dataPath))
+            ram = "Assets" + ram.Substring(Application.dataPath.Length);
+
+        EXP_CMN.RAM = AssetDatabase.LoadAssetAtPath(ram, typeof(RamScriptableObject)) as RamScriptableObject;
+        EXP_CMN.ExtractCOMMON(file1, file2, save);
     }
 }

@@ -14,7 +14,11 @@ public class EXP_CMN
         { 0x11, 0x1bb0 },
         { 0x12, 0x1c90 },
         { 0x13, 0x1bc0 },
-        { 0x14, 0x1ca0 }
+        { 0x14, 0x1ca0 },
+        { 0x15, 0x183c },
+        { 0x16, 0x183c },
+        { 0x17, 0x185c },
+        { 0x18, 0x185c }
     };
 
     private static Dictionary<int, uint> END_OFFSETS = new Dictionary<int, uint>()
@@ -22,7 +26,11 @@ public class EXP_CMN
         { 0x11, 0x1c60 },
         { 0x12, 0x1d40 },
         { 0x13, 0x1c64 },
-        { 0x14, 0x1d44 }
+        { 0x14, 0x1d44 },
+        { 0x15, 0x18e0 },
+        { 0x16, 0x18e0 },
+        { 0x17, 0x1900 },
+        { 0x18, 0x1900 }
     };
 
     public static void ExtractCOMMON(string inFile1, string inFile2, string outDir)

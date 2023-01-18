@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: af077af69844cb94faa8c38264309fad
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 57e99845e1d29ed47804780b9f22bb2e, type: 3}
+  ramAddress: 2148959180
+  boneCount: 15

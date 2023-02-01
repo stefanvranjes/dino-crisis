@@ -15,6 +15,17 @@ public static class Utilities
     {
         { "ST1", typeof(ST1) }
     };
+    public static TodScriptableObject[] DAT_18770 = new TodScriptableObject[]
+    {
+        (TodScriptableObject) GameManager.instance.playerCore.objects[0x8018466C],
+        (TodScriptableObject) GameManager.instance.playerCore.objects[0x8018539C],
+        (TodScriptableObject) GameManager.instance.playerCore.objects[0x80184D04],
+        (TodScriptableObject) GameManager.instance.playerCore.objects[0x80185A34],
+        (TodScriptableObject) GameManager.instance.playerCore.objects[0x8019113C],
+        (TodScriptableObject) GameManager.instance.playerCore.objects[0x80191884],
+        (TodScriptableObject) GameManager.instance.playerCore.objects[0x801914E0],
+        (TodScriptableObject) GameManager.instance.playerCore.objects[0x80191C28]
+    };
     public static short[] DAT_184F0 = new short[]
     {
         -6, -7, -17, -18, -23, -24, -25, -26, -26, -26, -28, -28, -28, -28, -26, -27, -23, -24, -19, -19, -14, -15, -9, -10, -13, -13
@@ -84,6 +95,27 @@ public static class Utilities
     public static Vector3Int DAT_9C610 = new Vector3Int(-1690, 0, -1807);
     public static Vector3Int DAT_9C628 = new Vector3Int(600, 0, -1239);
     public static Vector3Int DAT_9C630 = new Vector3Int(-1690, 0, -1280);
+    public static uint[][] DAT_9CFA8 = new uint[][]
+    {
+        new uint[]
+        {
+            0x8009cfbc
+        },
+        new uint[]
+        {
+            0x8017bbb0, 0x8017bc90, 0x8017bbc0, 0x8017bca0
+        },
+        new uint[]
+        {
+            0x8017b83c, 0x8017b83c, 0x8017b85c, 0x8017b85c
+        },
+        new uint[]
+        {
+            0x8017bc4c, 0x8017bb58, 0x8017bc4c, 0x8017bb58
+        }
+    };
+    public static UIntUIntDictionary DAT_9CFBC; //needs to be initialized
+    
     public static short[] DAT_AC658 = new short[]
     {
         4096, 4127, 4159, 4190, 4222, 4252, 4283, 4314, 4344,
@@ -2813,6 +2845,34 @@ public static class Utilities
     public static bool FUN_2EC6C(CriSkinned param1, byte param2, byte param3)
     {
         return param1.FUN_65D78(ref DAT_9B314[param2 * 4 + param3], param2, param3);
+    }
+
+    public static UnityEngine.Object GetSharedObject(uint sharedAddress)
+    {
+        uint objectRamAddress;
+
+        if (SharedAssets.instance.SHARED.ContainsKey(sharedAddress))
+        {
+            if (SharedAssets.instance.SHARED.TryGetValue(sharedAddress, out objectRamAddress))
+            {
+                if (SceneManager.instance.common.objects.ContainsKey(objectRamAddress))
+                    return SceneManager.instance.common.objects[objectRamAddress];
+                else if (GameManager.instance.playerCore.objects.ContainsKey(objectRamAddress))
+                    return GameManager.instance.playerCore.objects[objectRamAddress];
+            }
+        }
+        else if (DAT_9CFBC.ContainsKey(sharedAddress))
+        {
+            if (DAT_9CFBC.TryGetValue(sharedAddress, out objectRamAddress))
+            {
+                if (SceneManager.instance.common.objects.ContainsKey(objectRamAddress))
+                    return SceneManager.instance.common.objects[objectRamAddress];
+                else if (GameManager.instance.playerCore.objects.ContainsKey(objectRamAddress))
+                    return GameManager.instance.playerCore.objects[objectRamAddress];
+            }
+        }
+
+        return null;
     }
 }
 

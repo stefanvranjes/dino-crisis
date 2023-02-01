@@ -849,6 +849,7 @@ MonoBehaviour:
   DAT_C33B0: 0
   DAT_DEB8: []
   cSound: {fileID: 0}
+  playerCore: {fileID: 11400000, guid: 538736dcd265f694ca18c9f29665e2a0, type: 2}
   speechLines:
   - {fileID: 11400000, guid: a6148959696177f4aa4861d484b9945e, type: 2}
   - {fileID: 0}

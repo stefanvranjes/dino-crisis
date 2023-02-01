@@ -225,6 +225,7 @@ public class GameManager : MonoBehaviour
     public ushort DAT_C33B0;
     public CriChannel[] DAT_DEB8; //gp+deb8h...gp+e218h (0x800C58D8)
     public CriSound cSound; //0x800C6098
+    public RamScriptableObject playerCore;
     public List<RamScriptableObject> speechLines;
     public List<LoadScriptContainer> DAT_9E0A0;
     public List<ushort> DAT_AA2A0;
@@ -3668,7 +3669,7 @@ public class GameManager : MonoBehaviour
                     if ((uVar3 & 1) != 0)
                         SceneManager.instance.FUN_26504(0, (short)dVar4.DAT_0E.x, (short)dVar4.DAT_0E.y, (short)dVar4.DAT_0E.z);
 
-                    oVar2.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801890dc], 1, 0);
+                    oVar2.FUN_609C8((TodScriptableObject)playerCore.objects[0x801890dc], 1, 0, 0);
                     oVar2.FUN_60AB4();
                     param1.DAT_08 = 1;
                     param1.DAT_04++;
@@ -3726,7 +3727,7 @@ public class GameManager : MonoBehaviour
                 if ((uVar3 & 1) != 0)
                     SceneManager.instance.FUN_26504(0, (short)dVar4.DAT_0E.x, (short)dVar4.DAT_0E.y, (short)dVar4.DAT_0E.z);
 
-                oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801890dc], 1, 0);
+                oVar5.FUN_609C8((TodScriptableObject)playerCore.objects[0x801890dc], 1, 0, 0);
                 oVar5.FUN_60AB4();
                 param1.DAT_08 = 1;
                 param1.DAT_04++;
@@ -3757,7 +3758,7 @@ public class GameManager : MonoBehaviour
 
                 if (!bVar4) goto LAB_7ADF0;
 
-                oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018ca70], 0, 0);
+                oVar5.FUN_609C8((TodScriptableObject)playerCore.objects[0x8018ca70], 0, 0, 0);
                 break;
             case 4:
                 bVar4 = oVar5.FUN_60AB4();
@@ -3796,7 +3797,7 @@ public class GameManager : MonoBehaviour
         switch (param1.DAT_04)
         {
             case 0:
-                oVar4.FUN_609C8((TodScriptableObject)oVar4.REFS[oVar4.DAT_220], 1, 0);
+                oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220), 1, 0, oVar4.DAT_220);
                 oVar4.FUN_60AB4();
                 FUN_46C0C(0, 20, 1);
                 sVar2 = param1.DAT_04;
@@ -3835,7 +3836,7 @@ public class GameManager : MonoBehaviour
 
                 break;
             case 4:
-                oVar4.FUN_609C8((TodScriptableObject)oVar4.REFS[oVar4.DAT_220 + 1], 1, 10);
+                oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220 + 4), 1, 10, oVar4.DAT_220);
                 break;
             case 5:
                 oVar4.FUN_60AB4();
@@ -3886,7 +3887,7 @@ public class GameManager : MonoBehaviour
         switch (param1.DAT_04)
         {
             case 0:
-                oVar6.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80191fcc], 0x20, 0);
+                oVar6.FUN_609C8((TodScriptableObject)playerCore.objects[0x80191fcc], 0x20, 0, 0);
                 oVar6.FUN_60AB4();
                 FUN_46C0C(0, 20, 1);
                 param1.DAT_08 = 4;
@@ -3915,7 +3916,7 @@ public class GameManager : MonoBehaviour
 
                 break;
             case 4:
-                oVar6.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80192664], 9, 10);
+                oVar6.FUN_609C8((TodScriptableObject)playerCore.objects[0x80192664], 9, 10, 0);
                 break;
             case 5:
                 oVar6.FUN_60AB4();
@@ -4012,9 +4013,9 @@ public class GameManager : MonoBehaviour
                 bVar1 = param1.DAT_0C == 0;
 
                 if (bVar1)
-                    oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80187a7c], 0, 0);
+                    oVar5.FUN_609C8((TodScriptableObject)playerCore.objects[0x80187a7c], 0, 0, 0);
                 else
-                    oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018a990], 0, 0);
+                    oVar5.FUN_609C8((TodScriptableObject)playerCore.objects[0x8018a990], 0, 0, 0);
 
                 DAT_C7D4C = !bVar1;
                 oVar5.FUN_60AB4();
@@ -4073,7 +4074,7 @@ public class GameManager : MonoBehaviour
                 oVar2 = SceneManager.instance.DAT_7CDC[1];
                 oVar2.vr.y = 0xab2;
                 SceneManager.instance.FUN_26504(0, 0x900, -0x3e0, 0x780);
-                oVar5.FUN_609C8((TodScriptableObject)oVar5.REFS[oVar5.DAT_220 + 1], 1, 0);
+                oVar5.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar5.DAT_220 + 4), 1, 0, oVar5.DAT_220 + 1);
                 param1.DAT_04++;
                 goto case 5;
             case 5:
@@ -4168,9 +4169,9 @@ public class GameManager : MonoBehaviour
                 bVar1 = param1.DAT_0C == 0;
 
                 if (bVar1)
-                    oVar7.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801885ac], 0, 0);
+                    oVar7.FUN_609C8((TodScriptableObject)playerCore.objects[0x801885ac], 0, 0, 0);
                 else
-                    oVar7.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018ba00], 0, 0);
+                    oVar7.FUN_609C8((TodScriptableObject)playerCore.objects[0x8018ba00], 0, 0, 0);
 
                 DAT_C7D4C = !bVar1;
                 oVar7.FUN_60AB4();
@@ -4252,7 +4253,7 @@ public class GameManager : MonoBehaviour
                 SceneManager.instance.FUN_264C4(0, -0x3c0, -0x600, 0);
                 SceneManager.instance.FUN_26504(0, -0x930, -0x810, -0x900);
                 oVar7.screen.z = 0x200;
-                oVar7.FUN_609C8((TodScriptableObject)oVar7.REFS[oVar7.DAT_220 + 1], 1, 0);
+                oVar7.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar7.DAT_220 + 4), 1, 0, oVar7.DAT_220 + 1);
                 param1.DAT_04++;
                 goto case 5;
             case 5:
@@ -4362,9 +4363,9 @@ public class GameManager : MonoBehaviour
                 param1.DAT_08 = 3;
 
                 if (bVar1)
-                    oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x801885ac], 0, 0);
+                    oVar5.FUN_609C8((TodScriptableObject)playerCore.objects[0x801885ac], 0, 0, 0);
                 else
-                    oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018ba00], 0, 0);
+                    oVar5.FUN_609C8((TodScriptableObject)playerCore.objects[0x8018ba00], 0, 0, 0);
 
                 DAT_C7D4C = !bVar1;
                 oVar5.FUN_60AB4();
@@ -4414,7 +4415,7 @@ public class GameManager : MonoBehaviour
         switch (param1.DAT_04)
         {
             case 0:
-                oVar4.FUN_609C8((TodScriptableObject)oVar4.REFS[oVar4.DAT_220], 1, 0);
+                oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220), 1, 0, oVar4.DAT_220);
                 oVar4.FUN_60AB4();
                 param1.DAT_04++;
                 sVar2 = 4;
@@ -4463,7 +4464,7 @@ public class GameManager : MonoBehaviour
                 param1.DAT_04 = (short)(sVar3 + 1);
                 break;
             case 5:
-                oVar4.FUN_609C8((TodScriptableObject)oVar4.REFS[oVar4.DAT_220 + 1], 1, 10);
+                oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220 + 4), 1, 10, oVar4.DAT_220 + 1);
                 param1.DAT_04++;
                 oVar5.DAT_4A = 10;
                 SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
@@ -4543,7 +4544,7 @@ public class GameManager : MonoBehaviour
         switch (param1.DAT_04)
         {
             case 0:
-                oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80191fcc], 0x20, 0);
+                oVar5.FUN_609C8((TodScriptableObject)playerCore.objects[0x80191fcc], 0x20, 0, 0);
                 oVar5.FUN_60AB4();
                 param1.DAT_08 = 4;
                 param1.DAT_04++;
@@ -4571,7 +4572,7 @@ public class GameManager : MonoBehaviour
                 param1.DAT_04++;
                 break;
             case 4:
-                oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80192664], 9, 10);
+                oVar5.FUN_609C8((TodScriptableObject)playerCore.objects[0x80192664], 9, 10, 0);
                 param1.DAT_04++;
                 oVar2.DAT_4A = 10;
                 SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
@@ -4665,7 +4666,7 @@ public class GameManager : MonoBehaviour
             if (!DAT_6D)
             {
                 param1.DAT_04++;
-                oVar3.FUN_609C8((TodScriptableObject)oVar3.REFS[oVar3.DAT_220 + 1], 1, 10);
+                oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 1);
                 oVar1.DAT_4A = 10;
                 SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
             }
@@ -4676,7 +4677,7 @@ public class GameManager : MonoBehaviour
             {
                 if (sVar2 == 0)
                 {
-                    oVar3.FUN_609C8((TodScriptableObject)oVar3.REFS[oVar3.DAT_220], 1, 0);
+                    oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220), 1, 0, oVar3.DAT_220);
                     oVar3.FUN_60AB4();
                     param1.DAT_08 = 4;
                     param1.DAT_04++;
@@ -4743,7 +4744,7 @@ public class GameManager : MonoBehaviour
         switch (param1.DAT_04)
         {
             case 0:
-                oVar3.FUN_609C8((TodScriptableObject)oVar3.REFS[oVar3.DAT_220], 1, 0);
+                oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220), 1, 0, oVar3.DAT_220);
                 oVar3.FUN_60AB4();
                 param1.DAT_08 = 3;
                 param1.DAT_04++;
@@ -4789,7 +4790,7 @@ public class GameManager : MonoBehaviour
                 param1.DAT_04 = (short)(sVar2 + 1);
                 break;
             case 5:
-                oVar3.FUN_609C8((TodScriptableObject)oVar3.REFS[oVar3.DAT_220 + 1], 1, 10);
+                oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 1);
                 param1.DAT_04++;
                 oVar4.DAT_4A = 10;
                 SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
@@ -4825,7 +4826,7 @@ public class GameManager : MonoBehaviour
         switch (param1.DAT_04)
         {
             case 0:
-                oVar3.FUN_609C8((TodScriptableObject)oVar3.REFS[oVar3.DAT_220], 1, 0);
+                oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220), 1, 0, oVar3.DAT_220);
                 oVar3.FUN_60AB4();
                 param1.DAT_08 = 3;
                 param1.DAT_04++;
@@ -4860,11 +4861,11 @@ public class GameManager : MonoBehaviour
                         return;
 
                     param1.DAT_04 += 2;
-                    oVar3.FUN_609C8((TodScriptableObject)oVar3.REFS[oVar3.DAT_220 + 1], 1, 10);
+                    oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 1);
                     return;
                 }
 
-                oVar3.FUN_609C8((TodScriptableObject)oVar3.REFS[oVar3.DAT_220 + 1], 1, 10);
+                oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 1);
                 break;
             case 4:
                 param2 = oVar4.screen.y - param2;
@@ -4934,7 +4935,7 @@ public class GameManager : MonoBehaviour
             if (DAT_6D)
                 return;
 
-            oVar4.FUN_609C8((TodScriptableObject)oVar4.REFS[oVar4.DAT_220 + 1], 1, 10);
+            oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220 + 4), 1, 10, oVar4.DAT_220 + 1);
         }
         else
         {
@@ -4943,7 +4944,7 @@ public class GameManager : MonoBehaviour
                 if (sVar2 != 0)
                     return;
 
-                oVar4.FUN_609C8((TodScriptableObject)oVar4.REFS[oVar4.DAT_220], 1, 0);
+                oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220), 1, 0, oVar4.DAT_220);
                 oVar4.FUN_60AB4();
                 param1.DAT_08 = 4;
                 param1.DAT_04++;
@@ -5079,13 +5080,13 @@ public class GameManager : MonoBehaviour
                 {
                     if (param1.DAT_0C == 0)
                     {
-                        oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80191fcc], 1, 0);
+                        oVar5.FUN_609C8((TodScriptableObject)playerCore.objects[0x80191fcc], 1, 0, 0);
                         oVar5.FUN_60AB4();
                         puVar8 = 0x8018da38;
                     }
                     else
                     {
-                        oVar5.FUN_609C8((TodScriptableObject)oVar5.REFS[oVar5.DAT_220], 1, 0);
+                        oVar5.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar5.DAT_220), 1, 0, oVar5.DAT_220);
                         oVar5.FUN_60AB4();
                         puVar8 = 0x8018e8b8;
                     }
@@ -5106,7 +5107,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
 
-                oVar5.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[puVar8], 1, bVar7);
+                oVar5.FUN_609C8((TodScriptableObject)playerCore.objects[puVar8], 1, bVar7, 0);
                 oVar5.FUN_60AB4();
                 FUN_46C0C(0, 20, 1);
                 DAT_C7CF8 = new Vector3Int(0, 0, -0xa00);
@@ -5255,18 +5256,18 @@ public class GameManager : MonoBehaviour
 
                     if (param1.DAT_0C == 0)
                     {
-                        oVar6.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80191fcc], 1, 0);
+                        oVar6.FUN_609C8((TodScriptableObject)playerCore.objects[0x80191fcc], 1, 0, 0);
                         oVar6.FUN_60AB4();
                         puVar5 = 0x8018e178;
                     }
                     else
                     {
-                        oVar6.FUN_609C8((TodScriptableObject)oVar6.REFS[oVar6.DAT_220], 1, 0);
+                        oVar6.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar6.DAT_220), 1, 0, oVar6.DAT_220);
                         oVar6.FUN_60AB4();
                         puVar5 = 0x8018f340;
                     }
 
-                    oVar6.FUN_609C8((TodScriptableObject)SceneManager.instance.database.playerCore.objects[puVar5], 1, 8);
+                    oVar6.FUN_609C8((TodScriptableObject)playerCore.objects[puVar5], 1, 8, 0);
                     oVar6.FUN_60AB4();
                     FUN_46C0C(0, 20, 1);
                     DAT_C7D10 = new Vector3Int(0, 0, 0xa00);
@@ -5379,12 +5380,12 @@ public class GameManager : MonoBehaviour
 
             if (param1.DAT_0C == 0)
             {
-                oVar5.FUN_609C8((TodScriptableObject)dVar4.ram.objects[0x8015dd74], 1, 0);
+                oVar5.FUN_609C8((TodScriptableObject)dVar4.ram.objects[0x8015dd74], 1, 0, 0);
                 oVar5.screen.y = -0x240;
             }
             else
             {
-                oVar5.FUN_609C8((TodScriptableObject)dVar4.ram.objects[0x8015eaf0], 1, 0);
+                oVar5.FUN_609C8((TodScriptableObject)dVar4.ram.objects[0x8015eaf0], 1, 0, 0);
                 oVar5.screen.y = -0x210;
                 SceneManager.instance.FUN_26504(0, (short)dVar4.DAT_0E.x, (short)dVar4.DAT_0E.y, (short)dVar4.DAT_0E.z);
             }
@@ -5459,10 +5460,10 @@ public class GameManager : MonoBehaviour
             param1.DAT_04++;
 
             if (param1.DAT_0C == 0)
-                oVar5.FUN_609C8((TodScriptableObject)dVar4.ram.objects[0x8015dd74], 1, 0);
+                oVar5.FUN_609C8((TodScriptableObject)dVar4.ram.objects[0x8015dd74], 1, 0, 0);
             else
             {
-                oVar5.FUN_609C8((TodScriptableObject)dVar4.ram.objects[0x8015eaf0], 1, 0);
+                oVar5.FUN_609C8((TodScriptableObject)dVar4.ram.objects[0x8015eaf0], 1, 0, 0);
                 oVar5.screen.x = 80;
                 SceneManager.instance.FUN_26504(0, (short)dVar4.DAT_0E.x, (short)dVar4.DAT_0E.y, (short)dVar4.DAT_0E.z);
             }
@@ -5536,7 +5537,7 @@ public class GameManager : MonoBehaviour
             {
                 if (sVar1 == 0)
                 {
-                    oVar3.FUN_609C8((TodScriptableObject)oVar3.REFS[oVar3.DAT_220], 1, 0);
+                    oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220), 1, 0, oVar3.DAT_220);
                     oVar3.FUN_60AB4();
                     param1.DAT_08 = 6;
                     param1.DAT_04++;
@@ -5614,7 +5615,7 @@ public class GameManager : MonoBehaviour
                 if (sVar2 == 0)
                 {
                     oVar6.vr.y = 0x800;
-                    oVar6.FUN_609C8((TodScriptableObject)oVar6.REFS[oVar6.DAT_220], 1, 0);
+                    oVar6.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar6.DAT_220), 1, 0, oVar6.DAT_220);
                     oVar6.FUN_60AB4();
                     iVar6 = 1;
                     param1.DAT_08 = 6;
@@ -5772,6 +5773,7 @@ public class GameManager : MonoBehaviour
         TodScriptableObject puVar4;
         uint uVar5;
         CriPlayer oVar6;
+        uint uVar7;
 
         CoroutineLoader param1 = loader;
         sVar2 = param1.DAT_04;
@@ -5798,11 +5800,17 @@ public class GameManager : MonoBehaviour
             param1.DAT_04++;
 
             if (param1.DAT_0C == 0)
-                puVar4 = (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x80191fcc];
+            {
+                puVar4 = (TodScriptableObject)playerCore.objects[0x80191fcc];
+                uVar7 = 0;
+            }
             else
-                puVar4 = (TodScriptableObject)oVar6.REFS[oVar6.DAT_220];
+            {
+                puVar4 = (TodScriptableObject)Utilities.GetSharedObject(oVar6.DAT_220);
+                uVar7 = oVar6.DAT_220;
+            }
 
-            oVar6.FUN_609C8(puVar4, 1, 0);
+            oVar6.FUN_609C8(puVar4, 1, 0, uVar7);
             oVar6.FUN_60AB4();
             FUN_46C0C(0, 20, 1);
             return;
@@ -5820,11 +5828,11 @@ public class GameManager : MonoBehaviour
             param1.DAT_04++;
 
             if (param1.DAT_0C == 0)
-                puVar4 = (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018da38];
+                puVar4 = (TodScriptableObject)playerCore.objects[0x8018da38];
             else
-                puVar4 = (TodScriptableObject)SceneManager.instance.database.playerCore.objects[0x8018e8b8];
+                puVar4 = (TodScriptableObject)playerCore.objects[0x8018e8b8];
 
-            oVar6.FUN_609C8(puVar4, 9, 10);
+            oVar6.FUN_609C8(puVar4, 9, 10, 0);
             return;
         }
 
@@ -5904,7 +5912,7 @@ public class GameManager : MonoBehaviour
         switch (param1.DAT_04)
         {
             case 0:
-                oVar5.FUN_609C8((TodScriptableObject)oVar5.REFS[oVar5.DAT_220 + 4], 1, 0);
+                oVar5.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar5.DAT_220 + 0x10), 1, 0, oVar5.DAT_220 + 4);
                 oVar5.FUN_60AB4();
                 SceneManager.instance.FUN_26504(0, (short)dVar3.DAT_0E.x, (short)dVar3.DAT_0E.y, (short)dVar3.DAT_0E.z);
                 iVar3 = 1;
@@ -5957,7 +5965,7 @@ public class GameManager : MonoBehaviour
 
                 if (oVar5.screen.z < 0x4901) goto LAB_7EBE4;
 
-                oVar5.FUN_609C8((TodScriptableObject)oVar5.REFS[oVar5.DAT_220], 1, 20);
+                oVar5.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar5.DAT_220), 1, 20, oVar5.DAT_220);
                 goto LAB_7EDF4;
             case 3:
                 oVar5.FUN_60AB4();
@@ -6014,7 +6022,7 @@ public class GameManager : MonoBehaviour
             if (sVar1 != 0)
                 return;
 
-            oVar4.FUN_609C8((TodScriptableObject)DAT_A89A0[DAT_47].ram.objects[0x8015d000], 0, 0);
+            oVar4.FUN_609C8((TodScriptableObject)DAT_A89A0[DAT_47].ram.objects[0x8015d000], 0, 0, 0);
             oVar4.FUN_60AB4();
             uVar2 = 0;
         }

@@ -154,7 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scn: {fileID: -4406283935363021935, guid: a115325bcb54cb543a5bdaaea5959397, type: 3}
   vab: {fileID: 888843668273218188, guid: 9fa626d167f77304fafe0706c5342079, type: 3}
-  database: {fileID: 11400000, guid: 536651ecb139fdf4ba707b4c44b49643, type: 2}
+  ram: {fileID: 11400000, guid: e5e89bc0bb8001e46906d4e19e753538, type: 2}
+  common: {fileID: 0}
+  bgm: {fileID: 0}
   DAT_A4: 0
   DAT_AC: 
   DAT_B0: 
@@ -188,8 +190,6 @@ MonoBehaviour:
   DAT_C51D4: 0
   DAT_C51D8: 0
   DAT_D7C0: []
-  DAT_DEB8: []
-  cSound: {fileID: 0}
 --- !u!4 &1223960082
 Transform:
   m_ObjectHideFlags: 0
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cfuStatus: PSXEffects v1.15.5 - update available (click to update).
   sections: 01010100
-  customRes: {x: 772, y: 423}
+  customRes: {x: 769, y: 423}
   resolutionFactor: 1
   limitFramerate: -1
   skipFrames: 0

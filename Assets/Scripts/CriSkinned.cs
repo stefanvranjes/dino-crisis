@@ -96,6 +96,7 @@ public class CriSkinned : CriObject
     public byte DAT_1A5; //0x1A5
     public bool DAT_1A6; //0x1A6
     public byte DAT_1A7; //0x1A7
+    public int[] REFS;
 
     private List<byte> commandList;
     private List<Vector3> vertexList;
@@ -271,6 +272,7 @@ public class CriSkinned : CriObject
         DAT_1A5 = 0;
         DAT_1A6 = false;
         DAT_1A7 = 0;
+        REFS = null;
     }
 
     public void FUN_60278()
@@ -526,7 +528,7 @@ public class CriSkinned : CriObject
         DAT_62--;
     }
 
-    public void FUN_609C8(TodScriptableObject param1, byte param2, byte param3)
+    public void FUN_609C8(TodScriptableObject param1, byte param2, byte param3, uint param4)
     {
         byte bVar1;
         byte bVar2;
@@ -534,7 +536,7 @@ public class CriSkinned : CriObject
 
         if (param1 == null)
         {
-            FUN_609C8(0, param2, param3);
+            FUN_609C8(REFS[param4], param2, param3);
             return;
         }
 
@@ -957,7 +959,7 @@ public class CriSkinned : CriObject
                 oVar3.DAT_40 = oVar5;
                 oVar3.screen = param1.screen;
                 oVar3.vr = param1.vr;
-                oVar3.cMesh = (TmdScriptableObject)SceneManager.instance.database.playerCore.objects[0x80180178];
+                oVar3.cMesh = (TmdScriptableObject)GameManager.instance.playerCore.objects[0x80180178];
                 oVar4.DAT_01 = 12;
                 oVar4.DAT_1C = oVar3;
                 oVar4.DAT_20 = this;

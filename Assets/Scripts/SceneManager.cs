@@ -18,7 +18,8 @@ public class SceneManager : MonoBehaviour
     public ScnScriptableObject scn; //gp+268h
     public VabScriptableObject vab; //gp+26ch
     public RamScriptableObject ram;
-    public DatabaseScriptableObject database;
+    public RamScriptableObject common;
+    public RamScriptableObject bgm;
     public ushort DAT_A4; //gp+a4h
     public byte[] DAT_AC; //gp+ach
     public uint[] DAT_B0; //gp+b0h
@@ -82,9 +83,6 @@ public class SceneManager : MonoBehaviour
         0, 1, 0, 0, 0, 0, 1, 0, 0, 0
     };
 
-    public static TodScriptableObject[] DAT_18770;
-    public static RefScriptableObject[][] PTR_9CFA8;
-
     public static bool sceneLoaded = false;
 
     void Awake()
@@ -103,32 +101,6 @@ public class SceneManager : MonoBehaviour
             FUN_6533C,
             FUN_653CC,
             FUN_6545C
-        };
-
-        DAT_18770 = new TodScriptableObject[]
-        {
-            (TodScriptableObject)database.playerCore.objects[0x8018466C],
-            (TodScriptableObject)database.playerCore.objects[0x8018539C],
-            (TodScriptableObject)database.playerCore.objects[0x80184D04],
-            (TodScriptableObject)database.playerCore.objects[0x80185A34],
-            (TodScriptableObject)database.playerCore.objects[0x8019113C],
-            (TodScriptableObject)database.playerCore.objects[0x80191884],
-            (TodScriptableObject)database.playerCore.objects[0x801914E0],
-            (TodScriptableObject)database.playerCore.objects[0x80191C28]
-        };
-
-        PTR_9CFA8 = new RefScriptableObject[][]
-        {
-            new RefScriptableObject[1], //PTR_9CF74
-            new RefScriptableObject[4], //PTR_9CF78, 
-            new RefScriptableObject[4]
-            {
-                (RefScriptableObject)database.common.objects[0x8017B83C],
-                (RefScriptableObject)database.common.objects[0x8017B83C],
-                (RefScriptableObject)database.common.objects[0x8017B83C],
-                (RefScriptableObject)database.common.objects[0x8017B83C]
-            }, //PTR_9CF88
-            new RefScriptableObject[4] //PTR_9CF98
         };
 
         GameManager.instance.PTR_DAT_9E708[gian.INDEX] = gian;

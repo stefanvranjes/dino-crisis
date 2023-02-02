@@ -402,7 +402,7 @@ public class GameManager : MonoBehaviour
     public void FUN_2984C(ushort param1)
     {
         voices[24].clip = speechLines[(DAT_9AA0 >> 8) - 1].objects[param1] as AudioClip;
-        voices[24].Play();
+        //voices[24].Play();
     }
 
     public void FUN_46C0C(int param1, uint param2, byte param3)
@@ -1180,7 +1180,7 @@ public class GameManager : MonoBehaviour
                 oVar4.DAT_06 = local_90.volume.left;
                 local_90.volume.right = (short)(((uint)(local_3c * cSound.DAT_25) * DAT_A2CE >> 4) / 0x7f);
                 oVar4.DAT_04 = local_90.volume.right;
-                local_90.note = vVar8.NOTE;
+                local_90.note = (ushort)(vVar8.NOTE2 << 8 | vVar8.NOTE);
 
                 if (param4[7] - 0x30U < 0x60)
                 {
@@ -2350,8 +2350,8 @@ public class GameManager : MonoBehaviour
 
                 if (bVar2 || (uVar9 & 0x20) != 0)
                 {
-                    //wVar3 = (ushort)_spu_note2pitch(DAT_AA534[puVar11] >> 8, DAT_AA534[puVar11] & 0xff, arg.note >> 8, arg.note & 0xff);
-                    //voices[uVar10].pitch = (float)wVar3 / 4096;
+                    wVar3 = (ushort)_spu_note2pitch(DAT_AA534[puVar11] >> 8, DAT_AA534[puVar11] & 0xff, arg.note >> 8, arg.note & 0xff);
+                    voices[uVar10].pitch = (float)wVar3 / 4096;
                 }
 
                 if (bVar2 || (uVar9 & 1) != 0)
@@ -2475,6 +2475,7 @@ public class GameManager : MonoBehaviour
         } while (true);
     }
 
+    //FUN_8746C
     private uint _spu_note2pitch(int param1, int param2, int param3, int param4)
     {
         short sVar1;
@@ -2502,7 +2503,9 @@ public class GameManager : MonoBehaviour
         }
 
         uVar2 = (uint)-sVar5;
-        return uVar2; //tmp
+        return ((uint)((Utilities.DAT_AA9E8[((iVar3 << 0x10) >> 0xf) / 2] *
+                Utilities.DAT_AAA00[param4 + param2 & 0x7f]) >> 0x10) +
+                (1U << (int)(uVar2 - 1 & 0x1f))) >> (int)(uVar2 & 0x1f) & 0xffff;
 
         uint S_N2P_OBJ_C8(uint param1)
         {
@@ -3836,7 +3839,7 @@ public class GameManager : MonoBehaviour
 
                 break;
             case 4:
-                oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220 + 4), 1, 10, oVar4.DAT_220);
+                oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220 + 4), 1, 10, oVar4.DAT_220 + 4);
                 break;
             case 5:
                 oVar4.FUN_60AB4();
@@ -4074,7 +4077,7 @@ public class GameManager : MonoBehaviour
                 oVar2 = SceneManager.instance.DAT_7CDC[1];
                 oVar2.vr.y = 0xab2;
                 SceneManager.instance.FUN_26504(0, 0x900, -0x3e0, 0x780);
-                oVar5.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar5.DAT_220 + 4), 1, 0, oVar5.DAT_220 + 1);
+                oVar5.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar5.DAT_220 + 4), 1, 0, oVar5.DAT_220 + 4);
                 param1.DAT_04++;
                 goto case 5;
             case 5:
@@ -4253,7 +4256,7 @@ public class GameManager : MonoBehaviour
                 SceneManager.instance.FUN_264C4(0, -0x3c0, -0x600, 0);
                 SceneManager.instance.FUN_26504(0, -0x930, -0x810, -0x900);
                 oVar7.screen.z = 0x200;
-                oVar7.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar7.DAT_220 + 4), 1, 0, oVar7.DAT_220 + 1);
+                oVar7.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar7.DAT_220 + 4), 1, 0, oVar7.DAT_220 + 4);
                 param1.DAT_04++;
                 goto case 5;
             case 5:
@@ -4464,7 +4467,7 @@ public class GameManager : MonoBehaviour
                 param1.DAT_04 = (short)(sVar3 + 1);
                 break;
             case 5:
-                oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220 + 4), 1, 10, oVar4.DAT_220 + 1);
+                oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220 + 4), 1, 10, oVar4.DAT_220 + 4);
                 param1.DAT_04++;
                 oVar5.DAT_4A = 10;
                 SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
@@ -4666,7 +4669,7 @@ public class GameManager : MonoBehaviour
             if (!DAT_6D)
             {
                 param1.DAT_04++;
-                oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 1);
+                oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 4);
                 oVar1.DAT_4A = 10;
                 SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
             }
@@ -4790,7 +4793,7 @@ public class GameManager : MonoBehaviour
                 param1.DAT_04 = (short)(sVar2 + 1);
                 break;
             case 5:
-                oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 1);
+                oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 4);
                 param1.DAT_04++;
                 oVar4.DAT_4A = 10;
                 SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
@@ -4861,11 +4864,11 @@ public class GameManager : MonoBehaviour
                         return;
 
                     param1.DAT_04 += 2;
-                    oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 1);
+                    oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 4);
                     return;
                 }
 
-                oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 1);
+                oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 4);
                 break;
             case 4:
                 param2 = oVar4.screen.y - param2;
@@ -4935,7 +4938,7 @@ public class GameManager : MonoBehaviour
             if (DAT_6D)
                 return;
 
-            oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220 + 4), 1, 10, oVar4.DAT_220 + 1);
+            oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220 + 4), 1, 10, oVar4.DAT_220 + 4);
         }
         else
         {
@@ -5912,7 +5915,7 @@ public class GameManager : MonoBehaviour
         switch (param1.DAT_04)
         {
             case 0:
-                oVar5.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar5.DAT_220 + 0x10), 1, 0, oVar5.DAT_220 + 4);
+                oVar5.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar5.DAT_220 + 0x10), 1, 0, oVar5.DAT_220 + 0x10);
                 oVar5.FUN_60AB4();
                 SceneManager.instance.FUN_26504(0, (short)dVar3.DAT_0E.x, (short)dVar3.DAT_0E.y, (short)dVar3.DAT_0E.z);
                 iVar3 = 1;

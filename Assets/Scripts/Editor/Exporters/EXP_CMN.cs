@@ -53,7 +53,7 @@ public class EXP_CMN
                     uint elementPosition = reader1.ReadUInt32();
 
                     if (Array.IndexOf(filePositions, elementPosition) == -1 && 
-                        elementPosition > 0x80160000 && elementPosition < 0x8017A000)
+                        elementPosition >= 0x80160000 && elementPosition < 0x8017A000)
                         filePositions[index++] = elementPosition;
                 }
 

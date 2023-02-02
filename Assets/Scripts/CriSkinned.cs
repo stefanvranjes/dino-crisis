@@ -536,7 +536,7 @@ public class CriSkinned : CriObject
 
         if (param1 == null)
         {
-            FUN_609C8(REFS[param4], param2, param3);
+            FUN_609C8(REFS[param4 / 4], param2, param3);
             return;
         }
 

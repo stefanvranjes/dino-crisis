@@ -2203,18 +2203,18 @@ public class CriPlayer : CriSkinned
         if (550 < health)
         {
             DAT_1D7 = 0;
-            DAT_220 = DAT_21C + 1;
+            DAT_220 = DAT_21C + 4;
         }
 
         else if (250 < health)
         {
             DAT_1D7 = 1;
-            DAT_220 = DAT_21C + 8;
+            DAT_220 = DAT_21C + 0x20;
         }
         else
         {
             DAT_1D7 = 2;
-            DAT_220 = DAT_21C + 15;
+            DAT_220 = DAT_21C + 0x3c;
         }
     }
 
@@ -2787,7 +2787,7 @@ public class CriPlayer : CriSkinned
 
         if (DAT_3E == 0)
         {
-            FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_220 + 4), 1, 10, DAT_220 + 1);
+            FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_220 + 4), 1, 10, DAT_220 + 4);
             DAT_18C = 0;
             DAT_40.z = 0;
             DAT_1C0 &= 0xfffffffe;
@@ -3065,7 +3065,7 @@ public class CriPlayer : CriSkinned
             else
             {
                 oVar2 = (TodScriptableObject)Utilities.GetSharedObject(DAT_220 + 4);
-                uVar4 = DAT_220 + 1;
+                uVar4 = DAT_220 + 4;
                 uVar3 = 5;
             }
 
@@ -7645,7 +7645,7 @@ public class CriPlayer : CriSkinned
         DAT_1D0 = 0xffffffff;
         DAT_18C = 1;
         DAT_40 = new Vector3Int(0, 0, 0);
-        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 8), 1, 5, DAT_21C + 2);
+        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 8), 1, 5, DAT_21C + 8);
 
         if (PTR_190[DAT_190].y == 0)
             DAT_1F4 = 90;
@@ -7707,7 +7707,7 @@ public class CriPlayer : CriSkinned
 
     private void FUN_543A8()
     {
-        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 4), 0, 8, DAT_21C + 1);
+        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 4), 0, 8, DAT_21C + 4);
 
         DAT_40 = new Vector3Int(0, 0, 0);
         DAT_3D = 0;
@@ -7723,7 +7723,7 @@ public class CriPlayer : CriSkinned
         DAT_1D0 = 0xffffffff;
         DAT_1C0 &= 0xfffffffe;
         DAT_40 = new Vector3Int(0, 0, 0);
-        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 8), 1, 5, DAT_21C + 2);
+        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 8), 1, 5, DAT_21C + 8);
 
         DAT_3E++;
     }
@@ -7791,7 +7791,7 @@ public class CriPlayer : CriSkinned
         DAT_1C0 &= 0xfffffffe;
         DAT_40.y = 0;
         DAT_40.x = 0;
-        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 0x10), 1, 5, DAT_21C + 4);
+        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 0x10), 1, 5, DAT_21C + 0x10);
         DAT_3E++;
     }
 
@@ -7856,7 +7856,7 @@ public class CriPlayer : CriSkinned
 
         oVar1 = (TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 8);
         DAT_1C0 &= 0xfffffffe;
-        FUN_609C8(oVar1, 1, 5, DAT_21C + 2);
+        FUN_609C8(oVar1, 1, 5, DAT_21C + 8);
         PTR_190[DAT_190].y = vr.y + PTR_190[DAT_190].y & 0xfff;
         DAT_3E++;
     }
@@ -7887,7 +7887,7 @@ public class CriPlayer : CriSkinned
     {
         DAT_1C0 &= 0xfffffffe;
         DAT_40 = new Vector3Int(0, 0, 0);
-        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 8), 1, 5, DAT_21C + 2);
+        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 8), 1, 5, DAT_21C + 8);
 
         if (PTR_190[DAT_190].y == 0)
             DAT_1F4 = 90;
@@ -7924,7 +7924,7 @@ public class CriPlayer : CriSkinned
         DAT_1D0 = 0xffffffff;
         DAT_1C0 &= 0xfffffffe;
         DAT_40 = new Vector3Int(0, 0, 0);
-        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 0x18), 1, 10, DAT_21C + 6);
+        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 0x18), 1, 10, DAT_21C + 0x18);
         DAT_3E++;
     }
 
@@ -7967,7 +7967,7 @@ public class CriPlayer : CriSkinned
         DAT_1C0 &= 0xfffffffe;
         DAT_40.y = 0;
         DAT_40.x = 0;
-        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 0x14), 1, 5, DAT_21C + 5);
+        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 0x14), 1, 5, DAT_21C + 0x14);
         DAT_40.z = 130;
         DAT_3E++;
     }
@@ -7992,7 +7992,7 @@ public class CriPlayer : CriSkinned
     {
         DAT_1C0 &= 0xfffffffe;
         DAT_1F4 = (byte)(vr.y + 0x800 & 0xfff);
-        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 8), 1, 2, DAT_21C + 2);
+        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 8), 1, 2, DAT_21C + 8);
         DAT_3E++;
     }
 
@@ -8037,7 +8037,7 @@ public class CriPlayer : CriSkinned
         DAT_1C0 &= 0xfffffffe;
         DAT_40.y = 0;
         DAT_40.x = 0;
-        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 0x1c), 1, 5, DAT_21C + 7);
+        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 0x1c), 1, 5, DAT_21C + 0x1c);
         DAT_3E++;
     }
 
@@ -8129,7 +8129,7 @@ public class CriPlayer : CriSkinned
         DAT_1D0 = 0xffffffff;
         DAT_18C = 1;
         DAT_40 = new Vector3Int(0, 0, 0);
-        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_220 + 4), 1, 5, DAT_220 + 1);
+        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_220 + 4), 1, 5, DAT_220 + 4);
 
         if (PTR_190[DAT_190].y == 0)
             DAT_1F4 = 90;
@@ -8221,7 +8221,7 @@ public class CriPlayer : CriSkinned
     {
         REFS = DAT_9D1D4;
         DAT_21C = 0;
-        DAT_220 = 1;
+        DAT_220 = 4;
         PTR_120 = DAT_9D1C8;
         DAT_120 = 0;
         DAT_12E = 1;
@@ -8235,7 +8235,7 @@ public class CriPlayer : CriSkinned
         FUN_5342C();
         FUN_535E4(-0x80, -0x80);
         FUN_65984(11, 14);
-        FUN_609C8(REFS[DAT_220], 0, 0);
+        FUN_609C8(REFS[DAT_220 / 4], 0, 0);
         FUN_66404(8, 0x1000, 0x1000);
         DAT_3C++;
     }

@@ -261,7 +261,8 @@ public class GameManager : MonoBehaviour
     private FUN_AA4D0[] PTR_FUN_AA4D0;
     private FUN_AA3E0[] PTR_FUN_AA3E0;
 
-    public GianScriptableObject[] PTR_DAT_9E708;
+    public static RamScriptableObject globalRam;
+    public static GianScriptableObject[] PTR_DAT_9E708;
     private byte DAT_AA3EC;
     private byte[] DAT_AA44C = new byte[]
     {
@@ -297,12 +298,16 @@ public class GameManager : MonoBehaviour
     {
         0, 0, 0, 1, 0, 0, 2, 0, 80, 115, 17, 0, 0, 0, 69, 0
     };
-    private ushort[] DAT_AA534 = new ushort[] 
+    private static uint DAT_AA504;
+    private static uint DAT_AA52C;
+    private static uint DAT_AA530;
+    private static ushort[] DAT_AA534 = new ushort[] 
     { 
         0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000, 0xc000 
     };
+    private static uint DAT_AA564;
 
-    public SoundData[] DAT_1FE900;
+    public static SoundData[] DAT_1FE900;
 
     private void Awake()
     {
@@ -351,6 +356,8 @@ public class GameManager : MonoBehaviour
         DAT_AA3EC = 0;
         PTR_DAT_9E708 = new GianScriptableObject[7];
         DAT_1FE900 = new SoundData[256];
+        globalRam = new RamScriptableObject();
+        globalRam.objects = new UIntObjectDictionary();
         DAT_DEB8 = new CriChannel[24];
         GameObject obj2 = new GameObject();
         obj2.name = "CriSound (Instance)";
@@ -396,13 +403,16 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         if (gameStarted && !pauseMain)
+        {
             FUN_47900();
+            FUN_5D798();
+        }
     }
 
     public void FUN_2984C(ushort param1)
     {
         voices[24].clip = speechLines[(DAT_9AA0 >> 8) - 1].objects[param1] as AudioClip;
-        //voices[24].Play();
+        voices[24].Play();
     }
 
     public void FUN_46C0C(int param1, uint param2, byte param3)
@@ -908,7 +918,7 @@ public class GameManager : MonoBehaviour
         byte bVar3;
 
         cSound.DAT_25 = 0x7f;
-        cSound.DAT_23 = 0x10;
+        cSound.DAT_23 = 16;
         cSound.DAT_22 = 3;
         cSound.DAT_24 = 0;
         cSound.DAT_20 = 0x3fff;
@@ -1102,6 +1112,7 @@ public class GameManager : MonoBehaviour
         sbyte sVar3;
         CriChannel oVar4;
         uint uVar6;
+        uint uVar7;
         SpuVoiceAttr vVar8;
         uint uVar9;
         SpuVoiceAttr2 local_90;
@@ -1203,7 +1214,18 @@ public class GameManager : MonoBehaviour
                     local_90.volume.right = (short)((local_90.volume.right << 2) / 5);
                 }
 
-                //...
+                if ((vVar8.FLAGS & 4) == 0)
+                {
+                    uVar7 = 0;
+                    cSound.DAT_34 |= 1U << (int)(uVar6 & 31);
+                }
+                else
+                {
+                    uVar7 = 1;
+                    cSound.DAT_2C |= 1U << (int)(uVar6 & 31);
+                }
+
+                //FUN_862AC
                 cSound.DAT_08[uVar6] = (sbyte)param4[4];
 
                 if (param4[0] != 0)
@@ -1261,6 +1283,108 @@ public class GameManager : MonoBehaviour
         return;
     }
 
+    private void FUN_5D6E0(uint param1, CriChannel param2, CriSound param3)
+    {
+        if (param2.DAT_06 < 0x100)
+            param2.DAT_06 = 0;
+        else
+            param2.DAT_06 -= 0x100;
+
+        if (param2.DAT_04 < 0x100)
+            param2.DAT_04 = 0;
+        else
+            param2.DAT_04 -= 0x100;
+
+        SpuSetVoiceVolume((int)(param1 & 0xffff), param2.DAT_06, param2.DAT_04);
+
+        if (param2.DAT_04 == 0)
+        {
+            param2.DAT_21 = false;
+            param2.DAT_20 = false;
+            param2.DAT_04 = 0;
+            param2.DAT_06 = 0;
+            param3.DAT_30 |= 1U << (int)(param1 & 31);
+        }
+    }
+
+    private void FUN_5D798()
+    {
+        uint uVar5;
+        CriChannel puVar7;
+        uint uVar9;
+        CriChannel puVar12;
+        sbyte[] acStack56;
+
+        if ((cSound.DAT_24 & 2) != 0)
+        {
+            uVar9 = 16;
+
+            do
+            {
+                puVar7 = DAT_DEB8[uVar9];
+                puVar7.DAT_20 = true;
+                uVar9++;
+            } while (uVar9 < 24);
+
+            DAT_DEB8[uVar9].DAT_21 = false;
+        }
+
+        acStack56 = new sbyte[24];
+        SpuRGetAllKeysStatus(cSound.DAT_23, 23, acStack56);
+        uVar9 = cSound.DAT_23;
+
+        if (uVar9 < 24)
+        {
+            do
+            {
+                puVar12 = DAT_DEB8[uVar9];
+
+                if (acStack56[uVar9] == 1)
+                {
+                    if (puVar12.DAT_20)
+                        FUN_5D6E0(uVar9 & 0xffff, puVar12, cSound);
+                }
+                else
+                {
+                    uVar5 = 1U << (int)(uVar9 & 31);
+
+                    if ((cSound.DAT_28 & uVar5) == 0 && cSound.DAT_08[uVar9] != -1)
+                    {
+                        cSound.DAT_08[uVar9] = -1;
+                        puVar12.DAT_04 = 0;
+                        puVar12.DAT_06 = 0;
+                        puVar12.DAT_1A = false;
+                        puVar12.DAT_20 = false;
+                        cSound.DAT_34 |= uVar5;
+                        cSound.DAT_30 |= uVar5;
+                        //FUN_862AC
+                    }
+                }
+
+                uVar9++;
+            } while (uVar9 < 24);
+        }
+
+        uVar9 = 0;
+
+        do
+        {
+            //...
+            uVar9++;
+
+            if (2 < uVar9)
+            {
+                SpuSetKey(0, cSound.DAT_30);
+                SpuSetKey(1, cSound.DAT_28);
+                cSound.DAT_28 = 0;
+                cSound.DAT_2C = 0;
+                cSound.DAT_30 = 0;
+                cSound.DAT_34 = 0;
+                return;
+            }
+        } while (true);
+    }
+
     private void FUN_5DB50(CriChannel param1, ref uint param2, ref uint param3)
     {
         sbyte sVar1;
@@ -1289,6 +1413,30 @@ public class GameManager : MonoBehaviour
 
         if (0x3fff < (int)param3)
             param3 = 0x3fff;
+    }
+
+    private void FUN_5E400()
+    {
+        CriChannel puVar10;
+        ulong uVar16;
+        int iVar17;
+
+        if (cSound.DAT_38 != 0)
+        {
+            iVar17 = 0;
+            uVar16 = cSound.DAT_38;
+
+            do
+            {
+                puVar10 = DAT_DEB8[iVar17];
+
+                if ((uVar16 & 1) != 0 && puVar10.DAT_22 != -1)
+                    ; //FUN_5F7B4
+
+                uVar16 >>= 1;
+                iVar17++;
+            } while (iVar17 < 16);
+        }
     }
 
     public void FUN_40C60(CriPlayer param1)
@@ -2319,8 +2467,128 @@ public class GameManager : MonoBehaviour
         return bVar4;
     }
 
+    //FUN_8647C
+    public static void SpuSetKey(long on_off, ulong voice_bit)
+    {
+        ushort uVar1;
+        uint uVar2;
+        ushort uVar3;
+
+        uVar2 = (uint)(voice_bit & 0xffffff);
+        uVar1 = (ushort)uVar2;
+        uVar3 = (ushort)(uVar2 >> 0x10);
+
+        if (on_off == 0)
+        {
+            if ((DAT_AA564 & 1) == 0)
+                DAT_AA504 &= ~uVar2;
+            else
+            {
+                DAT_AA530 |= 1;
+                DAT_AA52C &= ~uVar2;
+            }
+        }
+        else
+        {
+            if (on_off == 1)
+            {
+                if ((DAT_AA564 & 1) == 0)
+                    DAT_AA504 |= uVar2;
+                else
+                {
+                    DAT_AA530 |= 1;
+                    DAT_AA52C |= uVar2;
+                }
+            }
+        }
+    }
+
+    //FUN_86C1C
+    public static long SpuRGetAllKeysStatus(long min_, long max_, sbyte[] status)
+    {
+        long lVar1;
+        uint uVar2;
+        int pcVar3;
+
+        uVar2 = (uint)min_;
+        lVar1 = -3;
+
+        if (min_ < 0)
+            uVar2 = 0;
+
+        if (min_ < 24)
+        {
+            if (23 < max_)
+                max_ = 23;
+
+            if (-1 < max_)
+            {
+                if (max_ < (int)uVar2) goto SR_GAKS_OBJ_38;
+
+                lVar1 = 0;
+
+                if ((int)uVar2 < max_ + 1)
+                {
+                    pcVar3 = (int)uVar2;
+
+                    do
+                    {
+                        if ((DAT_AA504 & 1 << (int)(uVar2 & 31)) != 0)
+                        {
+                            if (voices[uVar2].isPlaying)
+                            {
+                                status[pcVar3] = 1;
+                                goto SR_GAKS_OBJ_B8;
+                            }
+
+                            status[pcVar3] = 3;
+                            goto SR_GAKS_OBJ_B8;
+                        }
+
+                        if (voices[uVar2].isPlaying)
+                        {
+                            status[pcVar3] = 2;
+                            goto SR_GAKS_OBJ_B8;
+                        }
+
+                        status[pcVar3] = 0;
+                        SR_GAKS_OBJ_B8:
+                        uVar2++;
+                        pcVar3++;
+                    } while ((int)uVar2 < max_ + 1);
+
+                    lVar1 = 0;
+                }
+            }
+
+            return lVar1;
+        }
+
+        SR_GAKS_OBJ_38:
+        return lVar1;
+    }
+
+    //FUN_86D7C
+    public static void SpuSetVoiceVolume(int vNum, int volL, int volR)
+    {
+        volL = (volL & 0x7fff);
+
+        if (volL > 0x3fff)
+            volL = -volL & 0x7fff;
+
+        volR = (volR & 0x7fff);
+
+        if (volR > 0x3fff)
+            volR = -volR & 0x7fff;
+
+        float _volL = (float)volL / 0x4000;
+        float _volR = (float)volR / 0x4000;
+        voices[vNum].volume = Mathf.Max(_volL, _volR);
+        voices[vNum].panStereo = _volR - _volL;
+    }
+
     //FUN_86E6C
-    private void SpuSetVoiceAttr(SpuVoiceAttr2 arg)
+    public static void SpuSetVoiceAttr(SpuVoiceAttr2 arg)
     {
         short sVar1;
         bool bVar2;
@@ -2343,7 +2611,7 @@ public class GameManager : MonoBehaviour
             if ((arg.voice & 1 << (int)(uVar10 & 31)) != 0)
             {
                 if (bVar2 || (uVar9 & 0x10) != 0)
-                    voices[uVar10].pitch = (float)arg.pitch / 4096;
+                    voices[uVar10].pitch = (float)arg.pitch / 1024;
 
                 if (bVar2 || (uVar9 & 0x40) != 0)
                     DAT_AA534[puVar11] = arg.sample_note;
@@ -2351,7 +2619,7 @@ public class GameManager : MonoBehaviour
                 if (bVar2 || (uVar9 & 0x20) != 0)
                 {
                     wVar3 = (ushort)_spu_note2pitch(DAT_AA534[puVar11] >> 8, DAT_AA534[puVar11] & 0xff, arg.note >> 8, arg.note & 0xff);
-                    voices[uVar10].pitch = (float)wVar3 / 4096;
+                    voices[uVar10].pitch = (float)wVar3 / 1024;
                 }
 
                 if (bVar2 || (uVar9 & 1) != 0)
@@ -2463,7 +2731,7 @@ public class GameManager : MonoBehaviour
                 float _volR = (float)VOICE_00_RIGHT / 0x4000;
                 voices[uVar10].volume = Mathf.Max(_volL, _volR);
                 voices[uVar10].panStereo = _volR - _volL;
-                voices[uVar10].clip = SceneManager.instance.ram.objects[arg.addr] as AudioClip;
+                voices[uVar10].clip = globalRam.objects[arg.addr] as AudioClip;
                 voices[uVar10].Play();
                 //****************NOT IN OG CODE******************//
             }
@@ -2476,7 +2744,7 @@ public class GameManager : MonoBehaviour
     }
 
     //FUN_8746C
-    private uint _spu_note2pitch(int param1, int param2, int param3, int param4)
+    private static uint _spu_note2pitch(int param1, int param2, int param3, int param4)
     {
         short sVar1;
         uint uVar2;

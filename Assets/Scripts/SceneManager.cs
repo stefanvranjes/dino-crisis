@@ -103,11 +103,19 @@ public class SceneManager : MonoBehaviour
             FUN_6545C
         };
 
-        GameManager.instance.PTR_DAT_9E708[gian.INDEX] = gian;
+        GameManager.PTR_DAT_9E708[gian.INDEX] = gian;
         int j = (int)(ini.ADDR - 0x801fe900) / 4;
 
         for (int i = 0; i < ini.DATA.Length; i++)
-            GameManager.instance.DAT_1FE900[j + i] = ini.DATA[i];
+            GameManager.DAT_1FE900[j + i] = ini.DATA[i];
+
+        foreach (KeyValuePair<uint, UnityEngine.Object> t in ram.objects)
+        {
+            if (!GameManager.globalRam.objects.ContainsKey(t.Key))
+                GameManager.globalRam.objects.Add(t.Key, t.Value);
+            else
+                GameManager.globalRam.objects[t.Key] = t.Value;
+        }
 
         triggers = new Trigger[32];
         DAT_27C = new CriSkinned[11];

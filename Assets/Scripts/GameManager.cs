@@ -223,7 +223,9 @@ public class GameManager : MonoBehaviour
     public Packet DAT_C33A8;
     public Frame[] DAT_C33AC;
     public ushort DAT_C33B0;
-    public CriChannel[] DAT_DEB8; //gp+deb8h...gp+e218h (0x800C58D8)
+    public GntScriptableObject[] trackers; //0x800C58C8
+    public CriChannel[] cChannels; //gp+deb8h...gp+e218h (0x800C58D8)
+    public CriTracker[] cTrackers; //gp+e220h...gp+e3f8h (0x800C5C40)
     public CriSound cSound; //0x800C6098
     public RamScriptableObject playerCore;
     public List<RamScriptableObject> speechLines;
@@ -358,7 +360,7 @@ public class GameManager : MonoBehaviour
         DAT_1FE900 = new SoundData[256];
         globalRam = new RamScriptableObject();
         globalRam.objects = new UIntObjectDictionary();
-        DAT_DEB8 = new CriChannel[24];
+        cChannels = new CriChannel[24];
         GameObject obj2 = new GameObject();
         obj2.name = "CriSound (Instance)";
         cSound = obj2.AddComponent<CriSound>();
@@ -368,7 +370,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject obj = new GameObject();
             obj.name = "CriChannel (Instance)";
-            DAT_DEB8[i] = obj.AddComponent<CriChannel>();
+            cChannels[i] = obj.AddComponent<CriChannel>();
             obj.transform.parent = transform;
         }
 
@@ -930,7 +932,7 @@ public class GameManager : MonoBehaviour
 
         do
         {
-            oVar2 = DAT_DEB8[bVar3];
+            oVar2 = cChannels[bVar3];
             oVar2.ResetValues();
             oVar2.DAT_0D = -1;
             oVar2.DAT_22 = -1;
@@ -1033,8 +1035,8 @@ public class GameManager : MonoBehaviour
             while (bVar1 != 0xff)
             {
                 uVar3++;
-                DAT_DEB8[uVar2].DAT_20 = true;
-                DAT_DEB8[uVar2].DAT_21 = false;
+                cChannels[uVar2].DAT_20 = true;
+                cChannels[uVar2].DAT_21 = false;
                 cSound.DAT_34 |= 1U << (int)(uVar2 & 31);
                 //...
                 bVar1--;
@@ -1149,7 +1151,7 @@ public class GameManager : MonoBehaviour
                 if (param4[4] < cSound.DAT_08[uVar6])
                     return;
 
-                oVar4 = DAT_DEB8[uVar6];
+                oVar4 = cChannels[uVar6];
                 oVar4.DAT_20 = false;
 
                 if (param4[5] == 0)
@@ -1321,12 +1323,12 @@ public class GameManager : MonoBehaviour
 
             do
             {
-                puVar7 = DAT_DEB8[uVar9];
+                puVar7 = cChannels[uVar9];
                 puVar7.DAT_20 = true;
                 uVar9++;
             } while (uVar9 < 24);
 
-            DAT_DEB8[uVar9].DAT_21 = false;
+            cChannels[uVar9].DAT_21 = false;
         }
 
         acStack56 = new sbyte[24];
@@ -1337,7 +1339,7 @@ public class GameManager : MonoBehaviour
         {
             do
             {
-                puVar12 = DAT_DEB8[uVar9];
+                puVar12 = cChannels[uVar9];
 
                 if (acStack56[uVar9] == 1)
                 {
@@ -1415,6 +1417,50 @@ public class GameManager : MonoBehaviour
             param3 = 0x3fff;
     }
 
+    private void FUN_5E130(int param1, byte param2, byte param3)
+    {
+        GntScriptableObject tVar3;
+        CriTracker tVar1;
+
+        tVar3 = trackers[param1];
+        tVar1 = cTrackers[param1];
+
+        if (tVar3 != null && tVar1.DAT_20 != 1)
+        {
+            tVar1.BUFFER = tVar3.BUFFER;
+            tVar1.startOffset = 0;
+            tVar1.currentOffset = 0;
+            tVar1.DAT_1F = 0;
+            tVar1.DAT_1E = param2;
+            tVar1.DAT_1D = (byte)param1;
+            tVar1.DAT_1C = 0;
+            tVar1.DAT_27 = 0;
+            tVar1.DAT_14 = tVar3.DAT_02;
+            tVar1.DAT_0C = 0;
+            tVar1.DAT_18 = tVar3.DAT_04;
+
+            if (tVar3.DAT_02 == 0)
+                return; //trap(0x1c00)
+
+            tVar1.DAT_10 = (tVar3.DAT_04 * 1000) / tVar3.DAT_02;
+
+            if (param3 == 0)
+            {
+                tVar1.DAT_26 = 2;
+                tVar1.DAT_25 = 0;
+                tVar1.DAT_24 = 0x7f;
+            }
+            else
+            {
+                tVar1.DAT_25 = 0x81;
+                tVar1.DAT_26 = param3;
+                tVar1.DAT_24 = 1;
+            }
+
+            tVar1.DAT_20 = 1;
+        }
+    }
+
     private void FUN_5E400()
     {
         CriChannel puVar10;
@@ -1428,7 +1474,7 @@ public class GameManager : MonoBehaviour
 
             do
             {
-                puVar10 = DAT_DEB8[iVar17];
+                puVar10 = cChannels[iVar17];
 
                 if ((uVar16 & 1) != 0 && puVar10.DAT_22 != -1)
                     ; //FUN_5F7B4

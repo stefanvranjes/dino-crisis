@@ -30,6 +30,7 @@ public class SceneManager : MonoBehaviour
     public SceneCameraScriptableObject motions; //gp+164h, gp+160h -> motions.Length
     public GianScriptableObject gian; //0x8009E708
     public IniScriptableObject ini; //0x801FE900
+    public GntScriptableObject gnt;
     public Trigger[] triggers; //gp+1e8h
     public byte DAT_270; //gp+270h
     public bool DAT_272; //gp+272h

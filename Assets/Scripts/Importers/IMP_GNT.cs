@@ -20,7 +20,7 @@ public class IMP_GNT : ScriptedImporter
             gnt.INDEX = index;
             reader.Seek(2, SeekOrigin.Begin);
             gnt.DAT_02 = reader.ReadUInt16();
-            gnt.DAT_04 = reader.ReadUInt32();
+            gnt.DAT_04 = reader.ReadInt32();
             gnt.BUFFER = new byte[reader.Length - reader.Position];
 
             for (int i = 0; i < gnt.BUFFER.Length; i++)

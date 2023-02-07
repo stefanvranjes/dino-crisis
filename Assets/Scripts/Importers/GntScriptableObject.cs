@@ -8,6 +8,6 @@ public class GntScriptableObject : ScriptableObject
 
     public int INDEX;
     public ushort DAT_02;
-    public uint DAT_04;
+    public int DAT_04;
     public byte[] BUFFER;
 }

@@ -1208,7 +1208,7 @@ public class GameManager : MonoBehaviour
                 local_90.addr = (uint)vVar8.ADDR << 3;
                 local_90.adsr1 = vVar8.ADSR1;
                 local_90.adsr2 = vVar8.ADSR2;
-                SpuSetVoiceAttr(local_90);
+                SpuSetVoiceAttr(ref local_90);
 
                 if (0xef < param4[7])
                 {
@@ -1311,11 +1311,18 @@ public class GameManager : MonoBehaviour
 
     private void FUN_5D798()
     {
+        byte bVar1;
+        CriPlayer oVar2;
+        int iVar4;
         uint uVar5;
+        short sVar6;
         CriChannel puVar7;
         uint uVar9;
+        CriTracker puVar11;
         CriChannel puVar12;
         sbyte[] acStack56;
+
+        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
 
         if ((cSound.DAT_24 & 2) != 0)
         {
@@ -1371,7 +1378,62 @@ public class GameManager : MonoBehaviour
 
         do
         {
-            //...
+            puVar11 = cTrackers[uVar9];
+
+            if (puVar11.DAT_20 == 1)
+            {
+                if (puVar11.DAT_1C && cSound.DAT_52 != oVar2.DAT_1D7)
+                    puVar11.FUN_5DAA0();
+
+                if (puVar11.DAT_27)
+                {
+                    iVar4 = SceneManager.instance.FUN_59C74((byte)DAT_9AA0);
+
+                    if (iVar4 == 0)
+                    {
+                        puVar11.DAT_25 = 0x86;
+                        puVar11.DAT_27 = false;
+                        puVar11.DAT_26 = 3;
+
+                        if (DAT_28 == 3)
+                        {
+                            //...
+                        }
+                    }
+                }
+
+                bVar1 = puVar11.DAT_25;
+
+                if ((bVar1 & 0x80) != 0)
+                {
+                    sVar6 = 2;
+
+                    if ((bVar1 & 1) == 0)
+                    {
+                        if ((bVar1 & 2) == 0)
+                            puVar11.DAT_25 = 0;
+                        else
+                        {
+                            sVar6 = 3;
+
+                            if ((bVar1 & 6) == 0)
+                                FUN_5DBF0(sVar6, ref puVar11.DAT_25, ref puVar11.DAT_24, puVar11.DAT_26);
+                            else
+                            {
+                                FUN_5DBF0(3, ref puVar11.DAT_25, ref puVar11.DAT_24, puVar11.DAT_26);
+
+                                if (puVar11.DAT_24 == 0)
+                                    FUN_5E2EC((short)uVar9);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        FUN_5DBF0(sVar6, ref puVar11.DAT_25, ref puVar11.DAT_24, puVar11.DAT_26);
+                    }
+                }
+            }
+
             uVar9++;
 
             if (2 < uVar9)
@@ -1417,6 +1479,31 @@ public class GameManager : MonoBehaviour
             param3 = 0x3fff;
     }
 
+    private void FUN_5DBF0(int param1, ref byte param2, ref byte param3, byte param4)
+    {
+        if (param1 != 2)
+        {
+            if (param3 <= param4)
+            {
+                param3 = 0;
+                param2 = 0;
+                return;
+            }
+
+            param3 -= 2;
+            return;
+        }
+
+        if (0x7f - param4 <= param3)
+        {
+            param3 = 0x7f;
+            param2 = 0;
+            return;
+        }
+
+        param3 += param4;
+    }
+
     private void FUN_5E130(int param1, byte param2, byte param3)
     {
         GntScriptableObject tVar3;
@@ -1433,11 +1520,11 @@ public class GameManager : MonoBehaviour
             tVar1.DAT_1F = 0;
             tVar1.DAT_1E = param2;
             tVar1.DAT_1D = (byte)param1;
-            tVar1.DAT_1C = 0;
-            tVar1.DAT_27 = 0;
+            tVar1.DAT_1C = false;
+            tVar1.DAT_27 = false;
             tVar1.DAT_14 = tVar3.DAT_02;
             tVar1.DAT_0C = 0;
-            tVar1.DAT_18 = tVar3.DAT_04;
+            tVar1.DAT_18 = (int)tVar3.DAT_04;
 
             if (tVar3.DAT_02 == 0)
                 return; //trap(0x1c00)
@@ -1458,6 +1545,50 @@ public class GameManager : MonoBehaviour
             }
 
             tVar1.DAT_20 = 1;
+        }
+    }
+
+    private void FUN_5E2EC(short param1)
+    {
+        CriTracker tVar1;
+        uint uVar3;
+        CriChannel puVar4;
+        ulong voice_bit;
+        SpuVoiceAttr2 local_50;
+
+        tVar1 = cTrackers[param1];
+
+        if (tVar1.DAT_20 == 1)
+        {
+            tVar1.DAT_20 = 0;
+            voice_bit = 0;
+            uVar3 = 0;
+
+            do
+            {
+                puVar4 = cChannels[uVar3];
+
+                if (puVar4.DAT_22 == param1)
+                {
+                    voice_bit |= 1U << (int)(uVar3 & 31);
+                    puVar4.DAT_22 = -1;
+                    puVar4.DAT_0D = -1;
+                    puVar4.DAT_1A = false;
+                    puVar4.DAT_00 = 0;
+                    cSound.DAT_38 &= ~(uint)voice_bit;
+                    cSound.DAT_40 |= (uint)voice_bit;
+                }
+
+                uVar3++;
+            } while (uVar3 < 16);
+
+            local_50 = new SpuVoiceAttr2();
+            local_50.mask = 3;
+            local_50.volume.left = 0;
+            local_50.volume.right = 0;
+            local_50.voice = (int)voice_bit;
+            SpuSetVoiceAttr(ref local_50);
+            SpuSetKey(0, voice_bit);
         }
     }
 
@@ -2634,7 +2765,7 @@ public class GameManager : MonoBehaviour
     }
 
     //FUN_86E6C
-    public static void SpuSetVoiceAttr(SpuVoiceAttr2 arg)
+    public static void SpuSetVoiceAttr(ref SpuVoiceAttr2 arg)
     {
         short sVar1;
         bool bVar2;

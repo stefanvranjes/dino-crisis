@@ -9,18 +9,18 @@ public class CriTracker : MonoBehaviour
     public int startOffset; //0x04
     public int DAT_08; //0x08
     public int DAT_0C; //0x0C
-    public uint DAT_10; //0x10
-    public uint DAT_14; //0x14
-    public uint DAT_18; //0x18
-    public byte DAT_1C; //0x1C
+    public int DAT_10; //0x10
+    public int DAT_14; //0x14
+    public int DAT_18; //0x18
+    public bool DAT_1C; //0x1C
     public byte DAT_1D; //0x1D
     public byte DAT_1E; //0x1E
     public byte DAT_1F; //0x1F
     public byte DAT_20; //0x20
-    public sbyte DAT_24; //0x24
+    public byte DAT_24; //0x24
     public byte DAT_25; //0x25
     public byte DAT_26; //0x26
-    public byte DAT_27; //0x27
+    public bool DAT_27; //0x27
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +44,7 @@ public class CriTracker : MonoBehaviour
         DAT_10 = 0;
         DAT_14 = 0;
         DAT_18 = 0;
-        DAT_1C = 0;
+        DAT_1C = false;
         DAT_1D = 0;
         DAT_1E = 0;
         DAT_1F = 0;
@@ -52,6 +52,46 @@ public class CriTracker : MonoBehaviour
         DAT_24 = 0;
         DAT_25 = 0;
         DAT_26 = 0;
-        DAT_27 = 0;
+        DAT_27 = false;
+    }
+
+    public void FUN_5DAA0()
+    {
+        byte bVar1;
+        CriPlayer oVar2;
+        int iVar3;
+        int iVar4;
+        int iVar5;
+
+        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        iVar4 = DAT_14;
+        iVar3 = DAT_18 * 1000;
+
+        if (iVar4 == 0)
+            return; //trap(0x1c00)
+
+        if (iVar4 == -1 && iVar3 == -0x80000000)
+            return; //trap(0x1800)
+
+        iVar5 = iVar3 / iVar4;
+        DAT_10 = iVar5;
+        bVar1 = oVar2.DAT_1D7;
+
+        if (bVar1 != 0)
+        {
+            iVar3 = iVar5 >> 1;
+            iVar4 = iVar5 >> 2;
+
+            if (bVar1 == 1)
+            {
+                iVar3 += iVar4;
+                iVar4 = iVar5 >> 3;
+            }
+
+            DAT_10 = iVar3 + iVar4;
+        }
+
+        GameManager.instance.cSound.DAT_52 = oVar2.DAT_1D7;
+        GameManager.instance.cSound.DAT_53 = true;
     }
 }

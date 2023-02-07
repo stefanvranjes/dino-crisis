@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CriChannel : MonoBehaviour
 {
+    public int DAT_00; //0x00
     public short DAT_04; //0x04
     public short DAT_06; //0x06
     public short DAT_0A; //0x0A
@@ -29,6 +30,7 @@ public class CriChannel : MonoBehaviour
 
     public void ResetValues()
     {
+        DAT_00 = 0;
         DAT_04 = 0;
         DAT_06 = 0;
         DAT_0A = 0;

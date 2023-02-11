@@ -1398,6 +1398,7 @@ public class GameManager : MonoBehaviour
                         if (DAT_28 == 3)
                         {
                             //...
+                            FUN_5E130(0, 4, 0);
                         }
                     }
                 }
@@ -1614,6 +1615,70 @@ public class GameManager : MonoBehaviour
                 iVar17++;
             } while (iVar17 < 16);
         }
+    }
+
+    private void FUN_5F7B4(CriChannel param1, sbyte param2)
+    {
+        byte bVar1;
+        SpuVoiceAttr puVar2;
+        int iVar3;
+        uint uVar4;
+        SpuVoiceAttr2 local_48;
+
+        uVar4 = param1.DAT_18;
+        puVar2 = PTR_DAT_9E708[param1.DAT_23].ATTRS[param1.DAT_1D + param1.DAT_1C * 16];
+        iVar3 = 0;
+
+        if (0x2000 < uVar4)
+            iVar3 = -((int)(0x2000 - uVar4) * puVar2.DAT_0D * 0x80) / 0x1fff;
+
+        if (uVar4 < 0x2000)
+            iVar3 = ((param1.DAT_18 - 0x2000) * puVar2.DAT_0C * 0x80) / 0x1fff;
+
+        local_48 = new SpuVoiceAttr2();
+        local_48.voice = 1 << (param2 & 31);
+        uVar4 = ((uint)param1.DAT_1E << 7 | puVar2.NOTE) + (uint)iVar3;
+        bVar1 = puVar2.SAMPLE_NOTE;
+        local_48.mask = 0x60093;
+        local_48.addr = (uint)puVar2.ADDR << 3;
+        local_48.adsr1 = puVar2.ADSR1;
+        local_48.adsr2 = puVar2.ADSR2;
+
+        if ((cSound.DAT_48 & 0x1000) == 0)
+        {
+            if (param1.DAT_06 < param1.DAT_04)
+                param1.DAT_06 = param1.DAT_04;
+            else
+                param1.DAT_04 = param1.DAT_06;
+        }
+
+        local_48.volume.left = param1.DAT_06;
+        local_48.volume.right = param1.DAT_04;
+        local_48.pitch = (ushort)Utilities.FUN_5FCF0((int)((uVar4 & 0x3f80) >> 7) - bVar1, (int)(uVar4 & 0x7f));
+        uVar4 = local_48.pitch;
+
+        if (cTrackers[param1.DAT_22].DAT_1C)
+        {
+            bVar1 = ((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_1D7;
+
+            if (bVar1 == 1)
+                local_48.pitch = (ushort)(uVar4 * 0x10f39 >> 0x10);
+            else
+            {
+                if (bVar1 < 2)
+                {
+                    if (bVar1 == 0)
+                        local_48.pitch = param1.DAT_14;
+                }
+                else
+                {
+                    if (bVar1 == 2)
+                        local_48.pitch = (ushort)(uVar4 * 0x8fad >> 0xf);
+                }
+            }
+        }
+
+        SpuSetVoiceAttr(ref local_48);
     }
 
     public void FUN_40C60(CriPlayer param1)

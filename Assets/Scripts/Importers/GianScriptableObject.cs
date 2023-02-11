@@ -11,6 +11,8 @@ public class SpuVoiceAttr
     public byte SAMPLE_NOTE; //0x04
     public byte NOTE; //0x05
     public byte NOTE2; //0x06
+    public byte DAT_0C; //0x0C
+    public byte DAT_0D; //0x0D
     public ushort ADSR1; //0x10
     public ushort ADSR2; //0x12
     public ushort ADDR; //0x16

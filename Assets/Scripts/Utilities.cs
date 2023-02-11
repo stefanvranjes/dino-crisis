@@ -145,6 +145,14 @@ public static class Utilities
         { 0x8009d024, 0x801982e8 },
         { 0x8009d028, 0x801982e8 }
     };
+    public static int[] DAT_9E76C = new int[]
+    {
+        0x10000, 0x10f39, 0x11f5a, 0x13070, 0x1428a, 0x155b9, 0x16a0a, 0x17f91, 0x19660, 0x1ae8a, 0x1c824, 0x1e343
+    };
+    public static int[] DAT_9E79C = new int[]
+    {
+        0x10000, 0xf1a2, 0xe412, 0xd745, 0xcb30, 0xbfc9, 0xb505, 0xaadc, 0xa145, 0x9835, 0x8fad, 0x879c
+    };
 
     public static ushort[] DAT_AA9E8 = new ushort[]
     {
@@ -1966,6 +1974,40 @@ public static class Utilities
             param4 = (short)-param4;
 
         return param4;
+    }
+
+    private static int FUN_5FC48(int param1)
+    {
+        int iVar1;
+        int iVar2;
+
+        if (param1 < 0)
+        {
+            iVar1 = DAT_9E79C[-param1 % 12];
+            iVar2 = 0x1000 >> (-param1 / 12 & 31);
+        }
+        else
+        {
+            iVar1 = DAT_9E76C[param1 % 12];
+            iVar2 = 0x1000 << (param1 / 12 & 31);
+        }
+
+        return iVar2 * iVar1 >> 0x10;
+    }
+
+    public static int FUN_5FCF0(int param1, int param2)
+    {
+        int iVar1;
+        int iVar2;
+
+        iVar1 = FUN_5FC48(param1);
+        iVar2 = FUN_5FC48(param1 + 1);
+        param2 = (iVar2 - iVar1) * param2;
+
+        if (param2 < 0)
+            param2 += 0x7f;
+
+        return iVar1 + (param2 >> 7);
     }
 
     public static short FUN_51D40(int param1, int param2, short param3)

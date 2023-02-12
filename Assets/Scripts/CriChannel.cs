@@ -9,8 +9,11 @@ public class CriChannel : MonoBehaviour
     public short DAT_06; //0x06
     public short DAT_0A; //0x0A
     public sbyte DAT_0D; //0x0D
+    public bool DAT_0F; //0x0F
+    public bool DAT_10; //0x10
+    public byte DAT_12; //0x12
     public sbyte DAT_13; //0x13
-    public ushort DAT_14; //0x14
+    public int DAT_14; //0x14
     public ushort DAT_18; //0x18
     public bool DAT_1A; //0x1A
     public sbyte DAT_1B; //0x1B
@@ -41,6 +44,9 @@ public class CriChannel : MonoBehaviour
         DAT_06 = 0;
         DAT_0A = 0;
         DAT_0D = 0;
+        DAT_0F = false;
+        DAT_10 = false;
+        DAT_12 = 0;
         DAT_13 = 0;
         DAT_14 = 0;
         DAT_18 = 0;

@@ -1595,9 +1595,24 @@ public class GameManager : MonoBehaviour
 
     private void FUN_5E400()
     {
+        byte bVar1;
+        byte bVar2;
+        bool bVar3;
+        ushort uVar4;
+        int iVar5;
+        uint uVar7;
+        SpuVoiceAttr puVar8;
+        uint uVar9;
         CriChannel puVar10;
+        CriTracker pcVar11;
+        CriChannel psVar12;
+        CriChannel puVar13;
+        CriChannel piVar14;
+        byte[] ppbVar15;
         ulong uVar16;
         int iVar17;
+        sbyte[] local_48 = new sbyte[16];
+        uint local_30;
 
         if (cSound.DAT_38 != 0)
         {
@@ -1609,12 +1624,218 @@ public class GameManager : MonoBehaviour
                 puVar10 = cChannels[iVar17];
 
                 if ((uVar16 & 1) != 0 && puVar10.DAT_22 != -1)
-                    ; //FUN_5F7B4
+                    FUN_5F7B4(puVar10, (sbyte)iVar17);
 
                 uVar16 >>= 1;
                 iVar17++;
             } while (iVar17 < 16);
+
+            SpuSetKey(1, cSound.DAT_38);
+            //FUN_862AC
+            cSound.DAT_38 = 0;
+            cSound.DAT_3C = 0;
         }
+
+        iVar17 = 0;
+        bVar3 = false;
+
+        do
+        {
+            pcVar11 = cTrackers[iVar17];
+            ppbVar15 = pcVar11.BUFFER;
+
+            if (pcVar11.DAT_20 == 1)
+            {
+                iVar5 = pcVar11.DAT_0C - 2280000;
+                pcVar11.DAT_0C = iVar5;
+
+                while (iVar5 < 1)
+                {
+                    bVar1 = ppbVar15[pcVar11.currentOffset];
+                    local_30 = bVar1;
+                    pcVar11.currentOffset++;
+                    pcVar11.DAT_28 = (byte)(bVar1 & 0xf);
+                    //...
+
+                    if ((local_30 & 0x80) == 0)
+                        pcVar11.DAT_0C = -1;
+                    else
+                    {
+                        bVar1 = ppbVar15[pcVar11.currentOffset];
+                        pcVar11.currentOffset++;
+                        bVar3 = true;
+                        pcVar11.DAT_0C = bVar1 * pcVar11.DAT_10;
+                    }
+
+                    if (pcVar11.DAT_22 == 1)
+                    {
+                        pcVar11.DAT_22 = 0;
+                        pcVar11.DAT_08 = pcVar11.currentOffset;
+                    }
+
+                    iVar5 = pcVar11.DAT_0C;
+                }
+
+                if (pcVar11.DAT_22 != 0)
+                {
+                    if (pcVar11.DAT_22 == 1)
+                        pcVar11.DAT_08 = pcVar11.currentOffset;
+                    else
+                    {
+                        if (pcVar11.DAT_23 == 0x7f || pcVar11.DAT_23-- != 1)
+                            pcVar11.currentOffset = pcVar11.DAT_08;
+                    }
+
+                    pcVar11.DAT_22 = 0;
+                }
+            }
+
+            iVar17++;
+        } while (iVar17 < 3);
+
+        if (bVar3)
+        {
+            if (cSound.DAT_50)
+            {
+                cSound.DAT_50 = false;
+                iVar17 = 0;
+
+                do
+                {
+                    psVar12 = cChannels[iVar17];
+
+                    if (psVar12.DAT_10)
+                    {
+                        psVar12.DAT_10 = false;
+                        SpuSetVoiceVolume(iVar17, (short)((psVar12.DAT_06 * psVar12.DAT_12) / 0x7f), (short)((psVar12.DAT_04 * psVar12.DAT_12) / 0x7f));
+                    }
+
+                    iVar17++;
+                } while (iVar17 < 16);
+            }
+
+            if (cSound.DAT_51)
+            {
+                cSound.DAT_51 = false;
+                iVar17 = 0;
+
+                do
+                {
+                    puVar13 = cChannels[iVar17];
+
+                    if (puVar13.DAT_0F)
+                    {
+                        puVar13.DAT_0F = false;
+                        puVar8 = PTR_DAT_9E708[puVar13.DAT_23].ATTRS[puVar13.DAT_1D + puVar13.DAT_1C * 16];
+                        uVar9 = puVar13.DAT_18;
+                        iVar5 = 0;
+
+                        if (0x2000 < uVar9)
+                            iVar5 = -((int)(0x2000 - uVar9) * puVar8.DAT_0D * 0x80) / 0x1fff;
+
+                        if (uVar9 < 0x2000)
+                            iVar5 = -((int)(puVar13.DAT_18 - 0x2000) * puVar8.DAT_0C * 0x80) / 0x1fff;
+
+                        uVar9 = (uint)(puVar13.DAT_1E << 7 | puVar8.NOTE) + (uint)iVar5;
+                        uVar4 = (ushort)Utilities.FUN_5FCF0((int)((uVar9 & 0x3f80) >> 7) - puVar8.SAMPLE_NOTE, (int)(uVar9 & 0x7f));
+                        SpuSetVoicePitch(iVar17, uVar4);
+                    }
+
+                    iVar17++;
+                } while (iVar17 < 16);
+            }
+
+            if (cSound.DAT_53)
+            {
+                cSound.DAT_53 = false;
+                iVar17 = 0;
+
+                do
+                {
+                    piVar14 = cChannels[iVar17];
+
+                    if (cSound.DAT_52 == 1)
+                    {
+                        uVar4 = (ushort)(piVar14.DAT_14 * 0x10f39);
+                        SpuSetVoicePitch(iVar17, uVar4);
+                    }
+                    else
+                    {
+                        if (cSound.DAT_52 < 2)
+                        {
+                            if (cSound.DAT_52 == 0)
+                            {
+                                uVar4 = (ushort)piVar14.DAT_14;
+                                SpuSetVoicePitch(iVar17, uVar4);
+                            }
+                        }
+                        else
+                        {
+                            if (cSound.DAT_52 == 2)
+                            {
+                                uVar4 = (ushort)(piVar14.DAT_14 * 0x11f5a);
+                                SpuSetVoicePitch(iVar17, uVar4);
+                            }
+                        }
+                    }
+
+                    iVar17++;
+                } while (iVar17 < 16);
+            }
+        }
+
+        uVar9 = 0;
+
+        do
+        {
+            piVar14 = cChannels[uVar9];
+
+            if (cTrackers[piVar14.DAT_22].DAT_25 != 0 && piVar14.DAT_1A)
+            {
+                iVar17 = (piVar14.DAT_06 * DAT_A2CD * (sbyte)cTrackers[piVar14.DAT_22].DAT_24) / 0x771;
+                iVar5 = (piVar14.DAT_04 * DAT_A2CD * (sbyte)cTrackers[piVar14.DAT_22].DAT_24) / 0x771;
+
+                if (iVar17 == 0 && iVar5 == 0)
+                {
+                    uVar7 = 1U << (int)(uVar9 & 31);
+                    cSound.DAT_40 |= uVar7;
+                    cSound.DAT_44 |= uVar7;
+                    piVar14.DAT_22 = -1;
+                    piVar14.DAT_0D = -1;
+                    piVar14.DAT_1A = false;
+                    piVar14.DAT_00 = 0;
+                }
+
+                SpuSetVoiceVolume((int)uVar9, (short)iVar17, (short)iVar5);
+            }
+
+            uVar9++;
+            piVar14.DAT_00++;
+        } while ((int)uVar9 < 16);
+
+        if (cSound.DAT_40 != 0)
+        {
+            SpuSetKey(0, cSound.DAT_40);
+            cSound.DAT_40 = 0;
+            cSound.DAT_44 = 0;
+        }
+
+        SpuRGetAllKeysStatus(0, 15, local_48);
+        iVar17 = 0;
+
+        do
+        {
+            puVar10 = cChannels[iVar17];
+
+            if (local_48[iVar17] == 1 && puVar10.DAT_22 == -1)
+            {
+                uVar9 = 1U << (iVar17 & 31);
+                cSound.DAT_40 |= uVar9;
+                cSound.DAT_44 |= uVar9;
+            }
+
+            iVar17++;
+        } while (iVar17 < 16);
     }
 
     private void FUN_5F7B4(CriChannel param1, sbyte param2)
@@ -1668,7 +1889,7 @@ public class GameManager : MonoBehaviour
                 if (bVar1 < 2)
                 {
                     if (bVar1 == 0)
-                        local_48.pitch = param1.DAT_14;
+                        local_48.pitch = (ushort)param1.DAT_14;
                 }
                 else
                 {
@@ -2827,6 +3048,12 @@ public class GameManager : MonoBehaviour
         float _volR = (float)volR / 0x4000;
         voices[vNum].volume = Mathf.Max(_volL, _volR);
         voices[vNum].panStereo = _volR - _volL;
+    }
+
+    //FUN_86DFC
+    public static void SpuSetVoicePitch(int vNum, ushort pitch)
+    {
+        voices[vNum].pitch = (float)pitch / 1024;
     }
 
     //FUN_86E6C

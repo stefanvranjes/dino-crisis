@@ -23,7 +23,16 @@ public class IMP_GIAN : ScriptedImporter
             
                 List<SpuVoiceAttr> list = new List<SpuVoiceAttr>();
                 gian.INDEX = index;
-                reader.Seek(0x90, SeekOrigin.Begin);
+                reader.Seek(0x10, SeekOrigin.Begin);
+                gian.CHUNKS = new GianChunk[16];
+
+                for (int i = 0; i < 16; i++)
+                {
+                    GianChunk chunk = new GianChunk();
+                    chunk.COUNT = reader.ReadByte();
+                    reader.Seek(7, SeekOrigin.Current);
+                    gian.CHUNKS[i] = chunk;
+                }
                 
                 while(reader.Length - reader.Position >= 0x18)
                 {

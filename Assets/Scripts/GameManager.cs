@@ -1505,7 +1505,7 @@ public class GameManager : MonoBehaviour
         param3 += param4;
     }
 
-    private void FUN_5E130(int param1, byte param2, byte param3)
+    private void FUN_5E130(int param1, sbyte param2, byte param3)
     {
         GntScriptableObject tVar3;
         CriTracker tVar1;
@@ -1520,7 +1520,7 @@ public class GameManager : MonoBehaviour
             tVar1.currentOffset = 0;
             tVar1.DAT_1F = 0;
             tVar1.DAT_1E = param2;
-            tVar1.DAT_1D = (byte)param1;
+            tVar1.DAT_1D = (sbyte)param1;
             tVar1.DAT_1C = false;
             tVar1.DAT_27 = false;
             tVar1.DAT_14 = tVar3.DAT_02;
@@ -1838,6 +1838,81 @@ public class GameManager : MonoBehaviour
         } while (iVar17 < 16);
     }
 
+    private void FUN_5EB68(CriSound param1, CriTracker param2, int param3, ref uint param4)
+    {
+        byte bVar1;
+        uint uVar2;
+        int iVar3;
+        uint uVar4;
+        GianScriptableObject puVar5;
+
+        param2.DAT_2C[param3 + 9] = param2.BUFFER[param2.currentOffset];
+        iVar3 = param2.currentOffset;
+        param2.currentOffset = iVar3 + 1;
+        bVar1 = param2.BUFFER[iVar3 + 1];
+        param2.currentOffset = iVar3 + 2;
+        puVar5 = PTR_DAT_9E708[param2.DAT_1E];
+        uVar2 = (uint)((DAT_A2CD * (sbyte)param2.DAT_24 * param2.DAT_2C[param3 + 7] * param2.DAT_2C[param3 + 4]) / 0x3b10f);
+        param2.DAT_2C[param3 + 8] = (byte)uVar2;
+        param2.DAT_2C[param3 + 8] = (byte)(((uVar2 & 0xff) * bVar1) / 0x7f);
+        uVar4 = FUN_5F75C(puVar5.ATTRS, param2.DAT_2C[param3 + 9], puVar5.CHUNKS[param2.DAT_2C[param3 + 3]].COUNT, param2.DAT_2C[param3 + 3] * 16);
+        FUN_5ECB8(param1, param2, param3, uVar4);
+    }
+
+    private void FUN_5ECB8(CriSound param1, CriTracker param2, int param3, uint param4)
+    {
+        sbyte sVar1;
+
+        param2.DAT_2C[param3 + 10] = 0;
+
+        if (param4 != 0)
+        {
+            do
+            {
+                if ((param4 & 1) != 0)
+                {
+                    sVar1 = FUN_5FBA4((uint)(int)param2.DAT_1D, param2.DAT_2C[param3 + 3],
+                                      param2.DAT_2C[param3 + 10], param2.DAT_2C[param3 + 9]);
+                    param2.DAT_2C[param3 + 2] = (byte)sVar1;
+
+                    if (sVar1 != -1)
+                    {
+                        param1.DAT_40 |= 1U << (param2.DAT_2C[param3 + 2] & 31);
+                        param1.DAT_44 |= 1U << (param2.DAT_2C[param3 + 2] & 31);
+                    }
+                }
+
+                param4 >>= 1;
+                param2.DAT_2C[param3 + 10]++;
+            } while (param4 != 0);
+        }
+    }
+
+    private uint FUN_5F75C(SpuVoiceAttr[] param1, uint param2, uint param3, int param4)
+    {
+        uint uVar1;
+        SpuVoiceAttr pbVar2;
+        uint uVar3;
+
+        uVar1 = 0;
+        uVar3 = 0;
+
+        if (param3 != 0)
+        {
+            do
+            {
+                pbVar2 = param1[param4 + (int)uVar1];
+
+                if (pbVar2.NOTE2 <= param2 && param2 <= pbVar2.DAT_07)
+                    uVar3 = uVar3 | 1U << (int)(uVar1 & 31);
+
+                uVar1++;
+            } while (uVar1 < param3);
+        }
+
+        return uVar3;
+    }
+
     private void FUN_5F7B4(CriChannel param1, sbyte param2)
     {
         byte bVar1;
@@ -1900,6 +1975,31 @@ public class GameManager : MonoBehaviour
         }
 
         SpuSetVoiceAttr(ref local_48);
+    }
+
+    private sbyte FUN_5FBA4(uint param1, uint param2, uint param3, uint param4)
+    {
+        CriChannel pbVar1;
+        int iVar3;
+
+        iVar3 = 0;
+        pbVar1 = cChannels[iVar3];
+
+        while (pbVar1.DAT_1C != param2 || pbVar1.DAT_1D != param3 || 
+            pbVar1.DAT_1E != param4 || !pbVar1.DAT_1A || param1 != (byte)pbVar1.DAT_22)
+        {
+            iVar3++;
+            pbVar1 = cChannels[iVar3];
+
+            if (15 < iVar3)
+                return -1;
+        }
+
+        pbVar1.DAT_1A = false;
+        pbVar1.DAT_00 = 0;
+        pbVar1.DAT_0D = -1;
+        pbVar1.DAT_22 = -1;
+        return (sbyte)iVar3;
     }
 
     public void FUN_40C60(CriPlayer param1)

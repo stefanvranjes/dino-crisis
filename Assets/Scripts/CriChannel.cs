@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class CriChannel : MonoBehaviour
 {
-    public int DAT_00; //0x00
+    public uint DAT_00; //0x00
     public short DAT_04; //0x04
     public short DAT_06; //0x06
+    public short DAT_08; //0x08
     public short DAT_0A; //0x0A
+    public byte DAT_0C; //0x0C
     public sbyte DAT_0D; //0x0D
+    public byte DAT_0E; //0x0E
     public bool DAT_0F; //0x0F
     public bool DAT_10; //0x10
     public byte DAT_12; //0x12
@@ -42,8 +45,11 @@ public class CriChannel : MonoBehaviour
         DAT_00 = 0;
         DAT_04 = 0;
         DAT_06 = 0;
+        DAT_08 = 0;
         DAT_0A = 0;
+        DAT_0C = 0;
         DAT_0D = 0;
+        DAT_0E = 0;
         DAT_0F = false;
         DAT_10 = false;
         DAT_12 = 0;

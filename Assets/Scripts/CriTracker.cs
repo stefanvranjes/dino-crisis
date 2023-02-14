@@ -23,7 +23,7 @@ public class CriTracker : MonoBehaviour
     public byte DAT_25; //0x25
     public byte DAT_26; //0x26
     public bool DAT_27; //0x27
-    public byte DAT_28; //0x28
+    public sbyte DAT_28; //0x28
     public byte[] DAT_2C; //0x2C
 
     // Start is called before the first frame update

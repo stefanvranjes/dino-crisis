@@ -1320,7 +1320,7 @@ public class GameManager : MonoBehaviour
         uint uVar9;
         CriTracker puVar11;
         CriChannel puVar12;
-        sbyte[] acStack56;
+        sbyte[] acStack56 = new sbyte[24];
 
         oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
 
@@ -1611,7 +1611,7 @@ public class GameManager : MonoBehaviour
         byte[] ppbVar15;
         ulong uVar16;
         int iVar17;
-        sbyte[] local_48 = new sbyte[16];
+        sbyte[] local_48 = new sbyte[24];
         uint local_30;
 
         if (cSound.DAT_38 != 0)
@@ -1654,7 +1654,7 @@ public class GameManager : MonoBehaviour
                     bVar1 = ppbVar15[pcVar11.currentOffset];
                     local_30 = bVar1;
                     pcVar11.currentOffset++;
-                    pcVar11.DAT_28 = (byte)(bVar1 & 0xf);
+                    pcVar11.DAT_28 = (sbyte)(bVar1 & 0xf);
                     //...
 
                     if ((local_30 & 0x80) == 0)
@@ -1888,6 +1888,98 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void FUN_5ED84(CriSound param1, CriTracker param2, int param3, ref uint param4)
+    {
+        sbyte sVar1;
+        uint uVar2;
+        int iVar3;
+        sbyte sVar4;
+        uint uVar5;
+        int iVar6;
+        CriChannel cVar7;
+        uint uVar8;
+        SpuVoiceAttr puVar9;
+        short[] local_5c = new short[4];
+        GianScriptableObject local_38;
+
+        param2.DAT_2C[param3 + 9] = param2.BUFFER[param2.currentOffset];
+        iVar6 = param2.currentOffset;
+        param2.currentOffset = iVar6 + 1;
+        param2.DAT_2C[param3 + 11] = param2.BUFFER[iVar6 + 1];
+        param2.currentOffset++;
+        local_38 = PTR_DAT_9E708[param2.DAT_1E];
+        uVar5 = (uint)((param2.DAT_2C[param3 + 7] * param2.DAT_2C[param3 + 4]) / 0x7f);
+        param2.DAT_2C[param3 + 8] = (byte)uVar5;
+        param2.DAT_2C[param3 + 8] = (byte)(((int)(uVar5 & 0xff) * param2.DAT_2C[param3 + 11]) / 0x7f);
+        uVar5 = FUN_5F75C(local_38.ATTRS, param2.DAT_2C[param3 + 9], local_38.CHUNKS[param2.DAT_2C[param3 + 3]].COUNT, param2.DAT_2C[param3 + 3] * 16);
+        param2.DAT_2C[param3 + 10] = 0;
+
+        if (param2.DAT_2C[param3 + 11] == 0)
+            FUN_5ECB8(param1, param2, param3, uVar5);
+        else
+        {
+            while (uVar5 != 0)
+            {
+                if ((uVar5 & 1) != 0)
+                {
+                    puVar9 = local_38.ATTRS[param2.DAT_2C[param3 + 10] + param2.DAT_2C[param3 + 3] * 16];
+
+                    if (param2.DAT_2C[param3 + 6] == 0x40 && param2.DAT_2C[param3 + 5] == 0x40)
+                        uVar8 = puVar9.DAT_03;
+                    else
+                        uVar8 = (uint)(((param2.DAT_2C[param3 + 6] + puVar9.DAT_03 >> 1) + param2.DAT_2C[param3 + 5]) >> 1);
+
+                    FUN_5FA44(local_5c, (short)((param2.DAT_2C[param3 + 8] * puVar9.DAT_02) / 0x7f), uVar8);
+                    iVar6 = local_5c[3] * local_5c[3] * 0x2080f;
+                    iVar3 = local_5c[2] * local_5c[2] * 0x2080f;
+                    uVar8 = (uint)(((iVar6 >> 0x11) * DAT_A2CD * (sbyte)param2.DAT_24) / 0x771);
+                    local_5c[3] = (short)uVar8;
+                    uVar2 = (uint)(((iVar3 >> 0x11) * DAT_A2CD * (sbyte)param2.DAT_24) / 0x771);
+                    local_5c[2] = (short)uVar2;
+
+                    if (((uVar8 | uVar2) & 0xffff) != 0)
+                    {
+                        sVar4 = FUN_5FAAC();
+                        param2.DAT_2C[param3 + 2] = (byte)sVar4;
+
+                        if (sVar4 != -1)
+                        {
+                            uVar8 = param2.DAT_2C[param3 + 2];
+                            cVar7 = cChannels[uVar8];
+                            cVar7.DAT_1A = true;
+                            cVar7.DAT_0D = param2.DAT_28;
+                            cVar7.DAT_1C = param2.DAT_2C[param3 + 3];
+                            cVar7.DAT_1D = param2.DAT_2C[param3 + 10];
+                            cVar7.DAT_1E = param2.DAT_2C[param3 + 9];
+                            cVar7.DAT_18 = (ushort)(param2.DAT_2C[param3 + 1] << 8 | param2.DAT_2C[param3]);
+                            cVar7.DAT_0E = param2.DAT_2C[param3 + 7];
+                            cVar7.DAT_0C = param2.DAT_2C[param3 + 11];
+                            cVar7.DAT_23 = param2.DAT_1E;
+                            sVar1 = param2.DAT_1D;
+                            cVar7.DAT_00 = 0;
+                            cVar7.DAT_22 = sVar1;
+                            cVar7.DAT_06 = local_5c[3];
+                            cVar7.DAT_0A = (short)(iVar6 >> 0x11);
+                            cVar7.DAT_08 = (short)(iVar3 >> 0x11);
+                            cVar7.DAT_04 = local_5c[2];
+
+                            if (puVar9.FLAGS == 0)
+                                param1.DAT_44 |= 1U << (param2.DAT_2C[param3 + 2] & 31);
+                            else
+                                param1.DAT_3C |= 1U << (param2.DAT_2C[param3 + 2] & 31);
+
+                            param1.DAT_38 |= 1U << (param2.DAT_2C[param3 + 2] & 31);
+                            param1.DAT_40 |= 1U << (param2.DAT_2C[param3 + 2] & 31);
+                        }
+                    }
+                }
+
+                uVar5 >>= 1;
+                param2.DAT_2C[param3 + 10]++;
+            }
+        }
+    }
+
     private uint FUN_5F75C(SpuVoiceAttr[] param1, uint param2, uint param3, int param4)
     {
         uint uVar1;
@@ -1975,6 +2067,68 @@ public class GameManager : MonoBehaviour
         }
 
         SpuSetVoiceAttr(ref local_48);
+    }
+
+    private void FUN_5FA44(short[] param1, short param2, uint param3)
+    {
+        param1[2] = param2;
+        param1[3] = param2;
+
+        if (param3 < 0x40)
+            param1[2] = (short)(param2 * (short)param3 >> 6);
+
+        if (0x40 < param3)
+            param1[3] = (short)(param2 * (short)(0x7f - param3) >> 6);
+    }
+
+    private sbyte FUN_5FAAC()
+    {
+        int iVar1;
+        int iVar2;
+        CriChannel puVar3;
+        CriChannel puVar4;
+        uint uVar5;
+        int iVar6;
+        sbyte[] local_20 = new sbyte[24];
+
+        SpuRGetAllKeysStatus(0, 15, local_20);
+        iVar2 = 0;
+        puVar3 = cChannels[iVar2];
+
+        while (local_20[iVar2] != 0 || puVar3.DAT_1A)
+        {
+            iVar2++;
+            puVar3 = cChannels[iVar2];
+
+            if (15 < iVar2)
+            {
+                uVar5 = 1;
+                iVar6 = -1;
+                iVar2 = 0;
+
+                do
+                {
+                    puVar4 = cChannels[iVar2];
+
+                    if (local_20[iVar2] == 3)
+                        return (sbyte)iVar2;
+
+                    iVar1 = iVar2 + 1;
+
+                    if (uVar5 <= puVar4.DAT_00)
+                    {
+                        uVar5 = puVar4.DAT_00;
+                        iVar6 = iVar2;
+                    }
+
+                    iVar2 = iVar1;
+                } while (iVar1 < 16);
+
+                return (sbyte)iVar6;
+            }
+        }
+
+        return (sbyte)iVar2;
     }
 
     private sbyte FUN_5FBA4(uint param1, uint param2, uint param3, uint param4)

@@ -44,7 +44,8 @@ public class IMP_GIAN : ScriptedImporter
                     attr.SAMPLE_NOTE = reader.ReadByte();
                     attr.NOTE = reader.ReadByte();
                     attr.NOTE2 = reader.ReadByte();
-                    reader.Seek(6, SeekOrigin.Current);
+                    attr.DAT_07 = reader.ReadByte();
+                    reader.Seek(5, SeekOrigin.Current);
                     attr.DAT_0C = reader.ReadByte();
                     attr.DAT_0D = reader.ReadByte();
                     reader.Seek(2, SeekOrigin.Current);

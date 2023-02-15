@@ -1980,6 +1980,95 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void FUN_5F224(CriSound param1, CriTracker param2, int param3, ref uint param4)
+    {
+        return;
+    }
+
+    private void FUN_5F22C(CriSound param1, CriTracker param2, int param3, ref uint param4)
+    {
+        byte bVar1;
+        byte bVar2;
+        int pbVar3;
+        int pbVar4;
+        CriChannel puVar5;
+        uint uVar6;
+
+        pbVar3 = param2.currentOffset;
+        bVar1 = param2.BUFFER[pbVar3];
+        pbVar4 = pbVar3 + 1;
+
+        if (bVar1 != 91)
+        {
+            if (bVar1 < 92)
+            {
+                if (bVar1 == 10)
+                    param2.DAT_2C[param3 + 5] = param2.BUFFER[pbVar4];
+                else
+                {
+                    if (bVar1 < 11)
+                    {
+                        if (bVar1 == 6)
+                        {
+                            if (param2.DAT_21 == 20)
+                            {
+                                param2.DAT_22 = 1;
+                                param2.DAT_23 = param2.BUFFER[param2.currentOffset];
+                            }
+                        }
+                        else
+                        {
+                            uVar6 = 0;
+
+                            if (bVar1 == 7)
+                            {
+                                bVar1 = param2.BUFFER[pbVar4];
+                                param2.currentOffset = pbVar3 + 2;
+
+                                do
+                                {
+                                    puVar5 = cChannels[uVar6];
+
+                                    if (puVar5.DAT_0D == param2.DAT_28 &&
+                                        param2.DAT_1D == puVar5.DAT_22)
+                                    {
+                                        puVar5.DAT_12 = bVar1;
+                                        bVar2 = param2.DAT_2C[param3 + 7];
+                                        puVar5.DAT_10 = true;
+                                        puVar5.DAT_11 = bVar2;
+                                        param1.DAT_50 = true;
+                                    }
+
+                                    uVar6++;
+                                } while (uVar6 < 16);
+
+                                param2.DAT_2C[param3 + 7] = bVar1;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (bVar1 < 102 && bVar1 < 100 && bVar1 != 98 && bVar1 == 99)
+                {
+                    bVar1 = param2.BUFFER[pbVar4];
+                    param2.DAT_21 = bVar1;
+                    param2.currentOffset++;
+
+                    if (bVar1 != 30)
+                        return;
+
+                    param2.DAT_22 = 2;
+                    return;
+                }
+            }
+        }
+
+        param2.currentOffset++;
+    }
+
     private uint FUN_5F75C(SpuVoiceAttr[] param1, uint param2, uint param3, int param4)
     {
         uint uVar1;

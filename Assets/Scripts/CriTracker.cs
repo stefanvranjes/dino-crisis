@@ -17,6 +17,7 @@ public class CriTracker : MonoBehaviour
     public sbyte DAT_1E; //0x1E
     public byte DAT_1F; //0x1F
     public byte DAT_20; //0x20
+    public byte DAT_21; //0x21
     public byte DAT_22; //0x22
     public byte DAT_23; //0x23
     public byte DAT_24; //0x24
@@ -53,6 +54,7 @@ public class CriTracker : MonoBehaviour
         DAT_1E = 0;
         DAT_1F = 0;
         DAT_20 = 0;
+        DAT_21 = 0;
         DAT_22 = 0;
         DAT_23 = 0;
         DAT_24 = 0;

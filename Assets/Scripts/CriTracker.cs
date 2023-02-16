@@ -2,6 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class TrackerData
+{
+    public ushort DAT_00; //0x00
+    public sbyte DAT_02; //0x02
+    public byte DAT_03; //0x03
+    public byte DAT_04; //0x04
+    public byte DAT_05; //0x05
+    public byte DAT_06; //0x06
+    public byte DAT_07; //0x07
+    public byte DAT_08; //0x08
+    public byte DAT_09; //0x09
+    public byte DAT_0A; //0x0A
+    public byte DAT_0B; //0x0B
+}
+
 public class CriTracker : MonoBehaviour
 {
     public byte[] BUFFER;

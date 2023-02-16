@@ -23,6 +23,8 @@ public class SpuVoiceAttr
 public class GianChunk
 {
     public byte COUNT; //0x00
+    public byte DAT_01; //0x01
+    public byte DAT_04; //0x04
 }
 
 public class GianScriptableObject : ScriptableObject
@@ -30,6 +32,8 @@ public class GianScriptableObject : ScriptableObject
     public string prefabName;
 
     public int INDEX;
-    public GianChunk[] CHUNKS;
-    public SpuVoiceAttr[] ATTRS;
+    public byte DAT_0C; //0x0C
+    public byte DAT_0D; //0x0D
+    public GianChunk[] CHUNKS; //0x10
+    public SpuVoiceAttr[] ATTRS; //0x90
 }

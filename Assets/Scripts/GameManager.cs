@@ -1838,7 +1838,7 @@ public class GameManager : MonoBehaviour
         } while (iVar17 < 16);
     }
 
-    private void FUN_5EB68(CriSound param1, CriTracker param2, int param3, ref uint param4)
+    private void FUN_5EB68(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
     {
         byte bVar1;
         uint uVar2;
@@ -1846,24 +1846,24 @@ public class GameManager : MonoBehaviour
         uint uVar4;
         GianScriptableObject puVar5;
 
-        param2.DAT_2C[param3 + 9] = param2.BUFFER[param2.currentOffset];
+        param3.DAT_09 = param2.BUFFER[param2.currentOffset];
         iVar3 = param2.currentOffset;
         param2.currentOffset = iVar3 + 1;
         bVar1 = param2.BUFFER[iVar3 + 1];
         param2.currentOffset = iVar3 + 2;
         puVar5 = PTR_DAT_9E708[param2.DAT_1E];
-        uVar2 = (uint)((DAT_A2CD * (sbyte)param2.DAT_24 * param2.DAT_2C[param3 + 7] * param2.DAT_2C[param3 + 4]) / 0x3b10f);
-        param2.DAT_2C[param3 + 8] = (byte)uVar2;
-        param2.DAT_2C[param3 + 8] = (byte)(((uVar2 & 0xff) * bVar1) / 0x7f);
-        uVar4 = FUN_5F75C(puVar5.ATTRS, param2.DAT_2C[param3 + 9], puVar5.CHUNKS[param2.DAT_2C[param3 + 3]].COUNT, param2.DAT_2C[param3 + 3] * 16);
+        uVar2 = (uint)((DAT_A2CD * (sbyte)param2.DAT_24 * param3.DAT_07 * param3.DAT_04) / 0x3b10f);
+        param3.DAT_08 = (byte)uVar2;
+        param3.DAT_08 = (byte)(((uVar2 & 0xff) * bVar1) / 0x7f);
+        uVar4 = FUN_5F75C(puVar5.ATTRS, param3.DAT_09, puVar5.CHUNKS[param3.DAT_03].COUNT, param3.DAT_03 * 16);
         FUN_5ECB8(param1, param2, param3, uVar4);
     }
 
-    private void FUN_5ECB8(CriSound param1, CriTracker param2, int param3, uint param4)
+    private void FUN_5ECB8(CriSound param1, CriTracker param2, TrackerData param3, uint param4)
     {
         sbyte sVar1;
 
-        param2.DAT_2C[param3 + 10] = 0;
+        param3.DAT_0A = 0;
 
         if (param4 != 0)
         {
@@ -1871,24 +1871,23 @@ public class GameManager : MonoBehaviour
             {
                 if ((param4 & 1) != 0)
                 {
-                    sVar1 = FUN_5FBA4((uint)(int)param2.DAT_1D, param2.DAT_2C[param3 + 3],
-                                      param2.DAT_2C[param3 + 10], param2.DAT_2C[param3 + 9]);
-                    param2.DAT_2C[param3 + 2] = (byte)sVar1;
+                    sVar1 = FUN_5FBA4((uint)(int)param2.DAT_1D, param3.DAT_03, param3.DAT_0A, param3.DAT_09);
+                    param3.DAT_02 = sVar1;
 
                     if (sVar1 != -1)
                     {
-                        param1.DAT_40 |= 1U << (param2.DAT_2C[param3 + 2] & 31);
-                        param1.DAT_44 |= 1U << (param2.DAT_2C[param3 + 2] & 31);
+                        param1.DAT_40 |= 1U << (param3.DAT_02 & 31);
+                        param1.DAT_44 |= 1U << (param3.DAT_02 & 31);
                     }
                 }
 
                 param4 >>= 1;
-                param2.DAT_2C[param3 + 10]++;
+                param3.DAT_0A++;
             } while (param4 != 0);
         }
     }
 
-    private void FUN_5ED84(CriSound param1, CriTracker param2, int param3, ref uint param4)
+    private void FUN_5ED84(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
     {
         sbyte sVar1;
         uint uVar2;
@@ -1902,19 +1901,19 @@ public class GameManager : MonoBehaviour
         short[] local_5c = new short[4];
         GianScriptableObject local_38;
 
-        param2.DAT_2C[param3 + 9] = param2.BUFFER[param2.currentOffset];
+        param3.DAT_09 = param2.BUFFER[param2.currentOffset];
         iVar6 = param2.currentOffset;
         param2.currentOffset = iVar6 + 1;
-        param2.DAT_2C[param3 + 11] = param2.BUFFER[iVar6 + 1];
+        param3.DAT_0B = param2.BUFFER[iVar6 + 1];
         param2.currentOffset++;
         local_38 = PTR_DAT_9E708[param2.DAT_1E];
-        uVar5 = (uint)((param2.DAT_2C[param3 + 7] * param2.DAT_2C[param3 + 4]) / 0x7f);
-        param2.DAT_2C[param3 + 8] = (byte)uVar5;
-        param2.DAT_2C[param3 + 8] = (byte)(((int)(uVar5 & 0xff) * param2.DAT_2C[param3 + 11]) / 0x7f);
-        uVar5 = FUN_5F75C(local_38.ATTRS, param2.DAT_2C[param3 + 9], local_38.CHUNKS[param2.DAT_2C[param3 + 3]].COUNT, param2.DAT_2C[param3 + 3] * 16);
-        param2.DAT_2C[param3 + 10] = 0;
+        uVar5 = (uint)((param3.DAT_07 * param3.DAT_04) / 0x7f);
+        param3.DAT_08 = (byte)uVar5;
+        param3.DAT_08 = (byte)(((int)(uVar5 & 0xff) * param3.DAT_0B) / 0x7f);
+        uVar5 = FUN_5F75C(local_38.ATTRS, param3.DAT_09, local_38.CHUNKS[param3.DAT_03].COUNT, param3.DAT_03 * 16);
+        param3.DAT_0A = 0;
 
-        if (param2.DAT_2C[param3 + 11] == 0)
+        if (param3.DAT_0B == 0)
             FUN_5ECB8(param1, param2, param3, uVar5);
         else
         {
@@ -1922,14 +1921,14 @@ public class GameManager : MonoBehaviour
             {
                 if ((uVar5 & 1) != 0)
                 {
-                    puVar9 = local_38.ATTRS[param2.DAT_2C[param3 + 10] + param2.DAT_2C[param3 + 3] * 16];
+                    puVar9 = local_38.ATTRS[param3.DAT_0A + param3.DAT_03 * 16];
 
-                    if (param2.DAT_2C[param3 + 6] == 0x40 && param2.DAT_2C[param3 + 5] == 0x40)
+                    if (param3.DAT_06 == 0x40 && param3.DAT_05 == 0x40)
                         uVar8 = puVar9.DAT_03;
                     else
-                        uVar8 = (uint)(((param2.DAT_2C[param3 + 6] + puVar9.DAT_03 >> 1) + param2.DAT_2C[param3 + 5]) >> 1);
+                        uVar8 = (uint)(((param3.DAT_06 + puVar9.DAT_03 >> 1) + param3.DAT_05) >> 1);
 
-                    FUN_5FA44(local_5c, (short)((param2.DAT_2C[param3 + 8] * puVar9.DAT_02) / 0x7f), uVar8);
+                    FUN_5FA44(local_5c, (short)((param3.DAT_08 * puVar9.DAT_02) / 0x7f), uVar8);
                     iVar6 = local_5c[3] * local_5c[3] * 0x2080f;
                     iVar3 = local_5c[2] * local_5c[2] * 0x2080f;
                     uVar8 = (uint)(((iVar6 >> 0x11) * DAT_A2CD * (sbyte)param2.DAT_24) / 0x771);
@@ -1940,20 +1939,20 @@ public class GameManager : MonoBehaviour
                     if (((uVar8 | uVar2) & 0xffff) != 0)
                     {
                         sVar4 = FUN_5FAAC();
-                        param2.DAT_2C[param3 + 2] = (byte)sVar4;
+                        param3.DAT_02 = sVar4;
 
                         if (sVar4 != -1)
                         {
-                            uVar8 = param2.DAT_2C[param3 + 2];
+                            uVar8 = (byte)param3.DAT_02;
                             cVar7 = cChannels[uVar8];
                             cVar7.DAT_1A = true;
                             cVar7.DAT_0D = param2.DAT_28;
-                            cVar7.DAT_1C = param2.DAT_2C[param3 + 3];
-                            cVar7.DAT_1D = param2.DAT_2C[param3 + 10];
-                            cVar7.DAT_1E = param2.DAT_2C[param3 + 9];
-                            cVar7.DAT_18 = (ushort)(param2.DAT_2C[param3 + 1] << 8 | param2.DAT_2C[param3]);
-                            cVar7.DAT_0E = param2.DAT_2C[param3 + 7];
-                            cVar7.DAT_0C = param2.DAT_2C[param3 + 11];
+                            cVar7.DAT_1C = param3.DAT_03;
+                            cVar7.DAT_1D = param3.DAT_0A;
+                            cVar7.DAT_1E = param3.DAT_09;
+                            cVar7.DAT_18 = param3.DAT_00;
+                            cVar7.DAT_0E = param3.DAT_07;
+                            cVar7.DAT_0C = param3.DAT_0B;
                             cVar7.DAT_23 = param2.DAT_1E;
                             sVar1 = param2.DAT_1D;
                             cVar7.DAT_00 = 0;
@@ -1964,28 +1963,28 @@ public class GameManager : MonoBehaviour
                             cVar7.DAT_04 = local_5c[2];
 
                             if (puVar9.FLAGS == 0)
-                                param1.DAT_44 |= 1U << (param2.DAT_2C[param3 + 2] & 31);
+                                param1.DAT_44 |= 1U << (param3.DAT_02 & 31);
                             else
-                                param1.DAT_3C |= 1U << (param2.DAT_2C[param3 + 2] & 31);
+                                param1.DAT_3C |= 1U << (param3.DAT_02 & 31);
 
-                            param1.DAT_38 |= 1U << (param2.DAT_2C[param3 + 2] & 31);
-                            param1.DAT_40 |= 1U << (param2.DAT_2C[param3 + 2] & 31);
+                            param1.DAT_38 |= 1U << (param3.DAT_02 & 31);
+                            param1.DAT_40 |= 1U << (param3.DAT_02 & 31);
                         }
                     }
                 }
 
                 uVar5 >>= 1;
-                param2.DAT_2C[param3 + 10]++;
+                param3.DAT_0A++;
             }
         }
     }
 
-    private void FUN_5F224(CriSound param1, CriTracker param2, int param3, ref uint param4)
+    private void FUN_5F224(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
     {
         return;
     }
 
-    private void FUN_5F22C(CriSound param1, CriTracker param2, int param3, ref uint param4)
+    private void FUN_5F22C(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
     {
         byte bVar1;
         byte bVar2;
@@ -2003,7 +2002,7 @@ public class GameManager : MonoBehaviour
             if (bVar1 < 92)
             {
                 if (bVar1 == 10)
-                    param2.DAT_2C[param3 + 5] = param2.BUFFER[pbVar4];
+                    param3.DAT_05 = param2.BUFFER[pbVar4];
                 else
                 {
                     if (bVar1 < 11)
@@ -2033,7 +2032,7 @@ public class GameManager : MonoBehaviour
                                         param2.DAT_1D == puVar5.DAT_22)
                                     {
                                         puVar5.DAT_12 = bVar1;
-                                        bVar2 = param2.DAT_2C[param3 + 7];
+                                        bVar2 = param3.DAT_07;
                                         puVar5.DAT_10 = true;
                                         puVar5.DAT_11 = bVar2;
                                         param1.DAT_50 = true;
@@ -2042,7 +2041,7 @@ public class GameManager : MonoBehaviour
                                     uVar6++;
                                 } while (uVar6 < 16);
 
-                                param2.DAT_2C[param3 + 7] = bVar1;
+                                param3.DAT_07 = bVar1;
                                 return;
                             }
                         }
@@ -2067,6 +2066,48 @@ public class GameManager : MonoBehaviour
         }
 
         param2.currentOffset++;
+    }
+
+    private void FUN_5F39C(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
+    {
+        GianScriptableObject puVar1;
+
+        puVar1 = PTR_DAT_9E708[param2.DAT_1E];
+        param3.DAT_03 = param2.BUFFER[param2.currentOffset];
+        param2.currentOffset++;
+        param3.DAT_04 = (byte)((puVar1.DAT_0C * puVar1.CHUNKS[param3.DAT_03].DAT_01) / 0x7f);
+        param3.DAT_06 = (byte)(puVar1.CHUNKS[param3.DAT_03].DAT_04 + puVar1.DAT_0D - 0x40);
+    }
+
+    private void FUN_5F43C(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
+    {
+        ushort uVar1;
+        int pbVar2;
+        CriChannel puVar3;
+        uint uVar4;
+
+        uVar4 = 0;
+        param3.DAT_00 = param2.BUFFER[param2.currentOffset];
+        pbVar2 = param2.currentOffset;
+        param2.currentOffset = pbVar2 + 1;
+        param3.DAT_00 |= (ushort)(param2.BUFFER[pbVar2 + 1] << 7);
+        param2.currentOffset++;
+
+        do
+        {
+            puVar3 = cChannels[uVar4];
+
+            if (puVar3.DAT_0D == param2.DAT_28 &&
+                param2.DAT_1D == puVar3.DAT_13)
+            {
+                uVar1 = param3.DAT_00;
+                puVar3.DAT_0F = true;
+                puVar3.DAT_18 = uVar1;
+                param1.DAT_51 = true;
+            }
+
+            uVar4++;
+        } while (uVar4 < 16);
     }
 
     private uint FUN_5F75C(SpuVoiceAttr[] param1, uint param2, uint param3, int param4)

@@ -255,6 +255,7 @@ public class GameManager : MonoBehaviour
 
     private delegate void FUN_9CBF0();
     private delegate void FUN_9CC28();
+    private delegate void FUN_9E74C(CriSound s, CriTracker t, TrackerData d, ref uint r);
     private delegate sbyte FUN_AA4D0(CriPlayer p, CriStatic o);
     private delegate void FUN_AA3E0(CoroutineLoader c);
 
@@ -265,6 +266,7 @@ public class GameManager : MonoBehaviour
 
     public static RamScriptableObject globalRam;
     public static GianScriptableObject[] PTR_DAT_9E708;
+    private static FUN_9E74C[] PTR_FUN_9E74C;
     private byte DAT_AA3EC;
     private byte[] DAT_AA44C = new byte[]
     {
@@ -342,6 +344,17 @@ public class GameManager : MonoBehaviour
         {
             FUN_489A8,
             FUN_48A54
+        };
+        PTR_FUN_9E74C = new FUN_9E74C[]
+        {
+            FUN_5EB68, 
+            FUN_5ED84, 
+            FUN_5F224, 
+            FUN_5F22C, 
+            FUN_5F39C, 
+            FUN_5F224, 
+            FUN_5F43C, 
+            FUN_5F5D4
         };
         PTR_FUN_AA4D0 = new FUN_AA4D0[3]
         {
@@ -1655,7 +1668,7 @@ public class GameManager : MonoBehaviour
                     local_30 = bVar1;
                     pcVar11.currentOffset++;
                     pcVar11.DAT_28 = (sbyte)(bVar1 & 0xf);
-                    //...
+                    PTR_FUN_9E74C[((local_30 & 0x70) >> 2) / 4](cSound, pcVar11, pcVar11.DAT_2C[local_30 & 0xf], ref local_30);
 
                     if ((local_30 & 0x80) == 0)
                         pcVar11.DAT_0C = -1;
@@ -2108,6 +2121,113 @@ public class GameManager : MonoBehaviour
 
             uVar4++;
         } while (uVar4 < 16);
+    }
+
+    private void FUN_5F4DC(short param1)
+    {
+        CriTracker tVar1;
+        uint uVar3;
+        CriChannel puVar4;
+        ulong voice_bit;
+        SpuVoiceAttr2 local_48;
+
+        tVar1 = cTrackers[param1];
+        voice_bit = 0;
+
+        if (tVar1.DAT_20 == 1)
+        {
+            tVar1.DAT_20 = 0;
+            uVar3 = 0;
+
+            do
+            {
+                puVar4 = cChannels[uVar3];
+
+                if (puVar4.DAT_22 == param1)
+                {
+                    voice_bit |= 1U << (int)(uVar3 & 31);
+                    puVar4.DAT_22 = -1;
+                    puVar4.DAT_0D = -1;
+                    puVar4.DAT_1A = false;
+                    puVar4.DAT_00 = 0;
+                    cSound.DAT_38 &= ~(uint)voice_bit;
+                    cSound.DAT_40 |= (uint)voice_bit;
+                }
+
+                uVar3++;
+            } while (uVar3 < 16);
+            
+            local_48 = new SpuVoiceAttr2();
+            local_48.mask = 3;
+            local_48.volume.left = 0;
+            local_48.volume.right = 0;
+            local_48.voice = (int)voice_bit;
+            SpuSetVoiceAttr(ref local_48);
+            SpuSetKey(0, voice_bit);
+        }
+    }
+
+    private void FUN_5F5D4(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
+    {
+        byte bVar1;
+        byte bVar2;
+        byte bVar3;
+        int iVar4;
+        int pcVar5;
+        int pcVar6;
+        int pcVar7;
+
+        if (param2.BUFFER[param2.currentOffset] == 47 && param2.BUFFER[param2.currentOffset] == 0)
+        {
+            if (param2.DAT_1F == 0)
+            {
+                if (param2.DAT_22 == 2)
+                {
+                    bVar1 = param2.DAT_23;
+
+                    if (bVar1 == 0x7f || param2.DAT_23-- != 1)
+                        param2.currentOffset = param2.DAT_08;
+
+                    param2.DAT_22 = 0;
+                }
+                else
+                    FUN_5F4DC(param2.DAT_1D);
+
+                if (param2.DAT_08 == 0)
+                    param4 = 0x80;
+                else
+                    param4 = 0;
+            }
+            else
+                param2.currentOffset = param2.startOffset;
+        }
+
+        pcVar7 = param2.currentOffset;
+
+        if (param2.BUFFER[pcVar7] == 0x51)
+        {
+            param2.currentOffset = pcVar7 + 1;
+            bVar2 = param2.BUFFER[pcVar7 + 1];
+            param2.currentOffset = pcVar7 + 2;
+            bVar3 = param2.BUFFER[pcVar7 + 2];
+            param2.currentOffset = pcVar7 + 3;
+            pcVar6 = (bVar2 << 0x10 | bVar3 << 8 | param2.BUFFER[pcVar7 + 3]);
+            pcVar5 = param2.DAT_14;
+            iVar4 = pcVar6 * 1000;
+
+            if (pcVar5 == 0)
+                return; //trap(0x1c00)
+
+            if (pcVar5 == -1 && iVar4 == -0x80000000)
+                return; //trap(0x1800)
+
+            param2.DAT_18 = pcVar6;
+            param2.currentOffset = pcVar7 + 4;
+            param2.DAT_10 = (iVar4 / pcVar5);
+
+            if (param2.DAT_1C)
+                param2.FUN_5DAA0();
+        }
     }
 
     private uint FUN_5F75C(SpuVoiceAttr[] param1, uint param2, uint param3, int param4)

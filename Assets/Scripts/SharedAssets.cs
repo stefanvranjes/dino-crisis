@@ -8,6 +8,9 @@ public class UIntUIntDictionary : SerializableDictionary<uint, uint> { }
 public class SharedAssets : MonoBehaviour
 {
     public static SharedAssets instance;
+    public RamScriptableObject ram;
+    public GianScriptableObject[] gians;
+    public IniScriptableObject[] inis;
     public UIntUIntDictionary SHARED;
 
     private void Awake()

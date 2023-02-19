@@ -19,7 +19,7 @@ public class TriggerData
     public ushort DAT_16;
 }
 
-[CreateAssetMenu(fileName = "TRG", menuName = "ScriptableObject/TrgScriptableObject", order = 1)]
+[CreateAssetMenu(fileName = "TRG", menuName = "ScriptableObjects/TrgScriptableObject", order = 1)]
 public class TrgScriptableObject : ScriptableObject
 {
     public string prefabName;

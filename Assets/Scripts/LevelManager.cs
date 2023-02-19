@@ -5,6 +5,9 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
+    public RamScriptableObject ram;
+    public GianScriptableObject[] gians;
+    public IniScriptableObject[] inis;
     public ushort DAT_B58BA;
     public delegate void FUN_B58C0(CriPlayer p);
     public FUN_B58C0[] PTR_FUN_B58C0;
@@ -14,6 +17,7 @@ public class LevelManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 

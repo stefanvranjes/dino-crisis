@@ -79,6 +79,12 @@ public class LoadDoorContainer
     public string DAT_20; //0x20
 }
 
+public class BgmData
+{
+    public byte DAT_00; //0x00
+    public ushort sceneId; //0x02
+}
+
 public class CoroutineLoader
 {
     public short DAT_00; //0x00
@@ -223,6 +229,12 @@ public class GameManager : MonoBehaviour
     public Packet DAT_C33A8;
     public Frame[] DAT_C33AC;
     public ushort DAT_C33B0;
+    public BgmData[] DAT_C5F08;
+    public BgmData[] DAT_C5F60;
+    public BgmData[] DAT_C5F80;
+    public BgmData[] DAT_C5FC0;
+    public BgmData[] DAT_C5FF8;
+    public BgmData[] DAT_C6040;
     public GntScriptableObject[] trackers; //0x800C58C8
     public CriChannel[] cChannels; //gp+deb8h...gp+e218h (0x800C58D8)
     public CriTracker[] cTrackers; //gp+e220h...gp+e3f8h (0x800C5C40)
@@ -266,6 +278,7 @@ public class GameManager : MonoBehaviour
 
     public static RamScriptableObject globalRam;
     public static GianScriptableObject[] PTR_DAT_9E708;
+    private static BgmData[][] PTR_DAT_9E724;
     private static FUN_9E74C[] PTR_FUN_9E74C;
     private byte DAT_AA3EC;
     private byte[] DAT_AA44C = new byte[]
@@ -421,6 +434,7 @@ public class GameManager : MonoBehaviour
         {
             FUN_47900();
             FUN_5D798();
+            FUN_5E400();
         }
     }
 
@@ -495,6 +509,8 @@ public class GameManager : MonoBehaviour
             //FUN_55198 - originally here
             LevelManager.instance.Initialize();
         }
+
+        FUN_55224();
     }
 
     private void FUN_47BE0()
@@ -923,8 +939,22 @@ public class GameManager : MonoBehaviour
     private void FUN_55198()
     {
         DontDestroyOnLoad(gameObject);
-        gameObject.AddComponent(Utilities.scriptComponents[DAT_9E0A0[DAT_9AA0 >> 8].scriptName]);
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[DAT_9E0A0[DAT_9AA0 >> 8].DAT_02], LoadSceneMode.Single);
+    }
+
+    private void FUN_55224()
+    {
+        byte bVar1;
+        uint uVar5;
+        List<LoadSceneContainer> puVar3;
+
+        bVar1 = (byte)DAT_9AA0;
+        puVar3 = DAT_9E0A0[DAT_9AA0 >> 8].scenes;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(puVar3[bVar1].DAT_02, LoadSceneMode.Single);
+        uVar5 = FUN_5DFDC();
+
+        if ((uVar5 & 0xfff) != 0xfff)
+            UnityEngine.SceneManagement.SceneManager.LoadScene((int)(uVar5 & 0xfff));
     }
 
     private void FUN_5AFCC()
@@ -951,6 +981,71 @@ public class GameManager : MonoBehaviour
             oVar2.DAT_22 = -1;
             bVar3++;
         } while (bVar3 < 24);
+    }
+
+    private void FUN_5B214()
+    {
+        DAT_C5F08 = new BgmData[Utilities.DAT_9E7CC.Length];
+
+        for (int i = 0; i < DAT_C5F08.Length; i++)
+        {
+            DAT_C5F08[i].DAT_00 = (byte)Utilities.DAT_9E7CC[i];
+            DAT_C5F08[i].sceneId = (ushort)(Utilities.DAT_9E7CC[i] >> 0x10);
+        }
+
+        DAT_C5F60 = new BgmData[Utilities.DAT_9E820.Length];
+
+        for (int i = 0; i < DAT_C5F60.Length; i++)
+        {
+            DAT_C5F60[i].DAT_00 = (byte)Utilities.DAT_9E820[i];
+            DAT_C5F60[i].sceneId = (ushort)(Utilities.DAT_9E820[i] >> 0x10);
+        }
+
+        DAT_C5F80 = new BgmData[Utilities.DAT_9E83C.Length];
+
+        for (int i = 0; i < DAT_C5F80.Length; i++)
+        {
+            DAT_C5F80[i].DAT_00 = (byte)Utilities.DAT_9E83C[i];
+            DAT_C5F80[i].sceneId = (ushort)(Utilities.DAT_9E83C[i] >> 0x10);
+        }
+
+        DAT_C5FC0 = new BgmData[Utilities.DAT_9E878.Length];
+
+        for (int i = 0; i < DAT_C5FC0.Length; i++)
+        {
+            DAT_C5FC0[i].DAT_00 = (byte)Utilities.DAT_9E878[i];
+            DAT_C5FC0[i].sceneId = (ushort)(Utilities.DAT_9E878[i] >> 0x10);
+        }
+
+        DAT_C5FF8 = new BgmData[Utilities.DAT_9E8B0.Length];
+
+        for (int i = 0; i < DAT_C5FF8.Length; i++)
+        {
+            DAT_C5FF8[i].DAT_00 = (byte)Utilities.DAT_9E8B0[i];
+            DAT_C5FF8[i].sceneId = (ushort)(Utilities.DAT_9E8B0[i] >> 0x10);
+        }
+
+        DAT_C6040 = new BgmData[Utilities.DAT_9E8F8.Length];
+
+        for (int i = 0; i < DAT_C6040.Length; i++)
+        {
+            DAT_C6040[i].DAT_00 = (byte)Utilities.DAT_9E8F8[i];
+            DAT_C6040[i].sceneId = (ushort)(Utilities.DAT_9E8F8[i] >> 0x10);
+        }
+
+        PTR_DAT_9E724 = new BgmData[][]
+        {
+            DAT_C5F08,
+            DAT_C5F08,
+            DAT_C5F60,
+            DAT_C5F80,
+            DAT_C5FC0,
+            DAT_C5FF8,
+            DAT_C6040,
+            DAT_C5F08,
+            DAT_C5F08,
+            DAT_C5F08
+        };
     }
 
     private void FUN_5C1F8(bool param1)
@@ -1126,6 +1221,7 @@ public class GameManager : MonoBehaviour
         byte bVar1;
         sbyte sVar3;
         CriChannel oVar4;
+        BgmData[] puVar5;
         uint uVar6;
         uint uVar7;
         SpuVoiceAttr vVar8;
@@ -1134,14 +1230,16 @@ public class GameManager : MonoBehaviour
         uint local_40;
         uint local_3c;
         sbyte[] local_50;
+        BgmData local_38;
 
         bVar1 = (byte)DAT_9AA0;
-        //...
+        puVar5 = PTR_DAT_9E724[DAT_9AA0 >> 8];
         param4[0] = (byte)(param2.DAT_03 & 0x1f);
         param4[4] = (byte)(param2.DAT_02 & 0xf);
         param4[2] = (byte)(param2.DAT_01 & 0x7f);
         param4[3] = (byte)((uint)param2.DAT_02 >> 4);
         param4[5] = (byte)(param2.DAT_01 & 0x80);
+        local_38 = puVar5[bVar1];
         uVar9 = (uint)param2.DAT_03 >> 5 & 3;
 
         if (uVar9 != 0xffffffff)
@@ -1229,7 +1327,7 @@ public class GameManager : MonoBehaviour
                     local_90.volume.right = (short)((local_90.volume.right << 2) / 5);
                 }
 
-                if ((vVar8.FLAGS & 4) == 0)
+                if (local_38.DAT_00 == 0 || (vVar8.FLAGS & 4) == 0)
                 {
                     uVar7 = 0;
                     cSound.DAT_34 |= 1U << (int)(uVar6 & 31);
@@ -1516,6 +1614,48 @@ public class GameManager : MonoBehaviour
         }
 
         param3 += param4;
+    }
+
+    private ushort FUN_5DFDC()
+    {
+        uint uVar1;
+        uint uVar2;
+
+        if ((byte)(DAT_9AA0 >> 8) < 7U)
+        {
+            cSound.DAT_4C = cSound.DAT_4E;
+            uVar1 = FUN_5E0BC();
+            uVar2 = uVar1 & 0xfff;
+            cSound.DAT_4E = (ushort)uVar2;
+
+            if (cSound.DAT_4C != uVar2)
+            {
+                if (uVar2 == 0xfff)
+                    return 0xfff;
+
+                if ((uint)cSound.DAT_4C >> 4 == uVar2 >> 4)
+                {
+                    uVar2 = uVar1 & 0xf;
+                    uVar1 |= 8;
+
+                    if (uVar2 == 0)
+                        return 0xfff;
+                }
+                else
+                    trackers[0] = null;
+
+                trackers[1] = null;
+                trackers[2] = null;
+                return Utilities.PTR_DAT_9E3AC[(uVar1 >> 2 & 0x3fc) / 4][uVar1 & 0xf];
+            }
+        }
+
+        return 0xfff;
+    }
+
+    private ushort FUN_5E0BC()
+    {
+        return PTR_DAT_9E724[DAT_9AA0 >> 8][(byte)DAT_9AA0].sceneId;
     }
 
     private void FUN_5E130(int param1, sbyte param2, byte param3)
@@ -2442,7 +2582,7 @@ public class GameManager : MonoBehaviour
         oVar1.screen.z = 0xebe0;
         oVar1.vr.y = 0;
         DAT_9AAA = 5;
-        //FUN_5B214
+        FUN_5B214();
 
         if (DAT_9AA9 == 0)
         {

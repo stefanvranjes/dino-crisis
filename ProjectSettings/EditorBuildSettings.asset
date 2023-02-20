@@ -213,6 +213,15 @@ EditorBuildSettings:
     path: Assets/Resources/DATA/DOOR403/DOOR403.unity
     guid: 2aa70ac8d53914443bbdd8c06495249b
   - enabled: 1
+    path: Assets/Resources/DATA/MS_09/MS_09.unity
+    guid: 0af956d4211483344a1a39118689000e
+  - enabled: 1
+    path: Assets/Resources/DATA/P20/P20.unity
+    guid: c28f009590974eb44bf4805c3f157ee4
+  - enabled: 1
+    path: Assets/Resources/DATA/ST1/ST1.unity
+    guid: 32646f3ca629ee14db595f67b6d96906
+  - enabled: 1
     path: Assets/Resources/DATA/ST100/ST100.unity
     guid: 804cc317a99829c4daae557fe4c33c8c
   - enabled: 1

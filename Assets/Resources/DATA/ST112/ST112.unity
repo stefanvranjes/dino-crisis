@@ -248,7 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cfuStatus: PSXEffects v1.15.5 - update available (click to update).
   sections: 01010100
-  customRes: {x: 769, y: 423}
+  customRes: {x: 807, y: 514}
   resolutionFactor: 1
   limitFramerate: -1
   skipFrames: 0
@@ -443,7 +443,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1678437249}
   - component: {fileID: 1678437248}
-  - component: {fileID: 1678437250}
   m_Layer: 0
   m_Name: Scene Manager
   m_TagString: Untagged
@@ -466,8 +465,6 @@ MonoBehaviour:
   scn: {fileID: -4406283935363021935, guid: f8f69427ceab6a84bb571bf49715f86e, type: 3}
   vab: {fileID: 888843668273218188, guid: f1c8f87ffc85cba41966e42891c7bb03, type: 3}
   ram: {fileID: 11400000, guid: 1feb6eb174f84134c974642228cab8d7, type: 2}
-  common: {fileID: 11400000, guid: e9c7a69e48ef5374f8382d67d9e62a39, type: 2}
-  bgm: {fileID: 11400000, guid: 85bf72e62d8438b4985ae95df0d232fd, type: 2}
   DAT_A4: 0
   DAT_AC: 
   DAT_B0: 
@@ -516,18 +513,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1678437250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1678437247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 521908af282ec6245b88c31306be2e7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SHARED:
-    m_keys: 
-    m_values: 

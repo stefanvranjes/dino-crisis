@@ -95,6 +95,12 @@ public static class Utilities
     public static Vector3Int DAT_9C610 = new Vector3Int(-1690, 0, -1807);
     public static Vector3Int DAT_9C628 = new Vector3Int(600, 0, -1239);
     public static Vector3Int DAT_9C630 = new Vector3Int(-1690, 0, -1280);
+    public static uint[][] PTR_DAT_9CF68 = new uint[][]
+    {
+        new uint[] { 0x139, 0x13a, 0x13b, 0x13c, 0x80, 0x81, 0x82, 0x83 }, //0x8009cf08
+        new uint[] { 0x13d, 0x13e, 0x13f, 0x140, 0x84, 0x85, 0x86, 0x87 }, //0x8009cf28
+        new uint[] { 0x141, 0x142, 0x143, 0x144, 0x88, 0x89, 0x8a, 0x8b } //0x8009cf48
+    };
     public static uint[][] DAT_9CFA8 = new uint[][]
     {
         new uint[]
@@ -114,6 +120,7 @@ public static class Utilities
             0x8017bc4c, 0x8017bb58, 0x8017bc4c, 0x8017bb58
         }
     };
+    public static uint DAT_9CFB8 = 0xFFFFFFFF;
     public static UIntUIntDictionary DAT_9CFBC = new UIntUIntDictionary
     {
         { 0x8009cfbc, 0x8019f208 },
@@ -147,7 +154,74 @@ public static class Utilities
     };
     public static ushort[][] PTR_DAT_9E3AC = new ushort[][]
     {
-        //need to fill the array!!
+        new ushort[] { 0x11d, 0 }, //0x8009e190
+        new ushort[] { 0x90, 0x90, 0xa2, 0xb2, 0xc9, 0xe3, 0x90, 0x90, 0x99, 0x99, 0xaa, 0xb3, 0xd1, 0xe4 }, //0x8009e194
+        new ushort[] { 0x124, 0x91, 0xa3, 0xca, 0x124, 0x124, 0x124, 0x124, 0x124, 0x9a, 0xab, 0xd2 }, //0x8009e1b0
+        new ushort[] { 0x125, 0x92, 0xa4, 0xb9, 0xcb, 0x125, 0x125, 0x125, 0x125, 0x9b, 0xac, 0xba, 0xd3, 0 }, //0x8009e1c8
+        new ushort[] { 0x126, 0x93, 0xa5, 0xcc, 0x126, 0x126, 0x126, 0x126, 0x126, 0x9c, 0xad, 0xd4 }, //0x8009e1e4
+        new ushort[] { 0x11e, 0 }, //0x8009e1fc
+        new ushort[] { 0x127, 0x94, 0xa6, 0xcd, 0x127, 0x127, 0x127, 0x127, 0x127, 0x9d, 0xae, 0xd5 }, //0x8009e200
+        new ushort[] { 0xec, 0 }, //0x8009e218
+        new ushort[] { 0xdf, 0 }, //0x8009e21c
+        new ushort[] { 0x11f, 0xb4, 0xb6, 0xc5, 0xc7, 0xe5, 0xe7, 0xe9, 0x11f, 0xb5, 0xb7, 0xc6, 0xc8, 0xe6, 0xe8, 0xea, }, //0x8009e220
+        new ushort[] { 0x128, 0 }, //0x8009e240
+        new ushort[] { 0x129, 0x129, 0xbc, 0x129, 0x129, 0x129, 0x129, 0x129, 0x129, 0x129, 0xc1, 0 }, //0x8009e244
+        new ushort[] { 0xee, 0 }, //0x8009e25c
+        new ushort[] { 0x12a, 0x12a, 0x95, 0xa7, 0xbd, 0xce, 0x12a, 0x12a, 0x12a, 0x12a, 0x9e, 0xaf, 0xc2, 0xd6 }, //0x8009e260
+        new ushort[] { 0x12b, 0x12b, 0x96, 0xa8, 0xbe, 0xcf, 0x12b, 0x12b, 0x12b, 0x12b, 0x9f, 0xb0, 0xc3, 0xd7 }, //0x8009e27c
+        new ushort[] { 0x12c, 0x12c, 0x97, 0xa9, 0xbf, 0xd0, 0x12c, 0x12c, 0x12c, 0xa0, 0xb1, 0xc4, 0xd8, 0xf5, 0 }, //0x8009e298
+        new ushort[] { 0x120, 0 }, //0x8009e2b8
+        new ushort[] { 0x121, 0x121 }, //0x8009e2bc
+        new ushort[] { 0xbb, 0xbb, 0xd9, 0xdb, 0xdd, 0xbb, 0xbb, 0xbb, 0xc0, 0xc0, 0xda, 0xdc, 0xde, 0 }, //0x8009e2c0
+        new ushort[] { 0x122, 0 }, //0x8009e2dc
+        new ushort[] { 0x98, 0x98, 0xe1, 0xf0, 0xf2, 0x98, 0x98, 0x98, 0xa1, 0xa1, 0xe2, 0xf1, 0xf3, 0 }, //0x8009e2e0
+        new ushort[] { 0x123, 0 }, //0x8009e2fc
+        new ushort[] { 0xeb, 0 }, //0x8009e300
+        new ushort[] { 0x101, 0 }, //0x8009e304
+        new ushort[] { 0x102, 0xff }, //0x8009e308
+        new ushort[] { 0x103, 0 }, //0x8009e30c
+        new ushort[] { 0x104, 0 }, //0x8009e310
+        new ushort[] { 0x105, 0 }, //0x8009e314
+        new ushort[] { 0x106, 0 }, //0x8009e318
+        new ushort[] { 0x107, 0 }, //0x8009e31c
+        new ushort[] { 0x108, 0 }, //0x8009e320
+        new ushort[] { 0x109, 0 }, //0x8009e324
+        new ushort[] { 0x10a, 0 }, //0x8009e328
+        new ushort[] { 0x10b, 0 }, //0x8009e32c
+        new ushort[] { 0xef, 0 }, //0x8009e330
+        new ushort[] { 0x10c, 0 }, //0x8009e334
+        new ushort[] { 0x100, 0 }, //0x8009e338
+        new ushort[] { 0x10d, 0 }, //0x8009e33c
+        new ushort[] { 0x10e, 0 }, //0x8009e340
+        new ushort[] { 0xe0, 0 }, //0x8009e344
+        new ushort[] { 0x10f, 0 }, //0x8009e348
+        new ushort[] { 0x110, 0 }, //0x8009e34c
+        new ushort[] { 0x111, 0 }, //0x8009e350
+        new ushort[] { 0x112, 0 }, //0x8009e354
+        new ushort[] { 0x113, 0 }, //0x8009e358
+        new ushort[] { 0x114, 0 }, //0x8009e35c
+        new ushort[] { 0x115, 0 }, //0x8009e360
+        new ushort[] { 0x116, 0 }, //0x8009e364
+        new ushort[] { 0x117, 0 }, //0x8009e368
+        new ushort[] { 0x118, 0 }, //0x8009e36c
+        new ushort[] { 0x119, 0 }, //0x8009e370
+        new ushort[] { 0x11a, 0 }, //0x8009e374
+        new ushort[] { 0xf6, 0 }, //0x8009e378
+        new ushort[] { 0xf7, 0 }, //0x8009e37c
+        new ushort[] { 0xb8, 0 }, //0x8009e380
+        new ushort[] { 0xf8, 0 }, //0x8009e384
+        new ushort[] { 0xf9, 0 }, //0x8009e388
+        new ushort[] { 0xfa, 0 }, //0x8009e38c
+        new ushort[] { 0xfb, 0 }, //0x8009e390
+        new ushort[] { 0xfc, 0 }, //0x8009e394
+        new ushort[] { 0xed, 0 }, //0x8009e398
+        new ushort[] { 0xfd, 0 }, //0x8009e39c
+        new ushort[] { 0xfe, 0 }, //0x8009e3a0
+        new ushort[] { 0x11b, 0 }, //0x8009e3a4
+        new ushort[] { 0x11c, 0 }, //0x8009e3a8
+        new ushort[] { 0x11d, 0 }, //0x8009e190
+        new ushort[] { 0x11d, 0 }, //0x8009e190
+        new ushort[] { 0x11d, 0 } //0x8009e190
     };
     public static int[] DAT_9E76C = new int[]
     {
@@ -2998,8 +3072,8 @@ public static class Utilities
         {
             if (SharedAssets.instance.SHARED.TryGetValue(sharedAddress, out objectRamAddress))
             {
-                if (SceneManager.instance.common.objects.ContainsKey(objectRamAddress))
-                    return SceneManager.instance.common.objects[objectRamAddress];
+                if (SharedAssets.instance.ram.objects.ContainsKey(objectRamAddress))
+                    return SharedAssets.instance.ram.objects[objectRamAddress];
                 else if (GameManager.instance.playerCore.objects.ContainsKey(objectRamAddress))
                     return GameManager.instance.playerCore.objects[objectRamAddress];
             }
@@ -3008,8 +3082,8 @@ public static class Utilities
         {
             if (DAT_9CFBC.TryGetValue(sharedAddress, out objectRamAddress))
             {
-                if (SceneManager.instance.common.objects.ContainsKey(objectRamAddress))
-                    return SceneManager.instance.common.objects[objectRamAddress];
+                if (SharedAssets.instance.ram.objects.ContainsKey(objectRamAddress))
+                    return SharedAssets.instance.ram.objects[objectRamAddress];
                 else if (GameManager.instance.playerCore.objects.ContainsKey(objectRamAddress))
                     return GameManager.instance.playerCore.objects[objectRamAddress];
             }

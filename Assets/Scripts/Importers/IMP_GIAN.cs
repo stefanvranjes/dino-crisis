@@ -36,7 +36,7 @@ public class IMP_GIAN : ScriptedImporter
                     chunk.DAT_01 = reader.ReadByte();
                     reader.Seek(2, SeekOrigin.Current);
                     chunk.DAT_04 = reader.ReadByte();
-                    reader.Seek(4, SeekOrigin.Current);
+                    reader.Seek(3, SeekOrigin.Current);
                     gian.CHUNKS[i] = chunk;
                 }
                 
@@ -51,7 +51,7 @@ public class IMP_GIAN : ScriptedImporter
                     attr.NOTE = reader.ReadByte();
                     attr.NOTE2 = reader.ReadByte();
                     attr.DAT_07 = reader.ReadByte();
-                    reader.Seek(5, SeekOrigin.Current);
+                    reader.Seek(4, SeekOrigin.Current);
                     attr.DAT_0C = reader.ReadByte();
                     attr.DAT_0D = reader.ReadByte();
                     reader.Seek(2, SeekOrigin.Current);

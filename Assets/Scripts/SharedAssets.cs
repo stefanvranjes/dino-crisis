@@ -8,16 +8,19 @@ public class UIntUIntDictionary : SerializableDictionary<uint, uint> { }
 public class SharedAssets : MonoBehaviour
 {
     public static SharedAssets instance;
+    public static Dictionary<uint, SharedAssets> assets;
     public RamScriptableObject ram;
     public GianScriptableObject[] gians;
     public IniScriptableObject[] inis;
     public UIntUIntDictionary SHARED;
 
-    private void Awake()
+
+    void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            assets = new Dictionary<uint, SharedAssets>();
         }
     }
 
@@ -31,5 +34,10 @@ public class SharedAssets : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public virtual void Init()
+    {
+        return;
     }
 }

@@ -7,6 +7,12 @@ public class P20 : SharedAssets
     public override void Start()
     {
         base.Start();
+        assets.Add(317, this);
+    }
+
+    public override void Init()
+    {
+        base.Init();
         SHARED = new UIntUIntDictionary
         {
             { 0x8017b83c, 0x801679D4 },

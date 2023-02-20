@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class TrackerData
+public struct TrackerData
 {
     public ushort DAT_00; //0x00
     public sbyte DAT_02; //0x02
@@ -46,7 +45,7 @@ public class CriTracker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        DAT_2C = new TrackerData[16];
     }
 
     // Update is called once per frame
@@ -78,7 +77,7 @@ public class CriTracker : MonoBehaviour
         DAT_26 = 0;
         DAT_27 = false;
         DAT_28 = 0;
-        DAT_2C = null;
+        DAT_2C = new TrackerData[16];
     }
 
     public void FUN_5DAA0()

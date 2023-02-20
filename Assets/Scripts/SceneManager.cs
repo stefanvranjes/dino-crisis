@@ -18,8 +18,6 @@ public class SceneManager : MonoBehaviour
     public ScnScriptableObject scn; //gp+268h
     public VabScriptableObject vab; //gp+26ch
     public RamScriptableObject ram;
-    public RamScriptableObject common;
-    public RamScriptableObject bgm;
     public ushort DAT_A4; //gp+a4h
     public byte[] DAT_AC; //gp+ach
     public uint[] DAT_B0; //gp+b0h
@@ -30,7 +28,6 @@ public class SceneManager : MonoBehaviour
     public SceneCameraScriptableObject motions; //gp+164h, gp+160h -> motions.Length
     public GianScriptableObject gian; //0x8009E708
     public IniScriptableObject ini; //0x801FE900
-    public GntScriptableObject gnt;
     public Trigger[] triggers; //gp+1e8h
     public byte DAT_270; //gp+270h
     public bool DAT_272; //gp+272h

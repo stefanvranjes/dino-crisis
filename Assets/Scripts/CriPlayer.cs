@@ -2163,7 +2163,10 @@ public class CriPlayer : CriSkinned
 
         if (param1 != 0)
         {
-            //load player core file
+            uVar3 = Utilities.PTR_DAT_9CF68[param1 - 1][uVar8 & 0xff];
+
+            if (uVar3 != Utilities.DAT_9CFB8)
+                SharedAssets.assets[uVar3 & 0xffff].Init();
         }
 
         uVar4 = 0;

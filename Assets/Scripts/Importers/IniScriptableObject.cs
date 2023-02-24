@@ -16,6 +16,6 @@ public class IniScriptableObject : ScriptableObject
     public string prefabName;
 
     public uint ADDR;
-    public int SIZE;
+    public uint SIZE;
     public SoundData[] DATA;
 }

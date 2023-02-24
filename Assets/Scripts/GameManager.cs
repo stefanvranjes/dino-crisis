@@ -267,7 +267,7 @@ public class GameManager : MonoBehaviour
 
     private delegate void FUN_9CBF0();
     private delegate void FUN_9CC28();
-    private delegate void FUN_9E74C(CriSound s, CriTracker t, TrackerData d, ref uint r);
+    private delegate void FUN_9E74C(CriSound s, CriTracker t, ref TrackerData d, ref uint r);
     private delegate sbyte FUN_AA4D0(CriPlayer p, CriStatic o);
     private delegate void FUN_AA3E0(CoroutineLoader c);
 
@@ -436,6 +436,12 @@ public class GameManager : MonoBehaviour
             disableColors = !disableColors;
 
         Shader.SetGlobalFloat("_ColorIntensity", !disableColors ? 1.0f : 0.0f);
+
+        if (SceneManager.sceneLoaded)
+        {
+            FUN_5D798();
+            FUN_5E400();
+        }
     }
 
     private void FixedUpdate()
@@ -443,12 +449,6 @@ public class GameManager : MonoBehaviour
         if (gameStarted && !pauseMain)
         {
             FUN_47900();
-
-            if (SceneManager.sceneLoaded)
-            {
-                FUN_5D798();
-                FUN_5E400();
-            }
         }
     }
 
@@ -1868,7 +1868,7 @@ public class GameManager : MonoBehaviour
                     local_30 = bVar1;
                     pcVar11.currentOffset++;
                     pcVar11.DAT_28 = (sbyte)(bVar1 & 0xf);
-                    PTR_FUN_9E74C[((local_30 & 0x70) >> 2) / 4](cSound, pcVar11, pcVar11.DAT_2C[local_30 & 0xf], ref local_30);
+                    PTR_FUN_9E74C[((local_30 & 0x70) >> 2) / 4](cSound, pcVar11, ref pcVar11.DAT_2C[local_30 & 0xf], ref local_30);
 
                     if ((local_30 & 0x80) == 0)
                         pcVar11.DAT_0C = -1;
@@ -2051,7 +2051,7 @@ public class GameManager : MonoBehaviour
         } while (iVar17 < 16);
     }
 
-    private void FUN_5EB68(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
+    private void FUN_5EB68(CriSound param1, CriTracker param2, ref TrackerData param3, ref uint param4)
     {
         byte bVar1;
         uint uVar2;
@@ -2069,10 +2069,10 @@ public class GameManager : MonoBehaviour
         param3.DAT_08 = (byte)uVar2;
         param3.DAT_08 = (byte)(((uVar2 & 0xff) * bVar1) / 0x7f);
         uVar4 = FUN_5F75C(puVar5.ATTRS, param3.DAT_09, puVar5.CHUNKS[param3.DAT_03].COUNT, param3.DAT_03 * 16);
-        FUN_5ECB8(param1, param2, param3, uVar4);
+        FUN_5ECB8(param1, param2, ref param3, uVar4);
     }
 
-    private void FUN_5ECB8(CriSound param1, CriTracker param2, TrackerData param3, uint param4)
+    private void FUN_5ECB8(CriSound param1, CriTracker param2, ref TrackerData param3, uint param4)
     {
         sbyte sVar1;
 
@@ -2100,7 +2100,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void FUN_5ED84(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
+    private void FUN_5ED84(CriSound param1, CriTracker param2, ref TrackerData param3, ref uint param4)
     {
         sbyte sVar1;
         uint uVar2;
@@ -2127,7 +2127,7 @@ public class GameManager : MonoBehaviour
         param3.DAT_0A = 0;
 
         if (param3.DAT_0B == 0)
-            FUN_5ECB8(param1, param2, param3, uVar5);
+            FUN_5ECB8(param1, param2, ref param3, uVar5);
         else
         {
             while (uVar5 != 0)
@@ -2192,12 +2192,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void FUN_5F224(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
+    private void FUN_5F224(CriSound param1, CriTracker param2, ref TrackerData param3, ref uint param4)
     {
         return;
     }
 
-    private void FUN_5F22C(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
+    private void FUN_5F22C(CriSound param1, CriTracker param2, ref TrackerData param3, ref uint param4)
     {
         byte bVar1;
         byte bVar2;
@@ -2209,6 +2209,7 @@ public class GameManager : MonoBehaviour
         pbVar3 = param2.currentOffset;
         bVar1 = param2.BUFFER[pbVar3];
         pbVar4 = pbVar3 + 1;
+        param2.currentOffset = pbVar4;
 
         if (bVar1 != 91)
         {
@@ -2281,7 +2282,7 @@ public class GameManager : MonoBehaviour
         param2.currentOffset++;
     }
 
-    private void FUN_5F39C(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
+    private void FUN_5F39C(CriSound param1, CriTracker param2, ref TrackerData param3, ref uint param4)
     {
         GianScriptableObject puVar1;
 
@@ -2292,7 +2293,7 @@ public class GameManager : MonoBehaviour
         param3.DAT_06 = (byte)(puVar1.CHUNKS[param3.DAT_03].DAT_04 + puVar1.DAT_0D - 0x40);
     }
 
-    private void FUN_5F43C(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
+    private void FUN_5F43C(CriSound param1, CriTracker param2, ref TrackerData param3, ref uint param4)
     {
         ushort uVar1;
         int pbVar2;
@@ -2367,7 +2368,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void FUN_5F5D4(CriSound param1, CriTracker param2, TrackerData param3, ref uint param4)
+    private void FUN_5F5D4(CriSound param1, CriTracker param2, ref TrackerData param3, ref uint param4)
     {
         byte bVar1;
         byte bVar2;

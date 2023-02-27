@@ -44,8 +44,8 @@ public class DataContainer6 : DataContainer4
     public short DAT_06;
     public Vector3Int DAT_08;
     public short DAT_0E;
-    public Tmd2ScriptableObject DAT_10;
-    public RefScriptableObject DAT_14;
+    public uint DAT_10;
+    public uint DAT_14;
 }
 
 [System.Serializable]
@@ -58,7 +58,7 @@ public class DataContainer7 : DataContainer2
 public class DataContainer8 : DataContainer4
 {
     public ushort DAT_04;
-    public TmdScriptableObject DAT_08;
+    public uint DAT_08;
     public Vector3Int DAT_0C;
     public Vector3Int DAT_12;
     public BoxCollider DAT_18;
@@ -67,8 +67,8 @@ public class DataContainer8 : DataContainer4
 [System.Serializable]
 public class DataContainer9 : DataContainer4
 {
-    public TodScriptableObject PTR_04;
-    public int DAT_04;
+    public uint ramAddress;
+    public uint ramValue;
     public bool hasPointer;
 }
 

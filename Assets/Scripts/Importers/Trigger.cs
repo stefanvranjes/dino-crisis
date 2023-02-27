@@ -57,7 +57,7 @@ public class Trigger6 : Trigger
     public ushort DAT_1C;
     public byte DAT_1E;
     public byte DAT_1F;
-    public TmdScriptableObject DAT_20;
+    public uint DAT_20;
     public int DAT_24;
     public ushort DAT_28;
 
@@ -69,7 +69,7 @@ public class Trigger6 : Trigger
         param1.DAT_4A = 0;
         param1.DAT_2F = 0;
         param1.tags = 0;
-        param1.cMesh = DAT_20;
+        param1.cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_20);
         param1.SetMaterials();
         param1.screen = param2;
         param1.vr.x = 0;

@@ -46,7 +46,6 @@ public class ContainerIdentifier : IEquatable<ContainerIdentifier>, IComparable<
 public class IMP_SCN : ScriptedImporter
 {
     public RamScriptableObject ram;
-    public DatabaseScriptableObject db;
 
     public override void OnImportAsset(AssetImportContext ctx)
     {
@@ -54,7 +53,7 @@ public class IMP_SCN : ScriptedImporter
 
         using (BufferedBinaryReader reader = new BufferedBinaryReader(buffer))
         {
-            if (ram != null && db != null)
+            if (ram != null)
             {
                 ScnScriptableObject scn = ScriptableObject.CreateInstance("ScnScriptableObject") as ScnScriptableObject;
 
@@ -197,8 +196,8 @@ public class IMP_SCN : ScriptedImporter
                                 c6.DAT_06 = reader.ReadInt16();
                                 c6.DAT_08 = reader.ReadSVector();
                                 c6.DAT_0E = reader.ReadInt16();
-                                c6.DAT_10 = GetAssetDatabaseObject(reader.ReadUInt32(), typeof(Tmd2ScriptableObject), 5) as Tmd2ScriptableObject;
-                                c6.DAT_14 = GetTodArray(reader.ReadUInt32(), 5);
+                                c6.DAT_10 = reader.ReadUInt32();
+                                c6.DAT_14 = reader.ReadUInt32();
                                 containers.Add(c6);
                                 break;
                             case 33:
@@ -217,7 +216,7 @@ public class IMP_SCN : ScriptedImporter
                                 c8.DAT_03 = reader.ReadByte();
                                 c8.DAT_04 = reader.ReadUInt16();
                                 reader.Seek(2, SeekOrigin.Current);
-                                c8.DAT_08 = GetAssetDatabaseObject(reader.ReadUInt32(), typeof(TmdScriptableObject), 7) as TmdScriptableObject;
+                                c8.DAT_08 = reader.ReadUInt32();
                                 c8.DAT_0C = reader.ReadSVector();
                                 c8.DAT_12 = reader.ReadSVector();
                                 BoxCollider box = new BoxCollider();
@@ -236,14 +235,12 @@ public class IMP_SCN : ScriptedImporter
 
                                 if (pAddress < 0x80000000)
                                 {
-                                    c9.PTR_04 = null;
-                                    c9.DAT_04 = (int)pAddress;
+                                    c9.ramValue = pAddress;
                                     c9.hasPointer = false;
                                 }
                                 else
                                 {
-                                    c9.PTR_04 = GetAssetDatabaseObject(pAddress, typeof(TodScriptableObject), 8) as TodScriptableObject;
-                                    c9.DAT_04 = 0;
+                                    c9.ramAddress = pAddress;
                                     c9.hasPointer = true;
                                 }
 
@@ -440,11 +437,11 @@ public class IMP_SCN : ScriptedImporter
                         }
                     }
 
-                    if (db.playerCore.objects.ContainsKey(address))
-                        return db.playerCore.objects[address];
-                    else if (db.common.objects.ContainsKey(address))
-                        return db.common.objects[address];
-                    else
+                    //if (db.playerCore.objects.ContainsKey(address))
+                    //    return db.playerCore.objects[address];
+                    //else if (db.common.objects.ContainsKey(address))
+                    //    return db.common.objects[address];
+                    //else
                         return null;
                 }
                 //*****************************************************************************************************************//
@@ -453,8 +450,8 @@ public class IMP_SCN : ScriptedImporter
                 {
                     if (ram.objects.ContainsKey(address))
                         return ram.objects[address] as RefScriptableObject;
-                    else if (db.common.objects.ContainsKey(address))
-                        return db.common.objects[address] as RefScriptableObject;
+                    //else if (db.common.objects.ContainsKey(address))
+                    //    return db.common.objects[address] as RefScriptableObject;
                     else
                         return null;
                 }
@@ -536,7 +533,7 @@ public class IMP_SCN : ScriptedImporter
                             t5.DAT_1C = reader.ReadUInt16();
                             t5.DAT_1E = reader.ReadByte();
                             t5.DAT_1F = reader.ReadByte();
-                            t5.DAT_20 = GetAssetDatabaseObject(reader.ReadUInt32(), typeof(TmdScriptableObject), 9) as TmdScriptableObject;
+                            t5.DAT_20 = reader.ReadUInt32();
                             t5.DAT_24 = reader.ReadInt32();
                             reader.Seek(jump, SeekOrigin.Begin);
                             return t5;

@@ -15,6 +15,76 @@ public static class Utilities
     {
         { "ST1", typeof(ST1) }
     };
+    public static string[] fileNames = new string[]
+    {
+        "AAA", "AREA_JMP", "BK_EDIT", "CLEAR", "DBMODULE", "EM_SET", "EM_TEST",
+        "LUKE", "MOT", "OAT_EDIT", "OPENING", "PL_DEBUG", "SAT_EDIT", "SCR_LIT",
+        "SEQ_EDIT", "ST1", "ST2", "ST3", "ST4", "ST5", "ST6", "ST7", "ST8", "ST9",
+        "SYS_DEB", "TESTCAM2", "TESTCAM3", "TESTMOJI", "TESTSND2", "TEST_AT",
+        "TEST_CAM", "TEST_IN", "TEST_MOT", "TEST_OBJ", "TEST_SND", "TITLE",
+        "VRAMVIEW", "WEP10", "WEP11", "WEP12", "WEP13", "WEP20", "WEP21", "WEP22",
+        "WEP23", "WEP30", "WEP31", "CAPLOGO", "CLEAR", "CORE", "CORE00", "CORE01",
+        "CORE02", "CORE03", "C_CHANGE", "DEMO1", "DEMO2", "DEMO3", "DEMO4",
+        "DOOR00", "DOOR01", "DOOR02", "DOOR03", "DOOR04", "DOOR05", "DOOR06",
+        "DOOR09", "DOOR10", "DOOR11", "DOOR12", "DOOR13", "DOOR14", "DOOR15",
+        "DOOR16", "DOOR18", "DOOR19D", "DOOR19U", "DOOR21", "DOOR22", "DOOR23",
+        "DOOR24", "DOOR25", "DOOR26", "DOOR27", "DOOR28", "DOOR29", "DOOR31",
+        "DOOR32", "DOOR33", "DOOR34", "DOOR35", "DOOR36", "DOOR37",
+        "DOOR38", "DOOR39", "DOOR40", "DOOR403", "DOOR41", "DOOR42", "DOOR43",
+        "DOOR44", "DOOR45", "DOOR46", "DOOR48", "DOOR49", "DOOR50", "DOOR51",
+        "DOOR52", "DOOR53", "DOOR54", "DOOR55", "DOOR56", "DOOR57", "DOOR58",
+        "DOOR59", "DOOR60", "DOOR61", "DOOR62", "DOOR63D", "DOOR63U", "DOOR64",
+        "DOOR65", "DOOR66", "DOOR67", "DOOR68", "DOOR69", "DOWN00", "ENDING",
+        "H10", "H11", "H12", "H13", "H20", "H21", "H22", "H23", "H30", "H31",
+        "H32", "H33", "ITEM", "ITEM2", "LOAD", "LOAD2", "ME00MT01", "ME00MT02",
+        "ME00MT03", "ME00MT04", "ME00MT06", "ME00MT0F", "ME00MT10", "ME00MT11",
+        "ME00MT16", "ME00_T01", "ME00_T02", "ME00_T03", "ME00_T04", "ME00_T06",
+        "ME00_T0F", "ME00_T10", "ME00_T11", "ME00_T16", "ME01MT01", "ME01MT02",
+        "ME01MT03", "ME01MT04", "ME01MT06", "ME01MT0F", "ME01MT10", "ME01MT11",
+        "ME01_T01", "ME01_T02", "ME01_T03", "ME01_T04", "ME01_T06", "ME01_T0F",
+        "ME01_T10", "ME01_T11", "ME02MT01", "ME02_T01", "ME03MS09", "ME03_S09",
+        "ME04MS09", "ME04_S09", "ME06ME16", "ME08MT03", "ME08_T03", "ME09MS14",
+        "ME09MT0C", "ME09MT0F", "ME09MT10", "ME09MT11", "ME09_S14", "ME09_T0C",
+        "ME09_T0F", "ME09_T10", "ME09_T11", "ME0AMS09", "ME0A_S09", "ME0B_S09",
+        "ME0BMS09", "ME0CMT01", "ME0CMT02", "ME0CMT03", "ME0CMT04", "ME0CMT06",
+        "ME0CMT0F", "ME0CMT10", "ME0CMT11", "ME0C_T01", "ME0C_T02", "ME0C_T03",
+        "ME0C_T04", "ME0C_T06", "ME0C_T0F", "ME0C_T10", "ME0C_T11", "ME0DMS14",
+        "ME0D_S14", "ME0EMS14", "ME0E_S14", "ME0FMS14", "ME0F_S14", "ME12MT08",
+        "ME13MF11", "ME14MT16", "ME14_T16", "ME17MT01", "ME17_T01", "ME18MS09",
+        "ME18_S09", "ME19MS09", "ME19_S09", "ME1AMS09", "ME1A_S09", "ME1BMS18",
+        "ME1CMS07", "ME1DME20", "ME22MS0D", "ME23MF0C", "ME25MT16", "ME25_T16", "ME26MT16",
+        "ME26_T16", "ME27MT11", "ME27_T11", "ME_00", "ME_01", "ME_09", "ME_0C", "ME_10",
+        "ME_11", "ME_15", "ME_1E", "ME_1F", "MF01MF0A", "MF0EMF1D", "MF_00",
+        "MF_01", "MF_02", "MF_03", "MF_04", "MF_05", "MF_06", "MF_07", "MF_08",
+        "MF_09", "MF_0B", "MF_0D", "MF_0F", "MF_10", "MF_12", "MF_13", "MF_14",
+        "MF_15", "MF_16", "MF_17", "MF_18", "MF_19", "MF_1A", "MF_1B", "MF_1C",
+        "MF_1E", "MR_03", "MR_04", "MS_00", "MS_05", "MS_09", "MS_12", "MS_13",
+        "MS_15", "MS_17", "MT_02", "MT_03", "MT_04", "MT_06", "MT_0B", "MT_0C", "MT_0F",
+        "MT_10", "MT_11", "M__0C", "M__0F", "M__10", "M__11", "OMAKE1", "OMAKE2",
+        "OMAKE3", "OMAKE4", "OMAKE5", "OPENING", "OPTION", "OVER", "P10", "P11",
+        "P12", "P13", "P20", "P21", "P22", "P23", "P30", "P31", "P32", "P33",
+        "P_END", "ST1", "ST100", "ST101", "ST102", "ST103", "ST104", "ST105",
+        "ST106", "ST107", "ST108", "ST109", "ST10A", "ST10B", "ST10C", "ST10D",
+        "ST10E", "ST10F", "ST110", "ST111", "ST112", "ST113", "ST114", "ST2",
+        "ST200", "ST201", "ST202", "ST203", "ST204", "ST205", "ST206", "ST3",
+        "ST300", "ST301", "ST302", "ST303", "ST304", "ST305", "ST306", "ST307",
+        "ST308", "ST309", "ST30A", "ST30B", "ST30C", "ST30D", "ST30E", "ST4",
+        "ST400", "ST401", "ST402", "ST403", "ST404", "ST405", "ST406", "ST407",
+        "ST408", "ST409", "ST40A", "ST40B", "ST40C", "ST40D", "ST5", "ST500",
+        "ST501", "ST502", "ST503", "ST504", "ST505", "ST506", "ST507", "ST508",
+        "ST509", "ST50A", "ST50B", "ST50C", "ST50D", "ST50E", "ST50F", "ST510",
+        "ST511", "ST6", "ST600", "ST601", "ST602", "ST603", "ST604", "ST605",
+        "ST606", "ST607", "ST608", "ST609", "ST60A", "ST60B", "ST60C", "ST60D",
+        "ST60E", "ST60F", "ST610", "ST611", "ST612", "ST613", "ST614", "ST615",
+        "ST7", "ST701", "ST702", "ST703", "ST704", "ST705", "ST706", "ST707",
+        "ST709", "ST70D", "ST8", "ST800", "ST801", "ST802", "ST804", "ST805",
+        "ST806", "ST807", "ST808", "ST9", "ST900", "ST902", "ST903", "ST904",
+        "ST905", "ST906", "ST908", "ST910", "STUFF", "TITLE", "UP00", "WARNING",
+        "WIPE", "WIPE1", "WIPE2", "WIPE3", "WIPE_SUB", "WIRE00", "WIRE101",
+        "WIRE102", "WIRE105", "WIRE108", "WIRE500", "WIRE502", "STAGE00",
+        "STAGE01", "STAGE02", "STAGE03", "STAGE04", "STAGE05", "STAGE06",
+        "DEMO", "END1", "END2", "END3", "MAKU", "OPENING", "STUFF"
+    };
     public static TodScriptableObject[] DAT_18770 = new TodScriptableObject[]
     {
         (TodScriptableObject) GameManager.instance.playerCore.objects[0x8018466C],
@@ -3090,6 +3160,17 @@ public static class Utilities
         }
 
         return null;
+    }
+
+    public static UnityEngine.Object GetRamObject(uint ramAddress)
+    {
+        if (SceneManager.instance.ram.objects.ContainsKey(ramAddress))
+            return SceneManager.instance.ram.objects[ramAddress];
+        else if (SharedAssets.instance.ram.objects.ContainsKey(ramAddress))
+            return SharedAssets.instance.ram.objects[ramAddress];
+        else if (GameManager.instance.playerCore.objects.ContainsKey(ramAddress))
+            return GameManager.instance.playerCore.objects[ramAddress];
+        else return null;
     }
 }
 

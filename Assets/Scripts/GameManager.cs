@@ -243,7 +243,6 @@ public class GameManager : MonoBehaviour
     public List<RamScriptableObject> speechLines;
     public List<LoadScriptContainer> DAT_9E0A0;
     public List<ushort> DAT_AA2A0;
-    public List<int> sceneIds;
     public List<LoadDoorContainer> DAT_A89A0;
     public List<Vector3> skinnedVertices; //0x800C6F90
     public List<Color> skinnedColors; //0x800C75D0
@@ -436,12 +435,6 @@ public class GameManager : MonoBehaviour
             disableColors = !disableColors;
 
         Shader.SetGlobalFloat("_ColorIntensity", !disableColors ? 1.0f : 0.0f);
-
-        if (SceneManager.sceneLoaded)
-        {
-            FUN_5D798();
-            FUN_5E400();
-        }
     }
 
     private void FixedUpdate()
@@ -449,13 +442,21 @@ public class GameManager : MonoBehaviour
         if (gameStarted && !pauseMain)
         {
             FUN_47900();
+
+            if (SceneManager.sceneLoaded)
+            {
+                FUN_5D798();
+
+                for (int i = 0; i < 16; i++)
+                    FUN_5E400();
+            }
         }
     }
 
     public void FUN_2984C(ushort param1)
     {
         voices[24].clip = speechLines[(DAT_9AA0 >> 8) - 1].objects[param1] as AudioClip;
-        voices[24].Play();
+        //voices[24].Play();
     }
 
     public void FUN_46C0C(int param1, uint param2, byte param3)
@@ -957,7 +958,7 @@ public class GameManager : MonoBehaviour
     private void FUN_55198()
     {
         DontDestroyOnLoad(gameObject);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[DAT_9E0A0[DAT_9AA0 >> 8].DAT_02], LoadSceneMode.Single);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(Utilities.fileNames[DAT_9E0A0[DAT_9AA0 >> 8].DAT_02], LoadSceneMode.Single);
     }
 
     private void FUN_55224()
@@ -968,13 +969,13 @@ public class GameManager : MonoBehaviour
 
         bVar1 = (byte)DAT_9AA0;
         puVar3 = DAT_9E0A0[DAT_9AA0 >> 8].scenes;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[puVar3[bVar1].DAT_02], LoadSceneMode.Single);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(Utilities.fileNames[puVar3[bVar1].DAT_02], LoadSceneMode.Single);
         uVar5 = FUN_5DFDC();
 
         if ((uVar5 & 0xfff) != 0xfff)
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[(int)(uVar5 & 0xfff)], LoadSceneMode.Additive);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(Utilities.fileNames[(int)(uVar5 & 0xfff)], LoadSceneMode.Additive);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[317], LoadSceneMode.Additive); //not in the original code
+        UnityEngine.SceneManagement.SceneManager.LoadScene(Utilities.fileNames[317], LoadSceneMode.Additive); //not in the original code
     }
 
     private void FUN_5AFCC()
@@ -4940,7 +4941,7 @@ public class GameManager : MonoBehaviour
                 DontDestroyOnLoad(tmpBones[i].gameObject);
             }
 
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[DAT_AA2A0[DAT_47]], LoadSceneMode.Single);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(Utilities.fileNames[DAT_AA2A0[DAT_47]], LoadSceneMode.Single);
         }
 
         //...
@@ -5042,7 +5043,7 @@ public class GameManager : MonoBehaviour
             case 1:
                 //...
                 puVar2 = DAT_9E0A0[DAT_9AA0 >> 8];
-                UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[puVar2.DAT_02], LoadSceneMode.Single);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(Utilities.fileNames[puVar2.DAT_02], LoadSceneMode.Single);
                 goto LAB_7A814;
             case 2:
                 param1.DAT_06++;
@@ -5074,7 +5075,7 @@ public class GameManager : MonoBehaviour
 
         pauseMain = true;
         SceneManager.sceneLoaded = false;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIds[puVar3.DAT_02], LoadSceneMode.Single);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(Utilities.fileNames[puVar3.DAT_02], LoadSceneMode.Single);
         LAB_7A814:
         param1.DAT_06++;
     }

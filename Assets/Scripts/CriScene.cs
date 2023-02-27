@@ -1475,10 +1475,10 @@ public class CriScene : MonoBehaviour
             oVar3.DAT_13C.y = mVar4.DAT_08.z;
             oVar3.vr.y = mVar4.DAT_0E;
 
-            if (mVar4.DAT_10 != null)
+            if (mVar4.DAT_10 != 0)
             {
-                oVar3.cSkin = mVar4.DAT_10;
-                oVar3.FUN_604A4(mVar4.DAT_10);
+                oVar3.cSkin = (Tmd2ScriptableObject)Utilities.GetRamObject(mVar4.DAT_10);
+                oVar3.FUN_604A4(oVar3.cSkin);
                 oVar3.materials = new Material[255];
                 Tmd2ScriptableObject tmd = oVar3.cSkin;
                 Material mat1 = new Material(GameManager.instance.materials[0x34]);
@@ -1493,13 +1493,13 @@ public class CriScene : MonoBehaviour
                 oVar3.materials[0x3C] = mat2;
             }
 
-            if (mVar4.DAT_14 != null)
+            if (mVar4.DAT_14 != 0)
             {
-                int length = mVar4.DAT_14.ASSET_REFS.Length;
+                int length = ((RefScriptableObject)Utilities.GetRamObject(mVar4.DAT_14)).ASSET_REFS.Length;
                 oVar3.DAT_98 = new TodScriptableObject[length];
 
                 for (int i = 0; i < length; i++)
-                    oVar3.DAT_98[i] = mVar4.DAT_14.ASSET_REFS[i] as TodScriptableObject;
+                    oVar3.DAT_98[i] = ((RefScriptableObject)Utilities.GetRamObject(mVar4.DAT_14)).ASSET_REFS[i] as TodScriptableObject;
             }
 
             oVar3.maxHealth = mVar4.DAT_06;
@@ -1544,7 +1544,7 @@ public class CriScene : MonoBehaviour
         oVar1.DAT_2E = mVar2.DAT_02;
         oVar1.DAT_48 = mVar2.DAT_03;
         oVar1.DAT_4A = mVar2.DAT_04;
-        oVar1.cMesh = mVar2.DAT_08;
+        oVar1.cMesh = (TmdScriptableObject)Utilities.GetRamObject(mVar2.DAT_08);
         oVar1.SetMaterials();
         oVar1.screen = mVar2.DAT_0C;
         oVar1.vr = mVar2.DAT_12;
@@ -1572,9 +1572,9 @@ public class CriScene : MonoBehaviour
         oVar2.DAT_3F = 0;
 
         if (mVar1.hasPointer)
-            oVar2.FUN_6103C(mVar1.PTR_04, mVar1.DAT_01, mVar1.DAT_02, mVar1.DAT_03);
+            oVar2.FUN_6103C((TodScriptableObject)Utilities.GetRamObject(mVar1.ramAddress), mVar1.DAT_01, mVar1.DAT_02, mVar1.DAT_03);
         else
-            oVar2.FUN_6103C(mVar1.DAT_04, mVar1.DAT_01, mVar1.DAT_02, mVar1.DAT_03);
+            oVar2.FUN_6103C((int)mVar1.ramValue, mVar1.DAT_01, mVar1.DAT_02, mVar1.DAT_03);
 
         DAT_58[0]++;
         return false;

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1680
     height: 967
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 17
+  controlID: 21
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 58
+  controlID: 74
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 59
+  controlID: 75
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -501,9 +501,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -48.432083, y: -128.93996, z: 309.85794}
+    m_Target: {x: 319.9704, y: -61.087616, z: 312.48416}
     speed: 2
-    m_Value: {x: -48.432083, y: -128.93996, z: 309.85794}
+    m_Value: {x: 319.9704, y: -61.087616, z: 312.48416}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -550,13 +550,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.30860806, y: -0.4080825, z: 0.14911667, w: 0.8462574}
+    m_Target: {x: 0.13142274, y: -0.08553139, z: 0.011608042, w: 0.987642}
     speed: 2
-    m_Value: {x: 0.30858374, y: -0.40805033, z: 0.14910492, w: 0.8461907}
+    m_Value: {x: 0.1314123, y: -0.08552459, z: 0.011607119, w: 0.9875635}
   m_Size:
-    m_Target: 219.96208
+    m_Target: 389.816
     speed: 2
-    m_Value: 219.96208
+    m_Value: 389.816
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -574,7 +574,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.008124799, y: -0.9710857, z: 0.032300636, w: -0.23672616}
+  m_LastSceneViewRotation: {x: 0.13142274, y: -0.08553139, z: 0.011608042, w: 0.987642}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -612,9 +612,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: d6590000
-      m_LastClickedID: 22998
-      m_ExpandedIDs: 38fbfffff4ffffff
+      m_SelectedIDs: f6870000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 20befeffe2d2feff0239ffff223bffff063cffffde54ffff4462fffff862ffff4e63ffff1a7bffffca7bffffb07effff6e80ffff3e88fffff68affff568bffff38fbfffff4ffffff865a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -771,22 +771,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Resources/DATA/ST112
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Resources/DATA/ST112
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\PC\Documents\GitHub\dino-crisis
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 5972}
-    m_SelectedIDs: da9e0000
-    m_LastClickedID: 40666
-    m_ExpandedIDs: 00000000605c0000625c0000645c0000
+    scrollPos: {x: 0, y: 4827}
+    m_SelectedIDs: 329e0000
+    m_LastClickedID: 40498
+    m_ExpandedIDs: 00000000605c0000625c0000645c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -839,9 +839,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: f6870000
+    m_LastClickedInstanceID: 34806
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000ee5d0000805a000016850000fe610000446500008a6800009a650000c2650000de65000008660000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

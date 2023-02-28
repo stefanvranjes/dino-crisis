@@ -147,6 +147,7 @@ public class GameManager : MonoBehaviour
     public static Vector3Int DAT_1f800388;
     public static Vector3Int DAT_1f800390;
     public List<Vector3Int> todUncomp;
+    public uint DAT_04; //gp+04h
     public LightSource DAT_0C; //gp+0ch
     public byte DAT_20; //gp+20h
     public byte DAT_21; //gp+21h
@@ -7993,6 +7994,22 @@ public class GameManager : MonoBehaviour
         param1.position.y = iVar1;
         iVar1 = Coprocessor.mathsAccumulator.mac3;
         param1.position.z = iVar1;
+    }
+
+    public Vector3Int FUN_71BF8(Vector3Int param1, Vector3Int param2, uint param3)
+    {
+        uint uVar1;
+        int p0;
+        uint uVar2;
+
+        uVar2 = 1U << (int)(param3 & 31);
+        uVar1 = DAT_04 & uVar2 - 1;
+
+        if ((DAT_04 & uVar2) != 0)
+            uVar1 = uVar2 - uVar1;
+
+        p0 = (int)uVar1 << (int)(12 - param3 & 31);
+        return Utilities.LoadAverageCol(ref param1, ref param2, p0, 0x1000 - p0);
     }
 
     public int FUN_64C80()

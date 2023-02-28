@@ -2002,6 +2002,30 @@ public static class Utilities
              Coprocessor.accumulator.ir3);
     }
 
+    //FUN_8F140
+    public static Vector3Int LoadAverageCol(ref Vector3Int v0, ref Vector3Int v1, long p0, long p1)
+    {
+        int iVar1;
+        int iVar2;
+        int iVar3;
+
+        Coprocessor.accumulator.ir0 = (short)p0;
+        Coprocessor.accumulator.ir1 = (short)v0.x;
+        Coprocessor.accumulator.ir2 = (short)v0.y;
+        Coprocessor.accumulator.ir3 = (short)v0.z;
+        Coprocessor.ExecuteGPF(0, false);
+        Coprocessor.accumulator.ir0 = (short)p1;
+        Coprocessor.accumulator.ir1 = (short)v1.x;
+        Coprocessor.accumulator.ir2 = (short)v1.y;
+        Coprocessor.accumulator.ir3 = (short)v1.z;
+        Coprocessor.ExecuteGPL(0, false);
+        iVar1 = Coprocessor.mathsAccumulator.mac1;
+        iVar2 = Coprocessor.mathsAccumulator.mac2;
+        iVar3 = Coprocessor.mathsAccumulator.mac3;
+
+        return new Vector3Int(iVar1 >> 12, iVar2 >> 12, iVar3 >> 12);
+    }
+
     //FUN_8EFD0
     public static Vector3Int LoadAverageShort12(ref Vector3Int v0, ref Vector3Int v1, long p0, long p1)
     {

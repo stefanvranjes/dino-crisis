@@ -3398,9 +3398,34 @@ public class BufferedBinaryReader : IDisposable
         bufferOffset++;
     }
 
+    public void Write(byte[] array)
+    {
+        for (int i = 0; i < array.Length; i++)
+            buffer[bufferOffset++] = array[i];
+    }
+
+    public void Write(sbyte value)
+    {
+        buffer[bufferOffset] = (byte)value;
+        bufferOffset++;
+    }
+
+    public void Write(bool value)
+    {
+        buffer[bufferOffset] = (byte)(value == true ? 1 : 0);
+        bufferOffset++;
+    }
+
     public void Write(int offset, byte value)
     {
         buffer[bufferOffset + offset] = value;
+    }
+
+    public void Write(short value)
+    {
+        buffer[bufferOffset] = (byte)value;
+        buffer[bufferOffset + 1] = (byte)(value >> 8);
+        bufferOffset += 2;
     }
 
     public void Write(ushort value)
@@ -3410,10 +3435,40 @@ public class BufferedBinaryReader : IDisposable
         bufferOffset += 2;
     }
 
+    public void Write(ushort[] array)
+    {
+        for (int i = 0; i < array.Length; i++)
+            Write(array[i]);
+    }
+
     public void Write(int offset, ushort value)
     {
         buffer[bufferOffset + offset] = (byte)value;
         buffer[bufferOffset + offset + 1] = (byte)(value >> 8);
+    }
+
+    public void Write(int value)
+    {
+        buffer[bufferOffset] = (byte)value;
+        buffer[bufferOffset + 1] = (byte)(value >> 8);
+        buffer[bufferOffset + 2] = (byte)(value >> 0x10);
+        buffer[bufferOffset + 3] = (byte)(value >> 0x18);
+        bufferOffset += 4;
+    }
+
+    public void Write(uint value)
+    {
+        buffer[bufferOffset] = (byte)value;
+        buffer[bufferOffset + 1] = (byte)(value >> 8);
+        buffer[bufferOffset + 2] = (byte)(value >> 0x10);
+        buffer[bufferOffset + 3] = (byte)(value >> 0x18);
+        bufferOffset += 4;
+    }
+
+    public void Write(uint[] array)
+    {
+        for (int i = 0; i < array.Length; i++)
+            Write(array[i]);
     }
 
     public void Dispose()

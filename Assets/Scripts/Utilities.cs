@@ -3302,6 +3302,13 @@ public class BufferedBinaryReader : IDisposable
         return val;
     }
 
+    public char ReadChar()
+    {
+        char val = (char)buffer[bufferOffset];
+        bufferOffset++;
+        return val;
+    }
+
     public byte[] ReadBytes(int length)
     {
         byte[] bytes = new byte[length];
@@ -3392,6 +3399,20 @@ public class BufferedBinaryReader : IDisposable
         return val;
     }
 
+    public string ReadString()
+    {
+        int index = 0;
+        List<char> chars = new List<char>();
+
+        do
+        {
+            chars.Add(ReadChar());
+        } while (chars[index++] != 0);
+
+        chars.RemoveAt(chars.Count - 1);
+        return new string(chars.ToArray());
+    }
+
     public void Write(byte value)
     {
         buffer[bufferOffset] = value;
@@ -3405,6 +3426,12 @@ public class BufferedBinaryReader : IDisposable
     }
 
     public void Write(sbyte value)
+    {
+        buffer[bufferOffset] = (byte)value;
+        bufferOffset++;
+    }
+
+    public void Write(char value)
     {
         buffer[bufferOffset] = (byte)value;
         bufferOffset++;
@@ -3469,6 +3496,12 @@ public class BufferedBinaryReader : IDisposable
     {
         for (int i = 0; i < array.Length; i++)
             Write(array[i]);
+    }
+
+    public void Write(string value)
+    {
+        for (int i = 0; i < value.Length; i++)
+            Write(value[i]);
     }
 
     public void Dispose()

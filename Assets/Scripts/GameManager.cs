@@ -189,6 +189,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_9AA9; //gp+9aa9h
     public byte DAT_9AAA; //gp+9aaah
     public byte DAT_9AAB; //gp+9aabh
+    public int DAT_9AAC; //gp+9aach
     public byte[] DAT_9AB4; //gp+9ab4h
     public ushort DAT_9ADC; //gp+9adch
     public byte DAT_9ADE; //gp+9adeh

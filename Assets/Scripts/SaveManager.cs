@@ -1,6 +1,9 @@
+using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum _SAVE_STATE 
 {
@@ -27,6 +30,14 @@ public class SaveManager : MonoBehaviour
 {
     public static SaveManager instance;
     private static BufferedBinaryReader writer; //0x8015D000
+    private static BufferedBinaryReader reader;
+    private static string inputFieldName;
+    private const string gameSavePath = "/Games/Dino Crisis (Unity)/";
+    public GameObject saveSlotPrefab;
+    public Button saveButton;
+    public ScrollRect scrollRect;
+    public RectTransform contentRect;
+    public InputField inputField;
     public byte currentSlot; //0x08
     public byte DAT_0A; //0x0A
     public sbyte DAT_0C; //0x0C
@@ -34,6 +45,7 @@ public class SaveManager : MonoBehaviour
     public _SAVE_STATE state; //0x11
     public bool DAT_14; //0x14
     public bool DAT_15; //0x15
+    public byte DAT_18; //0x18
     public SaveSlot[] saveSlots; //0x20
     public SaveSlot[] saveSlots2; //0x280
 
@@ -42,6 +54,7 @@ public class SaveManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -74,7 +87,55 @@ public class SaveManager : MonoBehaviour
         return 15 < param2 + 0x1fff >> 13;
     }
 
-    private void FUN_25748()
+    public void SaveGame()
+    {
+        inputFieldName = inputField.text;
+
+        if (inputFieldName.Length >= 3)
+        {
+            inputField.interactable = false;
+            StartCoroutine(FUN_25748());
+        }
+    }
+
+    public void LoadSlots(bool isSaving)
+    {
+        RectTransform newSlot = contentRect.GetChild(0) as RectTransform;
+        newSlot.gameObject.SetActive(isSaving);
+        string myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        int fileIndex = 0;
+
+        while (true)
+        {
+            string fileName = "BASLUS-00922-DINO" + fileIndex + ".BIN";
+            FileStream stream = File.Open(myDocumentsPath + gameSavePath + fileName, FileMode.Open, FileAccess.Read);
+
+            if (stream == null) break;
+
+            reader = new BufferedBinaryReader(stream, (int)stream.Length);
+            reader.FillBuffer();
+            reader.Seek(0x840, SeekOrigin.Begin);
+            RectTransform slotRect = Instantiate(saveSlotPrefab).GetComponent<RectTransform>();
+            slotRect.SetParent(contentRect, false);
+            slotRect.GetComponentInChildren<Text>().text = reader.ReadString();
+            Button slotButton = slotRect.GetComponent<Button>();
+            slotButton.onClick.AddListener(() => inputField.gameObject.SetActive(true));
+            slotButton.onClick.AddListener(() => scrollRect.gameObject.SetActive(false));
+            slotButton.onClick.AddListener(() => DestroySlots());
+            reader.Dispose();
+        }
+    }
+
+    public void DestroySlots()
+    {
+        for (int i = 0; i < contentRect.childCount; i++)
+        {
+            RectTransform child = contentRect.GetChild(i) as RectTransform;
+            Destroy(child.gameObject);
+        }
+    }
+
+    private IEnumerator FUN_25748()
     {
         sbyte sVar1;
         bool bVar5;
@@ -94,7 +155,7 @@ public class SaveManager : MonoBehaviour
                         DAT_10 = 5;
                         state = _SAVE_STATE.STATE_00;
                         DAT_0A = 3;
-                        return;
+                        yield return null;
                     }
 
                     state = _SAVE_STATE.STATE_02;
@@ -107,10 +168,12 @@ public class SaveManager : MonoBehaviour
                     state++;
                 }
 
+                yield return null;
                 break;
             case _SAVE_STATE.STATE_01:
                 //...
                 state++;
+                yield return null;
                 break;
             case _SAVE_STATE.STATE_02:
                 DAT_0C = 5;
@@ -129,16 +192,39 @@ public class SaveManager : MonoBehaviour
                 else
                 {
                     FUN_23D40(writer);
-                    //...
+                    acStack64 = "BASLUS-00922-DINO" + currentSlot;
+                    FUN_23A50(acStack64, inputFieldName, writer);
+                    state++;
+                    DAT_18 = 2;
                 }
 
+                inputField.interactable = true;
+                inputField.gameObject.SetActive(false);
+                saveButton.gameObject.SetActive(true);
                 break;
         }
+
+        yield return null;
+    }
+
+    private void FUN_23A50(string param1, string param2, BufferedBinaryReader param3)
+    {
+        param3.Seek(0x840, SeekOrigin.Begin);
+        param3.Write(param2);
+        string myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        FileStream stream = File.Create(myDocumentsPath + gameSavePath + param1 + ".BIN");
+        stream.Write(param3.GetBuffer());
+        stream.Close();
     }
 
     private void FUN_23D40(BufferedBinaryReader param1)
     {
-        byte[] buffer = new byte[0x840];
+        ushort uVar1;
+
+        uVar1 = GameManager.instance.DAT_9AA0;
+        GameManager.instance.DAT_9AA0 = GameManager.instance.DAT_9ADC;
+        GameManager.instance.DAT_9AAC = 0x990517;
+        byte[] buffer = new byte[0x1000];
         param1 = new BufferedBinaryReader(buffer);
         param1.Write(new byte[8]); //padding
         param1.Write(GameManager.instance.DAT_9AA0);
@@ -149,7 +235,8 @@ public class SaveManager : MonoBehaviour
         param1.Write(GameManager.instance.DAT_9AA9);
         param1.Write(GameManager.instance.DAT_9AAA);
         param1.Write(GameManager.instance.DAT_9AAB);
-        param1.Write(new byte[8]); //padding
+        param1.Write(GameManager.instance.DAT_9AAC);
+        param1.Write(new byte[4]); //padding
         param1.Write(GameManager.instance.DAT_9AB4);
         param1.Write(new byte[0x20]); //padding
         param1.Write(GameManager.instance.DAT_9ADC);
@@ -199,5 +286,6 @@ public class SaveManager : MonoBehaviour
         param1.Write(GameManager.instance.DAT_A2D3);
         param1.Write(GameManager.instance.DAT_A2D4);
         param1.Write(new byte[3]); //padding
+        GameManager.instance.DAT_9AA0 = uVar1;
     }
 }

@@ -3309,6 +3309,13 @@ public class BufferedBinaryReader : IDisposable
         return val;
     }
 
+    public bool ReadBool()
+    {
+        bool val = buffer[bufferOffset] == 1;
+        bufferOffset++;
+        return val;
+    }
+
     public byte[] ReadBytes(int length)
     {
         byte[] bytes = new byte[length];
@@ -3345,6 +3352,16 @@ public class BufferedBinaryReader : IDisposable
         return val;
     }
 
+    public ushort[] ReadUInt16Array(int length)
+    {
+        ushort[] ushorts = new ushort[length];
+
+        for (int i = 0; i < length; i++)
+            ushorts[i] = ReadUInt16();
+
+        return ushorts;
+    }
+
     public int ReadInt32()
     {
         var val = (int)((int)buffer[bufferOffset] | (int)buffer[bufferOffset + 1] << 8 |
@@ -3373,6 +3390,16 @@ public class BufferedBinaryReader : IDisposable
         var val = (uint)((int)buffer[bufferOffset + offset] | (int)buffer[bufferOffset + offset + 1] << 8 |
                         (int)buffer[bufferOffset + offset + 2] << 16 | (int)buffer[bufferOffset + offset + 3] << 24);
         return val;
+    }
+
+    public uint[] ReadUInt32Array(int length)
+    {
+        uint[] uints = new uint[length];
+
+        for (int i = 0; i < length; i++)
+            uints[i] = ReadUInt32();
+
+        return uints;
     }
 
     public Vector3Int ReadSVector()

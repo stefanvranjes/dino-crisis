@@ -32,6 +32,7 @@ public class Demo : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(GameManager.instance.gameObject);
+        DontDestroyOnLoad(GameObject.Find("EventSystem"));
 
         for (int i = 0; i < gians.Length; i++)
             GameManager.PTR_DAT_9E708[gians[i].INDEX] = gians[i];

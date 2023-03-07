@@ -3402,6 +3402,12 @@ public class BufferedBinaryReader : IDisposable
         return uints;
     }
 
+    public void ReadUInt32Array(uint[] array)
+    {
+        for (int i = 0; i < array.Length; i++)
+            array[i] = ReadUInt32();
+    }
+
     public Vector3Int ReadSVector()
     {
         var val = new Vector3Int(ReadInt16(), ReadInt16(), ReadInt16());

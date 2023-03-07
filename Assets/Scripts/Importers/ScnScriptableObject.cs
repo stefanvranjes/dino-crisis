@@ -207,17 +207,11 @@ public class DataContainer24 : DataContainer4
 }
 
 [System.Serializable]
-public class SVECTOR_SERIALIZED_ARRAY
-{
-    public Vector2Int[] sv2;
-}
-
-[System.Serializable]
 public class DataContainer25 : DataContainer4
 {
-    public Tmd2ScriptableObject DAT_04;
-    public TodScriptableObject[] DAT_08;
-    public SVECTOR_SERIALIZED_ARRAY[] DAT_0C; //0x00 - lenght, 0x04 - svectors
+    public uint DAT_04;
+    public uint DAT_08;
+    public uint DAT_0C; //0x00 - lenght, 0x04 - svectors
     public byte DAT_10;
 }
 

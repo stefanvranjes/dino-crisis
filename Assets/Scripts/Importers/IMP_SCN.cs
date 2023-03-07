@@ -408,6 +408,17 @@ public class IMP_SCN : ScriptedImporter
                                 c23.DAT_10 = reader.ReadUInt32();
                                 containers.Add(c23);
                                 break;
+                            case 89:
+                                DataContainer25 c25 = new DataContainer25();
+                                c25.DAT_00 = type;
+                                c25.DAT_01 = reader.ReadByte();
+                                c25.DAT_02 = reader.ReadByte();
+                                c25.DAT_03 = reader.ReadByte();
+                                c25.DAT_04 = reader.ReadUInt32();
+                                c25.DAT_08 = reader.ReadUInt32();
+                                c25.DAT_0C = reader.ReadUInt32();
+                                containers.Add(c25);
+                                break;
                             default:
                                 Debug.Log("Unknown case: " + type);
                                 break;

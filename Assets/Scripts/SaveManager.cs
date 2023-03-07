@@ -69,12 +69,20 @@ public class SaveManager : MonoBehaviour
     {
         saveSlots = new SaveSlot[16];
         saveSlots2 = new SaveSlot[16];
+        string myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+        if (!Directory.Exists(myDocumentsPath + gameSavePath))
+            Directory.CreateDirectory(myDocumentsPath + gameSavePath);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (scrollRect.IsActive() && Input.GetMouseButtonDown(1))
+        {
+            scrollRect.gameObject.SetActive(false);
+            Cancel();
+        }
     }
 
     private bool FUN_23D0C(SaveSlot[] param1, uint param2)
@@ -129,7 +137,7 @@ public class SaveManager : MonoBehaviour
         }
 
         RectTransform newSlot = contentRect.GetChild(0) as RectTransform;
-        newSlot.gameObject.SetActive(isSaving && CountSlots() > 0);
+        newSlot.gameObject.SetActive(isSaving && CountSlots() < saveSlots.Length);
         string myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         int fileIndex = 0;
 
@@ -137,16 +145,20 @@ public class SaveManager : MonoBehaviour
         {
             int k = fileIndex;
             string fileName = "BASLUS-00922-DINO" + fileIndex + ".BIN";
+
+            if (!File.Exists(myDocumentsPath + gameSavePath + fileName)) break;
+
             FileStream stream = File.Open(myDocumentsPath + gameSavePath + fileName, FileMode.Open, FileAccess.Read);
 
             if (stream == null) break;
 
             saveSlots[fileIndex].slotName = "BASLUS-00922-DINO" + fileIndex;
+            saveSlots[fileIndex].DAT_18 = 0x2000;
             saveSlots2[fileIndex].slotName = "BASLUS-00922-DINO" + fileIndex;
             fileIndex++;
             reader = new BufferedBinaryReader(stream, (int)stream.Length);
             reader.FillBuffer();
-            reader.Seek(0x840, SeekOrigin.Begin);
+            reader.Seek(0x8F0, SeekOrigin.Begin);
             RectTransform slotRect = Instantiate(saveSlotPrefab).GetComponent<RectTransform>();
             slotRect.SetParent(contentRect, false);
             slotRect.GetComponentInChildren<Text>().text = reader.ReadString();
@@ -173,10 +185,25 @@ public class SaveManager : MonoBehaviour
 
     public void DestroySlots()
     {
-        for (int i = 0; i < contentRect.childCount; i++)
+        for (int i = 1; i < contentRect.childCount; i++)
         {
             RectTransform child = contentRect.GetChild(i) as RectTransform;
             Destroy(child.gameObject);
+        }
+    }
+
+    public void Cancel()
+    {
+        if (GameManager.instance.gameStarted)
+        {
+            saveButton.gameObject.SetActive(true);
+            DestroySlots();
+        }
+        else
+        {
+            GameObject.Find("Start").GetComponent<Button>().interactable = true;
+            GameObject.Find("Load").GetComponent<Button>().interactable = true;
+            DestroySlots();
         }
     }
 
@@ -237,13 +264,14 @@ public class SaveManager : MonoBehaviour
                 }
                 else
                 {
-                    FUN_23D40(writer);
+                    FUN_23D40(ref writer);
                     acStack64 = "BASLUS-00922-DINO" + currentSlot;
-                    FUN_23A50(acStack64, inputFieldName, writer);
+                    FUN_23A50(acStack64, inputFieldName, ref writer);
                     state++;
                     DAT_18 = 2;
                 }
 
+                state = _SAVE_STATE.STATE_00;
                 inputField.interactable = true;
                 inputField.gameObject.SetActive(false);
                 saveButton.gameObject.SetActive(true);
@@ -276,20 +304,22 @@ public class SaveManager : MonoBehaviour
                 DAT_10 = 5;
                 state = _SAVE_STATE.STATE_00;
                 DAT_0A = 2;
+                saveButton.gameObject.SetActive(true);
+                GameManager.instance.gameStarted = true;
                 break;
         }
 
         yield return null;
     }
 
-    private void FUN_23428(BufferedBinaryReader param1)
+    private void FUN_23428(ref BufferedBinaryReader param1)
     {
         param1.ReadBytes(8); //padding
         GameManager.instance.DAT_9AA0 = param1.ReadUInt16();
         GameManager.instance.DAT_9AA2 = param1.ReadByte();
-        param1.ReadByte(0); //padding
+        param1.ReadByte(); //padding
         GameManager.instance.DAT_9AA4 = param1.ReadInt32();
-        param1.ReadByte(0); //padding
+        GameManager.instance.difficulty = (_DIFFICULTY)param1.ReadByte();
         GameManager.instance.DAT_9AA9 = param1.ReadByte();
         GameManager.instance.DAT_9AAA = param1.ReadByte();
         GameManager.instance.DAT_9AAB = param1.ReadByte();
@@ -300,18 +330,18 @@ public class SaveManager : MonoBehaviour
         GameManager.instance.DAT_9ADC = param1.ReadUInt16();
         GameManager.instance.DAT_9ADE = param1.ReadByte();
         GameManager.instance.DAT_9ADF = param1.ReadByte();
-        InventoryManager.DAT_C1500 = param1.ReadUInt32Array(8);
-        InventoryManager.DAT_C1520 = param1.ReadUInt32Array(8);
-        InventoryManager.DAT_C1540 = param1.ReadUInt32Array(8);
-        InventoryManager.DAT_C1560 = param1.ReadUInt32Array(8);
-        InventoryManager.DAT_C1580 = param1.ReadUInt32Array(8);
-        InventoryManager.DAT_C15A0 = param1.ReadUInt32Array(2);
-        InventoryManager.DAT_C15A8 = param1.ReadUInt32Array(8);
-        InventoryManager.DAT_C15C8 = param1.ReadUInt32Array(2);
-        InventoryManager.DAT_C15D0 = param1.ReadUInt32Array(8);
+        param1.ReadUInt32Array(InventoryManager.DAT_C1500);
+        param1.ReadUInt32Array(InventoryManager.DAT_C1520);
+        param1.ReadUInt32Array(InventoryManager.DAT_C1540);
+        param1.ReadUInt32Array(InventoryManager.DAT_C1560);
+        param1.ReadUInt32Array(InventoryManager.DAT_C1580);
+        param1.ReadUInt32Array(InventoryManager.DAT_C15A0);
+        param1.ReadUInt32Array(InventoryManager.DAT_C15A8);
+        param1.ReadUInt32Array(InventoryManager.DAT_C15C8);
+        param1.ReadUInt32Array(InventoryManager.DAT_C15D0);
         param1.ReadBytes(0x2dc); //padding
-        GameManager.instance.DAT_9EAC = param1.ReadBytes(GameManager.instance.DAT_9EAC.Length);
-        param1.ReadBytes(0x3c - GameManager.instance.DAT_9EAC.Length); //padding
+        //GameManager.instance.DAT_9EAC = param1.ReadBytes(GameManager.instance.DAT_9EAC.Length);
+        //param1.ReadBytes(0x3c - GameManager.instance.DAT_9EAC.Length); //padding
         GameManager.instance.DAT_9EE8 = param1.ReadByte();
         GameManager.instance.DAT_9EE9 = param1.ReadByte();
         GameManager.instance.DAT_9EEA = param1.ReadByte();
@@ -328,12 +358,12 @@ public class SaveManager : MonoBehaviour
         GameManager.instance.DAT_A0EA = param1.ReadSByte();
         GameManager.instance.DAT_A0EC = param1.ReadInt16();
         GameManager.instance.DAT_A0EE = param1.ReadInt16();
-        param1.ReadBytes(2); //padding
+        GameManager.instance.playerHealth = param1.ReadInt16();
         GameManager.instance.DAT_A0F2 = param1.ReadUInt16();
         GameManager.instance.DAT_A0F4 = param1.ReadUInt32();
         GameManager.instance.DAT_A0F8 = param1.ReadUInt16Array(4);
         GameManager.instance.DAT_A100 = param1.ReadByte();
-        param1.ReadBytes(0x1cb); //padding
+        param1.ReadBytes(0x1cc); //padding
         GameManager.instance.DAT_A2CC = param1.ReadBool();
         GameManager.instance.DAT_A2CD = param1.ReadByte();
         GameManager.instance.DAT_A2CE = param1.ReadByte();
@@ -353,13 +383,13 @@ public class SaveManager : MonoBehaviour
         FileStream stream = File.Open(myDocumentsPath + gameSavePath + fileName, FileMode.Open, FileAccess.Read);
         reader = new BufferedBinaryReader(stream, (int)stream.Length);
         reader.FillBuffer();
-        FUN_23428(reader);
+        FUN_23428(ref reader);
         reader.Dispose();
     }
 
-    private void FUN_23A50(string param1, string param2, BufferedBinaryReader param3)
+    private void FUN_23A50(string param1, string param2, ref BufferedBinaryReader param3)
     {
-        param3.Seek(0x840, SeekOrigin.Begin);
+        param3.Seek(0x8F0, SeekOrigin.Begin);
         param3.Write(param2);
         string myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         FileStream stream = File.Create(myDocumentsPath + gameSavePath + param1 + ".BIN");
@@ -367,7 +397,7 @@ public class SaveManager : MonoBehaviour
         stream.Close();
     }
 
-    private void FUN_23D40(BufferedBinaryReader param1)
+    private void FUN_23D40(ref BufferedBinaryReader param1)
     {
         ushort uVar1;
 
@@ -381,7 +411,7 @@ public class SaveManager : MonoBehaviour
         param1.Write(GameManager.instance.DAT_9AA2);
         param1.Write((byte)0); //padding
         param1.Write(GameManager.instance.DAT_9AA4);
-        param1.Write((byte)0); //padding
+        param1.Write((byte)GameManager.instance.difficulty);
         param1.Write(GameManager.instance.DAT_9AA9);
         param1.Write(GameManager.instance.DAT_9AAA);
         param1.Write(GameManager.instance.DAT_9AAB);
@@ -402,8 +432,8 @@ public class SaveManager : MonoBehaviour
         param1.Write(InventoryManager.DAT_C15C8);
         param1.Write(InventoryManager.DAT_C15D0);
         param1.Write(new byte[0x2dc]); //padding
-        param1.Write(GameManager.instance.DAT_9EAC);
-        param1.Write(new byte[0x3c - GameManager.instance.DAT_9EAC.Length]); //padding
+        //param1.Write(GameManager.instance.DAT_9EAC);
+        //param1.Write(new byte[0x3c - GameManager.instance.DAT_9EAC.Length]); //padding
         param1.Write(GameManager.instance.DAT_9EE8);
         param1.Write(GameManager.instance.DAT_9EE9);
         param1.Write(GameManager.instance.DAT_9EEA);
@@ -420,12 +450,12 @@ public class SaveManager : MonoBehaviour
         param1.Write(GameManager.instance.DAT_A0EA);
         param1.Write(GameManager.instance.DAT_A0EC);
         param1.Write(GameManager.instance.DAT_A0EE);
-        param1.Write(new byte[2]); //padding
+        param1.Write(GameManager.instance.playerHealth);
         param1.Write(GameManager.instance.DAT_A0F2);
         param1.Write(GameManager.instance.DAT_A0F4);
         param1.Write(GameManager.instance.DAT_A0F8);
         param1.Write(GameManager.instance.DAT_A100);
-        param1.Write(new byte[0x1cb]); //padding
+        param1.Write(new byte[0x1cc]); //padding
         param1.Write(GameManager.instance.DAT_A2CC);
         param1.Write(GameManager.instance.DAT_A2CD);
         param1.Write(GameManager.instance.DAT_A2CE);

@@ -2753,9 +2753,14 @@ public class CriScene : MonoBehaviour
             oVar7.flags = 1;
             oVar7.tags = (sbyte)mVar6.DAT_02;
             oVar7.DAT_2F = mVar6.DAT_03;
-            oVar7.cSkin = mVar6.DAT_04;
-            oVar7.FUN_604A4(mVar6.DAT_04);
-            oVar7.DAT_98 = mVar6.DAT_08;
+            oVar7.cSkin = (Tmd2ScriptableObject)Utilities.GetRamObject(mVar6.DAT_04);
+            oVar7.FUN_604A4(oVar7.cSkin);
+            int length = ((RefScriptableObject)Utilities.GetRamObject(mVar6.DAT_08)).ASSET_REFS.Length;
+            oVar7.DAT_98 = new TodScriptableObject[length];
+
+            for (int i = 0; i < length; i++)
+                oVar7.DAT_98[i] = ((RefScriptableObject)Utilities.GetRamObject(mVar6.DAT_08)).ASSET_REFS[i] as TodScriptableObject;
+
             oVar7.screen = puVar2.DAT_04;
             oVar7.vr.y = puVar2.DAT_0C;
             oVar7.DAT_163 = puVar2.DAT_02;
@@ -2771,13 +2776,14 @@ public class CriScene : MonoBehaviour
             if (oVar7.DAT_196 == 0)
             {
                 uVar9 = 0;
-                uVar10 = (uint)mVar6.DAT_0C.Length;
+                SV2ScriptableObject sv2 = (SV2ScriptableObject)Utilities.GetRamObject(mVar6.DAT_0C);
+                uVar10 = (uint)sv2.SVECTORS.Length;
 
                 if (uVar10 != 0)
                 {
                     do
                     {
-                        puVar8 = mVar6.DAT_0C[uVar9].sv2;
+                        puVar8 = sv2.SVECTORS[uVar9].sv2;
                         bVar6 = GameManager.instance.FUN_768C8(puVar2.DAT_04, puVar8);
 
                         if (bVar6)

@@ -417,6 +417,8 @@ public class IMP_SCN : ScriptedImporter
                                 c25.DAT_04 = reader.ReadUInt32();
                                 c25.DAT_08 = reader.ReadUInt32();
                                 c25.DAT_0C = reader.ReadUInt32();
+                                c25.DAT_10 = reader.ReadByte();
+                                reader.Seek(3, SeekOrigin.Current);
                                 containers.Add(c25);
                                 break;
                             default:

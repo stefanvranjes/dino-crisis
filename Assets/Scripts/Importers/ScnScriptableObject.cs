@@ -412,6 +412,9 @@ public class _SCENE_OBJ_DATA
                 case 66:
                     offset -= 0x14;
                     break;
+                case 89:
+                    offset -= 0x14;
+                    break;
                 default:
                     Debug.Log("Unknown case: " + CONTAINERS[container].DAT_00);
                     break;

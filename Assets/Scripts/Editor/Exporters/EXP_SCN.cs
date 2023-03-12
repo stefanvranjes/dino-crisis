@@ -296,6 +296,13 @@ public class EXP_SCN
                             case 66:
                                 reader.Seek(0x13, SeekOrigin.Current);
                                 break;
+                            case 89:
+                                reader.Seek(3, SeekOrigin.Current);
+                                GetContainerIdentifier(reader.ReadUInt32(), typeof(Tmd2ScriptableObject), 5);
+                                GetContainerIdentifierTodArray(reader.ReadUInt32(), 5);
+                                GetContainerIdentifier(reader.ReadUInt32(), typeof(SV2ScriptableObject), 10);
+                                reader.Seek(4, SeekOrigin.Current);
+                                break;
                             default:
                                 Debug.Log("Unknown case: " + type);
                                 break;
@@ -340,6 +347,10 @@ public class EXP_SCN
                         extension = ".ref";
                         RefPostprocessor.script = true;
                         RefPostprocessor.ram = new RamScriptableObject[] { ram };
+                    }
+                    else if (addrPairs[i].refType == typeof(SV2ScriptableObject))
+                    {
+                        extension = ".sv2";
                     }
 
                     int fileSize = 0;
@@ -414,6 +425,18 @@ public class EXP_SCN
                         }
                         else
                             ram.objects.Add(addrPairs[i].ramAddress, _ref);
+                    }
+                    else if (addrPairs[i].refType == typeof(SV2ScriptableObject))
+                    {
+                        SV2ScriptableObject sv2 = AssetDatabase.LoadAssetAtPath(path, typeof(SV2ScriptableObject)) as SV2ScriptableObject;
+
+                        if (ram.objects.ContainsKey(addrPairs[i].ramAddress))
+                        {
+                            if (ram.objects[addrPairs[i].ramAddress] == null)
+                                ram.objects[addrPairs[i].ramAddress] = sv2;
+                        }
+                        else
+                            ram.objects.Add(addrPairs[i].ramAddress, sv2);
                     }
                 }
 

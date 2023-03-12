@@ -431,7 +431,14 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Destroy(LevelManager.instance.gameObject);
+            Destroy(SaveManager.instance.gameObject);
+            Destroy(GameObject.Find("EventSystem"));
+            Destroy(gameObject);
+            SceneManager.sceneLoaded = false;
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        }
 
         if (Input.GetKeyDown(KeyCode.C))
             disableColors = !disableColors;
@@ -511,6 +518,11 @@ public class GameManager : MonoBehaviour
         {
             //FUN_1802C
             DAT_28++;
+            playerSpawnPos.x = DAT_A0E8;
+            playerSpawnPos.y = DAT_A0EA * -0x1a9;
+            playerSpawnPos.z = DAT_A0EC;
+            playerSpawnRotY = DAT_A0EE;
+            DAT_56 = 1;
             //...
             FUN_61240();
             InventoryManager.FUN_4A7E8(4, 0, true);
@@ -1296,7 +1308,7 @@ public class GameManager : MonoBehaviour
 
                 if (param4[5] == 0)
                 {
-                    if (param1.tags == 3)
+                    if (param1 != null && param1.tags == 3)
                     {
                         sVar3 = (sbyte)vVar8.DAT_02;
                         oVar4.DAT_1B = sVar3;

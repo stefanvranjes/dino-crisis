@@ -153,7 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scn: {fileID: -4406283935363021935, guid: b14b794cad1851749886456f72b8a24e, type: 3}
-  database: {fileID: 11400000, guid: 536651ecb139fdf4ba707b4c44b49643, type: 2}
+  vab: {fileID: 888843668273218188, guid: a2f1f2c820878c149af53595e4d756c8, type: 3}
+  ram: {fileID: 11400000, guid: 6a5a09379b2335543b877baab56ddb99, type: 2}
   DAT_A4: 0
   DAT_AC: 
   DAT_B0: 
@@ -162,6 +163,8 @@ MonoBehaviour:
   sceneCollision: {fileID: -6028080052161987059, guid: 978817dce51a3744d92fae47eadf9e47, type: 3}
   lightSource: {fileID: -7488134631618437631, guid: 07397620cde6de74c85c5f40bf70f3ec, type: 3}
   motions: {fileID: 9013893561334630828, guid: cde4138c1c687eb4287e92b86b902e69, type: 3}
+  gian: {fileID: -5354861067182356112, guid: fc6239288e3235b40855a5f736e93db0, type: 3}
+  ini: {fileID: -9147774878685956931, guid: fe18f35a0e52b044e9a8b6566c81f78e, type: 3}
   triggers: []
   DAT_270: 0
   DAT_272: 0
@@ -252,7 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cfuStatus: PSXEffects v1.15.5 - update available (click to update).
   sections: 01010100
-  customRes: {x: 772, y: 423}
+  customRes: {x: 807, y: 514}
   resolutionFactor: 1
   limitFramerate: -1
   skipFrames: 0

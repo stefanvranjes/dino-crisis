@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 396c773e44ab57a4fabd401ebe4cb0e8
+guid: a2f1f2c820878c149af53595e4d756c8
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -7,6 +7,4 @@ ScriptedImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-  script: {fileID: 11500000, guid: 10b9c3840614b9242b233233ee3b8604, type: 3}
-  ramAddress: 2149575872
-  size: 24
+  script: {fileID: 11500000, guid: cf049a9ae7b0d6a4c942c754be8906d0, type: 3}

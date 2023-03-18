@@ -40,6 +40,7 @@ public class DialogManager : MonoBehaviour
     public byte DAT_B148A;
     public byte DAT_B148B;
     public byte DAT_B148C;
+    public ushort[] DAT_B148E;
     public static DialogManager instance;
     public static int[] DAT_98594 = new int[]
     {
@@ -1501,6 +1502,7 @@ public class DialogManager : MonoBehaviour
                 FUN_1CBA4
             };
             DAT_B12C0 = new ushort[256];
+            DAT_B148E = new ushort[256];
         }
     }
 
@@ -1569,7 +1571,7 @@ public class DialogManager : MonoBehaviour
 
     public void FUN_1DE48()
     {
-        //FUN_1DED0
+        FUN_1DED0(0, 0, 0x29, 11);
         PTR_B146C = null;
         PTR_B1470 = null;
         DAT_B1478 = 0;
@@ -1588,6 +1590,40 @@ public class DialogManager : MonoBehaviour
         DAT_B148A = 40;
         DAT_B148B = 0;
         DAT_B148C = 0;
+    }
+
+    private void FUN_1DED0(uint param1, uint param2, int param3, int param4)
+    {
+        int iVar1;
+        uint uVar2;
+        int iVar3;
+        uint uVar4;
+
+        uVar4 = param2 + (uint)param4;
+
+        if (param2 < uVar4)
+        {
+            iVar3 = (int)param2 * 0x52;
+
+            do
+            {
+                if (param1 < param1 + (uint)param3)
+                {
+                    iVar1 = (int)param1 * 2 + iVar3;
+                    uVar2 = param1;
+
+                    do
+                    {
+                        DAT_B148E[iVar1 / 2] = 0;
+                        uVar2++;
+                        iVar1 += 2;
+                    } while (uVar2 < param1 + (uint)param3);
+                }
+
+                param2++;
+                iVar3 += 0x52;
+            } while (param2 < uVar4);
+        }
     }
 
     public void FUN_1E2D8(ushort[] param1, int param2, byte param3, ushort param4)
@@ -1691,7 +1727,7 @@ public class DialogManager : MonoBehaviour
 
         if ((uVar2 & 0x1000) != 0)
         {
-            //FUN_1DED0
+            FUN_1DED0(0, 0, 0x29, 11);
             DAT_B1484 = 0;
             DAT_B1485 = 0;
         }
@@ -1701,7 +1737,7 @@ public class DialogManager : MonoBehaviour
         else
             DAT_B147F = DAT_B1480;
 
-        //...
+        DAT_B148E[DAT_B1485 * 0x29 + DAT_B1484] = (ushort)(uVar2 & 0x3ff | (byte)DAT_B1483 << 12);
         bVar1 = DAT_B1484;
         bVar4 = (byte)(bVar1 + 1);
         DAT_B1484 = bVar4;
@@ -1720,7 +1756,7 @@ public class DialogManager : MonoBehaviour
             }
             else
             {
-                //FUN_1DED0
+                FUN_1DED0(0, 0, 0x29, 11);
                 uVar5 = InventoryManager.DAT_B7A60[0] & (uint)~DAT_B1478;
                 InventoryManager.DAT_B7A60[0] = uVar5;
                 InventoryManager.DAT_B7A60[0] = uVar5 | DAT_B147A;

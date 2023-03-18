@@ -465,7 +465,7 @@ public class GameManager : MonoBehaviour
     public void FUN_2984C(ushort param1)
     {
         voices[24].clip = speechLines[(DAT_9AA0 >> 8) - 1].objects[param1] as AudioClip;
-        //voices[24].Play();
+        voices[24].Play();
     }
 
     public void FUN_46C0C(int param1, uint param2, byte param3)

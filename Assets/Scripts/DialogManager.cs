@@ -2,9 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogManager : MonoBehaviour
 {
+    public Text gameText;
+    public Text gameTitle;
+    private char[] chars;
     public ushort[] DAT_B12C0;
     public Trigger DAT_B1388;
     public byte DAT_B138C;
@@ -1501,8 +1505,9 @@ public class DialogManager : MonoBehaviour
                 FUN_1CA74,
                 FUN_1CBA4
             };
-            DAT_B12C0 = new ushort[256];
-            DAT_B148E = new ushort[256];
+            DAT_B12C0 = new ushort[1024];
+            DAT_B148E = new ushort[1024];
+            chars = new char[1024];
         }
     }
 
@@ -1515,7 +1520,31 @@ public class DialogManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        for (int i = 1; i < DAT_B148E.Length; i++)
+        {
+            if (i % 0x29 == 0)
+                chars[i - 1] = '\n';
+            else
+                chars[i - 1] = Utilities.characters[DAT_B148E[i]];
+        }
+
+        gameText.text = new string(chars);
+    }
+
+    public IEnumerator DisplayTitle(ushort[] txt, int i, float duration)
+    {
+        char[] chars = new char[256];
+        int k = 0;
+
+        while (txt[i] != 0xa000)
+            chars[k++] = Utilities.characters[(ushort)(txt[i++] & 0x3ff)];
+
+        gameTitle.text = new string(chars);
+
+        while (duration-- > 0)
+            yield return null;
+
+        gameTitle.text = string.Empty;
     }
 
     public void FUN_1BAB4(byte param1, Trigger param2)
@@ -2050,9 +2079,13 @@ public class DialogManager : MonoBehaviour
 
     private bool FUN_1B2A8(Trigger param1)
     {
+        Trigger3 tVar1;
+
         InventoryManager.FUN_4A7E8(1, 11, true);
+        tVar1 = (Trigger3)param1;
         SceneManager.instance.DAT_27C[10].DAT_3C = 1;
-        //FUN_1E2D8
+        FUN_1E2D8(SceneManager.instance.scn.endBuffer,
+            (tVar1.DAT_18 - SceneManager.instance.scn.bufferOffset) / 2, 0, (ushort)tVar1.DAT_1C);
         return false;
     }
 
@@ -2881,6 +2914,11 @@ public class DialogManager : MonoBehaviour
             SceneManager.instance.DAT_7CDC[param1.DAT_1E].ResetValues();
 
         //...
+    }
+
+    public int FUN_6752C(int param1)
+    {
+        return DAT_9E9C0[param1];
     }
 
     public int FUN_67988(int param1)

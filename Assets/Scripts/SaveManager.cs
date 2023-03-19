@@ -85,6 +85,23 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    private bool FUN_23CA8(SaveSlot[] param1, string param2)
+    {
+        int iVar1;
+
+        iVar1 = 0;
+
+        do
+        {
+            if (param1[iVar1].slotName == param2)
+                return true;
+
+            iVar1++;
+        } while (iVar1 < 15);
+
+        return false;
+    }
+
     private bool FUN_23D0C(SaveSlot[] param1, uint param2)
     {
         uint uVar1;
@@ -150,7 +167,11 @@ public class SaveManager : MonoBehaviour
 
             FileStream stream = File.Open(myDocumentsPath + gameSavePath + fileName, FileMode.Open, FileAccess.Read);
 
-            if (stream == null) break;
+            if (stream == null)
+            {
+                fileIndex++;
+                break;
+            }
 
             saveSlots[fileIndex].slotName = "BASLUS-00922-DINO" + fileIndex;
             saveSlots[fileIndex].DAT_18 = 0x2000;
@@ -181,6 +202,13 @@ public class SaveManager : MonoBehaviour
                 reader.Dispose();
             }
         }
+
+        Button newSlotButton = newSlot.GetComponent<Button>();
+        newSlotButton.onClick.RemoveAllListeners();
+        newSlotButton.onClick.AddListener(() => scrollRect.gameObject.SetActive(false));
+        newSlotButton.onClick.AddListener(() => inputField.gameObject.SetActive(true));
+        newSlotButton.onClick.AddListener(() => SetCurrentSlot(fileIndex));
+        newSlotButton.onClick.AddListener(() => DestroySlots());
     }
 
     public void DestroySlots()
@@ -219,7 +247,9 @@ public class SaveManager : MonoBehaviour
         switch (state)
         {
             case _SAVE_STATE.STATE_00:
-                if (saveSlots[0].slotName == acStack64)
+                bVar5 = FUN_23CA8(saveSlots, acStack64);
+
+                if (!bVar5)
                 {
                     bVar5 = FUN_23D0C(saveSlots, 1);
 

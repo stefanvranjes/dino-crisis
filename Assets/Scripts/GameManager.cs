@@ -61,6 +61,7 @@ public class LoadScriptContainer
 [System.Serializable]
 public class LoadSceneContainer
 {
+    public byte nameIndex; //0x00
     public ushort DAT_02; //0x02
     public byte DAT_08; //0x08
 }
@@ -2744,6 +2745,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private int FUN_6E848(int param1, int param2)
+    {
+        return DialogManager.instance.FUN_6752C(DAT_9E0A0[param1].scenes[param2].nameIndex + 279);
+    }
+
     public Vector2Int[] FUN_813F0(Vector2Int[] param1, WallCollider param2)
     {
         sbyte sVar1;
@@ -4966,6 +4972,8 @@ public class GameManager : MonoBehaviour
     private void FUN_7A460(CoroutineLoader param1)
     {
         short sVar1;
+        int iVar2;
+        ushort[] uVar3;
         uint uVar4;
         CriPlayer oVar5;
 
@@ -4987,7 +4995,9 @@ public class GameManager : MonoBehaviour
 
                     if (uVar4 != 18 && uVar4 != 26 && 3 < uVar4 - 32)
                     {
-                        //...
+                        iVar2 = FUN_6E848(DAT_9AA0 >> 8, DAT_9AA0 & 0xff);
+                        uVar3 = DialogManager.DAT_9F0EC;
+                        StartCoroutine(DialogManager.instance.DisplayTitle(uVar3, iVar2, 120f));
                     }
                 }
 

@@ -717,6 +717,12 @@ public class GameManager : MonoBehaviour
         //...
     }
 
+    private void FUN_48934()
+    {
+        FUN_475E4(1);
+        FUN_5DD54();
+    }
+
     private void FUN_48964()
     {
         PTR_FUN_9CC28[DAT_2A]();
@@ -1656,6 +1662,12 @@ public class GameManager : MonoBehaviour
         }
 
         param3 += param4;
+    }
+
+    private void FUN_5DD54()
+    {
+        cSound.DAT_24 = 0;
+        cSound.DAT_25 = 0;
     }
 
     private void FUN_5DDD0()
@@ -2703,6 +2715,15 @@ public class GameManager : MonoBehaviour
             DAT_922C &= 0xfd;
             DAT_9230 = null;
         }
+    }
+
+    private void FUN_6674C()
+    {
+        ushort uVar1;
+
+        uVar1 = (ushort)InventoryManager.instance.FUN_67C30();
+        InventoryManager.instance.DAT_C612E = (ushort)(uVar1 & 0xf000 | LevelManager.instance.DAT_B58B8 & 0xfff);
+        InventoryManager.instance.PTR_FUN_A60D0[DAT_2A]();
     }
 
     public void FUN_6E6C8()

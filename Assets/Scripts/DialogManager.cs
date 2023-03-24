@@ -3009,6 +3009,87 @@ public class DialogManager : MonoBehaviour
         return uVar10;
     }
 
+    public void FUN_68188(byte[] param1)
+    {
+        byte bVar1;
+        byte bVar2;
+        byte bVar3;
+        uint uVar4;
+        byte bVar5;
+        uint uVar6;
+        int pbVar7;
+        uint uVar8;
+        int pbVar9;
+        uint uVar10;
+        int iVar11;
+
+        InventoryManager.instance.FUN_6FAF0();
+        uVar8 = param1[1];
+        bVar1 = param1[0];
+        bVar2 = param1[2];
+        pbVar9 = 0;
+        bVar3 = GameManager.instance.DAT_9ADE;
+        uVar10 = 0;
+
+        if (uVar8 != 0)
+        {
+            iVar11 = bVar1 * 6;
+            pbVar7 = 1;
+
+            do
+            {
+                if (bVar3 <= uVar10)
+                    return;
+
+                uVar6 = GameManager.instance.DAT_9EAC[pbVar7];
+
+                if (uVar6 == 0)
+                {
+                    GameManager.instance.DAT_9EAC[pbVar9] = bVar1;
+                    GameManager.instance.DAT_9EAC[pbVar7 + 1] = bVar2;
+                    bVar5 = (byte)(DAT_A593C[iVar11] >> 8);
+                    uVar4 = bVar5;
+
+                    if (uVar4 < uVar8)
+                    {
+                        uVar8 -= uVar4;
+                        GameManager.instance.DAT_9EAC[pbVar7] = bVar5;
+                    }
+                    else
+                    {
+                        GameManager.instance.DAT_9EAC[pbVar7] = (byte)uVar8;
+                        uVar8 = 0;
+                    }
+                }
+                else
+                {
+                    if (GameManager.instance.DAT_9EAC[pbVar9] == bVar1 &&
+                        GameManager.instance.DAT_9EAC[pbVar7 + 1] == bVar2 &&
+                        uVar6 < (uint)DAT_A593C[iVar11] >> 8)
+                    {
+                        bVar5 = (byte)(DAT_A593C[iVar11] >> 8);
+                        uVar4 = bVar5 - uVar6;
+
+                        if (bVar5 < uVar8 + uVar6)
+                        {
+                            uVar8 -= uVar4;
+                            GameManager.instance.DAT_9EAC[pbVar7] = bVar5;
+                        }
+                        else
+                        {
+                            GameManager.instance.DAT_9EAC[pbVar7] = (byte)(uVar8 + uVar6);
+                            uVar8 = 0;
+                        }
+                    }
+                }
+
+                pbVar7 += 4;
+                pbVar9 += 4;
+                uVar10++;
+            } while (uVar8 != 0);
+        }
+    }
+
     private static ushort FUN_47808(int param1)
     {
         ushort uVar1;

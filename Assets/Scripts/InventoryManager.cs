@@ -34,9 +34,23 @@ public class InventoryManager : MonoBehaviour
         0x40, 0x20, 0x100,
         0x80
     };
+    public byte DAT_C6100;
+    public bool DAT_C6101;
+    public bool DAT_C6103;
+    public byte DAT_C6104;
+    public byte DAT_C6108;
+    public byte DAT_C6109;
+    public ushort DAT_C610C;
+    public ushort DAT_C610E;
+    public ushort DAT_C6110;
     public ushort DAT_C612E;
+    public uint DAT_C61F8;
+    public byte DAT_C61FC;
+    public byte DAT_C61FE;
+    public byte DAT_C61FF;
     public byte[] DAT_C6280;
     public byte DAT_C6290;
+    public ushort[] DAT_C6298;
     public delegate void FUN_A60D0();
     public FUN_A60D0[] PTR_FUN_A60D0;
 
@@ -47,6 +61,7 @@ public class InventoryManager : MonoBehaviour
         {
             instance = this;
             DAT_C6280 = new byte[16];
+            DAT_C6298 = new ushort[12];
             PTR_FUN_A60D0 = new FUN_A60D0[3]
             {
                 FUN_667BC,
@@ -114,7 +129,71 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_667BC()
     {
-        return;
+        byte bVar1;
+        CriPlayer oVar2;
+        byte bVar3;
+        byte[] local_18 = new byte[3];
+
+        //ResetValues();
+        GameManager.instance.DAT_2A++;
+        //FUN_674E8
+        FUN_67BF8(10);
+        DAT_C61F8 = DAT_B7A60[0];
+        FUN_4A7E8(1, 2, false);
+        //FUN_1CC7C
+        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        bVar1 = oVar2.DAT_240;
+        DAT_C6108 = bVar1;
+        DAT_C6109 = bVar1;
+        DAT_C610C = (ushort)((uint)oVar2.DAT_244[0] >> 8);
+        DAT_C610E = (ushort)((uint)oVar2.DAT_244[1] >> 8);
+        DAT_C6110 = (ushort)((uint)oVar2.DAT_244[2] >> 8);
+
+        if (GameManager.instance.DAT_39 == 4) goto LAB_66978;
+
+        DAT_C6100 = GameManager.instance.DAT_39;
+        bVar1 = (byte)GameManager.instance.DAT_2E;
+        DAT_C61FE = 60;
+        DAT_C6101 = true;
+        DAT_C61FC = bVar1;
+        bVar3 = GameManager.instance.DAT_39;
+
+        if (bVar3 == 1)
+        {
+            DAT_C6103 = false;
+            DAT_C6104 = 3;
+            bVar3 = (byte)(DAT_C61FF | 1);
+        }
+        else
+        {
+            if (bVar3 < 2)
+            {
+                if (bVar3 == 0)
+                {
+                    DAT_C61FF |= 1;
+
+                    if ((byte)GameManager.instance.DAT_2E - 16U < 20)
+                    {
+                        local_18[1] = (byte)(GameManager.instance.DAT_2E >> 8);
+                        local_18[0] = (byte)GameManager.instance.DAT_2E;
+                        local_18[2] = FUN_6FCA8(local_18[0]);
+                        DialogManager.instance.FUN_68188(local_18);
+                    }
+
+                    DAT_C6104 = 3;
+                }
+
+                goto LAB_66978;
+            }
+
+            if (bVar3 != 2) goto LAB_66978;
+
+            bVar3 = (byte)(DAT_C61FF | 2);
+        }
+
+        DAT_C61FF = bVar3;
+        LAB_66978:
+        FUN_6AC20();
     }
 
     private void FUN_66994()
@@ -125,6 +204,29 @@ public class InventoryManager : MonoBehaviour
     private void FUN_66B94()
     {
         return;
+    }
+
+    private byte FUN_67BF8(byte param1)
+    {
+        byte bVar1;
+        int puVar2;
+        uint uVar3;
+        uint uVar4;
+
+        bVar1 = DAT_C6290;
+        puVar2 = 0;
+        uVar3 = 0;
+        DAT_C6290 = param1;
+
+        do
+        {
+            DAT_C6280[puVar2] = 0;
+            uVar4 = uVar3 + 1;
+            puVar2 = (int)uVar3 + 1;
+            uVar3 = uVar4;
+        } while (uVar4 < 16);
+
+        return bVar1;
     }
 
     public uint FUN_67C30()
@@ -159,5 +261,100 @@ public class InventoryManager : MonoBehaviour
         } while (uVar3 < 16);
 
         return uVar4;
+    }
+
+    public ushort FUN_6AB5C(uint param1)
+    {
+        if (param1 != 0xff)
+            return DAT_C6298[param1 - 16];
+
+        return 0;
+    }
+
+    private void FUN_6AC20()
+    {
+        int pbVar1;
+        int iVar2;
+
+        DAT_C6298 = new ushort[12];
+        iVar2 = GameManager.instance.DAT_9ADE;
+        pbVar1 = 0;
+
+        while (--iVar2 != -1)
+        {
+            if (GameManager.instance.DAT_9EAC[pbVar1] - 16U < 11)
+                DAT_C6298[GameManager.instance.DAT_9EAC[pbVar1] - 16] += 
+                    GameManager.instance.DAT_9EAC[pbVar1 + 1];
+
+            pbVar1 += 4;
+        }
+
+        ((CriPlayer)SceneManager.instance.DAT_27C[10]).FUN_50CC8();
+    }
+
+    public void FUN_6FAF0()
+    {
+        int iVar2;
+        uint uVar3;
+        int iVar4;
+        uint uVar5;
+
+        uVar5 = 0;
+
+        if (GameManager.instance.DAT_9ADE != 1)
+        {
+            iVar4 = 0;
+
+            do
+            {
+                if (GameManager.instance.DAT_9EAC[iVar4 + 1] == 0)
+                {
+                    uVar3 = uVar5 + 1;
+
+                    if (uVar3 < GameManager.instance.DAT_9ADE)
+                    {
+                        do
+                        {
+                            iVar2 = (int)uVar3 * 4;
+
+                            if (GameManager.instance.DAT_9EAC[iVar2 + 1] != 0)
+                            {
+                                GameManager.instance.DAT_9EAC[iVar4] = GameManager.instance.DAT_9EAC[iVar2];
+                                GameManager.instance.DAT_9EAC[uVar3 * 4 + 1] = 0;
+                                break;
+                            }
+
+                            uVar3++;
+                        } while (uVar3 < GameManager.instance.DAT_9ADE);
+                    }
+                }
+
+                uVar5++;
+                iVar4 += 4;
+            } while (uVar5 < GameManager.instance.DAT_9ADE - 1U);
+        }
+    }
+
+    private byte FUN_6FCA8(int param1)
+    {
+        switch (param1)
+        {
+            case 18:
+            case 27:
+                return 1;
+            case 19:
+            case 28:
+                return 4;
+            case 20:
+            case 29:
+                return 7;
+            case 21:
+            case 31:
+                return 29;
+            default:
+                return 1;
+            case 30:
+                return 10;
+        }
     }
 }

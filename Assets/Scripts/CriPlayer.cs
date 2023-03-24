@@ -6696,6 +6696,111 @@ public class CriPlayer : CriSkinned
         }
     }
 
+    public void FUN_50CC8()
+    {
+        FUN_50AF4(1);
+        FUN_50AF4(2);
+        FUN_50AF4(3);
+    }
+
+    private void FUN_50AF4(byte param1)
+    {
+        byte bVar1;
+        int iVar2;
+        uint uVar3;
+        uint uVar4;
+        byte bVar5;
+
+        uVar4 = param1;
+        bVar5 = 0;
+        bVar1 = (byte)InventoryManager.instance.FUN_6AB5C(((uint)DAT_244[uVar4 - 1] >> 8) + 16);
+
+        if (uVar4 != 1)
+        {
+            if (1 < uVar4)
+            {
+                if (uVar4 == 2)
+                {
+                    uVar3 = (uint)DAT_244[1] >> 8;
+
+                    if (uVar3 == 6)
+                        bVar5 = 17;
+                    else
+                    {
+                        if (uVar3 == 7)
+                            bVar5 = 15;
+                    }
+                }
+                else
+                {
+                    if (uVar4 == 3)
+                    {
+                        bVar5 = 3;
+
+                        if ((DAT_240 & 1) == 0)
+                            bVar5 = 1;
+                    }
+                }
+            }
+
+            goto LAB_50C48;
+        }
+
+        if ((DAT_240 & 3) == 0)
+        {
+            uVar3 = (uint)DAT_244[0] >> 8;
+
+            if (uVar3 != 1)
+            {
+                if (1 < uVar3)
+                {
+                    if (uVar3 < 6)
+                        bVar5 = 3;
+
+                    goto LAB_50C48;
+                }
+
+                if (uVar3 != 0) goto LAB_50C48;
+            }
+
+            bVar5 = 5;
+        }
+        else
+        {
+            uVar3 = (uint)DAT_244[0] >> 8;
+
+            if (uVar3 != 1)
+            {
+                if (1 < uVar3)
+                {
+                    if (uVar3 < 6)
+                        bVar5 = 3;
+
+                    goto LAB_50C48;
+                }
+
+                if (uVar3 != 0) goto LAB_50C48;
+            }
+
+            bVar5 = 7;
+        }
+
+        LAB_50C48:
+        if (param1 == 3 && DAT_244[2] >> 8 == 10)
+        {
+            if (bVar1 == 0)
+                bVar5 = 0;
+        }
+        else
+        {
+            if (bVar1 < bVar5)
+                bVar5 = bVar1;
+        }
+
+        iVar2 = param1 - 1;
+        DAT_244[iVar2] = (ushort)(DAT_244[iVar2] & 0xff00 | bVar5);
+    }
+
     private void FUN_5211C(byte param1)
     {
         uint uVar2;

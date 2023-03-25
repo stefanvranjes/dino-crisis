@@ -2722,7 +2722,7 @@ public class GameManager : MonoBehaviour
         ushort uVar1;
 
         uVar1 = (ushort)InventoryManager.instance.FUN_67C30();
-        InventoryManager.instance.DAT_C612E = (ushort)(uVar1 & 0xf000 | LevelManager.instance.DAT_B58B8 & 0xfff);
+        InventoryManager.instance.DAT_C612E = (ushort)(uVar1 & 0xf000 | InputManager.controllers[0].DAT_B58B8 & 0xfff);
         InventoryManager.instance.PTR_FUN_A60D0[DAT_2A]();
     }
 
@@ -8123,9 +8123,9 @@ public class GameManager : MonoBehaviour
         uint uVar1;
         uint uVar2;
 
-        uVar1 = LevelManager.instance.DAT_B58BA * 3U;
-        uVar2 = LevelManager.instance.DAT_B58BA + ((uVar1 & 0xffff) >> 8) & 0xff;
-        LevelManager.instance.DAT_B58BA = (ushort)(uVar2 | uVar1 & 0xff00U);
+        uVar1 = InputManager.controllers[0].DAT_B58BA * 3U;
+        uVar2 = InputManager.controllers[0].DAT_B58BA + ((uVar1 & 0xffff) >> 8) & 0xff;
+        InputManager.controllers[0].DAT_B58BA = (ushort)(uVar2 | uVar1 & 0xff00U);
         return uVar2;
     }
 

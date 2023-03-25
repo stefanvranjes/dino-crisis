@@ -7688,6 +7688,12 @@ public class CriPlayer : CriSkinned
         DAT_1C5 = param1;
     }
 
+    public void FUN_53984(uint param1, byte param2, byte param3)
+    {
+        FUN_4CFDC();
+        FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_220 + param1 * 4), param2, param3, DAT_220 + param1 * 4);
+    }
+
     public void FUN_53A2C(uint param1, uint param2)
     {
         uint uVar1;

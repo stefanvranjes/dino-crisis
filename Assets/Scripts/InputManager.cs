@@ -9,6 +9,7 @@ public class Controller
     public ushort DAT_B141C;
     public ushort DAT_B5898;
     public ushort DAT_B58B8;
+    public ushort DAT_B58BA;
     public ushort DAT_C2550;
     public ushort DAT_C2552;
     public ushort DAT_C2554;

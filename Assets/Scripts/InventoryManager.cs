@@ -35,25 +35,30 @@ public class InventoryManager : MonoBehaviour
         0x80
     };
     public byte DAT_C6100;
-    public bool DAT_C6101;
+    public byte DAT_C6101;
     public bool DAT_C6103;
     public byte DAT_C6104;
+    public bool DAT_C6107;
     public byte DAT_C6108;
     public byte DAT_C6109;
+    public ushort DAT_C610A;
     public ushort DAT_C610C;
     public ushort DAT_C610E;
     public ushort DAT_C6110;
     public ushort DAT_C612E;
+    public byte[] DAT_C6130;
     public uint DAT_C61F8;
     public byte DAT_C61FC;
     public byte DAT_C61FE;
     public byte DAT_C61FF;
     public byte[] DAT_C6280;
     public byte DAT_C6290;
+    public int DAT_C6294;
     public ushort[] DAT_C6298;
     public delegate void FUN_A60D0();
+    public delegate void FUN_A60DC();
     public FUN_A60D0[] PTR_FUN_A60D0;
-
+    public FUN_A60DC[] PTR_FUN_A60DC;
 
     private void Awake()
     {
@@ -62,11 +67,21 @@ public class InventoryManager : MonoBehaviour
             instance = this;
             DAT_C6280 = new byte[16];
             DAT_C6298 = new ushort[12];
+            DAT_C6130 = new byte[200];
             PTR_FUN_A60D0 = new FUN_A60D0[3]
             {
                 FUN_667BC,
                 FUN_66994,
                 FUN_66B94
+            };
+            PTR_FUN_A60DC = new FUN_A60DC[6]
+            {
+                FUN_6B08C,
+                FUN_68598,
+                FUN_6CF38,
+                FUN_7007C,
+                FUN_7007C,
+                FUN_6E898
             };
         }
     }
@@ -154,7 +169,7 @@ public class InventoryManager : MonoBehaviour
         DAT_C6100 = GameManager.instance.DAT_39;
         bVar1 = (byte)GameManager.instance.DAT_2E;
         DAT_C61FE = 60;
-        DAT_C6101 = true;
+        DAT_C6101 = 1;
         DAT_C61FC = bVar1;
         bVar3 = GameManager.instance.DAT_39;
 
@@ -198,12 +213,113 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_66994()
     {
-        return;
+        ushort uVar1;
+
+        DAT_C6294 = 3;
+
+        if (DAT_C6101 == 0)
+        {
+            uVar1 = DAT_C612E;
+
+            if ((uVar1 & 0x1000) == 0)
+            {
+                if ((uVar1 & 0x4000) == 0)
+                {
+                    if ((uVar1 & 0xa0) == 0)
+                    {
+                        if ((uVar1 & 0x40) != 0)
+                        {
+                            GameManager.instance.FUN_5C94C(null, 1);
+                            GameManager.instance.DAT_2A = 2;
+                        }
+                    }
+                    else
+                    {
+                        if (DAT_C6100 != 2) //tmp
+                        {
+                            GameManager.instance.FUN_5C94C(null, 2);
+                            DAT_C6130 = new byte[200];
+                            DAT_C6107 = false;
+                            DAT_C6101++;
+
+                            if (DAT_C6100 == 4)
+                                GameManager.instance.DAT_2A = 2;
+                        }
+                        else
+                            GameManager.instance.FUN_5C94C(null, 1);
+                    }
+                }
+                else
+                {
+                    if (DAT_C6100 < 4U)
+                    {
+                        DAT_C6100++;
+                        GameManager.instance.FUN_5C94C(null, 0);
+                    }
+                }
+            }
+            else
+            {
+                if (DAT_C6100 != 0)
+                {
+                    DAT_C6100--;
+                    GameManager.instance.FUN_5C94C(null, 0);
+                }
+            }
+
+            DAT_C610A = (ushort)(DAT_C6100 + 0x10a);
+
+            if (DAT_C6100 == 2)
+                DAT_C610A = 0x10f;
+
+            //FUN_67AD8
+        }
+        else
+        {
+            if (DAT_C6101 != 1) goto LAB_66B58;
+            else
+            {
+                //...
+
+                if (1U < DAT_C6100) goto LAB_66B58;
+            }
+        }
+
+        //FUN_67F08
+        
+        LAB_66B58:
+        if ((DAT_C612E & 0x10) != 0)
+        {
+            GameManager.instance.DAT_2A = 2;
+            GameManager.instance.FUN_5C94C(null, 1);
+        }
     }
 
     private void FUN_66B94()
     {
-        return;
+        CriPlayer oVar2;
+
+        //FUN_1CC7C
+        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        if (DAT_C6109 != DAT_C6108)
+            oVar2.DAT_240 = DAT_C6108;
+
+        oVar2.FUN_4FE90(DAT_C6108);
+        oVar2.DAT_3C = 1;
+        oVar2.DAT_3D = 0;
+        oVar2.DAT_3E = 0;
+        oVar2.DAT_3F = 0;
+        oVar2.FUN_53984(0, 1, 0);
+        FUN_6AC20();
+        FUN_4A7E8(2, 0xf, false);
+        DAT_B7A60[0] = DAT_C61F8;
+        GameManager.instance.DAT_28 = 3;
+        GameManager.instance.DAT_2E = 0;
+        GameManager.instance.DAT_2C = 0;
+        GameManager.instance.DAT_2A = 0;
+        FUN_4A7E8(2, 8, false);
+        //ResetValues
     }
 
     private byte FUN_67BF8(byte param1)
@@ -242,17 +358,17 @@ public class InventoryManager : MonoBehaviour
 
         do
         {
-            if ((LevelManager.instance.DAT_B5898 >> (int)(uVar3 & 31) & 1) == 0)
+            if ((InputManager.controllers[0].DAT_B5898 >> (int)(uVar3 & 31) & 1) == 0)
                 DAT_C6280[pbVar2] = 0;
             else
                 DAT_C6280[pbVar2]++;
 
-            uVar1 = LevelManager.instance.DAT_B58B8;
+            uVar1 = InputManager.controllers[0].DAT_B58B8;
 
             if ((uint)DAT_C6290 <= DAT_C6280[pbVar2])
             {
                 DAT_C6280[pbVar2] = (byte)(DAT_C6290 >> 1);
-                uVar1 = LevelManager.instance.DAT_B5898;
+                uVar1 = InputManager.controllers[0].DAT_B5898;
             }
 
             uVar4 |= uVar1 & 1U << (int)(uVar3 & 31);
@@ -261,6 +377,11 @@ public class InventoryManager : MonoBehaviour
         } while (uVar3 < 16);
 
         return uVar4;
+    }
+
+    private void FUN_68598()
+    {
+        return;
     }
 
     public ushort FUN_6AB5C(uint param1)
@@ -290,6 +411,21 @@ public class InventoryManager : MonoBehaviour
         }
 
         ((CriPlayer)SceneManager.instance.DAT_27C[10]).FUN_50CC8();
+    }
+
+    private void FUN_6B08C()
+    {
+        return;
+    }
+
+    private void FUN_6CF38()
+    {
+        return;
+    }
+
+    private void FUN_6E898()
+    {
+        return;
     }
 
     public void FUN_6FAF0()
@@ -356,5 +492,10 @@ public class InventoryManager : MonoBehaviour
             case 30:
                 return 10;
         }
+    }
+
+    private void FUN_7007C()
+    {
+        return;
     }
 }

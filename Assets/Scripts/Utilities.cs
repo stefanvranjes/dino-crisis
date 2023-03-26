@@ -2111,6 +2111,18 @@ public static class Utilities
         return 0;
     }
 
+    //FUN_8ECD0
+    public static int csin(int a)
+    {
+        return 0;
+    }
+
+    //FUN_8EA40
+    public static int ccos(int a)
+    {
+        return 0;
+    }
+
     //FUN_8E930
     public static void SetFogNearFar(long a, long b, long h)
     {

@@ -2,6 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class InventoryWindow
+{
+    public bool DAT_00;
+    public sbyte DAT_01;
+    public bool DAT_02;
+    public byte DAT_03;
+    public int DAT_04;
+    public int DAT_08;
+    public short DAT_0C;
+    public short DAT_0E;
+    public short DAT_10;
+    public short DAT_12;
+    public short DAT_14;
+    public short DAT_16;
+    public short DAT_18;
+    public short DAT_1A;
+}
+
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance;
@@ -36,6 +55,7 @@ public class InventoryManager : MonoBehaviour
     };
     public byte DAT_C6100;
     public byte DAT_C6101;
+    public byte DAT_C6102;
     public bool DAT_C6103;
     public byte DAT_C6104;
     public bool DAT_C6107;
@@ -46,7 +66,8 @@ public class InventoryManager : MonoBehaviour
     public ushort DAT_C610E;
     public ushort DAT_C6110;
     public ushort DAT_C612E;
-    public byte[] DAT_C6130;
+    public InventoryWindow[] DAT_C6130;
+    public byte DAT_C618B;
     public uint DAT_C61F8;
     public byte DAT_C61FC;
     public byte DAT_C61FE;
@@ -57,17 +78,19 @@ public class InventoryManager : MonoBehaviour
     public ushort[] DAT_C6298;
     public delegate void FUN_A60D0();
     public delegate void FUN_A60DC();
+    public delegate void FUN_A614C();
     public FUN_A60D0[] PTR_FUN_A60D0;
     public FUN_A60DC[] PTR_FUN_A60DC;
+    public FUN_A614C[] PTR_FUN_A614C;
 
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            DAT_C6130 = new InventoryWindow[2];
             DAT_C6280 = new byte[16];
             DAT_C6298 = new ushort[12];
-            DAT_C6130 = new byte[200];
             PTR_FUN_A60D0 = new FUN_A60D0[3]
             {
                 FUN_667BC,
@@ -82,6 +105,12 @@ public class InventoryManager : MonoBehaviour
                 FUN_7007C,
                 FUN_7007C,
                 FUN_6E898
+            };
+            PTR_FUN_A614C = new FUN_A614C[3]
+            {
+                FUN_6B14C,
+                FUN_6B2F0,
+                FUN_6B32C
             };
         }
     }
@@ -238,7 +267,7 @@ public class InventoryManager : MonoBehaviour
                         if (DAT_C6100 != 2) //tmp
                         {
                             GameManager.instance.FUN_5C94C(null, 2);
-                            DAT_C6130 = new byte[200];
+                            //ResetValues
                             DAT_C6107 = false;
                             DAT_C6101++;
 
@@ -415,7 +444,87 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_6B08C()
     {
+        //FUN_6AF38
+
+        if (DAT_C618B == 0)
+            PTR_FUN_A614C[DAT_C6102]();
+
+        FUN_6CDD8(DAT_C6130, 0);
+    }
+
+    private void FUN_6B14C()
+    {
         return;
+    }
+
+    private void FUN_6B2F0()
+    {
+        return;
+    }
+
+    private void FUN_6B32C()
+    {
+        return;
+    }
+
+    private void FUN_6CDD8(InventoryWindow[] param1, int param2)
+    {
+        sbyte sVar1;
+        byte bVar2;
+        int iVar3;
+        int iVar4;
+        InventoryWindow pcVar5;
+
+        if (param2 < 2)
+        {
+            do
+            {
+                pcVar5 = param1[param2];
+
+                if (pcVar5.DAT_00)
+                {
+                    if (!pcVar5.DAT_02)
+                    {
+                        pcVar5.DAT_0C += (short)pcVar5.DAT_04;
+                        sVar1 = pcVar5.DAT_01;
+                        pcVar5.DAT_01 = (sbyte)(sVar1 - 1);
+                        pcVar5.DAT_10 += (short)pcVar5.DAT_08;
+
+                        if ((sbyte)(sVar1 - 1) == 0)
+                        {
+                            DAT_C618B--;
+                            pcVar5.DAT_00 = false;
+                            pcVar5.DAT_0C = pcVar5.DAT_14;
+                            pcVar5.DAT_0E = pcVar5.DAT_16;
+                            pcVar5.DAT_10 = pcVar5.DAT_18;
+                            pcVar5.DAT_12 = pcVar5.DAT_1A;
+                        }
+                    }
+                    else
+                    {
+                        if (pcVar5.DAT_02)
+                        {
+                            bVar2 = (byte)(pcVar5.DAT_03 + 1 & 31);
+                            pcVar5.DAT_03 = bVar2;
+                            iVar3 = Utilities.ccos(bVar2 << 7);
+                            iVar4 = Utilities.csin(pcVar5.DAT_03 << 7);
+                            sVar1 = pcVar5.DAT_01;
+                            pcVar5.DAT_0E = (short)((iVar3 >> 8) + 0x88);
+                            pcVar5.DAT_12 = (short)((iVar4 >> 7) + 0xac);
+                            pcVar5.DAT_01 = (sbyte)(sVar1 - 1);
+
+                            if ((sbyte)(sVar1 - 1) == 0)
+                            {
+                                DAT_C618B--;
+                                pcVar5.DAT_00 = false;
+                            }
+                        }
+                    }
+                }
+
+                param2++;
+            } while (param2 < 2);
+        }
     }
 
     private void FUN_6CF38()

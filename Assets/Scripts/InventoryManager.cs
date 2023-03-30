@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class InventoryText
+{
+    public byte DAT_00;
+    public byte DAT_01;
+    public byte DAT_02;
+}
+
 [System.Serializable]
 public class InventoryWindow
 {
@@ -19,6 +26,8 @@ public class InventoryWindow
     public short DAT_16;
     public short DAT_18;
     public short DAT_1A;
+    public InventoryText[] DAT_38;
+    public byte DAT_50;
 }
 
 public class InventoryManager : MonoBehaviour
@@ -72,6 +81,7 @@ public class InventoryManager : MonoBehaviour
     public byte DAT_C61FC;
     public byte DAT_C61FE;
     public byte DAT_C61FF;
+    public ushort[] DAT_C6210;
     public byte[] DAT_C6280;
     public byte DAT_C6290;
     public int DAT_C6294;
@@ -450,6 +460,7 @@ public class InventoryManager : MonoBehaviour
             PTR_FUN_A614C[DAT_C6102]();
 
         FUN_6CDD8(DAT_C6130, 0);
+        FUN_6BFDC(DAT_C6130, 0);
     }
 
     private void FUN_6B14C()
@@ -465,6 +476,44 @@ public class InventoryManager : MonoBehaviour
     private void FUN_6B32C()
     {
         return;
+    }
+
+    private void FUN_6BFDC(InventoryWindow[] param1, int param2)
+    {
+        byte bVar1;
+        short sVar2;
+        ushort[] uVar3;
+        int iVar4;
+        InventoryText pbVar5;
+        int iVar7;
+        int iVar8;
+        int iVar9;
+        uint uVar10;
+
+        uVar10 = 0;
+        iVar9 = -53;
+        iVar8 = -59;
+        iVar7 = param1[param2].DAT_0E;
+        sVar2 = param1[param2].DAT_12;
+        DAT_C6294 = param1[param2].DAT_50;
+
+        do
+        {
+            pbVar5 = param1[param2].DAT_38[uVar10];
+
+            if (pbVar5.DAT_01 != 0)
+            {
+                iVar4 = sVar2 + iVar8;
+                bVar1 = pbVar5.DAT_00;
+                iVar8 += 26;
+                //FUN_67904
+                uVar3 = FUN_71350(pbVar5);
+                //...
+                iVar9 += 26;
+            }
+
+            uVar10++;
+        } while (uVar10 < 5);
     }
 
     private void FUN_6CDD8(InventoryWindow[] param1, int param2)
@@ -606,5 +655,75 @@ public class InventoryManager : MonoBehaviour
     private void FUN_7007C()
     {
         return;
+    }
+
+    private ushort[] FUN_71350(InventoryText param1)
+    {
+        int iVar1;
+        uint uVar2;
+        ushort uVar3;
+        int iVar4;
+        uint uVar5;
+        int iVar6;
+
+        uVar5 = param1.DAT_02;
+        iVar1 = param1.DAT_00 * 6;
+
+        switch (param1.DAT_00)
+        {
+            case 18:
+            case 19:
+            case 27:
+            case 28:
+            case 29:
+                uVar5--;
+                iVar6 = (int)(uVar5 - (((uint)((ulong)uVar5 * 0xaaaaaaab >> 0x20) & 0xfffffffe) + uVar5 / 3));
+                iVar4 = iVar6 + 448;
+
+                if (iVar6 != 0)
+                {
+                    uVar3 = DialogManager.DAT_A593C[2 + iVar1];
+                    goto LAB_71474;
+                }
+
+                break;
+            case 20:
+                uVar2 = uVar5 - 1;
+
+                if (9 < uVar5)
+                    uVar2 = 8;
+
+                iVar6 = (int)(uVar2 - (((uint)((ulong)uVar2 * 0xaaaaaaab >> 0x20) & 0xfffffffe) + uVar2 / 3));
+                iVar4 = iVar6 + 448;
+
+                if (iVar6 != 0)
+                {
+                    uVar3 = DialogManager.DAT_A593C[2 + iVar1];
+                    goto LAB_71474;
+                }
+
+                break;
+            case 30:
+                uVar2 = uVar5 - 1;
+
+                if (12 < uVar5)
+                    uVar2 = 11;
+
+                iVar6 = (int)(uVar2 - (((uint)((ulong)uVar2 * 0xaaaaaaab >> 0x20) & 0xfffffffe) + uVar2 / 3));
+                iVar4 = iVar6 + 448;
+
+                if (iVar6 != 0)
+                {
+                    uVar3 = DialogManager.DAT_A593C[2 + iVar1];
+                    goto LAB_71474;
+                }
+
+                break;
+        }
+
+        uVar3 = DialogManager.DAT_A593C[2 + iVar1];
+        iVar4 = 0;
+        LAB_71474:
+        return DialogManager.instance.FUN_67350(uVar3, iVar4);
     }
 }

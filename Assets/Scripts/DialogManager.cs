@@ -2916,6 +2916,39 @@ public class DialogManager : MonoBehaviour
         //...
     }
 
+    public ushort[] FUN_67350(int param1, int param2)
+    {
+        short sVar1;
+        int psVar2;
+        int psVar3;
+
+        psVar2 = DAT_9E9C0[param1];
+        sVar1 = (short)DAT_9F0EC[psVar2];
+        psVar3 = 0;
+
+        while (sVar1 != -0x6000)
+        {
+            psVar2++;
+            InventoryManager.instance.DAT_C6210[psVar3] = (ushort)sVar1;
+            sVar1 = (short)DAT_9F0EC[psVar2];
+            psVar3++;
+        }
+
+        psVar2 = DAT_9E9C0[param2];
+        sVar1 = (short)DAT_9F0EC[psVar2];
+
+        while (sVar1 != -0x6000)
+        {
+            psVar2++;
+            InventoryManager.instance.DAT_C6210[psVar3] = (ushort)sVar1;
+            sVar1 = (short)DAT_9F0EC[psVar2];
+            psVar3++;
+        }
+
+        InventoryManager.instance.DAT_C6210[psVar3] = 0xA000;
+        return InventoryManager.instance.DAT_C6210;
+    }
+
     public int FUN_6752C(int param1)
     {
         return DAT_9E9C0[param1];

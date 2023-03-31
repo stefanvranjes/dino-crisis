@@ -406,6 +406,11 @@ public static class Utilities
         0x877d, 0x878c
     };
 
+    public static int[] DAT_AC638 = new int[]
+    {
+        0x1ff, 0x12e, 0x9f, 0x51, 0x29, 0x14, 0, 0
+    };
+
     public static short[] DAT_AC658 = new short[]
     {
         4096, 4127, 4159, 4190, 4222, 4252, 4283, 4314, 4344,
@@ -2111,15 +2116,168 @@ public static class Utilities
         return 0;
     }
 
+    //FUN_8EB10
+    public static void csincos(int param1, out int param2, out int param3)
+    {
+        int piVar1;
+        uint uVar2;
+        int piVar3;
+        int piVar4;
+        int piVar5;
+        int[] local_60 = new int[8];
+        int[] local_40 = new int[8];
+        int[] local_20 = new int[8];
+
+        piVar1 = 0;
+        uVar2 = 0;
+        piVar5 = 0;
+        piVar4 = 0;
+        piVar3 = 0;
+        local_60[0] = 0x9b7;
+        local_40[0] = 0;
+        local_20[0] = param1;
+
+        do
+        {
+            piVar5++;
+            piVar3++;
+
+            if (-1 < local_20[piVar1])
+            {
+                local_60[piVar1 + 1] = local_60[piVar1] - (local_40[piVar1] >> (int)(uVar2 & 31));
+                local_40[piVar3] = local_40[piVar1] + (local_60[piVar1] >> (int)(uVar2 & 31));
+                goto COR_01_OBJ_AC;
+            }
+
+            local_60[piVar1 + 1] = local_60[piVar1] + (local_40[piVar1] >> (int)(uVar2 & 31));
+            local_40[piVar3] = local_40[piVar1] - (local_60[piVar1] >> (int)(uVar2 & 31));
+        COR_01_OBJ_AC:
+            local_20[piVar5] = local_20[piVar1] + DAT_AC638[piVar4];
+            piVar4++;
+            uVar2++;
+            piVar1++;
+        } while ((int)uVar2 < 6);
+
+        param3 = local_60[6] - (local_20[6] * local_40[6] >> 12);
+        param2 = local_40[6] + (local_20[6] * local_60[6] >> 12);
+    }
+
     //FUN_8ECD0
     public static int csin(int a)
     {
-        return 0;
+        int iVar1;
+        int iVar2;
+        uint uVar3;
+        uint uVar4;
+        int local_10;
+        int local_14;
+
+        if (-1 < a)
+        {
+            uVar3 = (uint)(a + (a >> 12) * -0x1000);
+
+            if (0x3ff < uVar3)
+            {
+                if (0x3ff < uVar3 - 0x400)
+                {
+                    uVar4 = uVar3 - 0x800;
+
+                    if (0x3ff < uVar4)
+                    {
+                        if (0x3ff < uVar3 - 0xc00)
+                            return 0;
+
+                        uVar4 = 0xfff - uVar3;
+                    }
+
+                    csincos((int)uVar4, out local_10, out local_14);
+                    return -local_10;
+                }
+
+                uVar3 = 0x7ff - uVar3;
+            }
+
+            csincos((int)uVar3, out local_10, out local_14);
+            return local_10;
+        }
+
+        iVar2 = -a;
+        iVar1 = iVar2;
+
+        if (0 < a)
+            iVar1 = iVar2 + 0xfff;
+
+        uVar3 = (uint)(iVar2 + (iVar1 >> 12) * -0x1000);
+
+        if (uVar3 < 0x400)
+        {
+            csincos((int)uVar3, out local_10, out local_14);
+            return -local_10;
+        }
+
+        if (uVar3 - 0x400 < 0x400)
+        {
+            uVar3 = 0x7ff - uVar3;
+            csincos((int)uVar3, out local_10, out local_14);
+            return -local_10;
+        }
+
+        uVar4 = uVar3 - 0x800;
+
+        if (0x3ff < uVar4)
+        {
+            if (0x3ff < uVar3 - 0xc00)
+                return 0;
+
+            uVar4 = 0xfff - uVar3;
+        }
+
+        csincos((int)uVar4, out local_10, out local_14);
+        return local_10;
     }
 
     //FUN_8EA40
     public static int ccos(int a)
     {
+        int iVar1;
+        uint uVar3;
+        int local_8;
+        int local_c;
+
+        if (a < 0)
+            a = -a;
+
+        iVar1 = a;
+
+        if (a < 0)
+            iVar1 = a + 0xfff;
+
+        uVar3 = (uint)(a + (iVar1 >> 12) * -0x1000);
+
+        if (uVar3 < 0x400)
+        {
+            csincos((int)uVar3, out local_8, out local_c);
+            return local_c;
+        }
+
+        if (uVar3 - 0x400 < 0x400)
+        {
+            csincos((int)(0x7ff - uVar3), out local_8, out local_c);
+            return -local_c;
+        }
+
+        if (uVar3 - 0x800 < 0x400)
+        {
+            csincos((int)(uVar3 - 0x800), out local_8, out local_c);
+            return -local_c;
+        }
+
+        if (uVar3 - 0xc00 < 0x400)
+        {
+            csincos((int)(0xfff - uVar3), out local_8, out local_c);
+            return local_c;
+        }
+
         return 0;
     }
 

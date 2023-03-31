@@ -27,6 +27,9 @@ public class InventoryWindow
     public short DAT_18;
     public short DAT_1A;
     public InventoryText[] DAT_38;
+    public sbyte DAT_4D;
+    public byte DAT_4E;
+    public byte DAT_4F;
     public byte DAT_50;
 }
 
@@ -461,6 +464,7 @@ public class InventoryManager : MonoBehaviour
 
         FUN_6CDD8(DAT_C6130, 0);
         FUN_6BFDC(DAT_C6130, 0);
+        FUN_6BDD4(DAT_C6130, 0);
     }
 
     private void FUN_6B14C()
@@ -476,6 +480,55 @@ public class InventoryManager : MonoBehaviour
     private void FUN_6B32C()
     {
         return;
+    }
+
+    private void FUN_6BDD4(InventoryWindow[] param1, int param2)
+    {
+        short sVar1;
+        short sVar2;
+        uint uVar3;
+        Vector3Int vVar3;
+        int iVar4;
+        int iVar5;
+
+        DAT_C6294 = param1[param2].DAT_50;
+        sVar1 = param1[param2].DAT_0E;
+        iVar4 = sVar1;
+        sVar2 = param1[param2].DAT_12;
+        iVar5 = sVar2;
+
+        if (5U < param1[param2].DAT_4F)
+        {
+            vVar3 = new Vector3Int(0x80, 0x80, 0x80);
+
+            if (0 < param1[param2].DAT_4D)
+                vVar3 = GameManager.instance.FUN_71BF8(new Vector3Int(0x60, 0x60, 0x60), new Vector3Int(0xd0, 0xd0, 0xd0), 4);
+
+            //FUN_6ACDC
+            vVar3 = new Vector3Int(0x80, 0x80, 0x80);
+
+            if (param1[param2].DAT_4D + 1 < ((param1[param2].DAT_4F + 4) / 5))
+                vVar3 = GameManager.instance.FUN_71BF8(new Vector3Int(0x60, 0x60, 0x60), new Vector3Int(0xd0, 0xd0, 0xd0), 4);
+
+            //FUN_6ACDC
+        }
+
+        //FUN_6ACDC
+        uVar3 = 0;
+        iVar5 -= 64;
+
+        do
+        {
+            if (!DAT_C6103 && param1[param2].DAT_4E == uVar3)
+            {
+                //...
+            }
+
+            uVar3++;
+            iVar5 += 26;
+        } while (uVar3 < 5);
+
+        //...
     }
 
     private void FUN_6BFDC(InventoryWindow[] param1, int param2)

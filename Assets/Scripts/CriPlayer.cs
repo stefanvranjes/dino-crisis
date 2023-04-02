@@ -2201,7 +2201,7 @@ public class CriPlayer : CriSkinned
         } while (uVar4 < 60);
     }
 
-    private void FUN_4FE30()
+    public void FUN_4FE30()
     {
         if (550 < health)
         {

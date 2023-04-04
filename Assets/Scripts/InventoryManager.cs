@@ -42,12 +42,14 @@ public class InventoryWindow
     public byte DAT_4F;
     public byte DAT_50;
     public byte[] DAT_51;
+    public byte[] DAT_54;
     public byte DAT_56;
     public sbyte DAT_57;
     public byte DAT_58;
     public byte DAT_59;
     public byte DAT_5A;
     public byte DAT_5B;
+    public byte DAT_69;
 }
 
 public class InventoryManager : MonoBehaviour
@@ -113,6 +115,8 @@ public class InventoryManager : MonoBehaviour
     public ushort[] DAT_C6298;
     public delegate void FUN_A60D0();
     public delegate void FUN_A60DC();
+    public byte[] DAT_A6104 = new byte[4] { 1, 4, 4, 2 };
+    public delegate void FUN_A6108(InventoryWindow[] w, int i);
     public delegate void FUN_A614C(InventoryWindow[] w, int i);
     public delegate void FUN_A6158(InventoryWindow[] w, int i);
     public delegate void FUN_A6160(InventoryWindow[] w, int i);
@@ -120,6 +124,7 @@ public class InventoryManager : MonoBehaviour
     public delegate void FUN_A617C(InventoryWindow[] w, int i);
     public FUN_A60D0[] PTR_FUN_A60D0;
     public FUN_A60DC[] PTR_FUN_A60DC;
+    public FUN_A6108[] PTR_FUN_A6108;
     public FUN_A614C[] PTR_FUN_A614C;
     public FUN_A6158[] PTR_FUN_A6158;
     public FUN_A6160[] PTR_FUN_A6160;
@@ -148,6 +153,12 @@ public class InventoryManager : MonoBehaviour
                 FUN_7007C,
                 FUN_7007C,
                 FUN_6E898
+            };
+            PTR_FUN_A6108 = new FUN_A6108[3]
+            {
+                FUN_68638,
+                FUN_6873C,
+                FUN_68778
             };
             PTR_FUN_A614C = new FUN_A614C[3]
             {
@@ -479,7 +490,279 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_68598()
     {
+        if (DAT_C6130[0].DAT_69 == 0)
+            PTR_FUN_A6108[DAT_C6102](DAT_C6130, 0);
+
+        FUN_6A954(DAT_C6130, 0);
+        DAT_C6294 = 3; //write byte instead int??
+        FUN_68CA4(DAT_C6130, 0);
+        FUN_69CEC(DAT_C6130, 0);
+        //...
+    }
+
+    private void FUN_68638(InventoryWindow[] param1, int param2)
+    {
+        DAT_C6102++;
+
+        if ((DAT_C61FF & 1) == 0)
+        {
+            param1[param2].rect[0].DAT_0C = 0;
+            param1[param2].rect[0].DAT_0E = -77;
+            param1[param2].rect[0].DAT_10 = 0;
+            param1[param2].rect[0].DAT_12 = 140;
+            FUN_6A8A4(param1[param2], 0, 10, 0x7b0000, 0x8c0000);
+            param1[param2].rect[2].DAT_0C = 0;
+            param1[param2].rect[2].DAT_0E = 323;
+            param1[param2].rect[1].DAT_0C = 0;
+            param1[param2].rect[1].DAT_0E = 147;
+            param1[param2].rect[1].DAT_10 = 0;
+            param1[param2].rect[1].DAT_12 = 266;
+            param1[param2].rect[2].DAT_10 = 0;
+            param1[param2].rect[2].DAT_12 = 258;
+            FUN_6A8A4(param1[param2], 2, 10, 0x7b0000, 0x1020000);
+            param1[param2].rect[1].DAT_0C = 0;
+            param1[param2].rect[1].DAT_0E = 147;
+            param1[param2].rect[1].DAT_10 = 0;
+            param1[param2].rect[1].DAT_12 = 266;
+        }
+        else
+        {
+            param1[param2].rect[0].DAT_10 = 0;
+            param1[param2].rect[0].DAT_12 = -146;
+            param1[param2].rect[0].DAT_0C = 0;
+            param1[param2].rect[0].DAT_0E = 123;
+            param1[param2].rect[1].DAT_0C = 0;
+            param1[param2].rect[1].DAT_0E = 147;
+            param1[param2].rect[1].DAT_10 = 0;
+            param1[param2].rect[1].DAT_12 = 516;
+            param1[param2].rect[2].DAT_0C = 0;
+            param1[param2].rect[2].DAT_0E = 123;
+            param1[param2].rect[2].DAT_10 = 0;
+            param1[param2].rect[2].DAT_12 = -60;
+        }
+
+        FUN_69014(param1, param2);
+        FUN_6A1CC(param1, param2);
+    }
+
+    private void FUN_6873C(InventoryWindow[] param1, int param2)
+    {
         return;
+    }
+
+    private void FUN_68778(InventoryWindow[] param1, int param2)
+    {
+        return;
+    }
+
+    private int FUN_68C18(uint param1)
+    {
+        byte bVar1;
+        uint uVar2;
+        int iVar3;
+
+        uVar2 = 0;
+        iVar3 = 0;
+
+        if (param1 >> 4 != 0)
+        {
+            do
+            {
+                bVar1 = DAT_A6104[uVar2];
+                uVar2++;
+                iVar3 += bVar1;
+            } while (uVar2 < param1 >> 4);
+        }
+
+        return iVar3 + (int)(param1 & 0xf);
+    }
+
+    private void FUN_68CA4(InventoryWindow[] param1, int param2)
+    {
+        short sVar1;
+        int iVar2;
+        int iVar4;
+
+        iVar4 = param1[param2].rect[0].DAT_0E;
+        sVar1 = param1[param2].rect[0].DAT_12;
+        iVar2 = FUN_68C18(DAT_C6108);
+        //...
+    }
+
+    private void FUN_68F2C(InventoryWindow[] param1, int param2)
+    {
+        bool bVar1;
+        uint uVar2;
+        byte bVar3;
+        int iVar4;
+        bool bVar4;
+        uint uVar5;
+
+        param1[param2].DAT_54 = new byte[5];
+        iVar4 = param1[param2].DAT_59 * 5;
+        uVar2 = 0;
+
+        while (iVar4 != 0)
+        {
+            bVar1 = FUN_4A87C(11, uVar2);
+
+            if (bVar1)
+                iVar4--;
+
+            uVar2++;
+        }
+
+        uVar5 = 0;
+
+        do
+        {
+            if (15 < uVar2) break;
+
+            bVar4 = FUN_4A87C(11, uVar2);
+
+            if (bVar4)
+            {
+                param1[param2].DAT_54[uVar5] = (byte)uVar2;
+                uVar5++;
+            }
+
+            uVar2++;
+        } while (uVar5 < 5);
+
+        param1[param2].DAT_5A = (byte)uVar5;
+        bVar3 = 0;
+        uVar2 = 0;
+
+        do
+        {
+            bVar4 = FUN_4A87C(11, uVar2);
+
+            if (bVar4)
+                bVar3++;
+
+            uVar2++;
+        } while (uVar2 < 0x10);
+
+        param1[param2].DAT_5B = bVar3;
+    }
+
+    private void FUN_69014(InventoryWindow[] param1, int param2)
+    {
+        param1[param2].DAT_59 = 0;
+        FUN_68F2C(param1, param2);
+    }
+
+    private void FUN_69CEC(InventoryWindow[] param1, int param2)
+    {
+        uint uVar1;
+        int iVar2;
+        int iVar3;
+        uint uVar4;
+        uint uVar5;
+        int iVar6;
+        int iVar7;
+
+        iVar6 = param1[param2].rect[2].DAT_0E;
+        iVar7 = param1[param2].rect[2].DAT_12;
+        uVar1 = (uint)DAT_C6108 >> 4;
+
+        if (uVar1 != 0)
+        {
+            uVar4 = 0;
+            uVar5 = (uint)((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_244[uVar1 - 1] >> 8;
+            uVar1 = uVar5 + 0x10;
+            iVar3 = (int)uVar1 * 6;
+
+            if (GameManager.instance.DAT_9ADE != 0)
+            {
+                do
+                {
+                    iVar2 = (int)uVar4 * 4;
+
+                    if (GameManager.instance.DAT_9EAC[iVar2] == uVar1 && GameManager.instance.DAT_9EAC[iVar2 + 1] != 0)
+                    {
+                        //...
+                        return;
+                    }
+
+                    uVar4++;
+                } while (uVar4 < GameManager.instance.DAT_9ADE);
+            }
+        }
+
+        //FUN_67554
+    }
+
+    private void FUN_6A1CC(InventoryWindow[] param1, int param2)
+    {
+        return;
+    }
+
+    private void FUN_6A8A4(InventoryWindow param1, uint param2, int param3, int param4, int param5)
+    {
+        InventoryRect puVar1;
+
+        param1.DAT_69++;
+        puVar1 = param1.rect[param2];
+
+        if (param3 == 0)
+            return; //trap(0x1c00)
+
+        if (param3 == -1 && param4 - (puVar1.DAT_0E << 0x10 | (ushort)puVar1.DAT_0C) == -0x80000000)
+            return; //trap(0x1800)
+
+        if (param3 == 0)
+            return; //trap(0x1c00)
+
+        if (param3 == -1 && param5 - (puVar1.DAT_12 << 0x10 | (ushort)puVar1.DAT_10) == -0x80000000)
+            return; //trap(0x1800)
+
+        puVar1.DAT_01 = (sbyte)param3;
+        puVar1.DAT_14 = (short)param4;
+        puVar1.DAT_16 = (short)(param4 >> 0x10);
+        puVar1.DAT_18 = (short)param5;
+        puVar1.DAT_1A = (short)(param5 >> 0x10);
+        puVar1.DAT_00 = true;
+        puVar1.DAT_04 = (short)(((short)param4 - puVar1.DAT_0C) / param3);
+        puVar1.DAT_06 = (short)(((short)(param4 >> 0x10) - puVar1.DAT_0E) / param3);
+        puVar1.DAT_08 = (short)(((short)param5 - puVar1.DAT_10) / param3);
+        puVar1.DAT_0A = (short)(((short)(param5 >> 0x10) - puVar1.DAT_12) / param3);
+    }
+
+    private void FUN_6A954(InventoryWindow[] param1, int param2)
+    {
+        sbyte sVar1;
+        int piVar2;
+        InventoryRect pcVar3;
+
+        piVar2 = 0;
+
+        do
+        {
+            pcVar3 = param1[param2].rect[piVar2];
+
+            if (pcVar3.DAT_00)
+            {
+                pcVar3.DAT_0C += pcVar3.DAT_04;
+                pcVar3.DAT_0E += pcVar3.DAT_06;
+                sVar1 = (sbyte)(pcVar3.DAT_01 - 1);
+                pcVar3.DAT_01 = sVar1;
+                pcVar3.DAT_10 += pcVar3.DAT_08;
+                pcVar3.DAT_12 += pcVar3.DAT_0A;
+
+                if (sVar1 == -1)
+                {
+                    param1[param2].DAT_69--;
+                    pcVar3.DAT_00 = false;
+                    pcVar3.DAT_0C = pcVar3.DAT_14;
+                    pcVar3.DAT_0E = pcVar3.DAT_16;
+                    pcVar3.DAT_10 = pcVar3.DAT_18;
+                    pcVar3.DAT_12 = pcVar3.DAT_1A;
+                }
+            }
+
+            piVar2++;
+        } while (piVar2 < 3);
     }
 
     private void FUN_6A9F4()
@@ -665,7 +948,16 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_6B32C(InventoryWindow[] param1, int param2)
     {
-        return;
+        if ((DAT_C612E & 0xe0) != 0)
+        {
+            DAT_C6104 = 0;
+            DAT_C6103 = false;
+            DAT_C6102 = 0;
+            DAT_C6101--;
+            GameManager.instance.FUN_5C94C(null, 1);
+        }
+
+        //...
     }
 
     private void FUN_6B3C8(InventoryWindow[] param1, int param2)
@@ -1696,6 +1988,8 @@ public class InventoryManager : MonoBehaviour
         puVar1.DAT_02 = (byte)(param2 >> 0x10);
         puVar1.DAT_14 = (short)param4;
         puVar1.DAT_16 = (short)(param4 >> 0x10);
+        puVar1.DAT_18 = (short)param5;
+        puVar1.DAT_1A = (short)(param5 >> 0x10);
         puVar1.DAT_00 = true;
         puVar1.DAT_04 = (short)(((short)param4 - puVar1.DAT_0C) / param3);
         puVar1.DAT_06 = (short)(((short)(param4 >> 0x10) - puVar1.DAT_0E) / param3);

@@ -49,6 +49,9 @@ public class InventoryWindow
     public byte DAT_59;
     public byte DAT_5A;
     public byte DAT_5B;
+    public byte DAT_5C;
+    public byte DAT_5D;
+    public byte DAT_68;
     public byte DAT_69;
 }
 
@@ -87,7 +90,7 @@ public class InventoryManager : MonoBehaviour
     public byte DAT_C6100;
     public byte DAT_C6101;
     public byte DAT_C6102;
-    public bool DAT_C6103;
+    public byte DAT_C6103;
     public byte DAT_C6104;
     public byte DAT_C6106;
     public bool DAT_C6107;
@@ -117,6 +120,10 @@ public class InventoryManager : MonoBehaviour
     public delegate void FUN_A60DC();
     public byte[] DAT_A6104 = new byte[4] { 1, 4, 4, 2 };
     public delegate void FUN_A6108(InventoryWindow[] w, int i);
+    public delegate void FUN_A6114(InventoryWindow[] w, int i);
+    public delegate void FUN_A611C(InventoryWindow[] w, int i);
+    public delegate int FUN_A6130(InventoryWindow[] w, int i);
+    public delegate void FUN_A6138(InventoryWindow[] w, int i);
     public delegate void FUN_A614C(InventoryWindow[] w, int i);
     public delegate void FUN_A6158(InventoryWindow[] w, int i);
     public delegate void FUN_A6160(InventoryWindow[] w, int i);
@@ -125,6 +132,10 @@ public class InventoryManager : MonoBehaviour
     public FUN_A60D0[] PTR_FUN_A60D0;
     public FUN_A60DC[] PTR_FUN_A60DC;
     public FUN_A6108[] PTR_FUN_A6108;
+    public FUN_A6114[] PTR_FUN_A6114;
+    public FUN_A611C[] PTR_FUN_A611C;
+    public FUN_A6130[] PTR_FUN_A6130;
+    public FUN_A6138[] PTR_FUN_A6138;
     public FUN_A614C[] PTR_FUN_A614C;
     public FUN_A6158[] PTR_FUN_A6158;
     public FUN_A6160[] PTR_FUN_A6160;
@@ -159,6 +170,32 @@ public class InventoryManager : MonoBehaviour
                 FUN_68638,
                 FUN_6873C,
                 FUN_68778
+            };
+            PTR_FUN_A6114 = new FUN_A6114[2]
+            {
+                FUN_69034,
+                FUN_6A1D4
+            };
+            PTR_FUN_A611C = new FUN_A611C[5]
+            {
+                FUN_69070,
+                FUN_691C8,
+                FUN_693A0,
+                FUN_69618,
+                FUN_696F8
+            };
+            PTR_FUN_A6130 = new FUN_A6130[2]
+            {
+                FUN_68D50,
+                FUN_68D84
+            };
+            PTR_FUN_A6138 = new FUN_A6138[5]
+            {
+                FUN_6A210,
+                FUN_6A3BC,
+                FUN_6A594,
+                FUN_6A784,
+                FUN_6A864
             };
             PTR_FUN_A614C = new FUN_A614C[3]
             {
@@ -284,7 +321,7 @@ public class InventoryManager : MonoBehaviour
 
         if (bVar3 == 1)
         {
-            DAT_C6103 = false;
+            DAT_C6103 = 0;
             DAT_C6104 = 3;
             bVar3 = (byte)(DAT_C61FF | 1);
         }
@@ -577,6 +614,25 @@ public class InventoryManager : MonoBehaviour
         return iVar3 + (int)(param1 & 0xf);
     }
 
+    private bool FUN_68C58()
+    {
+        bool bVar1;
+        uint uVar2;
+
+        uVar2 = 1;
+
+        do
+        {
+            bVar1 = FUN_4A87C(11, uVar2);
+            uVar2++;
+
+            if (bVar1)
+                return true;
+        } while (uVar2 < 0xb);
+
+        return false;
+    }
+
     private void FUN_68CA4(InventoryWindow[] param1, int param2)
     {
         short sVar1;
@@ -587,6 +643,82 @@ public class InventoryManager : MonoBehaviour
         sVar1 = param1[param2].rect[0].DAT_12;
         iVar2 = FUN_68C18(DAT_C6108);
         //...
+    }
+
+    private int FUN_68D50(InventoryWindow[] param1, int param2)
+    {
+        DAT_C6108 = (byte)(DialogManager.DAT_A593C[param1[param2].DAT_5D * 6 + 1] >> 8);
+        return 0;
+    }
+
+    private int FUN_68D84(InventoryWindow[] param1, int param2)
+    {
+        byte bVar1;
+        byte bVar2;
+        int iVar3;
+        int iVar4;
+        uint uVar5;
+
+        iVar3 = param1[param2].DAT_5D * 6;
+        bVar1 = (byte)DialogManager.DAT_A593C[iVar3 + 1];
+
+        if (bVar1 == (uint)DAT_C6108 >> 4)
+        {
+            FUN_4A7E8(11, param1[param2].DAT_5D, false);
+            bVar2 = DAT_C6108;
+            iVar4 = FUN_68C18(bVar2);
+            FUN_4A7E8(11, (uint)iVar4, false);
+            uVar5 = (uint)bVar1 << 4 | (bVar2 & 0xfU) + (byte)(DialogManager.DAT_A593C[iVar3 + 1] >> 8);
+            DAT_C6108 = (byte)uVar5;
+            iVar4 = FUN_68C18(uVar5 & 0xff);
+            FUN_4A7E8(11, (uint)iVar4, true);
+            iVar4 = 0;
+        }
+        else
+            iVar4 = 0x17c;
+
+        return iVar4;
+    }
+
+    private void FUN_68E54(InventoryWindow[] param1, int param2)
+    {
+        byte bVar1;
+        bool bVar2;
+        uint uVar3;
+        uint uVar4;
+        int puVar5;
+
+        uVar4 = 0;
+        uVar3 = 0;
+        puVar5 = 0;
+        bVar1 = (byte)((uint)DAT_C6108 >> 4);
+
+        do
+        {
+            bVar2 = FUN_4A87C(11, uVar3);
+
+            if (bVar2)
+            {
+                if (bVar1 != 0 && bVar1 == (uint)(byte)(DialogManager.DAT_A593C[puVar5 + 1] >> 8) >> 4)
+                {
+                    param1[param2].DAT_59 = (byte)(4 < uVar4 ? 1 : 0);
+                    param1[param2].DAT_5C = (byte)(uVar4 - (((byte)((ulong)uVar4 * 0xcccccccd >> 0x20) & 0xfc) + (uVar4 / 5)));
+                    return;
+                }
+
+                uVar4++;
+            }
+
+            uVar3++;
+            puVar5 += 6;
+
+            if (0xf < uVar3)
+            {
+                param1[param2].DAT_5C = 0;
+                param1[param2].DAT_59 = 0;
+                return;
+            }
+        } while (true);
     }
 
     private void FUN_68F2C(InventoryWindow[] param1, int param2)
@@ -652,6 +784,241 @@ public class InventoryManager : MonoBehaviour
         FUN_68F2C(param1, param2);
     }
 
+    private void FUN_69034(InventoryWindow[] param1, int param2)
+    {
+        PTR_FUN_A611C[DAT_C6104](param1, param2);
+    }
+
+    private void FUN_69070(InventoryWindow[] param1, int param2)
+    {
+        ushort uVar1;
+        int iVar2;
+        bool bVar2;
+
+        iVar2 = FUN_68C18(DAT_C6108);
+
+        if (iVar2 == 0)
+            DAT_C610A = 0x173;
+        else
+            DAT_C610A = DialogManager.DAT_A593C[iVar2 * 6 + 3];
+
+        uVar1 = DAT_C612E;
+
+        if ((uVar1 & 0x4000) == 0)
+        {
+            if ((uVar1 & 0x20a0) == 0)
+            {
+                if ((uVar1 & 0x40) != 0)
+                    DAT_C6102++;
+            }
+            else
+            {
+                bVar2 = FUN_68C58();
+
+                if (!bVar2)
+                {
+                    DAT_C6104 = 4;
+                    DAT_C610A = 0x174;
+                    GameManager.instance.FUN_5C94C(null, 1);
+                }
+                else
+                {
+                    GameManager.instance.FUN_5C94C(null, 2);
+                    DAT_C6104 = 1;
+                    FUN_68E54(param1, param2);
+                    FUN_68F2C(param1, param2);
+                    FUN_6A8A4(param1[param2], 0, 10, 0x7b0000, 0x360000);
+                    FUN_6A8A4(param1[param2], 2, 10, 0x7b0000, 0x8c0000);
+                }
+            }
+        }
+        else
+        {
+            DAT_C6103++;
+            GameManager.instance.FUN_5C94C(null, 0);
+        }
+    }
+
+    private void FUN_691C8(InventoryWindow[] param1, int param2)
+    {
+        ushort uVar1;
+        sbyte sVar2;
+
+        param1[param2].DAT_68 |= 1;
+        uVar1 = DAT_C612E;
+
+        if ((uVar1 & 0xa0) == 0)
+        {
+            if ((uVar1 & 0x40) == 0)
+            {
+                if ((uVar1 & 0x1000) == 0)
+                {
+                    if ((uVar1 & 0x4000) == 0)
+                    {
+                        if ((uVar1 & 0x8000) == 0)
+                        {
+                            if ((uVar1 & 0x2000) == 0 ||
+                                (param1[param2].DAT_5B + 4) / 5 - 1 <= param1[param2].DAT_59)
+                                goto LAB_69368;
+
+                            GameManager.instance.FUN_5C94C(null, 0);
+                            sVar2 = (sbyte)(param1[param2].DAT_59 + 1);
+                        }
+                        else
+                        {
+                            if (param1[param2].DAT_59 == 0) goto LAB_69368;
+
+                            GameManager.instance.FUN_5C94C(null, 0);
+                            sVar2 = (sbyte)(param1[param2].DAT_59 - 1);
+                        }
+
+                        param1[param2].DAT_59 = (byte)sVar2;
+                        FUN_68F2C(param1, param2);
+                        param1[param2].DAT_5C = 0;
+                        goto LAB_69368;
+                    }
+
+                    if (param1[param2].DAT_5A - 1 <= param1[param2].DAT_5C) goto LAB_69368;
+
+                    param1[param2].DAT_5C++;
+                }
+                else
+                {
+                    if (param1[param2].DAT_5C == 0) goto LAB_69368;
+
+                    param1[param2].DAT_5C--;
+                }
+
+                GameManager.instance.FUN_5C94C(null, 0);
+            }
+            else
+            {
+                GameManager.instance.FUN_5C94C(null, 1);
+                DAT_C6104 = 0;
+                param1[param2].DAT_68 &= 0xfe;
+                FUN_6A8A4(param1[param2], 0, 10, 0x7b0000, 0x8c0000);
+                FUN_6A8A4(param1[param2], 2, 10, 0x7b0000, 0x1020000);
+            }
+        }
+        else
+        {
+            DAT_C6104 = 2;
+            DAT_C6106 = 0;
+            GameManager.instance.FUN_5C94C(null, 2);
+        }
+
+        LAB_69368:
+        DAT_C610A = DialogManager.DAT_A593C[param1[param2].DAT_5D * 6 + 3];
+    }
+
+    private void FUN_693A0(InventoryWindow[] param1, int param2)
+    {
+        byte bVar1;
+        byte bVar2;
+        ushort uVar3;
+        int iVar4;
+
+        uVar3 = DAT_C612E;
+
+        if ((uVar3 & 0x1000) == 0)
+        {
+            if ((uVar3 & 0x4000) == 0)
+            {
+                if ((uVar3 & 0x40) == 0)
+                {
+                    if ((uVar3 & 0xa0) != 0)
+                    {
+                        if (DAT_C6106 == 0)
+                        {
+                            bVar1 = param1[param2].DAT_5D;
+                            iVar4 = PTR_FUN_A6130[(byte)DialogManager.DAT_A593C[bVar1 * 6] & 0xf](param1, param2);
+
+                            if (iVar4 == 0)
+                            {
+                                if (((byte)DialogManager.DAT_A593C[bVar1 * 6] & 0xf) == 1 && param1[param2].DAT_5B < 7U)
+                                    param1[param2].DAT_59 = 0;
+
+                                GameManager.instance.FUN_5C94C(null, 2);
+                                DAT_C6104 = 0;
+                                param1[param2].DAT_68 &= 0xfe;
+                                FUN_6A8A4(param1[param2], 0, 10, 0x7b0000, 0x8c0000);
+                                FUN_6A8A4(param1[param2], 2, 10, 0x7b0000, 0x1020000);
+                                FUN_68F2C(param1, param2);
+                            }
+                            else
+                            {
+                                GameManager.instance.FUN_5C94C(null, 1);
+                                DAT_C610A = (ushort)iVar4;
+                            }
+                        }
+                        else
+                        {
+                            GameManager.instance.FUN_5C94C(null, 2);
+                            FUN_6A8A4(param1[param2], 0, 10, 0x7b0000, -0x920000);
+                            FUN_6A8A4(param1[param2], 2, 10, 0x7b0000, -0x3c0000);
+                            FUN_6A8A4(param1[param2], 1, 10, 0x930000, 0x2040000);
+                            DAT_C6104 = 3;
+                            bVar2 = param1[param2].DAT_5D;
+                            DAT_C61FD = 0;
+                            DAT_C61FE = 30;
+                            DAT_C61FC = bVar2;
+                            DAT_C610A = DialogManager.DAT_A593C[param1[param2].DAT_5D * 6 + 3];
+                        }
+                    }
+                }
+                else
+                {
+                    DAT_C6104 = 1;
+                    GameManager.instance.FUN_5C94C(null, 1);
+                }
+            }
+            else
+            {
+                if (DAT_C6106 == 0)
+                {
+                    GameManager.instance.FUN_5C94C(null, 0);
+                    DAT_C6106 = 1;
+                }
+            }
+        }
+        else
+        {
+            if (DAT_C6106 != 0)
+            {
+                GameManager.instance.FUN_5C94C(null, 0);
+                DAT_C6106 = 0;
+            }
+        }
+
+        //FUN_66C68
+    }
+
+    private void FUN_69618(InventoryWindow[] param1, int param2)
+    {
+        param1[param2].DAT_68 &= 0xfe;
+        FUN_6A9F4();
+
+        if (DAT_C61FE == 0 && (DAT_C612E & 0xe0) != 0)
+        {
+            GameManager.instance.FUN_5C94C(null, 1);
+            DAT_C6104 = 1;
+            DAT_C61FF &= 0xfe;
+            param1[param2].DAT_68 |= 1;
+            FUN_6A8A4(param1[param2], 0, 10, 0x7b0000, 0x360000);
+            FUN_6A8A4(param1[param2], 2, 10, 0x7b0000, 0x8c0000);
+            FUN_6A8A4(param1[param2], 1, 10, 0x930000, 0x10a0000);
+        }
+    }
+
+    private void FUN_696F8(InventoryWindow[] param1, int param2)
+    {
+        if ((DAT_C612E & 0xe0) != 0)
+        {
+            GameManager.instance.FUN_5C94C(null, 1);
+            DAT_C6104 = 0;
+        }
+    }
+
     private void FUN_69CEC(InventoryWindow[] param1, int param2)
     {
         uint uVar1;
@@ -694,6 +1061,36 @@ public class InventoryManager : MonoBehaviour
     }
 
     private void FUN_6A1CC(InventoryWindow[] param1, int param2)
+    {
+        return;
+    }
+
+    private void FUN_6A1D4(InventoryWindow[] param1, int param2)
+    {
+        PTR_FUN_A6138[DAT_C6104](param1, param2);
+    }
+
+    private void FUN_6A210(InventoryWindow[] param1, int param2)
+    {
+        return;
+    }
+
+    private void FUN_6A3BC(InventoryWindow[] param1, int param2)
+    {
+        return;
+    }
+
+    private void FUN_6A594(InventoryWindow[] param1, int param2)
+    {
+        return;
+    }
+
+    private void FUN_6A784(InventoryWindow[] param1, int param2)
+    {
+        return;
+    }
+
+    private void FUN_6A864(InventoryWindow[] param1, int param2)
     {
         return;
     }
@@ -894,7 +1291,7 @@ public class InventoryManager : MonoBehaviour
             if (param1[param2].DAT_56 != 0 && param1[param2].DAT_4C == 0)
             {
                 uVar1 = 1;
-                DAT_C6103 = true;
+                DAT_C6103 = 1;
                 uVar5 = 0;
                 param1[param2].DAT_50 = 3;
                 param1[param2].DAT_5A = 2;
@@ -917,7 +1314,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (42U < DAT_C61FC)
             {
-                DAT_C6103 = true;
+                DAT_C6103 = 1;
                 param1[param2].DAT_50 = 3;
                 param1[param2].DAT_5A = 2;
                 rVar3 = param1[param2].rect[0];
@@ -943,7 +1340,7 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_6B2F0(InventoryWindow[] param1, int param2)
     {
-        PTR_FUN_A6158[DAT_C6103 ? 1 : 0](param1, param2);
+        PTR_FUN_A6158[DAT_C6103](param1, param2);
     }
 
     private void FUN_6B32C(InventoryWindow[] param1, int param2)
@@ -951,7 +1348,7 @@ public class InventoryManager : MonoBehaviour
         if ((DAT_C612E & 0xe0) != 0)
         {
             DAT_C6104 = 0;
-            DAT_C6103 = false;
+            DAT_C6103 = 0;
             DAT_C6102 = 0;
             DAT_C6101--;
             GameManager.instance.FUN_5C94C(null, 1);
@@ -986,7 +1383,7 @@ public class InventoryManager : MonoBehaviour
         param1[param2].DAT_4E = 0;
 
         if (iVar2 == 0)
-            DAT_C6103 = true;
+            DAT_C6103 = 1;
 
         FUN_6BB40(param1, param2);
     }
@@ -1035,7 +1432,7 @@ public class InventoryManager : MonoBehaviour
                     else
                     {
                         DAT_C6104 = 0;
-                        DAT_C6103 = false;
+                        DAT_C6103 = 0;
                         DAT_C6102 = 0;
                         DAT_C6101--;
                         GameManager.instance.FUN_5C94C(null, 1);
@@ -1066,7 +1463,7 @@ public class InventoryManager : MonoBehaviour
                 if (bVar4)
                 {
                     GameManager.instance.FUN_5C94C(null, 0);
-                    DAT_C6103 = true;
+                    DAT_C6103 = 1;
                     bVar1 = param1[param2].DAT_50;
                     param1[param2].DAT_58 = 0;
                     param1[param2].DAT_50 = param1[param2].DAT_5A;
@@ -1449,7 +1846,7 @@ public class InventoryManager : MonoBehaviour
 
         do
         {
-            if (!DAT_C6103 && param1[param2].DAT_4E == uVar3)
+            if (DAT_C6103 == 0 && param1[param2].DAT_4E == uVar3)
             {
                 //...
             }
@@ -1529,7 +1926,7 @@ public class InventoryManager : MonoBehaviour
         param1[param2].DAT_58 = 0;
 
         if (iVar3 == 0)
-            DAT_C6103 = false;
+            DAT_C6103 = 0;
 
         DAT_C610A = 0;
     }
@@ -1579,7 +1976,7 @@ public class InventoryManager : MonoBehaviour
                     else
                     {
                         DAT_C6104 = 0;
-                        DAT_C6103 = false;
+                        DAT_C6103 = 0;
                         DAT_C6102 = 0;
                         DAT_C6101--;
                     }
@@ -1606,7 +2003,7 @@ public class InventoryManager : MonoBehaviour
                 if (param1[param2].DAT_4F != 0)
                 {
                     GameManager.instance.FUN_5C94C(null, 0);
-                    DAT_C6103 = false;
+                    DAT_C6103 = 0;
                     bVar1 = param1[param2].DAT_5A;
                     param1[param2].DAT_4E = 0;
                     param1[param2].DAT_5A = param1[param2].DAT_50;
@@ -1668,7 +2065,7 @@ public class InventoryManager : MonoBehaviour
                                     GameManager.instance.FUN_5C94C(null, 2);
                                     DAT_C6100 = 2;
                                     DAT_C6104 = 0;
-                                    DAT_C6103 = false;
+                                    DAT_C6103 = 0;
                                     DAT_C6102 = 0;
                                     DAT_C61FF |= 6;
                                     bVar8 = FUN_4A87C(0, 6);
@@ -1842,7 +2239,7 @@ public class InventoryManager : MonoBehaviour
 
         do
         {
-            if (DAT_C6103 && param1[param2].DAT_58 == uVar3)
+            if (DAT_C6103 == 1 && param1[param2].DAT_58 == uVar3)
             {
                 //...
             }

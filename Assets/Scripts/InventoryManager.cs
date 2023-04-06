@@ -51,6 +51,11 @@ public class InventoryWindow
     public byte DAT_5B;
     public byte DAT_5C;
     public byte DAT_5D;
+    public byte[] DAT_5E;
+    public byte DAT_63;
+    public byte DAT_64;
+    public sbyte DAT_65;
+    public sbyte DAT_66;
     public byte DAT_68;
     public byte DAT_69;
 }
@@ -1019,6 +1024,98 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    private void FUN_69738(InventoryWindow[] param1, int param2)
+    {
+        byte bVar1;
+        bool bVar2;
+        byte bVar3;
+        uint uVar4;
+        uint uVar5;
+        int pbVar6;
+        sbyte sVar7;
+        int iVar8;
+        uint uVar9;
+
+        param1[param2].DAT_5E = new byte[5];
+        uVar9 = 0;
+        pbVar6 = 0;
+        iVar8 = param1[param2].DAT_63 * 5;
+        bVar3 = (byte)((uint)DAT_C6108 >> 4);
+
+        while (iVar8 != 0)
+        {
+            if (GameManager.instance.DAT_9EAC[pbVar6] - 16U < 11 && 
+                GameManager.instance.DAT_9EAC[pbVar6 + 1] != 0 && 
+                bVar3 == ((byte)DialogManager.DAT_A593C[GameManager.instance.DAT_9EAC[pbVar6] * 6 + 1] & 0xf))
+            {
+                uVar4 = 1U << (GameManager.instance.DAT_9EAC[pbVar6] - 16 & 31);
+
+                if ((uVar9 & uVar4) == 0)
+                {
+                    uVar9 |= uVar4;
+                    iVar8--;
+                }
+            }
+
+            pbVar6 += 4;
+        }
+
+        uVar4 = 0;
+        uVar9 = uVar4;
+
+        do
+        {
+            if (GameManager.instance.DAT_9ADE * 4 <= pbVar6) break;
+
+            bVar2 = uVar4 < 5;
+
+            if (GameManager.instance.DAT_9EAC[pbVar6] - 16U < 11 &&
+                GameManager.instance.DAT_9EAC[pbVar6 + 1] != 0)
+            {
+                bVar1 = GameManager.instance.DAT_9EAC[pbVar6];
+
+                if (bVar3 == ((byte)DialogManager.DAT_A593C[bVar1 * 6 + 1] & 0xf))
+                {
+                    uVar5 = 1U << (bVar1 - 16 & 31);
+
+                    if ((uVar9 & uVar5) == 0)
+                    {
+                        uVar9 |= uVar5;
+                        param1[param2].DAT_5E[uVar4] = bVar1;
+                        uVar4++;
+                    }
+                }
+            }
+
+            pbVar6 += 4;
+        } while (bVar2);
+
+        uVar9 = 0;
+        param1[param2].DAT_64 = (byte)uVar4;
+        pbVar6 = 0;
+        sVar7 = 0;
+
+        while (pbVar6 < GameManager.instance.DAT_9ADE * 4)
+        {
+            if (GameManager.instance.DAT_9EAC[pbVar6] - 16U < 11 && 
+                GameManager.instance.DAT_9EAC[pbVar6 + 1] != 0 && 
+                bVar3 == ((byte)DialogManager.DAT_A593C[GameManager.instance.DAT_9EAC[pbVar6] * 6 + 1] & 0xf))
+            {
+                uVar4 = 1U << (GameManager.instance.DAT_9EAC[pbVar6] - 16 & 31);
+
+                if ((uVar9 & uVar4) == 0)
+                {
+                    uVar9 |= uVar4;
+                    sVar7++;
+                }
+            }
+
+            pbVar6 += 4;
+        }
+
+        param1[param2].DAT_65 = sVar7;
+    }
+
     private void FUN_69CEC(InventoryWindow[] param1, int param2)
     {
         uint uVar1;
@@ -1060,6 +1157,109 @@ public class InventoryManager : MonoBehaviour
         //FUN_67554
     }
 
+    private bool FUN_69F30()
+    {
+        byte bVar1;
+        int pbVar2;
+        uint uVar3;
+
+        uVar3 = 0;
+        pbVar2 = 0;
+        bVar1 = (byte)((uint)DAT_C6108 >> 4);
+
+        if (GameManager.instance.DAT_9ADE != 0)
+        {
+            do
+            {
+                if (GameManager.instance.DAT_9EAC[pbVar2] - 16U < 11 &&
+                    GameManager.instance.DAT_9EAC[pbVar2 + 1] != 0 &&
+                    ((byte)DialogManager.DAT_A593C[GameManager.instance.DAT_9EAC[pbVar2] * 6 + 1] & 0xf) == bVar1 &&
+                    (bVar1 != 2 || ((byte)DialogManager.DAT_A593C[GameManager.instance.DAT_9EAC[pbVar2] * 6 + 1] & 0xf0) == 0 ||
+                    1 < (DAT_C6108 & 0xfU)))
+                    return true;
+
+                uVar3++;
+                pbVar2 += 4;
+            } while (uVar3 < GameManager.instance.DAT_9ADE);
+        }
+
+        return false;
+    }
+
+    private bool FUN_6A00C(uint param2)
+    {
+        int pbVar1;
+        uint uVar2;
+
+        uVar2 = 0;
+        pbVar1 = 0;
+
+        if (GameManager.instance.DAT_9ADE != 0)
+        {
+            do
+            {
+                if (GameManager.instance.DAT_9EAC[pbVar1] == param2 &&
+                    GameManager.instance.DAT_9EAC[pbVar1 + 1] != 0)
+                    return true;
+
+                uVar2++;
+                pbVar1 += 4;
+            } while (uVar2 < GameManager.instance.DAT_9ADE);
+        }
+
+        return false;
+    }
+
+    private void FUN_6A078(InventoryWindow[] param1, int param2)
+    {
+        uint uVar1;
+        uint uVar2;
+        int pbVar3;
+        int iVar4;
+        uint uVar5;
+        uint uVar6;
+
+        iVar4 = -1;
+        uVar5 = 0;
+        uVar6 = (uint)DAT_C6108 >> 4;
+        pbVar3 = 0;
+
+        if (pbVar3 < GameManager.instance.DAT_9ADE * 4)
+        {
+            do
+            {
+                if (GameManager.instance.DAT_9EAC[pbVar3] - 16U < 11 &&
+                    GameManager.instance.DAT_9EAC[pbVar3 + 1] != 0)
+                {
+                    uVar2 = GameManager.instance.DAT_9EAC[pbVar3];
+
+                    if (uVar6 == ((byte)DialogManager.DAT_A593C[uVar2 * 6 + 1] & 0xf))
+                    {
+                        uVar1 = 1U << (int)(uVar2 - 16 & 31);
+
+                        if ((uVar5 & uVar1) == 0)
+                        {
+                            uVar5 |= uVar1;
+                            iVar4++;
+
+                            if (((uint)((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_244[uVar6 - 1] >> 8) + 0x10 == uVar2)
+                            {
+                                param1[param2].DAT_63 = (byte)(4 < iVar4 ? 1 : 0);
+                                param1[param2].DAT_66 = (sbyte)(iVar4 + (iVar4 / 5) * -5);
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                pbVar3 += 4;
+            } while (pbVar3 < GameManager.instance.DAT_9ADE * 4);
+        }
+
+        param1[param2].DAT_66 = 0;
+        param1[param2].DAT_63 = 0;
+    }
+
     private void FUN_6A1CC(InventoryWindow[] param1, int param2)
     {
         return;
@@ -1072,7 +1272,74 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_6A210(InventoryWindow[] param1, int param2)
     {
-        return;
+        ushort uVar1;
+        bool bVar2;
+        int iVar3;
+        uint uVar4;
+        uint uVar5;
+
+        uVar5 = (uint)DAT_C6108 >> 4;
+
+        if (uVar5 != 0)
+        {
+            uVar4 = ((uint)((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_244[uVar5 - 1] >> 8) + 0x10;
+            bVar2 = FUN_6A00C(uVar4);
+
+            if (bVar2)
+            {
+                DAT_C610A = DialogManager.DAT_A593C[uVar4 * 6 + 3];
+                goto LAB_6A29C;
+            }
+        }
+
+        DAT_C610A = 0x175;
+    LAB_6A29C:
+        uVar1 = DAT_C612E;
+
+        if ((uVar1 & 0x20a0) == 0)
+        {
+            if ((uVar1 & 0x40) != 0)
+            {
+                DAT_C6102++;
+                return;
+            }
+
+            if ((uVar1 & 0x1000) == 0)
+                return;
+
+            iVar3 = 0;
+            DAT_C6103--;
+        }
+        else
+        {
+            if (uVar5 == 0)
+            {
+                iVar3 = 1;
+                DAT_C6104 = 4;
+                DAT_C610A = 0x177;
+            }
+            else
+            {
+                bVar2 = FUN_69F30();
+
+                if (bVar2)
+                {
+                    GameManager.instance.FUN_5C94C(null, 2);
+                    DAT_C6104 = 1;
+                    FUN_6A078(param1, param2);
+                    FUN_69738(param1, param2);
+                    FUN_6A8A4(param1[param2], 0, 10, 0x7b0000, 0x360000);
+                    FUN_6A8A4(param1[param2], 2, 10, 0x7b0000, 0x8c0000);
+                    return;
+                }
+
+                iVar3 = 1;
+                DAT_C6104 = 4;
+                DAT_C610A = 0x176;
+            }
+        }
+
+        GameManager.instance.FUN_5C94C(null, iVar3);
     }
 
     private void FUN_6A3BC(InventoryWindow[] param1, int param2)

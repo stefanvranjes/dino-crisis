@@ -6703,7 +6703,7 @@ public class CriPlayer : CriSkinned
         FUN_50AF4(3);
     }
 
-    private void FUN_50AF4(byte param1)
+    public void FUN_50AF4(byte param1)
     {
         byte bVar1;
         int iVar2;

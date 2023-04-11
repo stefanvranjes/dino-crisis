@@ -68,6 +68,12 @@ public class InventoryWindow
     public byte DAT_69;
 }
 
+[System.Serializable]
+public struct UNK_CLASS
+{
+    public byte DAT_08;
+}
+
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance;
@@ -155,6 +161,8 @@ public class InventoryManager : MonoBehaviour
     public FUN_A6160[] PTR_FUN_A6160;
     public FUN_A6174[] PTR_FUN_A6174;
     public FUN_A617C[] PTR_FUN_A617C;
+    public byte[] DAT_A8408 = new byte[8] { 22, 7, 15, 8, 4, 17, 23, 0 };
+    public UNK_CLASS[][] PTR_DAT_A83EC = new UNK_CLASS[7][];
     public FUN_A842C[] PTR_FUN_A842C;
 
     private void Awake()
@@ -3044,7 +3052,40 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_6E424(InventoryWindow[] param1, int param2)
     {
-        return;
+        UNK_CLASS puVar1;
+        uint uVar2;
+        uint uVar3;
+        uint uVar4;
+        UNK_CLASS[] puVar5;
+        uint uVar6;
+
+        uVar6 = 0;
+
+        do
+        {
+            uVar2 = FUN_4A87C(11, uVar6 + 0x24) ? 1U : 0;
+            puVar5 = PTR_DAT_A83EC[uVar6];
+            uVar4 = 0;
+
+            if (uVar2 == 0)
+            {
+                do
+                {
+                    if (DAT_A8408[uVar6] <= uVar4) break;
+
+                    puVar1 = puVar5[uVar4];
+                    uVar4++;
+                    uVar3 = FUN_4A87C(12, puVar1.DAT_08) ? 1U : 0;
+                    uVar2 |= uVar3;
+                } while (uVar2 == 0);
+            }
+
+            param1[param2].DAT_06[uVar6] = (byte)uVar2;
+            uVar6++;
+
+            if (6 < uVar6)
+                return;
+        } while (true);
     }
 
     private uint FUN_6E4F8(int param1, uint param2)

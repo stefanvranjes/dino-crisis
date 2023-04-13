@@ -34,6 +34,7 @@ public class InventoryText
 [System.Serializable]
 public class InventoryWindow
 {
+    public byte[] ARRY_00;
     public sbyte DAT_00;
     public byte DAT_01;
     public byte DAT_02;
@@ -41,7 +42,17 @@ public class InventoryWindow
     public byte DAT_04;
     public byte DAT_05;
     public byte[] DAT_06;
+    public sbyte DAT_15;
+    public sbyte DAT_17;
+    public byte[] DAT_18;
+    public byte DAT_20;
+    public byte DAT_21;
+    public byte DAT_22;
+    public byte DAT_23;
+    public byte DAT_24;
+    public byte DAT_26;
     public InventoryRect[] rect; //0x00
+    public InventoryRect[] rect2; //0x30
     public InventoryText[] DAT_38;
     public byte DAT_4C;
     public sbyte DAT_4D;
@@ -149,6 +160,7 @@ public class InventoryManager : MonoBehaviour
     public delegate bool FUN_A6174(ushort[] a, int i);
     public delegate void FUN_A617C(InventoryWindow[] w, int i);
     public delegate void FUN_A842C(InventoryWindow[] w, int i);
+    public delegate void FUN_A88F0(InventoryWindow[] w, int i);
     public FUN_A60D0[] PTR_FUN_A60D0;
     public FUN_A60DC[] PTR_FUN_A60DC;
     public FUN_A6108[] PTR_FUN_A6108;
@@ -164,6 +176,7 @@ public class InventoryManager : MonoBehaviour
     public byte[] DAT_A8408 = new byte[8] { 22, 7, 15, 8, 4, 17, 23, 0 };
     public UNK_CLASS[][] PTR_DAT_A83EC = new UNK_CLASS[7][];
     public FUN_A842C[] PTR_FUN_A842C;
+    public FUN_A88F0[] PTR_FUN_A88F0;
 
     private void Awake()
     {
@@ -256,6 +269,13 @@ public class InventoryManager : MonoBehaviour
             {
                 FUN_6D0C4,
                 FUN_6D224
+            };
+            PTR_FUN_A88F0 = new FUN_A88F0[4]
+            {
+                FUN_70124,
+                FUN_701CC,
+                FUN_70BD0,
+                FUN_70C04
             };
         }
     }
@@ -3283,7 +3303,402 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_7007C()
     {
+        if (DAT_C6130[0].DAT_26 == 0)
+            PTR_FUN_A88F0[DAT_C6102](DAT_C6130, 0);
+
+        FUN_72420(DAT_C6130, 0);
+    }
+
+    private void FUN_70124(InventoryWindow[] param1, int param2)
+    {
+        DAT_C610A = 0;
+        DAT_C6102++;
+        FUN_71C6C(param1, param2);
+        //...
+    }
+
+    private void FUN_701CC(InventoryWindow[] param1, int param2)
+    {
         return;
+    }
+
+    private void FUN_70BD0(InventoryWindow[] param1, int param2)
+    {
+        FUN_6AC20();
+        DAT_C6104 = 0;
+        DAT_C6103 = 0;
+        DAT_C6102 = 0;
+        DAT_C6101 = 0;
+    }
+
+    private void FUN_70C04(InventoryWindow[] param1, int param2)
+    {
+        return;
+    }
+
+    private int FUN_70C8C(byte[] param1, int param2, int param3, InventoryWindow param4)
+    {
+        byte bVar1;
+        byte bVar2;
+
+        bVar1 = param1[param2];
+
+        if (bVar1 == 31 || param1[param3] == 31)
+        {
+            if (bVar1 == 31)
+                param2 = param3;
+
+            if (param1[param2] != 20)
+                return 0;
+
+            if (param1[param2 + 2] != 9)
+                return 0;
+        }
+        else
+        {
+            if ((bVar1 != 20 || param1[param2 + 2] != 9) && 
+                (param1[param3] != 20 || param1[param3 + 2] != 9))
+            {
+                if ((param1[param2] != 30 || param1[param2 + 2] != 12) && 
+                    (param1[param3] != 30 || param1[param3 + 2] != 12))
+                {
+                    if (param1[param2] != 21 && param1[param3] != 21)
+                        return 2;
+
+                    return 0;
+                }
+
+                if (param1[param2] == 30 && param1[param2 + 2] == 12)
+                    param2 = param3;
+
+                if (param1[param2] != 30)
+                    return 0;
+
+                if (param1[param2 + 2] != 12)
+                    return 0;
+
+                bVar2 = 31;
+                goto LAB_70CDC;
+            }
+
+            if (param1[param2] == 20 && param1[param2 + 2] == 9)
+                param2 = param3;
+
+            if (param1[param2] != 31)
+                return 0;
+        }
+
+        bVar2 = 21;
+        LAB_70CDC:
+        param4.DAT_20 = bVar2;
+        param4.DAT_21 = 1;
+        param4.DAT_22 = 29;
+        return 1;
+    }
+
+    private bool FUN_70E1C(InventoryWindow[] param1, int param2)
+    {
+        byte bVar2;
+        byte bVar3;
+        byte bVar4;
+        byte bVar5;
+        int puVar6;
+        int puVar7;
+        int iVar8;
+        uint uVar9;
+        byte[] local_20 = new byte[12];
+        uint[] local_10 = new uint[2];
+
+        uVar9 = 0;
+        puVar7 = 0;
+        puVar6 = 0;
+        iVar8 = 0;
+
+        do
+        {
+            local_20[puVar6] = param1[param2].DAT_18[iVar8];
+            local_20[puVar6 + 1] = param1[param2].DAT_18[iVar8 + 1];
+            local_20[puVar6 + 2] = param1[param2].DAT_18[iVar8 + 2];
+            local_20[puVar6 + 3] = param1[param2].DAT_18[iVar8 + 3];
+            bVar4 = local_20[puVar6];
+            puVar6 += 4;
+            iVar8 += 4;
+            uVar9++;
+            local_10[puVar7] = (bVar4 < 0x20U ? 1U : 0) ^ 1;
+            puVar7 += 1;
+        } while (uVar9 < 2);
+
+        if (local_10[0] == 1 && local_10[1] == 1)
+        {
+            if ((uint)local_20[4] < local_20[0])
+            {
+                local_20[8] = local_20[0];
+                local_20[9] = local_20[1];
+                local_20[10] = local_20[2];
+                local_20[11] = local_20[3];
+                local_20[0] = local_20[4];
+                local_20[1] = local_20[5];
+                local_20[2] = local_20[6];
+                local_20[3] = local_20[7];
+                local_20[4] = local_20[8];
+                local_20[5] = local_20[9];
+                local_20[6] = local_20[10];
+                local_20[7] = local_20[11];
+            }
+
+            if (local_20[0] == 0x20)
+            {
+                uVar9 = local_20[4];
+
+                if (uVar9 == 0x22)
+                {
+                    bVar4 = 0x12;
+                    param1[param2].DAT_20 = bVar4;
+                    param1[param2].DAT_22 = 2;
+                    param1[param2].DAT_21 = 1;
+                }
+                else
+                {
+                    if (uVar9 < 0x23)
+                    {
+                        if (uVar9 != 0x20)
+                            return false;
+
+                        param1[param2].DAT_20 = 0x12;
+                        bVar2 = 3;
+                    }
+                    else
+                    {
+                        if (uVar9 != 0x23)
+                            return false;
+
+                        bVar4 = 0x12;
+                        param1[param2].DAT_20 = bVar4;
+                        bVar2 = 2;
+                    }
+
+                    param1[param2].DAT_22 = 1;
+                    param1[param2].DAT_21 = bVar2;
+                }
+            }
+            else
+            {
+                if (local_20[0] != 0x21)
+                    return false;
+
+                uVar9 = local_20[4];
+
+                if (uVar9 == 0x22)
+                {
+                    bVar4 = 0x1b;
+                    param1[param2].DAT_20 = bVar4;
+                    param1[param2].DAT_22 = 2;
+                    param1[param2].DAT_21 = 1;
+                }
+                else
+                {
+                    if (0x22 < uVar9)
+                    {
+                        if (uVar9 != 0x23)
+                            return false;
+
+                        bVar4 = 0x1b;
+                        param1[param2].DAT_20 = bVar4;
+                        param1[param2].DAT_22 = 1;
+                        param1[param2].DAT_21 = 2;
+                    }
+                    else
+                    {
+                        if (uVar9 != 0x21)
+                            return false;
+
+                        param1[param2].DAT_20 = 0x1b;
+                        param1[param2].DAT_22 = 1;
+                        param1[param2].DAT_21 = 1;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if ((uint)local_20[0] < local_20[4])
+            {
+                local_20[8] = local_20[0];
+                local_20[9] = local_20[1];
+                local_20[10] = local_20[2];
+                local_20[11] = local_20[3];
+                local_20[0] = local_20[4];
+                local_20[1] = local_20[5];
+                local_20[2] = local_20[6];
+                local_20[3] = local_20[7];
+                local_20[4] = local_20[8];
+                local_20[5] = local_20[9];
+                local_20[6] = local_20[10];
+                local_20[7] = local_20[11];
+            }
+
+            iVar8 = FUN_70C8C(local_20, 0, 4, param1[param2]);
+
+            if (iVar8 == 0)
+                return false;
+
+            if (iVar8 == 2)
+            {
+                if (local_20[0] < 0x20U)
+                {
+                    if ((uint)local_20[2] < local_20[6])
+                    {
+                        param1[param2].DAT_20 = local_20[4];
+                        param1[param2].DAT_21 = local_20[5];
+                        param1[param2].DAT_22 = local_20[6];
+                        param1[param2].DAT_23 = local_20[7];
+                    }
+                    else
+                    {
+                        param1[param2].DAT_20 = local_20[0];
+                        param1[param2].DAT_21 = local_20[1];
+                        param1[param2].DAT_22 = local_20[2];
+                        param1[param2].DAT_23 = local_20[3];
+                    }
+
+                    if (local_20[2] == local_20[6])
+                    {
+                        if ((uint)local_20[1] < local_20[5])
+                            local_20[1] = local_20[5];
+
+                        param1[param2].DAT_21 = local_20[1];
+                    }
+
+                    bVar3 = (byte)(local_20[2] + local_20[6]);
+                    param1[param2].DAT_22 = bVar3;
+                }
+                else
+                {
+                    uVar9 = local_20[0];
+
+                    if (uVar9 == 0x21)
+                    {
+                        if (local_20[4] < 0x1bU)
+                        {
+                            param1[param2].DAT_20 = local_20[4];
+                            param1[param2].DAT_21 = local_20[5];
+                            param1[param2].DAT_22 = local_20[6];
+                            param1[param2].DAT_23 = local_20[7];
+                            bVar3 = (byte)(param1[param2].DAT_22 + 1);
+                            param1[param2].DAT_22 = bVar3;
+                        }
+                        else
+                        {
+                            param1[param2].DAT_20 = local_20[4];
+                            param1[param2].DAT_21 = local_20[5];
+                            param1[param2].DAT_22 = local_20[6];
+                            param1[param2].DAT_23 = local_20[7];
+                            param1[param2].DAT_22 += 5;
+                            param1[param2].DAT_21++;
+                        }
+                    }
+                    else
+                    {
+                        if (uVar9 < 0x22)
+                        {
+                            if (uVar9 == 0x20)
+                            {
+                                if (local_20[4] < 0x1bU)
+                                {
+                                    param1[param2].DAT_20 = local_20[4];
+                                    param1[param2].DAT_21 = local_20[5];
+                                    param1[param2].DAT_22 = local_20[6];
+                                    param1[param2].DAT_23 = local_20[7];
+                                    param1[param2].DAT_22 += 5;
+                                    param1[param2].DAT_21++;
+                                }
+                                else
+                                {
+                                    param1[param2].DAT_20 = local_20[4];
+                                    param1[param2].DAT_21 = local_20[5];
+                                    param1[param2].DAT_22 = local_20[6];
+                                    param1[param2].DAT_23 = local_20[7];
+                                    bVar3 = (byte)(param1[param2].DAT_22 + 1);
+                                    param1[param2].DAT_22 = bVar3;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (uVar9 == 0x22)
+                            {
+                                param1[param2].DAT_20 = local_20[4];
+                                param1[param2].DAT_21 = local_20[5];
+                                param1[param2].DAT_22 = local_20[6];
+                                param1[param2].DAT_23 = local_20[7];
+                                param1[param2].DAT_22 = (byte)(((local_20[6] + 3) / 3) * 3 + 1);
+                            }
+                            else
+                            {
+                                if (uVar9 == 0x23)
+                                {
+                                    param1[param2].DAT_20 = local_20[4];
+                                    param1[param2].DAT_21 = local_20[5];
+                                    param1[param2].DAT_22 = local_20[6];
+                                    param1[param2].DAT_23 = local_20[7];
+                                    param1[param2].DAT_21 <<= 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (param1[param2].DAT_20 < 0x1bU)
+        {
+            if (param1[param2].DAT_22 < 0x1dU)
+            {
+                if (param1[param2].DAT_22 < 9U)
+                    bVar4 = (byte)(((param1[param2].DAT_22 - 1) / 3) + 18);
+                else
+                    bVar4 = 20;
+
+                bVar5 = param1[param2].DAT_22;
+                param1[param2].DAT_20 = bVar4;
+
+                if (9U < bVar5)
+                    bVar5 = 9;
+
+                param1[param2].DAT_22 = bVar5;
+                goto LAB_71338;
+            }
+
+            bVar4 = 21;
+        }
+        else
+        {
+            if (param1[param2].DAT_22 < 0x1dU)
+            {
+                if (param1[param2].DAT_22 < 12U)
+                    bVar4 = (byte)(((param1[param2].DAT_22 - 1) / 3) + 27);
+                else
+                    bVar4 = 30;
+
+                bVar5 = param1[param2].DAT_22;
+                param1[param2].DAT_20 = bVar4;
+
+                if (12U < bVar5)
+                    bVar5 = 12;
+
+                param1[param2].DAT_22 = bVar5;
+                goto LAB_71338;
+            }
+
+            bVar4 = 31;
+        }
+
+        param1[param2].DAT_20 = bVar4;
+        param1[param2].DAT_22 = 0x1d;
+        param1[param2].DAT_21 = 1;
+        LAB_71338:
+        param1[param2].DAT_23 = 0;
+        return true;
     }
 
     private ushort[] FUN_71350(InventoryText param1)
@@ -3354,5 +3769,155 @@ public class InventoryManager : MonoBehaviour
         iVar4 = 0;
         LAB_71474:
         return DialogManager.instance.FUN_67350(uVar3, iVar4);
+    }
+
+    private void FUN_71C6C(InventoryWindow[] param1, int param2)
+    {
+        byte[] aVar1 = new byte[4];
+        byte[] aVar2 = new byte[4];
+        uint uVar3;
+        int puVar4;
+        int puVar5;
+        sbyte sVar6;
+        int iVar7;
+        bool bVar7;
+        uint uVar8;
+
+        param1[param2].ARRY_00 = new byte[20];
+        sVar6 = 0;
+        FUN_6FAF0();
+        uVar3 = 0;
+
+        while (uVar3 < GameManager.instance.DAT_9ADE * 4)
+        {
+            if (GameManager.instance.DAT_9EAC[uVar3 + 1] != 0)
+                sVar6++;
+
+            uVar3 += 4;
+        }
+
+        param1[param2].DAT_17 = sVar6;
+        puVar4 = 0;
+        iVar7 = param1[param2].DAT_15 * 5;
+        uVar3 = GameManager.instance.DAT_9ADE;
+
+        while (0 < iVar7)
+        {
+            if (GameManager.instance.DAT_9EAC[puVar4 + 1] != 0)
+                iVar7--;
+
+            puVar4 += 4;
+            uVar3--;
+        }
+
+        uVar8 = 0;
+        puVar5 = 0;
+
+        while (uVar3-- != 0 && (int)uVar8 < 5)
+        {
+            if (GameManager.instance.DAT_9EAC[puVar4 + 1] != 0)
+            {
+                param1[param2].ARRY_00[puVar5] = GameManager.instance.DAT_9EAC[puVar4];
+                param1[param2].ARRY_00[puVar5 + 1] = GameManager.instance.DAT_9EAC[puVar4 + 1];
+                param1[param2].ARRY_00[puVar5 + 2] = GameManager.instance.DAT_9EAC[puVar4 + 2];
+                param1[param2].ARRY_00[puVar5 + 3] = GameManager.instance.DAT_9EAC[puVar4 + 3];
+
+                if (GameManager.instance.DAT_9EAC[puVar4] < 27U &&
+                    3 < GameManager.instance.DAT_9EAC[puVar4] - 18U)
+                    param1[param2].ARRY_00[puVar5 + 3] = 1;
+
+                if (param1[param2].DAT_24 != 0)
+                {
+                    aVar1[0] = param1[param2].DAT_18[4];
+                    aVar1[1] = param1[param2].DAT_18[5];
+                    aVar1[2] = param1[param2].DAT_18[6];
+                    aVar1[3] = param1[param2].DAT_18[7];
+                    aVar2[0] = param1[param2].DAT_20;
+                    aVar2[1] = param1[param2].DAT_21;
+                    aVar2[2] = param1[param2].DAT_22;
+                    aVar2[3] = param1[param2].DAT_23;
+                    param1[param2].DAT_18[4] = GameManager.instance.DAT_9EAC[puVar4];
+                    param1[param2].DAT_18[5] = GameManager.instance.DAT_9EAC[puVar4 + 1];
+                    param1[param2].DAT_18[6] = GameManager.instance.DAT_9EAC[puVar4 + 2];
+                    param1[param2].DAT_18[7] = GameManager.instance.DAT_9EAC[puVar4 + 3];
+                    bVar7 = FUN_70E1C(param1, param2);
+
+                    if (!bVar7)
+                        param1[param2].ARRY_00[puVar5 + 3] = 1;
+
+                    param1[param2].DAT_18[4] = aVar1[0];
+                    param1[param2].DAT_18[5] = aVar1[1];
+                    param1[param2].DAT_18[6] = aVar1[2];
+                    param1[param2].DAT_18[7] = aVar1[3];
+                    param1[param2].DAT_20 = aVar2[0];
+                    param1[param2].DAT_21 = aVar2[1];
+                    param1[param2].DAT_22 = aVar2[2];
+                    param1[param2].DAT_23 = aVar2[3];
+                }
+
+                if (param1[param2].DAT_24 == 1)
+                {
+                    if ((uint)param1[param2].DAT_18[3] >> 4 == param1[param2].DAT_15 &&
+                        uVar8 == (param1[param2].DAT_18[3] & 0xf))
+                        param1[param2].ARRY_00[puVar5 + 3] = 1;
+                }
+                else
+                {
+                    if (param1[param2].DAT_24 == 2)
+                    {
+                        if ((uint)param1[param2].DAT_18[3] >> 4 == param1[param2].DAT_15 &&
+                            uVar8 == (param1[param2].DAT_18[3] & 0xf))
+                            param1[param2].ARRY_00[puVar5 + 3] = 1;
+
+                        if ((uint)param1[param2].DAT_18[7] >> 4 == param1[param2].DAT_15 &&
+                            uVar8 == (param1[param2].DAT_18[7] & 0xf))
+                            param1[param2].ARRY_00[puVar5 + 3] = 1;
+                    }
+                }
+
+                puVar5 += 4;
+                uVar8++;
+            }
+
+            puVar4 += 4;
+        }
+
+        param1[param2].DAT_05 = (byte)uVar8;
+    }
+
+    private void FUN_72420(InventoryWindow[] param1, int param2)
+    {
+        sbyte sVar1;
+        int piVar2;
+        InventoryRect pcVar3;
+
+        piVar2 = 0;
+
+        do
+        {
+            pcVar3 = param1[param2].rect2[piVar2];
+
+            if (pcVar3.DAT_00)
+            {
+                pcVar3.DAT_0C += pcVar3.DAT_04;
+                pcVar3.DAT_0E += pcVar3.DAT_06;
+                sVar1 = (sbyte)(pcVar3.DAT_01 - 1);
+                pcVar3.DAT_01 = sVar1;
+                pcVar3.DAT_10 += pcVar3.DAT_08;
+                pcVar3.DAT_12 += pcVar3.DAT_0A;
+
+                if (sVar1 == -1)
+                {
+                    param1[param2].DAT_26--;
+                    pcVar3.DAT_00 = false;
+                    pcVar3.DAT_0C = pcVar3.DAT_14;
+                    pcVar3.DAT_0E = pcVar3.DAT_16;
+                    pcVar3.DAT_10 = pcVar3.DAT_18;
+                    pcVar3.DAT_12 = pcVar3.DAT_1A;
+                }
+            }
+
+            piVar2++;
+        } while (piVar2 < 2);
     }
 }

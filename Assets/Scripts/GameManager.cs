@@ -2635,6 +2635,25 @@ public class GameManager : MonoBehaviour
         return (sbyte)iVar3;
     }
 
+    public uint FUN_5FE14()
+    {
+        uint uVar1;
+
+        uVar1 = 0;
+
+        while (true)
+        {
+            if (DAT_9ADE * 4U <= uVar1)
+                return 0;
+
+            if (DAT_9EAC[uVar1 + 1] == 0) break;
+
+            uVar1 += 4;
+        }
+
+        return uVar1;
+    }
+
     public void FUN_40C60(CriPlayer param1)
     {
         if ((param1.DAT_1DE & 1) != 0 && !DAT_6D)

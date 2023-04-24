@@ -43,11 +43,14 @@ public class InventoryWindow
     public byte DAT_04;
     public byte DAT_05;
     public byte[] DAT_06;
+    public sbyte DAT_07;
     public byte DAT_14;
     public sbyte DAT_15;
     public byte DAT_16;
     public byte DAT_17;
     public byte[] DAT_18;
+    public byte DAT_1C;
+    public sbyte DAT_1F;
     public InventoryText DAT_20;
     public byte DAT_24;
     public byte DAT_25;
@@ -56,6 +59,9 @@ public class InventoryWindow
     public byte[] DAT_28;
     public sbyte DAT_2C;
     public sbyte DAT_2D;
+    public byte DAT_34;
+    public byte BDAT_38;
+    public byte DAT_39;
     public InventoryRect[] rect; //0x00
     public InventoryRect[] rect2; //0x30
     public InventoryText[] DAT_38;
@@ -151,6 +157,7 @@ public class InventoryManager : MonoBehaviour
     public byte DAT_C6290;
     public int DAT_C6294;
     public ushort[] DAT_C6298;
+    public byte[][] DAT_C62B0;
     public delegate void FUN_A60D0();
     public delegate void FUN_A60DC();
     public byte[] DAT_A6104 = new byte[4] { 1, 4, 4, 2 };
@@ -165,6 +172,7 @@ public class InventoryManager : MonoBehaviour
     public delegate bool FUN_A6174(ushort[] a, int i);
     public delegate void FUN_A617C(InventoryWindow[] w, int i);
     public delegate void FUN_A842C(InventoryWindow[] w, int i);
+    public delegate void FUN_A88D0(InventoryWindow[] w, int i);
     public delegate void FUN_A88F0(InventoryWindow[] w, int i);
     public delegate void FUN_A8900(InventoryWindow[] w, int i);
     public FUN_A60D0[] PTR_FUN_A60D0;
@@ -182,6 +190,7 @@ public class InventoryManager : MonoBehaviour
     public byte[] DAT_A8408 = new byte[8] { 22, 7, 15, 8, 4, 17, 23, 0 };
     public UNK_CLASS[][] PTR_DAT_A83EC = new UNK_CLASS[7][];
     public FUN_A842C[] PTR_FUN_A842C;
+    public FUN_A88D0[] PTR_FUN_A88D0;
     public FUN_A88F0[] PTR_FUN_A88F0;
     public FUN_A8900[] PTR_FUN_A8900;
 
@@ -276,6 +285,11 @@ public class InventoryManager : MonoBehaviour
             {
                 FUN_6D0C4,
                 FUN_6D224
+            };
+            PTR_FUN_A88D0 = new FUN_A88D0[2]
+            {
+                FUN_6E8F4,
+                FUN_6EA48
             };
             PTR_FUN_A88F0 = new FUN_A88F0[4]
             {
@@ -3312,7 +3326,91 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_6E898()
     {
+        PTR_FUN_A88D0[DAT_C6102](DAT_C6130, 0);
+        //FUN_6F494
+    }
+
+    private void FUN_6E8F4(InventoryWindow[] param1, int param2)
+    {
+        byte bVar1;
+        byte bVar3;
+        byte[] aVar4;
+        //FUN_601A4
+
+        if ((uint)(int)GameManager.instance.DAT_2E < 8)
+            param1[param2].DAT_34 = 0;
+        else
+        {
+            bVar3 = 1;
+
+            if (12 < (uint)(int)GameManager.instance.DAT_2E)
+                bVar3 = 2;
+
+            param1[param2].DAT_34 = bVar3;
+        }
+
+        DAT_C6103 = 0;
+        DAT_C6102++;
+        aVar4 = DAT_C62B0[GameManager.instance.DAT_2E];
+        param1[param2].ARRY_00 = aVar4;
+        param1[param2].BDAT_38 = (byte)(GameManager.instance.DAT_9AA0 >> 8);
+        param1[param2].DAT_39 = (byte)GameManager.instance.DAT_9AA0;
+        FUN_6FA30(param1[param2]);
+        FUN_6FAF0();
+        bVar1 = aVar4[1];
+        param1[param2].DAT_07 = -1;
+        param1[param2].DAT_04 = (byte)((bVar1 + 4) / 5);
+        bVar1 = GameManager.instance.DAT_9ADE;
+        param1[param2].DAT_1F = -1;
+        param1[param2].DAT_1C = (byte)((bVar1 + 4) / 5);
+        FUN_6FBE8(param1[param2], 0);
+        FUN_6FBE8(param1[param2], 1);
+    }
+
+    private void FUN_6EA48(InventoryWindow[] param1, int param2)
+    {
         return;
+    }
+
+    private void FUN_6FA30(InventoryWindow param1)
+    {
+        uint uVar1;
+        int iVar2;
+        int iVar3;
+        uint uVar4;
+        uint uVar5;
+
+        uVar5 = param1.ARRY_00[1];
+        uVar4 = 0;
+
+        if (uVar5 != 1)
+        {
+            iVar3 = 0;
+
+            do
+            {
+                uVar1 = uVar4;
+
+                if (param1.ARRY_00[iVar3 + 5] == 0)
+                {
+                    do
+                    {
+                        uVar1++;
+
+                        if (uVar5 <= uVar1) goto LAB_6FAD8;
+
+                        iVar2 = (int)(uVar1 * 4);
+                    } while (param1.ARRY_00[iVar2 + 5] == 0);
+
+                    param1.ARRY_00[iVar3 + 4] = param1.ARRY_00[iVar2 + 4];
+                    param1.ARRY_00[uVar1 * 4 + 5] = 0;
+                }
+
+                LAB_6FAD8:
+                uVar4++;
+                iVar3 += 4;
+            } while (uVar4 < uVar5 - 1);
+        }
     }
 
     public void FUN_6FAF0()
@@ -3356,6 +3454,29 @@ public class InventoryManager : MonoBehaviour
                 iVar4 += 4;
             } while (uVar5 < GameManager.instance.DAT_9ADE - 1U);
         }
+    }
+
+    private void FUN_6FBE8(InventoryWindow param1, int param2)
+    {
+        int iVar2;
+        byte[] aVar2;
+        uint uVar4;
+
+        //memset
+
+        if (param2 == 0)
+        {
+            aVar2 = param1.ARRY_00;
+            iVar2 = 4;
+        }
+        else
+        {
+            aVar2 = GameManager.instance.DAT_9EAC;
+            iVar2 = 0;
+        }
+
+        uVar4 = 0;
+        //...
     }
 
     private byte FUN_6FCA8(int param1)

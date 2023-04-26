@@ -2785,7 +2785,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private int FUN_6E848(int param1, int param2)
+    public int FUN_6E848(int param1, int param2)
     {
         return DialogManager.instance.FUN_6752C(DAT_9E0A0[param1].scenes[param2].nameIndex + 279);
     }

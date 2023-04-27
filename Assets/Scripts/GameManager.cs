@@ -345,7 +345,7 @@ public class GameManager : MonoBehaviour
             FUN_47BE0,
             FUN_47DE4,
             null,
-            null,
+            FUN_48934,
             FUN_48964,
             null,
             null,
@@ -721,6 +721,7 @@ public class GameManager : MonoBehaviour
     {
         FUN_475E4(1);
         FUN_5DD54();
+        FUN_6674C();
     }
 
     private void FUN_48964()

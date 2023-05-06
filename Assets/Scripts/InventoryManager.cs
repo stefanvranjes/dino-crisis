@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class InventoryRect
@@ -211,6 +212,24 @@ public class InventoryManager : MonoBehaviour
     public FUN_A88E0[] PTR_FUN_A88E0;
     public FUN_A88F0[] PTR_FUN_A88F0;
     public FUN_A8900[] PTR_FUN_A8900;
+    public RectTransform inventoryRect;
+    public Button itemButton;
+    public Button equipButton;
+    public Button mapButton;
+    public Button mixButton;
+    public Button exitButton;
+    public Text descText;
+    public ScrollRect itemsRect;
+    public ScrollRect suppliesRect;
+    public ScrollRect weaponsRect;
+    public ScrollRect equippedWeaponRect;
+    public ScrollRect equippedAmmoRect;
+    public RectTransform actionsRect;
+    public Button useButton;
+    public Button checkButton;
+    public Button sortButton;
+    public RectTransform previewRect;
+    public List<Sprite> sprites;
 
     private void Awake()
     {
@@ -542,7 +561,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        //FUN_67F08
+        FUN_67F08();
         
         LAB_66B58:
         if ((DAT_C612E & 0x10) != 0)
@@ -644,6 +663,25 @@ public class InventoryManager : MonoBehaviour
         } while (true);
     }
 
+    private void FUN_6750C(ushort[] param1, int param2, Text param3, Color32 param4)
+    {
+        FUN_67CD4(param1, param2, param3, param4);
+    }
+
+    private void FUN_67554(Text param1, int param2, Color32 param3)
+    {
+        int iVar1;
+
+        iVar1 = DialogManager.instance.FUN_6752C(param2);
+        FUN_6750C(DialogManager.DAT_9F0EC, iVar1, param1, param3);
+    }
+
+    private void FUN_67AD8()
+    {
+        if (DAT_C610A != 0)
+            FUN_67554(descText, DAT_C610A, new Color32(0x80, 0x80, 0x80, 0xff));
+    }
+
     private byte FUN_67BF8(byte param1)
     {
         byte bVar1;
@@ -699,6 +737,33 @@ public class InventoryManager : MonoBehaviour
         } while (uVar3 < 16);
 
         return uVar4;
+    }
+
+    private void FUN_67CD4(ushort[] param1, int param2, Text param3, Color32 param4)
+    {
+        ushort uVar1;
+        uint uVar6;
+        List<char> chars = new List<char>();
+
+        while (param1[param2] != 0xa000)
+        {
+            uVar1 = param1[param2++];
+            uVar6 = uVar1 & 0x3ffU;
+            chars.Add(Utilities.characters[(ushort)uVar6]);
+        }
+
+        param3.text = new string(chars.ToArray());
+        param3.color = param4;
+    }
+
+    private void FUN_67F08()
+    {
+        DAT_C6294 = 3;
+        itemButton.gameObject.SetActive(true);
+        equipButton.gameObject.SetActive(true);
+        mapButton.gameObject.SetActive(true);
+        mixButton.gameObject.SetActive(true);
+        exitButton.gameObject.SetActive(true);
     }
 
     private void FUN_68598()
@@ -1881,6 +1946,8 @@ public class InventoryManager : MonoBehaviour
     private void FUN_6B08C()
     {
         //FUN_6AF38
+        suppliesRect.gameObject.SetActive(true);
+        itemsRect.gameObject.SetActive(true);
 
         if (DAT_C618B == 0)
             PTR_FUN_A614C[DAT_C6102](DAT_C6130, 0);
@@ -2474,6 +2541,7 @@ public class InventoryManager : MonoBehaviour
             if (DAT_C6103 == 0 && param1[param2].DAT_4E == uVar3)
             {
                 //...
+                suppliesRect.content.GetChild((int)uVar3).GetComponent<Button>().Select();
             }
 
             uVar3++;
@@ -2494,10 +2562,12 @@ public class InventoryManager : MonoBehaviour
         int iVar8;
         int iVar9;
         uint uVar10;
+        Color32 local_30;
 
         uVar10 = 0;
         iVar9 = -53;
         iVar8 = -59;
+        local_30 = new Color32(0x80, 0x80, 0x80, 0xff);
         iVar7 = param1[param2].rect[0].DAT_0E;
         sVar2 = param1[param2].rect[0].DAT_12;
         DAT_C6294 = param1[param2].DAT_50;
@@ -2511,9 +2581,10 @@ public class InventoryManager : MonoBehaviour
                 iVar4 = sVar2 + iVar8;
                 bVar1 = pbVar5.DAT_00;
                 iVar8 += 26;
-                //FUN_67904
+                suppliesRect.content.GetChild((int)uVar10).GetComponentInChildren<Image>().sprite = sprites[(byte)DialogManager.DAT_A593C[bVar1 * 6] >> 4];
                 uVar3 = FUN_71350(pbVar5);
-                //...
+                FUN_6750C(uVar3, 0, suppliesRect.content.GetChild((int)uVar10).GetComponentInChildren<Text>(), local_30);
+                suppliesRect.content.GetChild((int)uVar10).GetComponentsInChildren<Text>()[1].text = pbVar5.DAT_01 + "/" + (DialogManager.DAT_A593C[bVar1 * 6] >> 8);
                 iVar9 += 26;
             }
 
@@ -2867,6 +2938,7 @@ public class InventoryManager : MonoBehaviour
             if (DAT_C6103 == 1 && param1[param2].DAT_58 == uVar3)
             {
                 //...
+                itemsRect.content.GetChild((int)uVar3).GetComponent<Button>().Select();
             }
 
             uVar3++;
@@ -2913,7 +2985,8 @@ public class InventoryManager : MonoBehaviour
                         iVar3 = 10;
                 }
 
-                //...
+                itemsRect.content.GetChild((int)uVar6).GetComponentInChildren<Image>().sprite = sprites[iVar3];
+                FUN_67554(itemsRect.content.GetChild((int)uVar6).GetComponentInChildren<Text>(), iVar3, new Color32(0x80, 0x80, 0x80, 0xff));
 
                 switch (param1[param2].DAT_51[uVar6])
                 {
@@ -2944,7 +3017,7 @@ public class InventoryManager : MonoBehaviour
             } while (uVar6 < bVar1);
         }
 
-        //FUN_67AD8
+        FUN_67AD8();
     }
 
     private void FUN_6CC68(InventoryWindow[] param1, int param2)

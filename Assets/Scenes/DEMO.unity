@@ -3330,9 +3330,6 @@ MonoBehaviour:
   equippedWeaponRect: {fileID: 835891515}
   equippedAmmoRect: {fileID: 179686817}
   actionsRect: {fileID: 1847419674}
-  useButton: {fileID: 1404125924}
-  checkButton: {fileID: 2082877194}
-  sortButton: {fileID: 643287509}
   previewRect: {fileID: 544724956}
   sprites:
   - {fileID: 817439604, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
@@ -8640,7 +8637,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Sort
+  m_Text: N/A
 --- !u!222 &490029707
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9685,7 +9682,7 @@ GameObject:
   - component: {fileID: 643287510}
   - component: {fileID: 643287509}
   m_Layer: 5
-  m_Name: Sort
+  m_Name: Button 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12520,7 +12517,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Check
+  m_Text: N/A
 --- !u!222 &1031799354
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14871,7 +14868,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Use
+  m_Text: N/A
 --- !u!222 &1261441801
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15849,7 +15846,7 @@ GameObject:
   - component: {fileID: 1404125925}
   - component: {fileID: 1404125924}
   m_Layer: 5
-  m_Name: Use
+  m_Name: Button 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17898,7 +17895,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1674161988
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20455,7 +20452,7 @@ GameObject:
   - component: {fileID: 2082877195}
   - component: {fileID: 2082877194}
   m_Layer: 5
-  m_Name: Check
+  m_Name: Button 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

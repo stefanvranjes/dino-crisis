@@ -219,7 +219,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_A2CF; //gp+a2cfh
     public bool DAT_A2D0; //gp+a2d0h
     public bool DAT_A2D1; //gp+a2d1h
-    public bool DAT_A2D2; //gp+a2d2h
+    public byte DAT_A2D2; //gp+a2d2h
     public byte DAT_A2D3; //gp+a2d3h
     public bool DAT_A2D4; //gp+a2d4h
     public Packet[] DAT_C3380;
@@ -526,6 +526,7 @@ public class GameManager : MonoBehaviour
             DAT_56 = 1;
             //...
             FUN_61240();
+            FUN_66F00(0); //tmp
             InventoryManager.FUN_4A7E8(4, 0, true);
             InventoryManager.FUN_4A7E8(9, 0, true);
             DialogManager.instance.FUN_1DE48();
@@ -2744,6 +2745,138 @@ public class GameManager : MonoBehaviour
         uVar1 = (ushort)InventoryManager.instance.FUN_67C30();
         InventoryManager.instance.DAT_C612E = (ushort)(uVar1 & 0xf000 | InputManager.controllers[0].DAT_B58B8 & 0xfff);
         InventoryManager.instance.PTR_FUN_A60D0[DAT_2A]();
+    }
+
+    private void FUN_66F00(int param1)
+    {
+        byte bVar1;
+        byte bVar2;
+        byte bVar3;
+        bool bVar4;
+        uint uVar5;
+
+        if (param1 != 0) goto LAB_672E0;
+
+        DAT_9EAC = new byte[60];
+        bVar1 = DAT_A2D2;
+
+        if (bVar1 == 1)
+        {
+            InventoryManager.FUN_4A7E8(11, 5, true);
+            DAT_9EAC[0] = 0x16;
+            DAT_9EAC[1] = 0x11;
+            DAT_9EAC[4] = 0x1b;
+            DAT_9EAC[5] = 1;
+            DAT_9EAC[8] = 0x1d;
+            DAT_9EAC[9] = 1;
+        }
+        else
+        {
+            if (bVar1 < 2)
+            {
+                if (bVar1 == 0)
+                {
+                    InventoryManager.FUN_4A7E8(11, 1, true);
+                    InventoryManager.FUN_4A7E8(11, 5, true);
+                    InventoryManager.FUN_4A7E8(11, 9, true);
+                    DAT_9EAC[0] = 0x1b;
+                    DAT_9EAC[1] = 2;
+                    DAT_9EAC[4] = 0x1d;
+                    DAT_9EAC[5] = 2;
+                    DAT_9EAC[8] = 0x16;
+                    DAT_9EAC[9] = 0x22;
+                    DAT_9EAC[12] = 0x11;
+                    DAT_9EAC[13] = 10;
+                    DAT_9EAC[16] = 0x18;
+                }
+                else
+                {
+                    InventoryManager.FUN_4A7E8(11, 1, true);
+                    InventoryManager.FUN_4A7E8(11, 5, true);
+                    InventoryManager.FUN_4A7E8(11, 9, true);
+                    DAT_9EAC[0] = 0x1b;
+                    DAT_9EAC[1] = 2;
+                    DAT_9EAC[4] = 0x16;
+                    DAT_9EAC[5] = 0x22;
+                    DAT_9EAC[8] = 0x13;
+                    DAT_9EAC[9] = 3;
+                    DAT_9EAC[12] = 0x11;
+                    DAT_9EAC[13] = 10;
+                    DAT_9EAC[16] = 0x18;
+                }
+
+                DAT_9EAC[17] = 6;
+            }
+            else
+            {
+                if (bVar1 != 2)
+                {
+                    InventoryManager.FUN_4A7E8(11, 1, true);
+                    InventoryManager.FUN_4A7E8(11, 5, true);
+                    InventoryManager.FUN_4A7E8(11, 9, true);
+                    DAT_9EAC[0] = 0x1b;
+                    DAT_9EAC[1] = 2;
+                    DAT_9EAC[4] = 0x16;
+                    DAT_9EAC[5] = 0x22;
+                    DAT_9EAC[8] = 0x13;
+                    DAT_9EAC[9] = 3;
+                    DAT_9EAC[12] = 0x11;
+                    DAT_9EAC[13] = 10;
+                    DAT_9EAC[16] = 0x18;
+                    DAT_9EAC[17] = 6;
+                }
+                else
+                {
+                    InventoryManager.FUN_4A7E8(11, 1, true);
+                    InventoryManager.FUN_4A7E8(11, 5, true);
+                    DAT_9EAC[0] = 0x1d;
+                    DAT_9EAC[1] = 1;
+                    DAT_9EAC[4] = 0x16;
+                    DAT_9EAC[5] = 0x11;
+                    DAT_9EAC[8] = 0x12;
+                    DAT_9EAC[9] = 3;
+                }
+            }
+        }
+
+        if ((DAT_9AAB & 4) != 0)
+        {
+            DAT_9EAC[36] = 0x1a;
+            DAT_9EAC[37] = 1;
+        }
+
+        DAT_9ADE = 10;
+        uVar5 = 0;
+
+        if (DAT_9ADE != 0)
+        {
+            do
+            {
+                bVar2 = DAT_9EAC[uVar5 * 4];
+
+                if (bVar2 != 0)
+                {
+                    bVar3 = DialogManager.FUN_6FCA8(bVar2);
+                    DAT_9EAC[uVar5 * 4 + 2] = bVar3;
+                }
+
+                uVar5++;
+            } while (uVar5 < DAT_9ADE);
+        }
+
+        LAB_672E0:
+        bVar4 = InventoryManager.FUN_4A87C(11, 1);
+
+        if (bVar4)
+            InventoryManager.FUN_4A7E8(7, 0xd4, true);
+
+        bVar4 = InventoryManager.FUN_4A87C(11, 9);
+
+        if (bVar4)
+            InventoryManager.FUN_4A7E8(7, 0x8a, true);
+
+        InventoryManager.instance.FUN_6AC20();
+        //FUN_6FD04
     }
 
     public void FUN_6E6C8()

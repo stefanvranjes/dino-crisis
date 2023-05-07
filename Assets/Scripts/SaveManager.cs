@@ -369,8 +369,8 @@ public class SaveManager : MonoBehaviour
         param1.ReadUInt32Array(InventoryManager.DAT_C15A8);
         param1.ReadUInt32Array(InventoryManager.DAT_C15C8);
         param1.ReadUInt32Array(InventoryManager.DAT_C15D0);
-        param1.ReadBytes(0x2dc); //padding
-        //GameManager.instance.DAT_9EAC = param1.ReadBytes(GameManager.instance.DAT_9EAC.Length);
+        param1.ReadBytes(0x2a0); //padding
+        GameManager.instance.DAT_9EAC = param1.ReadBytes(GameManager.instance.DAT_9EAC.Length);
         //param1.ReadBytes(0x3c - GameManager.instance.DAT_9EAC.Length); //padding
         GameManager.instance.DAT_9EE8 = param1.ReadByte();
         GameManager.instance.DAT_9EE9 = param1.ReadByte();
@@ -400,7 +400,7 @@ public class SaveManager : MonoBehaviour
         GameManager.instance.DAT_A2CF = param1.ReadByte();
         GameManager.instance.DAT_A2D0 = param1.ReadBool();
         GameManager.instance.DAT_A2D1 = param1.ReadBool();
-        GameManager.instance.DAT_A2D2 = param1.ReadBool();
+        GameManager.instance.DAT_A2D2 = param1.ReadByte();
         GameManager.instance.DAT_A2D3 = param1.ReadByte();
         GameManager.instance.DAT_A2D4 = param1.ReadBool();
         param1.ReadBytes(3); //padding
@@ -461,8 +461,8 @@ public class SaveManager : MonoBehaviour
         param1.Write(InventoryManager.DAT_C15A8);
         param1.Write(InventoryManager.DAT_C15C8);
         param1.Write(InventoryManager.DAT_C15D0);
-        param1.Write(new byte[0x2dc]); //padding
-        //param1.Write(GameManager.instance.DAT_9EAC);
+        param1.Write(new byte[0x2a0]); //padding
+        param1.Write(GameManager.instance.DAT_9EAC);
         //param1.Write(new byte[0x3c - GameManager.instance.DAT_9EAC.Length]); //padding
         param1.Write(GameManager.instance.DAT_9EE8);
         param1.Write(GameManager.instance.DAT_9EE9);

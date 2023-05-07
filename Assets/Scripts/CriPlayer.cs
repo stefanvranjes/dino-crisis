@@ -3313,7 +3313,7 @@ public class CriPlayer : CriSkinned
 
     private void FUN_40CA4()
     {
-        if (!GameManager.instance.DAT_A2D2)
+        if (GameManager.instance.DAT_A2D2 == 0)
         {
             health = 335;
             return;
@@ -3352,7 +3352,7 @@ public class CriPlayer : CriSkinned
         BDAT_1DC = 4;
         DAT_1D5 = 0;
 
-        if (!GameManager.instance.DAT_A2D2)
+        if (GameManager.instance.DAT_A2D2 == 0)
         {
             aVar9 = Utilities.DAT_9B4A0;
             puVar9 = 0x10;
@@ -4112,7 +4112,7 @@ public class CriPlayer : CriSkinned
         DAT_1D5 = 0;
         uVar10 = (uint)(iVar4 % 10) * 100;
 
-        if (!GameManager.instance.DAT_A2D2)
+        if (GameManager.instance.DAT_A2D2 == 0)
         {
             aVar9 = Utilities.DAT_9B4A0;
             puVar9 = 0x20;
@@ -4818,7 +4818,7 @@ public class CriPlayer : CriSkinned
                     iVar4 = 5;
             }
 
-            if (!GameManager.instance.DAT_A2D2)
+            if (GameManager.instance.DAT_A2D2 == 0)
                 puVar5 = Utilities.DAT_9B4A0;
             else
                 puVar5 = Utilities.DAT_9B500;
@@ -5386,7 +5386,7 @@ public class CriPlayer : CriSkinned
                     iVar3 = 5;
             }
 
-            if (!GameManager.instance.DAT_A2D2)
+            if (GameManager.instance.DAT_A2D2 == 0)
                 puVar4 = Utilities.DAT_9B4A0;
             else
                 puVar4 = Utilities.DAT_9B500;
@@ -6344,7 +6344,7 @@ public class CriPlayer : CriSkinned
         DAT_1D5 = 0;
         BDAT_1DC = 4;
 
-        if (!GameManager.instance.DAT_A2D2)
+        if (GameManager.instance.DAT_A2D2 == 0)
         {
             aVar8 = Utilities.DAT_9B4A0;
             puVar8 = 24;

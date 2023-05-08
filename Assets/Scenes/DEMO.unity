@@ -1377,7 +1377,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 168097736}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -1612,7 +1612,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 186153173}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -2340,7 +2340,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 278175139}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -2927,7 +2927,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 331195531}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -3300,7 +3300,6 @@ MonoBehaviour:
   DAT_C6110: 0
   DAT_C612E: 0
   DAT_C6130: []
-  DAT_C618B: 0
   DAT_C61F8: 0
   DAT_C61FC: 0
   DAT_C61FD: 0
@@ -3332,16 +3331,26 @@ MonoBehaviour:
   actionsRect: {fileID: 1847419674}
   previewRect: {fileID: 544724956}
   sprites:
-  - {fileID: 817439604, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
-  - {fileID: -1512704138, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
-  - {fileID: 742626709, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
-  - {fileID: -1811202524, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
-  - {fileID: -864617895, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
   - {fileID: 72960596, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
+  - {fileID: -864617895, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
+  - {fileID: -1811202524, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
+  - {fileID: 536296014, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
+  - {fileID: 742626709, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
   - {fileID: -129656581, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
   - {fileID: 184571173, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
-  - {fileID: 536296014, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
+  - {fileID: 817439604, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
+  - {fileID: -1512704138, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
   - {fileID: 1908104644, guid: 6c11b92fa34dc0d4cae0e9a5331246e3, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &381395047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8124,7 +8133,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 422774814}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -9271,7 +9280,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 581660506}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -10709,7 +10718,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 789269351}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -12880,7 +12889,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1068167862}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -14367,7 +14376,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1204630334}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -15198,7 +15207,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1298674359}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -15586,7 +15595,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1357772759}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -16787,7 +16796,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1528772315}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -17028,7 +17037,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1562179365}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -17631,7 +17640,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1649874079}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -18404,7 +18413,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1769780236}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -19298,7 +19307,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1899742756}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -20321,7 +20330,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 2065792312}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []

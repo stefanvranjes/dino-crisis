@@ -225,6 +225,14 @@ public class InputManager : MonoBehaviour
             {
                 if (bVar1 != 0) goto LAB_1DA84;
 
+                local_10[0] = 0x20;
+                local_10[1] = 0x90;
+                local_10[2] = 0x40;
+            }
+            else
+            {
+                if (bVar1 != 2) goto LAB_1DA84;
+
                 local_10[0] = 0x10;
                 local_10[1] = 0x40;
                 local_10[2] = 0xa0;

@@ -163,7 +163,6 @@ public class InventoryManager : MonoBehaviour
     public ushort DAT_C6110;
     public ushort DAT_C612E;
     public InventoryWindow[] DAT_C6130;
-    public byte DAT_C618B;
     public uint DAT_C61F8;
     public byte DAT_C61FC;
     public byte DAT_C61FD;
@@ -370,7 +369,6 @@ public class InventoryManager : MonoBehaviour
         DAT_C6130 = new InventoryWindow[1];
         DAT_C6210 = new ushort[0x70];
         DAT_C6280 = new byte[0x10];
-        DAT_C6298 = new ushort[12];
 
         for (int i = 0; i < DAT_C6130.Length; i++)
             DAT_C6130[i] = new InventoryWindow();
@@ -562,7 +560,26 @@ public class InventoryManager : MonoBehaviour
             if (DAT_C6100 == 2)
                 DAT_C610A = 0x10f;
 
-            //FUN_67AD8
+            switch (DAT_C6100)
+            {
+                case 0:
+                    itemButton.Select();
+                    break;
+                case 1:
+                    equipButton.Select();
+                    break;
+                case 2:
+                    mapButton.Select();
+                    break;
+                case 3:
+                    mixButton.Select();
+                    break;
+                case 4:
+                    exitButton.Select();
+                    break;
+            }
+
+            FUN_67AD8();
         }
         else
         {
@@ -758,7 +775,7 @@ public class InventoryManager : MonoBehaviour
     private void FUN_67AD8()
     {
         if (DAT_C610A != 0)
-            FUN_67554(descText, DAT_C610A, new Color32(0x80, 0x80, 0x80, 0xff));
+            FUN_67554(descText, DAT_C610A, new Color32(0, 0, 0, 0xff));
     }
 
     private byte FUN_67BF8(byte param1)
@@ -1959,7 +1976,7 @@ public class InventoryManager : MonoBehaviour
             DAT_C610A = 0;
             iVar3 = DAT_C61FC * 6;
             aVar2 = DialogManager.instance.FUN_67350(377, DialogManager.DAT_A593C[iVar3 + 2]);
-            FUN_6750C(aVar2, 0, descText, new Color32(0x80, 0x80, 0x80, 0xff));
+            FUN_6750C(aVar2, 0, descText, new Color32(0, 0, 0, 0xff));
         }
 
         if (DAT_C61FE != 0)
@@ -2019,7 +2036,7 @@ public class InventoryManager : MonoBehaviour
         int pbVar1;
         int iVar2;
 
-        DAT_C6298 = new ushort[12];
+        DAT_C6298 = new ushort[512];
         iVar2 = GameManager.instance.DAT_9ADE;
         pbVar1 = 0;
 
@@ -2037,7 +2054,7 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_6AF38(RectTransform param1, Vector2 param2)
     {
-        param1.anchoredPosition = param2;
+        param1.anchoredPosition = new Vector2(param2.x, -param2.y);
     }
 
     private void FUN_6B08C()
@@ -2046,7 +2063,7 @@ public class InventoryManager : MonoBehaviour
         itemsRect.gameObject.SetActive(true);
         suppliesRect.gameObject.SetActive(true);
 
-        if (DAT_C618B == 0)
+        if (DAT_C6130[0].DAT_5B == 0)
             PTR_FUN_A614C[DAT_C6102](DAT_C6130, 0);
 
         FUN_6CDD8(DAT_C6130, 0);
@@ -2260,6 +2277,8 @@ public class InventoryManager : MonoBehaviour
                     param1[param2].DAT_5A = bVar1;
                     FUN_6CD1C(param1[param2], 0x10000, 0x10, 0x930000, 0xc20000);
                     FUN_6CD1C(param1[param2], 0x10001, 0x10, 0x7c0000, 0x950000);
+                    suppliesRect.transform.SetSiblingIndex(7);
+                    itemsRect.transform.SetSiblingIndex(8);
                 }
 
                 goto LAB_6B67C;
@@ -2502,6 +2521,9 @@ public class InventoryManager : MonoBehaviour
             if (GameManager.instance.DAT_9EAC[puVar3 + 1] != 0)
             {
                 aVar4[iVar2].DAT_00 = GameManager.instance.DAT_9EAC[puVar3];
+                aVar4[iVar2].DAT_01 = GameManager.instance.DAT_9EAC[puVar3 + 1];
+                aVar4[iVar2].DAT_02 = GameManager.instance.DAT_9EAC[puVar3 + 2];
+                aVar4[iVar2].DAT_03 = GameManager.instance.DAT_9EAC[puVar3 + 3];
                 iVar2++;
             }
 
@@ -2686,15 +2708,18 @@ public class InventoryManager : MonoBehaviour
 
             if (pbVar5.DAT_01 != 0)
             {
+                suppliesRect.content.GetChild((int)uVar10).gameObject.SetActive(true);
                 iVar4 = sVar2 + iVar8;
                 bVar1 = pbVar5.DAT_00;
                 iVar8 += 26;
-                suppliesRect.content.GetChild((int)uVar10).GetComponentInChildren<Image>().sprite = sprites[(byte)DialogManager.DAT_A593C[bVar1 * 6] >> 4];
+                suppliesRect.content.GetChild((int)uVar10).GetChild(0).GetComponent<Image>().sprite = sprites[(byte)DialogManager.DAT_A593C[bVar1 * 6] >> 4];
                 uVar3 = FUN_71350(pbVar5);
                 FUN_6750C(uVar3, 0, suppliesRect.content.GetChild((int)uVar10).GetComponentInChildren<Text>(), local_30);
                 suppliesRect.content.GetChild((int)uVar10).GetComponentsInChildren<Text>()[1].text = pbVar5.DAT_01 + "/" + (DialogManager.DAT_A593C[bVar1 * 6] >> 8);
                 iVar9 += 26;
             }
+            else
+                suppliesRect.content.GetChild((int)uVar10).gameObject.SetActive(false);
 
             uVar10++;
         } while (uVar10 < 5);
@@ -2783,6 +2808,8 @@ public class InventoryManager : MonoBehaviour
                         DAT_C6103 = 0;
                         DAT_C6102 = 0;
                         DAT_C6101--;
+                        suppliesRect.transform.SetSiblingIndex(8);
+                        itemsRect.transform.SetSiblingIndex(7);
                     }
                 }
                 else
@@ -2814,6 +2841,8 @@ public class InventoryManager : MonoBehaviour
                     param1[param2].DAT_50 = bVar1;
                     FUN_6CD1C(param1[param2], 0x10000, 0x10, 0x930000, 0xc20000);
                     FUN_6CD1C(param1[param2], 0x10001, 0x10, 0x7c0000, 0x950000);
+                    suppliesRect.transform.SetSiblingIndex(8);
+                    itemsRect.transform.SetSiblingIndex(7);
                 }
 
                 goto LAB_6C3A0;
@@ -2977,6 +3006,12 @@ public class InventoryManager : MonoBehaviour
                 goto LAB_6C738;
             }
 
+            if (DAT_C6106 != 0) goto LAB_6C738;
+
+            DAT_C6106 = 1;
+        }
+        else
+        {
             if (DAT_C6106 == 0) goto LAB_6C738;
 
             DAT_C6106 = 0;
@@ -3103,8 +3138,9 @@ public class InventoryManager : MonoBehaviour
                         iVar3 = 10;
                 }
 
-                itemsRect.content.GetChild((int)uVar6).GetComponentInChildren<Image>().sprite = sprites[iVar3];
-                FUN_67554(itemsRect.content.GetChild((int)uVar6).GetComponentInChildren<Text>(), iVar3, new Color32(0x80, 0x80, 0x80, 0xff));
+                itemsRect.content.GetChild((int)uVar6).gameObject.SetActive(true);
+                itemsRect.content.GetChild((int)uVar6).GetChild(0).GetComponent<Image>().sprite = sprites[iVar3];
+                FUN_67554(itemsRect.content.GetChild((int)uVar6).GetComponentInChildren<Text>(), DialogManager.DAT_A593C[iVar2 + 2], new Color32(0x80, 0x80, 0x80, 0xff));
 
                 switch (param1[param2].DAT_51[uVar6])
                 {
@@ -3133,6 +3169,12 @@ public class InventoryManager : MonoBehaviour
                 uVar6++;
                 iVar5 += 26;
             } while (uVar6 < bVar1);
+
+            while (uVar6 < 5)
+            {
+                itemsRect.content.GetChild((int)uVar6).gameObject.SetActive(false);
+                uVar6++;
+            }
         }
 
         FUN_67AD8();
@@ -3240,7 +3282,7 @@ public class InventoryManager : MonoBehaviour
 
                         if ((sbyte)(sVar1 - 1) == 0)
                         {
-                            DAT_C618B--;
+                            param1[param2].DAT_5B--;
                             pcVar5.DAT_00 = false;
                             pcVar5.DAT_0C = pcVar5.DAT_14;
                             pcVar5.DAT_0E = pcVar5.DAT_16;
@@ -3263,7 +3305,7 @@ public class InventoryManager : MonoBehaviour
 
                             if ((sbyte)(sVar1 - 1) == 0)
                             {
-                                DAT_C618B--;
+                                param1[param2].DAT_5B--;
                                 pcVar5.DAT_00 = false;
                             }
                         }

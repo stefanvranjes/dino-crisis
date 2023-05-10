@@ -2146,13 +2146,15 @@ public static class Utilities
             {
                 local_60[piVar1 + 1] = local_60[piVar1] - (local_40[piVar1] >> (int)(uVar2 & 31));
                 local_40[piVar3] = local_40[piVar1] + (local_60[piVar1] >> (int)(uVar2 & 31));
-                goto COR_01_OBJ_AC;
+                local_20[piVar5] = local_20[piVar1] - DAT_AC638[piVar4];
+            }
+            else
+            {
+                local_60[piVar1 + 1] = local_60[piVar1] + (local_40[piVar1] >> (int)(uVar2 & 31));
+                local_40[piVar3] = local_40[piVar1] - (local_60[piVar1] >> (int)(uVar2 & 31));
+                local_20[piVar5] = local_20[piVar1] + DAT_AC638[piVar4];
             }
 
-            local_60[piVar1 + 1] = local_60[piVar1] + (local_40[piVar1] >> (int)(uVar2 & 31));
-            local_40[piVar3] = local_40[piVar1] - (local_60[piVar1] >> (int)(uVar2 & 31));
-        COR_01_OBJ_AC:
-            local_20[piVar5] = local_20[piVar1] + DAT_AC638[piVar4];
             piVar4++;
             uVar2++;
             piVar1++;

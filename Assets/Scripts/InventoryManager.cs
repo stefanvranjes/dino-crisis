@@ -98,7 +98,7 @@ public class InventoryWindow
 
     public InventoryWindow()
     {
-        rect = new InventoryRect[2];
+        rect = new InventoryRect[3];
         rect2 = new InventoryRect[2];
 
         for (int i = 0; i < rect.Length; i++)
@@ -232,7 +232,8 @@ public class InventoryManager : MonoBehaviour
     public Text descText;
     public ScrollRect itemsRect;
     public ScrollRect suppliesRect;
-    public ScrollRect weaponsRect;
+    public ScrollRect weaponListRect;
+    public ScrollRect ammoListRect;
     public ScrollRect equippedWeaponRect;
     public ScrollRect equippedAmmoRect;
     public RectTransform actionsRect;
@@ -504,7 +505,7 @@ public class InventoryManager : MonoBehaviour
         {
             itemsRect.gameObject.SetActive(false);
             suppliesRect.gameObject.SetActive(false);
-            weaponsRect.gameObject.SetActive(false);
+            weaponListRect.gameObject.SetActive(false);
             equippedWeaponRect.gameObject.SetActive(false);
             equippedAmmoRect.gameObject.SetActive(false);
             uVar1 = DAT_C612E;
@@ -691,7 +692,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        FUN_6AF38(actionsRect, local_10); // originally FUN_6ACDC
+        FUN_6ACDC(actionsRect, local_10);
     }
 
     private int FUN_67404(byte[] param1, int param2)
@@ -871,7 +872,8 @@ public class InventoryManager : MonoBehaviour
         DAT_C6294 = 3; //write byte instead int??
         FUN_68CA4(DAT_C6130, 0);
         FUN_69CEC(DAT_C6130, 0);
-        //...
+        FUN_687B4(DAT_C6130, 0);
+        FUN_67AD8();
     }
 
     private void FUN_68638(InventoryWindow[] param1, int param2)
@@ -921,12 +923,143 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_6873C(InventoryWindow[] param1, int param2)
     {
-        return;
+        PTR_FUN_A6114[DAT_C6103](param1, param2);
     }
 
     private void FUN_68778(InventoryWindow[] param1, int param2)
     {
-        return;
+        DAT_C6104 = 0;
+        DAT_C6103 = 0;
+        DAT_C6102 = 0;
+        DAT_C6101--;
+        GameManager.instance.FUN_5C94C(null, 1);
+    }
+
+    private void FUN_687B4(InventoryWindow[] param1, int param2)
+    {
+        short sVar1;
+        short sVar2;
+        Vector3Int vVar3;
+        bool bVar4;
+        Vector2 local_30;
+
+        vVar3 = GameManager.instance.FUN_71BF8(new Vector3Int(0x60, 0x60, 0x60), new Vector3Int(0xd0, 0xd0, 0xd0), 4);
+        sVar1 = param1[param2].rect[0].DAT_0E;
+        sVar2 = param1[param2].rect[0].DAT_12;
+        bVar4 = FUN_68C58();
+
+        if (bVar4)
+        {
+            //FUN_6ACDC
+        }
+
+        //FUN_6ACDC
+        local_30 = new Vector2(param1[param2].rect[2].DAT_0E, param1[param2].rect[2].DAT_12);
+        bVar4 = FUN_69F30();
+
+        if (bVar4)
+        {
+            //FUN_6ACDC
+        }
+
+        //FUN_6ACDC
+
+        if (DAT_C6103 == 0)
+            local_30.x = sVar1;
+
+        local_30.x -= 0x60;
+
+        if (DAT_C6103 == 0)
+            local_30.y = sVar2;
+
+        local_30.y++;
+
+        if (DAT_C6104 == 0)
+            equippedWeaponRect.content.GetChild(0).GetComponent<Button>().Select();
+        else if (DAT_C6104 == 1)
+            equippedAmmoRect.content.GetChild(0).GetComponent<Button>().Select();
+
+        FUN_6895C(param1, param2);
+        FUN_699B8(param1, param2);
+    }
+
+    private void FUN_6895C(InventoryWindow[] param1, int param2)
+    {
+        short sVar1;
+        int iVar2;
+        uint uVar3;
+        Vector3Int vVar3;
+        Color32 cVar4;
+        int iVar6;
+        int iVar7;
+        int iVar8;
+        int iVar9;
+        uint uVar10;
+        uint local_30;
+
+        if ((param1[param2].DAT_68 & 1) == 0)
+            return;
+        else
+        {
+            DAT_C6294 = 2; //write byte instead int??
+            sVar1 = param1[param2].rect[1].DAT_0E;
+            iVar9 = sVar1;
+
+            if (5 < param1[param2].DAT_5B)
+            {
+                vVar3 = new Vector3Int(0x80, 0x80, 0x80);
+
+                if (param1[param2].DAT_59 != 0)
+                    vVar3 = GameManager.instance.FUN_71BF8(new Vector3Int(0x60, 0x60, 0x60), new Vector3Int(0xd0, 0xd0, 0xd0), 4);
+
+                //FUN_6ACDC
+                vVar3 = new Vector3Int(0x80, 0x80, 0x80);
+
+                if (param1[param2].DAT_59 + 1 < (param1[param2].DAT_5B + 4) / 5)
+                    vVar3 = GameManager.instance.FUN_71BF8(new Vector3Int(0x60, 0x60, 0x60), new Vector3Int(0xd0, 0xd0, 0xd0), 4);
+
+                //FUN_6ACDC
+            }
+
+            //FUN_6ACDC
+            uVar10 = 0;
+            uVar3 = 0;
+            local_30 = (uint)DAT_C6108 >> 4;
+
+            if (param1[param2].DAT_5A != 0)
+            {
+                iVar7 = -0x3b;
+                iVar6 = 0;
+
+                do
+                {
+                    if (param1[param2].DAT_54[iVar6] != 0)
+                    {
+                        iVar2 = param1[param2].DAT_54[iVar6] * 6;
+                        cVar4 = new Color32(0x80, 0x80, 0x80, 0xff);
+
+                        if (local_30 != 0 && local_30 == (byte)(DialogManager.DAT_A593C[iVar2 + 1] >> 8) >> 4)
+                            cVar4 = new Color32(0xba, 0x25, 0x36, 0xff);
+
+                        FUN_67554(weaponListRect.content.GetChild((int)uVar10).GetComponentInChildren<Text>(), DialogManager.DAT_A593C[iVar2 + 2], cVar4);
+                        weaponListRect.content.GetChild((int)uVar10).GetChild(0).GetComponent<Image>().sprite = sprites[(byte)DialogManager.DAT_A593C[iVar2] >> 4];
+
+                        if (param1[param2].DAT_5C == uVar3)
+                        {
+                            param1[param2].DAT_5D = param1[param2].DAT_54[iVar6];
+                            weaponListRect.content.GetChild((int)uVar3).GetComponent<Button>().Select();
+                        }
+
+                        //iVar8 += 0x1a;
+                        iVar7 += 0x1a;
+                        uVar3++;
+                    }
+
+                    uVar10++;
+                    iVar6++;
+                } while (uVar10 < param1[param2].DAT_5A);
+            }
+        }
     }
 
     private int FUN_68C18(uint param1)
@@ -974,12 +1107,21 @@ public class InventoryManager : MonoBehaviour
     {
         short sVar1;
         int iVar2;
+        int iVar3;
         int iVar4;
 
         iVar4 = param1[param2].rect[0].DAT_0E;
         sVar1 = param1[param2].rect[0].DAT_12;
         iVar2 = FUN_68C18(DAT_C6108);
-        //...
+
+        if (iVar2 == 0)
+            FUN_67554(equippedWeaponRect.content.GetChild(0).GetComponentInChildren<Text>(), 371, new Color32(0x80, 0x80, 0x80, 0xff));
+        else
+        {
+            iVar3 = sVar1 + 6;
+            FUN_67554(equippedWeaponRect.content.GetChild(0).GetComponentInChildren<Text>(), DialogManager.DAT_A593C[iVar2 * 6 + 2], new Color32(0x80, 0x80, 0x80, 0xff));
+            equippedWeaponRect.content.GetChild(0).GetChild(0).GetComponent<Image>().sprite = sprites[(byte)DialogManager.DAT_A593C[iVar2 * 6] >> 4];
+        }
     }
 
     private int FUN_68D50(InventoryWindow[] param1, int param2)
@@ -1454,6 +1596,76 @@ public class InventoryManager : MonoBehaviour
         param1[param2].DAT_65 = sVar7;
     }
 
+    private void FUN_699B8(InventoryWindow[] param1, int param2)
+    {
+        short sVar1;
+        uint uVar2;
+        uint uVar4;
+        Vector3Int vVar4;
+        Color32 cVar5;
+        int iVar6;
+        int iVar7;
+        uint local_38;
+
+        if ((param1[param2].DAT_68 & 2) == 0)
+            return;
+        else
+        {
+            DAT_C6294 = 2; //write byte instead int??
+            sVar1 = param1[param2].rect[1].DAT_0E;
+            iVar7 = sVar1;
+
+            if (5 < param1[param2].DAT_65)
+            {
+                vVar4 = new Vector3Int(0x80, 0x80, 0x80);
+
+                if (param1[param2].DAT_63 != 0)
+                    vVar4 = GameManager.instance.FUN_71BF8(new Vector3Int(0x60, 0x60, 0x60), new Vector3Int(0xd0, 0xd0, 0xd0), 4);
+
+                //FUN_6ACDC
+                vVar4 = new Vector3Int(0x80, 0x80, 0x80);
+
+                if (param1[param2].DAT_63 + 1 < (param1[param2].DAT_65 + 4) / 5)
+                    vVar4 = GameManager.instance.FUN_71BF8(new Vector3Int(0x60, 0x60, 0x60), new Vector3Int(0xd0, 0xd0, 0xd0), 4);
+
+                //FUN_6ACDC
+            }
+
+            //FUN_6ACDC
+            local_38 = ((uint)((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_244[(DAT_C6108 >> 4) - 1] >> 8) + 0x10;
+            uVar4 = 0;
+
+            if (param1[param2].DAT_64 != 0)
+            {
+                do
+                {
+                    iVar6 = (int)uVar4;
+                    uVar2 = param1[param2].DAT_5E[iVar6];
+
+                    if (uVar2 != 0)
+                    {
+                        cVar5 = new Color32(0x80, 0x80, 0x80, 0xff);
+
+                        if (local_38 == uVar2)
+                            cVar5 = new Color32(0xba, 0x25, 0x36, 0xff);
+
+                        ammoListRect.content.GetChild((int)uVar4).GetChild(0).GetComponent<Image>().sprite = sprites[(byte)DialogManager.DAT_A593C[uVar2 * 6] >> 4];
+                        FUN_67554(ammoListRect.content.GetChild((int)uVar4).GetComponentInChildren<Text>(), DialogManager.DAT_A593C[uVar2 * 6 + 2], cVar5);
+                        ammoListRect.content.GetChild((int)uVar4).GetComponentsInChildren<Text>()[1].text = DAT_C6298[param1[param2].DAT_5E[iVar6] - 0x10].ToString();
+
+                        if (param1[param2].DAT_66 == uVar4)
+                        {
+                            param1[param2].DAT_67 = param1[param2].DAT_5E[iVar6];
+                            ammoListRect.content.GetChild((int)uVar4).GetComponent<Button>().Select();
+                        }
+                    }
+
+                    uVar4++;
+                } while (uVar4 < param1[param2].DAT_64);
+            }
+        }
+    }
+
     private void FUN_69CEC(InventoryWindow[] param1, int param2)
     {
         uint uVar1;
@@ -1483,7 +1695,9 @@ public class InventoryManager : MonoBehaviour
 
                     if (GameManager.instance.DAT_9EAC[iVar2] == uVar1 && GameManager.instance.DAT_9EAC[iVar2 + 1] != 0)
                     {
-                        //...
+                        equippedAmmoRect.content.GetChild(0).GetChild(0).GetComponent<Image>().sprite = sprites[(byte)DialogManager.DAT_A593C[iVar3] >> 4];
+                        FUN_67554(equippedAmmoRect.content.GetChild(0).GetComponentInChildren<Text>(), DialogManager.DAT_A593C[iVar3 + 2], new Color32(0x80, 0x80, 0x80, 0xff));
+                        equippedAmmoRect.content.GetChild(0).GetComponentsInChildren<Text>()[1].text = DAT_C6298[uVar5].ToString();
                         return;
                     }
 
@@ -2052,9 +2266,14 @@ public class InventoryManager : MonoBehaviour
         ((CriPlayer)SceneManager.instance.DAT_27C[10]).FUN_50CC8();
     }
 
+    private void FUN_6ACDC(RectTransform param1, Vector2 param2)
+    {
+        param1.anchoredPosition = new Vector2(param2.x, -param2.y) / 2f;
+    }
+
     private void FUN_6AF38(RectTransform param1, Vector2 param2)
     {
-        param1.anchoredPosition = new Vector2(param2.x, -param2.y);
+        param1.anchoredPosition = new Vector2(param2.x, -param2.y) * 2f;
     }
 
     private void FUN_6B08C()
@@ -2442,6 +2661,8 @@ public class InventoryManager : MonoBehaviour
             DAT_C61FF &= 0xfe;
             FUN_6CD1C(param1[param2], 0, 10, 0x930000, 0xc20000);
             FUN_6CD1C(param1[param2], 1, 10, 0x7c0000, 0x950000);
+            suppliesRect.transform.SetSiblingIndex(8);
+            itemsRect.transform.SetSiblingIndex(7);
         }
     }
 
@@ -2677,7 +2898,7 @@ public class InventoryManager : MonoBehaviour
             iVar5 += 26;
         } while (uVar3 < 5);
 
-        local_28 = new Vector2(sVar1 - 0x6b, sVar2 - 0x60);
+        local_28 = new Vector2(sVar1 - 0x6b - 0x28, sVar2 - 0x60 - 0x62);
         FUN_6AF38((RectTransform)suppliesRect.transform, local_28);
     }
 
@@ -3035,8 +3256,8 @@ public class InventoryManager : MonoBehaviour
             DAT_C61FF &= 0xfe;
             FUN_6CD1C(param1[param2], 0, 10, 0x7c0000, 0x950000);
             FUN_6CD1C(param1[param2], 1, 10, 0x930000, 0xc20000);
-            itemsRect.gameObject.SetActive(true);
-            suppliesRect.gameObject.SetActive(true);
+            itemsRect.transform.SetSiblingIndex(8);
+            suppliesRect.transform.SetSiblingIndex(7);
         }
     }
 
@@ -3097,7 +3318,7 @@ public class InventoryManager : MonoBehaviour
             iVar5 += 26;
         } while (uVar3 < 5);
 
-        local_28 = new Vector2(sVar1 - 0x6b, sVar2 - 0x60);
+        local_28 = new Vector2(sVar1 - 0x6b - 0x28, sVar2 - 0x60 - 0x62);
         FUN_6AF38((RectTransform)itemsRect.transform, local_28);
     }
 

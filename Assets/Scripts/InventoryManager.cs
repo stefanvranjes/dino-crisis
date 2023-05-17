@@ -381,6 +381,34 @@ public class InventoryManager : MonoBehaviour
         
     }
 
+    public void ResetValues()
+    {
+        DAT_C6100 = 0;
+        DAT_C6101 = 0;
+        DAT_C6102 = 0;
+        DAT_C6103 = 0;
+        DAT_C6104 = 0;
+        DAT_C6105 = 0;
+        DAT_C6106 = 0;
+        DAT_C6107 = false;
+        DAT_C6108 = 0;
+        DAT_C6109 = 0;
+        DAT_C610A = 0;
+        DAT_C610C = 0;
+        DAT_C610E = 0;
+        DAT_C6110 = 0;
+        DAT_C612E = 0;
+        DAT_C6130[0] = new InventoryWindow();
+        DAT_C61F8 = 0;
+        DAT_C61FC = 0;
+        DAT_C61FD = 0;
+        DAT_C61FE = 0;
+        DAT_C61FF = 0;
+        DAT_C6200 = 0;
+        DAT_C6201 = 0;
+        DAT_C6202 = 0;
+    }
+
     public static void FUN_1BBCC()
     {
         FUN_4A7E8(2, 0xe, false);
@@ -432,8 +460,9 @@ public class InventoryManager : MonoBehaviour
         byte bVar3;
         byte[] local_18 = new byte[3];
 
-        //ResetValues();
+        ResetValues();
         inventoryRect.gameObject.SetActive(true);
+        SaveManager.instance.saveButton.gameObject.SetActive(false);
         GameManager.instance.DAT_2A++;
         //FUN_674E8
         FUN_67BF8(10);
@@ -527,7 +556,7 @@ public class InventoryManager : MonoBehaviour
                         if (DAT_C6100 != 2) //tmp
                         {
                             GameManager.instance.FUN_5C94C(null, 2);
-                            //ResetValues
+                            DAT_C6130[0] = new InventoryWindow();
                             DAT_C6107 = false;
                             DAT_C6101++;
 
@@ -628,7 +657,8 @@ public class InventoryManager : MonoBehaviour
         GameManager.instance.DAT_2A = 0;
         FUN_4A7E8(2, 8, false);
         inventoryRect.gameObject.SetActive(false);
-        //ResetValues
+        SaveManager.instance.saveButton.gameObject.SetActive(true);
+        ResetValues();
     }
 
     private void FUN_66C68(int param1, short param2)
@@ -865,6 +895,9 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_68598()
     {
+        equippedWeaponRect.gameObject.SetActive(true);
+        equippedAmmoRect.gameObject.SetActive(true);
+
         if (DAT_C6130[0].DAT_69 == 0)
             PTR_FUN_A6108[DAT_C6102](DAT_C6130, 0);
 
@@ -953,8 +986,8 @@ public class InventoryManager : MonoBehaviour
             //FUN_6ACDC
         }
 
-        //FUN_6ACDC
-        local_30 = new Vector2(param1[param2].rect[2].DAT_0E, param1[param2].rect[2].DAT_12);
+        FUN_6ACDC((RectTransform)equippedWeaponRect.transform, new Vector2(sVar1 - 600, sVar2 - 100));
+        local_30 = new Vector2(param1[param2].rect[2].DAT_0E - 600, param1[param2].rect[2].DAT_12 - 70);
         bVar4 = FUN_69F30();
 
         if (bVar4)
@@ -962,7 +995,7 @@ public class InventoryManager : MonoBehaviour
             //FUN_6ACDC
         }
 
-        //FUN_6ACDC
+        FUN_6ACDC((RectTransform)equippedAmmoRect.transform, local_30);
 
         if (DAT_C6103 == 0)
             local_30.x = sVar1;
@@ -974,9 +1007,9 @@ public class InventoryManager : MonoBehaviour
 
         local_30.y++;
 
-        if (DAT_C6104 == 0)
+        if (DAT_C6103 == 0)
             equippedWeaponRect.content.GetChild(0).GetComponent<Button>().Select();
-        else if (DAT_C6104 == 1)
+        else if (DAT_C6103 == 1)
             equippedAmmoRect.content.GetChild(0).GetComponent<Button>().Select();
 
         FUN_6895C(param1, param2);
@@ -996,14 +1029,19 @@ public class InventoryManager : MonoBehaviour
         int iVar9;
         uint uVar10;
         uint local_30;
+        int local_2c;
 
         if ((param1[param2].DAT_68 & 1) == 0)
-            return;
+        {
+            weaponListRect.gameObject.SetActive(false);
+        }
         else
         {
+            weaponListRect.gameObject.SetActive(true);
             DAT_C6294 = 2; //write byte instead int??
             sVar1 = param1[param2].rect[1].DAT_0E;
             iVar9 = sVar1;
+            local_2c = param1[param2].rect[1].DAT_12;
 
             if (5 < param1[param2].DAT_5B)
             {
@@ -1021,7 +1059,7 @@ public class InventoryManager : MonoBehaviour
                 //FUN_6ACDC
             }
 
-            //FUN_6ACDC
+            FUN_6ACDC((RectTransform)weaponListRect.transform, new Vector2(iVar9, local_2c - 165));
             uVar10 = 0;
             uVar3 = 0;
             local_30 = (uint)DAT_C6108 >> 4;
@@ -1041,6 +1079,7 @@ public class InventoryManager : MonoBehaviour
                         if (local_30 != 0 && local_30 == (byte)(DialogManager.DAT_A593C[iVar2 + 1] >> 8) >> 4)
                             cVar4 = new Color32(0xba, 0x25, 0x36, 0xff);
 
+                        weaponListRect.content.GetChild((int)uVar10).gameObject.SetActive(true);
                         FUN_67554(weaponListRect.content.GetChild((int)uVar10).GetComponentInChildren<Text>(), DialogManager.DAT_A593C[iVar2 + 2], cVar4);
                         weaponListRect.content.GetChild((int)uVar10).GetChild(0).GetComponent<Image>().sprite = sprites[(byte)DialogManager.DAT_A593C[iVar2] >> 4];
 
@@ -1054,10 +1093,28 @@ public class InventoryManager : MonoBehaviour
                         iVar7 += 0x1a;
                         uVar3++;
                     }
+                    else
+                    {
+                        weaponListRect.content.GetChild((int)uVar10).gameObject.SetActive(false);
+                    }
 
                     uVar10++;
                     iVar6++;
                 } while (uVar10 < param1[param2].DAT_5A);
+
+                while (uVar10 < 5)
+                {
+                    weaponListRect.content.GetChild((int)uVar10).gameObject.SetActive(false);
+                    uVar10++;
+                }
+            }
+            else
+            {
+                weaponListRect.content.GetChild(0).gameObject.SetActive(false);
+                weaponListRect.content.GetChild(1).gameObject.SetActive(false);
+                weaponListRect.content.GetChild(2).gameObject.SetActive(false);
+                weaponListRect.content.GetChild(3).gameObject.SetActive(false);
+                weaponListRect.content.GetChild(4).gameObject.SetActive(false);
             }
         }
     }
@@ -1606,14 +1663,19 @@ public class InventoryManager : MonoBehaviour
         int iVar6;
         int iVar7;
         uint local_38;
+        int local_3c;
 
         if ((param1[param2].DAT_68 & 2) == 0)
-            return;
+        {
+            ammoListRect.gameObject.SetActive(false);
+        }
         else
         {
+            ammoListRect.gameObject.SetActive(true);
             DAT_C6294 = 2; //write byte instead int??
             sVar1 = param1[param2].rect[1].DAT_0E;
             iVar7 = sVar1;
+            local_3c = param1[param2].rect[1].DAT_12;
 
             if (5 < param1[param2].DAT_65)
             {
@@ -1631,7 +1693,7 @@ public class InventoryManager : MonoBehaviour
                 //FUN_6ACDC
             }
 
-            //FUN_6ACDC
+            FUN_6ACDC((RectTransform)ammoListRect.transform, new Vector2(iVar7, local_3c - 165));
             local_38 = ((uint)((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_244[(DAT_C6108 >> 4) - 1] >> 8) + 0x10;
             uVar4 = 0;
 
@@ -1649,6 +1711,7 @@ public class InventoryManager : MonoBehaviour
                         if (local_38 == uVar2)
                             cVar5 = new Color32(0xba, 0x25, 0x36, 0xff);
 
+                        ammoListRect.content.GetChild((int)uVar4).gameObject.SetActive(true);
                         ammoListRect.content.GetChild((int)uVar4).GetChild(0).GetComponent<Image>().sprite = sprites[(byte)DialogManager.DAT_A593C[uVar2 * 6] >> 4];
                         FUN_67554(ammoListRect.content.GetChild((int)uVar4).GetComponentInChildren<Text>(), DialogManager.DAT_A593C[uVar2 * 6 + 2], cVar5);
                         ammoListRect.content.GetChild((int)uVar4).GetComponentsInChildren<Text>()[1].text = DAT_C6298[param1[param2].DAT_5E[iVar6] - 0x10].ToString();
@@ -1659,9 +1722,27 @@ public class InventoryManager : MonoBehaviour
                             ammoListRect.content.GetChild((int)uVar4).GetComponent<Button>().Select();
                         }
                     }
+                    else
+                    {
+                        ammoListRect.content.GetChild((int)uVar4).gameObject.SetActive(false);
+                    }
 
                     uVar4++;
                 } while (uVar4 < param1[param2].DAT_64);
+
+                while (uVar4 < 5)
+                {
+                    ammoListRect.content.GetChild((int)uVar4).gameObject.SetActive(false);
+                    uVar4++;
+                }
+            }
+            else
+            {
+                ammoListRect.content.GetChild(0).gameObject.SetActive(false);
+                ammoListRect.content.GetChild(1).gameObject.SetActive(false);
+                ammoListRect.content.GetChild(2).gameObject.SetActive(false);
+                ammoListRect.content.GetChild(3).gameObject.SetActive(false);
+                ammoListRect.content.GetChild(4).gameObject.SetActive(false);
             }
         }
     }
@@ -3396,6 +3477,14 @@ public class InventoryManager : MonoBehaviour
                 itemsRect.content.GetChild((int)uVar6).gameObject.SetActive(false);
                 uVar6++;
             }
+        }
+        else
+        {
+            itemsRect.content.GetChild(0).gameObject.SetActive(false);
+            itemsRect.content.GetChild(1).gameObject.SetActive(false);
+            itemsRect.content.GetChild(2).gameObject.SetActive(false);
+            itemsRect.content.GetChild(3).gameObject.SetActive(false);
+            itemsRect.content.GetChild(4).gameObject.SetActive(false);
         }
 
         FUN_67AD8();

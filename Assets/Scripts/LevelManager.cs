@@ -9,7 +9,11 @@ public class LevelManager : MonoBehaviour
     public GianScriptableObject[] gians;
     public IniScriptableObject[] inis;
     public delegate void FUN_B58C0(CriPlayer p);
+    public delegate void FUN_C1CF8(CriInteract i);
+    public delegate void FUN_C2570(CriStatic s);
     public FUN_B58C0[] PTR_FUN_B58C0;
+    public FUN_C1CF8[] PTR_FUN_C1CF8;
+    public FUN_C2570[] PTR_FUN_C2570;
 
     private void Awake()
     {
@@ -35,6 +39,24 @@ public class LevelManager : MonoBehaviour
     public virtual void Initialize()
     {
 
+    }
+
+    public void FUN_4A274()
+    {
+        CriStatic pcVar1;
+        int iVar2;
+
+        iVar2 = 0;
+
+        do
+        {
+            pcVar1 = SceneManager.instance.DAT_7CDC[iVar2];
+
+            if ((pcVar1.flags & 1) != 0)
+                PTR_FUN_C2570[pcVar1.DAT_2E](pcVar1);
+
+            iVar2++;
+        } while (iVar2 < 36);
     }
 
     public void FUN_4A3C4()
@@ -71,5 +93,25 @@ public class LevelManager : MonoBehaviour
     public static void FUN_2FAB0(CriPlayer param1)
     {
         param1.FUN_2FAB0();
+    }
+
+    public static void FUN_4A26C(CriStatic param1)
+    {
+        param1.FUN_4A26C();
+    }
+
+    public static void FUN_7F6F8(CriStatic param1)
+    {
+        param1.FUN_7F6F8();
+    }
+
+    public static void FUN_7F750(CriStatic param1)
+    {
+        param1.FUN_7F750();
+    }
+
+    public static void FUN_7F7E4(CriStatic param1)
+    {
+        param1.FUN_7F7E4();
     }
 }

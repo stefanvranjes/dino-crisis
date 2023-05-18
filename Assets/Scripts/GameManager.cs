@@ -794,6 +794,11 @@ public class GameManager : MonoBehaviour
             SceneManager.instance.FUN_555E8();
             //...
             LevelManager.instance.FUN_4A3C4();
+            bVar1 = InventoryManager.FUN_4A87C(1, 0xd);
+
+            if (!bVar1)
+                LevelManager.instance.FUN_4A274();
+
             //...
             SceneManager.instance.FUN_1A8AC();
 

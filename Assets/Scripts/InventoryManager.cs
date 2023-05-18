@@ -147,6 +147,8 @@ public class InventoryManager : MonoBehaviour
         0x40, 0x20, 0x100,
         0x80
     };
+    public ushort DAT_C60F0;
+    public ushort DAT_C60F2;
     public byte DAT_C6100;
     public byte DAT_C6101;
     public byte DAT_C6102;
@@ -464,7 +466,7 @@ public class InventoryManager : MonoBehaviour
         inventoryRect.gameObject.SetActive(true);
         SaveManager.instance.saveButton.gameObject.SetActive(false);
         GameManager.instance.DAT_2A++;
-        //FUN_674E8
+        FUN_674E8(0xe, 0xe);
         FUN_67BF8(10);
         DAT_C61F8 = DAT_B7A60[0];
         FUN_4A7E8(1, 2, false);
@@ -790,6 +792,16 @@ public class InventoryManager : MonoBehaviour
         } while (true);
     }
 
+    public uint FUN_674E8(ushort param1, ushort param2)
+    {
+        uint uVar1;
+
+        uVar1 = (uint)DAT_C60F0 << 0x10 | DAT_C60F2;
+        DAT_C60F0 = param1;
+        DAT_C60F2 = param2;
+        return uVar1;
+    }
+
     private void FUN_6750C(ushort[] param1, int param2, Text param3, Color32 param4)
     {
         FUN_67CD4(param1, param2, param3, param4);
@@ -809,7 +821,7 @@ public class InventoryManager : MonoBehaviour
             FUN_67554(descText, DAT_C610A, new Color32(0, 0, 0, 0xff));
     }
 
-    private byte FUN_67BF8(byte param1)
+    public byte FUN_67BF8(byte param1)
     {
         byte bVar1;
         int puVar2;

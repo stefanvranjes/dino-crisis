@@ -35,7 +35,7 @@ public class SceneManager : MonoBehaviour
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriParticle[] DAT_5FCC; //gp+5fcch...gp+7cdch
     public CriStatic[] DAT_7CDC; //gp+7cdch...gp+8ffch
-    public CriUnknown[] DAT_8FFC; //gp+8ffch...gp+9164h
+    public CriInteract[] DAT_8FFC; //gp+8ffch...gp+9164h
     public CriTrigger[] DAT_9EEC; //gp+9eech...gp+9fdch
     public Trigger6[] DAT_9FE0; //gp+9fe0...gp+a09ch
     public CriCamera DAT_C3230;
@@ -120,7 +120,7 @@ public class SceneManager : MonoBehaviour
         DAT_1C9C = new CriBone[100];
         DAT_5FCC = new CriParticle[60];
         DAT_7CDC = new CriStatic[40];
-        DAT_8FFC = new CriUnknown[10];
+        DAT_8FFC = new CriInteract[10];
         DAT_9EEC = new CriTrigger[10];
         DAT_9FE0 = new Trigger6[4];
         DAT_D7C0 = new CriScene[10];
@@ -157,7 +157,7 @@ public class SceneManager : MonoBehaviour
         {
             GameObject obj = new GameObject();
             obj.name = "CriUnknown (Instance)";
-            DAT_8FFC[i] = obj.AddComponent<CriUnknown>();
+            DAT_8FFC[i] = obj.AddComponent<CriInteract>();
         }
 
         for (int i = 0; i < 10; i++)
@@ -815,10 +815,10 @@ public class SceneManager : MonoBehaviour
         return null;
     }
 
-    public CriUnknown FUN_5FF08()
+    public CriInteract FUN_5FF08()
     {
         int iVar1;
-        CriUnknown pbVar2;
+        CriInteract pbVar2;
         int iVar3;
 
         iVar3 = 10;
@@ -1571,8 +1571,8 @@ public class SceneManager : MonoBehaviour
 
     public void FUN_23068(byte param1, byte param2)
     {
-        CriUnknown pcVar1;
-        CriUnknown pbVar2;
+        CriInteract pcVar1;
+        CriInteract pbVar2;
         int pbVar3;
         int iVar4;
         CriSkinned oVar4;
@@ -1601,11 +1601,11 @@ public class SceneManager : MonoBehaviour
 
     public void FUN_22F9C()
     {
-        CriUnknown pbVar1;
+        CriInteract pbVar1;
         int pbVar2;
         int iVar3;
         short sVar4;
-        CriUnknown pbVar5;
+        CriInteract pbVar5;
 
         iVar3 = 9;
         pbVar2 = 0;

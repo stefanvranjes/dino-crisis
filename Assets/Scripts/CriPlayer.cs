@@ -1690,7 +1690,7 @@ public class CriPlayer : CriSkinned
     private void FUN_4F284()
     {
         byte bVar1;
-        CriUnknown oVar2;
+        CriInteract oVar2;
 
         bVar1 = DAT_240;
         oVar2 = SceneManager.instance.FUN_5FF08();
@@ -6497,7 +6497,7 @@ public class CriPlayer : CriSkinned
 
     private void FUN_44E30()
     {
-        CriUnknown oVar1;
+        CriInteract oVar1;
         CriBone oVar2;
 
         if (DAT_202 == 0)

@@ -941,7 +941,7 @@ public class CriSkinned : CriObject
     {
         bool bVar2;
         CriStatic oVar3;
-        CriUnknown oVar4;
+        CriInteract oVar4;
         CriBone oVar5;
 
         oVar3 = SceneManager.instance.FUN_5FE78();

@@ -42,6 +42,11 @@ public class CriStatic : CriObject
             FUN_7F734,
             FUN_7F748
         };
+        PTR_FUN_7B20 = new FUN_7B20[2]
+        {
+            FUN_6CB0,
+            FUN_6CF4,
+        };
     }
 
     protected override void Start()
@@ -305,10 +310,15 @@ public class CriStatic : CriObject
         }
     }
 
+    public void FUN_4A26C()
+    {
+        return;
+    }
+
     //FUN_6C74 (ST1)
     public void FUN_6C74()
     {
-
+        PTR_FUN_7B20[tags]();
     }
 
     //FUN_6CB0 (ST1)
@@ -319,8 +329,19 @@ public class CriStatic : CriObject
         //FUN_6D14
     }
 
+    private void FUN_6CF4()
+    {
+        //FUN_6ED4
+    }
+
     //FUN_6D14 (ST1)
     private void FUN_6D14()
+    {
+
+    }
+
+    //FUN_6ED4 (ST1)
+    private void FUN_6ED4()
     {
 
     }

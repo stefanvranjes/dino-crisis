@@ -6,6 +6,7 @@ using UnityEngine;
 public class ST1 : LevelManager
 {
     public FUN_B58C0[] DAT_7680 = new FUN_B58C0[3] { FUN_4CFDC, FUN_54EF8, FUN_2FAB0 }; //0x7680 (ST1)
+    public FUN_C2570[] DAT_76A8 = new FUN_C2570[5] { FUN_4A26C, FUN_7F6F8, FUN_7F750, FUN_6C74, FUN_7F7E4 }; //0x76A8 (ST1)
     public byte[][] DAT_7594 = new byte[3][]
     {
         new byte[48] { 29, 7, 10, 11, 27, 15, 13, 0, 32, 25, 21, 19, 33, 30, 28, 25, 34, 0, 0, 0, 35, 31, 0, 0, 22, 0, 30, 27, 23, 0, 0, 0, 16, 0, 31, 31, 17, 0, 0, 0, 24, 0, 0, 0, 25, 0, 0, 0 },
@@ -38,6 +39,7 @@ public class ST1 : LevelManager
         DAT_74A4 = Resources.Load<TrgScriptableObject>("DATA/ST1/ST1_01");
         //...
         PTR_FUN_B58C0 = DAT_7680;
+        PTR_FUN_C2570 = DAT_76A8;
         //...
         uVar3 = 2;
 
@@ -81,5 +83,11 @@ public class ST1 : LevelManager
 
         if (!bVar2)
             SceneManager.instance.DAT_9EEC[1].DAT_03 |= 2;
+    }
+
+    //FUN_6C74 (ST1)
+    public static void FUN_6C74(CriStatic param1)
+    {
+        param1.FUN_6C74();
     }
 }

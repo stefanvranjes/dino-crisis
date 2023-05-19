@@ -2990,6 +2990,102 @@ public class GameManager : MonoBehaviour
         } while (iVar3 < 4);
     }
 
+    private uint FUN_82208(CriStatic param1, CriSkinned param2)
+    {
+        sbyte sVar1;
+        int iVar2;
+        CriObject oVar2;
+        int iVar3;
+        bool bVar3;
+        CapsuleCollider psVar4;
+        int iVar5;
+        Vector3Int v0;
+        Vector3Int v1;
+        Matrix3x3 MStack96 = new Matrix3x3();
+        Vector4Int auStack136;
+        Vector4Int local_90;
+        Vector3Int local_80;
+        Vector3Int local_70;
+        Vector2Int[] local_40 = new Vector2Int[2];
+        Vector2Int[] local_38 = new Vector2Int[2];
+        Vector2Int[] local_30 = new Vector2Int[4];
+
+        FUN_81720(param1, local_30);
+        Utilities.RotMatrix_gte(ref param2.vr, ref MStack96);
+        sVar1 = (sbyte)(param2.DAT_12F - 1);
+
+        if (param2.DAT_12F != 0)
+        {
+            psVar4 = param2.PTR_124[param2.DAT_124];
+            v0 = psVar4.pos;
+            iVar5 = 0;
+
+            do
+            {
+                v1 = Utilities.ApplyMatrixSV(ref MStack96, ref v0);
+                local_90 = new Vector4Int(v1.x, v1.y, v1.z, 0);
+
+                if (psVar4.bone == -1)
+                {
+                    local_90.x += param2.screen.x;
+                    local_90.z += param2.screen.z;
+                }
+                else
+                {
+                    oVar2 = Utilities.FUN_601C8(param2.skeleton, psVar4.bone);
+                    local_90.x += oVar2.screen.x;
+                    local_90.z += oVar2.screen.z;
+                }
+
+                iVar2 = 0;
+                local_90.w = psVar4.radius;
+                iVar3 = 0;
+
+                do
+                {
+                    iVar3 >>= 0x10;
+                    local_40[0] = local_30[iVar3];
+                    local_40[1] = local_30[iVar3 + 1];
+                    bVar3 = FUN_84338(local_40, local_90);
+
+                    if (bVar3)
+                    {
+                        iVar2 = Utilities.FUN_61620(new Vector4Int(local_40[0].x, local_40[0].y, local_40[1].x, local_40[1].y));
+                        return ((uint)iVar2 - 0x400 & 0xfff) << 0x10 | 1;
+                    }
+
+                    local_38[0] = new Vector2Int(param2.DAT_34.x, param2.DAT_34.z);
+                    local_38[1] = new Vector2Int(local_90.x, local_90.z);
+                    auStack136 = new Vector4Int();
+                    bVar3 = FUN_84008(local_40, local_38, ref auStack136);
+
+                    if (bVar3)
+                    {
+                        local_80 = new Vector3Int(param2.DAT_34.x - local_40[0].x, 0, param2.DAT_34.z - local_40[0].y);
+                        local_70 = new Vector3Int(local_40[1].x - local_40[0].x, 0, local_40[1].y - local_40[0].y);
+                        local_80 = Utilities.OuterProduct0(ref local_80, ref local_70);
+
+                        if (-1 < local_80.y)
+                        {
+                            iVar2 = Utilities.FUN_61620(new Vector4Int(local_40[0].x, local_40[0].y, local_40[1].x, local_40[1].y));
+                            return ((uint)iVar2 - 0x400 & 0xfff) << 0x10 | 1;
+                        }
+                    }
+
+                    iVar2++;
+                    iVar3 = iVar2 * 0x10000;
+                } while (iVar2 * 0x10000 >> 0x10 < 4);
+
+                iVar5++;
+                sVar1--;
+                psVar4 = param2.PTR_124[param2.DAT_124 + iVar5];
+                v0 = psVar4.pos;
+            } while (sVar1 != -1);
+        }
+
+        return 0;
+    }
+
     private short[] FUN_82730(short[] param1, Vector2Int[] param2)
     {
         uint uVar1;
@@ -3326,6 +3422,38 @@ public class GameManager : MonoBehaviour
 
         bVar3 = false;
         return bVar3;
+    }
+
+    public uint FUN_835F4(CriStatic param1)
+    {
+        uint uVar1;
+        CriSkinned piVar2;
+        CriSkinned oVar3;
+        uint uVar4;
+
+        if ((param1.flags & 2) != 0)
+        {
+            oVar3 = SceneManager.instance.DAT_27C[0];
+            uVar4 = 0;
+
+            do
+            {
+                piVar2 = SceneManager.instance.DAT_27C[uVar4];
+
+                if ((piVar2.flags & 1) != 0 && (piVar2.DAT_12C & 8) == 0 && piVar2.PTR_124 != null)
+                {
+                    uVar1 = FUN_82208(param1, oVar3);
+
+                    if ((uVar1 & 1) != 0)
+                        return uVar1 & 0xffff0000 | uVar4 & 0xff;
+                }
+
+                uVar4++;
+                oVar3 = SceneManager.instance.DAT_27C[uVar4];
+            } while (uVar4 < 11);
+        }
+
+        return 0xff;
     }
 
     public uint FUN_8383C(uint param1)

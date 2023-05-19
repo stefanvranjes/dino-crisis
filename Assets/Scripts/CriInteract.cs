@@ -298,6 +298,41 @@ public class CriInteract : MonoBehaviour
         oVar1.flags &= 0xfffffffd;
     }
 
+    private void FUN_219AC()
+    {
+        uint uVar1;
+        sbyte sVar3;
+        int iVar4;
+        CriSkinned oVar5;
+        CriStatic oVar6;
+        uint uVar8;
+
+        uVar8 = 0;
+        oVar6 = SceneManager.instance.DAT_7CDC[DAT_04];
+
+        do
+        {
+            //...
+            uVar1 = GameManager.instance.FUN_835F4(oVar6);
+
+            if ((uVar1 & 0xff) != 0xff)
+            {
+                oVar5 = SceneManager.instance.DAT_27C[uVar1 & 0xff];
+                iVar4 = (int)uVar1 >> 0x10;
+
+                if (oVar5.tags == 0)
+                    oVar5.FUN_21CCC(oVar6, iVar4);
+
+                sVar3 = oVar5.tags;
+
+                if (sVar3 == 2)
+                {
+
+                }
+            }
+        }
+    }
+
     private void FUN_5FF98()
     {
         DAT_00 = 0;

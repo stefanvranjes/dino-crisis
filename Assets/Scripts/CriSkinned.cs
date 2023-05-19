@@ -63,6 +63,9 @@ public class CriSkinned : CriObject
     public Vector3Int DAT_14C; //0x14C
     public short DAT_152; //0x152
     public CriSkinned DAT_154; //0x154
+    public short DAT_158; //0x158
+    public short DAT_15A; //0x15A
+    public short DAT_15C; //0x15C
     public byte DAT_162; //0x162
     public byte DAT_163; //0x163
     public byte DAT_164; //0x164
@@ -238,6 +241,9 @@ public class CriSkinned : CriObject
         DAT_14C = Vector3Int.zero;
         DAT_152 = 0;
         DAT_154 = null;
+        DAT_158 = 0;
+        DAT_15A = 0;
+        DAT_15C = 0;
         DAT_162 = 0;
         DAT_163 = 0;
         DAT_164 = 0;
@@ -1094,6 +1100,28 @@ public class CriSkinned : CriObject
 
         DAT_146 = param2;
         DAT_144 = (ushort)(((param1 & 0xff) - 1) * 400 | 0x8000 | (ushort)(iVar1 & (int)uVar2));
+    }
+
+    public void FUN_21CCC(CriObject param1, int param2)
+    {
+        if ((DAT_11E & 8) == 0)
+        {
+            //...
+            DAT_3C = 5;
+            DAT_3D = 100;
+            DAT_3E = 0;
+            DAT_3F = 0;
+            DAT_177 = 30;
+            DAT_15C = 0;
+            DAT_158 = 0;
+            DAT_15A = (short)param2;
+            DAT_3F = (byte)((((param2 + 0x800 & 0xfff) - vr.y & 0xfff) + 0x200 & 0xfff) >> 0x10);
+            DAT_11E |= 0x80;
+            DAT_12C |= 8;
+            GameManager.instance.FUN_5C94C(param1, 219);
+            DAT_12C |= 0x200;
+            //...
+        }
     }
 
     public void FUN_2D704()

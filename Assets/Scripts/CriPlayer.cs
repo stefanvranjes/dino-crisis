@@ -34,6 +34,7 @@ public class CriPlayer : CriSkinned
     public byte BDAT_1D8; //0x1D8
     public CriStatic DAT_1D8; //0x1D8
     public byte DAT_1D9; //0x1D9
+    public ushort UDAT_1DA; //0x1DA
     public byte DAT_1DA; //0x1DA
     public sbyte DAT_1DB; //0x1DB
     public CriPlayer DAT_1DC; //0x1DC
@@ -98,6 +99,11 @@ public class CriPlayer : CriSkinned
     public byte DAT_227; //0x227
     public byte DAT_240; //0x240
     public ushort[] DAT_244; //0x244
+    private static uint[] DAT_9922C = new uint[]
+    {
+        0x8019113c, 0x80191884, 0x801914e0, 0x80191c28
+    };
+    private delegate void FUN_9923C();
     private delegate void FUN_9AD14();
     private delegate void FUN_9AD60();
     private delegate void FUN_9AD6C();
@@ -222,6 +228,7 @@ public class CriPlayer : CriSkinned
     private delegate void FUN_9D1AC();
     private delegate void FUN_9D1B8();
     private delegate void FUN_9D1F4();
+    private FUN_9923C[] PTR_FUN_9923C;
     private FUN_9AD14[] PTR_FUN_9AD14;
     private FUN_9AD60[] PTR_FUN_9AD60;
     private FUN_9AD6C[] PTR_FUN_9AD6C;
@@ -450,6 +457,11 @@ public class CriPlayer : CriSkinned
     protected override void Awake()
     {
         base.Awake();
+        PTR_FUN_9923C = new FUN_9923C[2]
+        {
+            FUN_21D9C,
+            FUN_21E10
+        };
         PTR_FUN_9AD14 = new FUN_9AD14[19]
         {
             FUN_2B828,
@@ -1450,6 +1462,7 @@ public class CriPlayer : CriSkinned
         BDAT_1D8 = 0;
         DAT_1D8 = null;
         DAT_1D9 = 0;
+        UDAT_1DA = 0;
         DAT_1DA = 0;
         DAT_1DB = 0;
         DAT_1DC = null;
@@ -6507,7 +6520,7 @@ public class CriPlayer : CriSkinned
             if (oVar1 != null)
             {
                 oVar1.DAT_01 = 11;
-                oVar1.DAT_0A = 12;
+                oVar1.BDAT_0A = 12;
                 oVar2 = skeleton;
                 //...
                 oVar1.PTR_18 = oVar2;
@@ -20235,5 +20248,120 @@ public class CriPlayer : CriSkinned
     {
         DAT_227 &= 0x7f;
         GameManager.instance.PTR_FUN_14C(this);
+    }
+
+    public void FUN_21B0C(CriObject param1, short param2, CriInteract param3)
+    {
+        byte bVar1;
+        ushort uVar2;
+        CriPlayer oVar3;
+
+        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        if ((oVar3.DAT_11E & 8) == 0 || oVar3.DAT_1DC != this && 0 < health)
+        {
+            uVar2 = (ushort)(param2 + 0x800 & 0xfff);
+            DAT_3C = 4;
+            DAT_3D = 3;
+            DAT_3E = 0;
+            DAT_3F = 0;
+            UDAT_1DA = uVar2;
+            DAT_177 = 30;
+            BDAT_1C0 |= 4;
+            GameManager.instance.FUN_5C94C(param1, 219);
+
+            if (param3.DAT_0B == 0)
+                DAT_140 |= 1;
+
+            flags |= 4;
+            bVar1 = (byte)(BDAT_1C0 & 0xef);
+            BDAT_1C0 = (sbyte)bVar1;
+
+            if (0x7ff < ((uVar2 - (ushort)vr.y & 0xfff) + 0x400 & 0xfff))
+            {
+                BDAT_1C0 = (sbyte)(bVar1 | 0x10);
+                UDAT_1DA = (ushort)(UDAT_1DA + 0x800 & 0xfff);
+            }
+        }
+    }
+
+    public void FUN_21C18(CriObject param1, short param2, CriInteract param3)
+    {
+        CriPlayer oVar1;
+
+        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+
+        if ((DAT_11E & 8) == 0 || oVar1.DAT_1DC != this && 0 < health)
+        {
+            DAT_3C = 4;
+            DAT_3D = 6;
+            DAT_3E = 0;
+            DAT_3F = 0;
+            DAT_1EC = param2;
+            DAT_177 = 30;
+            GameManager.instance.FUN_5C94C(param1, 219);
+
+            if (param3.DAT_0B == 0)
+                DAT_140 |= 1;
+
+            flags |= 4;
+        }
+    }
+
+    public void FUN_21CCC(CriObject param1, int param2)
+    {
+        if ((DAT_11E & 8) == 0)
+        {
+            GameManager.instance.PTR_FUN_148 = GameManager.FUN_21E7C;
+            DAT_3C = 5;
+            DAT_3D = 100;
+            DAT_3E = 0;
+            DAT_3F = 0;
+            DAT_177 = 30;
+            DAT_158 = new Vector3Int(0, param2, 0);
+            DAT_3F = (byte)((((param2 + 0x800 & 0xfff) - vr.y & 0xfff) + 0x200 & 0xfff) >> 0x10);
+            DAT_11E |= 0x80;
+            DAT_12C |= 8;
+            GameManager.instance.FUN_5C94C(param1, 219);
+            DAT_12C |= 0x200;
+            //...
+        }
+    }
+
+    private void FUN_21D9C()
+    {
+        DAT_3E++;
+        FUN_609C8((TodScriptableObject)GameManager.instance.playerCore.objects[DAT_9922C[DAT_3F]], 0, 0, 0);
+        DAT_40 = new Vector3Int(0, 0, 180);
+        DAT_18D = true;
+        GameManager.instance.FUN_5C94C(this, 3);
+    }
+
+    private void FUN_21E10()
+    {
+        bool bVar1;
+
+        if (DAT_40.z < 1)
+            DAT_40.z = 0;
+        else
+            DAT_40.z -= 20;
+
+        bVar1 = FUN_60AB4();
+
+        if (bVar1)
+        {
+            DAT_3C = 1;
+            DAT_3D = 0;
+            DAT_3E = 0;
+            DAT_3F = 0;
+            DAT_11E &= 0x7f;
+            DAT_12C &= 0xfff7;
+        }
+    }
+
+    public void FUN_21E7C()
+    {
+        PTR_FUN_9923C[DAT_3E]();
+        Utilities.RotMatrix_gte(ref DAT_158, ref cTransform.rotation);
     }
 }

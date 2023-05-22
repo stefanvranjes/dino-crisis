@@ -8394,6 +8394,11 @@ public class GameManager : MonoBehaviour
         return iVar3;
     }
 
+    public static void FUN_21E7C(CriPlayer param1)
+    {
+        param1.FUN_21E7C();
+    }
+
     public static void FUN_2B6F4(CriPlayer param1)
     {
         param1.FUN_2B6F4();

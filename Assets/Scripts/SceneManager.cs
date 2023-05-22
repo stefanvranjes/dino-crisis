@@ -3374,4 +3374,51 @@ public class SceneManager : MonoBehaviour
 
         fVar1.DAT_01 &= (byte)~param2;
     }
+
+    public bool FUN_836F0(ref Vector3Int param1, Vector3Int param2)
+    {
+        bool bVar1;
+        bool bVar2;
+        int iVar3;
+        int iVar4;
+
+        if (-1 < param1.y)
+            param1.y = 0;
+
+        iVar3 = (param2.y / 0x1a9) * -0x1000000 >> 0x18;
+        iVar4 = (param1.y / 0x1a9) * -0x1000000 >> 0x18;
+        bVar1 = iVar4 <= iVar3;
+
+        if (iVar4 < iVar3)
+        {
+            if (bVar1)
+            {
+                do
+                {
+                    bVar2 = FUN_64210(ref param1, (byte)iVar3, 0);
+                    iVar3--;
+
+                    if (bVar2)
+                        return true;
+                } while (iVar4 <= iVar3 * 0x10000 >> 0x10);
+
+                return false;
+            }
+        }
+        else
+        {
+            while (bVar1)
+            {
+                bVar2 = FUN_64210(ref param1, (byte)iVar4, 0);
+                iVar4++;
+
+                if (bVar2)
+                    return true;
+
+                bVar1 = iVar4 * 0x10000 >> 0x10 <= iVar3;
+            }
+        }
+
+        return false;
+    }
 }

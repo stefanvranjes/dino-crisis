@@ -80,6 +80,41 @@ public class LevelManager : MonoBehaviour
         } while (iVar3 != -1);
     }
 
+    public static void FUN_20A98(CriInteract param1)
+    {
+        param1.FUN_20A98();
+    }
+
+    public static void FUN_20AA0(CriInteract param1)
+    {
+        param1.FUN_20AA0();
+    }
+
+    public static void FUN_20AA8(CriInteract param1)
+    {
+        param1.FUN_20AA8();
+    }
+
+    public static void FUN_20B0C(CriInteract param1)
+    {
+        param1.FUN_20B0C();
+    }
+
+    public static void FUN_21758(CriInteract param1)
+    {
+        param1.FUN_21758();
+    }
+
+    public static void FUN_21ECC(CriInteract param1)
+    {
+        param1.FUN_21ECC();
+    }
+
+    public static void FUN_22178(CriInteract param1)
+    {
+        param1.FUN_22178();
+    }
+
     public static void FUN_54EF8(CriPlayer param1)
     {
         param1.FUN_54EF8();

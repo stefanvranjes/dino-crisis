@@ -15,7 +15,7 @@ public class CriInteract : MonoBehaviour
     public byte BDAT_08;
     public bool DAT_09;
     public short DAT_0A;
-    public byte BDAT_0A;
+    public sbyte BDAT_0A;
     public sbyte DAT_0B;
     public short DAT_0C;
     public byte BDAT_0C;
@@ -35,11 +35,17 @@ public class CriInteract : MonoBehaviour
     public byte DAT_19;
     public CriStatic DAT_1C;
     public CriSkinned DAT_20;
+    private delegate void FUN_54(); //0x54 (ST1)
+    private delegate void FUN_7984(); //0x7984 (ST1)
+    private delegate void FUN_7A8C(); //0x7A8C (ST1)
     private delegate void FUN_99208();
     private delegate void FUN_99214();
     private delegate void FUN_99224(CriStatic o);
     private delegate void FUN_99250();
     private delegate void FUN_99260();
+    private FUN_54[] PTR_FUN_54; //0x54 (ST1)
+    private FUN_7984[] PTR_FUN_7984; //0x7984 (ST1)
+    private FUN_7A8C[] PTR_FUN_7A8C; //0x7A8C (ST1)
     private FUN_99208[] PTR_FUN_99208;
     private FUN_99214[] PTR_FUN_99214;
     private static byte[] DAT_99220 = new byte[2] { 217, 218 };
@@ -50,6 +56,35 @@ public class CriInteract : MonoBehaviour
 
     void Awake()
     {
+        PTR_FUN_54 = new FUN_54[6]
+        {
+            FUN_3018,
+            FUN_30A8,
+            FUN_3138,
+            FUN_31C8,
+            FUN_2F84,
+            FUN_3270
+        };
+        PTR_FUN_7984 = new FUN_7984[7]
+        {
+            FUN_2E74,
+            FUN_2F24,
+            FUN_3378,
+            FUN_33DC,
+            FUN_34D0,
+            FUN_3500,
+            FUN_5FF98
+        };
+        PTR_FUN_7A8C = new FUN_7A8C[]
+        {
+            FUN_51E4,
+            FUN_52C8,
+            FUN_54D8,
+            FUN_55CC,
+            FUN_56B4,
+            FUN_570C,
+            FUN_5FF98
+        };
         PTR_FUN_99208 = new FUN_99208[3]
         {
             FUN_20B48,
@@ -285,12 +320,12 @@ public class CriInteract : MonoBehaviour
             if (DAT_03 == 1)
             {
                 bVar2 = InventoryManager.FUN_4A87C(0, DAT_05);
-                BDAT_0A = (byte)(bVar2 ? 1 : 0);
+                BDAT_0A = (sbyte)(bVar2 ? 1 : 0);
 
                 if (DAT_09 != bVar2)
                 {
                     GameManager.instance.FUN_5C94C(oVar3, DAT_99220[BDAT_0A]);
-                    DAT_0B = (sbyte)BDAT_0A;
+                    DAT_0B = BDAT_0A;
                 }
 
                 DAT_09 = BDAT_0A != 0;
@@ -495,7 +530,8 @@ public class CriInteract : MonoBehaviour
             }
         }
 
-        //...
+        PTR_FUN_7984[DAT_03]();
+        //FUN_3540
     }
 
     //FUN_2E74 (ST1)
@@ -504,7 +540,7 @@ public class CriInteract : MonoBehaviour
         SceneManager.instance.FUN_26EBC(2, 0);
         SceneManager.instance.FUN_26504(0, -0x1140, -0x778, 0x200);
         DAT_08 = 10000;
-        BDAT_0A = 236;
+        BDAT_0A = -20;
         DAT_0B = 40;
         BDAT_0C = 4;
         BDAT_0E = 100;
@@ -520,5 +556,616 @@ public class CriInteract : MonoBehaviour
         DAT_17 = 0;
         DAT_0D = 0;
         DAT_03++;
+    }
+
+    //FUN_2F24 (ST1)
+    private void FUN_2F24()
+    {
+        ushort uVar1;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0xf000) != 0)
+            GameManager.instance.FUN_5C94C(null, 145);
+
+        if (5U < BDAT_0C)
+        {
+            if ((InputManager.controllers[0].DAT_B5898 & 4) != 0)
+            {
+                uVar1 = (ushort)(DAT_08 - 100);
+                DAT_08 = (short)uVar1;
+
+                if (uVar1 < 7000U)
+                    DAT_08 = 7000;
+            }
+
+            if ((InputManager.controllers[0].DAT_B5898 & 8) != 0)
+            {
+                uVar1 = (ushort)(DAT_08 + 100);
+                DAT_08 = (short)uVar1;
+
+                if (10000 < uVar1)
+                    DAT_08 = 10000;
+            }
+
+            return;
+        }
+
+        PTR_FUN_54[BDAT_0C]();
+    }
+
+    //FUN_2F84 (ST1)
+    private void FUN_2F84()
+    {
+        ushort uVar1;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x1000) != 0)
+            BDAT_0C = 0;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x8000) != 0)
+            BDAT_0C = 1;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) != 0)
+            BDAT_0C = 2;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0)
+            BDAT_0C = 5;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) != 0)
+        {
+            DAT_03 = 2;
+            GameManager.instance.FUN_5C94C(null, 146);
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x40) != 0)
+            BDAT_0C = 5;
+
+        if ((InputManager.controllers[0].DAT_B5898 & 4) != 0)
+        {
+            uVar1 = (ushort)(DAT_08 - 100);
+            DAT_08 = (short)uVar1;
+
+            if (uVar1 < 7000U)
+                DAT_08 = 7000;
+        }
+
+        if ((InputManager.controllers[0].DAT_B5898 & 8) != 0)
+        {
+            uVar1 = (ushort)(DAT_08 + 100);
+            DAT_08 = (short)uVar1;
+
+            if (10000U < uVar1)
+                DAT_08 = 10000;
+        }
+    }
+
+    //FUN_3018 (ST1)
+    private void FUN_3018()
+    {
+        sbyte sVar1;
+        ushort uVar2;
+
+        if ((InputManager.controllers[0].DAT_B5898 & 0x10a0) != 0)
+        {
+            sVar1 = (sbyte)(BDAT_0A + 1);
+            BDAT_0A = sVar1;
+
+            if (40 < sVar1)
+                BDAT_0A = 40;
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x8000) != 0)
+            BDAT_0C = 1;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) != 0)
+            BDAT_0C = 2;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0)
+            BDAT_0C = 4;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x40) != 0)
+            BDAT_0C = 5;
+
+        if ((InputManager.controllers[0].DAT_B5898 & 4) != 0)
+        {
+            uVar2 = (ushort)(DAT_08 - 100);
+            DAT_08 = (short)uVar2;
+
+            if (uVar2 < 7000U)
+                DAT_08 = 7000;
+        }
+
+        if ((InputManager.controllers[0].DAT_B5898 & 8) != 0)
+        {
+            uVar2 = (ushort)(DAT_08 + 100);
+            DAT_08 = (short)uVar2;
+
+            if (10000U < uVar2)
+                DAT_08 = 10000;
+        }
+    }
+
+    //FUN_30A8 (ST1)
+    private void FUN_30A8()
+    {
+        sbyte sVar1;
+        ushort uVar2;
+
+        if ((InputManager.controllers[0].DAT_B5898 & 0x80a0) != 0)
+        {
+            sVar1 = (sbyte)(DAT_0B - 1);
+            DAT_0B = sVar1;
+
+            if (sVar1 < -40)
+                DAT_0B = -40;
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x1000) != 0)
+            BDAT_0C = 0;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) != 0)
+            BDAT_0C = 4;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0)
+            BDAT_0C = 3;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x40) != 0)
+            BDAT_0C = 5;
+
+        if ((InputManager.controllers[0].DAT_B5898 & 4) != 0)
+        {
+            uVar2 = (ushort)(DAT_08 - 100);
+            DAT_08 = (short)uVar2;
+
+            if (uVar2 < 7000U)
+                DAT_08 = 7000;
+        }
+
+        if ((InputManager.controllers[0].DAT_B5898 & 8) != 0)
+        {
+            uVar2 = (ushort)(DAT_08 + 100);
+            DAT_08 = (short)uVar2;
+
+            if (10000U < uVar2)
+                DAT_08 = 10000;
+        }
+    }
+
+    //FUN_3138 (ST1)
+    private void FUN_3138()
+    {
+        sbyte sVar1;
+        ushort uVar2;
+
+        if ((InputManager.controllers[0].DAT_B5898 & 0x20a0) != 0)
+        {
+            sVar1 = (sbyte)(DAT_0B + 1);
+            DAT_0B = sVar1;
+
+            if (40 < sVar1)
+                DAT_0B = 40;
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x1000) != 0)
+            BDAT_0C = 0;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x8000) != 0)
+            BDAT_0C = 4;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0)
+            BDAT_0C = 3;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x40) != 0)
+            BDAT_0C = 5;
+
+        if ((InputManager.controllers[0].DAT_B5898 & 4) != 0)
+        {
+            uVar2 = (ushort)(DAT_08 - 100);
+            DAT_08 = (short)uVar2;
+
+            if (uVar2 < 7000U)
+                DAT_08 = 7000;
+        }
+
+        if ((InputManager.controllers[0].DAT_B5898 & 8) != 0)
+        {
+            uVar2 = (ushort)(DAT_08 + 100);
+            DAT_08 = (short)uVar2;
+
+            if (10000U < uVar2)
+                DAT_08 = 10000;
+        }
+    }
+
+    //FUN_31C8 (ST1)
+    private void FUN_31C8()
+    {
+        sbyte sVar1;
+        ushort uVar2;
+
+        if ((InputManager.controllers[0].DAT_B5898 & 0x20a0) != 0)
+        {
+            sVar1 = (sbyte)(BDAT_0A + 1);
+            BDAT_0A = sVar1;
+
+            if (sVar1 < -40)
+                BDAT_0A = -40;
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x1000) != 0)
+            BDAT_0C = 5;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x8000) != 0)
+            BDAT_0C = 1;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) != 0)
+            BDAT_0C = 2;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x40) != 0)
+            BDAT_0C = 5;
+
+        if ((InputManager.controllers[0].DAT_B5898 & 4) != 0)
+        {
+            uVar2 = (ushort)(DAT_08 - 100);
+            DAT_08 = (short)uVar2;
+
+            if (uVar2 < 7000U)
+                DAT_08 = 7000;
+        }
+
+        if ((InputManager.controllers[0].DAT_B5898 & 8) != 0)
+        {
+            uVar2 = (ushort)(DAT_08 + 100);
+            DAT_08 = (short)uVar2;
+
+            if (10000U < uVar2)
+                DAT_08 = 10000;
+        }
+    }
+
+    //FUN_3270 (ST1)
+    private void FUN_3270()
+    {
+        ushort uVar1;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x1000) != 0)
+            BDAT_0C = 4;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x8000) != 0)
+            BDAT_0C = 1;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) != 0)
+            BDAT_0C = 2;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0)
+            BDAT_0C = 3;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) != 0)
+            DAT_03 = 5;
+
+        if ((InputManager.controllers[0].DAT_B5898 & 4) != 0)
+        {
+            uVar1 = (ushort)(DAT_08 - 100);
+            DAT_08 = (short)uVar1;
+
+            if (uVar1 < 7000U)
+                DAT_08 = 7000;
+        }
+
+        if ((InputManager.controllers[0].DAT_B5898 & 8) != 0)
+        {
+            uVar1 = (ushort)(DAT_08 + 100);
+            DAT_08 = (short)uVar1;
+
+            if (10000U < uVar1)
+                DAT_08 = 10000;
+        }
+    }
+
+    //FUN_3378 (ST1)
+    private void FUN_3378()
+    {
+        DAT_10 += 4;
+        DAT_11--;
+
+        if (99U < DAT_10)
+        {
+            DAT_10 = 100;
+            DAT_03 = 3;
+            DAT_11 = 12;
+            GameManager.instance.FUN_5C94C(null, 147);
+        }
+    }
+
+    //FUN_33DC (ST1)
+    private void FUN_33DC()
+    {
+        CriCamera oVar2;
+        byte bVar3;
+        CriParticle oVar4;
+
+        oVar2 = SceneManager.instance.cCamera;
+        bVar3 = (byte)(DAT_0D + 1);
+        DAT_0D = bVar3;
+
+        if (18U < bVar3)
+        {
+            DAT_0D = 0;
+            DAT_03 = 4;
+
+            if ((byte)BDAT_0A - 13U < 4 && (byte)DAT_0B - 3U < 4)
+                InventoryManager.FUN_4A7E8(2, 9, true);
+
+            oVar4 = SceneManager.instance.FUN_5FFA0();
+
+            if (oVar4 != null)
+            {
+                GameManager.instance.FUN_5C94C(null, 148);
+                oVar4.tags = 21;
+                oVar4.DAT_2F = 2;
+                oVar4.DAT_4C = null;
+                oVar4.screen = oVar2.DAT_30;
+                oVar4.DAT_62 = 10;
+                oVar4.DAT_60 = 10;
+                oVar4.DAT_68 = 0xff;
+                oVar4.DAT_69 = 10;
+                oVar4.DAT_6A = 10;
+                oVar4.DAT_6B = 0;
+            }
+        }
+    }
+
+    //FUN_34D0 (ST1)
+    private void FUN_34D0()
+    {
+        byte bVar1;
+
+        bVar1 = (byte)(DAT_10 - 10);
+        DAT_10 = bVar1;
+
+        if (bVar1 < 11U)
+        {
+            DAT_10 = 0;
+            DAT_03 = 1;
+        }
+    }
+
+    //FUN_3500 (ST1)
+    private void FUN_3500()
+    {
+        InventoryManager.FUN_4A7E8(2, 0xb, true);
+        DAT_03++;
+    }
+
+    //FUN_51A8 (ST1)
+    public void FUN_51A8()
+    {
+        PTR_FUN_7A8C[DAT_03]();
+    }
+
+    //FUN_51E4 (ST1)
+    private void FUN_51E4()
+    {
+        sbyte sVar1;
+        sbyte[] puVar2;
+        bool bVar3;
+        uint uVar4;
+        uint uVar5;
+
+        InventoryManager.FUN_4A7E8(2, 0xa, false);
+        InventoryManager.FUN_4A7E8(2, 9, false);
+        InventoryManager.FUN_4A7E8(2, 0x12, false);
+        InventoryManager.FUN_4A7E8(2, 0xb, false);
+        DAT_08 = 0;
+        DAT_0A = 0;
+        DAT_0C = 0;
+        puVar2 = ST1.instance.DAT_7B44;
+        uVar4 = 0;
+
+        do
+        {
+            puVar2[uVar4] = -1;
+            uVar5 = uVar4 + 1;
+            uVar4 = uVar5;
+        } while (uVar5 < 5);
+
+        ST1.instance.DAT_7B4B = 0;
+        ST1.instance.DAT_7B4A = 0;
+        ST1.instance.DAT_7B49 = 0;
+        ST1.instance.DAT_7B4D = 0;
+        ST1.instance.DAT_7B4C = 0;
+        bVar3 = InventoryManager.FUN_4A87C(3, 0x20);
+        sVar1 = 3;
+
+        if (!bVar3)
+            sVar1 = 1;
+
+        DAT_03 = sVar1;
+    }
+
+    //FUN_52C8 (ST1)
+    private void FUN_52C8()
+    {
+        short sVar1;
+
+        //...
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) != 0)
+        {
+            if (DAT_08 == 4)
+                DAT_08 = 0;
+            else
+                DAT_08++;
+
+            GameManager.instance.FUN_5C94C(null, 145);
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x8000) != 0)
+        {
+            sVar1 = (short)(DAT_08 - 1);
+
+            if (DAT_08 == 0)
+                sVar1 = 4;
+
+            DAT_08 = sVar1;
+            GameManager.instance.FUN_5C94C(null, 145);
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x1000) != 0)
+        {
+            sVar1 = (short)(DAT_0A - 1);
+
+            if (DAT_0A == 0)
+                sVar1 = 1;
+
+            DAT_0A = sVar1;
+            GameManager.instance.FUN_5C94C(null, 145);
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0)
+        {
+            if (DAT_0A == 1)
+                DAT_0A = 0;
+            else
+                DAT_0A++;
+
+            GameManager.instance.FUN_5C94C(null, 145);
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) != 0)
+        {
+            GameManager.instance.FUN_5C94C(null, 146);
+            ST1.instance.DAT_7B44[ST1.instance.DAT_7B49] = (sbyte)((byte)DAT_08 + DAT_0A * 5);
+
+            if (ST1.instance.DAT_7B49 == 4)
+                DAT_03 = 2;
+
+            ST1.instance.DAT_7B49++;
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x40) != 0)
+        {
+            if (ST1.instance.DAT_7B49 == 0)
+            {
+                InventoryManager.FUN_4A7E8(2, 0xb, true);
+                DAT_03 = 5;
+            }
+            else
+            {
+                ST1.instance.DAT_7B44[ST1.instance.DAT_7B49] = -1;
+                ST1.instance.DAT_7B49--;
+            }
+
+            GameManager.instance.FUN_5C94C(null, 147);
+        }
+    }
+
+    //FUN_54D8 (ST1)
+    private void FUN_54D8()
+    {
+        bool bVar1;
+
+        if (30 < ST1.instance.DAT_7B4A) goto LAB_5598;
+
+        if (ST1.instance.DAT_7B4A == 0)
+        {
+            InventoryManager.FUN_4A7E8(3, 0x22, false);
+            InventoryManager.FUN_4A7E8(3, 0x23, false);
+            InventoryManager.FUN_4A7E8(3, 0x24, false);
+
+            if (DAT_02 == 0)
+            {
+                //...
+            }
+            else
+            {
+                if (DAT_02 != 1) goto LAB_557C;
+
+                //...
+            }
+
+            //...
+        }
+
+        LAB_557C:
+        //...
+        ST1.instance.DAT_7B4A++;
+        LAB_5598:
+        bVar1 = InventoryManager.FUN_4A87C(3, 0x21);
+
+        if (bVar1)
+        {
+            DAT_03 = 3;
+            ST1.instance.DAT_7B4A = 0;
+        }
+    }
+
+    //FUN_55CC (ST1)
+    private void FUN_55CC()
+    {
+        sbyte sVar1;
+        short sVar2;
+        bool bVar3;
+        int iVar4;
+
+        if (DAT_0C == 0)
+        {
+            bVar3 = InventoryManager.FUN_4A87C(3, 0x24);
+
+            if (bVar3)
+                InventoryManager.FUN_4A7E8(2, 0xa, true);
+            else
+            {
+                bVar3 = InventoryManager.FUN_4A87C(3, 0x23);
+
+                if (bVar3)
+                    InventoryManager.FUN_4A7E8(2, 0xa, true);
+            }
+        }
+
+        //...
+        sVar2 = (short)(DAT_0C + 1);
+        DAT_0C = sVar2;
+
+        if (sVar2 == 150)
+        {
+            bVar3 = InventoryManager.FUN_4A87C(2, 0xa);
+            sVar1 = 5;
+
+            if (!bVar3)
+                sVar1 = 4;
+
+            DAT_03 = sVar1;
+
+            if (DAT_0C == 150)
+            {
+                bVar3 = InventoryManager.FUN_4A87C(2, 0xa);
+
+                if (!bVar3)
+                    iVar4 = 148;
+                else
+                    iVar4 = 149;
+
+                GameManager.instance.FUN_5C94C(null, iVar4);
+            }
+        }
+    }
+
+    //FUN_56B4 (ST1)
+    private void FUN_56B4()
+    {
+        //...
+
+        if (29 < ST1.instance.DAT_7B4A)
+        {
+            DAT_03 = 5;
+            ST1.instance.DAT_7B4A = 0;
+        }
+
+        ST1.instance.DAT_7B4A++;
+    }
+
+    //FUN_570C (ST1)
+    private void FUN_570C()
+    {
+        DAT_03 = 5;
     }
 }

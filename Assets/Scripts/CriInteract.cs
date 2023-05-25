@@ -23,6 +23,7 @@ public class CriInteract : MonoBehaviour
     public short DAT_0E;
     public byte BDAT_0E;
     public byte DAT_0F;
+    public Vector3Int VDAT_10;
     public byte DAT_10;
     public byte DAT_11;
     public sbyte DAT_12;
@@ -38,14 +39,19 @@ public class CriInteract : MonoBehaviour
     private delegate void FUN_54(); //0x54 (ST1)
     private delegate void FUN_7984(); //0x7984 (ST1)
     private delegate void FUN_7A8C(); //0x7A8C (ST1)
+    private delegate void FUN_7B14(); //0x7B14 (ST1)
     private delegate void FUN_99208();
     private delegate void FUN_99214();
     private delegate void FUN_99224(CriStatic o);
     private delegate void FUN_99250();
     private delegate void FUN_99260();
+    private delegate void FUN_9926C();
+    private delegate void FUN_99278();
+    private delegate void FUN_99284();
     private FUN_54[] PTR_FUN_54; //0x54 (ST1)
     private FUN_7984[] PTR_FUN_7984; //0x7984 (ST1)
     private FUN_7A8C[] PTR_FUN_7A8C; //0x7A8C (ST1)
+    private FUN_7B14[] PTR_FUN_7B14; //0x7B14 (ST1)
     private FUN_99208[] PTR_FUN_99208;
     private FUN_99214[] PTR_FUN_99214;
     private static byte[] DAT_99220 = new byte[2] { 217, 218 };
@@ -53,6 +59,9 @@ public class CriInteract : MonoBehaviour
     private static uint[] DAT_99244 = new uint[3] { 0x8017d000, 0x8017e000, 0x8017f000 };
     private FUN_99250[] PTR_FUN_99250;
     private FUN_99260[] PTR_FUN_99260;
+    private FUN_9926C[] PTR_FUN_9926C;
+    private FUN_99278[] PTR_FUN_99278;
+    private FUN_99284[] PTR_FUN_99284;
 
     void Awake()
     {
@@ -75,7 +84,7 @@ public class CriInteract : MonoBehaviour
             FUN_3500,
             FUN_5FF98
         };
-        PTR_FUN_7A8C = new FUN_7A8C[]
+        PTR_FUN_7A8C = new FUN_7A8C[7]
         {
             FUN_51E4,
             FUN_52C8,
@@ -83,6 +92,12 @@ public class CriInteract : MonoBehaviour
             FUN_55CC,
             FUN_56B4,
             FUN_570C,
+            FUN_5FF98
+        };
+        PTR_FUN_7B14 = new FUN_7B14[3]
+        {
+            FUN_6700,
+            FUN_6718,
             FUN_5FF98
         };
         PTR_FUN_99208 = new FUN_99208[3]
@@ -114,6 +129,22 @@ public class CriInteract : MonoBehaviour
             FUN_221B4,
             FUN_221DC,
             FUN_5FF98
+        };
+        PTR_FUN_9926C = new FUN_9926C[3]
+        {
+            FUN_222E8,
+            FUN_22314,
+            FUN_5FF98
+        };
+        PTR_FUN_99278 = new FUN_99278[3]
+        {
+            FUN_224A0,
+            FUN_224C8,
+            FUN_5FF98
+        };
+        PTR_FUN_99284 = new FUN_99284[]
+        {
+
         };
     }
 
@@ -150,6 +181,7 @@ public class CriInteract : MonoBehaviour
         DAT_0E = 0;
         BDAT_0E = 0;
         DAT_0F = 0;
+        VDAT_10 = Vector3Int.zero;
         DAT_10 = 0;
         DAT_11 = 0;
         DAT_12 = 0;
@@ -503,6 +535,144 @@ public class CriInteract : MonoBehaviour
     private void FUN_221DC()
     {
         //...
+    }
+
+    public void FUN_222AC()
+    {
+        PTR_FUN_9926C[DAT_03]();
+    }
+
+    private void FUN_222E8()
+    {
+        DAT_08 = 0;
+        DAT_03++;
+        FUN_22314();
+    }
+
+    private void FUN_22314()
+    {
+        //...
+    }
+
+    public void FUN_22464()
+    {
+        PTR_FUN_99278[DAT_03]();
+    }
+
+    private void FUN_224A0()
+    {
+        DAT_08 = 0;
+        DAT_03 = 1;
+        FUN_224C8();
+    }
+
+    private void FUN_224C8()
+    {
+        //...
+    }
+
+    public void FUN_2268C()
+    {
+        if ((InventoryManager.DAT_B7A60[0] & 2) == 0)
+        {
+            PTR_FUN_99284[DAT_03]();
+
+            if ((PTR_18.flags & 6) == 0)
+                DAT_1C.flags &= 0xfffffffd;
+        }
+    }
+
+    private void FUN_2271C()
+    {
+        int iVar1;
+
+        iVar1 = (int)GameManager.FUN_64650();
+        DAT_03++;
+        DAT_08 = (short)(iVar1 + (iVar1 / 90) * -90 + 300);
+    }
+
+    private void FUN_2278C()
+    {
+        ushort uVar1;
+        CriSkinned oVar2;
+
+        uVar1 = (ushort)(DAT_08 - 1);
+        DAT_08 = (short)uVar1;
+
+        if (uVar1 << 0x10 < 1)
+        {
+            oVar2 = DAT_20;
+            oVar2.DAT_19A &= (ushort)~(1 << (DAT_19 + DAT_18 * 4 & 0x1f));
+            oVar2.DAT_199--;
+            DAT_03++;
+        }
+    }
+
+    private void FUN_227FC()
+    {
+        CriStatic oVar2;
+        CriObject oVar4;
+        CriSkinned oVar6;
+        Vector3Int local_28;
+
+        LevelManager.instance.DAT_C2590 = DAT_1C;
+        oVar6 = DAT_20;
+        oVar2 = (CriStatic)LevelManager.instance.DAT_C2590;
+        local_28 = oVar2.screen;
+        local_28 = Utilities.ApplyMatrixSV(ref oVar2.DAT_40.cTransform.rotation, ref local_28);
+        oVar2.screen.x = oVar2.DAT_40.screen.x + local_28.x;
+        oVar2.screen.y = oVar2.DAT_40.screen.y + local_28.y;
+        oVar2.screen.z = oVar2.DAT_40.screen.z + local_28.z;
+        LevelManager.instance.DAT_C2594 = 0;
+        LevelManager.instance.DAT_C2598 = new Vector3Int(0, 0, 0);
+
+        do
+        {
+            oVar4 = Utilities.FUN_601C8(oVar6.skeleton, LevelManager.instance.DAT_C2594);
+            LevelManager.instance.DAT_C2598.x = LevelManager.instance.DAT_C2598.x + oVar4.vr.x & 0xfff;
+            LevelManager.instance.DAT_C2598.y = LevelManager.instance.DAT_C2598.y + oVar4.vr.y & 0xfff;
+            LevelManager.instance.DAT_C2598.z = LevelManager.instance.DAT_C2598.z + oVar4.vr.z & 0xfff;
+            LevelManager.instance.DAT_C2594++;
+        } while (LevelManager.instance.DAT_C2594 <= DAT_16);
+
+        oVar2.DAT_40 = null;
+        oVar2.vr.x = LevelManager.instance.DAT_C2598.x + oVar2.vr.x & 0xfff;
+        oVar2.vr.y = LevelManager.instance.DAT_C2598.y + oVar2.vr.y & 0xfff;
+        oVar2.vr.z = LevelManager.instance.DAT_C2598.z + oVar2.vr.z & 0xfff;
+        DAT_0C = 40;
+        DAT_0E = 20;
+
+        if ((oVar2.screen.x & 0x800) == 0)
+            VDAT_10.x = -((oVar2.screen.x / 5) * 0x10000 >> 0x10);
+        else
+            VDAT_10.x = (0x1000 - oVar2.screen.x) / 5;
+
+        if ((oVar2.screen.y & 0x800) == 0)
+            VDAT_10.y = -((oVar2.screen.y / 5) * 0x10000 >> 0x10);
+        else
+            VDAT_10.y = (0x1000 - oVar2.screen.y) / 5;
+
+        if ((oVar2.screen.z & 0x800) == 0)
+            VDAT_10.z = -((oVar2.screen.z / 5) * 0x10000 >> 0x10);
+        else
+            VDAT_10.z = (0x1000 - oVar2.screen.z) / 5;
+
+        DAT_0A = 4;
+        DAT_03++;
+    }
+
+    private void FUN_22E98()
+    {
+        ushort uVar1;
+
+        uVar1 = (ushort)(DAT_0A - 1);
+        DAT_0A = (short)uVar1;
+
+        if (uVar1 << 0x10 < 1)
+        {
+            DAT_1C.FUN_5FF00();
+            DAT_03++;
+        }
     }
 
     private void FUN_5FF98()
@@ -1167,5 +1337,76 @@ public class CriInteract : MonoBehaviour
     private void FUN_570C()
     {
         DAT_03 = 5;
+    }
+
+    //FUN_66C4 (ST1)
+    public void FUN_66C4()
+    {
+        PTR_FUN_7B14[DAT_03]();
+    }
+
+    //FUN_6700 (ST1)
+    private void FUN_6700()
+    {
+        DAT_0A = 0;
+        DAT_08 = 0;
+        DAT_03++;
+    }
+
+    //FUN_6718 (ST1)
+    private void FUN_6718()
+    {
+        ushort uVar2;
+        sbyte sVar3;
+        int iVar4;
+        CriParticle oVar5;
+        uint uVar6;
+
+        uVar6 = (ushort)DAT_0A;
+
+        if (DAT_0A < 9)
+        {
+            do
+            {
+                iVar4 = (int)uVar6 * 12;
+
+                if (ST1.instance.DAT_7AA0[iVar4 + 6] != DAT_08) break;
+
+                oVar5 = SceneManager.instance.FUN_5FFA0();
+
+                if (oVar5 != null)
+                {
+                    oVar5.tags = 20;
+                    oVar5.DAT_2F = (byte)(ST1.instance.DAT_7AA0[iVar4 + 7] | 0x80);
+                    oVar5.DAT_4C = SceneManager.instance.DAT_7CDC[DAT_04];
+                    oVar5.DAT_40.x = ST1.instance.DAT_7AA0[iVar4 + 8] << 0x18 >> 0x17;
+                    oVar5.DAT_40.y = ST1.instance.DAT_7AA0[iVar4 + 9] << 0x18 >> 0x17;
+                    oVar5.DAT_40.z = ST1.instance.DAT_7AA0[iVar4 + 10] << 0x18 >> 0x17;
+                    oVar5.DAT_6C = 0x80;
+                }
+
+                uVar6 = (ushort)DAT_0A + 1U;
+                DAT_0A = (short)uVar6;
+            } while ((short)uVar6 < 9);
+        }
+
+        //...
+        uVar2 = (ushort)DAT_08;
+        DAT_08 = (short)(uVar2 + 1);
+
+        if (5 < DAT_08)
+        {
+            DAT_0A = 0;
+            DAT_08 = 0;
+        }
+
+        sVar3 = (sbyte)(DAT_05 - 1);
+        DAT_05 = (byte)sVar3;
+
+        if (sVar3 == 0)
+        {
+            DAT_03++;
+            ST1.instance.FUN_6A9C();
+        }
     }
 }

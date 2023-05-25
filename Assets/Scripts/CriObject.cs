@@ -276,6 +276,11 @@ public class CriObject : MonoBehaviour
         flags = 0;
     }
 
+    public void FUN_5FF00()
+    {
+        flags = 0;
+    }
+
     public void FUN_60068()
     {
         flags = 0;

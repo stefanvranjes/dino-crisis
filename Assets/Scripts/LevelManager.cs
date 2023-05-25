@@ -14,6 +14,9 @@ public class LevelManager : MonoBehaviour
     public FUN_B58C0[] PTR_FUN_B58C0;
     public FUN_C1CF8[] PTR_FUN_C1CF8;
     public FUN_C2570[] PTR_FUN_C2570;
+    public CriObject DAT_C2590;
+    public int DAT_C2594;
+    public Vector3Int DAT_C2598;
 
     private void Awake()
     {
@@ -113,6 +116,16 @@ public class LevelManager : MonoBehaviour
     public static void FUN_22178(CriInteract param1)
     {
         param1.FUN_22178();
+    }
+
+    public static void FUN_222AC(CriInteract param1)
+    {
+        param1.FUN_222AC();
+    }
+
+    public static void FUN_22464(CriInteract param1)
+    {
+        param1.FUN_22464();
     }
 
     public static void FUN_54EF8(CriPlayer param1)

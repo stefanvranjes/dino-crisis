@@ -34,7 +34,7 @@ public class CriInteract : MonoBehaviour
     public CriBone PTR_18;
     public byte DAT_18;
     public byte DAT_19;
-    public CriStatic DAT_1C;
+    public CriObject DAT_1C;
     public CriSkinned DAT_20;
     private delegate void FUN_54(); //0x54 (ST1)
     private delegate void FUN_7984(); //0x7984 (ST1)
@@ -142,9 +142,15 @@ public class CriInteract : MonoBehaviour
             FUN_224C8,
             FUN_5FF98
         };
-        PTR_FUN_99284 = new FUN_99284[]
+        PTR_FUN_99284 = new FUN_99284[7]
         {
-
+            FUN_2271C, 
+            FUN_2278C, 
+            FUN_227FC, 
+            FUN_22B50, 
+            FUN_22CB4, 
+            FUN_22E98, 
+            FUN_5FF98
         };
     }
 
@@ -488,7 +494,7 @@ public class CriInteract : MonoBehaviour
         oVar2.screen.x += DAT_08;
         oVar2.screen.y += DAT_0A;
         oVar2.screen.z += DAT_0C;
-        bVar1 = SceneManager.instance.FUN_836F0(ref oVar2.screen, local_18);
+        bVar1 = SceneManager.instance.FUN_836F0(ref oVar2.screen, local_18) != 0;
 
         if (bVar1)
         {
@@ -659,6 +665,113 @@ public class CriInteract : MonoBehaviour
 
         DAT_0A = 4;
         DAT_03++;
+    }
+
+    private void FUN_22B50()
+    {
+        ushort uVar1;
+        ushort uVar2;
+        uint uVar3;
+        short sVar4;
+        CriSkinned oVar5;
+
+        oVar5 = (CriSkinned)DAT_1C;
+
+        if (-1 < DAT_0A)
+        {
+            oVar5.vr.x = oVar5.vr.x + VDAT_10.x & 0xfff;
+            oVar5.vr.y = oVar5.vr.y + VDAT_10.y & 0xfff;
+            oVar5.vr.z = oVar5.vr.z + VDAT_10.z & 0xfff;
+            uVar1 = (ushort)(DAT_0A - 1);
+            DAT_0A = (short)uVar1;
+
+            if (uVar1 << 0x10 < 0)
+                oVar5.vr = new Vector3Int(0, 0, 0);
+        }
+
+        oVar5.DAT_34 = oVar5.screen;
+        sVar4 = (short)(DAT_0C + DAT_0E);
+        DAT_0C = sVar4;
+        oVar5.screen.y += sVar4;
+        uVar3 = SceneManager.instance.FUN_83534(ref oVar5.screen, oVar5.DAT_34);
+
+        if ((uVar3 & 2) != 0)
+        {
+            oVar5.screen.x = oVar5.DAT_34.x;
+            oVar5.screen.z = oVar5.DAT_34.z;
+        }
+
+        if ((uVar3 & 1) != 0 || -1 < oVar5.screen.y)
+        {
+            DAT_0A = 0;
+            uVar1 = (ushort)GameManager.FUN_64650();
+            uVar2 = (ushort)GameManager.FUN_64650();
+            DAT_08 = (short)((uVar1 & 1) * 0x100 + (uVar2 & 1));
+            DAT_03++;
+        }
+    }
+
+    private void FUN_22CB4()
+    {
+        ushort uVar1;
+        short sVar2;
+        uint uVar3;
+        CriSkinned oVar4;
+
+        oVar4 = (CriSkinned)DAT_1C;
+        oVar4.DAT_34 = oVar4.screen;
+        uVar1 = (ushort)DAT_0A;
+        DAT_0A = (short)(uVar1 + 1);
+        sVar2 = Utilities.DAT_992A0[(uVar1 << 0x10) >> 0xf];
+        DAT_0C = sVar2;
+        oVar4.screen.y += sVar2;
+
+        if ((DAT_08 & 0x100) != 0)
+        {
+            oVar4.screen.x += 50;
+            oVar4.vr.z = oVar4.vr.z + 0x66 & 0xfff;
+        }
+
+        if ((DAT_08 & 1) != 0)
+        {
+            oVar4.screen.z += 50;
+            oVar4.vr.x = oVar4.vr.x + 0x66 & 0xfff;
+        }
+
+        if (DAT_08 == 0)
+        {
+            oVar4.vr.z = oVar4.vr.z + 0x66 & 0xfff;
+            oVar4.vr.x = oVar4.vr.x + 0x66 & 0xfff;
+        }
+
+        uVar3 = SceneManager.instance.FUN_83534(ref oVar4.screen, oVar4.DAT_34);
+
+        if ((uVar3 & 2) != 0)
+        {
+            oVar4.screen.x = oVar4.DAT_34.x;
+            oVar4.screen.z = oVar4.DAT_34.z;
+        }
+
+        if (9 < DAT_0A)
+        {
+            oVar4.screen.y = 0;
+            SceneManager.instance.FUN_83534(ref oVar4.screen, oVar4.DAT_34);
+
+            if ((DAT_08 & 0x100) != 0)
+                oVar4.vr.z = 0x400;
+
+            if ((DAT_08 & 1) != 0)
+                oVar4.vr.x = 0x400;
+
+            if (DAT_08 == 0)
+            {
+                oVar4.vr.z = 0x400;
+                oVar4.vr.x = 0x400;
+            }
+
+            DAT_0A = 30;
+            DAT_03++;
+        }
     }
 
     private void FUN_22E98()

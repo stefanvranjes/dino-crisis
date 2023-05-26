@@ -53,8 +53,10 @@ public class SceneManager : MonoBehaviour
     public CriScene[] DAT_D7C0; //gp+d7c0h...gp+dea0h (0x800C51E0)
 
     private delegate bool FUN_9E96C(Vector4Int v4, WallCollider c, ref Vector2Int v2);
+    private delegate uint FUN_AA4DC(ref Vector3Int v1, Vector3Int v2);
 
     private FUN_9E96C[] PTR_FUN_9E96C;
+    private FUN_AA4DC[] PTR_FUN_AA4DC;
 
     private byte[] DAT_AA44C = new byte[]
     {
@@ -88,18 +90,26 @@ public class SceneManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            PTR_FUN_9E96C = new FUN_9E96C[7]
+            {
+                FUN_65138,
+                FUN_651D8,
+                FUN_6521C,
+                FUN_652AC,
+                FUN_6533C,
+                FUN_653CC,
+                FUN_6545C
+            };
+            PTR_FUN_AA4DC = new FUN_AA4DC[4]
+            {
+                FUN_836F0,
+                FUN_8180C,
+                FUN_81CD4,
+                FUN_81AA0
+            };
         }
 
-        PTR_FUN_9E96C = new FUN_9E96C[7]
-        {
-            FUN_65138,
-            FUN_651D8,
-            FUN_6521C,
-            FUN_652AC,
-            FUN_6533C,
-            FUN_653CC,
-            FUN_6545C
-        };
+        
 
         GameManager.PTR_DAT_9E708[gian.INDEX] = gian;
         int j = (int)(ini.ADDR - 0x801fe900) / 4;
@@ -3375,7 +3385,272 @@ public class SceneManager : MonoBehaviour
         fVar1.DAT_01 &= (byte)~param2;
     }
 
-    public bool FUN_836F0(ref Vector3Int param1, Vector3Int param2)
+    public uint FUN_8180C(ref Vector3Int param1, Vector3Int param2)
+    {
+        sbyte sVar1;
+        int iVar2;
+        WallSegment wVar2;
+        sbyte sVar4;
+        bool bVar4;
+        WallSegment wVar4;
+        WallCollider puVar5;
+        int pcVar6;
+        byte bVar7;
+        bool bVar8;
+        int[] local_50;
+        Vector4Int local_48;
+        Vector3Int local_40;
+        WallCollider[][] local_38;
+        Vector2Int[] local_30;
+        Vector2Int[] auStack96;
+
+        local_50 = new int[2];
+        local_40 = new Vector3Int();
+        local_38 = new WallCollider[2][];
+        local_30 = new Vector2Int[2];
+        auStack96 = new Vector2Int[4];
+        wVar4 = sceneCollision.WALL_SEGMENTS[0];
+        bVar8 = false;
+        local_50[0] = wVar4.WALL_COUNT;
+        local_38[0] = wVar4.WALL_COLLIDERS;
+        iVar2 = (param1.y / 0x1a9) * -0x1000000 >> 0x18;
+
+        if (iVar2 < 0x10)
+        {
+            wVar2 = sceneCollision.WALL_SEGMENTS[iVar2 + 1];
+            local_50[1] = wVar2.WALL_COUNT;
+            local_38[1] = wVar2.WALL_COLLIDERS;
+        }
+        else
+        {
+            local_50[1] = 0;
+            local_38[1] = local_38[0];
+        }
+
+        bVar7 = 0;
+        iVar2 = -(sbyte)(param1.y / 0x1a9);
+
+        do
+        {
+            sVar1 = (sbyte)local_50[bVar7];
+            local_50[bVar7] = sVar1 - 1;
+
+            if (sVar1 - 1 != -1)
+            {
+                pcVar6 = 0;
+
+                do
+                {
+                    puVar5 = local_38[bVar7][pcVar6];
+
+                    if ((puVar5.flags & 0xc000) == 0 && puVar5.DAT_03 == 0 || puVar5.DAT_02 <= iVar2 && iVar2 <= puVar5.DAT_03)
+                    {
+                        local_30[0] = new Vector2Int(param2.x, param2.z);
+                        local_30[1] = new Vector2Int(param1.x, param1.z);
+
+                        if (puVar5.DAT_00 == 0xff)
+                        {
+                            local_48 = new Vector4Int(puVar5.DAT_04.x, 0, puVar5.DAT_04.y, puVar5.DAT_08.x);
+                            bVar4 = GameManager.instance.FUN_84338(local_30, local_48);
+
+                            if (bVar4)
+                                bVar8 = true;
+                        }
+                        else
+                        {
+                            GameManager.instance.FUN_813F0(auStack96, puVar5);
+                            sVar4 = GameManager.instance.FUN_841E8(auStack96, local_30, ref local_40);
+
+                            if (sVar4 != 0)
+                            {
+                                param1.x = local_40.x;
+                                bVar8 = true;
+                                param1.z = local_40.z;
+                            }
+
+                            bVar4 = GameManager.instance.FUN_768C8(param1, auStack96);
+
+                            if (bVar4)
+                                return 1;
+                        }
+                    }
+
+                    sVar1 = (sbyte)local_50[bVar7];
+                    local_50[bVar7] = sVar1 - 1;
+                    pcVar6++;
+                } while (sVar1 - 1 != -1);
+            }
+
+            bVar7++;
+
+            if (1 < bVar7)
+                return bVar8 ? 1U : 0;
+        } while (true);
+    }
+
+    public uint FUN_81AA0(ref Vector3Int param1, Vector3Int param2)
+    {
+        short sVar1;
+        bool bVar2;
+        CriObject oVar2;
+        int pSVar3;
+        CriSkinned psVar4;
+        uint uVar5;
+        short sVar6;
+        CapsuleCollider v0;
+        Vector4Int local_60;
+        Vector3Int local_58;
+        Vector2Int[] local_30;
+        Matrix3x3 MStack80;
+
+        local_30 = new Vector2Int[2];
+        sVar6 = 0;
+        uVar5 = 0;
+
+        do
+        {
+            psVar4 = DAT_27C[uVar5];
+
+            if ((psVar4.flags & 1) != 0 && psVar4.PTR_124 != null)
+            {
+                MStack80 = new Matrix3x3();
+                Utilities.RotMatrix_gte(ref psVar4.vr, ref MStack80);
+                sVar1 = (short)(psVar4.DAT_12F - 1);
+
+                if (sVar1 != -1)
+                {
+                    pSVar3 = 0;
+
+                    do
+                    {
+                        v0 = psVar4.PTR_124[psVar4.DAT_124 + pSVar3];
+                        local_58 = Utilities.ApplyMatrixSV(ref MStack80, ref v0.pos);
+
+                        if (v0.bone == -1)
+                            local_60 = new Vector4Int(psVar4.screen.x + local_58.x, psVar4.screen.y + local_58.y, psVar4.screen.z + local_58.z, v0.radius);
+                        else
+                        {
+                            oVar2 = Utilities.FUN_601C8(psVar4.skeleton, v0.bone);
+                            local_60 = new Vector4Int(oVar2.screen.x + local_58.x, oVar2.screen.y + local_58.y, oVar2.screen.z + local_58.z, v0.radius);
+                        }
+
+                        local_30[0] = new Vector2Int(param2.x, param2.z);
+                        local_30[1] = new Vector2Int(param1.x, param1.z);
+                        bVar2 = GameManager.instance.FUN_84338(local_30, local_60);
+
+                        if (bVar2 && local_60.y - param1.y < v0.height)
+                            return (uint)(sVar6 + 1);
+
+                        pSVar3++;
+                        sVar1--;
+                    } while (sVar1 != -1);
+                }
+            }
+
+            uVar5++;
+            sVar6++;
+        } while (uVar5 < 10);
+
+        return 0;
+    }
+
+    public uint FUN_81CD4(ref Vector3Int param1, Vector3Int param2)
+    {
+        bool bVar1;
+        int iVar1;
+        int iVar2;
+        int iVar3;
+        CriStatic piVar4;
+        uint uVar5;
+        Vector2Int[] local_28;
+        Vector3Int local_20;
+        Vector2Int[] auStack56;
+
+        local_28 = new Vector2Int[2];
+        local_20 = new Vector3Int();
+        auStack56 = new Vector2Int[4];
+        uVar5 = 0;
+
+        do
+        {
+            piVar4 = DAT_7CDC[uVar5];
+
+            if ((piVar4.flags & 1) != 0 && piVar4.cCollider != null)
+            {
+                GameManager.instance.FUN_81720(piVar4, auStack56);
+
+                if (piVar4.cCollider.DAT_00.y < 0)
+                    iVar3 = piVar4.screen.y - piVar4.cCollider.DAT_00.y;
+                else
+                    iVar3 = piVar4.screen.y;
+
+                iVar2 = piVar4.cCollider.DAT_00.y;
+
+                if (iVar2 < 0)
+                    iVar2 = -iVar2;
+
+                iVar1 = ((param1.y - iVar3) * 0x10000) >> 0x10;
+
+                if (iVar1 < 0)
+                    iVar1 = -iVar1;
+
+                if (iVar1 < (iVar2 & 0xffff))
+                {
+                    local_28[0] = new Vector2Int(param2.x, param2.z);
+                    local_28[1] = new Vector2Int(param1.x, param1.z);
+                    iVar1 = GameManager.instance.FUN_841E8(auStack56, local_28, ref local_20);
+
+                    if (iVar1 != 0)
+                    {
+                        param1.x = local_20.x;
+                        param1.z = local_20.z;
+                        return 1;
+                    }
+
+                    bVar1 = GameManager.instance.FUN_768C8(param1, auStack56);
+
+                    if (bVar1)
+                        return 1;
+                }
+            }
+
+            uVar5++;
+        } while (uVar5 < (uint)DAT_7CDC.Length);
+
+        return 0;
+    }
+
+    public uint FUN_83534(ref Vector3Int param1, Vector3Int param2)
+    {
+        uint uVar1;
+        uint uVar2;
+        ushort uVar3;
+        uint uVar4;
+
+        uVar4 = 0;
+        uVar3 = 0;
+        uVar2 = 0;
+
+        do
+        {
+            uVar1 = PTR_FUN_AA4DC[uVar2](ref param1, param2);
+
+            if ((uVar1 & 0xffff) != 0)
+            {
+                uVar4 |= 1U << (int)(uVar2 & 31);
+
+                if (uVar2 == 3)
+                    uVar4 |= (uVar1 - 1) * 0x100;
+            }
+
+            uVar3++;
+            uVar2 = uVar3;
+        } while (uVar3 < 4);
+
+        return uVar4 & 0xffff;
+    }
+
+    public uint FUN_836F0(ref Vector3Int param1, Vector3Int param2)
     {
         bool bVar1;
         bool bVar2;
@@ -3399,10 +3674,10 @@ public class SceneManager : MonoBehaviour
                     iVar3--;
 
                     if (bVar2)
-                        return true;
+                        return 1;
                 } while (iVar4 <= iVar3 * 0x10000 >> 0x10);
 
-                return false;
+                return 0;
             }
         }
         else
@@ -3413,12 +3688,12 @@ public class SceneManager : MonoBehaviour
                 iVar4++;
 
                 if (bVar2)
-                    return true;
+                    return 1;
 
                 bVar1 = iVar4 * 0x10000 >> 0x10 <= iVar3;
             }
         }
 
-        return false;
+        return 0;
     }
 }

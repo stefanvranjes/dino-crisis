@@ -165,6 +165,7 @@ public static class Utilities
     {
         3, 9, 2, 6
     };
+    public static short[] DAT_992A0 = new short[] { -40, -30, -20, -10, -10, 10, 10, 20, 30, 40 };
     public static byte[] DAT_9B018 = new byte[] { 4, 3, 2, 0, 4, 3, 2, 0, 4, 3, 2, 0, 3, 3, 1, 2, 3, 3, 1, 2, 3, 3, 1, 2, 2, 2, 1, 4, 3, 2, 1, 3, 3, 2, 1, 3 };
     public static ushort[] DAT_9B03C = new ushort[] { 0x1194, 0x1194, 0x1194, 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0xdac, 0 };
     public static UNK_9B084[] DAT_9B084 = new UNK_9B084[] { };

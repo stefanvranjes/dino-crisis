@@ -10,7 +10,7 @@ public class ST1 : LevelManager
     public FUN_C2570[] DAT_76A8 = new FUN_C2570[5] { FUN_4A26C, FUN_7F6F8, FUN_7F750, FUN_6C74, FUN_7F7E4 }; //0x76A8 (ST1)
     public FUN_C1CF8[] DAT_76C8 = new FUN_C1CF8[] { FUN_20A98, FUN_20AA0, FUN_20AA8, FUN_20B0C, FUN_21758,
                                                     FUN_21ECC, FUN_22178, FUN_2DD8, FUN_51A8, FUN_66C4, 
-                                                    FUN_222AC, FUN_22464 };
+                                                    FUN_222AC, FUN_22464, FUN_2268C };
     public byte[][] DAT_7594 = new byte[3][]
     {
         new byte[48] { 29, 7, 10, 11, 27, 15, 13, 0, 32, 25, 21, 19, 33, 30, 28, 25, 34, 0, 0, 0, 35, 31, 0, 0, 22, 0, 30, 27, 23, 0, 0, 0, 16, 0, 31, 31, 17, 0, 0, 0, 24, 0, 0, 0, 25, 0, 0, 0 },

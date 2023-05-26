@@ -128,6 +128,11 @@ public class LevelManager : MonoBehaviour
         param1.FUN_22464();
     }
 
+    public static void FUN_2268C(CriInteract param1)
+    {
+        param1.FUN_2268C();
+    }
+
     public static void FUN_54EF8(CriPlayer param1)
     {
         param1.FUN_54EF8();

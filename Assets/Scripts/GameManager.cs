@@ -2965,7 +2965,7 @@ public class GameManager : MonoBehaviour
         return param1;
     }
 
-    private void FUN_81720(CriStatic param1, Vector2Int[] param2)
+    public void FUN_81720(CriStatic param1, Vector2Int[] param2)
     {
         int iVar3;
         BoxCollider psVar4;

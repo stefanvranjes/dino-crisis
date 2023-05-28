@@ -8,9 +8,11 @@ public class LevelManager : MonoBehaviour
     public RamScriptableObject ram;
     public GianScriptableObject[] gians;
     public IniScriptableObject[] inis;
+    public delegate void FUN_B58BC(CriParticle p);
     public delegate void FUN_B58C0(CriPlayer p);
     public delegate void FUN_C1CF8(CriInteract i);
     public delegate void FUN_C2570(CriStatic s);
+    public FUN_B58BC[] PTR_FUN_B58BC;
     public FUN_B58C0[] PTR_FUN_B58C0;
     public FUN_C1CF8[] PTR_FUN_C1CF8;
     public FUN_C2570[] PTR_FUN_C2570;
@@ -60,6 +62,24 @@ public class LevelManager : MonoBehaviour
 
             iVar2++;
         } while (iVar2 < 36);
+    }
+
+    public void FUN_4A320()
+    {
+        CriInteract pbVar1;
+        int iVar2;
+
+        iVar2 = 0;
+
+        do
+        {
+            pbVar1 = SceneManager.instance.DAT_8FFC[iVar2];
+
+            if ((pbVar1.DAT_00 & 1) != 0)
+                PTR_FUN_C1CF8[pbVar1.DAT_01](pbVar1);
+
+            iVar2++;
+        } while (iVar2 < SceneManager.instance.DAT_8FFC.Length);
     }
 
     public void FUN_4A3C4()
@@ -131,6 +151,11 @@ public class LevelManager : MonoBehaviour
     public static void FUN_2268C(CriInteract param1)
     {
         param1.FUN_2268C();
+    }
+
+    public static void FUN_44EA8(CriParticle param1)
+    {
+        param1.FUN_44EA8();
     }
 
     public static void FUN_54EF8(CriPlayer param1)

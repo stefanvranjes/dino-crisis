@@ -13,6 +13,7 @@ public class CriInteract : MonoBehaviour
     public byte DAT_06;
     public short DAT_08;
     public byte BDAT_08;
+    public CriSkinned PDAT_08;
     public bool DAT_09;
     public short DAT_0A;
     public sbyte BDAT_0A;
@@ -40,6 +41,7 @@ public class CriInteract : MonoBehaviour
     private delegate void FUN_7984(); //0x7984 (ST1)
     private delegate void FUN_7A8C(); //0x7A8C (ST1)
     private delegate void FUN_7B14(); //0x7B14 (ST1)
+    private delegate void FUN_7B28(); //0x7B28 (ST1)
     private delegate void FUN_99208();
     private delegate void FUN_99214();
     private delegate void FUN_99224(CriStatic o);
@@ -52,6 +54,7 @@ public class CriInteract : MonoBehaviour
     private FUN_7984[] PTR_FUN_7984; //0x7984 (ST1)
     private FUN_7A8C[] PTR_FUN_7A8C; //0x7A8C (ST1)
     private FUN_7B14[] PTR_FUN_7B14; //0x7B14 (ST1)
+    private FUN_7B28[] PTR_FUN_7B28; //0x7B28 (ST1)
     private FUN_99208[] PTR_FUN_99208;
     private FUN_99214[] PTR_FUN_99214;
     private static byte[] DAT_99220 = new byte[2] { 217, 218 };
@@ -98,6 +101,14 @@ public class CriInteract : MonoBehaviour
         {
             FUN_6700,
             FUN_6718,
+            FUN_5FF98
+        };
+        PTR_FUN_7B28 = new FUN_7B28[5]
+        {
+            FUN_7084,
+            FUN_7090,
+            FUN_70E0,
+            FUN_71EC,
             FUN_5FF98
         };
         PTR_FUN_99208 = new FUN_99208[3]
@@ -177,6 +188,7 @@ public class CriInteract : MonoBehaviour
         DAT_06 = 0;
         DAT_08 = 0;
         BDAT_08 = 0;
+        PDAT_08 = null;
         DAT_09 = false;
         DAT_0A = 0;
         BDAT_0A = 0;
@@ -1521,5 +1533,65 @@ public class CriInteract : MonoBehaviour
             DAT_03++;
             ST1.instance.FUN_6A9C();
         }
+    }
+
+    //FUN_6B74 (ST1)
+    public void FUN_6B74()
+    {
+        CriTrigger tVar1;
+
+        tVar1 = SceneManager.instance.DAT_9EEC[DAT_04];
+        tVar1.DAT_01 = DAT_05;
+        tVar1.DAT_0E = 0;
+        tVar1.DAT_10 = 0;
+        tVar1.DAT_12 = 0;
+        tVar1.DAT_14 = false;
+        InventoryManager.FUN_4A7E8(5, tVar1.DAT_02, false);
+        FUN_5FF98();
+    }
+
+    //FUN_7084 (ST1)
+    private void FUN_7084()
+    {
+        DAT_03 = 1;
+    }
+
+    //FUN_7090 (ST1)
+    private void FUN_7090()
+    {
+        CriSkinned oVar1;
+        uint uVar2;
+
+        uVar2 = 0;
+
+        do
+        {
+            oVar1 = SceneManager.instance.DAT_27C[uVar2];
+
+            if (oVar1.tags == 2)
+            {
+                PDAT_08 = oVar1;
+                DAT_03 = 2;
+                return;
+            }
+        } while (uVar2 < 10);
+    }
+
+    //FUN_70E0 (ST1)
+    private void FUN_70E0()
+    {
+        //...
+    }
+
+    //FUN_71EC (ST1)
+    private void FUN_71EC()
+    {
+        return;
+    }
+
+    //FUN_71F4 (ST1)
+    public void FUN_71F4()
+    {
+        PTR_FUN_7B28[DAT_03]();
     }
 }

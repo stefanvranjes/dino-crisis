@@ -22,10 +22,20 @@ public class CriParticle : CriObject
     public byte DAT_6A; //0x6A
     public byte DAT_6B; //0x6B
     public byte DAT_6C; //0x6C
+    private delegate void FUN_9C790();
+    private FUN_9C790[] PTR_FUN_9C790;
 
     protected override void Awake()
     {
         base.Awake();
+        PTR_FUN_9C790 = new FUN_9C790[]
+        {
+            FUN_44F08,
+            FUN_44FC0,
+            FUN_60068,
+            FUN_45038,
+            FUN_45104
+        };
     }
 
     protected override void Start()
@@ -59,5 +69,102 @@ public class CriParticle : CriObject
         DAT_6A = 0;
         DAT_6B = 0;
         DAT_6C = 0;
+    }
+
+    public void FUN_44EA8()
+    {
+        //...
+        PTR_FUN_9C790[DAT_3C]();
+    }
+
+    private void FUN_44F08()
+    {
+        byte bVar1;
+
+        if ((DAT_2F & 0x80) != 0)
+        {
+            bVar1 = (byte)(DAT_2F & 0x7f);
+            DAT_2F = bVar1;
+
+            if (6 < bVar1)
+            {
+                DAT_2F = (byte)(bVar1 - 7);
+                DAT_3C = 3;
+                //FUN_45038
+                return;
+            }
+
+            DAT_62 = DAT_69;
+            DAT_60 = DAT_69;
+        }
+
+        //FUN_606A8
+        DAT_56 = 62;
+        DAT_54 = 0x7df0;
+        DAT_3C = 1;
+        flags |= 2;
+    }
+
+    private void FUN_44FC0()
+    {
+        screen.y += DAT_40.y;
+        screen.x += DAT_40.x;
+        screen.z += DAT_40.z;
+        DAT_40.y += DAT_68;
+        //...
+    }
+
+    private void FUN_45038()
+    {
+        short sVar1;
+
+        //FUN_606A8
+        DAT_56 = 30;
+        DAT_54 = 0x7df0;
+        DAT_50.r = 0xd0;
+        DAT_65 = 3;
+        vr.x = 0x400;
+        DAT_50.a |= 2;
+        //DAT_4C = SceneManager.instance.cCamera;
+
+        if (DAT_68 == 0)
+        {
+            sVar1 = (short)(DAT_69 << 4);
+            DAT_62 = (ushort)sVar1;
+            DAT_60 = (ushort)sVar1;
+            DAT_69 = 0;
+            DAT_6A = 0;
+        }
+
+        DAT_6B = 0;
+        flags |= 2;
+        DAT_3C++;
+    }
+
+    private void FUN_45104()
+    {
+        byte bVar1;
+        byte bVar2;
+
+        if (DAT_69 != 0)
+        {
+            DAT_69--;
+            bVar1 = DAT_6B;
+            bVar2 = (byte)(bVar1 + DAT_68);
+            DAT_6B = bVar2;
+
+            if (bVar2 < bVar1)
+            {
+                DAT_60++;
+                DAT_62++;
+            }
+        }
+
+        if (DAT_6A < DAT_68)
+            DAT_68 -= DAT_6A;
+        else
+            DAT_68 = 0;
+
+        //FUN_606D8
     }
 }

@@ -237,6 +237,7 @@ public class CriObject : MonoBehaviour
 {
     public CriTransform cTransform; //0x00
     public Vector3Int screen; //0x20
+    public short DAT_26; //0x26
     public sbyte tags; //0x27
     public Vector3Int vr; //0x28
     public byte DAT_2E; //0x2E
@@ -269,6 +270,7 @@ public class CriObject : MonoBehaviour
         cTransform.rotation = new Matrix3x3();
         cTransform.padding = 0;
         screen = Vector3Int.zero;
+        DAT_26 = 0;
         tags = 0;
         vr = Vector3Int.zero;
         DAT_2E = 0;

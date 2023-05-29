@@ -8755,7 +8755,7 @@ public class CriPlayer : CriSkinned
         oVar1.DAT_90 = 0;
         oVar1.DAT_56 = 0;
         oVar1.DAT_54 = 0;
-        oVar1.DAT_2E = 0;
+        oVar1.SDAT_2E = 0;
         oVar1.DAT_26 = 0;
         SceneManager.instance.FUN_264C4(0, (short)local_38.x, (short)local_38.y, (short)local_38.z);
         SceneManager.instance.FUN_26504(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
@@ -8788,7 +8788,7 @@ public class CriPlayer : CriSkinned
         oVar1.DAT_90 = 0;
         oVar1.DAT_56 = 0;
         oVar1.DAT_54 = 0;
-        oVar1.DAT_2E = 0;
+        oVar1.SDAT_2E = 0;
         oVar1.DAT_26 = 0;
         SceneManager.instance.FUN_264C4(0, (short)local_38.x, (short)local_38.y, (short)local_38.z);
         SceneManager.instance.FUN_26504(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
@@ -8857,7 +8857,7 @@ public class CriPlayer : CriSkinned
         oVar1.DAT_90 = 0;
         oVar1.DAT_56 = 0;
         oVar1.DAT_54 = 0;
-        oVar1.DAT_2E = 0;
+        oVar1.SDAT_2E = 0;
     }
 
     private void FUN_2F800(CriPlayer param1)

@@ -3332,6 +3332,66 @@ public class GameManager : MonoBehaviour
         return 1;
     }
 
+    public ushort FUN_82D3C(Vector3Int param1, Vector3Int param2, WallCollider param3)
+    {
+        byte bVar1;
+        ushort uVar2;
+        short sVar3;
+        int iVar4;
+        uint uVar5;
+        ushort uVar6;
+        Vector4Int local_30;
+        Vector2Int[] local_20;
+        Vector2Int[] auStack68;
+        Vector3Int auStack40;
+
+        local_30 = new Vector4Int();
+        local_20 = new Vector2Int[2];
+        auStack68 = new Vector2Int[4];
+        auStack40 = new Vector3Int();
+        local_20[0] = new Vector2Int(param2.x, param2.z);
+        local_20[1] = new Vector2Int(param1.x, param1.z);
+        uVar6 = 0;
+        uVar2 = 0;
+        bVar1 = 0;
+
+        if (param3.DAT_00 != 1 && (param3.flags & 0x8000) == 0)
+        {
+            if (param3.DAT_03 != 0)
+            {
+                iVar4 = (param1.y / 0x1a9) * -0x1000000 >> 0x18;
+
+                if (iVar4 < param3.DAT_02 || param3.DAT_03 <= iVar4)
+                    goto LAB_82E90;
+            }
+
+            FUN_813F0(auStack68, param3);
+            bVar1 = (byte)FUN_841E8(auStack68, local_20, ref auStack40);
+            uVar5 = bVar1;
+
+            if (uVar5 == 0) goto LAB_82ED8;
+
+            local_30 = new Vector4Int(auStack68[uVar5 - 1].x, auStack68[uVar5 - 1].y, auStack68[uVar5 + 1].x, auStack68[uVar5 + 1].y);
+        }
+
+        LAB_82E90:
+        if (bVar1 != 0)
+        {
+            uVar2 = (ushort)Utilities.FUN_61620(local_30);
+            local_30.z = param2.x;
+            local_30.w = param2.z;
+            sVar3 = (short)Utilities.FUN_61620(local_30);
+
+            if ((ushort)(sVar3 - uVar2) < 0x400U)
+                return 0;
+
+            uVar6 = 0x1000;
+        }
+
+        LAB_82ED8:
+        return (ushort)(uVar6 | uVar2);
+    }
+
     public bool FUN_82EFC(CriPlayer param1, ref CriStatic param2, ref byte param3)
     {
         byte bVar1;

@@ -2,13 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CriCamera : MonoBehaviour
+public class CriCamera : CriObject
 {
-    public CriTransform cTransform; //0x00
-    public Vector3Int screen; //0x20
-    public short DAT_26; //0x26
-    public Vector3Int vr; //0x28
-    public short DAT_2E; //0x2E
+    public short SDAT_2E; //0x2E
     public Vector3Int DAT_30; //0x30
     public short DAT_36; //0x36
     public short DAT_38; //0x38
@@ -57,8 +53,9 @@ public class CriCamera : MonoBehaviour
     public FUN_8C[] PTR_FUN_9C618;
     public static CameraMotion DAT_99498;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         PTR_FUN_18448 = new FUN_18448[10]
         {
             FUN_27320,
@@ -119,16 +116,14 @@ public class CriCamera : MonoBehaviour
         };
     }
 
-    void Start()
+    protected override void Start()
     {
-        
+        base.Start();
     }
 
-    void Update()
+    protected override void Update()
     {
-        transform.position = (Vector3)screen / 16f;
-        transform.position = new Vector3(transform.position.x, -transform.position.y, transform.position.z);
-        transform.rotation = Quaternion.Euler((Vector3)vr / 4096f * 360f);
+        base.Update();
         transform.eulerAngles = new Vector3
             (-transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
     }
@@ -438,7 +433,7 @@ public class CriCamera : MonoBehaviour
                         DAT_8B = 0;
                         DAT_26 = 0x1000;
                         DAT_36 = 0x1000;
-                        DAT_2E = 0;
+                        SDAT_2E = 0;
                         DAT_3E = 0;
                     }
                     else
@@ -447,7 +442,7 @@ public class CriCamera : MonoBehaviour
                         DAT_8B = 2;
                         DAT_26 = pbVar6.DAT_25;
                         DAT_36 = pbVar6.DAT_24;
-                        DAT_2E = pbVar6.DAT_27;
+                        SDAT_2E = pbVar6.DAT_27;
                         DAT_3E = pbVar6.DAT_26;
                     }
 

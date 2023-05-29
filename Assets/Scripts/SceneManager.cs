@@ -994,7 +994,7 @@ public class SceneManager : MonoBehaviour
         oVar1.DAT_90 = 0;
         oVar1.DAT_56 = 0;
         oVar1.DAT_54 = 0;
-        oVar1.DAT_2E = 0;
+        oVar1.SDAT_2E = 0;
         oVar1.DAT_26 = 0;
     }
 
@@ -1231,7 +1231,7 @@ public class SceneManager : MonoBehaviour
         cCamera.DAT_71 = param2;
         cCamera.DAT_56 = 0;
         cCamera.DAT_52 = 0;
-        cCamera.DAT_2E = 0;
+        cCamera.SDAT_2E = 0;
         cCamera.DAT_3E = 0;
         cCamera.DAT_58 = 0;
         cCamera.DAT_73 = 0;
@@ -1280,7 +1280,7 @@ public class SceneManager : MonoBehaviour
         DAT_C3230.screen = cCamera.screen;
         DAT_C3230.DAT_26 = cCamera.DAT_26;
         DAT_C3230.vr = cCamera.vr;
-        DAT_C3230.DAT_2E = cCamera.DAT_2E;
+        DAT_C3230.SDAT_2E = cCamera.SDAT_2E;
         DAT_C3230.DAT_30 = cCamera.DAT_30;
         DAT_C3230.DAT_36 = cCamera.DAT_36;
         DAT_C3230.DAT_38 = cCamera.DAT_38;
@@ -1328,7 +1328,7 @@ public class SceneManager : MonoBehaviour
         cCamera.screen = DAT_C3230.screen;
         cCamera.DAT_26 = DAT_C3230.DAT_26;
         cCamera.vr = DAT_C3230.vr;
-        cCamera.DAT_2E = DAT_C3230.DAT_2E;
+        cCamera.SDAT_2E = DAT_C3230.SDAT_2E;
         cCamera.DAT_30 = DAT_C3230.DAT_30;
         cCamera.DAT_36 = DAT_C3230.DAT_36;
         cCamera.DAT_38 = DAT_C3230.DAT_38;
@@ -1398,7 +1398,7 @@ public class SceneManager : MonoBehaviour
         ushort uVar3;
 
         oVar1 = cCamera;
-        sVar2 = (short)(cCamera.DAT_26 + cCamera.DAT_2E);
+        sVar2 = (short)(cCamera.DAT_26 + cCamera.SDAT_2E);
         cCamera.DAT_26 = sVar2;
 
         if (10000 < sVar2)
@@ -3618,6 +3618,140 @@ public class SceneManager : MonoBehaviour
         } while (uVar5 < (uint)DAT_7CDC.Length);
 
         return 0;
+    }
+
+    private ushort FUN_8316C(CriParticle param1)
+    {
+        ushort uVar1;
+        uint uVar2;
+        CriStatic piVar3;
+        uint uVar4;
+        Vector4Int local_20;
+        Vector2Int[] local_38;
+        Vector2Int[] auStack48;
+        Vector3Int auStack32;
+
+        local_38 = new Vector2Int[2];
+        auStack48 = new Vector2Int[4];
+        auStack32 = new Vector3Int();
+        uVar1 = 0;
+        uVar4 = 0;
+
+        do
+        {
+            piVar3 = DAT_7CDC[uVar4];
+
+            if ((piVar3.flags & 1) != 0 && piVar3.cCollider != null)
+            {
+                GameManager.instance.FUN_81720(piVar3, auStack48);
+                local_38[0] = new Vector2Int(param1.screen.x, param1.screen.z);
+                local_38[1] = new Vector2Int(param1.DAT_34.x, param1.DAT_34.z);
+                uVar2 = (byte)GameManager.instance.FUN_841E8(auStack48, local_38, ref auStack32);
+
+                if ((uVar2 & 0xff) != 0)
+                {
+                    if (param1.screen.y < piVar3.screen.y &&
+                        piVar3.screen.y - piVar3.cCollider.DAT_00.y < param1.screen.y)
+                    {
+                        uVar2 &= 0x7f;
+                        local_20 = new Vector4Int(auStack48[uVar2].x, auStack48[uVar2].y, auStack48[uVar2 + 1].x, auStack48[uVar2 + 1].y);
+                        uVar1 = (ushort)Utilities.FUN_61620(local_20);
+                        uVar1 |= 0x4000;
+                    }
+                }
+            }
+
+            uVar4++;
+        } while (uVar4 < (uint)DAT_7CDC.Length);
+
+        return uVar1;
+    }
+
+    private uint FUN_83300(CriParticle param1)
+    {
+        short sVar1;
+        uint uVar2;
+        int iVar3;
+        int iVar4;
+        WallSegment wVar4;
+        WallSegment wVar5;
+        WallCollider pbVar6;
+        ushort uVar7;
+        uint uVar8;
+        uint uVar9;
+        int[] local_38;
+        WallCollider[][] local_30;
+
+        local_38 = new int[2];
+        local_30 = new WallCollider[2][];
+        sVar1 = (short)FUN_836F0(ref param1.screen, param1.DAT_34);
+        wVar5 = sceneCollision.WALL_SEGMENTS[0];
+        uVar9 = (sVar1 != 0 ? 1U : 0) << 13;
+        local_38[0] = wVar5.WALL_COUNT;
+        local_30[0] = wVar5.WALL_COLLIDERS;
+        iVar3 = 1 - param1.screen.y / 0x1a9;
+        iVar4 = iVar3 * 0x1000000 >> 0x18;
+
+        if (iVar4 < 0x10)
+        {
+            wVar4 = sceneCollision.WALL_SEGMENTS[iVar4];
+            local_38[1] = wVar4.WALL_COUNT;
+            local_30[1] = wVar4.WALL_COLLIDERS;
+        }
+        else
+        {
+            local_38[1] = 0;
+            local_30[1] = local_30[0];
+        }
+
+        uVar8 = 0;
+        iVar4 = (sbyte)iVar3;
+        iVar3 = 0;
+
+        do
+        {
+            uVar7 = 0;
+
+            if (local_38[iVar3] != 0)
+            {
+                do
+                {
+                    pbVar6 = local_30[uVar8][uVar7];
+
+                    if ((pbVar6.flags & 0x8000) == 0 && (pbVar6.DAT_03 == 0 || (pbVar6.DAT_02 <= iVar4 && iVar4 < pbVar6.DAT_03)))
+                    {
+                        uVar2 = GameManager.instance.FUN_82D3C(param1.screen, param1.DAT_34, pbVar6);
+                        uVar9 |= uVar2;
+
+                        if ((uVar9 & 0xffff) != 0) goto LAB_834B0;
+                    }
+
+                    uVar7++;
+                } while (uVar7 < (uint)local_38[iVar3]);
+            }
+
+            uVar8++;
+            iVar3++;
+        } while (uVar8 < 2);
+
+        LAB_834B0:
+        uVar8 = FUN_8316C(param1);
+        return (uVar9 | uVar8) & 0xffff;
+    }
+
+    public short FUN_834F0(CriParticle param1)
+    {
+        short sVar1;
+
+        sVar1 = (short)FUN_83300(param1);
+
+        if (sVar1 != 0)
+        {
+            param1.screen.x = param1.DAT_34.x;
+            param1.screen.z = param1.DAT_34.z;
+        }
+
+        return sVar1;
     }
 
     public uint FUN_83534(ref Vector3Int param1, Vector3Int param2)

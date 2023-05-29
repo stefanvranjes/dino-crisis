@@ -2373,7 +2373,7 @@ public class CriScene : MonoBehaviour
         SceneManager.instance.FUN_264C4(oVar1.DAT_36, 
             (short)mVar2.DAT_02.x, (short)mVar2.DAT_02.y, (short)mVar2.DAT_02.z);
         oVar1.DAT_26 = mVar2.DAT_18;
-        oVar1.DAT_2E = mVar2.DAT_1A;
+        oVar1.SDAT_2E = mVar2.DAT_1A;
         oVar1.DAT_54 = mVar2.DAT_1C;
         oVar1.DAT_56 = mVar2.DAT_1E;
         SceneManager.instance.FUN_26504(oVar1.DAT_26, 
@@ -2402,7 +2402,7 @@ public class CriScene : MonoBehaviour
             oVar1.DAT_26 = mVar2.DAT_02;
 
         if ((mVar2.DAT_01 & 8) != 0)
-            oVar1.DAT_2E = mVar2.DAT_04;
+            oVar1.SDAT_2E = mVar2.DAT_04;
 
         DAT_58[0]++;
         return false;

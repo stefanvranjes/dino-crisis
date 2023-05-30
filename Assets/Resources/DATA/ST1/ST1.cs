@@ -7,7 +7,8 @@ public class ST1 : LevelManager
 {
     public static new ST1 instance;
     public uint[] DAT_04 = new uint[4] { 0x80132b5c, 0x80132bfc, 0x80132ca4, 0x80132d6c };
-    public FUN_B58BC[] DAT_7624 = new FUN_B58BC[] { FUN_44EA8, FUN_45224, FUN_45350 };
+    public FUN_B58BC[] DAT_7624 = new FUN_B58BC[] { FUN_44EA8, FUN_45224, FUN_45350, FUN_45480, FUN_45758, 
+                                                    FUN_45B08, FUN_270, FUN_46A1C, FUN_35C };
     public FUN_B58C0[] DAT_7680 = new FUN_B58C0[3] { FUN_4CFDC, FUN_54EF8, FUN_2FAB0 }; //0x7680 (ST1)
     public FUN_C2570[] DAT_76A8 = new FUN_C2570[5] { FUN_4A26C, FUN_7F6F8, FUN_7F750, FUN_6C74, FUN_7F7E4 }; //0x76A8 (ST1)
     public FUN_C1CF8[] DAT_76C8 = new FUN_C1CF8[15] { FUN_20A98, FUN_20AA0, FUN_20AA8, FUN_20B0C, FUN_21758,
@@ -168,6 +169,18 @@ public class ST1 : LevelManager
     public static void FUN_71F4(CriInteract param1)
     {
         param1.FUN_71F4();
+    }
+
+    //FUN_270 (ST1)
+    public static void FUN_270(CriParticle param1)
+    {
+        param1.FUN_270();
+    }
+
+    //FUN_35C (ST1)
+    public static void FUN_35C(CriParticle param1)
+    {
+        param1.FUN_35C();
     }
 
     //FUN_6C74 (ST1)

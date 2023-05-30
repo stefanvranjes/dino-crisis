@@ -137,6 +137,10 @@ public static class Utilities
     {
         -6, -7, -17, -18, -23, -24, -25, -26, -26, -26, -28, -28, -28, -28, -26, -27, -23, -24, -19, -19, -14, -15, -9, -10, -13, -13
     };
+    public static short[] DAT_18530 = new short[]
+    {
+        0x2000, 0x1000, 0x500, 0
+    };
     public static short[] DAT_18790 = new short[]
     {
         54, 46, 35

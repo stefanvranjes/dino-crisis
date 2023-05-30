@@ -298,6 +298,28 @@ public class CriObject : MonoBehaviour
         screen.z += local_10.z;
     }
 
+    public void FUN_630EC()
+    {
+        CriCamera oVar1;
+        uint uVar2;
+
+        oVar1 = SceneManager.instance.cCamera;
+        uVar2 = flags;
+
+        if ((uVar2 & 1) != 0)
+        {
+            flags = uVar2 | 2;
+            uVar2 = Utilities.FUN_63160(screen, oVar1.DAT_30);
+
+            if (uVar2 < 0xe100001)
+                return;
+
+            uVar2 = flags;
+        }
+
+        flags = uVar2 & 0xfffffffd;
+    }
+
     public short FUN_64804(Vector3Int param1)
     {
         short sVar1;

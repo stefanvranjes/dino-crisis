@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct UNK_9C7CC
+{
+    public uint DAT_00;
+    public ushort DAT_04;
+    public ushort DAT_06;
+    public ushort DAT_08;
+    public bool DAT_0A;
+}
+
 public class CriParticle : CriObject
 {
     public Vector3Int DAT_34; //0x34
@@ -22,14 +31,27 @@ public class CriParticle : CriObject
     public byte DAT_65; //0x65
     public byte DAT_68; //0x68
     public byte DAT_69; //0x69
+    public short SDAT_6A; //0x6A
     public byte DAT_6A; //0x6A
     public byte DAT_6B; //0x6B
     public byte DAT_6C; //0x6C
     public int IDAT_6C; //0x6C
+    public short DAT_6E; //0x6E
+    public short DAT_70; //0x70
+    private delegate void FUN_7704(); //0x7704 (ST1)
+    private delegate void FUN_7710(); //0x7710 (ST1)
+    private delegate void FUN_780C(); //0x780C (ST1)
     private delegate void FUN_9C790();
     private delegate void FUN_9C7AC();
     private delegate void FUN_9C7B4();
     private delegate void FUN_9C7C0();
+    private delegate void FUN_9C874();
+    private delegate void FUN_9C884();
+    private delegate void FUN_9C890();
+    private delegate void FUN_9CBD4();
+    private FUN_7704[] PTR_FUN_7704; //0x7704 (ST1)
+    private FUN_7710[] PTR_FUN_7710; //0x7710 (ST1)
+    private FUN_780C[] PTR_FUN_780C; //0x780C (ST1)
     public static uint[] DAT_9C774 = new uint[7]
     {
         0x8019dfd8, 0x8019e698, 0x8019e6d8, 0x8019dfd8,
@@ -40,10 +62,31 @@ public class CriParticle : CriObject
     private FUN_9C7AC[] PTR_FUN_9C7AC;
     private FUN_9C7B4[] PTR_FUN_9C7B4;
     private FUN_9C7C0[] PTR_FUN_9C7C0;
+    private UNK_9C7CC[] PTR_DAT_9C7CC;
+    private FUN_9C874[] PTR_FUN_9C874;
+    private FUN_9C884[] PTR_FUN_9C884;
+    private FUN_9C890[] PTR_FUN_9C890;
+    private FUN_9CBD4[] PTR_FUN_9CBD4;
 
     protected override void Awake()
     {
         base.Awake();
+        PTR_FUN_7704 = new FUN_7704[3]
+        {
+            FUN_2BC,
+            FUN_31C,
+            FUN_60068
+        };
+        PTR_FUN_7710 = new FUN_7710[3]
+        {
+            FUN_398,
+            FUN_448,
+            FUN_60068
+        };
+        PTR_FUN_780C = new FUN_780C[]
+        {
+
+        };
         PTR_FUN_9C790 = new FUN_9C790[5]
         {
             FUN_44F08,
@@ -67,6 +110,37 @@ public class CriParticle : CriObject
         {
             FUN_4538C,
             FUN_45444,
+            FUN_60068
+        };
+        PTR_DAT_9C7CC = new UNK_9C7CC[]
+        {
+
+        };
+        PTR_FUN_9C874 = new FUN_9C874[4]
+        {
+            FUN_454E0, 
+            FUN_45630, 
+            FUN_45650, 
+            FUN_456B4
+        };
+        PTR_FUN_9C884 = new FUN_9C884[3]
+        {
+            FUN_457A4,
+            FUN_458C0,
+            FUN_60068
+        };
+        PTR_FUN_9C890 = new FUN_9C890[5]
+        {
+            FUN_45B44,
+            FUN_45C4C,
+            FUN_60068,
+            FUN_45C6C,
+            FUN_45CAC
+        };
+        PTR_FUN_9CBD4 = new FUN_9CBD4[3]
+        {
+            FUN_46A7C,
+            FUN_46AE4,
             FUN_60068
         };
     }
@@ -102,10 +176,13 @@ public class CriParticle : CriObject
         DAT_65 = 0;
         DAT_68 = 0;
         DAT_69 = 0;
+        SDAT_6A = 0;
         DAT_6A = 0;
         DAT_6B = 0;
         DAT_6C = 0;
         IDAT_6C = 0;
+        DAT_6E = 0;
+        DAT_70 = 0;
     }
 
     public void FUN_44EA8()
@@ -297,12 +374,464 @@ public class CriParticle : CriObject
             DAT_3C++;
     }
 
-    public void FUN_606A8(Tod2ScriptableObject param1)
+    public void FUN_45480()
+    {
+        int iVar1;
+
+        PTR_FUN_9C874[DAT_3C]();
+        iVar1 = IDAT_6C - 1;
+        IDAT_6C = iVar1;
+
+        if (iVar1 == -1)
+            FUN_451A4();
+    }
+
+    private void FUN_454E0()
+    {
+        byte bVar1;
+        int iVar2;
+        int iVar3;
+
+        iVar3 = 0;
+
+        if (DAT_2F == 1)
+            FUN_456F4(0);
+        else
+        {
+            if (DAT_2F == 2)
+            {
+                iVar2 = DAT_69;
+                iVar3 = FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(PTR_DAT_9C7CC[iVar2].DAT_00));
+                DAT_56 = (ushort)(PTR_DAT_9C7CC[iVar2].DAT_04 & 0xff9f | PTR_DAT_9C7CC[iVar2].DAT_06 << 5);
+                DAT_54 = PTR_DAT_9C7CC[iVar2].DAT_08;
+
+                if (PTR_DAT_9C7CC[iVar2].DAT_06 != 0xff)
+                    DAT_50.a |= 2;
+
+                if (!PTR_DAT_9C7CC[iVar2].DAT_0A)
+                    DAT_2F = 0;
+                else
+                {
+                    FUN_456F4(0);
+                    DAT_2F = 1;
+                }
+            }
+        }
+
+        flags |= 2;
+
+        if (DAT_68 != 0)
+        {
+            DAT_62 = DAT_68;
+            DAT_60 = DAT_68;
+        }
+
+        if (DAT_6B != 0)
+            DAT_6C = DAT_6B;
+
+        bVar1 = 2;
+
+        if (iVar3 == 1)
+            bVar1 = 3;
+
+        DAT_3C = bVar1;
+    }
+
+    private void FUN_45630()
+    {
+        FUN_606D8();
+    }
+
+    private void FUN_45650()
+    {
+        int iVar1;
+
+        screen.x += DAT_40.x;
+        screen.y += DAT_40.y;
+        screen.z += DAT_40.z;
+        iVar1 = FUN_606D8();
+
+        if (iVar1 != 0)
+            DAT_3C = 3;
+    }
+
+    private void FUN_456B4()
+    {
+        if (DAT_2F == 1)
+            GameManager.instance.DAT_0C.DAT_03 = 0;
+
+        FUN_60068();
+    }
+
+    private void FUN_456F4(uint param2)
+    {
+        LightSource oVar2;
+
+        oVar2 = GameManager.instance.DAT_0C;
+        oVar2.DAT_03 = 1;
+        oVar2.DAT_04 = screen;
+        oVar2.DAT_0E = Utilities.DAT_18530[param2 & 0xff];
+        oVar2.DAT_0A = 0x600;
+        oVar2.DAT_00 = 0x20;
+        oVar2.DAT_01 = 0x20;
+        oVar2.DAT_02 = 0x20;
+    }
+
+    public void FUN_45758()
+    {
+        PTR_FUN_9C884[DAT_3C]();
+        FUN_630EC();
+    }
+
+    private void FUN_457A4()
+    {
+        int iVar1;
+        CriSkinned oVar1;
+        Vector3Int local_20;
+        Vector3Int local_18;
+
+        local_20 = new Vector3Int(60, -40, -30);
+        DAT_56 = 62;
+        oVar1 = SceneManager.instance.DAT_27C[10];
+        DAT_54 += 0x7df0;
+        local_18 = new Vector3Int(0, oVar1.vr.y & 0xfff, 0);
+        Utilities.RotMatrix(ref local_18, ref oVar1.cTransform.rotation);
+        local_18 = Utilities.ApplyMatrixSV(ref oVar1.cTransform.rotation, ref local_20);
+        iVar1 = Utilities.Rand();
+        DAT_40.x = local_18.x + (iVar1 & 31) - 15;
+        iVar1 = Utilities.Rand();
+        DAT_40.y = local_18.y + (iVar1 & 31) - 15;
+        iVar1 = Utilities.Rand();
+        DAT_40.z = local_18.z + (iVar1 & 31) - 15;
+        DAT_70 = 0x222;
+        DAT_6A = 10;
+        DAT_6E = 40;
+        DAT_3C++;
+    }
+
+    private void FUN_458C0()
+    {
+        short sVar1;
+        uint uVar2;
+        uint uVar3;
+        int iVar4;
+
+        sVar1 = DAT_6E;
+        DAT_6E = (short)(sVar1 - 1);
+
+        if (sVar1 == 1)
+            DAT_3C++;
+
+        DAT_34 = screen;
+        DAT_40.y += SDAT_6A;
+        screen.y += DAT_40.y;
+        DAT_40.x = (DAT_40.x * 0x180000 >> 0x10) / 0x19;
+        vr.z = vr.z - DAT_70 & 0xfff;
+        DAT_40.z = (DAT_40.z * 0x180000 >> 0x10) / 0x19;
+        screen.x += DAT_40.x;
+        screen.z += DAT_40.z;
+        uVar2 = (ushort)SceneManager.instance.FUN_834F0(this);
+        uVar3 = uVar2 >> 12;
+
+        if (uVar3 == 1)
+        {
+            if ((uVar2 & 0xff) == 0)
+            {
+                if ((uVar2 & 0x400) == 0)
+                    DAT_40.x = -DAT_40.x;
+                else
+                    DAT_40.z = -DAT_40.z;
+            }
+            else
+            {
+                DAT_40.x = -DAT_40.x;
+                DAT_40.z = -DAT_40.z;
+            }
+
+            DAT_70 = (short)-DAT_70;
+        }
+        else
+        {
+            if (uVar3 < 2) goto LAB_45AAC;
+
+            if (uVar3 != 2)
+            {
+                if (uVar3 != 3) goto LAB_45AAC;
+
+                if ((uVar2 & 0xff) == 0)
+                {
+                    if ((uVar2 & 0x400) == 0)
+                        DAT_40.x = -DAT_40.x;
+                    else
+                        DAT_40.z = -DAT_40.z;
+                }
+                else
+                {
+                    DAT_40.x = -DAT_40.x;
+                    DAT_40.z = -DAT_40.z;
+                }
+
+                DAT_70 = (short)-DAT_70;
+            }
+            else
+            {
+                iVar4 = DAT_40.y << 0x10;
+                sVar1 = (short)-((iVar4 >> 0x10) - (int)((uint)iVar4 >> 0x1f) >> 1);
+                DAT_40.y = sVar1;
+
+                if (-10 < sVar1) goto LAB_45AAC;
+            }
+        }
+
+        GameManager.instance.FUN_5C94C(this, 18);
+
+        LAB_45AAC:
+        if (DAT_6E < 30)
+            DAT_70 = (short)((DAT_70 * 0x130000 >> 0x10) / 0x14);
+    }
+
+    public void FUN_45B08()
+    {
+        PTR_FUN_9C890[DAT_3C]();
+    }
+
+    private void FUN_45B44()
+    {
+        byte bVar1;
+
+        bVar1 = DAT_2F;
+        DAT_56 = 126;
+        DAT_54 = 0x7df2;
+
+        if (bVar1 == 1)
+        {
+            DAT_50.r = 0;
+            DAT_50.g = 0xff;
+            DAT_50.b = 0;
+        }
+        else
+        {
+            if (bVar1 < 2)
+            {
+                if (bVar1 == 0)
+                {
+                    DAT_50.r = 0xff;
+                    DAT_50.g = 0;
+                    DAT_50.b = 0;
+                }
+            }
+            else
+            {
+                if (bVar1 == 2)
+                {
+                    DAT_50.r = DAT_68;
+                    DAT_50.g = DAT_69;
+                    DAT_50.b = DAT_6A;
+                }
+            }
+        }
+
+        if (vr.y == 0)
+        {
+            DAT_60 = 11;
+            DAT_62 = 11;
+        }
+        else
+        {
+            DAT_60 = (ushort)((uint)(vr.y & 0xf0) >> 4);
+            DAT_62 = (ushort)(vr.y & 0xf);
+        }
+
+        DAT_50.a |= 2;
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(0x8019e250));
+        flags |= 2;
+        DAT_3C++;
+    }
+
+    private void FUN_45C4C()
+    {
+        FUN_606D8();
+    }
+
+    private void FUN_45C6C()
+    {
+        FUN_45B44();
+        DAT_62 = 6;
+        DAT_60 = 6;
+        flags &= 0xfffffffd;
+    }
+
+    private void FUN_45CAC()
+    {
+        bool bVar1;
+        uint uVar2;
+
+        bVar1 = InventoryManager.FUN_4A87C(2, 0x16);
+
+        if (!bVar1)
+        {
+            bVar1 = InventoryManager.FUN_4A87C(2, 0x17);
+
+            if (!bVar1)
+                uVar2 = flags & 0xfffffffd;
+            else
+            {
+                DAT_50.r = 0;
+                DAT_50.g = 0xff;
+                uVar2 = flags | 2;
+            }
+
+            flags = uVar2;
+        }
+        else
+        {
+            DAT_50.r = 0xff;
+            DAT_50.g = 0;
+            flags |= 2;
+        }
+
+        FUN_606D8();
+    }
+
+    public void FUN_46A1C()
+    {
+        int iVar1;
+
+        iVar1 = IDAT_6C - 1;
+        IDAT_6C = iVar1;
+
+        if (iVar1 == -1)
+            FUN_451A4();
+
+        PTR_FUN_9CBD4[DAT_3C]();
+    }
+
+    private void FUN_46A7C()
+    {
+        DAT_56 = 62;
+        DAT_54 = 0x7df1;
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(0x8019e3b8));
+        DAT_6B = 20;
+        flags |= 2;
+        DAT_3C++;
+    }
+
+    private void FUN_46AE4()
+    {
+        sbyte sVar1;
+        int iVar2;
+
+        DAT_34 = screen;
+        screen.x += DAT_40.x;
+        DAT_40.y += 10;
+        screen.z += DAT_40.z;
+        screen.y += DAT_40.y;
+        vr.z = vr.z + DAT_6B * 2;
+        iVar2 = SceneManager.instance.FUN_834F0(this);
+
+        if (iVar2 >> 12 == 2)
+        {
+            GameManager.instance.FUN_5C94C(this, 22);
+            DAT_6B = DAT_69;
+            DAT_40.y = (DAT_40.y * -DAT_6A) / 0xff;
+        }
+
+        FUN_606D8();
+        sVar1 = (sbyte)(DAT_68 - 1);
+        DAT_68 = (byte)sVar1;
+
+        if (sVar1 == -1)
+            DAT_3C++;
+    }
+
+    //FUN_270 (ST1)
+    public void FUN_270()
+    {
+        PTR_FUN_7704[DAT_3C]();
+        FUN_630EC();
+    }
+
+    //FUN_2BC (ST1)
+    private void FUN_2BC()
+    {
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(0x8010ee50));
+        DAT_56 = 103;
+        DAT_54 = 0x7ef0;
+        DAT_50.a |= 2;
+        DAT_3C++;
+        flags |= 2;
+    }
+
+    //FUN_31C (ST1)
+    private void FUN_31C()
+    {
+        int iVar1;
+
+        iVar1 = FUN_606D8();
+
+        if (iVar1 == 1)
+            DAT_3C++;
+    }
+
+    //FUN_35C (ST1)
+    public void FUN_35C()
+    {
+        PTR_FUN_7710[DAT_3C]();
+    }
+
+    //FUN_398 (ST1)
+    private void FUN_398()
+    {
+        byte bVar1;
+        ushort uVar2;
+        uint[] local_20;
+
+        local_20 = new uint[4];
+        local_20[0] = ST1.instance.DAT_04[0];
+        local_20[1] = ST1.instance.DAT_04[1];
+        local_20[2] = ST1.instance.DAT_04[2];
+        local_20[3] = ST1.instance.DAT_04[3];
+        bVar1 = DAT_2F;
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(local_20[bVar1]));
+        DAT_56 = 37;
+        DAT_54 = 0x7f3c;
+
+        if (bVar1 == 0)
+            uVar2 = 12;
+        else
+            uVar2 = 8;
+
+        DAT_60 = uVar2;
+        DAT_62 = uVar2;
+        flags |= 2;
+        DAT_3C++;
+    }
+
+    //FUN_448 (ST1)
+    private void FUN_448()
+    {
+        FUN_606D8();
+    }
+
+    //FUN_468 (ST1)
+    public void FUN_468()
+    {
+        PTR_FUN_780C[DAT_3C]();
+        FUN_630EC();
+    }
+
+    //FUN_4B4 (ST1)
+    private void FUN_4B4()
+    {
+        //...
+    }
+
+    public int FUN_606A8(Tod2ScriptableObject param1)
     {
         DAT_5C = 0;
         DAT_58 = param1;
         DAT_64 = param1.FRAMES[0].DAT_05;
-        FUN_606D8();
+        return FUN_606D8();
     }
 
     public int FUN_606D8()

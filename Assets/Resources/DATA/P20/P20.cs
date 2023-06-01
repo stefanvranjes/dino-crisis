@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class P20 : SharedAssets
 {
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         assets.Add(317, this);

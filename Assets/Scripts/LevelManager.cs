@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
     public int DAT_C2594;
     public Vector3Int DAT_C2598;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (instance == null)
         {
@@ -30,20 +30,20 @@ public class LevelManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        
+        return;
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
-        
+        return;
     }
 
     public virtual void Initialize()
     {
-
+        return;
     }
 
     public void FUN_4A274()
@@ -97,6 +97,27 @@ public class LevelManager : MonoBehaviour
 
             if ((pbVar1.flags & 1) != 0)
                 PTR_FUN_B58C0[pbVar1.tags](pbVar1);
+
+            iVar3--;
+            iVar2++;
+        } while (iVar3 != -1);
+    }
+
+    public void FUN_4A460()
+    {
+        CriParticle pbVar1;
+        int iVar2;
+        int iVar3;
+
+        iVar3 = 59;
+        iVar2 = 0;
+
+        do
+        {
+            pbVar1 = SceneManager.instance.DAT_5FCC[iVar2];
+
+            if ((pbVar1.flags & 1) != 0)
+                PTR_FUN_B58BC[pbVar1.tags](pbVar1);
 
             iVar3--;
             iVar2++;

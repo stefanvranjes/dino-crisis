@@ -11,6 +11,17 @@ public struct UNK_9C7CC
     public bool DAT_0A;
 }
 
+public struct UNK_771C
+{
+    public byte DAT_00;
+    public byte DAT_01;
+    public byte DAT_02;
+    public sbyte DAT_03;
+    public short DAT_04;
+    public short DAT_06;
+    public short DAT_08;
+}
+
 public class CriParticle : CriObject
 {
     public Vector3Int DAT_34; //0x34
@@ -38,6 +49,7 @@ public class CriParticle : CriObject
     public int IDAT_6C; //0x6C
     public short DAT_6E; //0x6E
     public short DAT_70; //0x70
+    public short DAT_72; //0x72
     private delegate void FUN_7704(); //0x7704 (ST1)
     private delegate void FUN_7710(); //0x7710 (ST1)
     private delegate void FUN_780C(); //0x780C (ST1)
@@ -51,14 +63,17 @@ public class CriParticle : CriObject
     private delegate void FUN_9CBD4();
     private FUN_7704[] PTR_FUN_7704; //0x7704 (ST1)
     private FUN_7710[] PTR_FUN_7710; //0x7710 (ST1)
+    private UNK_771C[] PTR_DAT_771C; //0x771C (ST1)
+    private static uint[] DAT_77F8 = new uint[4] { 0x8011d314, 0x8011d324, 0x8011d33c, 0x8011d344 }; //0x77F8 (ST1)
     private FUN_780C[] PTR_FUN_780C; //0x780C (ST1)
-    public static uint[] DAT_9C774 = new uint[7]
+    private static byte[] DAT_7808 = new byte[4] { 3, 1, 0, 0 }; //0x7808 (ST1)
+    private static uint[] DAT_9C774 = new uint[7]
     {
         0x8019dfd8, 0x8019e698, 0x8019e6d8, 0x8019dfd8,
         0x8019e0c0, 0x8019e058, 0x8019e610
     };
     private FUN_9C790[] PTR_FUN_9C790;
-    public static uint[] DAT_9C7A4 = new uint[2] { 0x8019e0e8, 0x8019e0f0 };
+    private static uint[] DAT_9C7A4 = new uint[2] { 0x8019e0e8, 0x8019e0f0 };
     private FUN_9C7AC[] PTR_FUN_9C7AC;
     private FUN_9C7B4[] PTR_FUN_9C7B4;
     private FUN_9C7C0[] PTR_FUN_9C7C0;
@@ -83,9 +98,16 @@ public class CriParticle : CriObject
             FUN_448,
             FUN_60068
         };
-        PTR_FUN_780C = new FUN_780C[]
+        PTR_DAT_771C = new UNK_771C[]
         {
 
+        };
+        PTR_FUN_780C = new FUN_780C[4]
+        {
+            FUN_4B4, 
+            FUN_5F8, 
+            FUN_71C, 
+            FUN_60068
         };
         PTR_FUN_9C790 = new FUN_9C790[5]
         {
@@ -183,6 +205,7 @@ public class CriParticle : CriObject
         IDAT_6C = 0;
         DAT_6E = 0;
         DAT_70 = 0;
+        DAT_72 = 0;
     }
 
     public void FUN_44EA8()
@@ -823,7 +846,85 @@ public class CriParticle : CriObject
     //FUN_4B4 (ST1)
     private void FUN_4B4()
     {
-        //...
+        byte bVar1;
+        sbyte sVar2;
+        byte bVar3;
+        int iVar4;
+        Vector3Int local_38;
+        Vector3Int local_40;
+        Matrix3x3 auStack48;
+
+        iVar4 = DAT_2F;
+        bVar1 = DAT_7808[PTR_DAT_771C[iVar4].DAT_03];
+        DAT_54 = 0x7efa;
+        DAT_56 = (ushort)(bVar1 << 5 | 5);
+        sVar2 = (sbyte)PTR_DAT_771C[iVar4].DAT_02;
+        DAT_50.a |= 2;
+        DAT_62 = (ushort)(short)sVar2;
+        DAT_60 = (ushort)(short)sVar2;
+        bVar3 = PTR_DAT_771C[iVar4].DAT_01;
+        DAT_50.r = bVar3;
+        DAT_50.g = bVar3;
+        DAT_50.b = bVar3;
+        local_38 = new Vector3Int(0, vr.y, 0);
+        auStack48 = new Matrix3x3();
+        Utilities.RotMatrix(ref local_38, ref auStack48);
+        local_40 = new Vector3Int(0, 0, PTR_DAT_771C[iVar4].DAT_04);
+        local_40 = Utilities.ApplyMatrixSV(ref auStack48, ref local_40);
+        DAT_40.x = local_40.x;
+        DAT_40.y = PTR_DAT_771C[iVar4].DAT_06;
+        DAT_72 = 0x10;
+        DAT_40.z = local_40.z;
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(DAT_77F8[PTR_DAT_771C[iVar4].DAT_00]));
+        vr = new Vector3Int(0, 0, 0);
+        DAT_3C++;
+    }
+
+    //FUN_5F8 (ST1)
+    private void FUN_5F8()
+    {
+        short sVar1;
+        short sVar2;
+        int iVar3;
+
+        if (0 < screen.y)
+        {
+            DAT_3C++;
+            DAT_60 >>= 1;
+            iVar3 = DAT_40.x << 0x10;
+            DAT_62 >>= 1;
+            DAT_40.x = (iVar3 >> 0x10) - (iVar3 >> 0x1f) >> 1;
+            screen.y = 0;
+            iVar3 = DAT_40.z << 0x10;
+            sVar1 = PTR_DAT_771C[DAT_2F].DAT_06;
+            DAT_40.z = (iVar3 >> 0x10) - (iVar3 >> 0x1f) >> 1;
+            DAT_40.y = sVar1;
+        }
+
+        sVar2 = PTR_DAT_771C[DAT_2F].DAT_08;
+        DAT_40.y += DAT_72;
+        screen.x += DAT_40.x;
+        screen.z += DAT_40.z;
+        vr.z = vr.z - sVar2 & 0xfff;
+        screen.y += DAT_40.y;
+        FUN_606D8();
+    }
+
+    //FUN_71C (ST1)
+    private void FUN_71C()
+    {
+        short sVar1;
+
+        if (0 < screen.y)
+            DAT_3C++;
+
+        sVar1 = PTR_DAT_771C[DAT_2F].DAT_08;
+        DAT_40.y += DAT_72;
+        screen.x += DAT_40.x;
+        screen.z += DAT_40.z;
+        vr.z = vr.z - sVar1 & 0xfff;
+        screen.y += DAT_40.y;
+        FUN_606D8();
     }
 
     public int FUN_606A8(Tod2ScriptableObject param1)

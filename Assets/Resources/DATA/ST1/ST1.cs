@@ -7,8 +7,8 @@ public class ST1 : LevelManager
 {
     public static new ST1 instance;
     public uint[] DAT_04 = new uint[4] { 0x80132b5c, 0x80132bfc, 0x80132ca4, 0x80132d6c };
-    public FUN_B58BC[] DAT_7624 = new FUN_B58BC[] { FUN_44EA8, FUN_45224, FUN_45350, FUN_45480, FUN_45758, 
-                                                    FUN_45B08, FUN_270, FUN_46A1C, FUN_35C };
+    public FUN_B58BC[] DAT_7624 = new FUN_B58BC[10] { FUN_44EA8, FUN_45224, FUN_45350, FUN_45480, FUN_45758, 
+                                                      FUN_45B08, FUN_270, FUN_46A1C, FUN_35C, FUN_468 };
     public FUN_B58C0[] DAT_7680 = new FUN_B58C0[3] { FUN_4CFDC, FUN_54EF8, FUN_2FAB0 }; //0x7680 (ST1)
     public FUN_C2570[] DAT_76A8 = new FUN_C2570[5] { FUN_4A26C, FUN_7F6F8, FUN_7F750, FUN_6C74, FUN_7F7E4 }; //0x76A8 (ST1)
     public FUN_C1CF8[] DAT_76C8 = new FUN_C1CF8[15] { FUN_20A98, FUN_20AA0, FUN_20AA8, FUN_20B0C, FUN_21758,
@@ -30,8 +30,10 @@ public class ST1 : LevelManager
     public byte DAT_7B4C;
     public byte DAT_7B4D;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         if (instance == null)
         {
             instance = this;
@@ -39,15 +41,15 @@ public class ST1 : LevelManager
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        
+        base.Update();
     }
 
     //FUN_F4 (ST1)
@@ -58,6 +60,7 @@ public class ST1 : LevelManager
         CriTrigger puVar4;
         TriggerData puVar5;
 
+        base.Initialize();
         DAT_74A4 = Resources.Load<TrgScriptableObject>("DATA/ST1/ST1_01");
         //...
         PTR_FUN_B58BC = DAT_7624;
@@ -181,6 +184,12 @@ public class ST1 : LevelManager
     public static void FUN_35C(CriParticle param1)
     {
         param1.FUN_35C();
+    }
+
+    //FUN_468 (ST1)
+    public static void FUN_468(CriParticle param1)
+    {
+        param1.FUN_468();
     }
 
     //FUN_6C74 (ST1)

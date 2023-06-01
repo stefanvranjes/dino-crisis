@@ -14,18 +14,18 @@ public class SharedAssets : MonoBehaviour
     public IniScriptableObject[] inis;
     public UIntUIntDictionary SHARED;
 
-
-    void Awake()
+    protected virtual void Awake()
     {
         if (instance == null)
         {
             instance = this;
             assets = new Dictionary<uint, SharedAssets>();
+            DontDestroyOnLoad(gameObject);
         }
     }
 
     // Start is called before the first frame update
-    public virtual void Start()
+    protected virtual void Start()
     {
         for (int i = 0; i < gians.Length; i++)
             GameManager.PTR_DAT_9E708[gians[i].INDEX] = gians[i];

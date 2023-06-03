@@ -1471,8 +1471,13 @@ public class DialogManager : MonoBehaviour
     };
     public delegate bool FUN_99028(Trigger t);
     public delegate void FUN_99058(Trigger t);
+    private delegate void FUN_99124();
     public FUN_99028[] PTR_FUN_99028;
     public FUN_99058[] PTR_FUN_99058;
+    private FUN_99124[] PTR_FUN_99124;
+    private static int[] DAT_99134 = new int[3] { 7, 11, 15 };
+    private static int[] DAT_99140 = new int[4] { 3, 7, 11, 15 };
+    private static int[] DAT_99150 = new int[5] { 3, 6, 9, 12, 15 };
 
     private void Awake()
     {
@@ -1504,6 +1509,13 @@ public class DialogManager : MonoBehaviour
                 FUN_1C888,
                 FUN_1CA74,
                 FUN_1CBA4
+            };
+            PTR_FUN_99124 = new FUN_99124[4]
+            {
+                FUN_1E968, 
+                FUN_1EAB8, 
+                FUN_1ECC0, 
+                FUN_1EEAC
             };
             DAT_B12C0 = new ushort[1024];
             DAT_B148E = new ushort[1024];
@@ -1847,7 +1859,7 @@ public class DialogManager : MonoBehaviour
                             DAT_B147C |= 4;
                         }
                         else
-                            ; //FUN_1E928
+                            FUN_1E928();
                     }
                 }
                 else
@@ -1870,12 +1882,12 @@ public class DialogManager : MonoBehaviour
                     {
                         if ((DAT_B147C & 8) == 0)
                         {
-                            //...
+                            DAT_B148E[92] = 0;
                             DAT_B147E = 7;
                         }
                         else
                         {
-                            //...
+                            DAT_B148E[92] = 0xa2;
                             DAT_B147E = 0;
                         }
 
@@ -1899,6 +1911,345 @@ public class DialogManager : MonoBehaviour
     private void FUN_1E900()
     {
         DAT_B148C = (byte)PTR_B146C[DAT_B146C];
+    }
+
+    private void FUN_1E928()
+    {
+        PTR_FUN_99124[(byte)PTR_B146C[DAT_B146C]]();
+    }
+
+    private void FUN_1E968()
+    {
+        ushort uVar1;
+        int puVar2;
+        int iVar3;
+        int puVar4;
+        uint uVar5;
+
+        puVar2 = FUN_1CC54(35);
+        puVar4 = 67;
+        iVar3 = 0;
+
+        do
+        {
+            iVar3++;
+            uVar1 = DAT_98628[puVar2];
+            puVar2++;
+            DAT_B148E[puVar4] = (ushort)(DAT_B1483 << 12 | uVar1 & 0x7fff);
+            puVar4++;
+        } while (iVar3 < 8);
+
+        if (DAT_B1489 == 0)
+            DAT_B148E[67] = 0xa0;
+        else
+            DAT_B148E[72] = 0xa0;
+
+        if (DAT_B148B == 0)
+        {
+            DAT_B146C--;
+            DAT_B148B++;
+        }
+        else
+        {
+            if ((InputManager.controllers[0].DAT_B58B8 & 0x40) == 0)
+            {
+                if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) == 0)
+                {
+                    if ((InputManager.controllers[0].DAT_B58B8 & 0xa000) != 0)
+                    {
+                        GameManager.instance.FUN_5C94C(null, 0);
+                        DAT_B1489++;
+                    }
+
+                    DAT_B1489 &= 1;
+                    DAT_B146C--;
+                    return;
+                }
+
+                if (DAT_B1489 == 0)
+                    uVar5 = 4;
+                else
+                {
+                    GameManager.instance.FUN_5C94C(null, 1);
+                    uVar5 = 5;
+                }
+            }
+            else
+            {
+                GameManager.instance.FUN_5C94C(null, 1);
+                uVar5 = 5;
+            }
+
+            InventoryManager.FUN_4A7E8(2, uVar5, true);
+        }
+    }
+
+    private void FUN_1EAB8()
+    {
+        byte bVar1;
+        int piVar2;
+        int iVar3;
+        int psVar4;
+        uint uVar5;
+        int iVar6;
+        uint[] local_18;
+
+        psVar4 = 42;
+        iVar3 = 1;
+        iVar6 = 0;
+        local_18 = new uint[3];
+        local_18[0] = 4;
+        local_18[1] = 5;
+        local_18[2] = 6;
+        piVar2 = 0;
+        DAT_B148E[41 + DAT_B148A] = 0;
+
+        do
+        {
+            if (DAT_B148E[psVar4] == 0 && DAT_B148E[psVar4 + 1] != 0)
+            {
+                DAT_99134[piVar2] = iVar3;
+                iVar6++;
+                piVar2++;
+
+                if (2 < iVar6) break;
+            }
+
+            iVar3++;
+            psVar4++;
+        } while (iVar3 < 40);
+
+        bVar1 = (byte)DAT_99134[DAT_B1489];
+        DAT_B148A = bVar1;
+        DAT_B148E[41 + bVar1] = 0xa0;
+
+        if (DAT_B148B == 0)
+        {
+            DAT_B146C--;
+            DAT_B148B++;
+        }
+        else
+        {
+            if ((InputManager.controllers[0].DAT_B58B8 & 0x40) == 0)
+            {
+                if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) == 0)
+                {
+                    if ((InputManager.controllers[0].DAT_B58B8 & 0x8000) == 0)
+                    {
+                        if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) != 0)
+                        {
+                            GameManager.instance.FUN_5C94C(null, 0);
+                            bVar1 = (byte)(DAT_B1489 + 1);
+                            DAT_B1489 = bVar1;
+                            DAT_B1489 = (byte)(bVar1 - (((byte)((ulong)bVar1 * 0xaaaaaaab >> 0x20) & 0xfe) + bVar1 / 3));
+                        }
+                    }
+                    else
+                    {
+                        GameManager.instance.FUN_5C94C(null, 0);
+
+                        if (DAT_B1489 == 0)
+                            DAT_B1489 = 2;
+                        else
+                            DAT_B1489--;
+                    }
+
+                    DAT_B146C--;
+                    return;
+                }
+
+                if (DAT_B1489 == 2)
+                    GameManager.instance.FUN_5C94C(null, 1);
+
+                uVar5 = local_18[DAT_B1489];
+            }
+            else
+            {
+                GameManager.instance.FUN_5C94C(null, 1);
+                uVar5 = 6;
+            }
+
+            InventoryManager.FUN_4A7E8(2, uVar5, true);
+        }
+    }
+
+    private void FUN_1EEAC()
+    {
+        byte bVar1;
+        int piVar2;
+        int iVar3;
+        int psVar4;
+        uint uVar5;
+        int iVar6;
+        uint[] local_20;
+
+        psVar4 = 42;
+        iVar3 = 1;
+        iVar6 = 0;
+        local_20 = new uint[5];
+        local_20[0] = 4;
+        local_20[1] = 5;
+        local_20[2] = 6;
+        local_20[3] = 7;
+        local_20[4] = 0x18;
+        piVar2 = 0;
+        DAT_B148E[41 + DAT_B148A] = 0;
+
+        do
+        {
+            if (DAT_B148E[psVar4] == 0 && DAT_B148E[psVar4 + 1] != 0)
+            {
+                DAT_99150[piVar2] = iVar3;
+                iVar6++;
+                piVar2++;
+
+                if (4 < iVar6) break;
+            }
+
+            iVar3++;
+            psVar4++;
+        } while (iVar3 < 40);
+
+        bVar1 = (byte)DAT_99150[DAT_B1489];
+        DAT_B148A = bVar1;
+        DAT_B148E[41 + bVar1] = 0xa0;
+
+        if (DAT_B148B == 0)
+        {
+            DAT_B146C--;
+            DAT_B148B++;
+        }
+        else
+        {
+            if ((InputManager.controllers[0].DAT_B58B8 & 0x40) == 0)
+            {
+                if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) == 0)
+                {
+                    if ((InputManager.controllers[0].DAT_B58B8 & 0x8000) == 0)
+                    {
+                        if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) != 0)
+                        {
+                            GameManager.instance.FUN_5C94C(null, 0);
+                            bVar1 = (byte)(DAT_B1489 + 1);
+                            DAT_B1489 = bVar1;
+                            DAT_B1489 = (byte)(bVar1 - (((byte)((ulong)bVar1 * 0xcccccccd >> 0x20) & 0xfc) + bVar1 / 5));
+                        }
+                    }
+                    else
+                    {
+                        GameManager.instance.FUN_5C94C(null, 0);
+
+                        if (DAT_B1489 == 0)
+                            DAT_B1489 = 4;
+                        else
+                            DAT_B1489--;
+                    }
+
+                    DAT_B146C--;
+                    return;
+                }
+
+                if (DAT_B1489 == 4)
+                    GameManager.instance.FUN_5C94C(null, 1);
+
+                uVar5 = local_20[DAT_B1489];
+            }
+            else
+            {
+                GameManager.instance.FUN_5C94C(null, 1);
+                uVar5 = 0x18;
+            }
+
+            InventoryManager.FUN_4A7E8(2, uVar5, true);
+        }
+    }
+
+    private void FUN_1ECC0()
+    {
+        byte bVar1;
+        int piVar2;
+        int iVar3;
+        int psVar4;
+        uint uVar5;
+        int iVar6;
+        uint[] local_18;
+
+        psVar4 = 42;
+        iVar3 = 1;
+        iVar6 = 0;
+        local_18 = new uint[4];
+        local_18[0] = 4;
+        local_18[1] = 5;
+        local_18[2] = 6;
+        local_18[3] = 7;
+        piVar2 = 0;
+        DAT_B148E[41 + DAT_B148A] = 0;
+
+        do
+        {
+            if (DAT_B148E[psVar4] == 0 && DAT_B148E[psVar4 + 1] != 0)
+            {
+                DAT_99140[piVar2] = iVar3;
+                iVar6++;
+                piVar2++;
+
+                if (3 < iVar6) break;
+            }
+
+            iVar3++;
+            psVar4++;
+        } while (iVar3 < 40);
+
+        bVar1 = (byte)DAT_99140[DAT_B1489];
+        DAT_B148A = bVar1;
+        DAT_B148E[41 + bVar1] = 0xa0;
+
+        if (DAT_B148B == 0)
+        {
+            DAT_B146C--;
+            DAT_B148B++;
+            return;
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x40) != 0)
+        {
+            GameManager.instance.FUN_5C94C(null, 1);
+            uVar5 = 7;
+            InventoryManager.FUN_4A7E8(2, uVar5, true);
+            return;
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) != 0)
+        {
+            if (DAT_B1489 == 3)
+                GameManager.instance.FUN_5C94C(null, 1);
+
+            uVar5 = local_18[DAT_B1489];
+            InventoryManager.FUN_4A7E8(2, uVar5, true);
+            return;
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x8000) == 0)
+        {
+            if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) == 0) goto LAB_1EE8C;
+
+            GameManager.instance.FUN_5C94C(null, 0);
+            bVar1 = (byte)(DAT_B1489 + 1);
+            DAT_B1489 = bVar1;
+            bVar1 &= 3;
+        }
+        else
+        {
+            GameManager.instance.FUN_5C94C(null, 0);
+            bVar1 = (byte)(DAT_B1489 - 1);
+
+            if (DAT_B1489 == 0)
+                bVar1 = 3;
+        }
+
+        DAT_B1489 = bVar1;
+        LAB_1EE8C:
+        DAT_B146C--;
     }
 
     private bool FUN_1AB50(Trigger param1)

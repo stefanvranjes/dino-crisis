@@ -13,6 +13,7 @@ public class BoxCollider
 
 public class CriStatic : CriObject
 {
+    public Vector3Int DAT_34; //0x34
     public TmdScriptableObject cMesh; //0x3C
     public CriObject DAT_40; //0x40
     public BoxCollider cCollider; //0x44
@@ -68,6 +69,7 @@ public class CriStatic : CriObject
     public override void ResetValues()
     {
         base.ResetValues();
+        DAT_34 = Vector3Int.zero;
         cMesh = null;
         DAT_40 = null;
         cCollider = null;

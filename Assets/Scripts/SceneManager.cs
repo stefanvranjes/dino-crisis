@@ -3620,6 +3620,11 @@ public class SceneManager : MonoBehaviour
         return 0;
     }
 
+    public sbyte FUN_826EC(CriStatic param1)
+    {
+        return 0;
+    }
+
     private ushort FUN_8316C(CriParticle param1)
     {
         ushort uVar1;

@@ -3620,9 +3620,289 @@ public class SceneManager : MonoBehaviour
         return 0;
     }
 
+    private bool FUN_81E70(Vector4Int param1, Vector4Int param2)
+    {
+        ushort uVar1;
+        int iVar2;
+        bool bVar3;
+        int iVar4;
+        int iVar5;
+
+        iVar4 = param2.x;
+        iVar2 = param1.x;
+        iVar5 = iVar4 - iVar2;
+
+        if (iVar5 < 0)
+            iVar5 = iVar2 - iVar4;
+
+        if (iVar2 < iVar4)
+            uVar1 = (ushort)param1.z;
+        else
+            uVar1 = (ushort)param2.z;
+
+        bVar3 = false;
+
+        if (iVar5 < uVar1)
+        {
+            iVar4 = param2.y;
+            iVar2 = param1.y;
+            iVar5 = iVar4 - iVar2;
+
+            if (iVar5 < 0)
+                iVar5 = iVar2 - iVar4;
+            
+            if (iVar2 < iVar4)
+            {
+                bVar3 = true;
+
+                if ((ushort)param1.w <= iVar5)
+                    return false;
+            }
+            else
+            {
+                bVar3 = false;
+
+                if (iVar5 < (ushort)param2.w)
+                    return true;
+            }
+        }
+
+        return bVar3;
+    }
+
+    private bool FUN_81F24(CriStatic param1, CriStatic param2)
+    {
+        short sVar1;
+        BoxCollider psVar3;
+        Vector4Int local_18;
+        Vector4Int local_10;
+
+        local_18 = new Vector4Int(); //not in the original code
+        sVar1 = (short)param1.vr.y;
+        psVar3 = param1.cCollider;
+
+        if (sVar1 == 0x400)
+        {
+            local_18 = new Vector4Int(param1.screen.x - psVar3.DAT_00.x, param1.screen.z - psVar3.DAT_00.y, psVar3.DAT_00.z, psVar3.DAT_00.x);
+            local_18.z <<= 1;
+            local_18.w <<= 1;
+        }
+        else
+        {
+            if (sVar1 < 0x401)
+            {
+                if (sVar1 == 0)
+                {
+                    local_18 = new Vector4Int(param1.screen.x - psVar3.DAT_00.x, param1.screen.z - psVar3.DAT_00.z, psVar3.DAT_00.x, psVar3.DAT_00.z);
+                    local_18.z <<= 1;
+                    local_18.w <<= 1;
+                    goto LAB_82000;
+                }
+            }
+            else
+            {
+                if (sVar1 == 0x800)
+                {
+                    local_18 = new Vector4Int(param1.screen.x - psVar3.DAT_00.x, param1.screen.z - psVar3.DAT_00.z, psVar3.DAT_00.x, psVar3.DAT_00.z);
+                    local_18.z <<= 1;
+                    local_18.w <<= 1;
+                    goto LAB_82000;
+                }
+
+                if (sVar1 == 0xc00)
+                {
+                    local_18 = new Vector4Int(param1.screen.x - psVar3.DAT_00.x, param1.screen.z - psVar3.DAT_00.y, psVar3.DAT_00.z, psVar3.DAT_00.x);
+                    local_18.z <<= 1;
+                    local_18.w <<= 1;
+                }
+            }
+        }
+
+        LAB_82000:
+        local_10 = new Vector4Int(); //not in the original code
+        sVar1 = (short)param2.vr.y;
+        psVar3 = param2.cCollider;
+
+        if (sVar1 == 0x400)
+            local_10 = new Vector4Int(param2.screen.x - psVar3.DAT_00.z, param2.screen.z - psVar3.DAT_00.x, psVar3.DAT_00.z, psVar3.DAT_00.x);
+        else
+        {
+            if (sVar1 < 0x401)
+            {
+                if (sVar1 != 0) goto LAB_820D0;
+            }
+            else
+            {
+                if (sVar1 != 0x800)
+                {
+                    if (sVar1 != 0xc00) goto LAB_820D0;
+
+                    local_10 = new Vector4Int(param2.screen.x - psVar3.DAT_00.z, param2.screen.z - psVar3.DAT_00.x, psVar3.DAT_00.z, psVar3.DAT_00.x);
+                    local_10.z <<= 1;
+                    local_10.w <<= 1;
+                    goto LAB_820D0;
+                }
+            }
+
+            local_10 = new Vector4Int(param2.screen.x - psVar3.DAT_00.x, param2.screen.z - psVar3.DAT_00.z, psVar3.DAT_00.x, psVar3.DAT_00.z);
+        }
+
+        local_10.z <<= 1;
+        local_10.w <<= 1;
+        LAB_820D0:
+        return FUN_81E70(local_18, local_10);
+    }
+
+    private bool FUN_820E8(CriStatic param1, WallCollider param2)
+    {
+        short sVar1;
+        BoxCollider psVar3;
+        Vector4Int local_18;
+        Vector4Int local_10;
+
+        psVar3 = param1.cCollider;
+        local_10 = new Vector4Int(param2.DAT_04.x, param2.DAT_04.y, param2.DAT_08.x, param2.DAT_08.y);
+        local_18 = new Vector4Int(); //not in the original code
+        sVar1 = (short)param1.vr.y;
+
+        if (sVar1 == 0x400)
+            local_18 = new Vector4Int(param1.screen.x - psVar3.DAT_00.z, param1.screen.z - psVar3.DAT_00.x, psVar3.DAT_00.x, psVar3.DAT_00.y);
+        else
+        {
+            if (sVar1 < 0x401)
+            {
+                if (sVar1 != 0) goto LAB_821F0;
+            }
+            else
+            {
+                if (sVar1 != 0x800)
+                {
+                    if (sVar1 != 0xc00) goto LAB_821F0;
+
+                    local_18 = new Vector4Int(param1.screen.x - psVar3.DAT_00.z, param1.screen.z - psVar3.DAT_00.x, psVar3.DAT_00.x, psVar3.DAT_00.y);
+                    local_18.z <<= 1;
+                    local_18.w <<= 1;
+                    goto LAB_821F0;
+                }
+            }
+
+            local_18 = new Vector4Int(param1.screen.x - psVar3.DAT_00.x, param1.screen.z - psVar3.DAT_00.z, psVar3.DAT_00.x, psVar3.DAT_00.z);
+        }
+
+        local_18.z <<= 1;
+        local_18.w <<= 1;
+        LAB_821F0:
+        return FUN_81E70(local_18, local_10);
+    }
+
+    private sbyte FUN_82478(CriStatic param1)
+    {
+        bool bVar1;
+        int iVar2;
+        WallCollider cVar2;
+        WallSegment wVar2;
+        int iVar3;
+        WallSegment wVar3;
+        BoxCollider psVar4;
+        uint uVar5;
+        CriSkinned piVar6;
+        CriStatic ppsVar7;
+        uint uVar8;
+        int[] local_38;
+        WallCollider[][] local_30;
+
+        uVar5 = (uint)-((param1.screen.y / 0x1a9) & 0xff);
+
+        if (uVar5 < 0x10)
+        {
+            local_38 = new int[2];
+            local_30 = new WallCollider[2][];
+            wVar3 = sceneCollision.WALL_SEGMENTS[0];
+            local_38[0] = wVar3.WALL_COUNT;
+            local_30[0] = wVar3.WALL_COLLIDERS;
+            wVar2 = sceneCollision.WALL_SEGMENTS[uVar5 + 1];
+            uVar8 = 0;
+            local_38[1] = wVar2.WALL_COUNT;
+            local_30[1] = wVar2.WALL_COLLIDERS;
+            iVar2 = 0;
+
+            do
+            {
+                iVar3 = local_38[uVar8];
+
+                while (--iVar3 != -1)
+                {
+                    cVar2 = local_30[uVar8][iVar2];
+
+                    if (cVar2.DAT_03 == 0 || cVar2.DAT_02 <= uVar5 && uVar5 < cVar2.DAT_03)
+                    {
+                        bVar1 = FUN_820E8(param1, cVar2);
+
+                        if (bVar1)
+                            return 1;
+                    }
+
+                    iVar2++;
+                }
+
+                uVar8++;
+                iVar2 = 0;
+            } while (uVar8 < 2);
+        }
+
+        uVar5 = 0;
+
+        do
+        {
+            ppsVar7 = DAT_7CDC[uVar5];
+
+            if ((ppsVar7.flags & 1) != 0 && param1 != ppsVar7)
+            {
+                psVar4 = ppsVar7.cCollider;
+
+                if (psVar4 != null && psVar4.DAT_00.x != 0 && psVar4.DAT_00.z != 0)
+                {
+                    bVar1 = FUN_81F24(param1, ppsVar7);
+
+                    if (bVar1)
+                        return 2;
+                }
+            }
+
+            uVar5++;
+        } while (uVar5 < (uint)DAT_7CDC.Length);
+
+        uVar5 = 0;
+
+        do
+        {
+            piVar6 = DAT_27C[uVar5];
+
+            if ((piVar6.flags & 1) != 0 && piVar6.PTR_124 != null)
+            {
+                if (GameManager.instance.FUN_82208(param1, piVar6) != 0)
+                    return 4;
+            }
+
+            uVar5++;
+        } while (uVar5 < 10);
+
+        return 0;
+    }
+
     public sbyte FUN_826EC(CriStatic param1)
     {
-        return 0;
+        sbyte sVar1;
+
+        sVar1 = FUN_82478(param1);
+
+        if (sVar1 != 0)
+        {
+            param1.screen.x = param1.DAT_34.x;
+            param1.screen.z = param1.DAT_34.z;
+        }
+
+        return sVar1;
     }
 
     private ushort FUN_8316C(CriParticle param1)

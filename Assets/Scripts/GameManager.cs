@@ -3000,7 +3000,7 @@ public class GameManager : MonoBehaviour
         } while (iVar3 < 4);
     }
 
-    private uint FUN_82208(CriStatic param1, CriSkinned param2)
+    public uint FUN_82208(CriStatic param1, CriSkinned param2)
     {
         sbyte sVar1;
         int iVar2;

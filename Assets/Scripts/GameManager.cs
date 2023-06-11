@@ -3212,7 +3212,13 @@ public class GameManager : MonoBehaviour
                 }
 
                 uVar8 = (ushort)local_88.y;
+                local_58.DAT_2C = param1.PTR_120[v0].radius;
+                local_58.DAT_2F = 4;
+                local_58.DAT_32 = 1;
+                local_58.DAT_2E = 0;
+                local_58.DAT_30 = 0;
                 uVar9 = (ushort)param1.PTR_120[v0].radius;
+                local_58.DAT_34 = param1;
 
                 if (((uint)((local_58.DAT_00[1].x + (int)uVar9) - local_60[0]) < (ushort)local_60[2] + uVar9 * 2 &&
                     (uint)((local_58.DAT_00[1].y + (int)uVar9) - local_60[1]) < (ushort)local_60[3] + uVar9 * 2) ||
@@ -3257,7 +3263,7 @@ public class GameManager : MonoBehaviour
             param1.screen.x += local_58.DAT_00[2].x;
             param1.screen.z += local_58.DAT_00[2].y;
             param1.DAT_14C.x += local_58.DAT_00[2].x;
-            param1.DAT_14C.z = local_58.DAT_00[2].y;
+            param1.DAT_14C.z += local_58.DAT_00[2].y;
 
             if ((param1.DAT_152 & 1) != 0)
             {
@@ -3273,7 +3279,12 @@ public class GameManager : MonoBehaviour
         sVar5 = -1;
 
         if (bVar4 != 0xff)
-            sVar5 = DAT_AA4B4[bVar4 + ((ushort)param2.vr.y << 0x10 >> 0x1a) * 5];
+        {
+            if (bVar4 >= DAT_AA4B4.Length)
+                sVar5 = 0;
+            else
+                sVar5 = DAT_AA4B4[bVar4 + ((ushort)param2.vr.y << 0x10 >> 0x1a) * 5];
+        }
 
         return sVar5;
     }

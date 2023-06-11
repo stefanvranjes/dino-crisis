@@ -16,25 +16,16 @@ public class IMP_CLN : ScriptedImporter
         {
             SceneColliderScriptableObject cln = ScriptableObject.CreateInstance("SceneColliderScriptableObject") as SceneColliderScriptableObject;
 
-            int wallLength = 0;
+            int length = 17;
+            cln.WALL_SEGMENTS = new WallSegment[length];
 
-            while(reader.ReadByte(1) != 0)
-            {
-                wallLength++;
-                reader.Seek(0x10, SeekOrigin.Current);
-            }
-
-            reader.Seek(0, SeekOrigin.Begin);
-            cln.WALL_SEGMENTS = new WallSegment[wallLength];
-
-            for (int i = 0; i < wallLength; i++)
+            for (int i = 0; i < length; i++)
             {
                 reader.Seek(i * 0x10, SeekOrigin.Begin);
                 WallSegment seg = new WallSegment();
                 seg.WALL_COUNT = reader.ReadByte(1);
                 seg.WALL_OFFSET = reader.ReadUInt32(8);
                 seg.WALL_COLLIDERS = new WallCollider[seg.WALL_COUNT];
-                long pos = reader.Position;
                 reader.Seek(0x110 + seg.WALL_OFFSET, SeekOrigin.Begin);
 
                 for (int j = 0; j < seg.WALL_COUNT; j++)
@@ -54,25 +45,32 @@ public class IMP_CLN : ScriptedImporter
                 cln.WALL_SEGMENTS[i] = seg;
             }
 
-            reader.Seek(wallLength * 0x10, SeekOrigin.Begin);
-            cln.FLOOR_SEGMENT = new FloorSegment();
-            cln.FLOOR_SEGMENT.FLOOR_COUNT = reader.ReadByte(0);
-            cln.FLOOR_SEGMENT.FLOOR_OFFSET = reader.ReadUInt32(4);
-            cln.FLOOR_SEGMENT.FLOOR_COLLIDERS = new FloorCollider[cln.FLOOR_SEGMENT.FLOOR_COUNT];
-            reader.Seek(cln.FLOOR_SEGMENT.FLOOR_OFFSET + 0x110, SeekOrigin.Begin);
+            cln.FLOOR_SEGMENT = new FloorSegment[length];
 
-            for (int i = 0; i < cln.FLOOR_SEGMENT.FLOOR_COUNT; i++)
+            for (int i = 0; i < length; i++)
             {
-                FloorCollider col = new FloorCollider();
-                col.DAT_00 = reader.ReadByte(0);
-                col.DAT_01 = reader.ReadByte(1);
-                col.DAT_04 = new Vector2Int[4];
-                col.DAT_04[0] = reader.ReadSVector2(4);
-                col.DAT_04[1] = reader.ReadSVector2(8);
-                col.DAT_04[2] = reader.ReadSVector2(12);
-                col.DAT_04[3] = reader.ReadSVector2(16);
-                cln.FLOOR_SEGMENT.FLOOR_COLLIDERS[i] = col;
-                reader.Seek(0x14, SeekOrigin.Current);
+                reader.Seek(i * 0x10, SeekOrigin.Begin);
+                FloorSegment seg = new FloorSegment();
+                seg.FLOOR_COUNT = reader.ReadByte(0);
+                seg.FLOOR_OFFSET = reader.ReadUInt32(4);
+                seg.FLOOR_COLLIDERS = new FloorCollider[seg.FLOOR_COUNT];
+                reader.Seek(0x110 + seg.FLOOR_OFFSET, SeekOrigin.Begin);
+
+                for (int j = 0; j < seg.FLOOR_COUNT; j++)
+                {
+                    FloorCollider col = new FloorCollider();
+                    col.DAT_00 = reader.ReadByte(0);
+                    col.DAT_01 = reader.ReadByte(1);
+                    col.DAT_04 = new Vector2Int[4];
+                    col.DAT_04[0] = reader.ReadSVector2(4);
+                    col.DAT_04[1] = reader.ReadSVector2(8);
+                    col.DAT_04[2] = reader.ReadSVector2(12);
+                    col.DAT_04[3] = reader.ReadSVector2(16);
+                    seg.FLOOR_COLLIDERS[j] = col;
+                    reader.Seek(0x14, SeekOrigin.Current);
+                }
+
+                cln.FLOOR_SEGMENT[i] = seg;
             }
 
             ctx.AddObjectToAsset("cln", cln);

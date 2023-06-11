@@ -411,6 +411,10 @@ public class CriPlayer : CriSkinned
             flags = 0
         }
     };
+    private static short[] DAT_9CE34 = new short[]
+    {
+        0x800, 0xc00, 0, 0x400
+    };
     private static short[] DAT_9CE50 = new short[]
     {
         0x800, 0xc00, 0, 0x400
@@ -1242,7 +1246,7 @@ public class CriPlayer : CriSkinned
             FUN_4E130,
             FUN_4E2F0,
             null,
-            null,
+            FUN_4E81C,
             FUN_4EF74,
             FUN_4F074
         };
@@ -2625,8 +2629,7 @@ public class CriPlayer : CriSkinned
     {
         bool bVar1;
 
-        //FUN_4E694
-        bVar1 = false; //tmp
+        bVar1 = FUN_4E694();
 
         if (!bVar1)
             DAT_1F4 = 0;
@@ -3005,8 +3008,7 @@ public class CriPlayer : CriSkinned
 
         void FUN_4E490()
         {
-            //FUN_4E694
-            bVar6 = false; //tmp
+            bVar6 = FUN_4E694();
 
             if (!bVar6)
                 DAT_1F4 = 0;
@@ -3025,6 +3027,71 @@ public class CriPlayer : CriSkinned
 
             FUN_60AB4();
         }
+    }
+
+    private bool FUN_4E694()
+    {
+        byte bVar1;
+        short sVar2;
+        int iVar3;
+        uint uVar4;
+        CriStatic oVar5;
+
+        oVar5 = DAT_1D8;
+
+        if (oVar5 == null)
+            return false;
+
+        if (oVar5.DAT_2E != 1)
+            return false;
+
+        if ((byte)oVar5.DAT_74 != 0)
+            return false;
+
+        if (DAT_1D4 == 0xff)
+            return false;
+
+        uVar4 = (uint)(vr.y + 0x200 & 0xfff);
+
+        if (uVar4 <= DAT_9CE34[DAT_1D4 - 1])
+            return false;
+
+        if (DAT_9CE34[DAT_1D4 - 1] + 0x400 <= (int)uVar4)
+            return false;
+
+        oVar5.DAT_34.x = oVar5.screen.x;
+        oVar5.DAT_34.z = oVar5.screen.z;
+        bVar1 = DAT_1D4;
+
+        if (bVar1 == 2)
+            sVar2 = (short)(oVar5.screen.x - 15);
+        else
+        {
+            if (bVar1 < 3)
+            {
+                if (bVar1 == 1)
+                    oVar5.screen.z -= 15;
+
+                goto LAB_4E7E0;
+            }
+
+            if (bVar1 == 3)
+            {
+                oVar5.screen.z += 15;
+                goto LAB_4E7E0;
+            }
+
+            if (bVar1 != 4) goto LAB_4E7E0;
+
+            sVar2 = (short)(oVar5.screen.x + 15);
+        }
+
+        oVar5.screen.x = sVar2;
+        LAB_4E7E0:
+        iVar3 = SceneManager.instance.FUN_826EC(oVar5);
+        oVar5.screen.x = oVar5.DAT_34.x;
+        oVar5.screen.z = oVar5.DAT_34.z;
+        return iVar3 == 0;
     }
 
     private void FUN_4E81C()

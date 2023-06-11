@@ -44,5 +44,5 @@ public class SceneColliderScriptableObject : ScriptableObject
     public string prefabName;
 
     public WallSegment[] WALL_SEGMENTS;
-    public FloorSegment FLOOR_SEGMENT;
+    public FloorSegment[] FLOOR_SEGMENT;
 }

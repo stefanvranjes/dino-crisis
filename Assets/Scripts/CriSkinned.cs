@@ -836,7 +836,7 @@ public class CriSkinned : CriObject
 
     public void FUN_65714()
     {
-        GameManager.DAT_1f80002c = DAT_64;
+        GameManager.DAT_1f80002c = new Vector3Int(DAT_64.x, -DAT_64.y, -DAT_64.z);
         Utilities.RotMatrix_gte(ref vr, ref GameManager.DAT_1f800034);
         GameManager.DAT_1f80002c = Utilities.ApplyMatrixSV
             (ref GameManager.DAT_1f800034, ref GameManager.DAT_1f80002c);

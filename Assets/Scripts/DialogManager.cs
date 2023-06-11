@@ -2471,7 +2471,7 @@ public class DialogManager : MonoBehaviour
         DAT_B138E = (byte)tVar5.DAT_18;
         bVar3 = true;
 
-        if ((tVar5.DAT_18 << 8) == 0xff)
+        if (tVar5.DAT_18 == 0xff)
         {
             uVar4 = tVar5.DAT_1C - 0xbdU & 0xffffU;
 

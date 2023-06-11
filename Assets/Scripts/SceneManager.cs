@@ -2410,7 +2410,7 @@ public class SceneManager : MonoBehaviour
             if (param2 < 0)
                 param2 = 0;
 
-            oVar4 = sceneCollision.FLOOR_SEGMENT;
+            oVar4 = sceneCollision.FLOOR_SEGMENT[param2];
             bVar1 = oVar4.FLOOR_COUNT;
             uVar7 = 0;
             local_28 = 0;
@@ -2544,7 +2544,7 @@ public class SceneManager : MonoBehaviour
 
     public FloorCollider FUN_645C8(uint param1, uint param2)
     {
-        return sceneCollision.FLOOR_SEGMENT.FLOOR_COLLIDERS[param2 & 0xff];
+        return sceneCollision.FLOOR_SEGMENT[param1].FLOOR_COLLIDERS[param2 & 0xff];
     }
 
     public sbyte FUN_64D20(CriSkinned param1, Vector3Int param2, ref Vector2Int param3)
@@ -3374,7 +3374,7 @@ public class SceneManager : MonoBehaviour
     {
         FloorCollider fVar1;
 
-        fVar1 = sceneCollision.FLOOR_SEGMENT.FLOOR_COLLIDERS[param1 & 0xff];
+        fVar1 = sceneCollision.FLOOR_SEGMENT[0].FLOOR_COLLIDERS[param1 & 0xff];
 
         if (param3 != 0)
         {

@@ -3105,19 +3105,11 @@ public class SceneManager : MonoBehaviour
         } while (true);
     }
 
-    /*public bool FUN_80D48(Vector3Int param1, Vector3Int param2, uint param3)
+    public bool FUN_80D48(Vector3Int param1, Vector3Int param2, uint param3)
     {
-        uint[] local_68;
-        Vector2Int[] local_60;
-
-        local_60 = new Vector2Int[2];
-        local_60[0].x = param1.x;
-        local_60[0].y = param1.z;
-        local_60[1].x = param2.x;
-        local_60[1].y = param2.z;
-        local_68 = new uint[2];
+        //...
         return false;
-    }*/
+    }
 
     public bool FUN_80A14(CriSkinned param1)
     {

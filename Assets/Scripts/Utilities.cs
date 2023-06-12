@@ -2465,6 +2465,20 @@ public static class Utilities
         return sVar1;
     }
 
+    public static short FUN_524F0(Vector3Int param1, Vector3Int param2, short param3)
+    {
+        short sVar1;
+        short sVar2;
+
+        sVar1 = (short)FUN_615EC(param1, param2);
+        sVar2 = (short)(sVar1 - param3 & 0xfff);
+
+        if (0x800 < sVar2)
+            sVar2 = (short)(0x1000 - sVar2);
+
+        return sVar2;
+    }
+
     public static CriObject FUN_601C8(CriBone param1, int param2)
     {
         int iVar1;

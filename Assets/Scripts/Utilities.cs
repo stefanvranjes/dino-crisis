@@ -1944,6 +1944,18 @@ public static class Utilities
         }
     }
 
+    //FUN_8F810
+    public static void RotTrans(ref Vector3Int v0, ref Vector3Int v1)
+    {
+        Coprocessor.vector0.vx0 = (short)v0.x;
+        Coprocessor.vector0.vy0 = (short)v0.y;
+        Coprocessor.vector0.vz0 = (short)v0.z;
+        Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.TR, 12, false);
+        v1.x = Coprocessor.mathsAccumulator.mac1;
+        v1.y = Coprocessor.mathsAccumulator.mac2;
+        v1.z = Coprocessor.mathsAccumulator.mac3;
+    }
+
     //FUN_8F76C
     public static Vector3Int OuterProduct0(ref Vector3Int v0, ref Vector3Int v1)
     {
@@ -2004,6 +2016,20 @@ public static class Utilities
         Coprocessor.depthQueingB = (uint)param1;
     }
 
+    //FUN_8F3E0
+    public static void SetRotMatrix(ref Matrix3x3 m)
+    {
+        Coprocessor.rotationMatrix.rt11 = m.V00;
+        Coprocessor.rotationMatrix.rt12 = m.V01;
+        Coprocessor.rotationMatrix.rt13 = m.V02;
+        Coprocessor.rotationMatrix.rt21 = m.V10;
+        Coprocessor.rotationMatrix.rt22 = m.V11;
+        Coprocessor.rotationMatrix.rt23 = m.V12;
+        Coprocessor.rotationMatrix.rt31 = m.V20;
+        Coprocessor.rotationMatrix.rt32 = m.V21;
+        Coprocessor.rotationMatrix.rt33 = m.V22;
+    }
+
     //FUN_8F2A0
     public static Matrix3x3 ScaleMatrix(ref Matrix3x3 m, ref Vector3Int v)
     {
@@ -2024,6 +2050,11 @@ public static class Utilities
         m.V21 = (short)(m.V21 * iVar3 >> 12);
         m.V22 = (short)(m.V22 * iVar4 >> 12);
         return m;
+    }
+
+    public static void FUN_8F270(ref CriTransform param1, Vector3Int param2)
+    {
+        param1.position = param2;
     }
 
     //FUN_8F210
@@ -2463,6 +2494,25 @@ public static class Utilities
         }
 
         return sVar1;
+    }
+
+    public static void FUN_52420(Vector3Int param1, Vector3Int param2, ref Vector2Int param3)
+    {
+        long lVar2;
+        Vector3Int local_48;
+        Vector3Int SStack64;
+        Matrix3x3 MStack56;
+
+        param3.y = FUN_615EC(param1, param2);
+        local_48 = new Vector3Int(0, 0x1000 - param3.y, 0);
+        MStack56 = new Matrix3x3();
+        RotMatrix(ref local_48, ref MStack56);
+        local_48.x = param2.x - param1.x;
+        local_48.y = param2.y - param1.y;
+        local_48.z = param2.z - param1.z;
+        SStack64 = ApplyMatrixSV(ref MStack56, ref local_48);
+        lVar2 = Ratan2(SStack64.y, SStack64.z);
+        param3.x = 0x1000 - (short)lVar2 & 0xfff;
     }
 
     public static short FUN_524F0(Vector3Int param1, Vector3Int param2, short param3)

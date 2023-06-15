@@ -106,6 +106,7 @@ public class CriPlayer : CriSkinned
     public byte DAT_240; //0x240
     public byte DAT_241; //0x241
     public ushort[] DAT_244; //0x244
+    public byte[] DAT_24C; //0x24C
     private static uint[] DAT_9922C = new uint[]
     {
         0x8019113c, 0x80191884, 0x801914e0, 0x80191c28
@@ -1603,6 +1604,7 @@ public class CriPlayer : CriSkinned
         DAT_240 = 0;
         DAT_241 = 0;
         DAT_244 = new ushort[4];
+        DAT_24C = new byte[4];
     }
 
     public void FUN_6016C()
@@ -6993,6 +6995,157 @@ public class CriPlayer : CriSkinned
     {
         //...
         PTR_FUN_9CE94[DAT_241]();
+    }
+
+    public uint FUN_50470()
+    {
+        CriObject oVar1;
+        CriSkinned oVar2;
+        CriObject oVar3;
+        uint uVar3;
+        uint uVar4;
+        Vector2Int local_18;
+
+        if (DAT_24C[0] == 0)
+        {
+            if (DAT_225 < 30)
+            {
+                uVar3 = (byte)DAT_226;
+                DAT_225++;
+            }
+            else
+                uVar3 = 0x80;
+        }
+        else
+        {
+            oVar2 = SceneManager.instance.DAT_27C[DAT_24C[DAT_24C[0]]];
+            oVar3 = Utilities.FUN_601C8(oVar2.skeleton, oVar2.DAT_175 & 15);
+            oVar1 = Utilities.FUN_601C8(skeleton, 3);
+            local_18 = new Vector2Int();
+            Utilities.FUN_52420(oVar1.screen, oVar3.screen, ref local_18);
+            uVar4 = (uint)(local_18.x + 0x200 & 0xfff);
+
+            if (uVar4 < 0x400)
+                uVar3 = 0x400 - uVar4 >> 2;
+            else
+            {
+                uVar3 = 0xff;
+
+                if (uVar4 < 0xa00)
+                    uVar3 = 0;
+            }
+
+            DAT_225 = 0;
+        }
+
+        return uVar3 & 0xffff;
+    }
+
+    public void FUN_50570(Vector3Int[] param1)
+    {
+        bool bVar1;
+        bool bVar2;
+        uint uVar3;
+        uint uVar4;
+        byte bVar6;
+        uint uVar7;
+        byte bVar8;
+        CriSkinned oVar9;
+        uint[] local_68;
+        byte[] local_58;
+        Vector2Int[] auStack64;
+        Vector3Int local_30;
+
+        local_68 = new uint[10];
+        local_58 = new byte[40];
+        auStack64 = new Vector2Int[4];
+        FUN_50748(param1, auStack64);
+        bVar8 = 0;
+        bVar6 = 0;
+
+        do
+        {
+            oVar9 = SceneManager.instance.DAT_27C[bVar6];
+
+            if ((oVar9.flags & 1) != 0 && (oVar9.DAT_11E & 0x40) == 0 && (oVar9.DAT_175 & 0x80) == 0)
+            {
+                bVar1 = SceneManager.instance.FUN_80D48(screen, oVar9.screen, 5);
+
+                if (!bVar1)
+                {
+                    local_30 = new Vector3Int();
+                    local_30.x = oVar9.screen.x - screen.x;
+                    local_30.y = oVar9.screen.y - screen.y;
+                    local_30.z = oVar9.screen.z - screen.z;
+                    bVar2 = GameManager.instance.FUN_768C8(local_30, auStack64);
+
+                    if (bVar2)
+                    {
+                        uVar3 = Utilities.FUN_63160(screen, oVar9.screen);
+                        local_68[bVar8] = uVar3 & 0xffffff00 | bVar6;
+                        bVar8++;
+                    }
+                }
+            }
+
+            bVar6++;
+        } while (bVar6 < 10);
+
+        for (int i = 0; i < 10; i++)
+        {
+            local_58[i * 4] = (byte)local_68[i];
+            local_58[i * 4 + 1] = (byte)(local_68[i] >> 8);
+            local_58[i * 4 + 2] = (byte)(local_68[i] >> 0x10);
+            local_58[i * 4 + 3] = (byte)(local_68[i] >> 0x18);
+        }
+
+        Utilities.QSort(local_58, 0, bVar8, 4, GameManager.instance.FUN_53B08);
+        uVar3 = bVar8;
+
+        if (3 < bVar8)
+        {
+            bVar8 = 3;
+            uVar3 = 3;
+        }
+
+        uVar7 = 0;
+
+        if (uVar3 != 0)
+        {
+            uVar4 = 0;
+
+            do
+            {
+                uVar7++;
+                DAT_24C[uVar3 - uVar4] = local_58[uVar4 * 4];
+                uVar4 = uVar7 & 0xff;
+            } while ((uVar7 & 0xff) < uVar3);
+        }
+
+        DAT_24C[0] = bVar8;
+    }
+
+    private void FUN_50748(Vector3Int[] param1, Vector2Int[] param2)
+    {
+        uint uVar1;
+        Vector3Int local_58;
+        Vector3Int local_48;
+        CriTransform MStack64;
+
+        local_58 = new Vector3Int(0, 0, 0);
+        MStack64 = new CriTransform();
+        Utilities.FUN_8F270(ref MStack64, local_58);
+        local_48 = new Vector3Int(0, vr.y, 0);
+        uVar1 = 0;
+        Utilities.RotMatrix(ref local_48, ref MStack64.rotation);
+        Utilities.SetRotMatrix(ref MStack64.rotation);
+
+        do
+        {
+            Utilities.RotTrans(ref param1[uVar1], ref local_58);
+            param2[uVar1] = new Vector2Int(local_58.x, local_58.z);
+            uVar1++;
+        } while (uVar1 < 4);
     }
 
     private void FUN_508B8()

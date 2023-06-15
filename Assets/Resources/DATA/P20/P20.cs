@@ -4,6 +4,35 @@ using UnityEngine;
 
 public class P20 : SharedAssets
 {
+    public static new P20 instance;
+    private delegate void FUN_1910(CriPlayer p); //0x1910 (P20)
+    private delegate void FUN_1938(CriPlayer p); //0x1938 (P20)
+    private static Vector3Int[] DAT_18E0 = new Vector3Int[4]
+    {
+        new Vector3Int(-700, 0, 200), new Vector3Int(-8000, 0, 20200),
+        new Vector3Int(8000, 0, 20200), new Vector3Int(700, 0, 200)
+    };
+    private static FUN_1910[] PTR_FUN_1910; //0x1910 (P20)
+    private static FUN_1938[] PTR_FUN_1938; //0x1938 (P20)
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (instance == null)
+        {
+            instance = this;
+            PTR_FUN_1910 = new FUN_1910[]
+            {
+                FUN_40
+            };
+            PTR_FUN_1938 = new FUN_1938[]
+            {
+
+            };
+        }
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -57,5 +86,36 @@ public class P20 : SharedAssets
             { 0x8017b8d8, 0x80166bf4 },
             { 0x8017b8dc, 0x80167534 }
         };
+    }
+
+    //FUN_04 (P20)
+    public static void FUN_04(CriPlayer param1)
+    {
+        PTR_FUN_1910[param1.DAT_3E](param1);
+    }
+
+    private static void FUN_40(CriPlayer param1)
+    {
+        uint uVar1;
+        sbyte sVar2;
+
+        uVar1 = GameManager.DAT_1f800008;
+        param1.FUN_50570(DAT_18E0);
+        sVar2 = (sbyte)param1.FUN_50470();
+        param1.DAT_226 = sVar2;
+        PTR_FUN_1938[param1.DAT_3F](param1);
+
+        if ((uVar1 & 8) == 0)
+        {
+            param1.DAT_227 &= 0x7f;
+            param1.DAT_3C = 1;
+            param1.DAT_3D = 0;
+            param1.DAT_3E = 0;
+            param1.DAT_3F = 0;
+            param1.DAT_18C = 0x80;
+        }
+
+        if (param1.DAT_1F6 != 0)
+            param1.DAT_1F6--;
     }
 }

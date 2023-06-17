@@ -7879,7 +7879,7 @@ public class CriPlayer : CriSkinned
         DAT_244[iVar2] = (ushort)(DAT_244[iVar2] & 0xff00 | bVar5);
     }
 
-    private bool FUN_50128()
+    public bool FUN_50128()
     {
         uint uVar2;
         bool bVar3;
@@ -7948,7 +7948,7 @@ public class CriPlayer : CriSkinned
         return FUN_502B8();
     }
 
-    private bool FUN_502B8()
+    public bool FUN_502B8()
     {
         bool bVar1;
         CriObject oVar2;
@@ -7988,6 +7988,63 @@ public class CriPlayer : CriSkinned
         DAT_228 = oVar2.screen;
         DAT_22E = oVar2.DAT_26;
         return true;
+    }
+
+    public void FUN_5080C()
+    {
+        byte bVar1;
+        CriSkinned oVar2;
+
+        bVar1 = DAT_24C[0];
+
+        if (bVar1 != 0)
+        {
+            DAT_24C[0] = (byte)(bVar1 - 1);
+            oVar2 = SceneManager.instance.DAT_27C[DAT_24C[bVar1]];
+
+            if ((oVar2.flags & 1) != 0 && (oVar2.DAT_11E & 0x40) == 0)
+            {
+                oVar2.DAT_11E |= 0x80;
+                oVar2.DAT_1A1 = (byte)DAT_244[(DAT_240 >> 4) - 1];
+                oVar2.DAT_1A0 = DAT_240;
+            }
+        }
+    }
+
+    public void FUN_509D8(Tod3ScriptableObject param1)
+    {
+        CriObject oVar2;
+        CriParticle oVar3;
+        Frame3 puVar4;
+        int puVar5;
+
+        puVar5 = DAT_1F4;
+        oVar2 = Utilities.FUN_601C8(skeleton, 3);
+        puVar4 = param1.FRAMES[puVar5];
+
+        if (puVar4.FRAME_NUM == frameNum)
+        {
+            do
+            {
+                oVar3 = SceneManager.instance.FUN_5FFA0();
+
+                if (oVar3 != null)
+                {
+                    oVar3.tags = 3;
+                    oVar3.DAT_2F = 2;
+                    oVar3.DAT_69 = puVar4.DAT_00;
+                    oVar3.DAT_62 = puVar4.DAT_0C;
+                    oVar3.DAT_60 = puVar4.DAT_0C;
+                    oVar3.screen = puVar4.POSITION;
+                    oVar3.DAT_40 = puVar4.VELOCITY;
+                    oVar3.DAT_4C = oVar2;
+                }
+
+                puVar5++;
+                DAT_1F4++;
+                puVar4 = param1.FRAMES[puVar5];
+            } while (puVar4.FRAME_NUM == frameNum);
+        }
     }
 
     private bool FUN_520CC(CriSkinned param1)

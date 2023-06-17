@@ -2338,6 +2338,32 @@ public class InventoryManager : MonoBehaviour
         return 0;
     }
 
+    public void FUN_6AB8C(uint param1, short param2)
+    {
+        int pbVar1;
+        int iVar3;
+
+        DAT_C6298[param1 - 0x10] += (ushort)param2;
+        pbVar1 = 0;
+        iVar3 = GameManager.instance.DAT_9ADE - 1;
+
+        if (iVar3 != 1)
+        {
+            do
+            {
+                if (GameManager.instance.DAT_9EAC[pbVar1] != 0 &&
+                    GameManager.instance.DAT_9EAC[pbVar1 + 1] == param1)
+                {
+                    GameManager.instance.DAT_9EAC[pbVar1 + 1] += (byte)param2;
+                    return;
+                }
+
+                iVar3--;
+                pbVar1 += 4;
+            } while (iVar3 != -1);
+        }
+    }
+
     public void FUN_6AC20()
     {
         int pbVar1;

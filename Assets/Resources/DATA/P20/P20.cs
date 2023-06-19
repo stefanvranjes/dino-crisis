@@ -24,7 +24,21 @@ public class P20 : SharedAssets
         if (instance == null)
         {
             instance = this;
-            PTR_FUN_1910 = new FUN_1910[]
+            PTR_FUN_9CE84[1] = new FUN_9CE84[4]
+            {
+                FUN_04,
+                FUN_04,
+                FUN_04,
+                FUN_04
+            };
+            PTR_FUN_9CE84[2] = new FUN_9CE84[4]
+            {
+                FUN_04,
+                FUN_04,
+                FUN_04,
+                FUN_04
+            };
+            PTR_FUN_1910 = new FUN_1910[3]
             {
                 FUN_40, 
                 FUN_250, 

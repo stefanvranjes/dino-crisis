@@ -144,6 +144,17 @@ public class GameManager : MonoBehaviour
     public static Matrix3x3 DAT_1f800034;
     public static Vector3Int DAT_1f800044;
     public static Matrix3x3 DAT_1f80004c;
+    public static Color32 DAT_1f800068;
+    public static byte DAT_1f800070;
+    public static byte DAT_1f800071;
+    public static ushort DAT_1f800072;
+    public static byte DAT_1f800078;
+    public static byte DAT_1f800079;
+    public static ushort DAT_1f80007a;
+    public static byte DAT_1f800080;
+    public static byte DAT_1f800081;
+    public static byte DAT_1f800088;
+    public static byte DAT_1f800089;
     public static Vector3Int DAT_1f800380;
     public static Vector3Int DAT_1f800388;
     public static Vector3Int DAT_1f800390;
@@ -7947,6 +7958,9 @@ public class GameManager : MonoBehaviour
         if ((DAT_38 & 1) == 0)
             FUN_731E8();
 
+        if ((DAT_38 & 4) == 0)
+            FUN_7357C();
+
         //...
         
         for (int i = 0; i < SceneManager.instance.DAT_27C.Length; i++)
@@ -8279,6 +8293,158 @@ public class GameManager : MonoBehaviour
                 //}
             }
         }
+    }
+
+    private void FUN_7357C()
+    {
+        byte bVar1;
+        byte bVar2;
+        uint uVar5;
+        CriObject puVar9;
+        uint uVar13;
+        int iVar14;
+        Frame2 pcVar16;
+        CriParticle pbVar20;
+        int puVar21;
+        Vector3Int local_48;
+        Vector3Int local_40;
+        Vector3Int local_38;
+
+        bVar1 = DAT_21;
+        puVar21 = 0;
+
+        do
+        {
+            pbVar20 = SceneManager.instance.DAT_5FCC[puVar21];
+
+            if ((pbVar20.flags & 2) != 0)
+            {
+                if ((pbVar20.DAT_65 & 0x80) == 0)
+                {
+                    puVar9 = pbVar20.DAT_4C;
+
+                    if (puVar9 != null)
+                    {
+                        if (puVar9 != SceneManager.instance.cCamera && (puVar9.flags & 2) == 0) goto LAB_73D6C;
+
+                        Coprocessor.rotationMatrix.rt11 = puVar9.cTransform.rotation.V00;
+                        Coprocessor.rotationMatrix.rt12 = puVar9.cTransform.rotation.V01;
+                        Coprocessor.rotationMatrix.rt13 = puVar9.cTransform.rotation.V02;
+                        Coprocessor.rotationMatrix.rt21 = puVar9.cTransform.rotation.V10;
+                        Coprocessor.rotationMatrix.rt22 = puVar9.cTransform.rotation.V11;
+                        Coprocessor.rotationMatrix.rt23 = puVar9.cTransform.rotation.V12;
+                        Coprocessor.rotationMatrix.rt31 = puVar9.cTransform.rotation.V20;
+                        Coprocessor.rotationMatrix.rt32 = puVar9.cTransform.rotation.V21;
+                        Coprocessor.rotationMatrix.rt33 = puVar9.cTransform.rotation.V22;
+                        bVar2 = pbVar20.DAT_65;
+
+                        if ((bVar2 & 2) == 0)
+                        {
+                            Coprocessor.vector0.vx0 = (short)pbVar20.screen.x;
+                            Coprocessor.vector0.vy0 = (short)pbVar20.screen.y;
+                            Coprocessor.vector0.vz0 = (short)pbVar20.screen.z;
+                            Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+                            pbVar20.cTransform.position.x = Coprocessor.mathsAccumulator.mac1;
+                            pbVar20.cTransform.position.y = Coprocessor.mathsAccumulator.mac2;
+                            pbVar20.cTransform.position.z = Coprocessor.mathsAccumulator.mac3;
+                            pbVar20.cTransform.position.x += puVar9.cTransform.position.x;
+                            pbVar20.cTransform.position.y += puVar9.cTransform.position.y;
+                            pbVar20.cTransform.position.z += puVar9.cTransform.position.z;
+                        }
+
+                        if ((bVar2 & 1) != 0)
+                        {
+                            Coprocessor.accumulator.ir1 = pbVar20.cTransform.rotation.V00;
+                            Coprocessor.accumulator.ir2 = pbVar20.cTransform.rotation.V10;
+                            Coprocessor.accumulator.ir3 = pbVar20.cTransform.rotation.V20;
+                            Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.IR, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+                            pbVar20.cTransform.rotation.V00 = Coprocessor.accumulator.ir1;
+                            pbVar20.cTransform.rotation.V10 = Coprocessor.accumulator.ir2;
+                            pbVar20.cTransform.rotation.V20 = Coprocessor.accumulator.ir3;
+                            Coprocessor.accumulator.ir1 = pbVar20.cTransform.rotation.V01;
+                            Coprocessor.accumulator.ir2 = pbVar20.cTransform.rotation.V11;
+                            Coprocessor.accumulator.ir3 = pbVar20.cTransform.rotation.V21;
+                            Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.IR, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+                            pbVar20.cTransform.rotation.V01 = Coprocessor.accumulator.ir1;
+                            pbVar20.cTransform.rotation.V11 = Coprocessor.accumulator.ir2;
+                            pbVar20.cTransform.rotation.V21 = Coprocessor.accumulator.ir3;
+                            Coprocessor.accumulator.ir1 = pbVar20.cTransform.rotation.V02;
+                            Coprocessor.accumulator.ir2 = pbVar20.cTransform.rotation.V12;
+                            Coprocessor.accumulator.ir3 = pbVar20.cTransform.rotation.V22;
+                            Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.IR, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+                            pbVar20.cTransform.rotation.V02 = Coprocessor.accumulator.ir1;
+                            pbVar20.cTransform.rotation.V12 = Coprocessor.accumulator.ir2;
+                            pbVar20.cTransform.rotation.V22 = Coprocessor.accumulator.ir3;
+                        }
+                    }
+
+                    Coprocessor.rotationMatrix.rt11 = pbVar20.cTransform.rotation.V00;
+                    Coprocessor.rotationMatrix.rt12 = pbVar20.cTransform.rotation.V01;
+                    Coprocessor.rotationMatrix.rt13 = pbVar20.cTransform.rotation.V02;
+                    Coprocessor.rotationMatrix.rt21 = pbVar20.cTransform.rotation.V10;
+                    Coprocessor.rotationMatrix.rt22 = pbVar20.cTransform.rotation.V11;
+                    Coprocessor.rotationMatrix.rt23 = pbVar20.cTransform.rotation.V12;
+                    Coprocessor.rotationMatrix.rt31 = pbVar20.cTransform.rotation.V20;
+                    Coprocessor.rotationMatrix.rt32 = pbVar20.cTransform.rotation.V21;
+                    Coprocessor.rotationMatrix.rt33 = pbVar20.cTransform.rotation.V22;
+                    pcVar16 = pbVar20.DAT_58.FRAMES[pbVar20.DAT_5C];
+                    iVar14 = (pcVar16.DAT_04 & 0x1f) - 1;
+
+                    if (iVar14 != -1)
+                    {
+                        do
+                        {
+                            local_48 = new Vector3Int(pcVar16.DAT_07 * pbVar20.DAT_62, pcVar16.DAT_06 * pbVar20.DAT_60, 0);
+                            local_40 = new Vector3Int(pcVar16.DAT_07 * pbVar20.DAT_62, (pcVar16.DAT_06 + pcVar16.DAT_02) * pbVar20.DAT_60, 0);
+                            local_38 = new Vector3Int((pcVar16.DAT_07 + pcVar16.DAT_03) * pbVar20.DAT_62, pcVar16.DAT_06 * pbVar20.DAT_60, 0);
+                            Coprocessor.vector0.vx0 = (short)local_48.x;
+                            Coprocessor.vector0.vy0 = (short)local_48.y;
+                            Coprocessor.vector0.vz0 = (short)local_48.z;
+                            Coprocessor.vector1.vx1 = (short)local_40.x;
+                            Coprocessor.vector1.vy1 = (short)local_40.y;
+                            Coprocessor.vector1.vz1 = (short)local_40.z;
+                            Coprocessor.vector2.vx2 = (short)local_38.x;
+                            Coprocessor.vector2.vy2 = (short)local_38.y;
+                            Coprocessor.vector2.vz2 = (short)local_38.z;
+                            Coprocessor.ExecuteRTPT(12, false);
+                            DAT_1f800070 = pcVar16.DAT_00;
+                            DAT_1f800071 = pcVar16.DAT_01;
+                            //write screen coordinates
+                            local_48 = new Vector3Int((pcVar16.DAT_07 + pcVar16.DAT_03) * pbVar20.DAT_62, (pcVar16.DAT_06 + pcVar16.DAT_02) * pbVar20.DAT_60, 0);
+                            Coprocessor.vector0.vx0 = (short)local_48.x;
+                            Coprocessor.vector0.vy0 = (short)local_48.y;
+                            Coprocessor.vector0.vz0 = (short)local_48.z;
+                            Coprocessor.ExecuteRTPS(12, false);
+                            DAT_1f800078 = (byte)(pcVar16.DAT_00 + pcVar16.DAT_02 - 1);
+                            DAT_1f800081 = (byte)(pcVar16.DAT_01 + pcVar16.DAT_03 - 1);
+                            DAT_1f800072 = pbVar20.DAT_54;
+                            DAT_1f80007a = pbVar20.DAT_56;
+                            DAT_1f800068 = pbVar20.DAT_50;
+                            //do z-depth
+                            DAT_1f800079 = DAT_1f800071;
+                            DAT_1f800080 = DAT_1f800070;
+                            DAT_1f800088 = DAT_1f800078;
+                            DAT_1f800089 = DAT_1f800081;
+                            //...
+                            iVar14--;
+                        } while (iVar14 != -1);
+                    }
+                }
+                else
+                {
+                    uVar13 = (uint)(pbVar20.DAT_50.a << 0x18 | pbVar20.DAT_50.b << 0x10 | pbVar20.DAT_50.g << 8 | pbVar20.DAT_50.r);
+
+                    if ((uVar13 & 0x2000000) == 0)
+                        uVar5 = 0x64000000;
+                    else
+                        uVar5 = 0x66000000;
+
+                    //...
+                }
+            }
+
+            puVar21++;
+        } while (puVar21 < SceneManager.instance.DAT_5FCC.Length);
     }
 
     private void FUN_72C2C()

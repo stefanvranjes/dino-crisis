@@ -1269,7 +1269,7 @@ public class CriPlayer : CriSkinned
             FUN_4DF9C,
             FUN_4E130,
             FUN_4E2F0,
-            null,
+            FUN_4F1AC,
             FUN_4E81C,
             FUN_4EF74,
             FUN_4F074
@@ -6993,7 +6993,7 @@ public class CriPlayer : CriSkinned
 
     private void FUN_4F1AC()
     {
-        //...
+        SharedAssets.PTR_FUN_9CE84[DAT_240 >> 4][DAT_240 & 15](this);
         PTR_FUN_9CE94[DAT_241]();
     }
 
@@ -7196,7 +7196,7 @@ public class CriPlayer : CriSkinned
         DAT_241 = 0;
     }
 
-    private void FUN_512BC()
+    public void FUN_512BC()
     {
         PTR_FUN_9D03C[DAT_3E]();
     }
@@ -8059,7 +8059,10 @@ public class CriPlayer : CriSkinned
 
     private void FUN_5211C(byte param1)
     {
+        bool bVar1;
         uint uVar2;
+        bool bVar3;
+        int puVar4;
         uint uVar5;
         CriSkinned oVar6;
         byte bVar8;
@@ -8068,6 +8071,7 @@ public class CriPlayer : CriSkinned
 
         bVar8 = 0;
         uVar5 = 0;
+        puVar4 = 0;
         local_50 = new uint[10];
         local_40 = new byte[10 * 4];
 
@@ -8078,11 +8082,30 @@ public class CriPlayer : CriSkinned
 
             if (oVar6 != null && (oVar6.flags & 1) != 0 && 0 < oVar6.health && (oVar6.DAT_175 & 0x80) == 0)
             {
-                //...
+                bVar1 = SceneManager.instance.FUN_80D48(screen, oVar6.screen, 5);
+
+                if (!bVar1)
+                    local_50[puVar4] = 0;
+                else
+                    local_50[puVar4] = 0x40000000;
+
+                uVar2 = Utilities.FUN_63160(screen, oVar6.screen);
+
+                if (0x9c4000 < uVar2)
+                    local_50[puVar4] += 0x20000000;
+
+                bVar3 = FUN_520CC(oVar6);
+
+                if (bVar3)
+                    local_50[puVar4] += 0x10000000;
+
+                bVar8++;
+                uVar2 = local_50[puVar4] + (uVar2 >> 4) & 0xfffffff0;
             }
 
             local_50[uVar5] = uVar2 + uVar5;
             uVar5++;
+            puVar4++;
         } while (uVar5 < 10);
 
         if (param1 == 0)

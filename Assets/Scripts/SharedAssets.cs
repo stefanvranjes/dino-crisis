@@ -13,6 +13,8 @@ public class SharedAssets : MonoBehaviour
     public GianScriptableObject[] gians;
     public IniScriptableObject[] inis;
     public UIntUIntDictionary SHARED;
+    public delegate void FUN_9CE84(CriPlayer p);
+    public static FUN_9CE84[][] PTR_FUN_9CE84;
 
     protected virtual void Awake()
     {
@@ -22,6 +24,17 @@ public class SharedAssets : MonoBehaviour
             assets = new Dictionary<uint, SharedAssets>();
             DontDestroyOnLoad(gameObject);
         }
+
+        PTR_FUN_9CE84 = new FUN_9CE84[4][]
+        {
+            new FUN_9CE84[1]
+            {
+                FUN_521BC
+            },
+            null, 
+            null, 
+            null
+        };
     }
 
     // Start is called before the first frame update
@@ -56,5 +69,10 @@ public class SharedAssets : MonoBehaviour
     public virtual void Init()
     {
         return;
+    }
+
+    public static void FUN_521BC(CriPlayer param1)
+    {
+        param1.FUN_512BC();
     }
 }

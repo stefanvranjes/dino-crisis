@@ -142,9 +142,14 @@ public class GameManager : MonoBehaviour
     public static Vector3Int DAT_1f80002c;
     public static Vector3Int DAT_1f800034_2;
     public static Matrix3x3 DAT_1f800034;
+    public static Vector3Int DAT_1f800040;
     public static Vector3Int DAT_1f800044;
     public static Matrix3x3 DAT_1f80004c;
     public static Color32 DAT_1f800068;
+    public static Vector3Int DAT_1f80006c;
+    public static Vector3Int DAT_1f800074;
+    public static Vector3Int DAT_1f80007c;
+    public static Vector3Int DAT_1f800084;
     public static byte DAT_1f800070;
     public static byte DAT_1f800071;
     public static ushort DAT_1f800072;
@@ -8301,6 +8306,7 @@ public class GameManager : MonoBehaviour
         byte bVar2;
         uint uVar5;
         CriObject puVar9;
+        int pbVar12;
         uint uVar13;
         int iVar14;
         Frame2 pcVar16;
@@ -8322,6 +8328,7 @@ public class GameManager : MonoBehaviour
                 if ((pbVar20.DAT_65 & 0x80) == 0)
                 {
                     puVar9 = pbVar20.DAT_4C;
+                    pbVar20.ClearBuffer();
 
                     if (puVar9 != null)
                     {
@@ -8389,11 +8396,13 @@ public class GameManager : MonoBehaviour
                     Coprocessor.rotationMatrix.rt33 = pbVar20.cTransform.rotation.V22;
                     pcVar16 = pbVar20.DAT_58.FRAMES[pbVar20.DAT_5C];
                     iVar14 = (pcVar16.DAT_04 & 0x1f) - 1;
+                    pbVar12 = pbVar20.DAT_5C;
 
                     if (iVar14 != -1)
                     {
                         do
                         {
+                            pcVar16 = pbVar20.DAT_58.FRAMES[pbVar12];
                             local_48 = new Vector3Int(pcVar16.DAT_07 * pbVar20.DAT_62, pcVar16.DAT_06 * pbVar20.DAT_60, 0);
                             local_40 = new Vector3Int(pcVar16.DAT_07 * pbVar20.DAT_62, (pcVar16.DAT_06 + pcVar16.DAT_02) * pbVar20.DAT_60, 0);
                             local_38 = new Vector3Int((pcVar16.DAT_07 + pcVar16.DAT_03) * pbVar20.DAT_62, pcVar16.DAT_06 * pbVar20.DAT_60, 0);
@@ -8409,7 +8418,9 @@ public class GameManager : MonoBehaviour
                             Coprocessor.ExecuteRTPT(12, false);
                             DAT_1f800070 = pcVar16.DAT_00;
                             DAT_1f800071 = pcVar16.DAT_01;
-                            //write screen coordinates
+                            DAT_1f80006c = local_48;
+                            DAT_1f800074 = local_40;
+                            DAT_1f80007c = local_38;
                             local_48 = new Vector3Int((pcVar16.DAT_07 + pcVar16.DAT_03) * pbVar20.DAT_62, (pcVar16.DAT_06 + pcVar16.DAT_02) * pbVar20.DAT_60, 0);
                             Coprocessor.vector0.vx0 = (short)local_48.x;
                             Coprocessor.vector0.vy0 = (short)local_48.y;
@@ -8417,6 +8428,7 @@ public class GameManager : MonoBehaviour
                             Coprocessor.ExecuteRTPS(12, false);
                             DAT_1f800078 = (byte)(pcVar16.DAT_00 + pcVar16.DAT_02 - 1);
                             DAT_1f800081 = (byte)(pcVar16.DAT_01 + pcVar16.DAT_03 - 1);
+                            DAT_1f800084 = local_48;
                             DAT_1f800072 = pbVar20.DAT_54;
                             DAT_1f80007a = pbVar20.DAT_56;
                             DAT_1f800068 = pbVar20.DAT_50;
@@ -8426,6 +8438,8 @@ public class GameManager : MonoBehaviour
                             DAT_1f800088 = DAT_1f800078;
                             DAT_1f800089 = DAT_1f800081;
                             //...
+                            pbVar20.AddBuffer();
+                            pbVar12++;
                             iVar14--;
                         } while (iVar14 != -1);
                     }
@@ -8443,6 +8457,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
+            LAB_73D6C:
             puVar21++;
         } while (puVar21 < SceneManager.instance.DAT_5FCC.Length);
     }
@@ -8453,6 +8468,7 @@ public class GameManager : MonoBehaviour
         int iVar9;
         CriCamera oVar9;
         CriSkinned pMVar12;
+        CriParticle pSVar13;
         CriBone m;
 
         oVar9 = SceneManager.instance.cCamera;
@@ -8518,7 +8534,20 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < sceneManager.DAT_5FCC.Length; i++)
         {
+            pSVar13 = sceneManager.DAT_5FCC[i];
 
+            if ((pSVar13.flags & 2) != 0)
+            {
+                DAT_1f800040 = new Vector3Int(pSVar13.screen.x - DAT_1f80002c.x, pSVar13.screen.y - DAT_1f80002c.y, pSVar13.screen.z - DAT_1f80002c.z);
+                Coprocessor.vector0.vx0 = (short)DAT_1f800040.x;
+                Coprocessor.vector0.vy0 = (short)DAT_1f800040.y;
+                Coprocessor.vector0.vz0 = (short)DAT_1f800040.z;
+                Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.TR, 12, false);
+                pSVar13.cTransform.position.x = Coprocessor.mathsAccumulator.mac1;
+                pSVar13.cTransform.position.y = Coprocessor.mathsAccumulator.mac2;
+                pSVar13.cTransform.position.z = Coprocessor.mathsAccumulator.mac3;
+                Utilities.RotMatrix(ref pSVar13.vr, ref pSVar13.cTransform.rotation);
+            }
         }
     }
 

@@ -3436,6 +3436,16 @@ public static class Utilities
         return param1.FUN_65D78(ref DAT_9B314[param2 * 4 + param3], param2, param3);
     }
 
+    public static Vector3 InvertY(this Vector3Int v3)
+    {
+        return new Vector3(v3.x, -v3.y, v3.z);
+    }
+
+    public static Color Opaque(this Color32 c32)
+    {
+        return new Color32(c32.r, c32.g, c32.b, 255);
+    }
+
     public static UnityEngine.Object GetSharedObject(uint sharedAddress)
     {
         uint objectRamAddress;

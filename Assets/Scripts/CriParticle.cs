@@ -83,6 +83,14 @@ public class CriParticle : CriObject
     private FUN_9C890[] PTR_FUN_9C890;
     private FUN_9CBD4[] PTR_FUN_9CBD4;
 
+    private List<byte> commandList;
+    private List<Vector3> vertexList;
+    private List<Vector2> uvList;
+    private List<Vector3> uv2List;
+    private List<Color> colorList;
+    private List<int> triangleList;
+    public Material[] materials;
+
     protected override void Awake()
     {
         base.Awake();
@@ -170,6 +178,12 @@ public class CriParticle : CriObject
     protected override void Start()
     {
         base.Start();
+        commandList = new List<byte>();
+        vertexList = new List<Vector3>();
+        uvList = new List<Vector2>();
+        uv2List = new List<Vector3>();
+        colorList = new List<Color>();
+        triangleList = new List<int>();
     }
 
     protected override void Update()
@@ -206,6 +220,71 @@ public class CriParticle : CriObject
         DAT_6E = 0;
         DAT_70 = 0;
         DAT_72 = 0;
+    }
+
+    private void OnRenderObject()
+    {
+        if (DAT_58 != null && (flags & 2) != 0)
+        {
+            GL.PushMatrix();
+            GL.MultMatrix(transform.localToWorldMatrix);
+
+            for (int i = 0; i < commandList.Count; i++)
+            {
+                materials[commandList[i]].SetPass(0);
+                GL.Begin(GL.TRIANGLES);
+                int j = i * 6;
+
+                for (int k = 0; k < 6; k++)
+                {
+                    if (!GameManager.instance.disableColors)
+                        GL.Color(colorList[triangleList[j + k]]);
+                    GL.Vertex(vertexList[triangleList[j + k]]);
+                }
+
+                GL.End();
+            }
+
+            GL.PopMatrix();
+        }
+    }
+
+    public void SetMaterials()
+    {
+        materials = new Material[255];
+        Material mat1 = new Material(GameManager.instance.materials[0x2C]);
+        materials[0x2C] = mat1;
+    }
+
+    public void AddBuffer()
+    {
+        commandList.Add(GameManager.DAT_1f800068.a);
+        float translateFactor = 16f;
+        int tri = vertexList.Count;
+        vertexList.Add(GameManager.DAT_1f80006c.InvertY() / translateFactor);
+        vertexList.Add(GameManager.DAT_1f800074.InvertY() / translateFactor);
+        vertexList.Add(GameManager.DAT_1f80007c.InvertY() / translateFactor);
+        vertexList.Add(GameManager.DAT_1f800084.InvertY() / translateFactor);
+        colorList.Add(GameManager.DAT_1f800068.Opaque());
+        colorList.Add(GameManager.DAT_1f800068.Opaque());
+        colorList.Add(GameManager.DAT_1f800068.Opaque());
+        colorList.Add(GameManager.DAT_1f800068.Opaque());
+        triangleList.Add(tri);
+        triangleList.Add(tri + 1);
+        triangleList.Add(tri + 2);
+        triangleList.Add(tri + 3);
+        triangleList.Add(tri + 2);
+        triangleList.Add(tri + 1);
+    }
+
+    public void ClearBuffer()
+    {
+        commandList.Clear();
+        vertexList.Clear();
+        uvList.Clear();
+        uv2List.Clear();
+        colorList.Clear();
+        triangleList.Clear();
     }
 
     public void FUN_44EA8()
@@ -932,6 +1011,7 @@ public class CriParticle : CriObject
         DAT_5C = 0;
         DAT_58 = param1;
         DAT_64 = param1.FRAMES[0].DAT_05;
+        SetMaterials();
         return FUN_606D8();
     }
 

@@ -83,6 +83,8 @@ public class CriParticle : CriObject
     private FUN_9C890[] PTR_FUN_9C890;
     private FUN_9CBD4[] PTR_FUN_9CBD4;
 
+    private GridScriptableObject grid;
+    private ClutScriptableObject clut;
     private List<byte> commandList;
     private List<Vector3> vertexList;
     private List<Vector2> uvList;
@@ -239,6 +241,8 @@ public class CriParticle : CriObject
                 {
                     if (!GameManager.instance.disableColors)
                         GL.Color(colorList[triangleList[j + k]]);
+                    GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
+                    GL.MultiTexCoord(1, uv2List[i]);
                     GL.Vertex(vertexList[triangleList[j + k]]);
                 }
 
@@ -252,7 +256,12 @@ public class CriParticle : CriObject
     public void SetMaterials()
     {
         materials = new Material[255];
+        grid = SceneManager.instance.grid;
+        clut = SceneManager.instance.clut;
         Material mat1 = new Material(GameManager.instance.materials[0x2C]);
+        mat1.mainTexture = grid.tex4;
+        mat1.SetTexture("_Tex8", grid.tex8);
+        mat1.SetTexture("_CLUT", clut.TEX_2D);
         materials[0x2C] = mat1;
     }
 
@@ -269,6 +278,36 @@ public class CriParticle : CriObject
         colorList.Add(GameManager.DAT_1f800068.Opaque());
         colorList.Add(GameManager.DAT_1f800068.Opaque());
         colorList.Add(GameManager.DAT_1f800068.Opaque());
+        ushort texpage = GameManager.DAT_1f80007a;
+        ushort palette = GameManager.DAT_1f800072;
+        bool lowColors = (texpage >> 7 & 3) == 0 ? true : false;
+        int clutX = (palette & 0x3f) * 16;
+        int clutY = palette >> 6;
+        uv2List.Add(new Vector3((float)(clutX - clut.VRAM_X) / clut.WIDTH, (float)(clutY - clut.VRAM_Y) / clut.HEIGHT, lowColors ? 0f : 1f));
+        int f = lowColors ? 4 : 2;
+        int d = lowColors ? 1 : 1;
+        int pageX = (texpage & 0xf) * 64 * f;
+        int pageY = (texpage >> 4 & 1) * 256;
+        float width = lowColors ? grid.tex4.width : grid.tex8.width;
+        float height = grid.tex4.height;
+        int vramX = grid.VRAM_X * f;
+        int vramY = grid.VRAM_Y;
+        Vector2Int uv1 = new Vector2Int(GameManager.DAT_1f800070, GameManager.DAT_1f800071);
+        Vector2Int uv2 = new Vector2Int(GameManager.DAT_1f800078, GameManager.DAT_1f800079);
+        Vector2Int uv3 = new Vector2Int(GameManager.DAT_1f800080, GameManager.DAT_1f800081);
+        Vector2Int uv4 = new Vector2Int(GameManager.DAT_1f800088, GameManager.DAT_1f800089);
+        uv1.x = pageX + (uv1.x / d) - vramX;
+        uv1.y = pageY + uv1.y - vramY;
+        uvList.Add(new Vector2(uv1.x / width, 1f - uv1.y / height));
+        uv2.x = pageX + (uv2.x / d) - vramX;
+        uv2.y = pageY + uv2.y - vramY;
+        uvList.Add(new Vector2(uv2.x / width, 1f - uv2.y / height));
+        uv3.x = pageX + (uv3.x / d) - vramX;
+        uv3.y = pageY + uv3.y - vramY;
+        uvList.Add(new Vector2(uv3.x / width, 1f - uv3.y / height));
+        uv4.x = pageX + (uv4.x / d) - vramX;
+        uv4.y = pageY + uv4.y - vramY;
+        uvList.Add(new Vector2(uv4.x / width, 1f - uv4.y / height));
         triangleList.Add(tri);
         triangleList.Add(tri + 1);
         triangleList.Add(tri + 2);

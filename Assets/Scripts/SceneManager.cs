@@ -17,6 +17,8 @@ public class SceneManager : MonoBehaviour
 
     public ScnScriptableObject scn; //gp+268h
     public VabScriptableObject vab; //gp+26ch
+    public GridScriptableObject grid;
+    public ClutScriptableObject clut;
     public RamScriptableObject ram;
     public ushort DAT_A4; //gp+a4h
     public byte[] DAT_AC; //gp+ach

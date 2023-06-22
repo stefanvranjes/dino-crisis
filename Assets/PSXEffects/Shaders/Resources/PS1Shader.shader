@@ -46,6 +46,7 @@ Shader "PSXEffects/PS1Shader"
 
 		Pass
 		{
+			Offset [_OffsetFactor], [_OffsetUnits]
 			Tags { "LightMode" = "ForwardBase" }
 			CGPROGRAM
 

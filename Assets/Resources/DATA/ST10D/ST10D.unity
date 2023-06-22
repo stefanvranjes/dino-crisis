@@ -154,6 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scn: {fileID: -4406283935363021935, guid: a115325bcb54cb543a5bdaaea5959397, type: 3}
   vab: {fileID: 888843668273218188, guid: aa66e7ea20225514f9030d761559e0d9, type: 3}
+  grid: {fileID: 4673482187186455597, guid: e7681e37f79d0e64385483f63ef66906, type: 3}
+  clut: {fileID: 5605554348678623116, guid: 09247e50fc5dd544c8d76af57a15b418, type: 3}
   ram: {fileID: 11400000, guid: e5e89bc0bb8001e46906d4e19e753538, type: 2}
   DAT_A4: 0
   DAT_AC: 
@@ -256,6 +258,7 @@ MonoBehaviour:
     padding: 0
     position: {x: 0, y: 0, z: 0}
   screen: {x: 0, y: 0, z: 0}
+  DAT_26: 0
   tags: 0
   vr: {x: 0, y: 0, z: 0}
   DAT_2E: 0
@@ -460,8 +463,12 @@ MonoBehaviour:
     position: {x: 0, y: 0, z: 0}
   screen: {x: 0, y: 0, z: 0}
   DAT_26: 0
+  tags: 0
   vr: {x: 0, y: 0, z: 0}
   DAT_2E: 0
+  DAT_2F: 0
+  flags: 0
+  SDAT_2E: 0
   DAT_30: {x: 0, y: 0, z: 0}
   DAT_36: 0
   DAT_38: 0

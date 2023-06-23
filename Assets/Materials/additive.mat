@@ -7,14 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: billboard
-  m_Shader: {fileID: 4800000, guid: 6ce5d2b2e13baf044b17051a240754ae, type: 3}
+  m_Name: additive
+  m_Shader: {fileID: 4800000, guid: 5eec0d3bdde95ae429ccec1c138325b2, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - BFC
   - _DIFFMODEL_VERTEX
+  - _DRAWDIST_ON
   - _SPECMODEL_GOURAUD
-  - _UNLIT_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

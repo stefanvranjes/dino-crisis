@@ -11,6 +11,8 @@ Shader "PSXEffects/PS1Additive"
 		_Color("Color", Color) = (1,1,1,1)
 		[KeywordEnum(Vertex, Fragment)] _DiffModel("Diffuse Model", Float) = 0.0
 		_MainTex("Texture", 2D) = "white" {}
+		_Tex8("Texture 8", 2D) = "white" {}
+		_CLUT("CLUT Texture", 2D) = "white" {}
 		_LODTex("LOD Texture", 2D) = "white" {}
 		_LODAmt("LOD Amount", Float) = 0.0
 		_NormalMap("Normal Map", 2D) = "bump" {}
@@ -39,7 +41,7 @@ Shader "PSXEffects/PS1Additive"
 		Tags { "Queue"="Overlay" "DisableBatching" = "True" }
 		LOD 100
 		Blend One One // additive blending for a simple "glow" effect
-		Cull Front // render backfaces as well
+		Cull Off // render backfaces as well
 		ZWrite Off // don't write into the Z-buffer, this effect shouldn't block objects
 
 		Pass
@@ -53,24 +55,24 @@ Shader "PSXEffects/PS1Additive"
             #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
+			#include "PSXEffects.cginc"
 
             struct appdata_t {
                 float4 vertex : POSITION;
-                float2 texcoord : TEXCOORD0;
+                float4 uv_MainTex : TEXCOORD0;
 				float4 color : COLOR;
+				float4 uv2_MainTex : TEXCOORD1;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f {
                 float4 vertex : SV_POSITION;
-                float2 texcoord : TEXCOORD0;
+                float4 uv_MainTex : TEXCOORD0;
 				fixed4 color : COLOR;
+				float4 uv2_MainTex : TEXCOORD11;
                 UNITY_FOG_COORDS(1)
                 UNITY_VERTEX_OUTPUT_STEREO
             };
-
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
 
             v2f vert (appdata_t v)
             {
@@ -79,7 +81,9 @@ Shader "PSXEffects/PS1Additive"
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
+				float2 texcoord = TRANSFORM_TEX(v.uv_MainTex, _MainTex);
+				o.uv_MainTex = float4(texcoord.xy, v.uv_MainTex.z, 0);
+				o.uv2_MainTex = float4(v.uv2_MainTex.xyz, 0);
 				o.color = v.color;
                 UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
@@ -87,7 +91,12 @@ Shader "PSXEffects/PS1Additive"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.texcoord);
+                fixed4 col = tex2D(_MainTex, i.uv_MainTex);
+
+				if (i.uv_MainTex.z == 1)
+					col = tex2D(_Tex8, i.uv_MainTex);
+
+				col = tex2D(_CLUT, float2(col.r + i.uv2_MainTex.x, i.uv2_MainTex.y));
 				i.color.a = 1;
 				col *= i.color;
 				col *= 2;

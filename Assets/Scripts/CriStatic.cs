@@ -135,6 +135,7 @@ public class CriStatic : CriObject
         {
             Material mat1 = new Material(GameManager.instance.materials[0x34]);
             Material mat2 = new Material(GameManager.instance.materials[0x3C]);
+            Material mat3 = new Material(GameManager.instance.materials[0x3E]);
             mat1.mainTexture = tmd.TEX_2D;
             mat1.SetTexture("_Tex8", tmd.TEX8_2D);
             mat1.SetTexture("_CLUT", tmd.CLUT_2D);
@@ -144,7 +145,10 @@ public class CriStatic : CriObject
             mat2.SetTexture("_Tex8", tmd.TEX8_2D);
             mat2.SetTexture("_CLUT", tmd.CLUT_2D);
             materials[0x3C] = mat2;
-            materials[0x3E] = mat2;
+            mat3.mainTexture = tmd.TEX_2D;
+            mat3.SetTexture("_Tex8", tmd.TEX8_2D);
+            mat3.SetTexture("_CLUT", tmd.CLUT_2D);
+            materials[0x3E] = mat3;
         }
     }
 

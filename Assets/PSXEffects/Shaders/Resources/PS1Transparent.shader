@@ -41,8 +41,7 @@ Shader "PSXEffects/PS1Transparent"
 		Tags { "Queue" = "Transparent" "RenderType" = "Opaque" }
 		LOD 100
 		Lighting Off
-		Offset [_Offset], 1
-		Cull Front
+		Cull Off
 		Blend[_SrcBlend][_DstBlend]
 		BlendOp[_BlendOp]
 		ZTest LEqual
@@ -51,7 +50,7 @@ Shader "PSXEffects/PS1Transparent"
 
 		Pass
 		{
-			Offset [_OffsetFactor], [_OffsetUnits]
+			//Offset [_OffsetFactor], [_OffsetUnits]
 			Tags { "LightMode" = "ForwardBase" }
 			CGPROGRAM
 

@@ -609,18 +609,13 @@ public class GameManager : MonoBehaviour
         oVar3.vr.y = playerSpawnRotY;
         oVar3.DAT_48 = (sbyte)-(oVar3.screen.y / 0x1a9);
         oVar3.FUN_4CFDC();
-        oVar3.materials = new Material[255];
+        oVar3.materials = new Material[16];
         Tmd2ScriptableObject tmd = oVar3.cSkin;
-        Material mat1 = new Material(materials[0x34]);
-        Material mat2 = new Material(materials[0x3C]);
+        Material mat1 = new Material(materials[0]);
         mat1.mainTexture = tmd.TEX_2D;
         mat1.SetTexture("_Tex8", tmd.TEX8_2D);
         mat1.SetTexture("_CLUT", tmd.CLUT_2D);
-        oVar3.materials[0x34] = mat1;
-        mat2.mainTexture = tmd.TEX_2D;
-        mat2.SetTexture("_Tex8", tmd.TEX8_2D);
-        mat2.SetTexture("_CLUT", tmd.CLUT_2D);
-        oVar3.materials[0x3C] = mat2;
+        oVar3.materials[0] = mat1;
         //...
         uVar5 = 0;
 

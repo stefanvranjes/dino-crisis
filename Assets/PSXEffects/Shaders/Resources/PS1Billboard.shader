@@ -40,11 +40,14 @@ Shader "PSXEffects/PS1Billboard"
 
 	SubShader
 	{
-		Tags { "Queue"="Overlay" "DisableBatching" = "True" }
+		Tags { "Queue" = "Geometry" "RenderType" = "Opaque" }
 		LOD 100
-		Blend One One // additive blending for a simple "glow" effect
-		Cull Off // render backfaces as well
-		//ZWrite Off // don't write into the Z-buffer, this effect shouldn't block objects
+		Lighting On
+		Offset[_Offset], 1
+		Cull Off
+		Blend[_SrcBlend][_DstBlend]
+		BlendOp[_BlendOp]
+		ZWrite[_ZWrite]
 
 		Pass
 		{
@@ -112,6 +115,12 @@ Shader "PSXEffects/PS1Billboard"
 				i.color.a = 1;
 				//col *= i.color;
 				col *= 2;
+
+				if (col.a == 0) {
+					// Don't draw if outside render distance
+					discard;
+				}
+
 				col.rgb = saturate(col.rgb);
 
 #if !UNITY_COLORSPACE_GAMMA

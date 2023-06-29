@@ -40,9 +40,10 @@ Shader "PSXEffects/PS1Additive"
 	{
 		Tags { "Queue"="Overlay" "DisableBatching" = "True" }
 		LOD 100
+		Offset -2, -2
 		Blend One One // additive blending for a simple "glow" effect
 		Cull Off // render backfaces as well
-		ZWrite Off // don't write into the Z-buffer, this effect shouldn't block objects
+		ZWrite[_ZWrite] // don't write into the Z-buffer, this effect shouldn't block objects
 
 		Pass
 		{
@@ -52,7 +53,7 @@ Shader "PSXEffects/PS1Additive"
             #pragma vertex vert
             #pragma fragment frag
             #pragma target 2.0
-            #pragma multi_compile_fog
+			#pragma multi_compile_fog
 
             #include "UnityCG.cginc"
 			#include "PSXEffects.cginc"
@@ -80,7 +81,9 @@ Shader "PSXEffects/PS1Additive"
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-                o.vertex = UnityObjectToClipPos(v.vertex);
+				if (_VertexInaccuracy < 0) _VertexInaccuracy = _VertexSnappingDetail;
+				o.vertex = UnityObjectToClipPos(v.vertex);
+				o.vertex = PixelSnap(o.vertex);
 				float2 texcoord = TRANSFORM_TEX(v.uv_MainTex, _MainTex);
 				o.uv_MainTex = float4(texcoord.xy, v.uv_MainTex.z, 0);
 				o.uv2_MainTex = float4(v.uv2_MainTex.xyz, 0);

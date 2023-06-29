@@ -2266,18 +2266,13 @@ public class CriPlayer : CriSkinned
         DAT_21C = Utilities.DAT_9CFA8[param1][iVar5];
         oVar2 = (CriBone)Utilities.FUN_601C8(skeleton, 3);
         oVar2.cMesh = Utilities.GetSharedObject(DAT_21C) as Tmd3ScriptableObject;
-        oVar2.materials = new Material[255];
+        oVar2.materials = new Material[16];
         Tmd3ScriptableObject tmd = oVar2.cMesh;
-        Material mat1 = new Material(GameManager.instance.materials[0x34]);
-        Material mat2 = new Material(GameManager.instance.materials[0x3C]);
+        Material mat1 = new Material(GameManager.instance.materials[0]);
         mat1.mainTexture = tmd.TEX_2D;
         mat1.SetTexture("_Tex8", tmd.TEX8_2D);
         mat1.SetTexture("_CLUT", tmd.CLUT_2D);
-        oVar2.materials[0x34] = mat1;
-        mat2.mainTexture = tmd.TEX_2D;
-        mat2.SetTexture("_Tex8", tmd.TEX8_2D);
-        mat2.SetTexture("_CLUT", tmd.CLUT_2D);
-        oVar2.materials[0x3C] = mat2;
+        oVar2.materials[0] = mat1;
         FUN_4FE30();
         return; //tmp
 

@@ -233,13 +233,13 @@ public class CriParticle : CriObject
 
             for (int i = 0; i < commandList.Count; i++)
             {
-                materials[commandList[i]].SetPass(0);
+                materials[commandList[i] & 0xef].SetPass(0);
                 GL.Begin(GL.TRIANGLES);
                 int j = i * 6;
 
                 for (int k = 0; k < 6; k++)
                 {
-                    if (!GameManager.instance.disableColors)
+                    if (!GameManager.instance.disableColors || (commandList[i] & 0x10) != 0)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
                     GL.MultiTexCoord(1, uv2List[i]);
@@ -255,19 +255,19 @@ public class CriParticle : CriObject
 
     public void SetMaterials()
     {
-        materials = new Material[255];
+        materials = new Material[16];
         grid = SceneManager.instance.grid;
         clut = SceneManager.instance.clut;
-        Material mat1 = new Material(GameManager.instance.materials[0x2C]);
+        Material mat1 = new Material(GameManager.instance.materials[5]);
         mat1.mainTexture = grid.tex4;
         mat1.SetTexture("_Tex8", grid.tex8);
         mat1.SetTexture("_CLUT", clut.TEX_2D);
-        materials[0x2C] = mat1;
+        materials[5] = mat1;
     }
 
     public void AddBuffer()
     {
-        commandList.Add(GameManager.DAT_1f800068.a);
+        commandList.Add(5); //GameManager.DAT_1f800068.a
         float translateFactor = 16f;
         int tri = vertexList.Count;
         vertexList.Add(GameManager.DAT_1f80006c.InvertY() / translateFactor);

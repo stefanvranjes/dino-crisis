@@ -86,15 +86,15 @@ public class CriStatic : CriObject
             GL.PushMatrix();
             GL.MultMatrix(transform.localToWorldMatrix);
 
-            for (int i = 0; i < cMesh.TRI_COUNT; i++)
+            for (int i = cMesh.TRI_COUNT - 1; i >= 0; i--)
             {
-                materials[commandList[i]].SetPass(0);
+                materials[commandList[i] & 0xef].SetPass(0);
                 GL.Begin(GL.TRIANGLES);
                 int j = i * 3;
 
                 for (int k = 0; k < 3; k++)
                 {
-                    if (!GameManager.instance.disableColors)
+                    if (!GameManager.instance.disableColors || (commandList[i] & 0x10) != 0)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
                     GL.MultiTexCoord(1, uv2List[i]);
@@ -104,15 +104,15 @@ public class CriStatic : CriObject
                 GL.End();
             }
 
-            for (int i = 0; i < cMesh.QUAD_COUNT; i++)
+            for (int i = cMesh.QUAD_COUNT - 1; i >= 0; i--)
             {
-                materials[commandList[cMesh.TRI_COUNT + i]].SetPass(0);
+                materials[commandList[cMesh.TRI_COUNT + i] & 0xef].SetPass(0);
                 GL.Begin(GL.TRIANGLES);
                 int j = cMesh.TRI_COUNT * 3 + i * 6;
 
                 for (int k = 0; k < 6; k++)
                 {
-                    if (!GameManager.instance.disableColors)
+                    if (!GameManager.instance.disableColors || (commandList[i] & 0x10) != 0)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
                     GL.MultiTexCoord(1, uv2List[cMesh.TRI_COUNT + i]);
@@ -128,27 +128,31 @@ public class CriStatic : CriObject
 
     public void SetMaterials()
     {
-        materials = new Material[255];
+        materials = new Material[16];
         TmdScriptableObject tmd = cMesh;
 
         if (tmd != null)
         {
-            Material mat1 = new Material(GameManager.instance.materials[0x34]);
-            Material mat2 = new Material(GameManager.instance.materials[0x3C]);
-            Material mat3 = new Material(GameManager.instance.materials[0x3E]);
+            Material mat1 = new Material(GameManager.instance.materials[0]);
+            Material mat2 = new Material(GameManager.instance.materials[1]);
+            Material mat3 = new Material(GameManager.instance.materials[2]);
+            Material mat4 = new Material(GameManager.instance.materials[3]);
             mat1.mainTexture = tmd.TEX_2D;
             mat1.SetTexture("_Tex8", tmd.TEX8_2D);
             mat1.SetTexture("_CLUT", tmd.CLUT_2D);
-            materials[0x34] = mat1;
-            materials[0x36] = mat1;
+            materials[0] = mat1;
             mat2.mainTexture = tmd.TEX_2D;
             mat2.SetTexture("_Tex8", tmd.TEX8_2D);
             mat2.SetTexture("_CLUT", tmd.CLUT_2D);
-            materials[0x3C] = mat2;
+            materials[1] = mat2;
             mat3.mainTexture = tmd.TEX_2D;
             mat3.SetTexture("_Tex8", tmd.TEX8_2D);
             mat3.SetTexture("_CLUT", tmd.CLUT_2D);
-            materials[0x3E] = mat3;
+            materials[2] = mat3;
+            mat4.mainTexture = tmd.TEX_2D;
+            mat4.SetTexture("_Tex8", tmd.TEX8_2D);
+            mat4.SetTexture("_CLUT", tmd.CLUT_2D);
+            materials[3] = mat4;
         }
     }
 

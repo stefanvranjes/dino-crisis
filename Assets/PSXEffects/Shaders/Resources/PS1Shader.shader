@@ -38,7 +38,7 @@ Shader "PSXEffects/PS1Shader"
 		Tags { "Queue" = "Geometry" "RenderType" = "Opaque" }
 		LOD 100
 		Lighting On
-		Offset[_Offset], 1
+		//Offset[_Offset], 1
 		Cull[_Cul]
 		Blend[_SrcBlend][_DstBlend]
 		BlendOp[_BlendOp]
@@ -46,7 +46,7 @@ Shader "PSXEffects/PS1Shader"
 
 		Pass
 		{
-			Offset [_OffsetFactor], [_OffsetUnits]
+			//Offset [_OffsetFactor], [_OffsetUnits]
 			Tags { "LightMode" = "ForwardBase" }
 			CGPROGRAM
 

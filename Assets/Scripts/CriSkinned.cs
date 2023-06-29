@@ -139,13 +139,13 @@ public class CriSkinned : CriObject
 
             for (int i = 0; i < cSkin.TRI_COUNT; i++)
             {
-                materials[commandList[i]].SetPass(0);
+                materials[commandList[i] & 0xef].SetPass(0);
                 GL.Begin(GL.TRIANGLES);
                 int j = i * 3;
 
                 for (int k = 0; k < 3; k++)
                 {
-                    if (!GameManager.instance.disableColors)
+                    if (!GameManager.instance.disableColors || (commandList[i] & 0x10) != 0)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[j + k]);
                     GL.MultiTexCoord(1, uv2List[i]);
@@ -157,13 +157,13 @@ public class CriSkinned : CriObject
 
             for (int i = 0; i < cSkin.QUAD_COUNT; i++)
             {
-                materials[commandList[cSkin.TRI_COUNT + i]].SetPass(0);
+                materials[commandList[cSkin.TRI_COUNT + i] & 0xef].SetPass(0);
                 GL.Begin(GL.TRIANGLES);
                 int j = cSkin.TRI_COUNT * 3 + i * 6;
 
                 for (int k = 0; k < 6; k++)
                 {
-                    if (!GameManager.instance.disableColors)
+                    if (!GameManager.instance.disableColors || (commandList[i] & 0x10) != 0)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[j + k]);
                     GL.MultiTexCoord(1, uv2List[cSkin.TRI_COUNT + i]);
@@ -1139,7 +1139,7 @@ public class CriSkinned : CriObject
 
         while (-1 < --param2)
         {
-            commandList.Add(0x34);
+            commandList.Add(0x10); //0x34
             uvList.Add(param1.UVS[uv]);
             uvList.Add(param1.UVS[uv + 1]);
             uvList.Add(param1.UVS[uv + 2]);
@@ -1165,7 +1165,7 @@ public class CriSkinned : CriObject
 
         while (-1 < --param2)
         {
-            commandList.Add(0x3C);
+            commandList.Add(0x10); //0x3C
             uvList.Add(param1.UVS[uv]);
             uvList.Add(param1.UVS[uv + 1]);
             uvList.Add(param1.UVS[uv + 2]);

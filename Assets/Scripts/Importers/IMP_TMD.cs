@@ -72,7 +72,7 @@ public class IMP_TMD : ScriptedImporter
                     uv3.y = pageY + uv3.y - vramY;
                     tmd.UVS[i * 3 + 2] = new Vector2(uv3.x / width, 1f - uv3.y / height);
                     tmd.CLRS[i * 3] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
-                    tmd.CMDS[i] = reader.ReadByte();
+                    tmd.CMDS[i] = Cmd(reader.ReadByte(), texpage);
                     tmd.CLRS[i * 3 + 1] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
                     reader.Seek(1, SeekOrigin.Current);
                     tmd.CLRS[i * 3 + 2] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
@@ -121,7 +121,7 @@ public class IMP_TMD : ScriptedImporter
                     uv4.y = pageY + uv4.y - vramY;
                     tmd.UVS[triEnd * 3 + i * 4 + 3] = new Vector2(uv4.x / width, 1f - uv4.y / height);
                     tmd.CLRS[triEnd * 3 + i * 4] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
-                    tmd.CMDS[triEnd + i] = reader.ReadByte();
+                    tmd.CMDS[triEnd + i] = Cmd(reader.ReadByte(), texpage);
                     tmd.CLRS[triEnd * 3 + i * 4 + 1] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
                     reader.Seek(1, SeekOrigin.Current);
                     tmd.CLRS[triEnd * 3 + i * 4 + 2] = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), 255);
@@ -140,6 +140,44 @@ public class IMP_TMD : ScriptedImporter
             ctx.AddObjectToAsset("tmd", tmd);
             ctx.SetMainObject(tmd);
         }
+    }
+
+    private static byte Cmd(byte cmd, ushort texpage)
+    {
+        byte value = 0;
+
+        //tex-blend
+        switch (cmd)
+        {
+            case 0x24:
+            case 0x26:
+            case 0x2C:
+            case 0x2E:
+            case 0x34:
+            case 0x36:
+            case 0x3C:
+            case 0x3E:
+                value |= 0x10;
+                break;
+        }
+
+        //semi-transparency
+        switch (cmd)
+        {
+            case 0x26:
+            case 0x27:
+            case 0x2E:
+            case 0x2F:
+            case 0x32:
+            case 0x36:
+            case 0x3A:
+            case 0x3E:
+                int alpha = texpage >> 5 & 3;
+                value |= (byte)(alpha + 1);
+                break;
+        }
+
+        return value;
     }
 }
 #endif

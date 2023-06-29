@@ -53,13 +53,13 @@ public class CriBone : CriObject
 
             for (int i = 0; i < cMesh.TRI_COUNT; i++)
             {
-                materials[commandList[i]].SetPass(0);
+                materials[commandList[i] & 0xef].SetPass(0);
                 GL.Begin(GL.TRIANGLES);
                 int j = i * 3;
 
                 for (int k = 0; k < 3; k++)
                 {
-                    if (!GameManager.instance.disableColors)
+                    if (!GameManager.instance.disableColors || (commandList[i] & 0x10) != 0)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
                     GL.MultiTexCoord(1, uv2List[i]);
@@ -71,13 +71,13 @@ public class CriBone : CriObject
 
             for (int i = 0; i < cMesh.QUAD_COUNT; i++)
             {
-                materials[commandList[cMesh.TRI_COUNT + i]].SetPass(0);
+                materials[commandList[cMesh.TRI_COUNT + i] & 0xef].SetPass(0);
                 GL.Begin(GL.TRIANGLES);
                 int j = cMesh.TRI_COUNT * 3 + i * 6;
 
                 for (int k = 0; k < 6; k++)
                 {
-                    if (!GameManager.instance.disableColors)
+                    if (!GameManager.instance.disableColors || (commandList[i] & 0x10) != 0)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
                     GL.MultiTexCoord(1, uv2List[cMesh.TRI_COUNT + i]);
@@ -143,7 +143,7 @@ public class CriBone : CriObject
 
         while (-1 < --param2)
         {
-            commandList.Add(0x34);
+            commandList.Add(0x10); //0x34
             vertexList.Add(param1.VERTS[vert]);
             vertexList.Add(param1.VERTS[vert + 1]);
             vertexList.Add(param1.VERTS[vert + 2]);
@@ -220,7 +220,7 @@ public class CriBone : CriObject
 
         while (-1 < --param2)
         {
-            commandList.Add(0x3C);
+            commandList.Add(0x10); //0x3C
             vertexList.Add(param1.VERTS[vert]);
             vertexList.Add(param1.VERTS[vert + 1]);
             vertexList.Add(param1.VERTS[vert + 2]);

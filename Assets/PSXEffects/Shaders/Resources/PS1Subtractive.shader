@@ -44,7 +44,7 @@ Shader "PSXEffects/PS1Subtractive"
 		BlendOp RevSub
 		Blend One One // additive blending for a simple "glow" effect
 		Cull Off // render backfaces as well
-		ZWrite Off // don't write into the Z-buffer, this effect shouldn't block objects
+		ZWrite[_ZWrite] // don't write into the Z-buffer, this effect shouldn't block objects
 
 		Pass
 		{
@@ -82,6 +82,8 @@ Shader "PSXEffects/PS1Subtractive"
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				if (_VertexInaccuracy < 0) _VertexInaccuracy = _VertexSnappingDetail;
+				o.vertex = UnityObjectToClipPos(v.vertex);
                 o.vertex = UnityObjectToClipPos(v.vertex);
 				float2 texcoord = TRANSFORM_TEX(v.uv_MainTex, _MainTex);
                 o.uv_MainTex = float4(texcoord.xy, v.uv_MainTex.z, 0);

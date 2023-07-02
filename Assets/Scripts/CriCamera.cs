@@ -119,12 +119,13 @@ public class CriCamera : CriObject
     protected override void Start()
     {
         base.Start();
+        GetComponent<Camera>().fieldOfView = 42f;
     }
 
     protected override void Update()
     {
         base.Update();
-        transform.eulerAngles = new Vector3
+        transform.localEulerAngles = new Vector3
             (-transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
     }
 

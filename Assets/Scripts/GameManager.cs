@@ -8457,6 +8457,142 @@ public class GameManager : MonoBehaviour
         } while (puVar21 < SceneManager.instance.DAT_5FCC.Length);
     }
 
+    private void FUN_74384()
+    {
+        byte bVar1;
+        short sVar3;
+        CriObject oVar4;
+        CriCamera oVar5;
+        uint uVar7;
+        CriSkinned piVar13;
+        int puVar14;
+        Vector3Int local_58;
+        Vector3Int local_50;
+        Vector3Int local_48;
+        Vector3Int local_40;
+        Vector3Int local_38;
+        Vector3Int local_30;
+
+        local_50 = new Vector3Int(-400, 0, 400);
+        local_48 = new Vector3Int(400, 0, 400);
+        local_40 = new Vector3Int(-400, 0, -400);
+        local_38 = new Vector3Int(400, 0, -400);
+        puVar14 = 0;
+        bVar1 = DAT_21;
+
+        do
+        {
+            piVar13 = SceneManager.instance.DAT_27C[puVar14];
+
+            if ((piVar13.flags & 2) != 0 && (piVar13.DAT_174 & 0x80) != 0)
+            {
+                local_58 = new Vector3Int(0, (short)(piVar13.skeleton.vr.y + piVar13.vr.y), 0);
+                Utilities.RotMatrix(ref local_58, ref DAT_1f800034);
+                local_30 = new Vector3Int(piVar13.shadowSize.x, 0, piVar13.shadowSize.y);
+                Utilities.ScaleMatrix(ref DAT_1f800034, ref local_30);
+                uVar7 = piVar13.DAT_174 & 15U;
+                oVar4 = Utilities.FUN_601C8(piVar13.skeleton, (int)uVar7);
+                oVar5 = SceneManager.instance.cCamera;
+                Coprocessor.rotationMatrix.rt11 = oVar5.cTransform.rotation.V00;
+                Coprocessor.rotationMatrix.rt12 = oVar5.cTransform.rotation.V01;
+                Coprocessor.rotationMatrix.rt13 = oVar5.cTransform.rotation.V02;
+                Coprocessor.rotationMatrix.rt21 = oVar5.cTransform.rotation.V10;
+                Coprocessor.rotationMatrix.rt22 = oVar5.cTransform.rotation.V11;
+                Coprocessor.rotationMatrix.rt23 = oVar5.cTransform.rotation.V12;
+                Coprocessor.rotationMatrix.rt31 = oVar5.cTransform.rotation.V20;
+                Coprocessor.rotationMatrix.rt32 = oVar5.cTransform.rotation.V21;
+                Coprocessor.rotationMatrix.rt33 = oVar5.cTransform.rotation.V22;
+                Coprocessor.accumulator.ir1 = DAT_1f800034.V00;
+                Coprocessor.accumulator.ir2 = DAT_1f800034.V10;
+                Coprocessor.accumulator.ir3 = DAT_1f800034.V20;
+                Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.IR, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+                local_58.x = oVar4.screen.x - oVar5.DAT_30.x;
+                piVar13.cTransform.rotation.V00 = Coprocessor.accumulator.ir1;
+                piVar13.cTransform.rotation.V10 = Coprocessor.accumulator.ir2;
+                piVar13.cTransform.rotation.V20 = Coprocessor.accumulator.ir3;
+                Coprocessor.accumulator.ir1 = DAT_1f800034.V01;
+                Coprocessor.accumulator.ir2 = DAT_1f800034.V11;
+                Coprocessor.accumulator.ir3 = DAT_1f800034.V21;
+                Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.IR, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+                local_58.z = oVar4.screen.z - oVar5.DAT_30.z;
+                piVar13.cTransform.rotation.V01 = Coprocessor.accumulator.ir1;
+                piVar13.cTransform.rotation.V11 = Coprocessor.accumulator.ir2;
+                piVar13.cTransform.rotation.V21 = Coprocessor.accumulator.ir3;
+                Coprocessor.accumulator.ir1 = DAT_1f800034.V02;
+                Coprocessor.accumulator.ir2 = DAT_1f800034.V12;
+                Coprocessor.accumulator.ir3 = DAT_1f800034.V22;
+                Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.IR, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+
+                if ((piVar13.DAT_174 & 0x40) == 0)
+                    local_58.y = piVar13.screen.y - oVar5.DAT_30.y;
+                else
+                {
+                    sVar3 = (short)SceneManager.instance.FUN_640A8(oVar4.screen);
+                    local_58.y = sVar3 - oVar5.DAT_30.y;
+                }
+
+                piVar13.cTransform.rotation.V02 = Coprocessor.accumulator.ir1;
+                piVar13.cTransform.rotation.V12 = Coprocessor.accumulator.ir2;
+                piVar13.cTransform.rotation.V22 = Coprocessor.accumulator.ir3;
+                Coprocessor.vector0.vx0 = (short)local_58.x;
+                Coprocessor.vector0.vy0 = (short)local_58.y;
+                Coprocessor.vector0.vz0 = (short)local_58.z;
+                Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
+                piVar13.cTransform.position.x = Coprocessor.mathsAccumulator.mac1;
+                piVar13.cTransform.position.y = Coprocessor.mathsAccumulator.mac2;
+                piVar13.cTransform.position.z = Coprocessor.mathsAccumulator.mac3;
+                piVar13.cTransform.position.x += oVar5.DAT_38;
+                piVar13.cTransform.position.y += oVar5.DAT_3A;
+                piVar13.cTransform.position.z += oVar5.DAT_3C;
+                Coprocessor.rotationMatrix.rt11 = piVar13.cTransform.rotation.V00;
+                Coprocessor.rotationMatrix.rt12 = piVar13.cTransform.rotation.V01;
+                Coprocessor.rotationMatrix.rt13 = piVar13.cTransform.rotation.V02;
+                Coprocessor.rotationMatrix.rt21 = piVar13.cTransform.rotation.V10;
+                Coprocessor.rotationMatrix.rt22 = piVar13.cTransform.rotation.V11;
+                Coprocessor.rotationMatrix.rt23 = piVar13.cTransform.rotation.V12;
+                Coprocessor.rotationMatrix.rt31 = piVar13.cTransform.rotation.V20;
+                Coprocessor.rotationMatrix.rt32 = piVar13.cTransform.rotation.V21;
+                Coprocessor.rotationMatrix.rt33 = piVar13.cTransform.rotation.V22;
+                Coprocessor.translationVector._trx = piVar13.cTransform.position.x;
+                Coprocessor.translationVector._try = piVar13.cTransform.position.y;
+                Coprocessor.translationVector._trz = piVar13.cTransform.position.z;
+                Coprocessor.vector0.vx0 = (short)local_50.x;
+                Coprocessor.vector0.vy0 = (short)local_50.y;
+                Coprocessor.vector0.vz0 = (short)local_50.z;
+                Coprocessor.vector1.vx1 = (short)local_48.x;
+                Coprocessor.vector1.vy1 = (short)local_48.y;
+                Coprocessor.vector1.vz1 = (short)local_48.z;
+                Coprocessor.vector2.vx2 = (short)local_40.x;
+                Coprocessor.vector2.vy2 = (short)local_40.y;
+                Coprocessor.vector2.vz2 = (short)local_40.z;
+                Coprocessor.ExecuteRTPT(12, false);
+                DAT_1f800080 = 0;
+                DAT_1f800070 = 0;
+                DAT_1f800079 = 0x48;
+                DAT_1f800071 = 0x48;
+                DAT_1f80006c = local_50;
+                DAT_1f800074 = local_48;
+                DAT_1f80007c = local_40;
+                Coprocessor.vector0.vx0 = (short)local_38.x;
+                Coprocessor.vector0.vy0 = (short)local_38.y;
+                Coprocessor.vector0.vz0 = (short)local_38.z;
+                Coprocessor.ExecuteRTPS(12, false);
+                DAT_1f800088 = 0x2f;
+                DAT_1f800078 = 0x2f;
+                DAT_1f800089 = 0x77;
+                DAT_1f800081 = 0x77;
+                DAT_1f800084 = local_38;
+                //do z-depth...
+                DAT_1f800072 = 0x7df1;
+                DAT_1f80007a = 0x5e;
+                DAT_1f800068 = new Color32(0x20, 0x20, 0x20, 0x2e);
+                //...
+            }
+
+            puVar14++;
+        } while (puVar14 < SceneManager.instance.DAT_27C.Length);
+    }
+
     private void FUN_72C2C()
     {
         CriObject puVar8;

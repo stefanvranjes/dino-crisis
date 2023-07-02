@@ -20,7 +20,8 @@ public class IMP_LGT : ScriptedImporter
             lgh.DAT_02 = reader.ReadUInt16();
             reader.Seek(2, SeekOrigin.Current);
             lgh.DAT_06 = reader.ReadByte();
-            reader.Seek(5, SeekOrigin.Current);
+            reader.Seek(1, SeekOrigin.Current);
+            lgh.DAT_08 = new Color32(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
             lgh.DAT_0C = reader.ReadSVector();
             lgh.DAT_12 = reader.ReadSVector();
             lgh.DAT_18 = reader.ReadByte();

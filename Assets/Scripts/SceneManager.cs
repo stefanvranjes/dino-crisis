@@ -2397,6 +2397,63 @@ public class SceneManager : MonoBehaviour
         return bVar4;
     }
 
+    public int FUN_640A8(Vector3Int param1)
+    {
+        int iVar2;
+        int iVar3;
+        FloorSegment fVar3;
+        int iVar4;
+        FloorCollider[] pbVar5;
+        FloorCollider psVar6;
+        int iVar7;
+
+        iVar3 = param1.y / 0x1a9;
+        iVar4 = -iVar3;
+        iVar2 = iVar3 * -0x1000000;
+
+        if (15 < iVar3 * -0x1000000 >> 0x18)
+        {
+            iVar4 = 0x10;
+            iVar2 = 0x10000000;
+        }
+
+        iVar4 <<= 0x18;
+
+        if (iVar2 < 0)
+            iVar4 = 0;
+
+        iVar4 >>= 0x18;
+
+        do
+        {
+            if (iVar4 < 0)
+                return 0;
+
+            iVar7 = 0;
+            fVar3 = sceneCollision.FLOOR_SEGMENT[iVar4];
+            iVar2 = fVar3.FLOOR_COUNT;
+            pbVar5 = fVar3.FLOOR_COLLIDERS;
+
+            if (0 < iVar2)
+            {
+                do
+                {
+                    psVar6 = pbVar5[iVar7];
+
+                    if (psVar6.DAT_04[1].x != 0 && psVar6.DAT_04[1].y != 0)
+                    {
+                        //...
+                        return 0; //tmp
+                    }
+
+                    iVar7++;
+                } while (iVar7 < iVar2);
+            }
+
+            iVar4--;
+        } while (true);
+    }
+
     public bool FUN_64210(ref Vector3Int param1, byte param2, uint param3)
     {
         byte bVar1;

@@ -108,7 +108,7 @@ Shader "PSXEffects/PS1Billboard"
             {
                 fixed4 col = tex2D(_MainTex, i.uv_MainTex);
 
-				if (i.uv_MainTex.z == 1)
+				if (i.uv2_MainTex.z == 1)
 					col = tex2D(_Tex8, i.uv_MainTex);
 
 				col = tex2D(_CLUT, float2(col.r + i.uv2_MainTex.x, i.uv2_MainTex.y));

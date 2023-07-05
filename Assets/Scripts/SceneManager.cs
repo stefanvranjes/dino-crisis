@@ -54,9 +54,11 @@ public class SceneManager : MonoBehaviour
     public byte DAT_C51D8;
     public CriScene[] DAT_D7C0; //gp+d7c0h...gp+dea0h (0x800C51E0)
 
+    private delegate bool FUN_9E950(FloorCollider fc, Vector3Int v3, ref short a3);
     private delegate bool FUN_9E96C(Vector4Int v4, WallCollider c, ref Vector2Int v2);
     private delegate uint FUN_AA4DC(ref Vector3Int v1, Vector3Int v2);
 
+    private FUN_9E950[] PTR_FUN_9E950;
     private FUN_9E96C[] PTR_FUN_9E96C;
     private FUN_AA4DC[] PTR_FUN_AA4DC;
 
@@ -92,6 +94,16 @@ public class SceneManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            PTR_FUN_9E950 = new FUN_9E950[7]
+            {
+                FUN_63768,
+                FUN_638E0,
+                FUN_63A1C,
+                FUN_63B04,
+                FUN_63BF0,
+                FUN_63CD8,
+                FUN_63DC4
+            };
             PTR_FUN_9E96C = new FUN_9E96C[7]
             {
                 FUN_65138,
@@ -137,13 +149,6 @@ public class SceneManager : MonoBehaviour
         DAT_9FE0 = new Trigger6[4];
         DAT_D7C0 = new CriScene[10];
 
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriSkinned (Instance)";
-            DAT_27C[i] = obj.AddComponent<CriPlayer>();
-        }
-
         for (int i = 0; i < 100; i++)
         {
             GameObject obj = new GameObject();
@@ -163,6 +168,13 @@ public class SceneManager : MonoBehaviour
             GameObject obj = new GameObject();
             obj.name = "CriStatic (Instance)";
             DAT_7CDC[i] = obj.AddComponent<CriStatic>();
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriSkinned (Instance)";
+            DAT_27C[i] = obj.AddComponent<CriPlayer>();
         }
 
         for (int i = 0; i < 10; i++)
@@ -2399,6 +2411,7 @@ public class SceneManager : MonoBehaviour
 
     public int FUN_640A8(Vector3Int param1)
     {
+        bool bVar1;
         int iVar2;
         int iVar3;
         FloorSegment fVar3;
@@ -2406,7 +2419,9 @@ public class SceneManager : MonoBehaviour
         FloorCollider[] pbVar5;
         FloorCollider psVar6;
         int iVar7;
+        short local_28;
 
+        local_28 = 0;
         iVar3 = param1.y / 0x1a9;
         iVar4 = -iVar3;
         iVar2 = iVar3 * -0x1000000;
@@ -2442,8 +2457,10 @@ public class SceneManager : MonoBehaviour
 
                     if (psVar6.DAT_04[1].x != 0 && psVar6.DAT_04[1].y != 0)
                     {
-                        //...
-                        return 0; //tmp
+                        bVar1 = PTR_FUN_9E950[psVar6.DAT_00](psVar6, param1, ref local_28);
+
+                        if (bVar1)
+                            return local_28;
                     }
 
                     iVar7++;

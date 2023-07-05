@@ -1482,10 +1482,18 @@ public class CriScene : MonoBehaviour
                 oVar3.materials = new Material[16];
                 Tmd2ScriptableObject tmd = oVar3.cSkin;
                 Material mat1 = new Material(GameManager.instance.materials[0]);
+                Material mat2 = new Material(GameManager.instance.materials[3]);
                 mat1.mainTexture = tmd.TEX_2D;
                 mat1.SetTexture("_Tex8", tmd.TEX8_2D);
                 mat1.SetTexture("_CLUT", tmd.CLUT_2D);
                 oVar3.materials[0] = mat1;
+                Tmd2ScriptableObject tmd2 = (Tmd2ScriptableObject)Utilities.GetRamObject(0x8018066c);
+                mat2.mainTexture = tmd2.TEX_2D;
+                mat2.SetTexture("_Tex8", tmd2.TEX8_2D);
+                mat2.SetTexture("_CLUT", tmd2.CLUT_2D);
+                oVar3.materials[3] = mat2;
+                GameObject sdw = new GameObject("Shadow");
+                oVar3.shadow = sdw.transform;
             }
 
             if (mVar4.DAT_14 != 0)

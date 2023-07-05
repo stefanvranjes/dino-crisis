@@ -59,7 +59,7 @@ public class CriBone : CriObject
 
                 for (int k = 0; k < 3; k++)
                 {
-                    if (!GameManager.instance.disableColors || (commandList[i] & 0x10) != 0)
+                    if (!GameManager.instance.disableColors && (commandList[i] & 0x10) != 0)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
                     GL.MultiTexCoord(1, uv2List[i]);
@@ -77,7 +77,7 @@ public class CriBone : CriObject
 
                 for (int k = 0; k < 6; k++)
                 {
-                    if (!GameManager.instance.disableColors || (commandList[i] & 0x10) != 0)
+                    if (!GameManager.instance.disableColors && (commandList[i] & 0x10) != 0)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
                     GL.MultiTexCoord(1, uv2List[cMesh.TRI_COUNT + i]);

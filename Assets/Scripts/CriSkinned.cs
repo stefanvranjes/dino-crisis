@@ -99,6 +99,7 @@ public class CriSkinned : CriObject
     public byte DAT_1A7; //0x1A7
     public int[] REFS;
 
+    public Transform shadow;
     private List<byte> commandList;
     private List<Vector3> vertexList;
     private List<Vector2> uvList;
@@ -145,7 +146,7 @@ public class CriSkinned : CriObject
 
                 for (int k = 0; k < 3; k++)
                 {
-                    if (!GameManager.instance.disableColors || (commandList[i] & 0x10) != 0)
+                    if (!GameManager.instance.disableColors && (commandList[i] & 0x10) != 0)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[j + k]);
                     GL.MultiTexCoord(1, uv2List[i]);
@@ -163,7 +164,7 @@ public class CriSkinned : CriObject
 
                 for (int k = 0; k < 6; k++)
                 {
-                    if (!GameManager.instance.disableColors || (commandList[i] & 0x10) != 0)
+                    if (!GameManager.instance.disableColors && (commandList[i] & 0x10) != 0)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[j + k]);
                     GL.MultiTexCoord(1, uv2List[cSkin.TRI_COUNT + i]);
@@ -172,6 +173,22 @@ public class CriSkinned : CriObject
 
                 GL.End();
             }
+
+            GL.MultMatrix(shadow.localToWorldMatrix);
+            materials[commandList[cSkin.TRI_COUNT + cSkin.QUAD_COUNT] & 0xef].SetPass(0);
+            GL.Begin(GL.TRIANGLES);
+            int m = cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6;
+
+            for (int k = 0; k < 6; k++)
+            {
+                if (!GameManager.instance.disableColors && (commandList[cSkin.TRI_COUNT + cSkin.QUAD_COUNT] & 0x10) != 0)
+                    GL.Color(colorList[triangleList[m + k]]);
+                GL.MultiTexCoord(0, uvList[m + k]);
+                GL.MultiTexCoord(1, uv2List[cSkin.TRI_COUNT + cSkin.QUAD_COUNT]);
+                GL.Vertex(vertexList[triangleList[m + k]]);
+            }
+
+            GL.End();
 
             GL.PopMatrix();
         }
@@ -1186,5 +1203,58 @@ public class CriSkinned : CriObject
             uv2++;
             tri += 6;
         }
+    }
+
+    public void AddShadows()
+    {
+        commandList.Add(0x13); //GameManager.DAT_1f800068.a
+        float translateFactor = 16f;
+        int tri = vertexList.Count;
+        vertexList.Add(GameManager.DAT_1f80006c.InvertY() / translateFactor);
+        vertexList.Add(GameManager.DAT_1f800074.InvertY() / translateFactor);
+        vertexList.Add(GameManager.DAT_1f80007c.InvertY() / translateFactor);
+        vertexList.Add(GameManager.DAT_1f800084.InvertY() / translateFactor);
+        colorList.Add(GameManager.DAT_1f800068.Opaque());
+        colorList.Add(GameManager.DAT_1f800068.Opaque());
+        colorList.Add(GameManager.DAT_1f800068.Opaque());
+        colorList.Add(GameManager.DAT_1f800068.Opaque());
+        ushort texpage = GameManager.DAT_1f80007a;
+        ushort palette = GameManager.DAT_1f800072;
+        bool lowColors = (texpage >> 7 & 3) == 0 ? true : false;
+        int clutX = (palette & 0x3f) * 16;
+        int clutY = palette >> 6;
+        uv2List.Add(new Vector3((float)(clutX - 0x300) / 0x100, (float)(clutY - 0x1f6) / 2, lowColors ? 0f : 1f));
+        int f = lowColors ? 4 : 2;
+        int d = lowColors ? 1 : 1;
+        int pageX = (texpage & 0xf) * 64 * f;
+        int pageY = (texpage >> 4 & 1) * 256;
+        float width = lowColors ? 0x200 : 0x100;
+        float height = 0x1d0;
+        int vramX = 0x380 * f;
+        int vramY = 0;
+        Vector2Int uv1 = new Vector2Int(GameManager.DAT_1f800070, GameManager.DAT_1f800071);
+        Vector2Int uv2 = new Vector2Int(GameManager.DAT_1f800078, GameManager.DAT_1f800079);
+        Vector2Int uv3 = new Vector2Int(GameManager.DAT_1f800080, GameManager.DAT_1f800081);
+        Vector2Int uv4 = new Vector2Int(GameManager.DAT_1f800088, GameManager.DAT_1f800089);
+        uv1.x = pageX + (uv1.x / d) - vramX;
+        uv1.y = pageY + uv1.y - vramY;
+        uvList.Add(new Vector2(uv1.x / width, 1f - uv1.y / height));
+        uv2.x = pageX + (uv2.x / d) - vramX;
+        uv2.y = pageY + uv2.y - vramY;
+        uvList.Add(new Vector2(uv2.x / width, 1f - uv2.y / height));
+        uv3.x = pageX + (uv3.x / d) - vramX;
+        uv3.y = pageY + uv3.y - vramY;
+        uvList.Add(new Vector2(uv3.x / width, 1f - uv3.y / height));
+        uv4.x = pageX + (uv4.x / d) - vramX;
+        uv4.y = pageY + uv4.y - vramY;
+        uvList.Add(new Vector2(uv4.x / width, 1f - uv4.y / height));
+        uvList.Add(new Vector2(uv3.x / width, 1f - uv3.y / height));
+        uvList.Add(new Vector2(uv2.x / width, 1f - uv2.y / height));
+        triangleList.Add(tri);
+        triangleList.Add(tri + 1);
+        triangleList.Add(tri + 2);
+        triangleList.Add(tri + 3);
+        triangleList.Add(tri + 2);
+        triangleList.Add(tri + 1);
     }
 }

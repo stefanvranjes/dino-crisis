@@ -612,10 +612,18 @@ public class GameManager : MonoBehaviour
         oVar3.materials = new Material[16];
         Tmd2ScriptableObject tmd = oVar3.cSkin;
         Material mat1 = new Material(materials[0]);
+        Material mat2 = new Material(materials[3]);
         mat1.mainTexture = tmd.TEX_2D;
         mat1.SetTexture("_Tex8", tmd.TEX8_2D);
         mat1.SetTexture("_CLUT", tmd.CLUT_2D);
         oVar3.materials[0] = mat1;
+        Tmd2ScriptableObject tmd2 = (Tmd2ScriptableObject)Utilities.GetRamObject(0x8018066c);
+        mat2.mainTexture = tmd2.TEX_2D;
+        mat2.SetTexture("_Tex8", tmd2.TEX8_2D);
+        mat2.SetTexture("_CLUT", tmd2.CLUT_2D);
+        oVar3.materials[3] = mat2;
+        GameObject sdw = new GameObject("Shadow");
+        oVar3.shadow = sdw.transform;
         //...
         uVar5 = 0;
 
@@ -7961,6 +7969,9 @@ public class GameManager : MonoBehaviour
         if ((DAT_38 & 4) == 0)
             FUN_7357C();
 
+        if ((DAT_38 & 0x20) == 0)
+            FUN_74384();
+
         //...
         
         for (int i = 0; i < SceneManager.instance.DAT_27C.Length; i++)
@@ -8466,6 +8477,8 @@ public class GameManager : MonoBehaviour
         uint uVar7;
         CriSkinned piVar13;
         int puVar14;
+        Transform tVar15;
+        Vector3Int local_60;
         Vector3Int local_58;
         Vector3Int local_50;
         Vector3Int local_48;
@@ -8487,6 +8500,8 @@ public class GameManager : MonoBehaviour
             if ((piVar13.flags & 2) != 0 && (piVar13.DAT_174 & 0x80) != 0)
             {
                 local_58 = new Vector3Int(0, (short)(piVar13.skeleton.vr.y + piVar13.vr.y), 0);
+                tVar15 = piVar13.shadow;
+                tVar15.localRotation = Quaternion.Euler((Vector3)local_58 / 4096f * 360f);
                 Utilities.RotMatrix(ref local_58, ref DAT_1f800034);
                 local_30 = new Vector3Int(piVar13.shadowSize.x, 0, piVar13.shadowSize.y);
                 Utilities.ScaleMatrix(ref DAT_1f800034, ref local_30);
@@ -8524,11 +8539,15 @@ public class GameManager : MonoBehaviour
                 Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.IR, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
 
                 if ((piVar13.DAT_174 & 0x40) == 0)
+                {
                     local_58.y = piVar13.screen.y - oVar5.DAT_30.y;
+                    local_60 = new Vector3Int(oVar4.screen.x, piVar13.screen.y, oVar4.screen.z);
+                }
                 else
                 {
                     sVar3 = (short)SceneManager.instance.FUN_640A8(oVar4.screen);
                     local_58.y = sVar3 - oVar5.DAT_30.y;
+                    local_60 = new Vector3Int(oVar4.screen.x, sVar3, oVar4.screen.z);
                 }
 
                 piVar13.cTransform.rotation.V02 = Coprocessor.accumulator.ir1;
@@ -8541,6 +8560,8 @@ public class GameManager : MonoBehaviour
                 piVar13.cTransform.position.x = Coprocessor.mathsAccumulator.mac1;
                 piVar13.cTransform.position.y = Coprocessor.mathsAccumulator.mac2;
                 piVar13.cTransform.position.z = Coprocessor.mathsAccumulator.mac3;
+                tVar15.localPosition = (Vector3)local_60 / 16f;
+                tVar15.localPosition = new Vector3(tVar15.localPosition.x, -tVar15.localPosition.y, tVar15.localPosition.z);
                 piVar13.cTransform.position.x += oVar5.DAT_38;
                 piVar13.cTransform.position.y += oVar5.DAT_3A;
                 piVar13.cTransform.position.z += oVar5.DAT_3C;
@@ -8587,6 +8608,7 @@ public class GameManager : MonoBehaviour
                 DAT_1f80007a = 0x5e;
                 DAT_1f800068 = new Color32(0x20, 0x20, 0x20, 0x2e);
                 //...
+                piVar13.AddShadows();
             }
 
             puVar14++;

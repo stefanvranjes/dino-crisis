@@ -174,21 +174,21 @@ public class CriSkinned : CriObject
                 GL.End();
             }
 
-            GL.MultMatrix(shadow.localToWorldMatrix);
-            materials[commandList[cSkin.TRI_COUNT + cSkin.QUAD_COUNT] & 0xef].SetPass(0);
-            GL.Begin(GL.TRIANGLES);
+            RenderQueue.AddMatrix(shadow);
+            RenderQueue.AddCommand(commandList[cSkin.TRI_COUNT + cSkin.QUAD_COUNT]);
+            RenderQueue.AddMaterial(materials[commandList[cSkin.TRI_COUNT + cSkin.QUAD_COUNT] & 0xef]);
+            RenderQueue.AddMatrix(shadow);
+            RenderQueue.AddCommand(commandList[cSkin.TRI_COUNT + cSkin.QUAD_COUNT]);
+            RenderQueue.AddMaterial(materials[commandList[cSkin.TRI_COUNT + cSkin.QUAD_COUNT] & 0xef]);
             int m = cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6;
 
             for (int k = 0; k < 6; k++)
             {
-                if (!GameManager.instance.disableColors && (commandList[cSkin.TRI_COUNT + cSkin.QUAD_COUNT] & 0x10) != 0)
-                    GL.Color(colorList[triangleList[m + k]]);
-                GL.MultiTexCoord(0, uvList[m + k]);
-                GL.MultiTexCoord(1, uv2List[cSkin.TRI_COUNT + cSkin.QUAD_COUNT]);
-                GL.Vertex(vertexList[triangleList[m + k]]);
+                RenderQueue.AddColor(colorList[triangleList[m + k]]);
+                RenderQueue.AddUV(uvList[m + k]);
+                RenderQueue.AddUV2(uv2List[cSkin.TRI_COUNT + cSkin.QUAD_COUNT]);
+                RenderQueue.AddVertex(vertexList[triangleList[m + k]]);
             }
-
-            GL.End();
 
             GL.PopMatrix();
         }

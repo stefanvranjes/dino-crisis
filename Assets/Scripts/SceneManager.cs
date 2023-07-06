@@ -31,6 +31,7 @@ public class SceneManager : MonoBehaviour
     public GianScriptableObject gian; //0x8009E708
     public IniScriptableObject ini; //0x801FE900
     public Trigger[] triggers; //gp+1e8h
+    public RenderQueue renderQueue;
     public byte DAT_270; //gp+270h
     public bool DAT_272; //gp+272h
     public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
@@ -206,6 +207,8 @@ public class SceneManager : MonoBehaviour
         GameObject obj2 = new GameObject();
         obj2.name = "CriPlayer (Instance)";
         DAT_27C[10] = obj2.AddComponent<CriPlayer>();
+        GameObject obj3 = new GameObject("RenderQueue (Instance)");
+        renderQueue = obj3.AddComponent<RenderQueue>();
         sceneLoaded = true;
     }
 

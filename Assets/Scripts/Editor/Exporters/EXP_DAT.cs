@@ -22,6 +22,7 @@ public static class EXP_DAT
             };
     private static ushort DAT_C3329; //originally a byte
     private static short DAT_C3330;
+    private static bool defaultValues;
     public static RamScriptableObject RAM;
 
     //FUN_2A990
@@ -30,6 +31,7 @@ public static class EXP_DAT
         using (BinaryReader reader = new BinaryReader(File.Open(inFile, FileMode.Open)))
         {
             DAT_C3329 = 1; //not in the original code
+            defaultValues = false;
             string outFile = outDir + Path.DirectorySeparatorChar;
             outFile += Path.GetFileNameWithoutExtension(inFile);
             BufferedBinaryReader bufferReader = new BufferedBinaryReader(reader.BaseStream, (int)reader.BaseStream.Length);
@@ -50,6 +52,34 @@ public static class EXP_DAT
 
                 /*if (15 < DAT_C3329)
                     DAT_C3329 = 1;*/
+            }
+
+            AssetDatabase.Refresh();
+        }
+    }
+
+    public static void ExtractITEM(string inFile, string outDir)
+    {
+        using (BinaryReader reader = new BinaryReader(File.Open(inFile, FileMode.Open)))
+        {
+            DAT_C3329 = 0; //not in the original code
+            defaultValues = true;
+            string outFile = outDir + Path.DirectorySeparatorChar;
+            outFile += Path.GetFileNameWithoutExtension(inFile);
+            BufferedBinaryReader bufferReader = new BufferedBinaryReader(reader.BaseStream, (int)reader.BaseStream.Length);
+            bufferReader.FillBuffer();
+            int length = (int)(reader.BaseStream.Length / 0x800 / 5);
+            
+            while (DAT_C3329 < length)
+            {
+                int pos = DAT_C3329 * 5 * 0x800;
+                reader.BaseStream.Seek(pos, SeekOrigin.Begin);
+                bufferReader.Seek(reader.BaseStream.Position, SeekOrigin.Begin);
+                PTR_FUN_9ACD0[1](bufferReader, outFile);
+                reader.BaseStream.Seek(0x2000, SeekOrigin.Current);
+                bufferReader.Seek(reader.BaseStream.Position, SeekOrigin.Begin);
+                PTR_FUN_9ACD0[2](bufferReader, outFile);
+                DAT_C3329++;
             }
 
             AssetDatabase.Refresh();
@@ -86,14 +116,29 @@ public static class EXP_DAT
 
         using (BinaryWriter writer = new BinaryWriter(File.Open(outFile, FileMode.Create)))
         {
-            writer.Write(reader.ReadInt16(8));
-            writer.Write(reader.ReadInt16(10));
-            writer.Write(reader.ReadInt16(12));
-            writer.Write(reader.ReadInt16(14));
-            writer.Write((long)0);
-            int size = reader.ReadInt32(4);
+            int size = 0x2000;
+            int pos = 0;
+
+            if (defaultValues)
+            {
+                writer.Write((short)0x340);
+                writer.Write((short)0xc0);
+                writer.Write((short)0x40);
+                writer.Write((short)0x40);
+                writer.Write((long)0);
+            }
+            else
+            {
+                writer.Write(reader.ReadInt16(8));
+                writer.Write(reader.ReadInt16(10));
+                writer.Write(reader.ReadInt16(12));
+                writer.Write(reader.ReadInt16(14));
+                writer.Write((long)0);
+                size = reader.ReadInt32(4);
+                pos = DAT_C3329 * 0x800 - (int)reader.Position;
+            }
+
             //int pos = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
-            int pos = DAT_C3329 * 0x800 - (int)reader.Position;
             int pageX = 0;
             int pageY = 0;
 
@@ -119,14 +164,29 @@ public static class EXP_DAT
 
         using (BinaryWriter writer = new BinaryWriter(File.Open(outFile, FileMode.Create)))
         {
-            writer.Write(reader.ReadInt16(8));
-            writer.Write(reader.ReadInt16(10));
-            writer.Write(reader.ReadInt16(12));
-            writer.Write(reader.ReadInt16(14));
-            writer.Write((long)0);
-            int size = reader.ReadInt32(4);
+            int size = 0x200;
+            int pos = 0;
+
+            if (defaultValues)
+            {
+                writer.Write((short)0x300);
+                writer.Write((short)0x1f4);
+                writer.Write((short)0x100);
+                writer.Write((short)1);
+                writer.Write((long)0);
+            }
+            else
+            {
+                writer.Write(reader.ReadInt16(8));
+                writer.Write(reader.ReadInt16(10));
+                writer.Write(reader.ReadInt16(12));
+                writer.Write(reader.ReadInt16(14));
+                writer.Write((long)0);
+                size = reader.ReadInt32(4);
+                pos = DAT_C3329 * 0x800 - (int)reader.Position;
+            }
+            
             //int pos = (int)PTR_DAT_9AC6C[DAT_C3329] - (int)reader.Position;
-            int pos = DAT_C3329 * 0x800 - (int)reader.Position;
 
             for (int i = 0; i < size; i++)
                 writer.Write(reader.ReadByte(pos + i));

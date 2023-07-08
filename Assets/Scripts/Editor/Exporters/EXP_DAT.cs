@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEditor;
 
 public static class EXP_DAT
@@ -72,17 +73,36 @@ public static class EXP_DAT
             
             while (DAT_C3329 < length)
             {
-                int pos = DAT_C3329 * 5 * 0x800;
+                int pos = DAT_C3329 * 5 * 0x800 + 0x2000;
                 reader.BaseStream.Seek(pos, SeekOrigin.Begin);
                 bufferReader.Seek(reader.BaseStream.Position, SeekOrigin.Begin);
-                PTR_FUN_9ACD0[1](bufferReader, outFile);
-                reader.BaseStream.Seek(0x2000, SeekOrigin.Current);
-                bufferReader.Seek(reader.BaseStream.Position, SeekOrigin.Begin);
                 PTR_FUN_9ACD0[2](bufferReader, outFile);
+                AssetDatabase.Refresh();
+                string path = outFile + "_" + DAT_C3329.ToString("D2") + ".clut";
+
+                if (path.StartsWith(Application.dataPath))
+                    path = "Assets" + path.Substring(Application.dataPath.Length);
+
+                ClutScriptableObject clut = AssetDatabase.LoadAssetAtPath(path, typeof(ClutScriptableObject)) as ClutScriptableObject;
+                TimPostprocessor.script = true;
+                TimPostprocessor.clut = clut;
+                reader.BaseStream.Seek(-0x2000, SeekOrigin.Current);
+                bufferReader.Seek(reader.BaseStream.Position, SeekOrigin.Begin);
+                PTR_FUN_9ACD0[1](bufferReader, outFile);
+                AssetDatabase.Refresh();
+                path = outFile + "_" + DAT_C3329.ToString("D2") + ".tim";
+
+                if (path.StartsWith(Application.dataPath))
+                    path = "Assets" + path.Substring(Application.dataPath.Length);
+
+                GridScriptableObject tim = AssetDatabase.LoadAssetAtPath(path, typeof(GridScriptableObject)) as GridScriptableObject;
+                TimPostprocessor.script = false;
+                RAM.objects.Add(DAT_C3329 * 2U, tim);
+                RAM.objects.Add(DAT_C3329 * 2U + 1, clut);
                 DAT_C3329++;
             }
 
-            AssetDatabase.Refresh();
+            EditorUtility.SetDirty(RAM);
         }
     }
 

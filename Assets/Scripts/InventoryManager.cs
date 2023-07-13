@@ -225,6 +225,7 @@ public class InventoryManager : MonoBehaviour
     public FUN_A88E0[] PTR_FUN_A88E0;
     public FUN_A88F0[] PTR_FUN_A88F0;
     public FUN_A8900[] PTR_FUN_A8900;
+    public RamScriptableObject[] items;
     public RectTransform inventoryRect;
     public Button itemButton;
     public Button equipButton;
@@ -453,6 +454,26 @@ public class InventoryManager : MonoBehaviour
     public static bool FUN_4A87C(int param1, uint param2)
     {
         return (PTR_DAT_9CD18[param1][param2 >> 5] & 1U << (int)(param2 & 0x1f)) != 0;
+    }
+
+    private void FUN_2A17C(ushort param1)
+    {
+        GridScriptableObject gVar1;
+        ClutScriptableObject cVar1;
+        int iVar2;
+
+        iVar2 = 0;
+
+        if (GameManager.instance.DAT_A2D3 == 3)
+            iVar2 = 1;
+
+        gVar1 = items[iVar2].objects[param1 * 2U] as GridScriptableObject;
+        cVar1 = items[iVar2].objects[param1 * 2U + 1] as ClutScriptableObject;
+        RawImage image = previewRect.GetComponentInChildren<RawImage>();
+        image.texture = gVar1.tex4;
+        image.material.mainTexture = gVar1.tex4;
+        image.material.SetTexture("_Tex8", gVar1.tex8);
+        image.material.SetTexture("_CLUT", cVar1.TEX_2D);
     }
 
     private void FUN_667BC()
@@ -2294,7 +2315,7 @@ public class InventoryManager : MonoBehaviour
         if (bVar1 == 1)
         {
             DAT_C61FD = 2;
-            //FUN_2A17C
+            FUN_2A17C(DAT_C61FC);
             return;
         }
 

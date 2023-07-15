@@ -164,7 +164,7 @@ public class CriSkinned : CriObject
 
                 for (int k = 0; k < 6; k++)
                 {
-                    if (!GameManager.instance.disableColors && (commandList[i] & 0x10) != 0)
+                    if (!GameManager.instance.disableColors && (commandList[cSkin.TRI_COUNT + i] & 0x10) != 0)
                         GL.Color(colorList[triangleList[j + k]]);
                     GL.MultiTexCoord(0, uvList[j + k]);
                     GL.MultiTexCoord(1, uv2List[cSkin.TRI_COUNT + i]);

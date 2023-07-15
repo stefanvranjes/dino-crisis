@@ -176,6 +176,7 @@ MonoBehaviour:
     padding: 0
     position: {x: 0, y: 0, z: 0}
   screen: {x: 0, y: 0, z: 0}
+  DAT_26: 0
   tags: 0
   vr: {x: 0, y: 0, z: 0}
   DAT_2E: 0
@@ -246,9 +247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b416fbce5a38cc47a3a1e709f95f5e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cfuStatus: PSXEffects v1.15.5 - update available (click to update).
+  cfuStatus: Checking for updates...
   sections: 01010100
-  customRes: {x: 807, y: 514}
+  customRes: {x: 723, y: 514}
   resolutionFactor: 1
   limitFramerate: -1
   skipFrames: 0
@@ -380,8 +381,12 @@ MonoBehaviour:
     position: {x: 0, y: 0, z: 0}
   screen: {x: 0, y: 0, z: 0}
   DAT_26: 0
+  tags: 0
   vr: {x: 0, y: 0, z: 0}
   DAT_2E: 0
+  DAT_2F: 0
+  flags: 0
+  SDAT_2E: 0
   DAT_30: {x: 0, y: 0, z: 0}
   DAT_36: 0
   DAT_38: 0
@@ -464,6 +469,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scn: {fileID: -4406283935363021935, guid: f8f69427ceab6a84bb571bf49715f86e, type: 3}
   vab: {fileID: 888843668273218188, guid: f1c8f87ffc85cba41966e42891c7bb03, type: 3}
+  grid: {fileID: 4673482187186455597, guid: 9753bba054ba7f148b4c6f65c528d640, type: 3}
+  clut: {fileID: 5605554348678623116, guid: aa420cc61462ba349b691af8ea41ac3f, type: 3}
   ram: {fileID: 11400000, guid: 1feb6eb174f84134c974642228cab8d7, type: 2}
   DAT_A4: 0
   DAT_AC: 
@@ -476,6 +483,7 @@ MonoBehaviour:
   gian: {fileID: -5354861067182356112, guid: 647889ec4b8dcf547843e74fff88987e, type: 3}
   ini: {fileID: -9147774878685956931, guid: d9e58e8709921c74d89998897555403b, type: 3}
   triggers: []
+  renderQueue: {fileID: 0}
   DAT_270: 0
   DAT_272: 0
   DAT_27C: []

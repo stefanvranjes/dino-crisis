@@ -287,7 +287,7 @@ public class CriParticle : CriObject
         int f = lowColors ? 4 : 2;
         int d = lowColors ? 1 : 1;
         int pageX = (texpage & 0xf) * 64 * f;
-        int pageY = (texpage >> 4 & 1) * 256;
+        int pageY = (texpage >> 4 & 1) * 256 + 1;
         float width = lowColors ? grid.tex4.width : grid.tex8.width;
         float height = grid.tex4.height;
         int vramX = grid.VRAM_X * f;

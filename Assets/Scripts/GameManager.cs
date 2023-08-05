@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_38; //gp+38h
     public byte DAT_39; //gp+39h
     public byte DAT_3B; //gp+3bh
-    public bool DAT_46; //gp+46h
+    public byte DAT_46; //gp+46h
     public byte DAT_47; //gp+47h
     public Vector3Int playerSpawnPos; //gp+4ch
     public short playerSpawnRotY; //gp+52h
@@ -555,7 +555,7 @@ public class GameManager : MonoBehaviour
         DAT_28++;
         SceneManager.instance.FUN_261BC();
 
-        if ((DAT_46 ? 1 : 0) != DAT_9AA0 >> 8)
+        if (DAT_46 != DAT_9AA0 >> 8)
         {
             //FUN_55198 - originally here
             LevelManager.instance.Initialize();

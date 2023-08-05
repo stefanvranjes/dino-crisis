@@ -62,19 +62,17 @@ public class ST1 : LevelManager
 
         base.Initialize();
         DAT_74A4 = Resources.Load<TrgScriptableObject>("DATA/ST1/ST1_01");
-        //...
         PTR_FUN_B58BC = DAT_7624;
         PTR_FUN_B58C0 = DAT_7680;
         PTR_FUN_C2570 = DAT_76A8;
         PTR_FUN_C1CF8 = DAT_76C8;
-        //...
         uVar3 = 2;
 
         if (GameManager.instance.DAT_9AA2 < 2)
             uVar3 = GameManager.instance.DAT_9AA2;
 
         SceneManager.instance.DAT_AC = DAT_7594[uVar3];
-        GameManager.instance.DAT_46 = true;
+        GameManager.instance.DAT_46 = 1;
         SceneManager.instance.DAT_B0 = DAT_7230;
 
         for (int i = 0; i < DAT_74A4.TRIGGERS.Length; i++)

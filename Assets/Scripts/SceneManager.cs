@@ -3036,6 +3036,29 @@ public class SceneManager : MonoBehaviour
         return bVar8;
     }
 
+    public bool FUN_802B8(CriSkinned param1, bool param2, byte param3)
+    {
+        CriSkinned oVar1;
+        byte bVar2;
+
+        oVar1 = DAT_27C[10];
+        param1.DAT_128 = 0;
+        param1.DAT_12A = 0;
+        param1.DAT_12B = 0;
+        param1.FUN_66208();
+
+        if ((param1.DAT_12C & 0x10) == 0 && (oVar1.DAT_12C & 0x40) == 0 && oVar1.DAT_177 == 0)
+        {
+            bVar2 = GameManager.instance.FUN_7FB78(param1, oVar1, param2, param3);
+            param1.DAT_12B = bVar2;
+
+            if (bVar2 != 0)
+                param1.DAT_128 |= 0x400;
+        }
+
+        return param1.DAT_128 != 0;
+    }
+
     private bool FUN_8037C(WallCollider param1, Hit param2)
     {
         bool bVar1;

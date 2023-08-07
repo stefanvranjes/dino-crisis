@@ -241,6 +241,7 @@ public class CriPlayer : CriSkinned
     private delegate void FUN_9D1AC();
     private delegate void FUN_9D1B8();
     private delegate void FUN_9D1F4();
+    private delegate void FUN_7C4C(); //0x7C4C (ST2)
     private FUN_9923C[] PTR_FUN_9923C;
     private FUN_9AD14[] PTR_FUN_9AD14;
     private FUN_9AD60[] PTR_FUN_9AD60;
@@ -371,6 +372,7 @@ public class CriPlayer : CriSkinned
     private FUN_9D1AC[] PTR_FUN_9D1AC;
     private FUN_9D1B8[] PTR_FUN_9D1B8;
     private FUN_9D1F4[] PTR_FUN_9D1F4;
+    private FUN_7C4C[] PTR_FUN_7C4C; //0x7C4C (ST2)
 
     private static CapsuleCollider[] DAT_9B404 = new CapsuleCollider[]
     {
@@ -1481,6 +1483,11 @@ public class CriPlayer : CriSkinned
             null,
             FUN_53B30,
             FUN_55170
+        };
+        PTR_FUN_7C4C = new FUN_7C4C[]
+        {
+            FUN_2224,
+            FUN_2398
         };
         DAT_244 = new ushort[4];
     }
@@ -21624,5 +21631,149 @@ public class CriPlayer : CriSkinned
     {
         PTR_FUN_9923C[DAT_3E]();
         Utilities.RotMatrix_gte(ref DAT_158, ref cTransform.rotation);
+    }
+
+    //FUN_2224 (ST2)
+    private void FUN_2224()
+    {
+        health = 1000;
+        maxHealth = 1000;
+        DAT_112 = 10;
+        DAT_40 = new Vector3Int(0, 0, 0);
+        DAT_3D = 0;
+        DAT_3E = 0;
+        DAT_120 = 0;
+        PTR_120 = null;
+        DAT_175 = 2;
+        DAT_11C = 0;
+        DAT_3C++;
+        FUN_609C8(11, 1, 10);
+        DAT_3C = 4;
+        DAT_3D = 0;
+        DAT_3E = 0;
+        DAT_3F = 0;
+        DAT_12F = 4;
+        DAT_1DF = 0;
+        DAT_1C0 = 0;
+        DAT_124 = 0;
+        PTR_124 = ST2.DAT_7558;
+        DAT_154 = SceneManager.instance.DAT_27C[10];
+    }
+
+    //FUN_22D0 (ST2)
+    private void FUN_22D0()
+    {
+        byte bVar1;
+        short sVar2;
+
+        if ((DAT_11E & 0x80) == 0)
+            return;
+
+        DAT_11E &= 0x7f;
+
+        if (DAT_3C == 2)
+            return;
+
+        bVar1 = (byte)(DAT_1A0 >> 4);
+
+        if (DAT_3D == 3)
+        {
+            if (0 < DAT_40.z)
+                DAT_40.z = 0;
+
+            if (bVar1 == 1)
+            {
+                if (DAT_60 < 15) goto LAB_2370;
+
+                DAT_3C = 2;
+                DAT_3D = 0;
+                DAT_3E = 0;
+                DAT_3F = 0;
+                sVar2 = (short)(DAT_11C + 3);
+            }
+            else
+            {
+                if (bVar1 != 3) goto LAB_2370;
+
+                DAT_3C = 2;
+                DAT_3D = 0;
+                DAT_3E = 0;
+                DAT_3F = 0;
+                sVar2 = (short)(DAT_11C + 6);
+            }
+
+            DAT_11C = sVar2;
+        }
+
+        LAB_2370:
+        if ((DAT_1C0 & 0x40000000) == 0)
+        {
+            DAT_1C0 |= 0x40000000;
+            DAT_1D9 = 0;
+            DAT_1DA = 0;
+        }
+    }
+
+    //FUN_2398 (ST2)
+    private void FUN_2398()
+    {
+        if ((DAT_1C0 & 0x40000000) != 0)
+            ST2.instance.FUN_3AC(this);
+
+        if ((DAT_1C0 & 0x10000) != 0)
+            ST2.instance.FUN_55C(this);
+
+        ST2.instance.PTR_FUN_7C14[DAT_3D](this);
+        ST2.instance.PTR_FUN_7C30[DAT_3D](this);
+    }
+
+    //FUN_2438 (ST2)
+    public void FUN_2438()
+    {
+        uint uVar1;
+        sbyte sVar2;
+
+        Utilities.RotMatrix(ref vr, ref cTransform.rotation);
+
+        if ((InventoryManager.DAT_B7A60[0] & 2) != 0)
+            return;
+
+        if (DAT_3C != 0)
+        {
+            if ((DAT_18E & 0x80) != 0) goto LAB_2574;
+
+            sVar2 = (sbyte)(DAT_1E2 >> 8);
+
+            if (sVar2 == 6)
+            {
+                if (SceneManager.instance.cCamera.DAT_68 == 7)
+                {
+                    DAT_1C0 = DAT_1C0 & 0xfffdffff | 0x40000;
+                    goto LAB_2514;
+                }
+            }
+
+            if (sVar2 == 7 && SceneManager.instance.cCamera.DAT_68 == 6)
+                DAT_1C0 &= 0xfff9ffff;
+        }
+
+        LAB_2514:
+        DAT_34 = screen;
+        FUN_22D0();
+        PTR_FUN_7C4C[DAT_3C]();
+        SceneManager.instance.FUN_802B8(this, false, 1);
+        FUN_62F3C(ref DAT_40);
+
+        LAB_2574:
+        if ((DAT_1D3 << 8 | DAT_1D2 & 0x8000) != 0)
+            ST2.instance.FUN_850(this);
+
+        if (DAT_3C == 4)
+            uVar1 = flags & 0xfffffffb;
+        else
+            uVar1 = flags | 4;
+
+        flags = uVar1;
+        DAT_1E2 = (ushort)(SceneManager.instance.cCamera.DAT_68 << 8 | (byte)DAT_1E2);
     }
 }

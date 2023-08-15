@@ -21776,4 +21776,234 @@ public class CriPlayer : CriSkinned
         flags = uVar1;
         DAT_1E2 = (ushort)(SceneManager.instance.cCamera.DAT_68 << 8 | (byte)DAT_1E2);
     }
+
+    //FUN_2EFC (ST2)
+    private void FUN_2EFC()
+    {
+        byte bVar1;
+        int iVar2;
+        bool bVar2;
+        sbyte sVar3;
+        uint uVar4;
+        uint uVar5;
+
+        if ((DAT_11E & 0x80) == 0)
+            return;
+
+        DAT_11E &= 0x7f;
+        bVar2 = InventoryManager.FUN_4A87C(3, 0x3e);
+
+        if (bVar2)
+            return;
+
+        if (DAT_3C == 2)
+            return;
+
+        if ((DAT_1C0 & 0x10000000) != 0)
+            return;
+
+        bVar1 = (byte)(DAT_1A0 >> 4);
+        uVar4 = (uint)(DAT_1A0 & 0xf);
+
+        if (bVar1 == 2)
+            uVar5 = ST2.instance.DAT_7D54[uVar4];
+        else
+        {
+            if (bVar1 < 3)
+            {
+                uVar5 = 0;
+
+                if (bVar1 == 1)
+                    uVar5 = ST2.instance.DAT_7D54[uVar4 + 4];
+            }
+            else
+            {
+                uVar5 = 0;
+
+                if (bVar1 == 3)
+                    uVar5 = ST2.instance.DAT_7D54[uVar4 + 8];
+            }
+        }
+
+        iVar2 = (int)(uVar5 + DAT_1C4); //sbyte instead od int??
+        DAT_1C4 = (sbyte)iVar2;
+        DAT_11C = (short)(uVar5 + DAT_11C);
+
+        if (10 < iVar2)
+            DAT_1C0 |= 0x40;
+
+        sVar3 = (sbyte)DAT_3D;
+        uVar4 = 0x102;
+
+        if (sVar3 != 7)
+        {
+            if (2 < (ushort)DAT_11C)
+            {
+                iVar2 = ST2.instance.DAT_7D54[uVar4 + 12];
+
+                if (-1 < iVar2)
+                {
+                    uVar4 = (uint)(iVar2 << 8 | 2);
+                    goto LAB_3088;
+                }
+
+                sVar3 = (sbyte)(DAT_3D);
+            }
+
+            if (sVar3 != 2)
+                return;
+
+            uVar4 = 0x102;
+
+            if (bVar1 == 2 && DAT_3A != 1)
+                return;
+        }
+
+        LAB_3088:
+        DAT_3C = (byte)uVar4;
+        DAT_3D = (byte)(uVar4 >> 8);
+        DAT_3E = (byte)(uVar4 >> 0x10);
+        DAT_3F = (byte)(uVar4 >> 0x18);
+        DAT_11C = 0;
+    }
+
+    //FUN_4C28 (ST2)
+    public void FUN_4C28()
+    {
+        byte bVar1;
+        bool bVar2;
+        short sVar3;
+        short sVar4;
+        int iVar5;
+        bool bVar5;
+        uint uVar6;
+        CriSkinned oVar7;
+
+        Utilities.RotMatrix(ref vr, ref cTransform.rotation);
+
+        if ((InventoryManager.DAT_B7A60[0] & 2) != 0)
+            return;
+
+        if (DAT_3C != 0 && (DAT_18E & 0x80) != 0)
+            return;
+
+        oVar7 = DAT_154;
+        DAT_34 = screen;
+        FUN_2EFC();
+        bVar5 = GameManager.instance.FUN_768C8(oVar7.screen, ST2.instance.DAT_7DC0);
+
+        if (!bVar5)
+            uVar6 = DAT_1C0 & 0xffffefff;
+        else
+            uVar6 = DAT_1C0 | 0x1000;
+
+        DAT_1C0 = uVar6;
+        //...
+        FUN_62F3C(ref DAT_40);
+
+        if (DAT_3C == 4 || (ushort)DAT_1D0 == 0)
+            DAT_1C0 |= 0x40;
+        else
+            DAT_1D0--;
+
+        if ((DAT_1C0 & 0x40) != 0 && DAT_3C == 1 && DAT_3D == 0)
+        {
+            InventoryManager.FUN_4A7E8(3, 0x3e, true);
+            oVar7.DAT_11E = 0;
+        }
+
+        bVar5 = SceneManager.instance.FUN_802B8(this, false, 3);
+
+        if (!bVar5)
+        {
+            FUN_66208();
+            goto LAB_4EBC;
+        }
+
+        bVar2 = false;
+
+        if (oVar7.DAT_152 == 0 && (oVar7.DAT_11E & 1) == 0)
+        {
+            bVar1 = DAT_3D;
+
+            if (bVar1 == 4)
+            {
+                if ((DAT_1C0 & 0x400) != 0 && (DAT_12B & 6) == 0)
+                    goto LAB_4E30;
+            }
+            else
+            {
+                if (bVar1 < 5)
+                {
+                    if (bVar1 < 3 && bVar1 != 0)
+                    {
+                        if ((DAT_1C0 & 0x400) != 0 && (DAT_12B & 6) == 0)
+                            goto LAB_4E30;
+                    }
+                }
+                else
+                {
+                    if (bVar1 == 7)
+                    {
+                        if ((DAT_1C0 & 0x400) != 0 && (DAT_12B & 6) == 0)
+                            goto LAB_4E30;
+                    }
+                }
+            }
+
+            bVar2 = true;
+        }
+
+        LAB_4E30:
+        if (bVar2)
+        {
+            oVar7.DAT_11E |= 0x80;
+            sVar3 = oVar7.FUN_64804(screen);
+            oVar7.DAT_3E = (byte)(((sVar3 + 0x200 & 0xfff) >> 10) | 0x10);
+            oVar7.DAT_3C = 2;
+            oVar7.DAT_3D = 0;
+            oVar7.DAT_177 = 20;
+            sVar3 = (short)(oVar7.health - 200);
+            oVar7.health = sVar3;
+
+            if (sVar3 < 100)
+                oVar7.health = 100;
+
+            //FUN_1D988
+        }
+
+        LAB_4EBC:
+        if ((DAT_1C0 & 1) != 0 && DAT_3C != 4 && oVar7.DAT_152 == 0)
+        {
+            sVar4 = (short)Utilities.FUN_615EC(screen, oVar7.screen);
+            iVar5 = (int)Utilities.FUN_64838(vr.y, 10, sVar4);
+            vr.y += iVar5;
+
+            if (0x900 < vr.y * 0x10000 >> 0x10)
+                vr.y = 0x900;
+
+            if (vr.y < 0x6d0)
+                vr.y = 0x6d0;
+        }
+
+        if ((DAT_1C0 & 2) != 0)
+        {
+            uVar6 = Utilities.FUN_63160(DAT_10C, screen);
+
+            if (uVar6 < 10000)
+            {
+                DAT_40.z = 0;
+                screen.x = DAT_10C.x;
+                screen.z = DAT_10C.z;
+                DAT_1C0 &= 0xfffffffd;
+            }
+        }
+
+        if (DAT_3C == 4)
+            uVar6 = flags & 0xfffffffb;
+        else
+            uVar6 = flags | 4;
+
+        flags = uVar6;
+    }
 }

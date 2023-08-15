@@ -5,6 +5,7 @@ using UnityEngine;
 public class CriSkinned : CriObject
 {
     public Vector3Int DAT_34; //0x34
+    public byte DAT_3A; //0x3A
     public byte DAT_3C; //0x3C
     public byte DAT_3D; //0x3D
     public byte DAT_3E; //0x3E
@@ -198,6 +199,7 @@ public class CriSkinned : CriObject
     {
         base.ResetValues();
         DAT_34 = Vector3Int.zero;
+        DAT_3A = 0;
         DAT_3C = 0;
         DAT_3D = 0;
         DAT_3E = 0;

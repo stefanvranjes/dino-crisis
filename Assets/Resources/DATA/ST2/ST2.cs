@@ -31,7 +31,7 @@ public class ST2 : LevelManager
     public static CapsuleCollider[] DAT_7558 = new CapsuleCollider[] { }; //0x7558 (ST2)
 
     public FUN_B58BC[] DAT_7470 = new FUN_B58BC[6] { FUN_44EA8, FUN_45224, FUN_45350, FUN_45480, FUN_45758, FUN_45B08 };
-    public FUN_B58C0[] DAT_74BC = new FUN_B58C0[] { FUN_4CFDC, FUN_54EF8, FUN_2FAB0 };
+    public FUN_B58C0[] DAT_74BC = new FUN_B58C0[] { FUN_4CFDC, FUN_54EF8, FUN_2FAB0, FUN_2438, FUN_4C28 };
     public FUN_C2570[] DAT_74D4 = new FUN_C2570[] { };
     public FUN_C1CF8[] DAT_7500 = new FUN_C1CF8[] { };
     public byte[][] DAT_73E0 = new byte[3][]
@@ -46,8 +46,11 @@ public class ST2 : LevelManager
     private UNK_7918[] PTR_DAT_7918; //0x7918 (ST2)
     private short[] DAT_7AE4 = new short[] { 4, -4, 32, -32, 32, -32, 16, -16, 8, -8, 2, -2, 1, -1 };
     private short[] DAT_7B00 = new short[] { 4, -4, 16, -16, 16, -16, 8, -8, 4, -4, 1, -1, 1, -1 };
+    public Vector2Int[] DAT_7DC0;
+    public byte[] DAT_7D54 = new byte[] { 1, 1, 1, 1, 3, 3, 3, 3, 5, 5, 0, 0, 0xff, 1, 1, 0 };
     public delegate void FUN_7C14(CriPlayer p); //0x7C14 (ST2)
     public delegate void FUN_7C30(CriPlayer p); //0x7C30 (ST2)
+    public delegate void FUN_8134(CriPlayer p); //0x8134 (ST2)
     public FUN_7C14[] PTR_FUN_7C14; //0x7C14 (ST2)
     public FUN_7C30[] PTR_FUN_7C30; //0x7C30 (ST2)
 
@@ -221,5 +224,11 @@ public class ST2 : LevelManager
     public static void FUN_2438(CriPlayer param1)
     {
         param1.FUN_2438();
+    }
+
+    //FUN_4C28 (ST2)
+    public static void FUN_4C28(CriPlayer param1)
+    {
+        param1.FUN_4C28();
     }
 }

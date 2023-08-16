@@ -1088,6 +1088,11 @@ public class CriSkinned : CriObject
         shadowSize = new Vector2Int(param2, param3);
     }
 
+    public void FUN_66418()
+    {
+        DAT_174 &= 0x7f;
+    }
+
     public void FUN_66460(bool param1)
     {
         if (param1)

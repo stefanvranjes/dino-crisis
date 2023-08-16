@@ -1181,4 +1181,22 @@ public class CriCamera : CriObject
         SceneManager.instance.FUN_26504(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
         SceneManager.instance.FUN_269C8(local_38, local_40);
     }
+
+    //FUN_2D20 (ST2)
+    public void FUN_2D20()
+    {
+        int iVar1;
+        short[] aVar2;
+        CriObject oVar3;
+        CriPlayer oVar4;
+
+        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[0];
+        iVar1 = oVar4.DAT_1DB * 3;
+        oVar3 = oVar4.PTR_1CC;
+        DAT_8B = 2;
+        DAT_8A = 2;
+        aVar2 = ST2.instance.DAT_7D44;
+        SceneManager.instance.FUN_26504(0, aVar2[iVar1], aVar2[iVar1 + 1], aVar2[iVar1 + 2]);
+        SceneManager.instance.FUN_269C8(oVar3.screen, DAT_48);
+    }
 }

@@ -18,6 +18,7 @@ public class CriPlayer : CriSkinned
     public byte BDAT_1CA; //0x1CA
     public short DAT_1CA; //0x1CA
     public byte DAT_1CB; //0x1CB
+    public CriObject PTR_1CC; //0x1CC
     public byte DAT_1CC; //0x1CC
     public byte DAT_1CD; //0x1CD
     public byte DAT_1CE; //0x1CE
@@ -242,6 +243,9 @@ public class CriPlayer : CriSkinned
     private delegate void FUN_9D1B8();
     private delegate void FUN_9D1F4();
     private delegate void FUN_7C4C(); //0x7C4C (ST2)
+    private delegate void FUN_8134(); //0x8134 (ST2)
+    private delegate void FUN_8150(); //0x8150 (ST2)
+    private delegate void FUN_8164(); //0x8164 (ST2)
     private FUN_9923C[] PTR_FUN_9923C;
     private FUN_9AD14[] PTR_FUN_9AD14;
     private FUN_9AD60[] PTR_FUN_9AD60;
@@ -373,6 +377,9 @@ public class CriPlayer : CriSkinned
     private FUN_9D1B8[] PTR_FUN_9D1B8;
     private FUN_9D1F4[] PTR_FUN_9D1F4;
     private FUN_7C4C[] PTR_FUN_7C4C; //0x7C4C (ST2)
+    private FUN_8134[] PTR_FUN_8134; //0x8134 (ST2)
+    private FUN_8150[] PTR_FUN_8150; //0x8150 (ST2)
+    private FUN_8164[] PTR_FUN_8164; //0x8164 (ST2)
 
     private static CapsuleCollider[] DAT_9B404 = new CapsuleCollider[]
     {
@@ -1489,6 +1496,19 @@ public class CriPlayer : CriSkinned
             FUN_2224,
             FUN_2398
         };
+        PTR_FUN_8134 = new FUN_8134[]
+        {
+            FUN_331C
+        };
+        PTR_FUN_8150 = new FUN_8150[2]
+        {
+            FUN_4FD8, 
+            FUN_50B8
+        };
+        PTR_FUN_8164 = new FUN_8164[]
+        {
+            FUN_5130
+        };
         DAT_244 = new ushort[4];
     }
 
@@ -1524,6 +1544,7 @@ public class CriPlayer : CriSkinned
         BDAT_1CA = 0;
         DAT_1CA = 0;
         DAT_1CB = 0;
+        PTR_1CC = null;
         DAT_1CC = 0;
         DAT_1CD = 0;
         DAT_1CE = 0;
@@ -21656,7 +21677,7 @@ public class CriPlayer : CriSkinned
         DAT_1DF = 0;
         DAT_1C0 = 0;
         DAT_124 = 0;
-        PTR_124 = ST2.DAT_7558;
+        PTR_124 = ST2.instance.DAT_7558;
         DAT_154 = SceneManager.instance.DAT_27C[10];
     }
 
@@ -21867,6 +21888,45 @@ public class CriPlayer : CriSkinned
         DAT_11C = 0;
     }
 
+    //FUN_331C (ST2)
+    private void FUN_331C()
+    {
+        CriObject oVar2;
+
+        DAT_3C = 4;
+        DAT_3D = 0;
+        DAT_3E = 0;
+        DAT_3F = 0;
+        health = 1000;
+        maxHealth = 1000;
+        DAT_130 = 0;
+        PTR_130 = ST2.instance.DAT_7CF4;
+        DAT_40 = new Vector3Int(0, 0, 0);
+        DAT_120 = 0;
+        PTR_120 = null;
+        DAT_140 = 1;
+        DAT_1E2 = 0; //ushort instead of byte??
+        DAT_1D4 = 0;
+        DAT_1D5 = 0;
+        oVar2 = Utilities.FUN_601C8(skeleton, 2);
+        PTR_1CC = oVar2;
+        DAT_175 = 2;
+        DAT_11C = 0;
+        DAT_1DF = 0;
+        DAT_1EA = 0; //ushort instead of byte??
+        DAT_1C0 |= 0x21;
+        DAT_1C4 = 0;
+        DAT_1C5 = 0;
+        DAT_1C6 = 0;
+        DAT_1C7 = 0;
+        DAT_154 = SceneManager.instance.DAT_27C[10];
+        GameManager.instance.PTR_FUN_148 = ST2.FUN_530C;
+        GameManager.instance.PTR_FUN_14C = ST2.FUN_5348;
+        PTR_124 = ST2.instance.DAT_7CD0;
+        DAT_124 = 0;
+        DAT_12F = 3;
+    }
+
     //FUN_4C28 (ST2)
     public void FUN_4C28()
     {
@@ -21898,7 +21958,7 @@ public class CriPlayer : CriSkinned
             uVar6 = DAT_1C0 | 0x1000;
 
         DAT_1C0 = uVar6;
-        //...
+        PTR_FUN_8134[DAT_3C]();
         FUN_62F3C(ref DAT_40);
 
         if (DAT_3C == 4 || (ushort)DAT_1D0 == 0)
@@ -22005,5 +22065,52 @@ public class CriPlayer : CriSkinned
             uVar6 = flags | 4;
 
         flags = uVar6;
+    }
+
+    //FUN_4FD8 (ST2)
+    private void FUN_4FD8()
+    {
+        CriPlayer oVar2;
+
+        oVar2 = (CriPlayer)DAT_154;
+        FUN_66418();
+        DAT_3E++;
+        FUN_609C8(ST2.instance.DAT_8148[oVar2.DAT_1DB], 0, 0);
+        DAT_140 = 0xffff;
+        DAT_12C = 0xffff;
+        FUN_65714();
+        DAT_1C0 &= 0xfffffffe;
+        SceneManager.instance.cCamera.DAT_70 = 1;
+        SceneManager.instance.cCamera.PTR_FUN_8C = SceneManager.instance.cCamera.FUN_2D20;
+        //...
+    }
+
+    //FUN_50B8 (ST2)
+    private void FUN_50B8()
+    {
+        CriSkinned oVar1;
+
+        oVar1 = DAT_154;
+        FUN_60AB4();
+        FUN_65714();
+
+        if (oVar1.frame.DAT_01 == 42)
+        {
+            SceneManager.instance.DAT_272 = false;
+            SceneManager.instance.DAT_270 = 3;
+            GameManager.instance.DAT_28 = 4;
+        }
+    }
+
+    //FUN_5130 (ST2)
+    private void FUN_5130()
+    {
+        PTR_FUN_8150[DAT_3E]();
+    }
+
+    //FUN_530C (ST2)
+    public void FUN_530C()
+    {
+        PTR_FUN_8164[DAT_3D]();
     }
 }

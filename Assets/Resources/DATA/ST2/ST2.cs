@@ -48,9 +48,13 @@ public class ST2 : LevelManager
     private short[] DAT_7B00 = new short[] { 4, -4, 16, -16, 16, -16, 8, -8, 4, -4, 1, -1, 1, -1 };
     public CapsuleCollider[] DAT_7CD0 = new CapsuleCollider[] { }; //0x7CD0 (ST2)
     public CapsuleCollider[] DAT_7CF4 = new CapsuleCollider[] { }; //0x7CF4 (ST2)
+    public int[] DAT_7D00 = new int[] { 3, 9, 20, 19, 4, 10, 5, 11, 6, 12, 7, 13, 8, 14 };
     public short[] DAT_7D44 = new short[] { };
     public byte[] DAT_7D54 = new byte[] { 1, 1, 1, 1, 3, 3, 3, 3, 5, 5, 0, 0, 0xff, 1, 1, 0 };
-    public Vector2Int[] DAT_7DC0; //0x7DC0 (ST2)
+    public Vector2Int[][] DAT_7DC0; //0x7DC0 (ST2)
+    public short[] DAT_7DF0 = new short[] { };
+    public sbyte[] DAT_7E14 = new sbyte[] { 4, 4, 1, 1, 1, 4, 4, 1, 1, 4, 1, 4, 1, 1, 1, 4 }; //0x7E14 (ST2)
+    public byte[] DAT_7E24 = new byte[] { 1, 5, 1, 7, 4, 0x82, 0, 0 }; //0x7E24 (ST2)
     public delegate void FUN_7C14(CriPlayer p); //0x7C14 (ST2)
     public delegate void FUN_7C30(CriPlayer p); //0x7C30 (ST2)
     public delegate void FUN_8134(CriPlayer p); //0x8134 (ST2)

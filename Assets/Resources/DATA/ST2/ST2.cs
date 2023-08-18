@@ -30,9 +30,9 @@ public class ST2 : LevelManager
     public static new ST2 instance;
 
     public FUN_B58BC[] DAT_7470 = new FUN_B58BC[6] { FUN_44EA8, FUN_45224, FUN_45350, FUN_45480, FUN_45758, FUN_45B08 };
-    public FUN_B58C0[] DAT_74BC = new FUN_B58C0[] { FUN_4CFDC, FUN_54EF8, FUN_2FAB0, FUN_2438, FUN_4C28 };
-    public FUN_C2570[] DAT_74D4 = new FUN_C2570[] { FUN_4A26C, FUN_7F6F8, FUN_7F750 };
-    public FUN_C1CF8[] DAT_7500 = new FUN_C1CF8[] { FUN_20A98 };
+    public FUN_B58C0[] DAT_74BC = new FUN_B58C0[5] { FUN_4CFDC, FUN_54EF8, FUN_2FAB0, FUN_2438, FUN_4C28 };
+    public FUN_C2570[] DAT_74D4 = new FUN_C2570[3] { FUN_4A26C, FUN_7F6F8, FUN_7F750 };
+    public FUN_C1CF8[] DAT_7500 = new FUN_C1CF8[1] { FUN_20A98 };
     public byte[][] DAT_73E0 = new byte[3][]
     {
         new byte[48] { 29, 7, 10, 11, 27, 15, 13, 0, 32, 25, 21, 19, 33, 30, 28, 25, 34, 0, 0, 0, 35, 31, 0, 0, 22, 0, 30, 27, 23, 0, 0, 0, 16, 0, 31, 31, 17, 0, 0, 0, 24, 0, 0, 0, 25, 0, 0, 0 },

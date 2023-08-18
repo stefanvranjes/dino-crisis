@@ -249,9 +249,11 @@ public class CriPlayer : CriSkinned
     private delegate void FUN_7C4C(); //0x7C4C (ST2)
     private delegate void FUN_7E08(); //0x7E08 (ST2)
     private delegate void FUN_7E3C(); //0x7E3C (ST2)
+    private delegate void FUN_7E60(); //0x7E60 (ST2)
     private delegate void FUN_8114(); //0x8114 (ST2)
     private delegate void FUN_8134(); //0x8134 (ST2)
     private delegate void FUN_8150(); //0x8150 (ST2)
+    private delegate void FUN_8158(CriPlayer p); //0x8158 (ST2)
     private delegate void FUN_8164(); //0x8164 (ST2)
     private FUN_9923C[] PTR_FUN_9923C;
     private FUN_9AD14[] PTR_FUN_9AD14;
@@ -386,9 +388,11 @@ public class CriPlayer : CriSkinned
     private FUN_7C4C[] PTR_FUN_7C4C; //0x7C4C (ST2)
     private FUN_7E08[] PTR_FUN_7E08; //0x7E08 (ST2)
     private FUN_7E3C[] PTR_FUN_7E3C; //0x7E3C (ST2)
+    private FUN_7E60[] PTR_FUN_7E60; //0x7E60 (ST2)
     private FUN_8114[] PTR_FUN_8114; //0x8114 (ST2)
     private FUN_8134[] PTR_FUN_8134; //0x8134 (ST2)
     private FUN_8150[] PTR_FUN_8150; //0x8150 (ST2)
+    private FUN_8158[] PTR_FUN_8158; //0x8158 (ST2)
     private FUN_8164[] PTR_FUN_8164; //0x8164 (ST2)
 
     private static CapsuleCollider[] DAT_9B404 = new CapsuleCollider[]
@@ -1516,21 +1520,32 @@ public class CriPlayer : CriSkinned
             FUN_3EC0, 
             FUN_3E84
         };
+        PTR_FUN_7E60 = new FUN_7E60[]
+        {
+            FUN_4298
+        };
         PTR_FUN_8114 = new FUN_8114[]
         {
             FUN_2D98
         };
-        PTR_FUN_8134 = new FUN_8134[]
+        PTR_FUN_8134 = new FUN_8134[5]
         {
             FUN_331C, 
             FUN_4258, 
-            null, 
+            FUN_43A4, 
+            FUN_43E0,
             FUN_4BEC
         };
         PTR_FUN_8150 = new FUN_8150[2]
         {
             FUN_4FD8, 
             FUN_50B8
+        };
+        PTR_FUN_8158 = new FUN_8158[3]
+        {
+            FUN_516C, 
+            FUN_51D0, 
+            FUN_5260
         };
         PTR_FUN_8164 = new FUN_8164[]
         {
@@ -22170,6 +22185,59 @@ public class CriPlayer : CriSkinned
         PTR_FUN_7E3C[DAT_3D & 0x7f]();
     }
 
+    //FUN_4298 (ST2)
+    private void FUN_4298()
+    {
+        bool bVar1;
+
+        if (DAT_3E == 0)
+        {
+            DAT_3E++;
+            FUN_609C8(17, 0, 0);
+        }
+        else
+        {
+            bVar1 = FUN_60AB4();
+
+            if (bVar1)
+            {
+                DAT_3C = 1;
+                DAT_3D = 0;
+                DAT_3E = 0;
+                DAT_3F = 0;
+                BDAT_1E2 = 0;
+            }
+        }
+    }
+
+    //FUN_4300 (ST2)
+    private void FUN_4300()
+    {
+        DAT_3C = 1;
+        DAT_3D = 6;
+        DAT_3E = 0;
+        DAT_3F = 0;
+        DAT_3E = 1;
+        FUN_609C8(ST2.instance.DAT_7D00[DAT_1DB + 12], 0, 0);
+        FUN_2DA0(0xaf, 0x1300);
+        DAT_40.z = 100;
+        GameManager.instance.FUN_5C94C(this, 54);
+        DAT_1C0 = DAT_1C0 & 0xffffffdf | 0x80;
+        BDAT_1E2 = 0;
+    }
+
+    //FUN_43A4 (ST2)
+    private void FUN_43A4()
+    {
+        PTR_FUN_7E60[DAT_3D]();
+    }
+
+    //FUN_43E0 (ST2)
+    private void FUN_43E0()
+    {
+        return;
+    }
+
     //FUN_4BEC (ST2)
     private void FUN_4BEC()
     {
@@ -22355,6 +22423,63 @@ public class CriPlayer : CriSkinned
     private void FUN_5130()
     {
         PTR_FUN_8150[DAT_3E]();
+    }
+
+    //FUN_516C (ST2)
+    private void FUN_516C(CriPlayer param1)
+    {
+        DAT_40.z = -0xf;
+        DAT_3E++;
+        FUN_609C8(22, 0, 10);
+        param1.SDAT_1D4 = (short)Utilities.FUN_615EC(screen, param1.screen);
+    }
+
+    //FUN_51D0 (ST2)
+    private void FUN_51D0(CriPlayer param1)
+    {
+        Vector3Int local_18;
+
+        FUN_60AB4();
+
+        if (DAT_3F != 0)
+        {
+            DAT_3F = 0;
+            DAT_40.z = 0;
+            DAT_3E++;
+            FUN_609C8(23, 4, 0);
+        }
+
+        local_18 = new Vector3Int(0, param1.SDAT_1D4, 0);
+        Utilities.RotMatrix(ref local_18, ref cTransform.rotation);
+    }
+
+    //FUN_5260 (ST2)
+    private void FUN_5260(CriPlayer param1)
+    {
+        bool bVar1;
+
+        bVar1 = FUN_60AB4();
+
+        if (bVar1)
+        {
+            DAT_3C = 1;
+            DAT_3D = 0;
+            DAT_3E = 0;
+            DAT_3F = 0;
+            DAT_98 = DAT_1E0;
+        }
+    }
+
+    //FUN_529C (ST2)
+    private void FUN_529C()
+    {
+        short sVar1;
+        CriPlayer oVar2;
+
+        oVar2 = (CriPlayer)DAT_154;
+        PTR_FUN_8158[DAT_3E](oVar2);
+        sVar1 = (short)Utilities.FUN_64838(vr.y, 150, (ushort)oVar2.SDAT_1D4);
+        vr.y += sVar1;
     }
 
     //FUN_530C (ST2)

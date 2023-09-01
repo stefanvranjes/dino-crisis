@@ -6,10 +6,10 @@ public class ST3 : LevelManager
 {
     public static new ST3 instance;
 
-    public FUN_B58BC[] DAT_11B40 = new FUN_B58BC[] { };
-    public FUN_B58C0[] DAT_11B98 = new FUN_B58C0[] { };
-    public FUN_C2570[] DAT_11BC0 = new FUN_C2570[] { };
-    public FUN_C1CF8[] DAT_11BE0 = new FUN_C1CF8[] { };
+    public FUN_B58BC[] DAT_11B40 = new FUN_B58BC[6] { FUN_44EA8, FUN_45224, FUN_45350, FUN_45480, FUN_45758, FUN_45B08 };
+    public FUN_B58C0[] DAT_11B98 = new FUN_B58C0[3] { FUN_4CFDC, FUN_54EF8, FUN_2FAB0 };
+    public FUN_C2570[] DAT_11BC0 = new FUN_C2570[3] { FUN_4A26C, FUN_7F6F8, FUN_7F750 };
+    public FUN_C1CF8[] DAT_11BE0 = new FUN_C1CF8[] { FUN_20A98 };
     public byte[][] DAT_11AB0 = new byte[3][]
     {
         new byte[48] { 29, 7, 10, 10, 27, 15, 13, 0, 32, 25, 20, 18, 33, 30, 27, 24, 34, 31, 0, 25, 35, 0, 0, 0, 22, 0, 28, 26, 23, 0, 29, 27, 16, 0, 30, 29, 17, 0, 31, 31, 24, 0, 0, 0, 25, 0, 0, 0 },

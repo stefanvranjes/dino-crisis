@@ -6,9 +6,12 @@ public class ST4 : LevelManager
 {
     public static new ST4 instance;
 
-    public FUN_B58BC[] DAT_1279C = new FUN_B58BC[] { };
-    public FUN_B58C0[] DAT_127EC = new FUN_B58C0[] { };
-    public FUN_C2570[] DAT_1280C = new FUN_C2570[] { };
+    public FUN_B58BC[] DAT_1279C = new FUN_B58BC[20] { FUN_44EA8, FUN_45224, FUN_45350, FUN_45480, FUN_45758, 
+                                                       FUN_45B08, null, FUN_46A1C, FUN_346C, null, null, 
+                                                       FUN_45D38, FUN_45E70, null, null, null, FUN_3648, 
+                                                       FUN_46814, FUN_3760, FUN_3828 };
+    public FUN_B58C0[] DAT_127EC = new FUN_B58C0[] { FUN_4CFDC, FUN_54EF8, FUN_2FAB0 };
+    public FUN_C2570[] DAT_1280C = new FUN_C2570[] { FUN_4A26C, FUN_7F6F8, FUN_7F750 };
     public FUN_C1CF8[] DAT_1282C = new FUN_C1CF8[] { };
     public byte[][] DAT_1270C = new byte[3][]
     {
@@ -82,5 +85,29 @@ public class ST4 : LevelManager
         }
 
         GameManager.instance.FUN_7669C(SceneManager.instance.DAT_9EEC, 4);
+    }
+
+    //FUN_346C (ST4)
+    public static void FUN_346C(CriParticle param1)
+    {
+        return;
+    }
+
+    //FUN_3648 (ST4)
+    public static void FUN_3648(CriParticle param1)
+    {
+        return;
+    }
+
+    //FUN_3760 (ST4)
+    public static void FUN_3760(CriParticle param1)
+    {
+        return;
+    }
+
+    //FUN_3828 (ST4)
+    public static void FUN_3828(CriParticle param1)
+    {
+        return;
     }
 }

@@ -11,6 +11,12 @@ public struct UNK_9C7CC
     public bool DAT_0A;
 }
 
+public struct UNK_9CB94
+{
+    public uint DAT_00;
+    public ushort DAT_04;
+}
+
 public struct UNK_771C
 {
     public byte DAT_00;
@@ -48,8 +54,8 @@ public class CriParticle : CriObject
     public byte DAT_6C; //0x6C
     public int IDAT_6C; //0x6C
     public short DAT_6E; //0x6E
-    public short DAT_70; //0x70
-    public short DAT_72; //0x72
+    public Vector3Int DAT_70; //0x70
+    public sbyte DAT_78; //0x78
     private delegate void FUN_7704(); //0x7704 (ST1)
     private delegate void FUN_7710(); //0x7710 (ST1)
     private delegate void FUN_780C(); //0x780C (ST1)
@@ -60,6 +66,9 @@ public class CriParticle : CriObject
     private delegate void FUN_9C874();
     private delegate void FUN_9C884();
     private delegate void FUN_9C890();
+    private delegate void FUN_9C8A4();
+    private delegate void FUN_9CAD0();
+    private delegate void FUN_9CBBC();
     private delegate void FUN_9CBD4();
     private FUN_7704[] PTR_FUN_7704; //0x7704 (ST1)
     private FUN_7710[] PTR_FUN_7710; //0x7710 (ST1)
@@ -77,10 +86,15 @@ public class CriParticle : CriObject
     private FUN_9C7AC[] PTR_FUN_9C7AC;
     private FUN_9C7B4[] PTR_FUN_9C7B4;
     private FUN_9C7C0[] PTR_FUN_9C7C0;
-    private UNK_9C7CC[] PTR_DAT_9C7CC;
+    private static UNK_9C7CC[] PTR_DAT_9C7CC;
     private FUN_9C874[] PTR_FUN_9C874;
     private FUN_9C884[] PTR_FUN_9C884;
     private FUN_9C890[] PTR_FUN_9C890;
+    private FUN_9C8A4[] PTR_FUN_9C8A4;
+    private FUN_9CAD0[] PTR_FUN_9CAD0;
+    private static uint DAT_9CAE0 = 0;
+    private static UNK_9CB94[] PTR_DAT_9CB94;
+    private FUN_9CBBC[] PTR_FUN_9CBBC;
     private FUN_9CBD4[] PTR_FUN_9CBD4;
 
     private GridScriptableObject grid;
@@ -144,10 +158,6 @@ public class CriParticle : CriObject
             FUN_45444,
             FUN_60068
         };
-        PTR_DAT_9C7CC = new UNK_9C7CC[]
-        {
-
-        };
         PTR_FUN_9C874 = new FUN_9C874[4]
         {
             FUN_454E0, 
@@ -168,6 +178,25 @@ public class CriParticle : CriObject
             FUN_60068,
             FUN_45C6C,
             FUN_45CAC
+        };
+        PTR_FUN_9C8A4 = new FUN_9C8A4[3]
+        {
+            FUN_45D74,
+            FUN_45DFC,
+            FUN_60068
+        };
+        PTR_FUN_9CAD0 = new FUN_9CAD0[4]
+        {
+            FUN_45ED0,
+            FUN_45FE4,
+            FUN_461E0,
+            FUN_60068
+        };
+        PTR_FUN_9CBBC = new FUN_9CBBC[3]
+        {
+            FUN_46850,
+            FUN_4695C,
+            FUN_60068
         };
         PTR_FUN_9CBD4 = new FUN_9CBD4[3]
         {
@@ -220,8 +249,8 @@ public class CriParticle : CriObject
         DAT_6C = 0;
         IDAT_6C = 0;
         DAT_6E = 0;
-        DAT_70 = 0;
-        DAT_72 = 0;
+        DAT_70 = Vector3Int.zero;
+        DAT_78 = 0;
     }
 
     private void OnRenderObject()
@@ -644,7 +673,7 @@ public class CriParticle : CriObject
         DAT_40.y = local_18.y + (iVar1 & 31) - 15;
         iVar1 = Utilities.Rand();
         DAT_40.z = local_18.z + (iVar1 & 31) - 15;
-        DAT_70 = 0x222;
+        DAT_70.x = 0x222;
         DAT_6A = 10;
         DAT_6E = 40;
         DAT_3C++;
@@ -667,7 +696,7 @@ public class CriParticle : CriObject
         DAT_40.y += SDAT_6A;
         screen.y += DAT_40.y;
         DAT_40.x = (DAT_40.x * 0x180000 >> 0x10) / 0x19;
-        vr.z = vr.z - DAT_70 & 0xfff;
+        vr.z = vr.z - DAT_70.x & 0xfff;
         DAT_40.z = (DAT_40.z * 0x180000 >> 0x10) / 0x19;
         screen.x += DAT_40.x;
         screen.z += DAT_40.z;
@@ -689,7 +718,7 @@ public class CriParticle : CriObject
                 DAT_40.z = -DAT_40.z;
             }
 
-            DAT_70 = (short)-DAT_70;
+            DAT_70.x = -DAT_70.x;
         }
         else
         {
@@ -712,7 +741,7 @@ public class CriParticle : CriObject
                     DAT_40.z = -DAT_40.z;
                 }
 
-                DAT_70 = (short)-DAT_70;
+                DAT_70.x = -DAT_70.x;
             }
             else
             {
@@ -728,7 +757,7 @@ public class CriParticle : CriObject
 
         LAB_45AAC:
         if (DAT_6E < 30)
-            DAT_70 = (short)((DAT_70 * 0x130000 >> 0x10) / 0x14);
+            DAT_70.x = (DAT_70.x * 0x130000 >> 0x10) / 0x14;
     }
 
     public void FUN_45B08()
@@ -832,6 +861,338 @@ public class CriParticle : CriObject
         }
 
         FUN_606D8();
+    }
+
+    public void FUN_45D38()
+    {
+        PTR_FUN_9C8A4[DAT_3C]();
+    }
+
+    private void FUN_45D74()
+    {
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(0x8019dfd8));
+        DAT_62 = 10;
+        DAT_60 = 10;
+        DAT_54 = 0x7df0;
+        flags |= 2;
+
+        if (DAT_2F == 4)
+        {
+            DAT_56 = 0x7e;
+            DAT_50.a |= 2;
+        }
+        else
+            DAT_56 = 0x3e;
+
+        DAT_3C++;
+    }
+
+    private void FUN_45DFC()
+    {
+        screen.x += DAT_40.x;
+        screen.z += DAT_40.z;
+        FUN_606D8();
+
+        if ((DAT_58.FRAMES[DAT_5C].DAT_04 & 0xe0) != 0)
+            DAT_3C++;
+    }
+
+    public void FUN_45E70()
+    {
+        int iVar1;
+
+        iVar1 = IDAT_6C - 1;
+        IDAT_6C = iVar1;
+
+        if (iVar1 == -1)
+            FUN_451A4();
+
+        PTR_FUN_9CAD0[DAT_3C]();
+    }
+
+    private void FUN_45ED0()
+    {
+        CriSkinned oVar1;
+        ushort uVar2;
+
+        oVar1 = SceneManager.instance.DAT_27C[10];
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(0x8019e5c8));
+        DAT_56 = 0x7e;
+        DAT_54 = 0x7df8;
+        DAT_50.a |= 2;
+        DAT_69 = 2;
+        DAT_6A = 0;
+        flags |= 2;
+
+        if (DAT_2F == 0)
+        {
+            DAT_62 = 10;
+            DAT_60 = 10;
+            DAT_6B = 60;
+            DAT_3C = 1;
+            uVar2 = (ushort)SceneManager.instance.FUN_83534(ref screen, oVar1.screen);
+
+            if ((uVar2 & 0xff) == 0)
+                return;
+
+            FUN_46334((sbyte)uVar2, uVar2);
+        }
+        else
+        {
+            DAT_62 = 7;
+            DAT_60 = 7;
+            DAT_6B = 90;
+            DAT_3C = 2;
+            uVar2 = (ushort)SceneManager.instance.FUN_83534(ref screen, oVar1.screen);
+
+            if ((uVar2 & 0xff) == 0)
+                return;
+
+            FUN_4640C((sbyte)uVar2, uVar2);
+            FUN_462CC();
+        }
+
+        DAT_3C = 3;
+    }
+
+    private void FUN_45FE4()
+    {
+        byte bVar2;
+        byte bVar3;
+        short sVar4;
+        ushort uVar5;
+        CriSkinned oVar6;
+        CriObject oVar7;
+        CriParticle oVar8;
+        Vector3Int local_50;
+        Vector3Int local_48;
+        Matrix3x3 MStack64;
+
+        local_50 = screen;
+        bVar2 = (byte)(DAT_6A + 1);
+        DAT_6A = bVar2;
+        screen.y += bVar2 >> 4;
+
+        if (DAT_78 != -1)
+        {
+            oVar6 = SceneManager.instance.DAT_27C[DAT_78];
+            oVar7 = Utilities.FUN_601C8(oVar6.skeleton, oVar6.DAT_175 & 15);
+            sVar4 = Utilities.FUN_51C8C(screen, oVar7.screen, DAT_70.y, 0x10);
+            DAT_70.y += sVar4;
+        }
+
+        MStack64 = new Matrix3x3();
+        Utilities.RotMatrixYXZ(ref DAT_70, ref MStack64);
+        local_48 = new Vector3Int(0, 0, 500);
+        local_48 = Utilities.ApplyMatrixSV(ref MStack64, ref local_48);
+        screen.x += local_48.x;
+        screen.y += local_48.y;
+        screen.z += local_48.z;
+        FUN_606D8();
+        bVar3 = (byte)(DAT_69 - 1);
+        DAT_69 = bVar3;
+
+        if (bVar3 == 0)
+        {
+            oVar8 = SceneManager.instance.FUN_5FFA0();
+
+            if (oVar8 != null)
+            {
+                oVar8.tags = 3;
+                oVar8.DAT_2F = 2;
+                oVar8.screen = screen;
+                oVar8.DAT_62 = 20;
+                oVar8.DAT_60 = 20;
+                oVar8.DAT_69 = 0;
+            }
+
+            DAT_69 = 2;
+        }
+
+        uVar5 = (ushort)SceneManager.instance.FUN_83534(ref screen, local_50);
+
+        if ((uVar5 & 0xff) != 0)
+        {
+            FUN_46334((sbyte)uVar5, uVar5);
+            DAT_3C = 3;
+        }
+
+        bVar3 = (byte)(DAT_6B - 1);
+        DAT_6B = bVar3;
+
+        if (bVar3 == 0)
+            DAT_3C = 3;
+    }
+
+    private void FUN_461E0()
+    {
+        byte bVar1;
+        byte bVar2;
+        ushort uVar3;
+        Vector3Int local_10;
+
+        local_10 = screen;
+        screen.y += DAT_40.y;
+        screen.x += DAT_40.x;
+        screen.z += DAT_40.z;
+        bVar1 = (byte)(DAT_6A + 1);
+        DAT_6A = bVar1;
+        screen.y += bVar1 * 8;
+        FUN_606D8();
+        uVar3 = (ushort)SceneManager.instance.FUN_83534(ref screen, local_10);
+
+        if ((uVar3 & 0xff) != 0)
+        {
+            FUN_4640C((sbyte)uVar3, uVar3);
+            FUN_462CC();
+            DAT_3C = 3;
+        }
+
+        bVar2 = (byte)(DAT_6B - 1);
+        DAT_6B = bVar2;
+
+        if (bVar2 == 0)
+            DAT_3C = 3;
+    }
+
+    private void FUN_462CC()
+    {
+        if (5 < GameManager.instance.DAT_04 - DAT_9CAE0)
+        {
+            GameManager.instance.FUN_5C94C(this, 24);
+            DAT_9CAE0 = GameManager.instance.DAT_04;
+        }
+    }
+
+    private void FUN_46334(sbyte param1, uint param2)
+    {
+        CriSkinned oVar1;
+        CriInteract oVar2;
+
+        if (param1 == 8)
+        {
+            oVar1 = SceneManager.instance.DAT_27C[(param2 & 0xffff) >> 8];
+
+            if ((oVar1.DAT_11E & 0x40) == 0)
+            {
+                oVar1.DAT_11E |= 0x80;
+                oVar1.DAT_1A0 = 0x30;
+                oVar1.DAT_1A1 = 8;
+            }
+        }
+
+        oVar2 = SceneManager.instance.FUN_5FF08();
+
+        if (oVar2 != null)
+        {
+            oVar2.DAT_01 = 11;
+            oVar2.BDAT_0A = 12;
+            //...
+            oVar2.VDAT_10 = screen;
+        }
+
+        GameManager.instance.FUN_5C94C(this, 23);
+    }
+
+    private void FUN_4640C(sbyte param1, uint param2)
+    {
+        CriSkinned oVar2;
+        CriInteract oVar3;
+
+        if (param1 == 8)
+        {
+            oVar2 = SceneManager.instance.DAT_27C[(param2 & 0xffff) >> 8];
+
+            if ((oVar2.DAT_11E & 0x40) == 0)
+            {
+                oVar2.DAT_11E |= 0x80;
+                oVar2.DAT_1A0 = 0x30;
+                oVar2.DAT_1A1 = 9;
+            }
+        }
+        else
+        {
+            oVar3 = SceneManager.instance.FUN_5FF08();
+
+            if (oVar3 != null)
+            {
+                oVar3.DAT_01 = 11;
+                oVar3.VDAT_10 = screen;
+                oVar3.BDAT_0A = 9;
+                //...
+            }
+        }
+    }
+
+    public void FUN_46814()
+    {
+        PTR_FUN_9CBBC[DAT_3C]();
+    }
+
+    private byte FUN_4699C()
+    {
+        byte bVar1;
+        ushort uVar2;
+
+        uVar2 = (ushort)vr.y;
+        bVar1 = DAT_2F;
+        vr.y = 0;
+        DAT_62 = uVar2;
+        DAT_60 = uVar2;
+        DAT_2F = (byte)(bVar1 >> 4 & 7);
+        return (byte)(bVar1 & 0xf);
+    }
+
+    private void FUN_46850()
+    {
+        ushort uVar1;
+        ushort uVar2;
+        uint uVar3;
+        uint uVar4;
+
+        uVar4 = 0;
+
+        if ((DAT_2F & 0x80) != 0)
+            uVar4 = FUN_4699C();
+
+        uVar3 = DAT_2F;
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(PTR_DAT_9CB94[uVar3].DAT_00));
+        uVar2 = 8;
+
+        if (uVar3 == 2)
+            uVar2 = 0x18;
+
+        uVar1 = (ushort)(uVar2 | 0x20);
+
+        if (uVar3 == 4)
+            uVar1 = (ushort)(uVar2 | 0x40);
+
+        DAT_56 = uVar1;
+        DAT_54 = PTR_DAT_9CB94[uVar3].DAT_04;
+        flags |= 2;
+        DAT_50.a |= 2;
+        uVar3 = 0;
+
+        if ((uVar4 & 0xff) != 0)
+        {
+            do
+            {
+                FUN_606D8();
+                uVar3++;
+            } while (uVar3 < (uVar4 & 0xff));
+        }
+
+        DAT_3C++;
+    }
+
+    private void FUN_4695C()
+    {
+        int iVar1;
+
+        iVar1 = FUN_606D8();
+
+        if (iVar1 == 1)
+            DAT_3C++;
     }
 
     public void FUN_46A1C()
@@ -991,7 +1352,7 @@ public class CriParticle : CriObject
         local_40 = Utilities.ApplyMatrixSV(ref auStack48, ref local_40);
         DAT_40.x = local_40.x;
         DAT_40.y = PTR_DAT_771C[iVar4].DAT_06;
-        DAT_72 = 0x10;
+        DAT_70.y = 0x10;
         DAT_40.z = local_40.z;
         FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(DAT_77F8[PTR_DAT_771C[iVar4].DAT_00]));
         vr = new Vector3Int(0, 0, 0);
@@ -1020,7 +1381,7 @@ public class CriParticle : CriObject
         }
 
         sVar2 = PTR_DAT_771C[DAT_2F].DAT_08;
-        DAT_40.y += DAT_72;
+        DAT_40.y += DAT_70.y;
         screen.x += DAT_40.x;
         screen.z += DAT_40.z;
         vr.z = vr.z - sVar2 & 0xfff;
@@ -1037,7 +1398,7 @@ public class CriParticle : CriObject
             DAT_3C++;
 
         sVar1 = PTR_DAT_771C[DAT_2F].DAT_08;
-        DAT_40.y += DAT_72;
+        DAT_40.y += DAT_70.y;
         screen.x += DAT_40.x;
         screen.z += DAT_40.z;
         vr.z = vr.z - sVar1 & 0xfff;

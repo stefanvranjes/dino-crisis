@@ -200,7 +200,7 @@ public class ST2 : LevelManager
                     oVar2.DAT_62 = uVar1;
                     oVar2.DAT_60 = uVar1;
                     oVar2.DAT_40 = PTR_DAT_7918[(byte)param1.DAT_1E6].DAT_0C;
-                    oVar2.DAT_72 = PTR_DAT_7918[(byte)param1.DAT_1E6].DAT_12;
+                    oVar2.DAT_70.y = PTR_DAT_7918[(byte)param1.DAT_1E6].DAT_12;
                     param1.DAT_1E6++;
                 }
             } while (PTR_DAT_7918[(byte)param1.DAT_1E6].DAT_00 == param1.DAT_60);

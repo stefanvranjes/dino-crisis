@@ -258,4 +258,9 @@ public class LevelManager : MonoBehaviour
     {
         param1.FUN_7F7E4();
     }
+
+    public static void FUN_7F808(CriStatic param1)
+    {
+        param1.FUN_7F808();
+    }
 }

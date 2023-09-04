@@ -33,7 +33,7 @@ public class CriPlayer : CriSkinned
     public byte DAT_1D5; //0x1D5
     public byte DAT_1D6; //0x1D6
     public byte DAT_1D7; //0x1D7
-    public byte BDAT_1D8; //0x1D8
+    public sbyte BDAT_1D8; //0x1D8
     public CriStatic DAT_1D8; //0x1D8
     public byte DAT_1D9; //0x1D9
     public ushort UDAT_1DA; //0x1DA
@@ -60,6 +60,8 @@ public class CriPlayer : CriSkinned
     public byte DAT_1EF; //0x1EF
     public CriPlayer DAT_1F0; //0x1F0
     public Vector2Int V2_1F0; //0x1F0
+    public byte DAT_1F2; //0x1F2
+    public bool DAT_1F3; //0x1F3
     public Vector2Int V2_1F4; //0x1F4
     public byte DAT_1F4; //0x1F4
     public byte DAT_1F5; //0x1F5
@@ -1628,6 +1630,8 @@ public class CriPlayer : CriSkinned
         DAT_1EF = 0;
         DAT_1F0 = null;
         V2_1F0 = Vector2Int.zero;
+        DAT_1F2 = 0;
+        DAT_1F3 = false;
         V2_1F4 = Vector2Int.zero;
         DAT_1F4 = 0;
         DAT_1F5 = 0;
@@ -22486,5 +22490,49 @@ public class CriPlayer : CriSkinned
     public void FUN_530C()
     {
         PTR_FUN_8164[DAT_3D]();
+    }
+
+    //FUN_252C (ST4)
+    public void FUN_252C()
+    {
+        CriPlayer oVar1;
+        sbyte sVar2;
+        bool bVar3;
+        bool bVar4;
+
+        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        Utilities.RotMatrix(ref vr, ref cTransform.rotation);
+
+        if ((InventoryManager.DAT_B7A60[0] & 2) == 0)
+        {
+            if (DAT_3C == 0 || (DAT_18E & 0x80) == 0)
+            {
+                DAT_34 = screen;
+                sVar2 = GameManager.instance.FUN_774CC(this, oVar1.screen);
+                BDAT_1D8 = sVar2;
+                //...
+                vr.y &= 0xfff;
+                FUN_62F3C(ref DAT_40);
+                PTR_120 = ST4.instance.DAT_12890;
+                DAT_120 = 0;
+                bVar4 = SceneManager.instance.FUN_802B8(this, false, 3);
+
+                if (bVar4)
+                    ST4.instance.FUN_27AC(oVar1, this, DAT_12B & 7U);
+
+                bVar3 = SceneManager.instance.FUN_80A14(this);
+
+                if (bVar3)
+                {
+                    if (!DAT_1F3)
+                        DAT_1F2 = 0;
+                    else
+                        DAT_1F2++;
+                }
+
+                DAT_1F3 = bVar3;
+
+            }
+        }
     }
 }

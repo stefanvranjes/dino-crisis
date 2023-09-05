@@ -89,6 +89,7 @@ public class CriSkinned : CriObject
     public sbyte DAT_198; //0x198
     public byte DAT_199; //0x199
     public ushort DAT_19A; //0x19A
+    public ushort DAT_19C; //0x19C
     public ushort DAT_19E; //0x19E
     public byte DAT_1A0; //0x1A0
     public byte DAT_1A1; //0x1A1
@@ -284,6 +285,7 @@ public class CriSkinned : CriObject
         DAT_198 = 0;
         DAT_199 = 0;
         DAT_19A = 0;
+        DAT_19C = 0;
         DAT_19E = 0;
         DAT_1A0 = 0;
         DAT_1A1 = 0;

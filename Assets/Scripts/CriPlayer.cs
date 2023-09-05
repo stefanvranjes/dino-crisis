@@ -9,6 +9,7 @@ public class CriPlayer : CriSkinned
     public sbyte DAT_1C1; //0x1C1
     public byte DAT_1C2; //0x1C2
     public sbyte DAT_1C3; //0x1C3
+    public int IDAT_1C4; //0x1C4
     public sbyte DAT_1C4; //0x1C4
     public byte DAT_1C5; //0x1C5
     public byte DAT_1C6; //0x1C6
@@ -26,6 +27,7 @@ public class CriPlayer : CriSkinned
     public uint DAT_1D0; //0x1D0
     public byte BDAT_1D0; //0x1D0
     public byte DAT_1D1; //0x1D1
+    public ushort UDAT_1D2; //0x1D2
     public byte DAT_1D2; //0x1D2
     public byte DAT_1D3; //0x1D3
     public short SDAT_1D4; //0x1D4
@@ -1579,6 +1581,7 @@ public class CriPlayer : CriSkinned
         DAT_1C1 = 0;
         DAT_1C2 = 0;
         DAT_1C3 = 0;
+        IDAT_1C4 = 0;
         DAT_1C4 = 0;
         DAT_1C5 = 0;
         DAT_1C6 = 0;
@@ -1596,6 +1599,7 @@ public class CriPlayer : CriSkinned
         DAT_1D0 = 0;
         BDAT_1D0 = 0;
         DAT_1D1 = 0;
+        UDAT_1D2 = 0;
         DAT_1D2 = 0;
         DAT_1D3 = 0;
         SDAT_1D4 = 0;
@@ -21836,7 +21840,7 @@ public class CriPlayer : CriSkinned
         FUN_62F3C(ref DAT_40);
 
         LAB_2574:
-        if ((DAT_1D3 << 8 | DAT_1D2 & 0x8000) != 0)
+        if ((UDAT_1D2 & 0x8000) != 0)
             ST2.instance.FUN_850(this);
 
         if (DAT_3C == 4)
@@ -21912,7 +21916,7 @@ public class CriPlayer : CriSkinned
             }
         }
 
-        iVar2 = (int)(uVar5 + DAT_1C4); //sbyte instead od int??
+        iVar2 = (int)(uVar5 + IDAT_1C4);
         DAT_1C4 = (sbyte)iVar2;
         DAT_11C = (short)(uVar5 + DAT_11C);
 
@@ -22531,8 +22535,30 @@ public class CriPlayer : CriSkinned
                 }
 
                 DAT_1F3 = bVar3;
-
+                ST4.instance.FUN_7E8(this);
             }
+
+            if (IDAT_1C4 != 0)
+                IDAT_1C4--;
+
+            if (DAT_177 != 0)
+                DAT_177--;
+
+            if ((UDAT_1D2 & 0x8000) != 0)
+                ST4.instance.FUN_824(this);
+
+            if ((ushort)DAT_1D0 == 0)
+                DAT_1C0 |= 1;
+            else
+                DAT_1D0--;
+
+            if ((DAT_1C0 & 1) != 0 && (oVar1.DAT_11E & 0x80) == 0)
+                InventoryManager.FUN_4A7E8(0, 0x7d, true);
+
+            if ((DAT_1C0 & 0x40000000) != 0)
+                ST4.instance.FUN_460(this);
+
+            flags |= 4;
         }
     }
 }

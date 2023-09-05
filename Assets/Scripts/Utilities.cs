@@ -2648,6 +2648,23 @@ public static class Utilities
         return (int)(lVar1 & 0xfff);
     }
 
+    public static uint FUN_61654(Vector3Int param1, Vector3Int param2, short param3)
+    {
+        uint uVar1;
+        Vector3Int local_40;
+        Matrix3x3 MStack56;
+
+        local_40 = new Vector3Int(0, 0x1000 - param3 & 0xfff, 0);
+        MStack56 = new Matrix3x3();
+        RotMatrix(ref local_40, ref MStack56);
+        local_40.x = param2.x - param1.x;
+        local_40.y = param2.y - param1.y;
+        local_40.z = param2.z - param1.z;
+        local_40 = ApplyMatrixSV(ref MStack56, ref local_40);
+        uVar1 = (uint)Ratan2(local_40.y, local_40.z);
+        return 0x1000 - (uVar1 & 0xfff) & 0xfff;
+    }
+
     public static bool FUN_617D4(Vector2Int[] param1, ref Vector2Int param2)
     {
         short sVar1;

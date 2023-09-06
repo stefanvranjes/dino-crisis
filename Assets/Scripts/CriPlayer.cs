@@ -15,6 +15,7 @@ public class CriPlayer : CriSkinned
     public byte DAT_1C6; //0x1C6
     public sbyte DAT_1C7; //0x1C7
     public sbyte DAT_1C8; //0x1C8
+    public uint UDAT_1C8; //0x1C8
     public byte DAT_1C9; //0x1C9
     public byte BDAT_1CA; //0x1CA
     public short DAT_1CA; //0x1CA
@@ -55,8 +56,11 @@ public class CriPlayer : CriSkinned
     public byte DAT_1E4; //0x1E4
     public byte DAT_1E5; //0x1E5
     public ushort DAT_1E6; //0x1E6
+    public bool DAT_1E7; //0x1E7
+    public bool BDAT_1E8; //0x1E8
     public ushort DAT_1E8; //0x1E8
     public short DAT_1EA; //0x1EA
+    public byte BDAT_1EC; //0x1EC
     public short DAT_1EC; //0x1EC
     public short DAT_1EE; //0x1EE
     public byte DAT_1EF; //0x1EF
@@ -1587,6 +1591,7 @@ public class CriPlayer : CriSkinned
         DAT_1C6 = 0;
         DAT_1C7 = 0;
         DAT_1C8 = 0;
+        UDAT_1C8 = 0;
         DAT_1C9 = 0;
         BDAT_1CA = 0;
         DAT_1CA = 0;
@@ -1627,7 +1632,10 @@ public class CriPlayer : CriSkinned
         DAT_1E4 = 0;
         DAT_1E5 = 0;
         DAT_1E6 = 0;
+        DAT_1E7 = false;
+        BDAT_1E8 = false;
         DAT_1E8 = 0;
+        BDAT_1EC = 0;
         DAT_1EA = 0;
         DAT_1EC = 0;
         DAT_1EE = 0;
@@ -22514,7 +22522,7 @@ public class CriPlayer : CriSkinned
                 DAT_34 = screen;
                 sVar2 = GameManager.instance.FUN_774CC(this, oVar1.screen);
                 BDAT_1D8 = sVar2;
-                //...
+                ST4.instance.PTR_FUN_12F38[DAT_3C](this);
                 vr.y &= 0xfff;
                 FUN_62F3C(ref DAT_40);
                 PTR_120 = ST4.instance.DAT_12890;

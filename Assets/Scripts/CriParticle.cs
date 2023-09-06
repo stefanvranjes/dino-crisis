@@ -59,6 +59,10 @@ public class CriParticle : CriObject
     private delegate void FUN_7704(); //0x7704 (ST1)
     private delegate void FUN_7710(); //0x7710 (ST1)
     private delegate void FUN_780C(); //0x780C (ST1)
+    private delegate void FUN_13028(); //0x13028 (ST4)
+    private delegate void FUN_13048(); //0x13048 (ST4)
+    private delegate void FUN_13054(); //0x13054 (ST4)
+    private delegate void FUN_13070(); //0x13070 (ST4)
     private delegate void FUN_9C790();
     private delegate void FUN_9C7AC();
     private delegate void FUN_9C7B4();
@@ -76,6 +80,10 @@ public class CriParticle : CriObject
     private static uint[] DAT_77F8 = new uint[4] { 0x8011d314, 0x8011d324, 0x8011d33c, 0x8011d344 }; //0x77F8 (ST1)
     private FUN_780C[] PTR_FUN_780C; //0x780C (ST1)
     private static byte[] DAT_7808 = new byte[4] { 3, 1, 0, 0 }; //0x7808 (ST1)
+    private FUN_13028[] PTR_FUN_13028; //0x13028 (ST4)
+    private FUN_13048[] PTR_FUN_13048; //0x13048 (ST4)
+    private FUN_13054[] PTR_FUN_13054; //0x13054 (ST4)
+    private FUN_13070[] PTR_FUN_13070; //0x13070 (ST4)
     private static uint[] DAT_9C774 = new uint[7]
     {
         0x8019dfd8, 0x8019e698, 0x8019e6d8, 0x8019dfd8,
@@ -131,6 +139,30 @@ public class CriParticle : CriObject
             FUN_4B4, 
             FUN_5F8, 
             FUN_71C, 
+            FUN_60068
+        };
+        PTR_FUN_13028 = new FUN_13028[3]
+        {
+            FUN_34A8,
+            FUN_3578,
+            FUN_60068
+        };
+        PTR_FUN_13048 = new FUN_13048[3]
+        {
+            FUN_3684,
+            FUN_372C,
+            FUN_60068
+        };
+        PTR_FUN_13054 = new FUN_13054[3]
+        {
+            FUN_379C,
+            FUN_3808,
+            FUN_60068
+        };
+        PTR_FUN_13070 = new FUN_13070[3]
+        {
+            FUN_3864,
+            FUN_3908,
             FUN_60068
         };
         PTR_FUN_9C790 = new FUN_9C790[5]
@@ -1404,6 +1436,214 @@ public class CriParticle : CriObject
         vr.z = vr.z - sVar1 & 0xfff;
         screen.y += DAT_40.y;
         FUN_606D8();
+    }
+
+    //FUN_346C (ST4)
+    public void FUN_346C()
+    {
+        PTR_FUN_13028[DAT_3C]();
+    }
+
+    //FUN_34A8 (ST4)
+    private void FUN_34A8()
+    {
+        uint uVar2;
+        uint uVar3;
+
+        uVar3 = 0;
+
+        if ((DAT_2F & 0x80) != 0)
+            uVar3 = ST4.instance.FUN_3608(this);
+
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(ST4.instance.PTR_DAT_12FF0[DAT_2F].DAT_00));
+        DAT_56 = 0x25;
+        DAT_54 = ST4.instance.PTR_DAT_12FF0[DAT_2F].DAT_04;
+        flags |= 2;
+        DAT_50.a |= 2;
+        uVar2 = 0;
+
+        if ((uVar3 & 0xff) != 0)
+        {
+            do
+            {
+                FUN_606D8();
+                uVar2++;
+            } while (uVar2 < (uVar3 & 0xff));
+        }
+
+        DAT_3C++;
+    }
+
+    //FUN_3578 (ST4)
+    private void FUN_3578()
+    {
+        short sVar1;
+        int iVar2;
+        short sVar3;
+
+        iVar2 = FUN_606D8();
+
+        if (iVar2 == 1)
+            DAT_3C++;
+
+        if (DAT_2F < 5)
+        {
+            sVar3 = (short)(DAT_40.y + DAT_68);
+            sVar1 = (short)(screen.y + sVar3);
+            screen.y = sVar1;
+            DAT_40.y = sVar3;
+
+            if (10000 < sVar1)
+                DAT_3C++;
+        }
+    }
+
+    //FUN_3648 (ST4)
+    public void FUN_3648()
+    {
+        PTR_FUN_13048[DAT_3C]();
+    }
+
+    //FUN_3684 (ST4)
+    private void FUN_3684()
+    {
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(ST4.instance.DAT_13034[DAT_2F]));
+        DAT_56 = 8;
+        DAT_54 = 0x7efc;
+        DAT_65 = 3;
+        DAT_50.a |= 2;
+        flags |= 2;
+        vr.y = DAT_68 << 4;
+        DAT_4C = SceneManager.instance.cCamera;
+        DAT_3C = 1;
+        vr.x = DAT_69 << 4;
+    }
+
+    //FUN_372C (ST4)
+    private void FUN_372C()
+    {
+        int iVar1;
+
+        iVar1 = FUN_606D8();
+
+        if (iVar1 == 1)
+            DAT_3C = 2;
+    }
+
+    //FUN_3760 (ST4)
+    public void FUN_3760()
+    {
+        PTR_FUN_13054[DAT_3C]();
+    }
+
+    //FUN_379C (ST4)
+    private void FUN_379C()
+    {
+        DAT_62 = DAT_68;
+        DAT_60 = DAT_68;
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(0x8010c830));
+        DAT_56 = 0x68;
+        DAT_54 = 0x7f3b;
+        DAT_3C = 1;
+        DAT_50.a |= 2;
+        flags |= 2;
+    }
+
+    //FUN_3808 (ST4)
+    private void FUN_3808()
+    {
+        FUN_606D8();
+    }
+
+    //FUN_3828 (ST4)
+    public void FUN_3828()
+    {
+        PTR_FUN_13070[DAT_3C]();
+    }
+
+    //FUN_3864 (ST4)
+    private void FUN_3864()
+    {
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(ST4.instance.DAT_13060[DAT_2F]));
+        DAT_56 = 0x27;
+        DAT_54 = 0x7ef1;
+        flags |= 2;
+        DAT_62 = DAT_68;
+        DAT_60 = DAT_68;
+        DAT_40.x = DAT_69;
+        DAT_40.y = -DAT_6A;
+        DAT_68 = 0;
+        DAT_3C = 1;
+        DAT_40.z = -DAT_6B;
+    }
+
+    //FUN_3908 (ST4)
+    private void FUN_3908()
+    {
+        ushort uVar1;
+        ushort uVar3;
+        short sVar4;
+        int iVar5;
+        uint uVar6;
+        uint uVar7;
+
+        iVar5 = FUN_606D8();
+
+        if (iVar5 == 1)
+            DAT_3C = 2;
+
+        if (DAT_40.z == 0)
+            return;
+
+        screen.x += DAT_40.x;
+        DAT_40.y += 40;
+        screen.z += DAT_40.z;
+        screen.y += DAT_40.y;
+        uVar7 = 0;
+
+        if (12999 < screen.z)
+        {
+            iVar5 = 13000 - screen.z;
+            uVar7 = (uint)(iVar5 - (int)((uint)iVar5 >> 31)) >> 1;
+        }
+
+        uVar3 = (ushort)(uVar7 & 0xff00);
+
+        if ((short)uVar3 <= screen.y)
+        {
+            uVar1 = DAT_60;
+            iVar5 = (int)(uVar1 * 0x190000) >> 0x10;
+
+            if (iVar5 < DAT_40.y)
+                DAT_40.y = (short)(uVar1 * 0x19);
+            else
+            {
+                if (DAT_40.y < -iVar5)
+                    DAT_40.y = (short)(uVar1 * -0x19);
+            }
+
+            screen.y = (short)uVar3;
+            DAT_40.y = -DAT_40.y;
+            uVar6 = (uint)Utilities.Rand();
+            DAT_40.x = (short)(ST4.instance.DAT_1306C[uVar6 & 3] * DAT_60);
+
+            if (screen.x < -10200)
+                sVar4 = 40;
+            else
+            {
+                if (screen.x < -5699) goto LAB_3A78;
+
+                sVar4 = -40;
+            }
+
+            DAT_40.x = sVar4;
+        }
+
+        LAB_3A78:
+        if ((uVar7 & 0xff00) == 0 && DAT_40.z < 0)
+            DAT_40.z++;
+
+        vr.z += 0xa0;
     }
 
     public int FUN_606A8(Tod2ScriptableObject param1)

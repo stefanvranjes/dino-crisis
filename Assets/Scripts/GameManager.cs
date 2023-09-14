@@ -193,6 +193,7 @@ public class GameManager : MonoBehaviour
     public FUN_148 PTR_FUN_148; //gp+148h
     public FUN_14C PTR_FUN_14C; //gp+14ch
     public byte DAT_922C; //gp+922ch
+    public byte DAT_922D; //gp+922dh
     public CriPlayer DAT_9230; //gp+9230h
     public byte DAT_9234; //gp+9234h
     public byte DAT_9235; //gp+9235h

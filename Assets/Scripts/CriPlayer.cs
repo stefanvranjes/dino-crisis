@@ -9058,6 +9058,28 @@ public class CriPlayer : CriSkinned
         FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_220 + param1 * 4), param2, param3, DAT_220 + param1 * 4);
     }
 
+    public void FUN_539F8(int param1, ushort param2, int param3)
+    {
+        uint uVar1;
+
+        if (0 < health)
+        {
+            uVar1 = (uint)(param3 * 0x1000000 + 0x902 + param1 * 0x10000);
+            DAT_3C = (byte)uVar1;
+            DAT_3D = (byte)(uVar1 >> 8);
+            DAT_3E = (byte)(uVar1 >> 0x10);
+            DAT_3F = (byte)(uVar1 >> 0x18);
+            DAT_1F4 = (byte)param2;
+            DAT_1F5 = (byte)(param2 >> 8);
+            return;
+        }
+
+        DAT_3C = 3;
+        DAT_3D = 0;
+        DAT_3E = 0;
+        DAT_3F = 0;
+    }
+
     public void FUN_53A2C(uint param1, uint param2)
     {
         uint uVar1;
@@ -22567,6 +22589,59 @@ public class CriPlayer : CriSkinned
                 ST4.instance.FUN_460(this);
 
             flags |= 4;
+        }
+    }
+
+    //FUN_10E38 (ST4)
+    public void FUN_10E38()
+    {
+        CriSkinned oVar1;
+        sbyte sVar2;
+        uint uVar3;
+
+        Utilities.RotMatrix(ref vr, ref cTransform.rotation);
+        oVar1 = SceneManager.instance.DAT_27C[10];
+
+        if ((InventoryManager.DAT_B7A60[0] & 2) == 0)
+        {
+            if (DAT_3C == 0 || (DAT_18E & 0x80) == 0)
+            {
+                DAT_34 = screen;
+
+                if ((DAT_1C0 & 2) == 0)
+                {
+                    DAT_158.x = oVar1.screen.x;
+                    DAT_158.z = oVar1.screen.z;
+                }
+
+                sVar2 = GameManager.instance.FUN_774CC(this, DAT_158);
+                DAT_1DB = sVar2;
+
+                if ((DAT_11E & 0x80) != 0)
+                    ST4.instance.FUN_10D80(this);
+
+                ST4.instance.PTR_FUN_14194[DAT_3C](this);
+
+                if ((flags & 1) == 0)
+                    return;
+
+                FUN_62F3C(ref DAT_40);
+
+                if ((DAT_1C0 & 0x60) != 0)
+                    ST4.instance.FUN_11020(this);
+
+                FUN_6449C(0);
+                SceneManager.instance.FUN_80030(this, true, 1);
+                SceneManager.instance.FUN_80A14(this);
+                //...
+            }
+
+            if (DAT_3C == 4)
+                uVar3 = flags & 0xfffffffb;
+            else
+                uVar3 = flags | 4;
+
+            flags = uVar3;
         }
     }
 }

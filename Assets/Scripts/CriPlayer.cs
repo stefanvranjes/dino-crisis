@@ -16,11 +16,13 @@ public class CriPlayer : CriSkinned
     public sbyte DAT_1C7; //0x1C7
     public sbyte DAT_1C8; //0x1C8
     public int IDAT_1C8; //0x1C8
+    public CriInteract PDAT_1C8; //0x1C8
     public byte DAT_1C9; //0x1C9
     public byte BDAT_1CA; //0x1CA
     public short DAT_1CA; //0x1CA
     public byte DAT_1CB; //0x1CB
     public CriObject PTR_1CC; //0x1CC
+    public short SDAT_1CC; //0x1CC
     public byte DAT_1CC; //0x1CC
     public byte DAT_1CD; //0x1CD
     public byte DAT_1CE; //0x1CE
@@ -32,11 +34,13 @@ public class CriPlayer : CriSkinned
     public byte DAT_1D2; //0x1D2
     public byte DAT_1D3; //0x1D3
     public short SDAT_1D4; //0x1D4
+    public Vector3Int[] PDAT_1D4; //0x1D4
     public byte DAT_1D4; //0x1D4
     public byte DAT_1D5; //0x1D5
     public byte DAT_1D6; //0x1D6
     public byte DAT_1D7; //0x1D7
     public sbyte BDAT_1D8; //0x1D8
+    public short SDAT_1D8; //0x1D8
     public CriStatic DAT_1D8; //0x1D8
     public byte DAT_1D9; //0x1D9
     public ushort UDAT_1DA; //0x1DA
@@ -1592,11 +1596,13 @@ public class CriPlayer : CriSkinned
         DAT_1C7 = 0;
         DAT_1C8 = 0;
         IDAT_1C8 = 0;
+        PDAT_1C8 = null;
         DAT_1C9 = 0;
         BDAT_1CA = 0;
         DAT_1CA = 0;
         DAT_1CB = 0;
         PTR_1CC = null;
+        SDAT_1CC = 0;
         DAT_1CC = 0;
         DAT_1CD = 0;
         DAT_1CE = 0;
@@ -1608,11 +1614,13 @@ public class CriPlayer : CriSkinned
         DAT_1D2 = 0;
         DAT_1D3 = 0;
         SDAT_1D4 = 0;
+        PDAT_1D4 = null;
         DAT_1D4 = 0;
         DAT_1D5 = 0;
         DAT_1D6 = 0;
         DAT_1D7 = 0;
         BDAT_1D8 = 0;
+        SDAT_1D8 = 0;
         DAT_1D8 = null;
         DAT_1D9 = 0;
         UDAT_1DA = 0;

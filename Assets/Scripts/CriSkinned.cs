@@ -866,6 +866,60 @@ public class CriSkinned : CriObject
         screen.z = DAT_14C.z + GameManager.DAT_1f80002c.z;
     }
 
+    public void FUN_65890()
+    {
+        byte bVar1;
+        short sVar2;
+        short sVar3;
+        uint uVar4;
+        short sVar5;
+        int iVar6;
+
+        uVar4 = frame.DAT_01;
+
+        if ((DAT_5C & 2) == 0)
+        {
+            iVar6 = (int)(uVar4 - 1);
+
+            if (uVar4 == 0)
+            {
+                sVar2 = 0;
+                sVar3 = 0;
+                sVar5 = 0;
+                goto LAB_65928;
+            }
+
+            bVar1 = DAT_5E;
+            //iVar6 *= bVar1;
+        }
+        else
+        {
+            if (uVar4 != frameCount)
+            {
+                bVar1 = DAT_5E;
+                iVar6 = (int)(uVar4 + 1);
+                //iVar6 *= bVar1;
+            }
+            else
+                iVar6 = (int)uVar4;
+        }
+
+        sVar5 = (short)packets[iVar6].DAT_06.x;
+        sVar3 = (short)-packets[iVar6].DAT_06.y;
+        sVar2 = (short)-packets[iVar6].DAT_06.z;
+        LAB_65928:
+        DAT_40.x = DAT_64.x - sVar5;
+        DAT_40.y = -sVar3 - DAT_64.y;
+        DAT_40.z = -sVar2 - DAT_64.z;
+
+        if ((DAT_5C & 8) != 0)
+        {
+            DAT_40.x >>= 1;
+            DAT_40.y >>= 1;
+            DAT_40.z >>= 1;
+        }
+    }
+
     public void FUN_659D0()
     {
         CriBone oVar1;

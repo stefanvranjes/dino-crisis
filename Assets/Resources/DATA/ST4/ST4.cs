@@ -76,7 +76,13 @@ public class ST4 : LevelManager
     private delegate void FUN_12FCC(CriPlayer p); //0x12FCC (ST4)
     private delegate void FUN_12FDC(CriPlayer p); //0x12FDC (ST4)
     private delegate void FUN_12FE8(CriPlayer p); //0x12FE8 (ST4)
+    private delegate void FUN_140B8(CriPlayer p); //0x140B8 (ST4)
+    private delegate void FUN_140C4(CriPlayer p); //0x140C4 (ST4)
+    private delegate void FUN_140D4(CriPlayer p); //0x140D4 (ST4)
+    private delegate void FUN_140E4(CriPlayer p); //0x140E4 (ST4)
     private delegate void FUN_140FC(CriPlayer p, CriPlayer p2); //0x140FC (ST4)
+    private delegate void FUN_1410C(CriPlayer p); //0x1410C (ST4)
+    private delegate void FUN_14118(CriPlayer p); //0x14118 (ST4)
     private delegate void FUN_14120(CriPlayer p); //0x14120 (ST4)
     private delegate void FUN_14144(CriPlayer p); //0x14144 (ST4)
     public delegate void FUN_14194(CriPlayer p); //0x14194 (ST4)
@@ -105,8 +111,18 @@ public class ST4 : LevelManager
     public sbyte[] DAT_1306C = new sbyte[4] { -4, -2, 2, 4 };
     public CapsuleCollider[] DAT_13E24; //0x13E30 (ST4)
     private byte[] DAT_13E48 = new byte[2] { 48, 49 }; //0x13E48 (ST4)
+    private byte[] DAT_13E4C = new byte[2] { 50, 51 }; //0x13E4C (ST4)
+    private FUN_140B8[] PTR_FUN_140B8; //0x140B8 (ST4)
+    private byte[] DAT_140C0 = new byte[2] { 56, 57 }; //0x140C0 (ST4)
+    private FUN_140C4[] PTR_FUN_140C4; //0x140C4 (ST4)
+    private FUN_140D4[] PTR_FUN_140D4; //0x140D4 (ST4)
+    private int[] DAT_140DC = new int[2] { 5, 5 }; //0x140DC (ST4)
+    private FUN_140E4[] PTR_FUN_140E4; //0x140E4 (ST4)
     private byte[] DAT_140EC = new byte[2] { 54, 55 }; //0x140EC (ST4)
+    private int[] DAT_140F0 = new int[3] { 13, 3, 8 }; //0x140F0 (ST4)
     private FUN_140FC[] PTR_FUN_140FC; //0x140FC (ST4)
+    private FUN_1410C[] PTR_FUN_1410C; //0x1410C (ST4)
+    private FUN_14118[] PTR_FUN_14118; //0x14118 (ST4)
     private FUN_14120[] PTR_FUN_14120; //0x14120 (ST4)
     private FUN_14144[] PTR_FUN_14144; //0x14144 (ST4)
     public FUN_14194[] PTR_FUN_14194; //0x14194 (ST4)
@@ -205,11 +221,44 @@ public class ST4 : LevelManager
                 FUN_313C,
                 FUN_3238
             };
-            PTR_FUN_140FC = new FUN_140FC[3]
+            PTR_FUN_140B8 = new FUN_140B8[2]
+            {
+                FUN_EE9C,
+                FUN_EEE4
+            };
+            PTR_FUN_140C4 = new FUN_140C4[4]
+            {
+                FUN_F098,
+                FUN_F138,
+                FUN_F1A8,
+                FUN_F20C
+            };
+            PTR_FUN_140D4 = new FUN_140D4[2]
+            {
+                FUN_F320,
+                FUN_F38C
+            };
+            PTR_FUN_140E4 = new FUN_140E4[2]
+            {
+                FUN_F4C8,
+                FUN_F5E0
+            };
+            PTR_FUN_140FC = new FUN_140FC[4]
             {
                 FUN_FDD4,
                 FUN_FECC, 
-                FUN_FFA8
+                FUN_FFA8, 
+                FUN_1014C
+            };
+            PTR_FUN_1410C = new FUN_1410C[2]
+            {
+                FUN_10374,
+                FUN_10400
+            };
+            PTR_FUN_14118 = new FUN_14118[2]
+            {
+                FUN_1054C,
+                FUN_10584
             };
             PTR_FUN_14120 = new FUN_14120[9]
             {
@@ -223,13 +272,22 @@ public class ST4 : LevelManager
                 FUN_EBA4, 
                 FUN_EBA4
             };
-            PTR_FUN_14144 = new FUN_14144[]
+            PTR_FUN_14144 = new FUN_14144[9]
             {
-                FUN_F880
+                FUN_F880, 
+                FUN_10284, 
+                FUN_F028, 
+                FUN_F2E4, 
+                FUN_F734, 
+                FUN_F48C, 
+                FUN_FB94, 
+                FUN_10510, 
+                FUN_10628
             };
-            PTR_FUN_14194 = new FUN_14194[]
+            PTR_FUN_14194 = new FUN_14194[2]
             {
-                FUN_EBD8
+                FUN_EBD8, 
+                FUN_10664
             };
         }
     }
@@ -1652,6 +1710,70 @@ public class ST4 : LevelManager
         }
     }
 
+    //FUN_EE9C (ST4)
+    private void FUN_EE9C(CriPlayer param1)
+    {
+        param1.DAT_3E++;
+        param1.FUN_609C8(13, 1, 0);
+        param1.FUN_65890();
+    }
+
+    //FUN_EEE4 (ST4)
+    private void FUN_EEE4(CriPlayer param1)
+    {
+        short sVar1;
+        short sVar2;
+        bool bVar3;
+        uint uVar4;
+        int iVar5;
+        CriSkinned oVar6;
+
+        oVar6 = param1.DAT_154;
+        sVar1 = (short)Utilities.FUN_615EC(param1.screen, param1.DAT_10C);
+        sVar2 = (short)Utilities.FUN_64838(param1.vr.y, 80, sVar1);
+        param1.vr.y += sVar2;
+        bVar3 = param1.FUN_60AB4();
+
+        if (bVar3)
+        {
+            param1.screen.y = 0;
+            uVar4 = GameManager.FUN_64650();
+            GameManager.instance.FUN_5C94C(param1, DAT_13E48[uVar4 & 1]);
+            bVar3 = Utilities.FUN_64C0C(param1.screen, oVar6.screen, (short)param1.vr.y, 0x200);
+
+            if (bVar3 && param1.DAT_148 < 5)
+            {
+                param1.DAT_3D = 3;
+                param1.DAT_3E = 0;
+                return;
+            }
+
+            uVar4 = GameManager.FUN_64650();
+
+            if ((uVar4 & 1) == 0)
+                iVar5 = 3;
+            else
+                iVar5 = 13;
+
+            param1.FUN_609C8(iVar5, 0, 0);
+            uVar4 = GameManager.FUN_64650();
+
+            if ((0x40 >> (int)(uVar4 & 7) & 1) != 0)
+            {
+                uVar4 = GameManager.FUN_64650();
+                GameManager.instance.FUN_5C94C(param1, DAT_13E4C[uVar4 & 1]);
+            }
+        }
+
+        param1.FUN_65890();
+    }
+
+    //FUN_F028 (ST4)
+    private void FUN_F028(CriPlayer param1)
+    {
+        PTR_FUN_140B8[param1.DAT_3E](param1);
+    }
+
     //FUN_F064 (ST4)
     private void FUN_F064(CriPlayer param1)
     {
@@ -1661,6 +1783,254 @@ public class ST4 : LevelManager
             param1.DAT_3E = 0;
             param1.DAT_3F = 0;
         }
+    }
+
+    //FUN_F098 (ST4)
+    private void FUN_F098(CriPlayer param1)
+    {
+        uint uVar1;
+
+        param1.DAT_40.y = -100;
+        param1.SDAT_1CC = 8;
+        param1.DAT_40.z = 160;
+        param1.DAT_3E++;
+        param1.FUN_609C8(4, 0, 0);
+        uVar1 = GameManager.FUN_64650();
+        GameManager.instance.FUN_5C94C(param1, DAT_140C0[uVar1 & 1]);
+
+        if (param1.DAT_2F == 0)
+            param1.DAT_1C0 |= 0x20;
+    }
+
+    //FUN_F138 (ST4)
+    private void FUN_F138(CriPlayer param1)
+    {
+        param1.FUN_60AB4();
+        param1.DAT_40.y += param1.SDAT_1CC;
+
+        if (param1.frame.DAT_01 == 12)
+        {
+            param1.DAT_1C0 |= 0x40;
+            param1.DAT_3E++;
+        }
+    }
+
+    //FUN_F1A8 (ST4)
+    private void FUN_F1A8(CriPlayer param1)
+    {
+        param1.FUN_60AB4();
+        param1.DAT_40.y += param1.SDAT_1CC;
+
+        if (param1.frame.DAT_01 == 16)
+        {
+            param1.DAT_1C0 &= 0xffffffbf;
+            param1.DAT_3E++;
+        }
+    }
+
+    //FUN_F20C (ST4)
+    private void FUN_F20C(CriPlayer param1)
+    {
+        int iVar1;
+
+        param1.FUN_60AB4();
+        param1.DAT_40.y += param1.SDAT_1CC;
+
+        if (param1.screen.y == 0)
+        {
+            param1.DAT_1C0 &= 0xffffffdf;
+
+            if (param1.DAT_2F == 0)
+            {
+                param1.DAT_3D = 1;
+                param1.DAT_3E = 1;
+                param1.DAT_3F = 0;
+                param1.FUN_609C8(13, 1, 0);
+                iVar1 = (int)GameManager.FUN_64650();
+                param1.DAT_112 = (short)(iVar1 + (iVar1 / 30) * -30 + 60);
+            }
+            else
+            {
+                param1.DAT_3D = 2;
+                param1.DAT_3E = 0;
+                param1.DAT_3F = 0;
+            }
+        }
+    }
+
+    //FUN_F2E4 (ST4)
+    private void FUN_F2E4(CriPlayer param1)
+    {
+        PTR_FUN_140C4[param1.DAT_3E](param1);
+    }
+
+    //FUN_F320 (ST4)
+    private void FUN_F320(CriPlayer param1)
+    {
+        CriInteract oVar1;
+
+        oVar1 = param1.PDAT_1C8;
+        param1.DAT_3E++;
+        param1.FUN_609C8(6, 0, 0);
+
+        if (param1.DAT_2F == 1)
+            oVar1.BDAT_08 |= 2;
+    }
+
+    //FUN_F38C (ST4)
+    private void FUN_F38C(CriPlayer param1)
+    {
+        ushort uVar1;
+        int iVar2;
+        bool bVar2;
+        CriInteract oVar3;
+
+        oVar3 = param1.PDAT_1C8;
+        bVar2 = param1.FUN_60AB4();
+
+        if (bVar2)
+        {
+            if (param1.DAT_2F == 0)
+            {
+                param1.DAT_3D = 1;
+                param1.DAT_3E = 1;
+                param1.DAT_3F = 0;
+                param1.FUN_609C8(13, 1, 0);
+                iVar2 = (int)GameManager.FUN_64650();
+                param1.DAT_112 = (short)(iVar2 + (iVar2 / 30) * -30 + 60);
+            }
+            else
+            {
+                param1.DAT_3D = 2;
+                param1.DAT_3E = 0;
+                param1.DAT_3F = 0;
+                param1.DAT_40.z = 0;
+                param1.DAT_40.y = 0;
+                param1.PTR_120 = DAT_13E24;
+                param1.DAT_120 = 0;
+                uVar1 = (ushort)GameManager.FUN_64650();
+                param1.DAT_112 = (short)(uVar1 & 0xf);
+                oVar3.DAT_08 &= 0xfd;
+            }
+        }
+
+        param1.FUN_65890();
+    }
+
+    //FUN_F48C (ST4)
+    private void FUN_F48C(CriPlayer param1)
+    {
+        PTR_FUN_140D4[param1.DAT_3E](param1);
+    }
+
+    //FUN_F4C8 (ST4)
+    private void FUN_F4C8(CriPlayer param1)
+    {
+        short sVar1;
+        short sVar2;
+        CriPlayer oVar4;
+
+        param1.DAT_3E++;
+        param1.DAT_12C |= 0x10;
+        oVar4 = (CriPlayer)param1.DAT_154;
+        param1.FUN_609C8(DAT_140DC[param1.DAT_2E], 1, 0);
+        GameManager.instance.PTR_FUN_148 = FUN_112EC;
+        oVar4.DAT_154 = param1;
+        oVar4.DAT_1E0 = oVar4.DAT_98;
+        oVar4.DAT_3C = 5;
+        oVar4.DAT_3D = 0;
+        oVar4.DAT_3E = 0;
+        oVar4.DAT_3F = 0;
+        oVar4.DAT_98 = param1.DAT_98;
+        sVar1 = (short)Utilities.FUN_615EC(param1.screen, oVar4.screen);
+        param1.vr.y = sVar1;
+        param1.DAT_112 = 90;
+
+        if (param1.DAT_2E == 0)
+            param1.vr.y = oVar4.vr.y + 0x800 & 0xfff;
+        else
+            param1.vr.y = oVar4.vr.y;
+
+        sVar2 = (short)(oVar4.health - 5);
+        oVar4.health = sVar2;
+
+        if (sVar2 < 10)
+            oVar4.health = 10;
+
+        param1.IDAT_1C4 = 20;
+    }
+
+    //FUN_F5E0 (ST4)
+    private void FUN_F5E0(CriPlayer param1)
+    {
+        short sVar1;
+        byte bVar2;
+        short sVar3;
+        bool bVar4;
+        int iVar4;
+        CriPlayer oVar5;
+
+        oVar5 = (CriPlayer)param1.DAT_154;
+        param1.FUN_60AB4();
+        sVar3 = param1.DAT_112;
+
+        if (sVar3 < 1)
+        {
+            if (oVar5.frame.DAT_01 == 24)
+            {
+                param1.DAT_3D = 5;
+                param1.DAT_3E = 0;
+                param1.DAT_3F = 0;
+                param1.DAT_12C &= 0xffef;
+                param1.skeleton.prev = param1;
+                GameManager.instance.DAT_922C &= (byte)~(1 << param1.DAT_2E & 31);
+                bVar2 = (byte)(GameManager.instance.DAT_922D - 1);
+                GameManager.instance.DAT_922D = bVar2;
+
+                if (bVar2 == 0)
+                    oVar5.DAT_3D++;
+
+                oVar5.FUN_4FE30();
+            }
+        }
+        else
+        {
+            bVar4 = GameManager.FUN_64C68();
+            sVar1 = -5;
+
+            if (!bVar4)
+                sVar1 = -1;
+
+            param1.DAT_112 = (short)(sVar3 + sVar1);
+        }
+
+        iVar4 = param1.IDAT_1C4 - 1;
+        
+        if (param1.IDAT_1C4 == 0)
+        {
+            sVar3 = (short)(oVar5.health - 5);
+            oVar5.health = sVar3;
+
+            if (sVar3 < 10)
+                oVar5.health = 10;
+
+            iVar4 = 20;
+        }
+
+        param1.IDAT_1C4 = iVar4;
+    }
+
+    //FUN_F734 (ST4)
+    private void FUN_F734(CriPlayer param1)
+    {
+        CriSkinned oVar1;
+        CriObject oVar2;
+
+        oVar1 = param1.DAT_154;
+        PTR_FUN_140E4[param1.DAT_3E](param1);
+        oVar2 = Utilities.FUN_601C8(oVar1.skeleton, 8);
+        param1.DAT_14C = oVar2.screen;
+        param1.FUN_65714();
     }
 
     //FUN_F7B4 (ST4)
@@ -1834,6 +2204,73 @@ public class ST4 : LevelManager
         }
 
         param1.DAT_1C0 = uVar4;
+    }
+
+    //FUN_FB94 (ST4)
+    private void FUN_FB94(CriPlayer param1)
+    {
+        byte bVar1;
+        byte bVar2;
+        bool bVar3;
+        uint uVar4;
+
+        bVar1 = param1.DAT_3E;
+
+        if (bVar1 == 1)
+        {
+            bVar3 = param1.FUN_60AB4();
+
+            if (bVar3)
+            {
+                param1.screen.y = 0;
+                uVar4 = GameManager.FUN_64650();
+                GameManager.instance.FUN_5C94C(param1, DAT_13E48[uVar4 & 1]);
+
+                if ((param1.DAT_1C0 & 2) != 0)
+                {
+                    GameManager.instance.FUN_774CC(param1, param1.DAT_158);
+
+                    if (param1.DAT_148 < 4)
+                    {
+                        param1.DAT_3E++;
+                        param1.FUN_609C8(8, 1, 10);
+                        param1.DAT_40.y = 0;
+                        param1.DAT_40.z = 70;
+                        return;
+                    }
+
+                    uVar4 = GameManager.FUN_64650();
+                    param1.FUN_609C8(DAT_140F0[uVar4 & 1], 0, 0);
+                }
+            }
+
+            param1.FUN_65890();
+        }
+        else
+        {
+            if (bVar1 < 2)
+            {
+                if (bVar1 == 0)
+                {
+                    param1.DAT_3E = 1;
+                    param1.FUN_609C8(13, 0, 0);
+                }
+            }
+            else
+            {
+                if (bVar1 == 2)
+                {
+                    param1.FUN_60AB4();
+                    bVar2 = param1.frame.DAT_01;
+
+                    if (bVar2 == 3 || bVar2 == 11)
+                    {
+                        uVar4 = GameManager.FUN_64650();
+                        GameManager.instance.FUN_5C94C(param1, DAT_13E48[uVar4 & 1]);
+                    }
+                }
+            }
+        }
     }
 
     //FUN_FD30 (ST4)
@@ -2013,24 +2450,186 @@ public class ST4 : LevelManager
         }
     }
 
+    //FUN_1014C (ST4)
+    private void FUN_1014C(CriPlayer param1, CriPlayer param2)
+    {
+        short sVar1;
+        bool bVar2;
+        uint uVar3;
+        short sVar4;
+        int iVar5;
+
+        bVar2 = param1.FUN_60AB4();
+
+        if (bVar2)
+        {
+            param1.screen.y = 0;
+            uVar3 = GameManager.FUN_64650();
+            iVar5 = 13;
+
+            if ((uVar3 & 1) == 0)
+                iVar5 = 4;
+
+            param1.FUN_609C8(iVar5, 0, 0);
+            uVar3 = GameManager.FUN_64650();
+            GameManager.instance.FUN_5C94C(param1, DAT_13E48[uVar3 & 1]);
+        }
+
+        param1.FUN_65890();
+        param1.DAT_40.z = 0;
+        sVar1 = (short)Utilities.FUN_64838(param1.vr.y, 80, param1.UDAT_1D2);
+        param1.vr.y += sVar1;
+
+        if (param1.DAT_40.x == 0)
+        {
+            uVar3 = GameManager.FUN_64650();
+            sVar4 = 5;
+
+            if ((uVar3 & 1) != 0)
+                sVar4 = -5;
+
+            param1.DAT_40.x = sVar4;
+        }
+        else
+            param1.DAT_40.x = -param1.DAT_40.x;
+
+        if (2 < param1.DAT_148 - 6)
+        {
+            param1.DAT_3F = 1;
+            param1.DAT_3E--;
+            param1.UDAT_1D2 = (ushort)(param1.vr.y + 0x800 & 0xfff);
+        }
+
+        if (11 < param1.DAT_148)
+        {
+            param1.DAT_3E = 1;
+            param1.DAT_3F = 0;
+        }
+    }
+
     //FUN_10284 (ST4)
     private void FUN_10284(CriPlayer param1)
     {
         int iVar1;
-        CriSkinned oVar3;
+        uint uVar2;
+        int iVar3;
+        CriPlayer oVar3;
 
-        oVar3 = param1.DAT_154;
+        oVar3 = (CriPlayer)param1.DAT_154;
 
         if (param1.DAT_3E != 0)
             param1.DAT_40.y += param1.SDAT_1CC;
 
-        //iVar1 = Utilities.FUN_63160(param1.screen, oVar3.screen);
+        iVar1 = (int)Utilities.FUN_63160(param1.screen, oVar3.screen);
+        PTR_FUN_140FC[param1.DAT_3E](param1, oVar3);
+
+        if (param1.frame.DAT_01 == 5)
+        {
+            iVar3 = (int)GameManager.FUN_64650();
+
+            if (iVar3 == (iVar3 / 30) * 30)
+            {
+                uVar2 = GameManager.FUN_64650();
+                GameManager.instance.FUN_5C94C(param1, DAT_13E4C[uVar2 & 1]);
+            }
+        }
+    }
+
+    //FUN_10374 (ST4)
+    private void FUN_10374(CriPlayer param1)
+    {
+        param1.DAT_40.y = -60;
+        param1.SDAT_1CC = 6;
+        param1.PTR_120 = null;
+        param1.DAT_120 = 0;
+        param1.PTR_130 = null;
+        param1.DAT_130 = 0;
+        param1.DAT_40.z = 80;
+        param1.DAT_3E++;
+        param1.FUN_609C8(3, 1, 0);
+        param1.vr.y = param1.SDAT_1D8;
+        param1.DAT_11E |= 0x40;
+        param1.DAT_144 &= 0x7fff;
+    }
+
+    //FUN_10400 (ST4)
+    private void FUN_10400(CriPlayer param1)
+    {
+        bool bVar1;
+        CriInteract oVar2;
+
+        bVar1 = param1.FUN_60AB4();
+
+        if (!bVar1)
+            param1.FUN_65890();
+        else
+        {
+            oVar2 = param1.PDAT_1C8;
+
+            if (oVar2 != null)
+            {
+                oVar2.DAT_14++;
+                //...
+            }
+
+            //...
+        }
+    }
+
+    //FUN_10510 (ST4)
+    private void FUN_10510(CriPlayer param1)
+    {
+        PTR_FUN_1410C[param1.DAT_3E](param1);
+    }
+
+    //FUN_1054C (ST4)
+    private void FUN_1054C(CriPlayer param1)
+    {
+        param1.DAT_3E++;
+        param1.FUN_609C8(13, 0, 0);
+    }
+
+    //FUN_10584 (ST4)
+    private void FUN_10584(CriPlayer param1)
+    {
+        bool bVar1;
+        CriInteract oVar1;
+
+        bVar1 = param1.FUN_60AB4();
+
+        if (bVar1)
+        {
+            param1.DAT_3D = 1;
+            param1.DAT_3E = 0;
+            param1.DAT_3F = 0;
+            oVar1 = param1.PDAT_1C8;
+
+            if (oVar1 != null)
+                oVar1.BDAT_08 |= 1;
+
+            param1.PTR_120 = DAT_13E24;
+            param1.DAT_120 = 0;
+            param1.PTR_130 = DAT_13E24;
+            param1.DAT_130 = 0;
+            param1.DAT_144 |= 0x8000;
+            param1.DAT_11E &= 0xbf;
+            param1.DAT_13C = new Vector2Int(param1.screen.x, param1.screen.z);
+        }
+
+        param1.FUN_65890();
+    }
+
+    //FUN_10628 (ST4)
+    private void FUN_10628(CriPlayer param1)
+    {
+        PTR_FUN_14118[param1.DAT_3E](param1);
     }
 
     //FUN_10664 (ST4)
     private void FUN_10664(CriPlayer param1)
     {
         PTR_FUN_14120[param1.DAT_3D](param1);
+        PTR_FUN_14144[param1.DAT_3D](param1);
     }
 
     //FUN_10D80 (ST4)
@@ -2171,6 +2770,12 @@ public class ST4 : LevelManager
     public static void FUN_10E38(CriPlayer param1)
     {
         param1.FUN_10E38();
+    }
+
+    //FUN_112EC (ST4)
+    public static void FUN_112EC(CriPlayer param1)
+    {
+        return;
     }
 
     //FUN_11328 (ST4)

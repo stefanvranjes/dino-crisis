@@ -1149,6 +1149,17 @@ public class CriSkinned : CriObject
         DAT_174 &= 0x7f;
     }
 
+    public void FUN_6642C(bool param1)
+    {
+        if (param1)
+        {
+            DAT_174 |= 0x80;
+            return;
+        }
+
+        DAT_174 &= 0x7f;
+    }
+
     public void FUN_66460(bool param1)
     {
         if (param1)

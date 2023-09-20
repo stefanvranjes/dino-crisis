@@ -22600,6 +22600,90 @@ public class CriPlayer : CriSkinned
         }
     }
 
+    //FUN_3AB8 (ST4)
+    public void FUN_3AB8()
+    {
+        byte bVar1;
+        short sVar2;
+        bool bVar3;
+
+        Utilities.RotMatrixYXZ(ref vr, ref cTransform.rotation);
+
+        if (DAT_3C != 0)
+        {
+            if ((InventoryManager.DAT_B7A60[0] & 2) != 0)
+            {
+                FUN_66208();
+                return;
+            }
+
+            if ((DAT_18E & 0x80) != 0)
+            {
+                FUN_66208();
+                goto LAB_3C64;
+            }
+        }
+
+        DAT_34 = screen;
+
+        if (DAT_177 != 0)
+            DAT_177--;
+
+        if ((BDAT_1D0 & 1) != 0 && !GameManager.instance.DAT_6D)
+        {
+            BDAT_1D0 &= 0xfe;
+            GameManager.instance.DAT_28 = 4;
+        }
+
+        ST4.instance.FUN_E528(this);
+        sVar2 = (short)(SDAT_1F8 - 1);
+
+        if (0 < SDAT_1F8)
+        {
+            SDAT_1F8 = sVar2;
+
+            if (sVar2 << 0x10 < 0)
+                SDAT_1F8 = 0;
+        }
+
+        ST4.instance.FUN_AEF4(this);
+        //...
+        ST4.instance.FUN_E23C(this);
+        FUN_62F3C(ref DAT_40);
+        bVar3 = SceneManager.instance.FUN_80030(this, DAT_18D, (byte)DAT_12E);
+
+        if (!bVar3 || (DAT_128 & 0x400) == 0)
+            bVar1 = (byte)(DAT_162 & 0xfe);
+        else
+            bVar1 = (byte)(DAT_162 | 1);
+
+        DAT_162 = bVar1;
+        ST4.instance.FUN_3F64(this);
+
+        if (DAT_3C == 4)
+            ST4.instance.FUN_7BD0(this);
+
+        LAB_3C64:
+        if (DAT_1C7 == 0)
+            FUN_6449C(DAT_140);
+
+        DAT_48 = (sbyte)-(screen.y / 0x1a9);
+        bVar3 = SceneManager.instance.FUN_80500(this, (byte)BDAT_1C0);
+
+        if (!bVar3)
+            bVar1 = (byte)(DAT_162 & 0xfd);
+        else
+            bVar1 = (byte)(DAT_162 | 2);
+
+        DAT_162 = bVar1;
+        ST4.instance.FUN_DC10(this);
+
+        if (DAT_3C == 4 || (DAT_3C == 2 && DAT_3D == 2) || DAT_3C == 6)
+            flags &= 0xfffffffb;
+        else
+            flags |= 4;
+    }
+
     //FUN_10E38 (ST4)
     public void FUN_10E38()
     {

@@ -3248,7 +3248,7 @@ public class SceneManager : MonoBehaviour
         return sVar1;
     }
 
-    private bool FUN_80500(CriSkinned param1, byte param2)
+    public bool FUN_80500(CriSkinned param1, byte param2)
     {
         short sVar1;
         short sVar2;

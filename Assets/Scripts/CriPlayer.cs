@@ -37,6 +37,7 @@ public class CriPlayer : CriSkinned
     public Vector3Int[] PDAT_1D4; //0x1D4
     public byte DAT_1D4; //0x1D4
     public byte DAT_1D5; //0x1D5
+    public short SDAT_1D6; //0x1D6
     public byte DAT_1D6; //0x1D6
     public byte DAT_1D7; //0x1D7
     public sbyte BDAT_1D8; //0x1D8
@@ -1617,6 +1618,7 @@ public class CriPlayer : CriSkinned
         PDAT_1D4 = null;
         DAT_1D4 = 0;
         DAT_1D5 = 0;
+        SDAT_1D6 = 0;
         DAT_1D6 = 0;
         DAT_1D7 = 0;
         BDAT_1D8 = 0;

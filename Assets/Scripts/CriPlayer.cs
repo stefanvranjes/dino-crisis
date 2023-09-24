@@ -48,6 +48,7 @@ public class CriPlayer : CriSkinned
     public byte DAT_1DA; //0x1DA
     public sbyte DAT_1DB; //0x1DB
     public CriPlayer DAT_1DC; //0x1DC
+    public short SDAT_1DC; //0x1DC
     public byte BDAT_1DC; //0x1DC
     public byte DAT_1DD; //0x1DD
     public byte DAT_1DE; //0x1DE
@@ -1629,6 +1630,7 @@ public class CriPlayer : CriSkinned
         DAT_1DA = 0;
         DAT_1DB = 0;
         DAT_1DC = null;
+        SDAT_1DC = 0;
         BDAT_1DC = 0;
         DAT_1DD = 0;
         DAT_1DE = 0;

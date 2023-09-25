@@ -51,6 +51,7 @@ public class CriPlayer : CriSkinned
     public short SDAT_1DC; //0x1DC
     public byte BDAT_1DC; //0x1DC
     public byte DAT_1DD; //0x1DD
+    public short SDAT_1DE; //0x1DE
     public byte DAT_1DE; //0x1DE
     public byte DAT_1DF; //0x1DF
     public TodScriptableObject[] DAT_1E0; //0x1E0
@@ -1633,6 +1634,7 @@ public class CriPlayer : CriSkinned
         SDAT_1DC = 0;
         BDAT_1DC = 0;
         DAT_1DD = 0;
+        SDAT_1DE = 0;
         DAT_1DE = 0;
         DAT_1DF = 0;
         DAT_1E0 = null;

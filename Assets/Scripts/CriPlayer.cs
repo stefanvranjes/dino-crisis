@@ -88,6 +88,7 @@ public class CriPlayer : CriSkinned
     public sbyte DAT_1FB; //0x1FB
     public Vector3Int DAT_1FC; //0x1FC
     public short SDAT_1FC; //0x1FC
+    public uint UDAT_1FC; //0x1FC
     public short DAT_1FE; //0x1FE
     public short DAT_200; //0x200
     public short DAT_202; //0x202
@@ -1671,6 +1672,7 @@ public class CriPlayer : CriSkinned
         DAT_1FB = 0;
         DAT_1FC = Vector3Int.zero;
         SDAT_1FC = 0;
+        UDAT_1FC = 0;
         DAT_1FE = 0;
         DAT_200 = 0;
         DAT_202 = 0;

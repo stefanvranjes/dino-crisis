@@ -1152,7 +1152,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private int FUN_68C18(uint param1)
+    public int FUN_68C18(uint param1)
     {
         byte bVar1;
         uint uVar2;

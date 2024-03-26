@@ -171,6 +171,8 @@ public class ST4 : LevelManager
     private FUN_14120[] PTR_FUN_14120; //0x14120 (ST4)
     private FUN_14144[] PTR_FUN_14144; //0x14144 (ST4)
     public FUN_14194[] PTR_FUN_14194; //0x14194 (ST4)
+    private uint[] PTR_DAT_141B0 = new uint[] { 0x8017D000, 0x8017E000, 0x8017F000 }; //0x141B0 (ST4)
+    private byte[] PTR_DAT_145E0 = new byte[] { 4, 7, 45, 4, 8, 46, 4, 8, 47 }; //0x145E0 (ST4)
     private ushort DAT_1464C = 0; //0x1464C (ST4)
 
     protected override void Awake()
@@ -373,10 +375,10 @@ public class ST4 : LevelManager
             {
                 //...
             };
-            PTR_FUN_138B8=new FUN_138B8[]
+            PTR_FUN_138B8 = new FUN_138B8[]
             {
 
-            }
+            };
             PTR_FUN_13B7C = new FUN_13B7C[6]
             {
                 FUN_DC9C,
@@ -2666,6 +2668,9 @@ public class ST4 : LevelManager
                 if ((uVar1 & 0xffff) == 0)
                 {
                     if (-5000 - param1.screen.y < 0)
+                    {
+
+                    }
 
                 }
             }
@@ -4951,6 +4956,121 @@ public class ST4 : LevelManager
         LAB_11230:
         param1.PTR_120 = DAT_13E24;
         param1.DAT_120 = 0;
+    }
+
+    //FUN_11250 (ST4)
+    public void FUN_11250(CriPlayer param1)
+    {
+        if (param1.DAT_3E == 0)
+        {
+            param1.DAT_3E = 1;
+            param1.DAT_40 = new Vector3Int(0, 0, 0);
+            param1.FUN_609C8(12, 1, 10);
+            GameManager.instance.FUN_5C94C(param1, 3);
+            //...
+        }
+
+        param1.FUN_60AB4();
+        param1.DAT_1C0 &= 0xfffffffe;
+    }
+
+    //FUN_11364 (ST4)
+    public void FUN_11364(CriInteract param1)
+    {
+        byte bVar1;
+        CriStatic oVar2;
+        int iVar3;
+        int iVar4;
+        uint uVar5;
+        CriPlayer oVar6;
+
+        oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        
+        if ((oVar6.DAT_240 & 0xf0) == 0)
+        {
+            param1.FUN_5FF98();
+            InventoryManager.FUN_4A7E8(2, 9, false);
+            return;
+        }
+
+        InventoryManager.FUN_4A7E8(2, 9, true);
+        bVar1 = oVar6.DAT_240;
+        param1.DAT_02 = bVar1;
+        uVar5 = (uint)(bVar1 >> 4);
+        iVar3 = (int)(uVar5 + 31);
+        param1.DAT_04 = (byte)iVar3;
+        oVar2 = SceneManager.instance.DAT_7CDC[iVar3];
+        iVar4 = InventoryManager.instance.FUN_68C18(oVar6.DAT_240);
+        InventoryManager.FUN_4A7E8(11, (uint)iVar4, false);
+        oVar2.flags = 1;
+        oVar2.DAT_40 = null;
+        oVar6.DAT_240 = 0;
+        oVar6.FUN_4FE90(0);
+        oVar2.screen = oVar6.screen;
+        oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(PTR_DAT_141B0[uVar5 - 1]);
+        oVar2.cCollider = null;
+        oVar2.vr = new Vector3Int(0, 0, 0);
+        oVar2.flags |= 2;
+        param1.DAT_08 = 0;
+        param1.DAT_0A = 0;
+        param1.DAT_0C = 0;
+        param1.DAT_0E = 0;
+        param1.DAT_03++;
+    }
+
+    //FUN_114D4 (ST4)
+    private void FUN_114D4(CriInteract param1)
+    {
+        CriStatic oVar1;
+
+        oVar1 = SceneManager.instance.DAT_7CDC[param1.DAT_04];
+        oVar1.vr.x += 0x200;
+        param1.DAT_0A += 0x20;
+        oVar1.screen.x += param1.DAT_08;
+        oVar1.screen.y += param1.DAT_0A;
+        oVar1.screen.z += param1.DAT_0C;
+
+        if (0 < oVar1.screen.y)
+        {
+            oVar1.screen.y = 0;
+            GameManager.instance.FUN_5C94C(oVar1, 19);
+            param1.DAT_0A = 0x280;
+            oVar1.vr.x = 0;
+            oVar1.vr.z = 0x400;
+            param1.DAT_03++;
+        }
+    }
+
+    //FUN_115B0 (ST4)
+    private void FUN_115B0(CriInteract param1)
+    {
+        short sVar1;
+        CriStatic oVar2;
+
+        oVar2 = SceneManager.instance.DAT_7CDC[param1.DAT_04];
+        oVar2.vr.y += param1.DAT_0A;
+        sVar1 = param1.DAT_0A;
+        param1.DAT_0A = (short)(sVar1 - 0x20);
+
+        if (sVar1 == 0x20)
+        {
+            //FUN_1A6B8
+            oVar2.cCollider = null;
+            param1.DAT_03++;
+        }
+
+        oVar2.screen.x += param1.DAT_08;
+        oVar2.screen.z += param1.DAT_0C;
+    }
+
+    //FUN_120C4 (ST4)
+    private void FUN_120C4(CriInteract param1)
+    {
+        if (!param1.DAT_09 && param1.DAT_0B == param1.DAT_16)
+        {
+            InventoryManager.FUN_4A7E8(4, PTR_DAT_145E0[param1.DAT_02 * 3], true);
+            param1.DAT_03++;
+        }
     }
 
     //FUN_252C (ST4)

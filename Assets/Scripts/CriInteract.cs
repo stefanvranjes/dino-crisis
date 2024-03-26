@@ -800,7 +800,7 @@ public class CriInteract : MonoBehaviour
         }
     }
 
-    private void FUN_5FF98()
+    public void FUN_5FF98()
     {
         DAT_00 = 0;
     }

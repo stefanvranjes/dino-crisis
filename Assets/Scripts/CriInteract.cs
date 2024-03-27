@@ -11,10 +11,12 @@ public class CriInteract : MonoBehaviour
     public byte DAT_04;
     public byte DAT_05;
     public byte DAT_06;
+    public byte DAT_07;
     public short DAT_08;
     public byte BDAT_08;
     public CriSkinned PDAT_08;
     public bool DAT_09;
+    public byte BDAT_09;
     public short DAT_0A;
     public sbyte BDAT_0A;
     public sbyte DAT_0B;
@@ -23,6 +25,7 @@ public class CriInteract : MonoBehaviour
     public byte DAT_0D;
     public short DAT_0E;
     public byte BDAT_0E;
+    public Vector3Int VDAT_0E;
     public byte DAT_0F;
     public Vector3Int VDAT_10;
     public byte DAT_10;

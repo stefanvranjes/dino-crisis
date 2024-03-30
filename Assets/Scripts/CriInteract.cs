@@ -23,6 +23,7 @@ public class CriInteract : MonoBehaviour
     public short DAT_0C;
     public byte BDAT_0C;
     public Vector3Int VDAT_0C;
+    public uint UDAT_0C;
     public byte DAT_0D;
     public short DAT_0E;
     public byte BDAT_0E;
@@ -34,11 +35,19 @@ public class CriInteract : MonoBehaviour
     public sbyte DAT_12;
     public sbyte DAT_13;
     public sbyte DAT_14;
+    public short SDAT_14;
+    public sbyte DAT_15;
     public ushort DAT_16;
-    public byte DAT_17;
+    public short SDAT_16;
+    public byte BDAT_16;
+    public sbyte DAT_17;
     public CriBone PTR_18;
     public byte DAT_18;
+    public short SDAT_18;
     public byte DAT_19;
+    public byte DAT_1A;
+    public short SDAT_1A;
+    public byte DAT_1B;
     public CriObject DAT_1C;
     public CriSkinned DAT_20;
     private delegate void FUN_54(); //0x54 (ST1)
@@ -200,6 +209,7 @@ public class CriInteract : MonoBehaviour
         DAT_0C = 0;
         BDAT_0C = 0;
         VDAT_0C = Vector3Int.zero;
+        UDAT_0C = 0;
         DAT_0D = 0;
         DAT_0E = 0;
         BDAT_0E = 0;
@@ -211,11 +221,19 @@ public class CriInteract : MonoBehaviour
         DAT_12 = 0;
         DAT_13 = 0;
         DAT_14 = 0;
+        SDAT_14 = 0;
+        DAT_15 = 0;
         DAT_16 = 0;
+        SDAT_16 = 0;
+        BDAT_16 = 0;
         DAT_17 = 0;
         PTR_18 = null;
         DAT_18 = 0;
+        SDAT_18 = 0;
         DAT_19 = 0;
+        DAT_1A = 0;
+        SDAT_1A = 0;
+        DAT_1B = 0;
         DAT_1C = null;
         DAT_20 = null;
     }

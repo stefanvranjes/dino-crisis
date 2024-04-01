@@ -67,8 +67,10 @@ public class CriPlayer : CriSkinned
     public byte BDAT_1E8; //0x1E8
     public ushort DAT_1E8; //0x1E8
     public short DAT_1EA; //0x1EA
+    public byte DAT_1EB; //0x1EB
     public byte BDAT_1EC; //0x1EC
     public short DAT_1EC; //0x1EC
+    public byte DAT_1ED; //0x1ED
     public short DAT_1EE; //0x1EE
     public byte DAT_1EF; //0x1EF
     public CriPlayer DAT_1F0; //0x1F0
@@ -1652,7 +1654,9 @@ public class CriPlayer : CriSkinned
         DAT_1E8 = 0;
         BDAT_1EC = 0;
         DAT_1EA = 0;
+        DAT_1EB = 0;
         DAT_1EC = 0;
+        DAT_1ED = 0;
         DAT_1EE = 0;
         DAT_1EF = 0;
         DAT_1F0 = null;

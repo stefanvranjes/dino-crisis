@@ -1336,11 +1336,6 @@ public class ST5 : LevelManager
         GameManager.instance.DAT_38 = 0;
     }
 
-    private void FUN_5FF98(CriInteract param1)
-    {
-        param1.FUN_5FF98();
-    }
-
     //FUN_B54 (ST5)
     public static void FUN_B54(CriInteract param1)
     {

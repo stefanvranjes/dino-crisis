@@ -48,6 +48,7 @@ public class CriPlayer : CriSkinned
     public byte DAT_1DA; //0x1DA
     public sbyte DAT_1DB; //0x1DB
     public CriPlayer DAT_1DC; //0x1DC
+    public uint UDAT_1DC; //0x1DC
     public short SDAT_1DC; //0x1DC
     public byte BDAT_1DC; //0x1DC
     public byte DAT_1DD; //0x1DD
@@ -59,6 +60,7 @@ public class CriPlayer : CriSkinned
     public byte BDAT_1E2; //0x1E2
     public ushort DAT_1E2; //0x1E2
     public byte DAT_1E3; //0x1E3
+    public Vector4Int VDAT_1E4; //0x1E4
     public ushort UDAT_1E4; //0x1E4
     public byte DAT_1E4; //0x1E4
     public byte DAT_1E5; //0x1E5
@@ -1634,6 +1636,7 @@ public class CriPlayer : CriSkinned
         DAT_1DA = 0;
         DAT_1DB = 0;
         DAT_1DC = null;
+        UDAT_1DC = 0;
         SDAT_1DC = 0;
         BDAT_1DC = 0;
         DAT_1DD = 0;
@@ -1645,6 +1648,7 @@ public class CriPlayer : CriSkinned
         BDAT_1E2 = 0;
         DAT_1E2 = 0;
         DAT_1E3 = 0;
+        VDAT_1E4 = Vector4Int.zero;
         UDAT_1E4 = 0;
         DAT_1E4 = 0;
         DAT_1E5 = 0;

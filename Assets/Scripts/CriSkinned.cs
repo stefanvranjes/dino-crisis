@@ -1014,6 +1014,13 @@ public class CriSkinned : CriObject
         DAT_167 = param3;
     }
 
+    public void FUN_65D0C(byte param1, byte param2)
+    {
+        DAT_164 = param1;
+        DAT_165 = 0;
+        DAT_167 = param2;
+    }
+
     public bool FUN_65D78(ref UNK_9B314 param1, byte param2, byte param3)
     {
         bool bVar2;

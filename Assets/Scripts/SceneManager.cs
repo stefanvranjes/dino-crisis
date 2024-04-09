@@ -33,7 +33,10 @@ public class SceneManager : MonoBehaviour
     public Trigger[] triggers; //gp+1e8h
     public RenderQueue renderQueue;
     public byte DAT_270; //gp+270h
+    public bool DAT_271; //gp+271h
     public bool DAT_272; //gp+272h
+    public Tmd2ScriptableObject DAT_274; //gp+274h
+    public TodScriptableObject[] DAT_278; //gp+278h
     public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriParticle[] DAT_5FCC; //gp+5fcch...gp+7cdch
@@ -2909,6 +2912,33 @@ public class SceneManager : MonoBehaviour
         }
 
         return psVar1;
+    }
+
+    public bool FUN_65BA8(CriSkinned param1)
+    {
+        bool bVar1;
+        CriSkinned oVar2;
+        Vector2Int[] local_18;
+        Vector4Int local_10;
+
+        oVar2 = FUN_65B30(param1);
+        bVar1 = false;
+
+        if (oVar2 != null)
+        {
+            if (oVar2.health < 1)
+                bVar1 = false;
+            else
+            {
+                local_18 = new Vector2Int[2];
+                local_18[0] = new Vector2Int(param1.screen.x, param1.screen.z);
+                local_18[1] = new Vector2Int(DAT_27C[10].screen.x, DAT_27C[10].screen.z);
+                local_10 = new Vector4Int(oVar2.screen.x, 0, oVar2.screen.z, 0x204);
+                bVar1 = GameManager.instance.FUN_84338(local_18, local_10);
+            }
+        }
+
+        return bVar1;
     }
 
     public uint FUN_65FD8(CriSkinned param1)

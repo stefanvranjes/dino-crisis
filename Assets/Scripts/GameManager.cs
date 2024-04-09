@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_47; //gp+47h
     public Vector3Int playerSpawnPos; //gp+4ch
     public short playerSpawnRotY; //gp+52h
-    public byte DAT_55; //gp+55h
+    public bool DAT_55; //gp+55h
     public byte DAT_56; //gp+56h
     public uint DAT_64; //gp+64h
     public uint DAT_68; //gp+68h
@@ -571,7 +571,7 @@ public class GameManager : MonoBehaviour
         CriTrigger pbVar4;
         uint uVar5;
 
-        DAT_55 = 0;
+        DAT_55 = false;
         DAT_21 = 6;
         DAT_28++;
         FUN_6E6C8();
@@ -1699,6 +1699,22 @@ public class GameManager : MonoBehaviour
         }
 
         param3 += param4;
+    }
+
+    public void FUN_5DC54()
+    {
+        CriTracker puVar1;
+        uint uVar2;
+
+        uVar2 = 0;
+
+        do
+        {
+            puVar1 = cTrackers[uVar2];
+            puVar1.DAT_25 = 0x86;
+            puVar1.DAT_26 = 2;
+            uVar2++;
+        } while (uVar2 < 3);
     }
 
     private void FUN_5DD54()

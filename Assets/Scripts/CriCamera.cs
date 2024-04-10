@@ -51,6 +51,8 @@ public class CriCamera : CriObject
     private FUN_18448[] PTR_FUN_18448;
     private FUN_99404[] PTR_FUN_99404;
     public FUN_8C[] PTR_FUN_9C618;
+    public FUN_8C[] PTR_FUN_16ACC;
+    public FUN_8C[] PTR_FUN_16AD4;
     public static CameraMotion DAT_99498;
 
     protected override void Awake()
@@ -113,6 +115,16 @@ public class CriCamera : CriObject
         {
             FUN_2EF40,
             FUN_2EFE8
+        };
+        PTR_FUN_16ACC = new FUN_8C[2]
+        {
+            FUN_C59C,
+            FUN_C64C
+        };
+        PTR_FUN_16AD4 = new FUN_8C[2]
+        {
+            FUN_C674,
+            FUN_C79C
         };
     }
 
@@ -1198,5 +1210,70 @@ public class CriCamera : CriObject
         aVar2 = ST2.instance.DAT_7D44;
         SceneManager.instance.FUN_26504(0, aVar2[iVar1], aVar2[iVar1 + 1], aVar2[iVar1 + 2]);
         SceneManager.instance.FUN_269C8(oVar3.screen, DAT_48);
+    }
+
+    //FUN_C064 (ST6)
+    public void FUN_C064()
+    {
+        return;
+    }
+
+    //FUN_C59C (ST6)
+    private void FUN_C59C()
+    {
+        CriObject oVar1;
+        Vector3Int local_40;
+        Vector3Int local_38;
+        Matrix3x3 auStack48;
+
+        oVar1 = DAT_64;
+        auStack48 = new Matrix3x3();
+        local_40 = new Vector3Int(0, 0, SceneManager.instance.DAT_27C[10].screen.z - oVar1.screen.z >> 1);
+        Utilities.RotMatrix(ref oVar1.vr, ref auStack48);
+        local_40 = Utilities.ApplyMatrixSV(ref auStack48, ref local_40);
+        local_38 = new Vector3Int(oVar1.screen.x + local_40.x, oVar1.screen.y - 1500, oVar1.screen.z + local_40.z);
+        SceneManager.instance.FUN_269C8(local_38, DAT_48);
+    }
+
+    //FUN_C64C (ST6)
+    private void FUN_C64C()
+    {
+        SceneManager.instance.FUN_269C8(DAT_40, DAT_48);
+    }
+
+    //FUN_C674 (ST6)
+    private void FUN_C674()
+    {
+        CriObject oVar1;
+        Vector3Int local_48;
+        Vector3Int local_40;
+        Vector3Int local_38;
+        Matrix3x3 auStack48;
+
+        oVar1 = DAT_64;
+        auStack48 = new Matrix3x3();
+        local_48 = new Vector3Int(1500, 0, 3000);
+        Utilities.RotMatrix(ref oVar1.vr, ref auStack48);
+        local_48 = Utilities.ApplyMatrixSV(ref auStack48, ref local_48);
+        local_38 = new Vector3Int(oVar1.screen.x + local_48.x, oVar1.screen.y, local_48.z);
+        local_48 = new Vector3Int(0, 0, 1000);
+        local_38.z = oVar1.screen.z + local_38.z;
+        Utilities.RotMatrix(ref oVar1.vr, ref auStack48);
+        local_48 = Utilities.ApplyMatrixSV(ref auStack48, ref local_48);
+        local_40 = new Vector3Int(oVar1.screen.x + local_48.x, oVar1.screen.y - 2000, oVar1.screen.z + local_48.z);
+        SceneManager.instance.FUN_264C4(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
+        SceneManager.instance.FUN_26504(0, (short)local_38.x, (short)local_38.y, (short)local_38.z);
+        SceneManager.instance.FUN_269C8(local_40, local_38);
+    }
+
+    //FUN_C79C (ST6)
+    private void FUN_C79C()
+    {
+        DAT_7C.y -= 20;
+        SceneManager.instance.FUN_269C8(DAT_40, DAT_48);
+        FUN_294B8((Vector2Int)DAT_7C, (short)DAT_7C.z);
+        vr.x = DAT_7C.x;
+        vr.y = DAT_7C.y;
+        DAT_3C = (ushort)DAT_7C.z;
     }
 }

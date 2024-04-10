@@ -2941,6 +2941,21 @@ public class SceneManager : MonoBehaviour
         return bVar1;
     }
 
+    public void FUN_65D1C(CriSkinned param1, CriInteract.FUN_0C param2, sbyte param3)
+    {
+        CriInteract oVar1;
+
+        oVar1 = FUN_5FF08();
+
+        if (oVar1 != null)
+        {
+            oVar1.DAT_01 = 10;
+            oVar1.BDAT_0A = param3;
+            oVar1.PTR_FUN_0C = param2;
+            oVar1.PTR_10 = param1;
+        }
+    }
+
     public uint FUN_65FD8(CriSkinned param1)
     {
         int iVar1;

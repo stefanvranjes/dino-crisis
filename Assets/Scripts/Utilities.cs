@@ -3239,6 +3239,43 @@ public static class Utilities
         return (uint)((sVar1 - param3) + param4 & 0xfff) < (uint)(param4 << 1);
     }
 
+    public static void FUN_6608C(WallCollider param1, out Vector3Int param2)
+    {
+        short sVar1;
+
+        param2 = new Vector3Int();
+
+        switch (param1.DAT_00)
+        {
+            case 0:
+            case 4:
+                sVar1 = (short)(param1.DAT_04.x + (param1.DAT_08.x >> 1));
+                break;
+            case 1:
+            case 6:
+                param2.x = param1.DAT_04.x;
+                param2.z = param1.DAT_04.y;
+                return;
+            case 2:
+                sVar1 = (short)(param1.DAT_04.x + (param1.DAT_08.x >> 1));
+                goto LAB_660F8;
+            case 3:
+                sVar1 = (short)(param1.DAT_04.x - (param1.DAT_08.x >> 1));
+                break;
+            case 5:
+                sVar1 = (short)(param1.DAT_04.x - (param1.DAT_08.x >> 1));
+                LAB_660F8:
+                param2.x = sVar1;
+                param2.z = (short)(param1.DAT_04.y - (param1.DAT_08.y >> 1));
+                return;
+            default:
+                return;
+        }
+
+        param2.x = sVar1;
+        param2.z = param1.DAT_04.y + (param1.DAT_08.y >> 1);
+    }
+
     public static void FUN_665D8(ref Vector3Int param1, ref Vector3Int param2, ref Vector3Int param3, int param4)
     {
         short sVar1;

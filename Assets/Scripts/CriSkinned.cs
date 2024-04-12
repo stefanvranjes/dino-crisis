@@ -1056,6 +1056,41 @@ public class CriSkinned : CriObject
         return bVar2;
     }
 
+    public int FUN_6615C()
+    {
+        short sVar1;
+        WallCollider puVar2;
+        ushort uVar3;
+        Vector3Int local_10;
+
+        puVar2 = DAT_134;
+        uVar3 = 0;
+
+        switch (puVar2.DAT_00)
+        {
+            case 0:
+                uVar3 = (ushort)((DAT_142 - 1 & 0xff) << 10);
+                goto LAB_661A0;
+            case 1:
+            case 6:
+                local_10 = new Vector3Int(puVar2.DAT_04.x, 0, puVar2.DAT_04.y);
+                break;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                Utilities.FUN_6608C(puVar2, out local_10);
+                break;
+            default:
+                goto LAB_661A0;
+        }
+
+        sVar1 = (short)Utilities.FUN_615EC(screen, local_10);
+        uVar3 = (ushort)(sVar1 + 0x800 & 0xfff);
+        LAB_661A0:
+        return (short)uVar3;
+    }
+
     public void FUN_66208()
     {
         long lVar3;

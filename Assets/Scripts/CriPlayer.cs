@@ -9028,7 +9028,7 @@ public class CriPlayer : CriSkinned
         DAT_164 = 3;
     }
 
-    private void FUN_538CC()
+    public void FUN_538CC()
     {
         DAT_1F8 = 0;
         DAT_164 = 10;

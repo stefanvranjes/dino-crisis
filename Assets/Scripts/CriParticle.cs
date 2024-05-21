@@ -46,6 +46,7 @@ public class CriParticle : CriObject
     public ushort DAT_62; //0x62
     public byte DAT_64; //0x64
     public byte DAT_65; //0x65
+    public CriStatic[] PTR_68; //0x68
     public byte DAT_68; //0x68
     public byte DAT_69; //0x69
     public short SDAT_6A; //0x6A
@@ -55,7 +56,11 @@ public class CriParticle : CriObject
     public int IDAT_6C; //0x6C
     public short DAT_6E; //0x6E
     public Vector3Int DAT_70; //0x70
+    public byte DAT_74; //0x74
+    public byte DAT_75; //0x75
     public sbyte DAT_78; //0x78
+    public byte DAT_7A; //0x7A
+    public byte DAT_7B; //0x7B
     private delegate void FUN_7704(); //0x7704 (ST1)
     private delegate void FUN_7710(); //0x7710 (ST1)
     private delegate void FUN_780C(); //0x780C (ST1)
@@ -274,6 +279,7 @@ public class CriParticle : CriObject
         DAT_64 = 0;
         DAT_65 = 0;
         DAT_68 = 0;
+        PTR_68 = new CriStatic[2];
         DAT_69 = 0;
         SDAT_6A = 0;
         DAT_6A = 0;
@@ -282,6 +288,8 @@ public class CriParticle : CriObject
         IDAT_6C = 0;
         DAT_6E = 0;
         DAT_70 = Vector3Int.zero;
+        DAT_74 = 0;
+        DAT_75 = 0;
         DAT_78 = 0;
     }
 

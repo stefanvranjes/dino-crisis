@@ -24,6 +24,7 @@ public class CriInteract : MonoBehaviour
     public byte BDAT_0C;
     public Vector3Int VDAT_0C;
     public uint UDAT_0C;
+    public CriPlayer PDAT_0C;
     public FUN_0C PTR_FUN_0C;
     public byte DAT_0D;
     public short DAT_0E;

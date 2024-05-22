@@ -58,6 +58,7 @@ public class CriParticle : CriObject
     public Vector3Int DAT_70; //0x70
     public byte DAT_74; //0x74
     public byte DAT_75; //0x75
+    public short DAT_76; //0x76
     public sbyte DAT_78; //0x78
     public byte DAT_7A; //0x7A
     public byte DAT_7B; //0x7B
@@ -290,6 +291,7 @@ public class CriParticle : CriObject
         DAT_70 = Vector3Int.zero;
         DAT_74 = 0;
         DAT_75 = 0;
+        DAT_76 = 0;
         DAT_78 = 0;
     }
 
@@ -504,7 +506,7 @@ public class CriParticle : CriObject
         FUN_606D8();
     }
 
-    private void FUN_451A4()
+    public void FUN_451A4()
     {
         Vector3Int local_10;
 

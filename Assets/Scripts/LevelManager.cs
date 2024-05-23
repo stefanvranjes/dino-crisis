@@ -124,6 +124,11 @@ public class LevelManager : MonoBehaviour
         } while (iVar3 != -1);
     }
 
+    public void FUN_60070()
+    {
+        //...
+    }
+
     public static void FUN_20A98(CriInteract param1)
     {
         param1.FUN_20A98();

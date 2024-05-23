@@ -33,10 +33,12 @@ public class CriInteract : MonoBehaviour
     public byte DAT_0F;
     public CriObject PTR_10;
     public Vector3Int VDAT_10;
+    public ushort UDAT_10;
     public byte DAT_10;
     public byte DAT_11;
     public sbyte DAT_12;
     public sbyte DAT_13;
+    public CriObject PDAT_14;
     public sbyte DAT_14;
     public short SDAT_14;
     public sbyte DAT_15;
@@ -221,11 +223,13 @@ public class CriInteract : MonoBehaviour
         DAT_0F = 0;
         PTR_10 = null;
         VDAT_10 = Vector3Int.zero;
+        UDAT_10 = 0;
         DAT_10 = 0;
         DAT_11 = 0;
         DAT_12 = 0;
         DAT_13 = 0;
         DAT_14 = 0;
+        PDAT_14 = null;
         SDAT_14 = 0;
         DAT_15 = 0;
         DAT_16 = 0;

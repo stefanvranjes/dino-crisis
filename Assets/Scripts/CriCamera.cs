@@ -1323,4 +1323,49 @@ public class CriCamera : CriObject
         vr.y = DAT_7C.y;
         DAT_3C = (ushort)DAT_7C.z;
     }
+    
+    //FUN_14C90 (ST6)
+    public void FUN_14C90()
+    {
+        int iVar1;
+        bool bVar2;
+        Vector3Int local_18;
+        Vector3Int local_10;
+
+        bVar2 = InventoryManager.FUN_4A87C(3, 0x3d);
+
+        if (bVar2)
+        {
+            InventoryManager.FUN_4A7E8(3, 0x3d, false);
+            InventoryManager.FUN_4A7E8(3, 0x3b, false);
+            DAT_3E = 0;
+            SDAT_2E = 0;
+            DAT_92 = 0;
+            DAT_90 = 0;
+            DAT_36 = 0;
+            DAT_26 = 0;
+            DAT_8B = 0;
+            DAT_8A = 0;
+        }
+
+        bVar2 = InventoryManager.FUN_4A87C(3, 0x3b);
+        iVar1 = GameManager.instance.DAT_922C;
+
+        if (bVar2)
+        {
+            InventoryManager.FUN_4A7E8(3, 0x3b, false);
+            DAT_26 = ST6.instance.DAT_17230[iVar1 * 4];
+            DAT_36 = ST6.instance.DAT_17230[iVar1 * 4 + 1];
+            SDAT_2E = ST6.instance.DAT_17230[iVar1 * 4 + 2];
+            DAT_3E = ST6.instance.DAT_17230[iVar1 * 4 + 3];
+            DAT_8B = 2;
+            DAT_8A = 2;
+        }
+
+        local_18 = new Vector3Int(ST6.instance.DAT_17208[iVar1 * 3] + ST6.instance.DAT_174E4,
+                                  ST6.instance.DAT_17208[iVar1 * 3 + 1], ST6.instance.DAT_17208[iVar1 * 3 + 2]);
+        local_10 = new Vector3Int(ST6.instance.DAT_1721C[iVar1 * 3], ST6.instance.DAT_1721C[iVar1 * 3 + 1],
+                                  ST6.instance.DAT_1721C[iVar1 * 3 + 2]);
+        SceneManager.instance.FUN_269C8(local_18, local_10);
+    }
 }

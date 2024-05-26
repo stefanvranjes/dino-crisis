@@ -99,6 +99,7 @@ public class ST6 : LevelManager
     private delegate void FUN_171A8(CriInteract i); //0x171A8 (ST6)
     private delegate void FUN_171B4(CriInteract i); //0x171B4 (ST6)
     private delegate void FUN_171D8(CriInteract i); //0x171D8 (ST6)
+    private delegate void FUN_171FC(CriInteract i); //0x171FC (ST6)
     private FUN_162DC[] PTR_FUN_162DC; //0x162DC (ST6)
     private Vector3Int DAT_16314 = new Vector3Int(-0x3000, -0x19A0, -0x2900); //0x16314
     private CapsuleCollider[] DAT_16488; //0x16488 (ST6)
@@ -211,6 +212,10 @@ public class ST6 : LevelManager
     private FUN_171B4[] PTR_FUN_171B4; //0x171B4 (ST6)
     private byte[] DAT_171D4 = new byte[] { 1, 0, 0, 148 };
     private FUN_171D8[] PTR_FUN_171D8; //0x171D8 (ST6)
+    private FUN_171FC[] PTR_FUN_171FC; //0x171FC (ST6)
+    public short[] DAT_17208 = new short[] { 768, -3646, -19660, 7184, 11458, 6708, -32, -3840 };
+    public short[] DAT_1721C = new short[] { -20224, 0, -1639, -5528, -27728, -3079, -8344, -27984, -1776, -4788, -27553, 0 };
+    public short[] DAT_17230 = new short[] { 50, 32, 25, 25, 50, 32, 25, 25, 0, 16384, 16, 25, 2850, 500, -3500, 5120, 5, 2850, 600, -2800 };
     private ushort DAT_173F0; //0x173F0 (ST6)
     private sbyte[] DAT_173F4 = new sbyte[20]; //0x173F4 (ST6)
     private byte[] DAT_17414 = new byte[16]; //0x17414 (ST6)
@@ -219,6 +224,7 @@ public class ST6 : LevelManager
     private ushort DAT_17474; //0x17474 (ST6)
     private ushort DAT_17476; //0x17476 (ST6)
     private byte DAT_17478; //0x17478 (ST6)
+    public short DAT_174E4; //0x174E4 (ST6)
 
     protected override void Awake()
     {
@@ -655,19 +661,24 @@ public class ST6 : LevelManager
                 FUN_11FD8,
                 FUN_5FF98
             };
-            PTR_FUN_171B4 = new FUN_171B4[]
+            PTR_FUN_171B4 = new FUN_171B4[7]
             {
                 FUN_12D68,
                 FUN_12EC8,
                 FUN_12FE4, 
                 FUN_131B4, 
                 FUN_132E0, 
-                FUN_1346C
+                FUN_1346C, 
+                FUN_13698
             };
             PTR_FUN_171D8 = new FUN_171D8[2]
             {
                 FUN_144E4,
                 FUN_14560
+            };
+            PTR_FUN_171FC = new FUN_171FC[]
+            {
+
             };
         }
     }
@@ -8381,6 +8392,79 @@ public class ST6 : LevelManager
         }
     }
 
+    //FUN_13698 (ST6)
+    private void FUN_13698(CriInteract param1)
+    {
+        CriStatic oVar1;
+        short sVar2;
+        bool bVar3;
+
+        if (param1.DAT_02 < 6)
+        {
+            switch (param1.DAT_02)
+            {
+                case 0:
+                    GameManager.instance.FUN_5C94C(null, 145);
+                    GameManager.instance.FUN_5C94C(null, 146);
+                    param1.DAT_02++;
+                    break;
+                case 1:
+                    FUN_1386C(param1);
+
+                    if (param1.DAT_02 == 2)
+                    {
+                        param1.DAT_04 = 0;
+                        param1.PTR_10.flags |= 2;
+                        ((CriStatic)param1.PTR_10).DAT_4A = 950;
+                    }
+
+                    break;
+                case 2:
+                    sVar2 = (short)FUN_13B04(param1);
+                    oVar1 = SceneManager.instance.DAT_7CDC[3];
+
+                    if (param1.PTR_10.screen.y == sVar2)
+                    {
+                        param1.PTR_10 = oVar1;
+                        oVar1.screen.y = sVar2;
+                        oVar1.flags &= 0xfffffffd;
+                        oVar1.DAT_4A = 1000;
+                        param1.BDAT_16 = 0;
+                        param1.DAT_04 = 1;
+                        param1.DAT_02++;
+                    }
+
+                    break;
+                case 3:
+                    FUN_13B04(param1);
+                    bVar3 = InventoryManager.FUN_4A87C(3, 0x20);
+
+                    if (bVar3)
+                    {
+                        InventoryManager.FUN_4A7E8(3, 0x20, false);
+                        param1.DAT_02++;
+                    }
+
+                    break;
+                case 4:
+                    sVar2 = (short)FUN_13B04(param1);
+
+                    if (param1.PDAT_08.screen.y == sVar2)
+                    {
+                        param1.PTR_10.screen.y = sVar2;
+                        param1.PTR_10.flags |= 2;
+                        ((CriStatic)param1.PTR_10).DAT_4A = 950;
+                        param1.DAT_02++;
+                    }
+
+                    break;
+                case 5:
+                    FUN_13E98(param1);
+                    break;
+            }
+        }
+    }
+
     //FUN_1386C (ST6)
     private void FUN_1386C(CriInteract param1)
     {
@@ -9174,7 +9258,20 @@ public class ST6 : LevelManager
     //FUN_14C04 (ST6)
     public static void FUN_14C04(CriInteract param1)
     {
-        return;
+        bool bVar1;
+        CriCamera cVar2;
+
+        instance.PTR_FUN_171FC[param1.DAT_03](param1);
+        bVar1 = InventoryManager.FUN_4A87C(3, 0x3c);
+
+        if (bVar1)
+        {
+            InventoryManager.FUN_4A7E8(3, 0x3c, false);
+            InventoryManager.FUN_4A7E8(3, 0x3a, true);
+            cVar2 = SceneManager.instance.cCamera;
+            cVar2.DAT_70 = 1;
+            cVar2.PTR_FUN_8C = cVar2.FUN_14C90;
+        }
     }
 
     //FUN_14EA8 (ST6)

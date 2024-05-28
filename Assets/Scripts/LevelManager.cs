@@ -224,6 +224,11 @@ public class LevelManager : MonoBehaviour
         param1.FUN_45E70();
     }
 
+    public static void FUN_464F8(CriParticle param1)
+    {
+        param1.FUN_464F8();
+    }
+
     public static void FUN_46814(CriParticle param1)
     {
         param1.FUN_46814();

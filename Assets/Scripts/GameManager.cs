@@ -1799,7 +1799,7 @@ public class GameManager : MonoBehaviour
         return PTR_DAT_9E724[DAT_9AA0 >> 8][(byte)DAT_9AA0].sceneId;
     }
 
-    private void FUN_5E130(int param1, sbyte param2, byte param3)
+    public void FUN_5E130(int param1, sbyte param2, byte param3)
     {
         GntScriptableObject tVar3;
         CriTracker tVar1;

@@ -46,6 +46,7 @@ public class CriParticle : CriObject
     public ushort DAT_62; //0x62
     public byte DAT_64; //0x64
     public byte DAT_65; //0x65
+    public int IDAT_68; //0x68
     public CriStatic[] PTR_68; //0x68
     public byte DAT_68; //0x68
     public byte DAT_69; //0x69
@@ -54,8 +55,10 @@ public class CriParticle : CriObject
     public byte DAT_6B; //0x6B
     public byte DAT_6C; //0x6C
     public int IDAT_6C; //0x6C
+    public Vector3Int VDAT_6C; //0x6C
     public short DAT_6E; //0x6E
     public Vector3Int DAT_70; //0x70
+    public Vector3Int VDAT_74; //0x74
     public byte DAT_74; //0x74
     public byte DAT_75; //0x75
     public short DAT_76; //0x76
@@ -78,6 +81,7 @@ public class CriParticle : CriObject
     private delegate void FUN_9C890();
     private delegate void FUN_9C8A4();
     private delegate void FUN_9CAD0();
+    private delegate void FUN_9CAF0();
     private delegate void FUN_9CBBC();
     private delegate void FUN_9CBD4();
     private FUN_7704[] PTR_FUN_7704; //0x7704 (ST1)
@@ -106,6 +110,8 @@ public class CriParticle : CriObject
     private FUN_9C890[] PTR_FUN_9C890;
     private FUN_9C8A4[] PTR_FUN_9C8A4;
     private FUN_9CAD0[] PTR_FUN_9CAD0;
+    private static uint[] DAT_9CAE4 = new uint[3] { 0x8019e700, 0x8019e708, 0x8019e710 };
+    private FUN_9CAF0[] PTR_FUN_9CAF0;
     private static uint DAT_9CAE0 = 0;
     private static UNK_9CB94[] PTR_DAT_9CB94;
     private FUN_9CBBC[] PTR_FUN_9CBBC;
@@ -230,6 +236,12 @@ public class CriParticle : CriObject
             FUN_461E0,
             FUN_60068
         };
+        PTR_FUN_9CAF0 = new FUN_9CAF0[3]
+        {
+            FUN_46534,
+            FUN_46598,
+            FUN_60068
+        };
         PTR_FUN_9CBBC = new FUN_9CBBC[3]
         {
             FUN_46850,
@@ -281,14 +293,17 @@ public class CriParticle : CriObject
         DAT_65 = 0;
         DAT_68 = 0;
         PTR_68 = new CriStatic[2];
+        IDAT_68 = 0;
         DAT_69 = 0;
         SDAT_6A = 0;
         DAT_6A = 0;
         DAT_6B = 0;
         DAT_6C = 0;
         IDAT_6C = 0;
+        VDAT_6C = Vector3Int.zero;
         DAT_6E = 0;
         DAT_70 = Vector3Int.zero;
+        VDAT_74 = Vector3Int.zero;
         DAT_74 = 0;
         DAT_75 = 0;
         DAT_76 = 0;
@@ -1164,6 +1179,41 @@ public class CriParticle : CriObject
                 //...
             }
         }
+    }
+
+    public void FUN_464F8()
+    {
+        PTR_FUN_9CAF0[DAT_3C]();
+    }
+
+    private void FUN_46534()
+    {
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(DAT_9CAE4[DAT_2F]));
+        DAT_54 = 0x7df4;
+        DAT_56 = 0x3e;
+        DAT_3C = 1;
+        flags |= 2;
+    }
+
+    private void FUN_46598()
+    {
+        int iVar1;
+
+        FUN_606D8();
+        vr.x = vr.x + VDAT_6C.x & 0xfff;
+        vr.y = vr.y + VDAT_6C.y & 0xfff;
+        vr.z = vr.z + VDAT_6C.z & 0xfff;
+        DAT_40.x += VDAT_74.x;
+        DAT_40.y += VDAT_74.y;
+        DAT_40.z += VDAT_74.z;
+        screen.x += DAT_40.x;
+        iVar1 = IDAT_68 - 1;
+        IDAT_68 = iVar1;
+        screen.y += DAT_40.y;
+        screen.z += DAT_40.z;
+
+        if (iVar1 == 0)
+            DAT_3C = 2;
     }
 
     public void FUN_46814()

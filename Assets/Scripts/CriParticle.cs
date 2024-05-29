@@ -62,6 +62,7 @@ public class CriParticle : CriObject
     public byte DAT_74; //0x74
     public byte DAT_75; //0x75
     public short DAT_76; //0x76
+    public short SDAT_78; //0x78
     public sbyte DAT_78; //0x78
     public byte DAT_7A; //0x7A
     public byte DAT_7B; //0x7B
@@ -307,7 +308,10 @@ public class CriParticle : CriObject
         DAT_74 = 0;
         DAT_75 = 0;
         DAT_76 = 0;
+        SDAT_78 = 0;
         DAT_78 = 0;
+        DAT_7A = 0;
+        DAT_7B = 0;
     }
 
     private void OnRenderObject()

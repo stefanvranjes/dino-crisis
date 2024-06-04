@@ -15,6 +15,7 @@ public class CriInteract : MonoBehaviour
     public short DAT_08;
     public byte BDAT_08;
     public CriObject PDAT_08;
+    public byte[] PTR_08;
     public bool DAT_09;
     public byte BDAT_09;
     public short DAT_0A;
@@ -208,6 +209,7 @@ public class CriInteract : MonoBehaviour
         DAT_08 = 0;
         BDAT_08 = 0;
         PDAT_08 = null;
+        PTR_08 = null;
         DAT_09 = false;
         DAT_0A = 0;
         BDAT_0A = 0;
@@ -245,6 +247,82 @@ public class CriInteract : MonoBehaviour
         DAT_1B = 0;
         DAT_1C = null;
         DAT_20 = null;
+    }
+
+    public void SET_08(int i, byte value)
+    {
+        switch (i)
+        {
+            case 0:
+                BDAT_08 = value;
+                break;
+            case 1:
+                BDAT_09 = value;
+                break;
+            case 2:
+                BDAT_0A = (sbyte)value;
+                break;
+            case 3:
+                DAT_0B = (sbyte)value;
+                break;
+            case 4:
+                BDAT_0C = value;
+                break;
+            case 5:
+                DAT_0D = value;
+                break;
+            case 6:
+                BDAT_0E = value;
+                break;
+            case 7:
+                DAT_0F = value;
+                break;
+            case 8:
+                DAT_10 = value;
+                break;
+            case 9:
+                DAT_11 = value;
+                break;
+            case 10:
+                DAT_12 = (sbyte)value;
+                break;
+            case 11:
+                DAT_13 = (sbyte)value;
+                break;
+        }
+    }
+
+    public byte GET_08(int i)
+    {
+        switch (i)
+        {
+            case 0:
+                return BDAT_08;
+            case 1:
+                return BDAT_09;
+            case 2:
+                return (byte)BDAT_0A;
+            case 3:
+                return (byte)DAT_0B;
+            case 4:
+                return BDAT_0C;
+            case 5:
+                return DAT_0D;
+            case 6:
+                return BDAT_0E;
+            case 7:
+                return DAT_0F;
+            case 8:
+                return DAT_10;
+            case 9:
+                return DAT_11;
+            case 10:
+                return (byte)DAT_12;
+            case 11:
+                return (byte)DAT_13;
+            default:
+                return 0;
+        }
     }
 
     public void FUN_20A98()

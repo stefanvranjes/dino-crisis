@@ -35,6 +35,10 @@ public class ST7 : LevelManager
     private delegate void FUN_11AC8(CriParticle p); //0x11AC8 (ST7)
     private delegate void FUN_11AFC(CriInteract p); //0x11AFC (ST7)
     private delegate void FUN_11B78(CriInteract p); //0x11B78 (ST7)
+    private delegate void FUN_11BAC(CriInteract p); //0x11BAC (ST7)
+    private delegate void FUN_11BC0(CriInteract p); //0x11BC0 (ST7)
+    private delegate void FUN_11BD4(CriInteract p); //0x11BD4 (ST7)
+    private delegate void FUN_120F4(CriInteract p); //0x120F4 (ST7)
     private FUN_119D4[] PTR_FUN_119D4; //0x119D4 (ST7)
     private FUN_119E4[] PTR_FUN_119E4; //0x119E4 (ST7)
     private short[] DAT_119F4 = new short[] { -2320, -1230, -3900, -2610, -1230, -3900, -2900, -1230, -3900, -3190, -1230, -3900, -3480, -1230, -3900, -4390, -1075, 2600 };
@@ -53,6 +57,14 @@ public class ST7 : LevelManager
     private FUN_11AFC[] PTR_FUN_11AFC; //0x11AFC (ST7)
     private byte[] DAT_11B0C; //0x11B0C (ST7)
     private FUN_11B78[] PTR_FUN_11B78; //0x11B78 (ST7)
+    private int[] DAT_11B84 = new int[] { -0xa1ac00, -0xd8afae, -0xc1ea9f, -0xe2afae, -0xcbffaf, -0xd5d4d2, -0xb6ce9c, -0xc4c7e7, -0xcfd4, -0x1018000 };
+    private FUN_11BAC[] PTR_FUN_11BAC; //0x11BAC (ST7)
+    private byte[] DAT_11BBC = new byte[] { 3, 6, 9, 5 };
+    private FUN_11BC0[] PTR_FUN_11BC0; //0x11BC0 (ST7)
+    private FUN_11BD4[] PTR_FUN_11BD4; //0x11BD4 (ST7)
+    private CriObject DAT_11BE0; //0x11BE0 (ST7)
+    private CriObject DAT_12018; //0x12018 (ST7)
+    private FUN_120F4[] PTR_FUN_120F4; //0x120F4 (ST7)
 
     protected override void Awake()
     {
@@ -123,6 +135,33 @@ public class ST7 : LevelManager
             {
                 FUN_2B04,
                 FUN_2B1C,
+                FUN_5FF98
+            };
+            PTR_FUN_11BAC = new FUN_11BAC[4]
+            {
+                FUN_2D18,
+                FUN_2D80,
+                FUN_2E94,
+                FUN_5FF98
+            };
+            PTR_FUN_11BC0 = new FUN_11BC0[5]
+            {
+                FUN_333C,
+                FUN_33CC,
+                FUN_35C4,
+                FUN_367C,
+                FUN_5FF98
+            };
+            PTR_FUN_11BD4 = new FUN_11BD4[3]
+            {
+                FUN_3A60,
+                FUN_3AAC,
+                FUN_3BD8
+            };
+            PTR_FUN_120F4 = new FUN_120F4[3]
+            {
+                FUN_3D90,
+                FUN_3E2C,
                 FUN_5FF98
             };
         }
@@ -1321,6 +1360,306 @@ public class ST7 : LevelManager
             param1.DAT_03++;
     }
 
+    //FUN_2D18 (ST7)
+    private void FUN_2D18(CriInteract param1)
+    {
+        byte bVar1;
+        uint uVar2;
+        CriInteract oVar3;
+
+        oVar3 = SceneManager.instance.DAT_8FFC[0];
+        bVar1 = (byte)oVar3.DAT_13;
+        uVar2 = (uint)DAT_11B84[(byte)oVar3.DAT_12 + oVar3.DAT_11 * 12];
+        param1.DAT_03 = 1;
+        param1.DAT_08 = (short)((int)((uVar2 >> ((bVar1 & 3) << 3) & 0xff) * 3) >> 1);
+    }
+
+    //FUN_2D80 (ST7)
+    private void FUN_2D80(CriInteract param1)
+    {
+        short sVar1;
+        int iVar2;
+        CriInteract oVar3;
+        bool bVar4;
+
+        oVar3 = SceneManager.instance.DAT_8FFC[0];
+        param1.DAT_0A = param1.DAT_08;
+        iVar2 = ((DAT_11B84[(byte)oVar3.DAT_12 + oVar3.DAT_11 * 12] >> (((byte)oVar3.DAT_13 & 3) << 3) & 0xff) * 3) >> 1;
+        param1.DAT_08 = (short)iVar2;
+
+        if (iVar2 != param1.DAT_0A)
+        {
+            sVar1 = (short)(param1.DAT_0A - 1);
+
+            if (param1.DAT_0A <= iVar2)
+                sVar1 = (short)(param1.DAT_0A + 1);
+
+            param1.DAT_08 = sVar1;
+        }
+
+        sVar1 = param1.DAT_08;
+
+        if (45 < sVar1 && 75 < sVar1 && sVar1 < 129)
+            InventoryManager.FUN_4A7E8(3, 0x17, true);
+
+        param1.BDAT_0C = 0xc0;
+        param1.DAT_0D = 0;
+        param1.BDAT_0E = 0xc0;
+        bVar4 = InventoryManager.FUN_4A87C(3, 0x20);
+
+        if (!bVar4)
+            param1.DAT_03 = 2;
+
+        //FUN_2EA0
+    }
+
+    //FUN_2E94 (ST7)
+    private void FUN_2E94(CriInteract param1)
+    {
+        param1.DAT_03 = 3;
+    }
+
+    //FUN_333C (ST7)
+    private void FUN_333C(CriInteract param1)
+    {
+        InventoryManager.FUN_4A7E8(2, 9, false);
+        InventoryManager.FUN_4A7E8(2, 10, false);
+        InventoryManager.FUN_4A7E8(2, 11, false);
+        param1.BDAT_0C = 0xff;
+        param1.DAT_0D = 0xff;
+        param1.BDAT_0E = 0xff;
+        param1.DAT_0F = 0xff;
+        param1.BDAT_0A = 0;
+        param1.BDAT_09 = 0;
+        param1.BDAT_08 = 0;
+        param1.DAT_03 = 1;
+    }
+
+    //FUN_33CC (ST7)
+    private void FUN_33CC(CriInteract param1)
+    {
+        sbyte sVar1;
+
+        //FUN_36BC
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) != 0)
+        {
+            if (param1.BDAT_08 == 4)
+                param1.BDAT_08 = 0;
+            else
+                param1.BDAT_08++;
+
+            GameManager.instance.FUN_5C94C(null, 145);
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x8000) != 0)
+        {
+            sVar1 = (sbyte)(param1.BDAT_08 - 1);
+
+            if (param1.BDAT_08 == 0)
+                sVar1 = 4;
+
+            param1.BDAT_08 = (byte)sVar1;
+            GameManager.instance.FUN_5C94C(null, 145);
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x1000) != 0)
+        {
+            sVar1 = (sbyte)(param1.BDAT_09 - 1);
+
+            if (param1.BDAT_09 == 0)
+                sVar1 = 1;
+
+            param1.BDAT_09 = (byte)sVar1;
+            GameManager.instance.FUN_5C94C(null, 145);
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0)
+        {
+            if (param1.BDAT_09 == 1)
+                param1.BDAT_09 = 0;
+            else
+                param1.BDAT_09++;
+
+            GameManager.instance.FUN_5C94C(null, 145);
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) != 0)
+        {
+            GameManager.instance.FUN_5C94C(null, 146);
+            param1.SET_08(param1.BDAT_0A + 4, (byte)(param1.BDAT_08 + param1.BDAT_09 * 5));
+
+            if (param1.BDAT_0A == 3)
+                param1.DAT_03 = 2;
+
+            param1.BDAT_0A++;
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x40) != 0)
+        {
+            if (param1.BDAT_0A == 0)
+            {
+                InventoryManager.FUN_4A7E8(2, 11, true);
+                param1.DAT_03 = 4;
+            }
+            else
+            {
+                param1.SET_08(param1.BDAT_0A + 3, 0xff);
+                param1.BDAT_0A--;
+            }
+
+            GameManager.instance.FUN_5C94C(null, 147);
+        }
+    }
+
+    //FUN_35C4 (ST7)
+    private void FUN_35C4(CriInteract param1)
+    {
+        bool bVar1;
+        int iVar4;
+        int iVar5;
+
+        //FUN_36BC
+        bVar1 = false;
+        iVar4 = 0;
+
+        do
+        {
+            if (param1.GET_08(iVar4 + 4) != DAT_11BBC[iVar4])
+            {
+                bVar1 = true;
+                break;
+            }
+
+            iVar4++;
+        } while (iVar4 < 4);
+
+        if (bVar1)
+        {
+            InventoryManager.FUN_4A7E8(2, 10, true);
+            iVar5 = 149;
+        }
+        else
+        {
+            InventoryManager.FUN_4A7E8(2, 9, true);
+            iVar5 = 148;
+        }
+
+        GameManager.instance.FUN_5C94C(null, iVar5);
+        param1.DAT_03 = 3;
+    }
+
+    //FUN_367C (ST7)
+    private void FUN_367C(CriInteract param1)
+    {
+        bool bVar1;
+
+        //FUN_36BC
+        bVar1 = InventoryManager.FUN_4A87C(3, 0x30);
+
+        if (bVar1)
+            param1.DAT_03 = 4;
+    }
+
+    //FUN_3A60 (ST7)
+    private void FUN_3A60(CriInteract param1)
+    {
+        //...
+        param1.DAT_03++;
+    }
+
+    //FUN_3AAC (ST7)
+    private void FUN_3AAC(CriInteract param1)
+    {
+        byte bVar1;
+        sbyte sVar2;
+        bool bVar3;
+        byte[] aVar4;
+
+        aVar4 = param1.PTR_08;
+        bVar1 = (byte)(aVar4[10] + 1);
+        aVar4[10] = bVar1;
+
+        if ((bVar1 & 1) != 0)
+        {
+            bVar1 = aVar4[9];
+
+            if (bVar1 == 1)
+            {
+                sVar2 = (sbyte)(aVar4[8] - 1);
+                aVar4[8] = (byte)sVar2;
+
+                if (sVar2 == 0)
+                    aVar4[9]--;
+            }
+            else
+            {
+                if (bVar1 < 2)
+                {
+                    if (bVar1 == 0)
+                    {
+                        bVar1 = (byte)(aVar4[8] + 1);
+                        aVar4[9] = bVar1;
+
+                        if (7 < bVar1)
+                            aVar4[9]++;
+                    }
+                }
+                else
+                {
+                    if (bVar1 == 2)
+                    {
+                        if (aVar4[8] == 0)
+                            param1.DAT_03++;
+                        else
+                            aVar4[8]--;
+                    }
+                }
+            }
+        }
+
+        bVar3 = InventoryManager.FUN_4A87C(2, 0x1a);
+
+        if (bVar3)
+        {
+            InventoryManager.FUN_4A7E8(2, 0x1a, false);
+            aVar4[9] = 2;
+        }
+    }
+
+    //FUN_3BD8 (ST7)
+    private void FUN_3BD8(CriInteract param1)
+    {
+        FUN_60100(param1.PTR_08);
+        param1.FUN_5FF98();
+    }
+
+    //FUN_3D90 (ST7)
+    private void FUN_3D90(CriInteract param1)
+    {
+        if (param1.DAT_02 == 0)
+        {
+            param1.PTR_10 = DAT_11BE0;
+            param1.BDAT_0E = 49;
+            param1.PDAT_14 = SceneManager.instance.DAT_27C[param1.DAT_04];
+        }
+        else
+        {
+            param1.PTR_10 = DAT_12018;
+            param1.BDAT_0E = 10;
+        }
+
+        param1.DAT_0C = 0;
+        param1.DAT_03++;
+        //FUN_3E2C
+    }
+
+    //FUN_3E2C (ST7)
+    private void FUN_3E2C(CriInteract param1)
+    {
+        //...
+    }
+
     //FUN_27C (ST7)
     public static void FUN_27C(CriParticle param1)
     {
@@ -1401,19 +1740,19 @@ public class ST7 : LevelManager
     //FUN_3300 (ST7)
     public static void FUN_3300(CriInteract param1)
     {
-
+        instance.PTR_FUN_11BAC[param1.DAT_03](param1);
     }
 
     //FUN_39E8 (ST7)
     public static void FUN_39E8(CriInteract param1)
     {
-
+        instance.PTR_FUN_11BC0[param1.DAT_03](param1);
     }
 
     //FUN_3A24 (ST7)
     public static void FUN_3A24(CriInteract param1)
     {
-
+        instance.PTR_FUN_11BD4[param1.DAT_03](param1);
     }
 
     //FUN_3D54 (ST7)

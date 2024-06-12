@@ -29,18 +29,18 @@ public class ST7 : LevelManager
     public uint[] DAT_11528 = new uint[151] { 0, 0xa, 0x11, 0x22, 0x31, 0x36, 0x80000046, 0x0, 0x16, 0x3a, 0x80000060, 0x0, 0x8, 0x17, 0x36, 0x8000005b, 0x0, 0xa, 0x18, 0x26, 0x2e, 0x36, 0x80000044, 0x0, 0x16, 0x80000046, 0x0, 0xc, 0x10, 0x1d, 0x21, 0x32, 0x3b, 0x80000044, 0x0, 0x6, 0x9, 0x22, 0x2e, 0x33, 0x80000047, 0x0, 0x1f, 0x24, 0x39, 0x8000004e, 0x0, 0x15, 0x1b, 0x20, 0x29, 0x36, 0x80000060, 0x0, 0x8, 0x16, 0x36, 0x80000047, 0x0, 0xe, 0x2f, 0x33, 0x80000040, 0x0, 0xd, 0x24, 0x32, 0x38, 0x80000045, 0x0, 0x7, 0xc, 0x12, 0x21, 0x27, 0x30, 0x39, 0x80000041, 0x0, 0x7, 0xf, 0x30, 0x80000042, 0x0, 0x12, 0x1a, 0x25, 0x39, 0x80000052, 0x0, 0x8, 0xb, 0x12, 0x18, 0x24, 0x30, 0x80000048, 0x0, 0x6, 0x17, 0x2b, 0x80000040, 0x0, 0x6, 0x2a, 0x31, 0x80000040, 0x0, 0xf, 0x24, 0x36, 0x8000003e, 0x0, 0x13, 0x2b, 0x8000004c, 0x0, 0x26, 0x37, 0x80000046, 0x0, 0x12, 0x26, 0x35, 0x8000004e, 0x0, 0x20, 0x27, 0x3b, 0x8000004a, 0x0, 0x10, 0x30, 0x3c, 0x80000050, 0x0, 0x8, 0x18, 0x29, 0x35, 0x3b, 0x80000047, 0x0, 0x12, 0x34, 0x80000044, 0x0, 0x1b, 0x25, 0x34, 0x80000043 };
     public TrgScriptableObject DAT_11784; //0x11784 (ST6)
     public byte[] DAT_11874 = new byte[48] { 29, 7, 10, 10, 27, 15, 13, 0, 32, 25, 20, 18, 33, 30, 27, 24, 34, 31, 0, 25, 35, 0, 0, 0, 22, 0, 28, 26, 23, 0, 29, 27, 16, 0, 30, 29, 17, 0, 31, 31, 24, 0, 0, 0, 25, 0, 0, 0 };
-    public FUN_B58BC[] DAT_118A4 = new FUN_B58BC[] { FUN_44EA8, FUN_45224, FUN_45350, FUN_45480, FUN_45758, FUN_45B08, 
-                                                     null, FUN_46A1C, null, null, null, FUN_45D38, FUN_45E70, FUN_464F8, 
-                                                     FUN_27C, FUN_BC8, FUN_13BC, FUN_1C58, FUN_1D60, FUN_21E0, FUN_1F14, 
+    public FUN_B58BC[] DAT_118A4 = new FUN_B58BC[] { FUN_44EA8, FUN_45224, FUN_45350, FUN_45480, FUN_45758, FUN_45B08,
+                                                     null, FUN_46A1C, null, null, null, FUN_45D38, FUN_45E70, FUN_464F8,
+                                                     FUN_27C, FUN_BC8, FUN_13BC, FUN_1C58, FUN_1D60, FUN_21E0, FUN_1F14,
                                                      FUN_2048 };
-    public FUN_B58C0[] DAT_118FC = new FUN_B58C0[] { FUN_4CFDC, FUN_54EF8, FUN_2FAB0, null, null, FUN_623C, null, null, 
+    public FUN_B58C0[] DAT_118FC = new FUN_B58C0[] { FUN_4CFDC, FUN_54EF8, FUN_2FAB0, null, null, FUN_623C, null, null,
                                                      null, null };
-    public FUN_C2570[] DAT_11924 = new FUN_C2570[] { FUN_4A26C, FUN_7F6F8, FUN_7F750, null, FUN_7F7E4, null, null, 
+    public FUN_C2570[] DAT_11924 = new FUN_C2570[] { FUN_4A26C, FUN_7F6F8, FUN_7F750, null, FUN_7F7E4, null, null,
                                                      FUN_7F808 };
-    public FUN_C1CF8[] DAT_11944 = new FUN_C1CF8[] { FUN_20A98, null, FUN_20AA8, FUN_20B0C, FUN_21758, FUN_21ECC, 
-                                                     FUN_22178, null, null, null, FUN_222AC, FUN_22464, FUN_2268C, 
-                                                     FUN_2650, FUN_2AC8, FUN_3300, FUN_39E8, FUN_3A24, null, 
-                                                     FUN_3D54, FUN_672C, FUN_94FC, FUN_BED4, FUN_E5B4, FUN_E830, 
+    public FUN_C1CF8[] DAT_11944 = new FUN_C1CF8[] { FUN_20A98, null, FUN_20AA8, FUN_20B0C, FUN_21758, FUN_21ECC,
+                                                     FUN_22178, null, null, null, FUN_222AC, FUN_22464, FUN_2268C,
+                                                     FUN_2650, FUN_2AC8, FUN_3300, FUN_39E8, FUN_3A24, null,
+                                                     FUN_3D54, FUN_672C, FUN_94FC, FUN_BED4, FUN_E5B4, FUN_E830,
                                                      FUN_E86C, FUN_10844 };
     private delegate void FUN_119D4(CriParticle p); //0x119D4 (ST7)
     private delegate void FUN_119E4(CriParticle p); //0x119E4 (ST7)
@@ -64,6 +64,7 @@ public class ST7 : LevelManager
     private delegate void FUN_125FC(CriInteract i); //0x125FC (ST7)
     private delegate void FUN_1269C(CriInteract i); //0x1269C (ST7)
     private delegate void FUN_126F4(CriInteract i); //0x126F4 (ST7)
+    private delegate void FUN_1278C(CriInteract i); //0x1278C (ST7)
     private FUN_119D4[] PTR_FUN_119D4; //0x119D4 (ST7)
     private FUN_119E4[] PTR_FUN_119E4; //0x119E4 (ST7)
     private short[] DAT_119F4 = new short[] { -2320, -1230, -3900, -2610, -1230, -3900, -2900, -1230, -3900, -3190, -1230, -3900, -3480, -1230, -3900, -4390, -1075, 2600 };
@@ -105,12 +106,20 @@ public class ST7 : LevelManager
     private FUN_125FC[] PTR_FUN_125FC; //0x125FC (ST7)
     private byte[] DAT_12690 = new byte[12]; //0x12690 (ST7)
     private FUN_1269C[] PTR_FUN_1269C; //0x1269C (ST7)
+    private Vector4Int[][] PTR_DAT_126D8 = new Vector4Int[3][];
+    private uint[] DAT_126DC = new uint[] { 1, 3, 2 };
+    private byte[] DAT_126F0 = new byte[] { 45, 46, 47 };
     private FUN_126F4[] PTR_FUN_126F4; //0x126F4 (ST7)
+    private sbyte[] DAT_1273C = new sbyte[] { 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, 2, 2, 2, 2, 2, 2, 2, 2, -1, -1, 3, 3, 3, 3, 3, -1, -1, -1, -1, -1, 0, 3, 3, 3, 0, 0, 3, 3, -1, -1, 0, 1, 0, 3, 0, 1, 3, 1, -1, -1, 0, 1, 2, 3, 0, 1, 2, 3, 1, -1, 0, 1, 2, 3, 0, 1, 2, 3, 2, 1 } ; //0x1273C (ST7)
+    private FUN_1278C[] PTR_FUN_1278C; //0x1278C (ST7)
     private sbyte[] DAT_12870 = new sbyte[20]; //0x12870 (ST7)
     private byte[] DAT_12890 = new byte[20]; //0x12890 (ST7)
     private byte[] DAT_128C0 = new byte[20]; //0x128C0 (ST7)
     private uint[] DAT_128D4 = new uint[4]; //0x128D4 (ST7)
     private UNK_12974[] PTR_DAT_12974 = new UNK_12974[3]; //0x12974 (ST7)
+    private sbyte[] DAT_12998 = new sbyte[10]; //0x12988 (ST7)
+    private sbyte[] DAT_129A8 = new sbyte[10]; //0x129A8 (ST7)
+    private sbyte[] DAT_129B8 = new sbyte[10]; //0x129B8 (ST7)
 
     protected override void Awake()
     {
@@ -258,8 +267,14 @@ public class ST7 : LevelManager
                 FUN_E538,
                 FUN_5FF98
             };
-            PTR_FUN_126F4 = new FUN_126F4[]
+            PTR_FUN_126F4 = new FUN_126F4[2]
             {
+                FUN_E5F0, 
+                FUN_E700
+            };
+            PTR_FUN_1278C = new FUN_1278C[]
+            {
+                FUN_E944,
 
             };
         }
@@ -4984,8 +4999,153 @@ public class ST7 : LevelManager
     //FUN_E5F0 (ST7)
     private void FUN_E5F0(CriInteract param1)
     {
-        param1.DAT_03++;
+        int iVar1;
+        int iVar2;
+        uint uVar3;
+        Vector4Int[] aVar2;
 
+        param1.DAT_03++;
+        iVar1 = param1.DAT_04;
+        aVar2 = PTR_DAT_126D8[iVar1];
+        param1.VDAT_14 = aVar2;
+
+        if (param1.DAT_02 == 0)
+        {
+            param1.VDAT_14 = PTR_DAT_126D8[iVar1 + param1.DAT_05];
+            iVar1 = (int)GameManager.FUN_64650();
+            param1.DAT_18 = (byte)(iVar1 + (iVar1 / 46) * -46 + 45);
+        }
+        else
+        {
+            iVar2 = (int)GameManager.FUN_64650();
+            uVar3 = DAT_126DC[iVar1];
+
+            if (uVar3 == 0)
+                return; //0x1c00
+
+            if (uVar3 == 0xffffffff && iVar2 == -0x80000000)
+                return; //0x1800
+
+            param1.DAT_18 = 0;
+            param1.VDAT_14 = PTR_DAT_126D8[iVar1 + (iVar2 % (int)uVar3)];
+        }
+    }
+
+    //FUN_E700 (ST7)
+    private void FUN_E700(CriInteract param1)
+    {
+        CriPlayer oVar1;
+
+        if (param1.DAT_18 == 0)
+        {
+            oVar1 = LevelManager.instance.FUN_60108();
+
+            if (oVar1 != null)
+            {
+                oVar1.tags = 5;
+                oVar1.DAT_2F = param1.DAT_04;
+                oVar1.DAT_163 = DAT_126F0[param1.DAT_05];
+                oVar1.screen.x = param1.VDAT_14[0].x;
+                oVar1.screen.y = param1.VDAT_14[0].y;
+                oVar1.screen.z = param1.VDAT_14[0].z;
+                oVar1.vr.y = param1.VDAT_14[0].w;
+                oVar1.cSkin = param1.TDAT_0C;
+                oVar1.FUN_604A4(oVar1.cSkin);
+                oVar1.DAT_98 = param1.TDAT_10;
+                oVar1.DAT_18E = 100;
+                oVar1.DAT_1DD = param1.DAT_19;
+                PTR_FUN_B58C0[oVar1.tags](oVar1);
+                param1.FUN_5FF98();
+            }
+        }
+        else
+            param1.DAT_18--;
+    }
+
+    //FUN_E944 (ST7)
+    private void FUN_E944(CriInteract param1)
+    {
+        CriStatic puVar2;
+        int iVar3;
+        int iVar4;
+        CriStatic puVar5;
+        CriStatic puVar6;
+        CriStatic puVar7;
+        CriStatic puVar8;
+        CriStatic puVar9;
+
+        param1.PDAT_08 = null;
+        param1.PDAT_0C = null;
+        param1.PTR_10 = null;
+        param1.PDAT_14 = null;
+        iVar3 = 0;
+
+        do
+        {
+            DAT_12998[iVar3] = -1;
+            DAT_129A8[iVar3] = -1;
+            DAT_129B8[iVar3] = DAT_1273C[iVar3 + param1.DAT_02 * 10];
+
+            if (DAT_1273C[iVar3 + param1.DAT_02 * 10] != -1)
+                param1.BDAT_0E++;
+
+            iVar4 = iVar3 + 1;
+            iVar3 = iVar4;
+        } while (iVar4 < 10);
+
+        iVar4 = 0;
+        param1.DAT_0D = 0x80;
+
+        do
+        {
+            puVar2 = SceneManager.instance.DAT_7CDC[iVar4];
+            iVar4++;
+            puVar2.screen.z = 0;
+            puVar2.vr.y = 0;
+            puVar2.flags |= 2;
+        } while (iVar4 < 6);
+
+        puVar2 = SceneManager.instance.DAT_7CDC[0];
+        puVar5 = SceneManager.instance.DAT_7CDC[1];
+        puVar6 = SceneManager.instance.DAT_7CDC[2];
+        puVar7 = SceneManager.instance.DAT_7CDC[3];
+        puVar8 = SceneManager.instance.DAT_7CDC[4];
+        puVar9 = SceneManager.instance.DAT_7CDC[5];
+        puVar2.screen.y = -340;
+        puVar5.screen.y = -340;
+        puVar2.screen.x = 640;
+        puVar5.screen.x = 0;
+        puVar6.screen.x = -640;
+        puVar7.screen.x = 640;
+        puVar7.screen.y = 410;
+        puVar8.screen.x = 0;
+        puVar8.screen.y = 410;
+        puVar9.screen.x = -640;
+        puVar9.screen.y = 410;
+        param1.DAT_03 = 1;
+    }
+
+    //FUN_EA94 (ST7)
+    private void FUN_EA94(CriInteract param1)
+    {
+        byte bVar1;
+
+        //FUN_FC78
+        bVar1 = (byte)param1.BDAT_0A;
+        param1.BDAT_0A = (sbyte)(bVar1 + 1);
+
+        if (30 < bVar1)
+        {
+            param1.BDAT_0A = 35;
+
+            if (param1.BDAT_08 < 9)
+            {
+                switch (param1.BDAT_08)
+                {
+                    
+                }
+            }
+        }
     }
 
     //FUN_27C (ST7)
@@ -5174,13 +5334,41 @@ public class ST7 : LevelManager
     //FUN_E830 (ST7)
     public static void FUN_E830(CriInteract param1)
     {
-
+        instance.PTR_FUN_126F4[param1.DAT_03](param1);
     }
 
     //FUN_E86C (ST7)
     public static void FUN_E86C(CriInteract param1)
     {
+        byte bVar1;
 
+        //FUN_10488
+
+        if (param1.DAT_19 == 0)
+        {
+            bVar1 = (byte)(param1.DAT_18 + 6);
+            param1.DAT_18 = bVar1;
+
+            if (bVar1 < 129) goto LAB_E8F4;
+
+            bVar1 = param1.DAT_19;
+            param1.DAT_18 = 0x80;
+        }
+        else
+        {
+            bVar1 = (byte)(param1.DAT_18 - 6);
+            param1.DAT_18 = bVar1;
+
+            if (31 < bVar1) goto LAB_E8F4;
+
+            bVar1 = param1.DAT_19;
+            param1.DAT_18 = 0x20;
+        }
+
+        param1.DAT_19 = (byte)(bVar1 ^ 1);
+        LAB_E8F4:
+        //FUN_1071C
+        instance.PTR_FUN_1278C[param1.DAT_03](param1);
     }
 
     //FUN_10844 (ST7)

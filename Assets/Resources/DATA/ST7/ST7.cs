@@ -112,6 +112,8 @@ public class ST7 : LevelManager
     private FUN_126F4[] PTR_FUN_126F4; //0x126F4 (ST7)
     private sbyte[] DAT_1273C = new sbyte[] { 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, 2, 2, 2, 2, 2, 2, 2, 2, -1, -1, 3, 3, 3, 3, 3, -1, -1, -1, -1, -1, 0, 3, 3, 3, 0, 0, 3, 3, -1, -1, 0, 1, 0, 3, 0, 1, 3, 1, -1, -1, 0, 1, 2, 3, 0, 1, 2, 3, 1, -1, 0, 1, 2, 3, 0, 1, 2, 3, 2, 1 } ; //0x1273C (ST7)
     private FUN_1278C[] PTR_FUN_1278C; //0x1278C (ST7)
+    private uint[] DAT_127A8 = new uint[] { 0x8010999c, 0x80109d50, 0x8010a104, 0x8010a4b8, 0x8010a86c, 0x8010a86c, 0x8010ac20, 0x801095e8 };
+    private byte[] DAT_127C4 = new byte[] { 3, 4, 5, 0, 1, 2, 5, 1, 2, 3, 0, 4, 3, 4, 0, 1, 5, 2, 2, 1, 3, 5, 0, 4, 4, 0, 2, 5, 1, 3, 2, 5, 1, 0, 4, 3 };
     private sbyte[] DAT_12870 = new sbyte[20]; //0x12870 (ST7)
     private byte[] DAT_12890 = new byte[20]; //0x12890 (ST7)
     private byte[] DAT_128C0 = new byte[20]; //0x128C0 (ST7)
@@ -272,10 +274,15 @@ public class ST7 : LevelManager
                 FUN_E5F0, 
                 FUN_E700
             };
-            PTR_FUN_1278C = new FUN_1278C[]
+            PTR_FUN_1278C = new FUN_1278C[7]
             {
                 FUN_E944,
-
+                FUN_EA94, 
+                FUN_F2A8, 
+                FUN_F464, 
+                FUN_F804, 
+                FUN_FA18, 
+                FUN_5FF98
             };
         }
     }
@@ -5128,7 +5135,17 @@ public class ST7 : LevelManager
     //FUN_EA94 (ST7)
     private void FUN_EA94(CriInteract param1)
     {
+        int iVar1;
         byte bVar1;
+        sbyte sVar2;
+        int iVar2;
+        uint uVar2;
+        int iVar3;
+        uint uVar3;
+        int iVar4;
+        byte bVar5;
+        byte bVar6;
+        uint uVar7;
 
         //FUN_FC78
         bVar1 = (byte)param1.BDAT_0A;
@@ -5142,10 +5159,476 @@ public class ST7 : LevelManager
             {
                 switch (param1.BDAT_08)
                 {
-                    
+                    case 0:
+                        if (param1.DAT_0F == param1.DAT_0E)
+                        {
+                            param1.BDAT_08 = 0;
+                            param1.BDAT_09 = 0;
+                            param1.BDAT_0A = 0;
+                            param1.DAT_0B = 0;
+                            param1.DAT_03++;
+                            return;
+                        }
+
+                        param1.BDAT_09 = 0;
+                        param1.BDAT_08++;
+                        bVar6 = (byte)DAT_129B8[param1.DAT_0F];
+
+                        if (bVar6 == 1)
+                        {
+                            iVar1 = Utilities.Rand();
+                            uVar7 = (uint)(iVar1 % 6);
+                            iVar1 = Utilities.Rand();
+                            bVar5 = (byte)(1 << (int)(uVar7 & 31));
+                            param1.DAT_10 = bVar5;
+                            param1.DAT_11 = bVar5;
+                            param1.BDAT_0C = (byte)uVar7;
+                            DAT_12998[param1.DAT_0F] = (sbyte)(iVar1 % 6);
+                            SceneManager.instance.DAT_7CDC[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_127A8[iVar1 & 6]);
+
+                            do
+                            {
+                                iVar1 = Utilities.Rand();
+                                uVar7 = (uint)(iVar1 % 6);
+                            } while (uVar7 == param1.BDAT_0C);
+
+                            bVar6 = (byte)(param1.DAT_10 | (1 << (int)(uVar7 & 31)));
+                            param1.DAT_10 = bVar6;
+                            param1.DAT_11 = bVar6;
+                            SceneManager.instance.DAT_7CDC[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x801095e8);
+                        }
+                        else
+                        {
+                            if (bVar6 < 2)
+                            {
+                                if (bVar6 == 0)
+                                {
+                                    iVar1 = Utilities.Rand();
+                                    uVar7 = (uint)(iVar1 % 6);
+                                    iVar1 = Utilities.Rand();
+                                    bVar5 = (byte)(1 << (int)(uVar7 & 31));
+                                    param1.DAT_10 = bVar5;
+                                    param1.DAT_11 = bVar5;
+                                    param1.BDAT_0C = (byte)uVar7;
+                                    DAT_12998[param1.DAT_0F] = (sbyte)(iVar1 % 6);
+                                    SceneManager.instance.DAT_7CDC[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_127A8[iVar1 % 6]);
+                                }
+                            }
+                            else
+                            {
+                                if (bVar6 == 2)
+                                {
+                                    iVar2 = Utilities.Rand();
+                                    iVar3 = Utilities.Rand();
+                                    uVar7 = 0;
+
+                                    do
+                                    {
+                                        iVar4 = (int)(uVar7 + (iVar2 % 6) * 6);
+                                        SceneManager.instance.DAT_7CDC[uVar7++].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_127A8[DAT_127C4[iVar4]]);
+                                    } while (uVar7 < 6);
+
+                                    DAT_12998[param1.DAT_0F] = (sbyte)DAT_127C4[iVar3 % 6 + (iVar2 % 6) * 6];
+                                    param1.DAT_11 = (byte)(63 - (1 << (iVar3 % 6 & 31)));
+                                    bVar5 = 4;
+                                    param1.DAT_10 = 63;
+                                }
+                                else
+                                {
+                                    if (bVar6 != 3) goto LAB_EF30;
+
+                                    iVar1 = Utilities.Rand();
+                                    uVar7 = (uint)(iVar1 % 6);
+                                    iVar1 = Utilities.Rand();
+                                    bVar5 = (byte)(1 << (int)(uVar7 & 31));
+                                    param1.DAT_10 = bVar5;
+                                    param1.DAT_11 = bVar5;
+                                    param1.BDAT_0C = (byte)uVar7;
+                                    DAT_12998[param1.DAT_0F] = (sbyte)(iVar1 % 6);
+                                    SceneManager.instance.DAT_7CDC[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_127A8[iVar1 % 6]);
+
+                                    do
+                                    {
+                                        iVar1 = Utilities.Rand();
+                                        bVar5 = 7;
+                                    } while (iVar1 % 6 == param1.BDAT_0C);
+
+                                    param1.DAT_12 = (sbyte)(iVar1 % 6);
+                                }
+
+                                param1.BDAT_08 = bVar5;
+                            }
+                        }
+    
+                        LAB_EF30:
+                        param1.DAT_0F++;
+                        return;
+                    case 1:
+                        bVar1 = param1.BDAT_09;
+                        param1.BDAT_09 = (byte)(bVar1 + 1);
+
+                        if (bVar1 < 0x10)
+                        {
+                            uVar2 = 0;
+
+                            do
+                            {
+                                if ((param1.DAT_10 >> (int)(uVar2 & 31) & 1) != 0)
+                                    SceneManager.instance.DAT_7CDC[uVar2].vr.y += param1.DAT_0D;
+
+                                uVar2++;
+                            } while (uVar2 < 6);
+                        }
+                        else
+                        {
+                            param1.BDAT_09 = 0;
+                            param1.BDAT_08++;
+                            GameManager.instance.FUN_5C94C(null, 147);
+                        }
+
+                        return;
+                    case 2:
+                        bVar1 = param1.BDAT_09;
+                        param1.BDAT_09 = (byte)(bVar1 + 1);
+
+                        if (5 < bVar1)
+                        {
+                            param1.BDAT_09 = 0;
+                            param1.BDAT_08++;
+                        }
+
+                        return;
+                    case 3:
+                        bVar1 = param1.BDAT_09;
+                        sVar2 = (sbyte)(bVar1 + 1);
+                        param1.BDAT_09 = (byte)sVar2;
+
+                        if (bVar1 < 0x10)
+                        {
+                            uVar3 = 0;
+
+                            do
+                            {
+                                if ((param1.DAT_11 >> (int)(uVar3 & 31) & 1) != 0)
+                                    SceneManager.instance.DAT_7CDC[uVar3].vr.y -= param1.DAT_0D;
+
+                                uVar3++;
+                            } while (uVar3 < 6);
+                        }
+                        else
+                        {
+                            if (sVar2 == 17)
+                                GameManager.instance.FUN_5C94C(null, 147);
+
+                            bVar1 = (byte)param1.DAT_0B;
+                            param1.BDAT_09 = 35;
+                            param1.DAT_0B = (sbyte)(bVar1 + 1);
+
+                            if (29 < bVar1)
+                            {
+                                param1.BDAT_08 = 0;
+                                param1.BDAT_09 = 0;
+                                param1.BDAT_0A = 35;
+                                param1.DAT_0B = 0;
+                            }
+                        }
+
+                        return;
+                    case 4:
+                        goto case 1;
+                    case 5:
+                        goto case 2;
+                    case 6:
+                        goto case 3;
+                    case 7:
+                        bVar1 = param1.BDAT_09;
+                        param1.BDAT_09 = (byte)(bVar1 + 1);
+
+                        if (bVar1 < 7)
+                            SceneManager.instance.DAT_7CDC[param1.DAT_12].vr.y += param1.DAT_0D;
+                        else
+                        {
+                            param1.BDAT_09 = 0;
+                            param1.BDAT_08++;
+                            GameManager.instance.FUN_5C94C(null, 147);
+                        }
+
+                        return;
+                    case 8:
+                        bVar1 = param1.BDAT_09;
+                        param1.BDAT_09 = (byte)(bVar1 + 1);
+
+                        if (bVar1 < 7)
+                            SceneManager.instance.DAT_7CDC[param1.DAT_0D].vr.y -= param1.DAT_0D;
+                        else
+                        {
+                            param1.BDAT_08 = 1;
+                            param1.BDAT_09 = 0;
+                            GameManager.instance.FUN_5C94C(null, 147);
+                        }
+
+                        return;
                 }
             }
         }
+    }
+
+    //FUN_F464 (ST7)
+    private void FUN_F2A8(CriInteract param1)
+    {
+        byte bVar1;
+        CriStatic oVar2;
+
+        bVar1 = param1.BDAT_08;
+
+        if (bVar1 == 1)
+        {
+            bVar1 = param1.BDAT_09;
+            param1.BDAT_09 = (byte)(bVar1 + 1);
+
+            if (29 < bVar1)
+            {
+                GameManager.instance.FUN_46C0C(0, 20, 1);
+                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                oVar2.screen.x = 430;
+                oVar2.screen.y = -40;
+                oVar2.screen.z = -1240;
+                oVar2.vr.y = 0x800;
+                oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x8010999c);
+                oVar2 = SceneManager.instance.DAT_7CDC[1];
+                oVar2.screen.x = -360;
+                oVar2.screen.y = -40;
+                oVar2.screen.z = -1240;
+                oVar2.vr.y = 0x800;
+                oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x80109d50);
+                oVar2 = SceneManager.instance.DAT_7CDC[2];
+                oVar2.screen.x = -1160;
+                oVar2.screen.y = -40;
+                oVar2.screen.z = -1240;
+                oVar2.vr.y = 0x800;
+                oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x8010a104);
+                oVar2 = SceneManager.instance.DAT_7CDC[3];
+                oVar2.screen.x = 430;
+                oVar2.screen.y = 728;
+                oVar2.screen.z = -1240;
+                oVar2.vr.y = 0x800;
+                oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x8010a4b8);
+                oVar2 = SceneManager.instance.DAT_7CDC[4];
+                oVar2.screen.x = -360;
+                oVar2.screen.y = 728;
+                oVar2.screen.z = -1240;
+                oVar2.vr.y = 0x800;
+                oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x8010a86c);
+                oVar2 = SceneManager.instance.DAT_7CDC[5];
+                oVar2.screen.x = -1160;
+                oVar2.screen.y = 728;
+                oVar2.screen.z = -1240;
+                oVar2.vr.y = 0x800;
+                oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x8010ac20);
+                param1.BDAT_08 = 2;
+                param1.BDAT_09 = 0;
+            }
+        }
+        else
+        {
+            if (bVar1 < 2)
+            {
+                if (bVar1 == 0)
+                {
+                    GameManager.instance.FUN_46C0C(1, 20, 1);
+                    param1.BDAT_08++;
+                }
+            }
+            else
+            {
+                if (bVar1 == 2)
+                {
+                    //FUN_FD84
+                    bVar1 = param1.BDAT_09;
+                    param1.BDAT_09 = (byte)(bVar1 + 1);
+
+                    if (29 < bVar1)
+                    {
+                        param1.BDAT_08 = 0;
+                        param1.BDAT_09 = 0;
+                        param1.DAT_03++;
+                    }
+                }
+            }
+        }
+    }
+
+    //FUN_F464 (ST7)
+    private void FUN_F464(CriInteract param1)
+    {
+        byte bVar2;
+        sbyte sVar3;
+        byte bVar4;
+
+        //FUN_FD84
+        bVar2 = param1.BDAT_08;
+
+        if (bVar2 == 1)
+        {
+            bVar2 = param1.BDAT_09;
+            param1.BDAT_09 = (byte)(bVar2 + 1);
+
+            if (bVar2 < 0x10)
+            {
+                SceneManager.instance.DAT_7CDC[param1.DAT_13].vr.y += 0x100;
+                return;
+            }
+
+            param1.BDAT_08 = 0;
+            param1.BDAT_09 = 0;
+        }
+        else
+        {
+            if (bVar2 < 2)
+            {
+                if (bVar2 != 0)
+                    return;
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) != 0 && param1.DAT_13 < 5)
+                {
+                    if (param1.DAT_13 == 2)
+                        return;
+
+                    GameManager.instance.FUN_5C94C(null, 144);
+                    param1.DAT_13++;
+                    return;
+                }
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x8000) != 0)
+                {
+                    if (param1.DAT_13 != 0 && param1.DAT_13 != 3)
+                    {
+                        GameManager.instance.FUN_5C94C(null, 144);
+                        param1.DAT_13--;
+                        return;
+                    }
+
+                    GameManager.instance.FUN_5C94C(null, 144);
+                    param1.BDAT_16 = 1;
+                    param1.DAT_15 = 0;
+                    param1.BDAT_08 = 2;
+                    return;
+                }
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0 && param1.DAT_13 < 3)
+                {
+                    GameManager.instance.FUN_5C94C(null, 144);
+                    param1.DAT_13 += 3;
+                    return;
+                }
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x1000) != 0 && 2 < param1.DAT_13)
+                {
+                    GameManager.instance.FUN_5C94C(null, 144);
+                    param1.DAT_13 -= 3;
+                    return;
+                }
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) != 0 && (byte)param1.DAT_14 < 10)
+                {
+                    GameManager.instance.FUN_5C94C(null, 146);
+                    DAT_129A8[param1.DAT_14] = param1.DAT_13;
+                    param1.DAT_14++;
+                    param1.BDAT_08++;
+                    return;
+                }
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x40) == 0)
+                    return;
+
+                if (param1.DAT_14 == 0)
+                    return;
+
+                GameManager.instance.FUN_5C94C(null, 145);
+                sVar3 = param1.DAT_14;
+            }
+            else
+            {
+                if (bVar2 != 2)
+                    return;
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) != 0)
+                {
+                    GameManager.instance.FUN_5C94C(null, 144);
+                    param1.BDAT_16 = 0;
+                    param1.BDAT_08 = 0;
+                    return;
+                }
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x5000) != 0)
+                {
+                    GameManager.instance.FUN_5C94C(null, 144);
+                    param1.DAT_15 ^= 1;
+                    return;
+                }
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) == 0)
+                    return;
+
+                if (param1.DAT_15 == 0)
+                {
+                    GameManager.instance.FUN_5C94C(null, 146);
+                    bVar4 = (byte)FUN_FC2C();
+                    param1.DAT_03 = (sbyte)bVar4;
+                    SceneManager.instance.DAT_7CDC[0].flags &= 0xfffffffd;
+                    SceneManager.instance.DAT_7CDC[1].flags &= 0xfffffffd;
+                    SceneManager.instance.DAT_7CDC[2].flags &= 0xfffffffd;
+                    SceneManager.instance.DAT_7CDC[3].flags &= 0xfffffffd;
+                    SceneManager.instance.DAT_7CDC[4].flags &= 0xfffffffd;
+                    SceneManager.instance.DAT_7CDC[5].flags &= 0xfffffffd;
+                    param1.BDAT_08 = 0;
+                    param1.BDAT_09 = 0;
+                    return;
+                }
+
+                GameManager.instance.FUN_5C94C(null, 145);
+                sVar3 = param1.DAT_14;
+
+                if (sVar3 == 0)
+                    return;
+            }
+
+            param1.DAT_14 = (sbyte)(sVar3 - 1);
+            DAT_129A8[param1.DAT_14] = -1;
+        }
+    }
+
+    //FUN_F804 (ST7)
+    private void FUN_F804(CriInteract param1)
+    {
+        //...
+    }
+
+    //FUN_FA18 (ST7)
+    private void FUN_FA18(CriInteract param1)
+    {
+        //...
+    }
+
+    //FUN_FC2C (ST7)
+    private int FUN_FC2C()
+    {
+        int iVar2;
+        int iVar3;
+
+        iVar2 = 0;
+
+        do
+        {
+            iVar3 = iVar2 + 1;
+
+            if (DAT_12998[iVar2] != DAT_129A8[iVar2])
+                return 4;
+
+            iVar2 = iVar3;
+        } while (iVar3 < 10);
+
+        return 5;
     }
 
     //FUN_27C (ST7)

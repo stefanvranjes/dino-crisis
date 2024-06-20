@@ -65,6 +65,7 @@ public class ST7 : LevelManager
     private delegate void FUN_1269C(CriInteract i); //0x1269C (ST7)
     private delegate void FUN_126F4(CriInteract i); //0x126F4 (ST7)
     private delegate void FUN_1278C(CriInteract i); //0x1278C (ST7)
+    private delegate void FUN_12850(CriInteract i); //0x12850 (ST7)
     private FUN_119D4[] PTR_FUN_119D4; //0x119D4 (ST7)
     private FUN_119E4[] PTR_FUN_119E4; //0x119E4 (ST7)
     private short[] DAT_119F4 = new short[] { -2320, -1230, -3900, -2610, -1230, -3900, -2900, -1230, -3900, -3190, -1230, -3900, -3480, -1230, -3900, -4390, -1075, 2600 };
@@ -114,6 +115,7 @@ public class ST7 : LevelManager
     private FUN_1278C[] PTR_FUN_1278C; //0x1278C (ST7)
     private uint[] DAT_127A8 = new uint[] { 0x8010999c, 0x80109d50, 0x8010a104, 0x8010a4b8, 0x8010a86c, 0x8010a86c, 0x8010ac20, 0x801095e8 };
     private byte[] DAT_127C4 = new byte[] { 3, 4, 5, 0, 1, 2, 5, 1, 2, 3, 0, 4, 3, 4, 0, 1, 5, 2, 2, 1, 3, 5, 0, 4, 4, 0, 2, 5, 1, 3, 2, 5, 1, 0, 4, 3 };
+    private FUN_12850[] PTR_FUN_12850; //0x12850 (ST7)
     private sbyte[] DAT_12870 = new sbyte[20]; //0x12870 (ST7)
     private byte[] DAT_12890 = new byte[20]; //0x12890 (ST7)
     private byte[] DAT_128C0 = new byte[20]; //0x128C0 (ST7)
@@ -122,6 +124,11 @@ public class ST7 : LevelManager
     private sbyte[] DAT_12998 = new sbyte[10]; //0x12988 (ST7)
     private sbyte[] DAT_129A8 = new sbyte[10]; //0x129A8 (ST7)
     private sbyte[] DAT_129B8 = new sbyte[10]; //0x129B8 (ST7)
+    private short DAT_129EC; //0x129EC (ST7)
+    private short DAT_129EE; //0x129EE (ST7)
+    private short DAT_129F0; //0x129F0 (ST7)
+    private short DAT_129F2; //0x129F2 (ST7)
+    private byte DAT_129F4; //0x129F4 (ST7)
 
     protected override void Awake()
     {
@@ -283,6 +290,10 @@ public class ST7 : LevelManager
                 FUN_F804, 
                 FUN_FA18, 
                 FUN_5FF98
+            };
+            PTR_FUN_12850 = new FUN_12850[]
+            {
+
             };
         }
     }
@@ -5857,6 +5868,6 @@ public class ST7 : LevelManager
     //FUN_10844 (ST7)
     public static void FUN_10844(CriInteract param1)
     {
-
+        //...
     }
 }

@@ -32,6 +32,7 @@ public class ST8 : LevelManager
     private delegate void FUN_12140(CriInteract i); //0x12140 (ST8)
     private delegate void FUN_12164(CriInteract i); //0x12164 (ST8)
     private delegate void FUN_121E4(CriInteract i); //0x121E4 (ST8)
+    private delegate void FUN_121F4(CriInteract i); //0x121F4 (ST8)
     private uint[] DAT_11F08 = new uint[] { 0x80138424, 0x80138434, 0x80138474, 0x80138504, 0x80138514, 0x8013851c, 0x80138524, 0x8013852c, 0x80138534, 0x8013853c, 0x80138544, 0x8013854c, 0x8013854c, 0x80138554, 0x801385c4, 0x8013865c, 0x8013866c, 0x80133fcc, 0x80133fdc, 0x8013401c, 0x801340ac, 0x801340bc, 0x801340c4, 0x801340cc, 0x801340d4, 0x801340dc, 0x801340e4, 0x801340ec, 0x801340f4, 0x801340f4, 0x801340fc, 0x8013416c, 0x80134204, 0x80134214 };
     private FUN_11F90[] PTR_FUN_11F90; //0x11F90 (ST8)
     private uint[] DAT_11F9C = new uint[] { 0x80144e70, 0x80145b88, 0x80145bd8, 0x80146178, 0x80146718, 0x80146750, 0x80146828, 0x80146908, 0x80146af8, 0x80146ba8, 0x80146bb0, 0x80146bb8, 0x80146bc0, 0x80146bc8, 0x80146bd0, 0x80146bd8, 0x80146be0, 0x80146be8, 0x80146bf0, 0x80146bf8, 0x80146c00, 0x80146c10, 0x80146c18, 0x80146c20, 0x80146c28, 0x80146c30, 0x80146c38, 0x80146c40, 0x80146c48, 0x80146c50, 0x80146c58, 0x80146c60, 0x80146c68 };
@@ -51,6 +52,7 @@ public class ST8 : LevelManager
                                                  new uint[] { 0x80119d1c, 0x8011a428, 0x80119d1c, 0x8011a428, 0x8011e85c, 0x8011f008, 0x8011e85c, 0x8011f008 },
                                                  new uint[] { 0x8011acd4, 0x8011b7e0, 0x8011acd4, 0x8011b7e0, 0x8011f954, 0x80120b40, 0x8011f954, 0x80120b40 } };
     private FUN_121E4[] PTR_FUN_121E4; //0x121E4 (ST8)
+    private FUN_121F4[] PTR_FUN_121F4; //0x121F4 (ST8)
     private sbyte[] DAT_126A4 = new sbyte[10];
     private short[] DAT_128B0 = new short[0x100];
     private Tmd3ScriptableObject DAT_12AB0; //0x12AB0 (ST8)
@@ -133,6 +135,13 @@ public class ST8 : LevelManager
                 FUN_305C, 
                 FUN_320C, 
                 FUN_5FF98
+            };
+            PTR_FUN_121F4 = new FUN_121F4[]
+            {
+                FUN_3574, 
+                FUN_35F4, 
+                FUN_3650,
+
             };
         }
     }
@@ -1408,6 +1417,449 @@ public class ST8 : LevelManager
             DAT_12AB0 = oVar2.cMesh;
             oVar2.cMesh = (Tmd3ScriptableObject)Utilities.GetRamObject(DAT_121D8[(oVar1.DAT_240 >> 4) - 1][uVar3]);
         }
+    }
+
+    //FUN_3574 (ST8)
+    private void FUN_3574(CriInteract param1)
+    {
+        if (param1.DAT_02 == 0)
+        {
+            param1.BDAT_08 = 15;
+            param1.BDAT_09 = 0;
+            param1.BDAT_0A = 0;
+            param1.DAT_0B = 0;
+        }
+        else
+        {
+            param1.BDAT_08 = 165;
+            param1.BDAT_09 = 90;
+            param1.BDAT_0A = 0;
+            param1.DAT_0B = 90;
+        }
+
+        param1.DAT_0D = 0xff;
+        param1.DAT_0F = 0xff;
+        param1.BDAT_0C = 0;
+        param1.BDAT_0E = 0;
+        param1.PTR_10 = null;
+        param1.PDAT_14 = null;
+        param1.UDAT_18 = 0x102;
+        param1.DAT_04 = 0;
+        param1.DAT_05 = 0;
+        param1.DAT_06 = 0;
+        param1.DAT_07 = 0;
+        param1.DAT_03++;
+    }
+
+    //FUN_35F4 (ST8)
+    private void FUN_35F4(CriInteract param1)
+    {
+        byte bVar1;
+
+        bVar1 = (byte)(param1.DAT_15 + 1);
+        param1.DAT_15 = (sbyte)bVar1;
+
+        if (1 < bVar1)
+        {
+            param1.DAT_15 = 0;
+            param1.DAT_14++;
+        }
+
+        if (7 < (byte)param1.DAT_14)
+            param1.DAT_03++;
+    }
+
+    //FUN_3650 (ST8)
+    private void FUN_3650(CriInteract param1)
+    {
+        byte bVar1;
+        sbyte sVar2;
+        byte bVar3;
+        uint uVar4;
+
+        bVar1 = param1.DAT_19;
+
+        if (bVar1 == 1)
+        {
+            if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) != 0 && param1.DAT_02 != 0)
+            {
+                GameManager.instance.FUN_5C94C(null, 150);
+                param1.DAT_19 = 2;
+                return;
+            }
+
+            if ((InputManager.controllers[0].DAT_B58B8 & 0x8040) != 0)
+            {
+                GameManager.instance.FUN_5C94C(null, 150);
+                param1.DAT_19 = 0;
+                return;
+            }
+
+            if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0 && param1.DAT_13 != 0)
+            {
+                GameManager.instance.FUN_5C94C(null, 150);
+                param1.DAT_13--;
+                return;
+            }
+
+            if ((InputManager.controllers[0].DAT_B58B8 & 0x1000) == 0 || 4 < param1.DAT_13)
+            {
+                if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) == 0)
+                    return;
+
+                GameManager.instance.FUN_5C94C(null, 150);
+                param1.DAT_03 = 4;
+                uVar4 = (byte)param1.DAT_13;
+                bVar3 = (byte)(param1.BDAT_08 << (6 - param1.DAT_13 & 31) & 0xc0);
+                bVar1 = (byte)(param1.BDAT_0A << (6 - (int)uVar4 & 31) & 0xc0);
+                param1.DAT_04 = (byte)(param1.BDAT_0A >> 2);
+                param1.DAT_1A = (byte)(param1.BDAT_08 >> 2);
+
+                if (uVar4 < 6)
+                {
+                    switch (uVar4)
+                    {
+                        case 0:
+                            param1.DAT_0D = 0xfc;
+                            param1.BDAT_0C = 0xfc;
+                            param1.DAT_1A |= (byte)(param1.BDAT_08 << 6);
+                            param1.DAT_04 |= (byte)(param1.BDAT_0A << 6);
+                            param1.DAT_06 = (byte)param1.DAT_13;
+                            return;
+                        case 1:
+                            param1.DAT_0D = 0xf9;
+                            param1.BDAT_0C = 0xf8;
+                            param1.DAT_1A &= 0x3e;
+                            param1.DAT_04 &= 0x3e;
+                            param1.DAT_1A |= (byte)(bVar3 | param1.BDAT_08 & 1);
+                            param1.DAT_06 = (byte)param1.DAT_13;
+                            param1.DAT_04 |= (byte)(bVar1 | param1.BDAT_0A & 1);
+                            return;
+                        case 2:
+                            param1.DAT_0D = 0xf3;
+                            param1.BDAT_0C = 0xf0;
+                            param1.DAT_1A &= 0x3c;
+                            param1.DAT_04 &= 0x3c;
+                            param1.DAT_1A |= (byte)(bVar3 | param1.BDAT_08 & 3);
+                            param1.DAT_06 = (byte)param1.DAT_13;
+                            param1.DAT_04 |= (byte)(bVar1 | param1.BDAT_0A & 3);
+                            return;
+                        case 3:
+                            param1.DAT_0D = 0xe7;
+                            param1.BDAT_0C = 0xf0;
+                            param1.DAT_1A &= 0x38;
+                            param1.DAT_04 &= 0x38;
+                            param1.DAT_1A |= (byte)(bVar3 | param1.BDAT_08 & 7);
+                            param1.DAT_06 = (byte)param1.DAT_13;
+                            param1.DAT_04 |= (byte)(bVar1 | param1.BDAT_0A & 7);
+                            return;
+                        case 4:
+                            param1.DAT_0D = 0xcf;
+                            param1.BDAT_0C = 0xe0;
+                            param1.DAT_1A &= 0x30;
+                            param1.DAT_04 &= 0x30;
+                            param1.DAT_1A |= (byte)(bVar3 | param1.BDAT_08 & 15);
+                            param1.DAT_06 = (byte)param1.DAT_13;
+                            param1.DAT_04 |= (byte)(bVar1 | param1.BDAT_0A & 15);
+                            return;
+                        case 5:
+                            param1.DAT_0D = 0x9f;
+                            param1.BDAT_0C = 0xc0;
+                            param1.DAT_1A &= 0x20;
+                            param1.DAT_04 &= 0x20;
+                            param1.DAT_1A |= (byte)(bVar3 | param1.BDAT_08 & 31);
+                            param1.DAT_06 = (byte)param1.DAT_13;
+                            param1.DAT_04 |= (byte)(bVar1 | param1.BDAT_0A & 31);
+                            return;
+                    }
+                }
+
+                param1.DAT_1A |= bVar3;
+                param1.DAT_06 = (byte)param1.DAT_13;
+                param1.DAT_04 |= bVar1;
+                return;
+            }
+
+            GameManager.instance.FUN_5C94C(null, 150);
+            param1.DAT_13++;
+            return;
+        }
+
+        if (1 < bVar1)
+        {
+            if (bVar1 == 2)
+            {
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x8040) != 0)
+                {
+                    GameManager.instance.FUN_5C94C(null, 150);
+                    param1.DAT_19 = 1;
+                    return;
+                }
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0 && param1.DAT_13 != 0)
+                {
+                    GameManager.instance.FUN_5C94C(null, 150);
+                    param1.DAT_13--;
+                    return;
+                }
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x1000) == 0 || 4 < param1.DAT_13)
+                {
+                    if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) == 0)
+                        return;
+
+                    GameManager.instance.FUN_5C94C(null, 150);
+                    param1.DAT_03 = 7;
+                    uVar4 = (byte)param1.DAT_13;
+                    param1.DAT_05 = (byte)(param1.DAT_0B >> 2);
+                    param1.DAT_1B = (byte)(param1.BDAT_09 >> 2);
+                    bVar3 = (byte)(param1.BDAT_09 << (6 - param1.DAT_13 & 31) & 0xc0);
+                    bVar1 = (byte)(param1.DAT_0B << (6 - (int)uVar4 & 31) & 0xc0);
+
+                    if (5 < uVar4)
+                    {
+                        param1.DAT_1B |= bVar3;
+                        param1.DAT_05 |= bVar1;
+                        return;
+                    }
+
+                    switch (uVar4)
+                    {
+                        case 0:
+                            param1.DAT_0F = 0xfc;
+                            param1.BDAT_0E = 0xfc;
+                            param1.DAT_1B |= (byte)(param1.BDAT_09 << 6);
+                            param1.DAT_05 |= (byte)(param1.DAT_0B << 6);
+                            return;
+                        case 1:
+                            param1.DAT_0F = 0xf9;
+                            param1.BDAT_0E = 0xf8;
+                            param1.DAT_1B &= 0x3e;
+                            param1.DAT_05 &= 0x3e;
+                            param1.DAT_1B |= (byte)(bVar3 | param1.BDAT_09 & 1);
+                            param1.DAT_05 |= (byte)(bVar1 | param1.DAT_0B & 1);
+                            return;
+                        case 2:
+                            param1.DAT_0F = 0xf3;
+                            param1.BDAT_0E = 0xf0;
+                            param1.DAT_1B &= 0x3c;
+                            param1.DAT_05 &= 0x3c;
+                            param1.DAT_1B |= (byte)(bVar3 | param1.BDAT_09 & 3);
+                            param1.DAT_05 |= (byte)(bVar1 | param1.DAT_0B & 3);
+                            return;
+                        case 3:
+                            param1.DAT_0F = 0xe7;
+                            param1.BDAT_0E = 0xf0;
+                            param1.DAT_1B &= 0x38;
+                            param1.DAT_05 &= 0x38;
+                            param1.DAT_1B |= (byte)(bVar3 | param1.BDAT_09 & 7);
+                            param1.DAT_05 |= (byte)(bVar1 | param1.DAT_0B & 7);
+                            return;
+                        case 4:
+                            param1.DAT_0F = 0xcf;
+                            param1.BDAT_0E = 0xe0;
+                            param1.DAT_1B &= 0x30;
+                            param1.DAT_05 &= 0x30;
+                            param1.DAT_1B |= (byte)(bVar3 | param1.BDAT_09 & 15);
+                            param1.DAT_05 |= (byte)(bVar1 | param1.DAT_0B & 15);
+                            return;
+                        case 5:
+                            param1.DAT_0F = 0x9f;
+                            param1.BDAT_0E = 0xc0;
+                            param1.DAT_1B &= 0x20;
+                            param1.DAT_05 &= 0x20;
+                            param1.DAT_1B |= (byte)(bVar3 | param1.BDAT_09 & 31);
+                            param1.DAT_05 |= (byte)(bVar1 | param1.DAT_0B & 31);
+                            return;
+                    }
+                }
+            }
+            else
+            {
+                if (bVar1 != 3)
+                    return;
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x8040) != 0)
+                {
+                    GameManager.instance.FUN_5C94C(null, 150);
+                    param1.DAT_19 = 0;
+
+                    if (param1.DAT_13 != 6)
+                        return;
+
+                    param1.DAT_13 = 5;
+                    return;
+                }
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0 && param1.DAT_13 != 0)
+                {
+                    GameManager.instance.FUN_5C94C(null, 150);
+                    param1.DAT_13--;
+                    return;
+                }
+
+                if ((InputManager.controllers[0].DAT_B58B8 & 0x1000) == 0 || 5 < param1.DAT_13)
+                {
+                    if ((InputManager.controllers[0].DAT_B58B8 & 0x20a0) == 0)
+                        return;
+
+                    GameManager.instance.FUN_5C94C(null, 150);
+                    param1.DAT_03 = 10;
+                    uVar4 = (byte)param1.DAT_13;
+                    bVar3 = (byte)(param1.BDAT_08 << (6 - param1.DAT_13 & 31) & 0xc0);
+                    bVar1 = (byte)(param1.BDAT_0A << (6 - (int)uVar4 & 31) & 0xc0);
+                    param1.DAT_04 = (byte)(param1.BDAT_0A >> 2);
+                    param1.DAT_1A = (byte)(param1.BDAT_08 >> 2);
+
+                    if (uVar4 < 7)
+                    {
+                        switch (uVar4)
+                        {
+                            case 0:
+                                param1.DAT_0D = 0xfc;
+                                param1.BDAT_0C = 0xfc;
+                                param1.DAT_1A |= (byte)(param1.BDAT_08 << 6);
+                                param1.DAT_04 |= (byte)(param1.BDAT_0A << 6);
+                                param1.DAT_06 = (byte)param1.DAT_13;
+                                return;
+                            case 1:
+                                param1.DAT_0D = 0xf9;
+                                param1.DAT_0C = 0xf8;
+                                param1.DAT_1A &= 0x3e;
+                                param1.DAT_04 &= 0x3e;
+                                param1.DAT_1A |= (byte)(bVar3 | param1.BDAT_08 & 1);
+                                param1.DAT_06 = (byte)param1.DAT_13;
+                                param1.DAT_04 |= (byte)(bVar1 | param1.BDAT_0A & 1);
+                                return;
+                            case 2:
+                                param1.DAT_0D = 0xf3;
+                                param1.DAT_0C = 0xf0;
+                                param1.DAT_1A &= 0x3c;
+                                param1.DAT_04 &= 0x3c;
+                                param1.DAT_1A |= (byte)(bVar3 | param1.BDAT_08 & 3);
+                                param1.DAT_06 = (byte)param1.DAT_13;
+                                param1.DAT_04 |= (byte)(bVar1 | param1.BDAT_0A & 3);
+                                return;
+                            case 3:
+                                param1.DAT_0D = 0xe7;
+                                param1.DAT_0C = 0xf0;
+                                param1.DAT_1A &= 0x38;
+                                param1.DAT_04 &= 0x38;
+                                param1.DAT_1A |= (byte)(bVar3 | param1.BDAT_08 & 7);
+                                param1.DAT_06 = (byte)param1.DAT_13;
+                                param1.DAT_04 |= (byte)(bVar1 | param1.BDAT_0A & 7);
+                                return;
+                            case 4:
+                                param1.DAT_0D = 0xcf;
+                                param1.DAT_0C = 0xe0;
+                                param1.DAT_1A &= 0x30;
+                                param1.DAT_04 &= 0x30;
+                                param1.DAT_1A |= (byte)(bVar3 | param1.BDAT_08 & 15);
+                                param1.DAT_06 = (byte)param1.DAT_13;
+                                param1.DAT_04 |= (byte)(bVar1 | param1.BDAT_0A & 15);
+                                return;
+                        }
+                    }
+
+                    param1.DAT_1A |= bVar3;
+                    param1.DAT_06 = (byte)param1.DAT_13;
+                    param1.DAT_04 |= bVar1;
+                    return;
+                }
+            }
+
+            GameManager.instance.FUN_5C94C(null, 150);
+            param1.DAT_13++;
+            return;
+        }
+
+        if (bVar1 != 0)
+            return;
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) != 0)
+        {
+            GameManager.instance.FUN_5C94C(null, 150);
+            bVar1 = param1.DAT_18;
+
+            if (bVar1 == 1)
+            {
+                param1.DAT_03 = 0;
+                return;
+            }
+
+            if (bVar1 < 2)
+            {
+                if (bVar1 == 0)
+                {
+                    InventoryManager.FUN_4A7E8(2, 11, true);
+                    param1.DAT_03 = 16;
+                    return;
+                }
+            }
+            else
+            {
+                if (bVar1 == 2)
+                {
+                    param1.DAT_19 = 1;
+                    return;
+                }
+
+                if (bVar1 == 3) goto LAB_376C;
+            }
+        }
+
+        if ((InputManager.controllers[0].DAT_B58B8 & 0x2000) == 0)
+        {
+            if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0)
+            {
+                GameManager.instance.FUN_5C94C(null, 150);
+                param1.DAT_18++;
+            }
+
+            if ((InputManager.controllers[0].DAT_B58B8 & 0x1000) != 0)
+            {
+                GameManager.instance.FUN_5C94C(null, 150);
+                param1.DAT_18--;
+            }
+
+            if (param1.DAT_02 != 0)
+            {
+                if (param1.DAT_18 == 0xff)
+                    param1.DAT_18 = 3;
+
+                param1.DAT_18 &= 3;
+                return;
+            }
+
+            sVar2 = (sbyte)param1.DAT_18;
+
+            if (sVar2 == -1)
+            {
+                param1.DAT_18 = 2;
+                sVar2 = (sbyte)param1.DAT_18;
+            }
+
+            if (sVar2 != 3)
+                return;
+
+            param1.DAT_18 = 0;
+            return;
+        }
+
+        GameManager.instance.FUN_5C94C(null, 150);
+        bVar1 = param1.DAT_18;
+
+        if (bVar1 == 2)
+        {
+            param1.DAT_19 = 1;
+            return;
+        }
+
+        if (bVar1 != 3)
+            return;
+
+        LAB_376C:
+        param1.DAT_19 = bVar1;
     }
 
     //FUN_1E4 (ST8)

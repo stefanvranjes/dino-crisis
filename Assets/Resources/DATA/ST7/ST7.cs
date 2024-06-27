@@ -4656,7 +4656,7 @@ public class ST7 : LevelManager
         {
             if (PTR_DAT_12974[0].DAT_06 == 0 && PTR_DAT_12974[1].DAT_06 == 3 && PTR_DAT_12974[2].DAT_06 == 3)
             {
-                if ((param1.UIDAT_10 & 0xffffff00) != 0x1000200)
+                if (param1.DAT_11 != 2 && param1.DAT_12 != 0 && param1.DAT_13 != 1)
                     return false;
 
                 return true;
@@ -4665,7 +4665,7 @@ public class ST7 : LevelManager
         else
         {
             if (PTR_DAT_12974[0].DAT_06 == 1 && PTR_DAT_12974[1].DAT_06 == 1 && PTR_DAT_12974[2].DAT_06 == 0 &&
-               (param1.UIDAT_10 & 0xffffff00) == 0x20100)
+                param1.DAT_11 == 1 && param1.DAT_12 == 2 && param1.DAT_13 == 0)
                 return true;
         }
 

@@ -36,9 +36,11 @@ public class CriInteract : MonoBehaviour
     public CriObject PTR_10;
     public Vector3Int VDAT_10;
     public TodScriptableObject[] TDAT_10;
+    public short SDAT_10;
     public ushort UDAT_10;
     public byte DAT_10;
     public byte DAT_11;
+    public short SDAT_12;
     public sbyte DAT_12;
     public sbyte DAT_13;
     public CriObject PDAT_14;
@@ -232,9 +234,11 @@ public class CriInteract : MonoBehaviour
         PTR_10 = null;
         VDAT_10 = Vector3Int.zero;
         TDAT_10 = null;
+        SDAT_10 = 0;
         UDAT_10 = 0;
         DAT_10 = 0;
         DAT_11 = 0;
+        SDAT_12 = 0;
         DAT_12 = 0;
         DAT_13 = 0;
         DAT_14 = 0;

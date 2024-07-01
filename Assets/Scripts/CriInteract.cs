@@ -33,6 +33,8 @@ public class CriInteract : MonoBehaviour
     public byte BDAT_0E;
     public Vector3Int VDAT_0E;
     public byte DAT_0F;
+    public byte[] ADAT_10;
+    public int IDAT_10;
     public CriObject PTR_10;
     public Vector3Int VDAT_10;
     public TodScriptableObject[] TDAT_10;
@@ -231,6 +233,8 @@ public class CriInteract : MonoBehaviour
         BDAT_0E = 0;
         VDAT_0E = Vector3Int.zero;
         DAT_0F = 0;
+        ADAT_10 = null;
+        IDAT_10 = 0;
         PTR_10 = null;
         VDAT_10 = Vector3Int.zero;
         TDAT_10 = null;
@@ -1630,7 +1634,7 @@ public class CriInteract : MonoBehaviour
                     oVar5.DAT_40.x = ST1.instance.DAT_7AA0[iVar4 + 8] << 0x18 >> 0x17;
                     oVar5.DAT_40.y = ST1.instance.DAT_7AA0[iVar4 + 9] << 0x18 >> 0x17;
                     oVar5.DAT_40.z = ST1.instance.DAT_7AA0[iVar4 + 10] << 0x18 >> 0x17;
-                    oVar5.DAT_6C = 0x80;
+                    oVar5.PTR_6C[0] = 0x80;
                 }
 
                 uVar6 = (ushort)DAT_0A + 1U;

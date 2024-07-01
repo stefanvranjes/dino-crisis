@@ -53,11 +53,18 @@ public class CriParticle : CriObject
     public short SDAT_6A; //0x6A
     public byte DAT_6A; //0x6A
     public byte DAT_6B; //0x6B
-    public byte DAT_6C; //0x6C
+    public byte[] PTR_6C; //0x6C
     public int IDAT_6C; //0x6C
     public Vector3Int VDAT_6C; //0x6C
+    public byte DAT_6D; //0x6D
+    public byte BDAT_6E; //0x6E
     public short DAT_6E; //0x6E
+    public byte DAT_6F; //0x6F
     public Vector3Int DAT_70; //0x70
+    public byte BDAT_70; //0x70
+    public byte DAT_71; //0x71
+    public byte DAT_72; //0x72
+    public byte DAT_73; //0x73
     public Vector3Int VDAT_74; //0x74
     public byte DAT_74; //0x74
     public byte DAT_75; //0x75
@@ -299,7 +306,7 @@ public class CriParticle : CriObject
         SDAT_6A = 0;
         DAT_6A = 0;
         DAT_6B = 0;
-        DAT_6C = 0;
+        PTR_6C = new byte[8];
         IDAT_6C = 0;
         VDAT_6C = Vector3Int.zero;
         DAT_6E = 0;
@@ -658,7 +665,7 @@ public class CriParticle : CriObject
         }
 
         if (DAT_6B != 0)
-            DAT_6C = DAT_6B;
+            PTR_6C[0] = DAT_6B;
 
         bVar1 = 2;
 

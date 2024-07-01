@@ -577,7 +577,7 @@ public class CriScene : MonoBehaviour
                         oVar7.DAT_6B = bVar1;
                         return;
                     case 31:
-                        oVar7.DAT_6C = bVar1;
+                        oVar7.PTR_6C[0] = bVar1;
                         return;
                 }
             case 5:
@@ -951,7 +951,7 @@ public class CriScene : MonoBehaviour
                     case 30:
                         return oVar4.DAT_6B;
                     case 31:
-                        return oVar4.DAT_6C;
+                        return oVar4.PTR_6C[0];
                 }
                 break;
             case 5:

@@ -2016,6 +2016,14 @@ public static class Utilities
         Coprocessor.depthQueingB = (uint)param1;
     }
 
+    //FUN_8F410
+    public static void SetTransMatrix(ref CriTransform t)
+    {
+        Coprocessor.translationVector._trx = t.position.x;
+        Coprocessor.translationVector._try = t.position.y;
+        Coprocessor.translationVector._trz = t.position.z;
+    }
+
     //FUN_8F3E0
     public static void SetRotMatrix(ref Matrix3x3 m)
     {

@@ -52,6 +52,7 @@ public class ST8 : LevelManager
     private delegate void FUN_124A8(CriInteract i); //0x124A8 (ST8)
     private delegate void FUN_12508(CriParticle p); //0x12508 (ST8)
     private delegate void FUN_12518(CriInteract i); //0x12518 (ST8)
+    private delegate void FUN_1255C(CriInteract i); //0x1255C (ST8)
     private uint[] DAT_11F08 = new uint[] { 0x80138424, 0x80138434, 0x80138474, 0x80138504, 0x80138514, 0x8013851c, 0x80138524, 0x8013852c, 0x80138534, 0x8013853c, 0x80138544, 0x8013854c, 0x8013854c, 0x80138554, 0x801385c4, 0x8013865c, 0x8013866c, 0x80133fcc, 0x80133fdc, 0x8013401c, 0x801340ac, 0x801340bc, 0x801340c4, 0x801340cc, 0x801340d4, 0x801340dc, 0x801340e4, 0x801340ec, 0x801340f4, 0x801340f4, 0x801340fc, 0x8013416c, 0x80134204, 0x80134214 };
     private FUN_11F90[] PTR_FUN_11F90; //0x11F90 (ST8)
     private uint[] DAT_11F9C = new uint[] { 0x80144e70, 0x80145b88, 0x80145bd8, 0x80146178, 0x80146718, 0x80146750, 0x80146828, 0x80146908, 0x80146af8, 0x80146ba8, 0x80146bb0, 0x80146bb8, 0x80146bc0, 0x80146bc8, 0x80146bd0, 0x80146bd8, 0x80146be0, 0x80146be8, 0x80146bf0, 0x80146bf8, 0x80146c00, 0x80146c10, 0x80146c18, 0x80146c20, 0x80146c28, 0x80146c30, 0x80146c38, 0x80146c40, 0x80146c48, 0x80146c50, 0x80146c58, 0x80146c60, 0x80146c68 };
@@ -89,6 +90,7 @@ public class ST8 : LevelManager
     private byte[] DAT_124F0 = new byte[] { 1, 5, 3, 7, 9, 2, 6, 10, 8, 3, 5, 9, 1, 4, 7, 8, 1, 3, 1, 5, 2, 3, 9, 2 };
     private FUN_12508[] PTR_FUN_12508; //0x12508 (ST8)
     private FUN_12518[] PTR_FUN_12518; //0x12518 (ST8)
+    private FUN_1255C[] PTR_FUN_1255C; //0x1255C (ST8)
     private sbyte[] DAT_126A4 = new sbyte[10];
     private short[] DAT_128B0 = new short[0x100];
     private Tmd3ScriptableObject DAT_12AB0; //0x12AB0 (ST8)
@@ -124,6 +126,8 @@ public class ST8 : LevelManager
     private byte[] DAT_12C1C = new byte[20]; // unknown size?
     private byte[] DAT_12CAC = new byte[20]; // unknown size?
     private byte[] DAT_12D3C = new byte[20];
+    private int[] DAT_12D50 = new int[3];
+    private int[] DAT_12D60 = new int[3];
 
     protected override void Awake()
     {
@@ -282,6 +286,15 @@ public class ST8 : LevelManager
                 FUN_DC00, 
                 FUN_DD10, 
                 FUN_DD9C, 
+                FUN_5FF98
+            };
+            PTR_FUN_1255C = new FUN_1255C[6]
+            {
+                FUN_E42C, 
+                FUN_E4B4, 
+                FUN_E52C, 
+                FUN_E5D8, 
+                FUN_E684, 
                 FUN_5FF98
             };
         }
@@ -5067,6 +5080,113 @@ public class ST8 : LevelManager
         } while (local_40 < 20);
     }
 
+    //FUN_E42C (ST8)
+    private void FUN_E42C(CriInteract param1)
+    {
+        uint uVar3;
+
+        uVar3 = 0;
+        param1.DAT_1B = 0;
+        param1.DAT_19 = 0;
+        param1.DAT_18 = 0;
+        param1.DAT_17 = 0;
+        param1.BDAT_16 = 0;
+        param1.DAT_1A = 0x20;
+        GameManager.instance.DAT_38 = 0x73;
+
+        do
+        {
+            DAT_12D50[uVar3] = 0;
+            DAT_12D60[uVar3] = 0;
+            uVar3++;
+        } while (uVar3 < 3);
+
+        param1.DAT_03 = 9;
+        GameManager.instance.FUN_2984C(0x8011);
+    }
+
+    //FUN_E4B4 (ST8)
+    private void FUN_E4B4(CriInteract param1)
+    {
+        bool bVar1;
+
+        if (param1.BDAT_16 < 30)
+            param1.BDAT_16++;
+        else
+        {
+            //...
+            bVar1 = InventoryManager.FUN_4A87C(3, 0x20);
+
+            if (bVar1)
+                param1.DAT_03 = 4;
+        }
+
+        //FUN_FBA8
+    }
+
+    //FUN_E52C (ST8)
+    private void FUN_E52C(CriInteract param1)
+    {
+        if (param1.BDAT_16 < 50)
+        {
+            param1.BDAT_16++;
+            //FUN_F4B4
+        }
+        else
+        {
+            //FUN_ECF4
+
+            if (param1.DAT_17 == -1)
+            {
+                param1.BDAT_16 = 0;
+                param1.DAT_17 = 0;
+                param1.DAT_03 = 6;
+            }
+
+            param1.DAT_17++;
+        }
+
+        if (param1.BDAT_16 == 35)
+            GameManager.instance.FUN_2984C(0x8012);
+
+        //...
+    }
+
+    //FUN_E5D8 (ST8)
+    private void FUN_E5D8(CriInteract param1)
+    {
+        if (param1.BDAT_16 < 50)
+        {
+            param1.BDAT_16++;
+            //FUN_F4B4
+        }
+        else
+        {
+            //FUN_ECF4
+
+            if (param1.DAT_17 == -1)
+            {
+                param1.BDAT_16 = 0;
+                param1.DAT_17 = 0;
+                param1.DAT_03 = 7;
+            }
+
+            param1.DAT_17++;
+        }
+
+        if (param1.BDAT_16 == 35)
+            GameManager.instance.FUN_2984C(0x8012);
+
+        //...
+    }
+
+    //FUN_E684 (ST8)
+    private void FUN_E684(CriInteract param1)
+    {
+        param1.DAT_03 = 5;
+        GameManager.instance.DAT_38 = 0;
+    }
+
     //FUN_1E4 (ST8)
     public static void FUN_1E4(CriParticle param1)
     {
@@ -5214,7 +5334,8 @@ public class ST8 : LevelManager
     //FUN_F738 (ST8)
     public static void FUN_F738(CriInteract param1)
     {
-
+        instance.PTR_FUN_1255C[param1.DAT_03](param1);
+        //...
     }
 
     //FUN_10118 (ST8)

@@ -14,6 +14,7 @@ public class CriCamera : CriObject
     public Vector3Int DAT_40; //0x40
     public short DAT_46; //0x46
     public Vector3Int DAT_48; //0x48
+    public short DAT_4E; //0x4E
     public short DAT_50; //0x50
     public short DAT_52; //0x52
     public short DAT_54; //0x54
@@ -1192,6 +1193,59 @@ public class CriCamera : CriObject
         SceneManager.instance.cCamera.DAT_36 = 0;
         SceneManager.instance.FUN_26504(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
         SceneManager.instance.FUN_269C8(local_38, local_40);
+    }
+
+    //FUN_1CFC (ST9)
+    public void FUN_1CFC()
+    {
+        CriSkinned oVar1;
+        CriBone oVar2;
+        CriSkinned oVar3;
+        Vector3Int local_48;
+        Vector3Int local_40;
+        Matrix3x3 auStack_38;
+
+        oVar1 = SceneManager.instance.DAT_27C[0];
+        oVar3 = SceneManager.instance.DAT_27C[10];
+        oVar2 = Utilities.FUN_601C8(oVar1.skeleton, 3) as CriBone;
+        local_40 = new Vector3Int(0, Utilities.FUN_615EC(oVar3.screen, oVar1.screen), 0);
+        auStack_38 = new Matrix3x3();
+        Utilities.RotMatrix_gte(ref local_40, ref auStack_38);
+        local_48 = new Vector3Int(0, 0, ST9.instance.DAT_160CC[(oVar1.DAT_2F - 2) * 2 + 1]);
+        local_48 = Utilities.ApplyMatrixSV(ref auStack_38, ref local_48);
+        local_48.x += oVar3.screen.x;
+        local_48.y = ST9.instance.DAT_160CC[(oVar1.DAT_2F - 2) * 2];
+        local_48.z += oVar3.screen.z;
+        SceneManager.instance.FUN_269C8(oVar2.screen, local_48);
+    }
+
+    //FUN_1E08 (ST9)
+    public void FUN_1E08()
+    {
+        CriBone oVar2;
+        CriSkinned oVar3;
+        Vector3Int local_18;
+
+        oVar3 = SceneManager.instance.DAT_27C[0];
+        oVar2 = Utilities.FUN_601C8(oVar3.skeleton, 3) as CriBone;
+        local_18 = ST9.instance.DAT_160D8[oVar3.DAT_2F - 2];
+        local_18 = Utilities.ApplyMatrixSV(ref oVar3.cTransform.rotation, ref local_18);
+        local_18.x += oVar2.screen.x;
+        local_18.y += oVar2.screen.y;
+        local_18.z += oVar2.screen.z;
+        DAT_56 = 0;
+        DAT_54 = 0;
+        DAT_52 = 0;
+        DAT_50 = 0;
+        DAT_3E = 0;
+        SDAT_2E = 0;
+        DAT_92 = 0;
+        DAT_90 = 0;
+        DAT_36 = 0;
+        DAT_26 = 0;
+        DAT_8B = 0;
+        DAT_8A = 0;
+        SceneManager.instance.FUN_269C8(oVar2.screen, local_18);
     }
 
     //FUN_2D20 (ST2)

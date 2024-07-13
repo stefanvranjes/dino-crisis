@@ -79,6 +79,7 @@ public class CriPlayer : CriSkinned
     public Vector2Int V2_1F0; //0x1F0
     public byte DAT_1F2; //0x1F2
     public bool DAT_1F3; //0x1F3
+    public CriPlayer PDAT_1F4; //0x1F4
     public Vector2Int V2_1F4; //0x1F4
     public byte DAT_1F4; //0x1F4
     public byte DAT_1F5; //0x1F5
@@ -1667,6 +1668,7 @@ public class CriPlayer : CriSkinned
         V2_1F0 = Vector2Int.zero;
         DAT_1F2 = 0;
         DAT_1F3 = false;
+        PDAT_1F4 = null;
         V2_1F4 = Vector2Int.zero;
         DAT_1F4 = 0;
         DAT_1F5 = 0;

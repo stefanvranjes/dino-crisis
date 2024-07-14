@@ -79,7 +79,7 @@ public class CriPlayer : CriSkinned
     public Vector2Int V2_1F0; //0x1F0
     public byte DAT_1F2; //0x1F2
     public bool DAT_1F3; //0x1F3
-    public CriPlayer PDAT_1F4; //0x1F4
+    public CriObject PDAT_1F4; //0x1F4
     public Vector2Int V2_1F4; //0x1F4
     public byte DAT_1F4; //0x1F4
     public byte DAT_1F5; //0x1F5

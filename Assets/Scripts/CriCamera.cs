@@ -1266,6 +1266,30 @@ public class CriCamera : CriObject
         SceneManager.instance.FUN_269C8(oVar3.screen, DAT_48);
     }
 
+    //FUN_3440 (ST9)
+    public void FUN_3440()
+    {
+        CriSkinned puVar1;
+        CriSkinned oVar2;
+        Vector3Int local_40;
+        Vector3Int local_38;
+        Matrix3x3 auStack_30;
+
+        oVar2 = SceneManager.instance.DAT_27C[10];
+        local_40 = new Vector3Int(oVar2.screen.x, oVar2.screen.y - 0x400, oVar2.screen.z);
+        puVar1 = SceneManager.instance.DAT_27C[0];
+        puVar1.flags &= 0xfffffffd;
+        local_38 = new Vector3Int(); //tmp
+        auStack_30 = new Matrix3x3();
+        Utilities.RotMatrix_gte(ref puVar1.vr, ref auStack_30);
+        local_38 = Utilities.ApplyMatrixSV(ref auStack_30, ref local_38);
+        local_38.x += oVar2.screen.x;
+        local_38.y += oVar2.screen.y;
+        local_38.z += oVar2.screen.z;
+        DAT_8B = 0;
+        SceneManager.instance.FUN_269C8(local_40, local_38);
+    }
+
     //FUN_BE1C (ST6)
     public void FUN_BE1C()
     {

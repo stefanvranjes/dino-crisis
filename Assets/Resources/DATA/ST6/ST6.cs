@@ -1117,7 +1117,7 @@ public class ST6 : LevelManager
     //FUN_3FE0 (ST6)
     private void FUN_3FE0(CriPlayer param1)
     {
-        if (param1.DAT_3C != 1 && param1.DAT_3D != 6 && param1.DAT_3D != 7)
+        if ((param1.DAT_3C != 1 || param1.DAT_3D != 6) && (param1.DAT_3C != 1 || param1.DAT_3D != 7))
             FUN_4050(param1);
     }
 
@@ -1209,14 +1209,14 @@ public class ST6 : LevelManager
                     param1.DAT_3D = 7;
                     param1.DAT_3E = 0;
                     param1.DAT_3F = 0;
-                    param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0x7f);
+                    param1.BDAT_1C0 &= 0x7f;
 
                     if (sVar5 < 0x200)
                         bVar3 = (byte)(param1.BDAT_1C0 | 8);
                     else
                         bVar3 = (byte)(param1.BDAT_1C0 & 0xf7);
 
-                    param1.BDAT_1C0 = (sbyte)bVar3;
+                    param1.BDAT_1C0 = bVar3;
                     GameManager.instance.FUN_65C7C(param1);
                     return;
                 }
@@ -1245,7 +1245,7 @@ public class ST6 : LevelManager
                         else
                             bVar3 = (byte)(param1.BDAT_1C0 & 0x77);
 
-                        param1.BDAT_1C0 = (sbyte)bVar3;
+                        param1.BDAT_1C0 = bVar3;
                         goto LAB_459C;
                     }
 
@@ -1315,7 +1315,7 @@ public class ST6 : LevelManager
                             param1.DAT_3D = 0;
                             param1.DAT_3E = 0;
                             param1.DAT_3F = 0;
-                            param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xdf);
+                            param1.BDAT_1C0 &= 0xdf;
                             GameManager.instance.FUN_65CB0(param1);
                             FUN_B2E0(param1);
                             return;
@@ -1331,7 +1331,7 @@ public class ST6 : LevelManager
                         param1.DAT_3D = 0;
                         param1.DAT_3E = 0;
                         param1.DAT_3F = 0;
-                        param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xdf);
+                        param1.BDAT_1C0 &= 0xdf;
                         GameManager.instance.FUN_65CB0(param1);
                         FUN_B2E0(param1);
                         return;
@@ -1339,7 +1339,7 @@ public class ST6 : LevelManager
                 }
                 else
                 {
-                    param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xdf);
+                    param1.BDAT_1C0 &= 0xdf;
                     GameManager.instance.FUN_65CB0(param1);
                     FUN_B2E0(param1);
                 }
@@ -1598,7 +1598,7 @@ public class ST6 : LevelManager
                     else
                         bVar2 = (byte)(param1.BDAT_1C0 & 0x77);
 
-                    param1.BDAT_1C0 = (sbyte)bVar2;
+                    param1.BDAT_1C0 = bVar2;
                 }
 
                 GameManager.instance.FUN_65C7C(param1);
@@ -1676,7 +1676,7 @@ public class ST6 : LevelManager
                 FUN_B2E0(param1);
             }
 
-            param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xbf);
+            param1.BDAT_1C0 &= 0xbf;
         }
 
         sVar1 = (short)param1.DAT_60;
@@ -2221,7 +2221,7 @@ public class ST6 : LevelManager
         else
         {
             param1.FUN_609C8(13, 0, 0);
-            param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xf7);
+            param1.BDAT_1C0 &= 0xf7;
             sVar1 = (short)-((int)((0x1000 - uVar2 & 0xfff) - 0x400) / 0x19);
         }
 
@@ -2623,7 +2623,7 @@ public class ST6 : LevelManager
             bVar1 = (byte)(param1.BDAT_1C0 & 0xef);
         }
 
-        param1.BDAT_1C0 = (sbyte)bVar1;
+        param1.BDAT_1C0 = bVar1;
         param1.DAT_60 = (ushort)(uVar4 & 0xff);
         param1.DAT_40 = new Vector3Int(0, 0, 0);
         FUN_B4AC(param1);
@@ -2634,7 +2634,7 @@ public class ST6 : LevelManager
         if ((param1.BDAT_1C0 & 4) == 0)
             FUN_BC9C(param1);
 
-        param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xdf);
+        param1.BDAT_1C0 &= 0xdf;
         param1.DAT_3E++;
     }
     
@@ -2715,7 +2715,7 @@ public class ST6 : LevelManager
             bVar1 = (byte)(param1.DAT_1C0 & 0xef);
         }
 
-        param1.BDAT_1C0 = (sbyte)bVar1;
+        param1.BDAT_1C0 = bVar1;
         param1.DAT_60 = (ushort)(uVar4 & 0xff);
         param1.DAT_40 = new Vector3Int(0, 0, 0);
         FUN_B4AC(param1);
@@ -2731,7 +2731,7 @@ public class ST6 : LevelManager
                 FUN_BC9C(param1);
         }
 
-        param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xdf);
+        param1.BDAT_1C0 &= 0xdf;
         param1.DAT_3E++;
     }
 
@@ -2864,7 +2864,7 @@ public class ST6 : LevelManager
             param1.DAT_3D = 3;
             param1.DAT_3E = 0;
             param1.DAT_3F = 0;
-            param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xef);
+            param1.BDAT_1C0 &= 0xef;
         }
     }
 
@@ -3233,7 +3233,7 @@ public class ST6 : LevelManager
         param1.DAT_18D = true;
         param1.DAT_196 = 0;
         param1.DAT_12C |= 8;
-        param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xdf);
+        param1.BDAT_1C0 &= 0xdf;
         FUN_B4DC(param1);
         param1.DAT_3E++;
     }
@@ -4068,7 +4068,7 @@ public class ST6 : LevelManager
             return;
 
         iVar4 = (int)GameManager.FUN_64650();
-        param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xfb);
+        param1.BDAT_1C0 &= 0xfb;
 
         if (param1.health < 1)
             return;
@@ -4222,7 +4222,7 @@ public class ST6 : LevelManager
                 param1.DAT_3D = 1;
                 param1.DAT_3E = 0;
                 param1.DAT_3F = 0;
-                param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xfd);
+                param1.BDAT_1C0 &= 0xfd;
             }
 
             FUN_B4DC(param1);
@@ -4246,7 +4246,7 @@ public class ST6 : LevelManager
             return;
 
         iVar4 = (int)GameManager.FUN_64650();
-        param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xfb);
+        param1.BDAT_1C0 &= 0xfb;
 
         if (param1.health < 1)
             return;
@@ -4400,7 +4400,7 @@ public class ST6 : LevelManager
                 param1.DAT_3D = 1;
                 param1.DAT_3E = 0;
                 param1.DAT_3F = 0;
-                param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xfd);
+                param1.BDAT_1C0 &= 0xfd;
             }
 
             FUN_B4DC(param1);
@@ -4637,7 +4637,7 @@ public class ST6 : LevelManager
         {
             iVar3 = (int)GameManager.FUN_64650();
             iVar4 = (int)GameManager.FUN_64650();
-            param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xfb);
+            param1.BDAT_1C0 &= 0xfb;
             uVar6 = (ushort)(param1.DAT_1A0 & 0xf);
 
             if (uVar6 == 1)
@@ -4989,7 +4989,7 @@ public class ST6 : LevelManager
         {
             iVar4 = (int)GameManager.FUN_64650();
             iVar5 = (int)GameManager.FUN_64650();
-            param1.BDAT_1C0 = (sbyte)(param1.BDAT_1C0 & 0xfb);
+            param1.BDAT_1C0 &= 0xfb;
 
             if (param1.health < 1)
                 return;

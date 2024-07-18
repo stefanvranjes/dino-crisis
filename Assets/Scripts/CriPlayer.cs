@@ -5,7 +5,7 @@ using UnityEngine;
 public class CriPlayer : CriSkinned
 {
     public uint DAT_1C0; //0x1C0
-    public sbyte BDAT_1C0; //0x1C0
+    public byte BDAT_1C0; //0x1C0
     public sbyte DAT_1C1; //0x1C1
     public byte DAT_1C2; //0x1C2
     public sbyte DAT_1C3; //0x1C3
@@ -11659,7 +11659,7 @@ public class CriPlayer : CriSkinned
 
         oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
         sVar1 = GameManager.instance.FUN_7732C((ushort)screen.x, (ushort)screen.z, (byte)DAT_48);
-        BDAT_1C0 = sVar1;
+        BDAT_1C0 = (byte)sVar1;
         sVar1 = GameManager.instance.FUN_7732C((ushort)oVar3.screen.x, (ushort)oVar3.screen.z, (byte)oVar3.DAT_48);
         DAT_1C1 = sVar1;
         iVar2 = (int)GameManager.FUN_64650();
@@ -12201,7 +12201,7 @@ public class CriPlayer : CriSkinned
         DAT_1E2 = 0;
         DAT_1C6 = 1;
         FUN_2B3EC();
-        BDAT_1C0 = sVar2;
+        BDAT_1C0 = (byte)sVar2;
         LAB_2B6D8:
         DAT_1C1 = sVar3;
     }
@@ -21676,11 +21676,11 @@ public class CriPlayer : CriSkinned
 
             flags |= 4;
             bVar1 = (byte)(BDAT_1C0 & 0xef);
-            BDAT_1C0 = (sbyte)bVar1;
+            BDAT_1C0 = bVar1;
 
             if (0x7ff < ((uVar2 - (ushort)vr.y & 0xfff) + 0x400 & 0xfff))
             {
-                BDAT_1C0 = (sbyte)(bVar1 | 0x10);
+                BDAT_1C0 = (byte)(bVar1 | 0x10);
                 UDAT_1DA = (ushort)(UDAT_1DA + 0x800 & 0xfff);
             }
         }

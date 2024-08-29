@@ -93,6 +93,7 @@ public class ST9 : LevelManager
     private delegate void FUN_1699C(CriPlayer p); //0x1699C (ST9)
     private delegate void FUN_169A4(CriPlayer p); //0x169A4 (ST9)
     private delegate void FUN_169BC(CriPlayer p); //0x169BC (ST9)
+    private delegate void FUN_16D10(CriParticle p); //0x16D10 (ST9)
     private CapsuleCollider[] DAT_15F90; //0x15F90 (ST9)
     private short[] DAT_15FCC = new short[] { -0x1500, 0x1500 };
     private short[] DAT_15FD0 = new short[] { 0, 0x800 };
@@ -197,6 +198,7 @@ public class ST9 : LevelManager
     private Vector3Int[] DAT_16C8C; //0x16C8C (ST9)
     private short[] DAT_16CAC = new short[] { -1500, 0, -1500, -1500, 120, 60 };
     private Vector3Int[] DAT_16CB8; //0x16CC8 (ST9)
+    private FUN_16D10[] PTR_FUN_16D10; //0x16D10 (ST9)
     private ushort DAT_171C8; //0x171C8 (ST9)
 
     protected override void Awake()
@@ -664,6 +666,10 @@ public class ST9 : LevelManager
                 FUN_AA50,
                 FUN_AEC8
             };
+            PTR_FUN_16D10 = new FUN_16D10[]
+            {
+
+            }
         }
     }
 
@@ -7087,6 +7093,76 @@ public class ST9 : LevelManager
         cVar1.DAT_7C = new Vector3Int(0x180, 0xc00, 0x9c4);
     }
 
+    //FUN_CCC0 (ST9)
+    private void FUN_CCC0(CriParticle param1)
+    {
+        bool bVar6;
+        int iVar6;
+        int iVar7;
+        CriStatic oVar9;
+        CriStatic[] local_78;
+        byte[] local_38;
+
+        iVar7 = 0;
+        iVar6 = 0;
+        local_78 = new CriStatic[5];
+        local_38 = new byte[] { 0, 3, 2, 1, 4, 4, 2, 1, 0, 3, 3, 2, 1, 0, 4, 1 };
+        //...
+
+        do
+        {
+            oVar9 = SceneManager.instance.DAT_7CDC[iVar6];
+            local_78[iVar6] = oVar9;
+            iVar6++;
+        } while (iVar6 < 5);
+
+        bVar6 = InventoryManager.FUN_4A87C(3, 0x20);
+
+        if (!bVar6)
+        {
+            bVar6 = InventoryManager.FUN_4A87C(3, 0x21);
+
+            if (!bVar6)
+            {
+                bVar6 = InventoryManager.FUN_4A87C(3, 0x22);
+
+                if (bVar6)
+                    iVar7 = 3;
+            }
+            else
+            {
+                bVar6 = InventoryManager.FUN_4A87C(0, 0x76);
+
+                if (!bVar6)
+                {
+                    bVar6 = InventoryManager.FUN_4A87C(3, 0x21);
+
+                    if (bVar6)
+                        iVar7 = 1;
+                }
+                else
+                    iVar7 = 2;
+            }
+        }
+        else
+            iVar7 = 0;
+
+        bVar6 = InventoryManager.FUN_4A87C(3, 0x3f);
+
+        if (!bVar6)
+        {
+            InventoryManager.FUN_4A7E8(3, 0x3f, true);
+            iVar6 = 0;
+
+            do
+            {
+                local_78[iVar6].DAT_78 = local_38[iVar6 + iVar7 * 5];
+                local_78[iVar6].DAT_79 = (byte)iVar6;
+                iVar6++;
+            } while (iVar6 < 5);
+        }
+    }
+
     //FUN_1AF8 (ST9)
     public static void FUN_1AF8(CriPlayer param1)
     {
@@ -7204,7 +7280,7 @@ public class ST9 : LevelManager
     //FUN_CC84 (ST9)
     public static void FUN_CC84(CriParticle param1)
     {
-
+        instance.PTR_FUN_16D10[param1.DAT_3C](param1);
     }
 
     //FUN_D478 (ST9)

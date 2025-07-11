@@ -95,6 +95,11 @@ public class ST9 : LevelManager
     private delegate void FUN_169BC(CriPlayer p); //0x169BC (ST9)
     private delegate void FUN_16D10(CriParticle p); //0x16D10 (ST9)
     private delegate void FUN_16D4C(CriParticle p); //0x16D4C (ST9)
+    private delegate void FUN_16D5C(CriParticle p); //0x16D5C (ST9)
+    private delegate void FUN_16D80(CriParticle p); //0x16D80 (ST9)
+    private delegate void FUN_16D8C(CriParticle p); //0x16D8C (ST9)
+    private delegate void FUN_16D9C(CriParticle p); //0x16D9C (ST9)
+    private delegate void FUN_16DAC(CriParticle p); //0x16DAC (ST9)
     private CapsuleCollider[] DAT_15F90; //0x15F90 (ST9)
     private short[] DAT_15FCC = new short[] { -0x1500, 0x1500 };
     private short[] DAT_15FD0 = new short[] { 0, 0x800 };
@@ -202,6 +207,13 @@ public class ST9 : LevelManager
     private FUN_16D10[] PTR_FUN_16D10; //0x16D10 (ST9)
     private short[] DAT_16D20 = new short[] { -2320, -1230, -3900, -2610, -1230, -3900, -2900, -1230, -3900, -3190, -1230, -3900, -3480, -1230, -3900, -4390, -1075, 2600, -2290, -2580, -2870, -3160 };
     private FUN_16D4C[] PTR_FUN_16D4C; //0x16D4C (ST9)
+    private FUN_16D5C[] PTR_FUN_16D5C; //0x16D5C (ST9)
+    private uint DAT_16D68 = 0x8010f728; //0x16D68 (ST9)
+    private int[] DAT_16D6C = new int[] { 1, 0, 1 };
+    private FUN_16D80[] PTR_FUN_16D80; //0x16D80 (ST9)
+    private FUN_16D8C[] PTR_FUN_16D8C; //0x16D8C (ST9)
+    private uint[] PTR_FUN_16D9C = new uint[4] {0x80120020, 0x80120060, 0x80120068, 0x80120070}; //0x16D9C (ST9)
+    private FUN_16DAC[] PTR_FUN_16DAC; //0x16DAC (ST9)
     private ushort DAT_171C8; //0x171C8 (ST9)
 
     protected override void Awake()
@@ -681,6 +693,31 @@ public class ST9 : LevelManager
                 FUN_D4B4,
                 FUN_D78C,
                 FUN_D92C,
+                FUN_60068
+            };
+            PTR_FUN_16D5C = new FUN_16D5C[3]
+            {
+                FUN_DD50,
+                FUN_DDDC,
+                FUN_60068
+            };
+            PTR_FUN_16D80 = new FUN_16D80[3]
+            {
+                FUN_DE58,
+                FUN_DEE0,
+                FUN_60068
+            };
+            PTR_FUN_16D8C = new FUN_16D8C[4]
+            {
+                FUN_E00C,
+                FUN_E0A0,
+                FUN_E14C,
+                FUN_60068
+            };
+            PTR_FUN_16DAC = new FUN_16DAC[3]
+            {
+                FUN_E214,
+                FUN_E290,
                 FUN_60068
             };
         }
@@ -7705,6 +7742,199 @@ public class ST9 : LevelManager
         param1.DAT_7B++;
     }
 
+    //FUN_DD50 (ST9)
+    private void FUN_DD50(CriParticle param1)
+    {
+        param1.DAT_56 = 0x68;
+        param1.DAT_54 = 0x7f3f;
+        param1.DAT_60 = 5;
+        param1.DAT_62 = 5;
+        param1.vr.y = 0x400;
+        param1.flags |= 2;
+        param1.FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(0x801f748));
+        param1.DAT_65 = 3;
+        param1.DAT_4C = SceneManager.instance.cCamera;
+        param1.DAT_3C++;
+    }
+
+    //FUN_DDDC (ST9)
+    private void FUN_DDDC(CriParticle param1)
+    {
+        int iVar1;
+
+        iVar1 = param1.FUN_606D8();
+
+        if (iVar1 == 1)
+            param1.DAT_3C++;
+    }
+
+    //FUN_DE1C (ST9)
+    private void FUN_DE1C(CriParticle param1)
+    {
+        instance.PTR_FUN_16D80[param1.DAT_3C](param1);
+    }
+
+    //FUN_DE58 (ST9)
+    private void FUN_DE58(CriParticle param1)
+    {
+        byte bVar1;
+
+        param1.DAT_56 = 0x68;
+        param1.DAT_54 = 0x7f3e;
+        param1.DAT_60 = 5;
+        param1.DAT_62 = 5;
+        param1.flags |= 2;
+        param1.DAT_50.a |= 2;
+        param1.FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(0x80016D68));
+        bVar1 = (byte)DAT_16D6C[0];
+        param1.DAT_69 = 1;
+        param1.DAT_68 = bVar1;
+        param1.DAT_3C++;
+    }
+
+    //FUN_DEE0 (ST9)
+    private void FUN_DEE0(CriParticle param1)
+    {
+        byte bVar1;
+        sbyte sVar2;
+        byte bVar3;
+
+        sVar2 = (sbyte)(param1.DAT_68 - 1);
+        param1.DAT_68 = (byte)sVar2;
+
+        if (sVar2 == -1)
+        {
+            if ((DAT_16D68 + param1.DAT_69 * 8) != 0)
+                param1.flags &= 0xfffffffd;
+            else
+            {
+                param1.flags |= 2;
+                param1.FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject((uint)(DAT_16D68 + param1.DAT_69 * 8)));
+            }
+
+            bVar1 = (byte)DAT_16D6C[param1.DAT_69 * 4];
+            bVar3 = (byte)(param1.DAT_69 + 1);
+            param1.DAT_69 = bVar3;
+            param1.DAT_68 = bVar1;
+
+            if (2 < bVar3)
+                param1.DAT_3C++;
+        }
+    }
+
+    //FUN_DFD0 (ST9)
+    private void FUN_DFD0(CriParticle param1)
+    {
+        instance.PTR_FUN_16D8C[param1.DAT_3C](param1);
+    }
+
+    //FUN_E00C (ST9)
+    private void FUN_E00C(CriParticle param1)
+    {
+        param1.flags |= 2;
+        param1.FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(0x8011c0c0));
+        param1.DAT_56 = 0x37;
+        param1.DAT_54 = 0x7f36;
+        param1.DAT_62 = param1.DAT_68;
+        param1.DAT_60 = param1.DAT_68;
+        param1.DAT_40.z = 0;
+        param1.DAT_40.x = -param1.DAT_69;
+        param1.DAT_40.y = -param1.DAT_6A;
+        param1.IDAT_6C = 20;
+        param1.DAT_3C = 1;
+    }
+
+    //FUN_E0A0 (ST9)
+    private void FUN_E0A0(CriParticle param1)
+    {
+        int iVar1;
+
+        param1.screen.y += param1.DAT_40.y;
+        param1.screen.x += param1.DAT_40.x;
+        param1.screen.z += param1.DAT_40.z;
+        param1.vr.x = 0x180 & 0xfff;
+        param1.DAT_40.y += param1.DAT_6B;
+        iVar1 = param1.IDAT_6C - 1;
+        param1.IDAT_6C = iVar1;
+
+        if (iVar1 == 0)
+        {
+            param1.vr.x = 0;
+            param1.DAT_6B = 0;
+            param1.IDAT_6C = 0x80;
+            param1.DAT_3C++;
+        }
+
+        param1.FUN_606D8();
+    }
+
+    //FUN_E14C (ST9)
+    private void FUN_E14C(CriParticle param1)
+    {
+        byte bVar1;
+        int iVar2;
+
+        bVar1 = (byte)(param1.DAT_6B + 1);
+        param1.DAT_6B = bVar1;
+
+        if ((bVar1 & 0xf) == 0)
+            param1.DAT_60++;
+
+        param1.vr.y += 0x20;
+        param1.vr.x += 8;
+        iVar2 = param1.IDAT_6C - 1;
+        param1.IDAT_6C = iVar2;
+
+        if (iVar2 == 0)
+            param1.DAT_3C++;
+
+        param1.FUN_606D8();
+    }
+
+    //FUN_E1D8 (ST9)
+    private void FUN_E1D8(CriParticle param1)
+    {
+        instance.PTR_FUN_16DAC[param1.DAT_3C](param1);
+    }
+
+    //FUN_E214 (ST9)
+    private void FUN_E214(CriParticle param1)
+    {
+        param1.flags |= 2;
+        param1.FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(PTR_FUN_16D9C[param1.DAT_2F]));
+        param1.DAT_56 = 0x68;
+        param1.DAT_54 = 0x7eff;
+        param1.DAT_3C = 1;
+        param1.DAT_50.a |= 2;
+        param1.DAT_62 = param1.DAT_68;
+        param1.DAT_60 = param1.DAT_68;
+    }
+
+    //FUN_E290 (ST9)
+    private void FUN_E290(CriParticle param1)
+    {
+        sbyte sVar1;
+        int iVar2;
+
+        param1.screen.x += param1.DAT_40.x;
+        param1.screen.y += param1.DAT_40.z;
+        param1.screen.z += param1.DAT_40.y;
+        sVar1 = (sbyte)param1.DAT_69;
+
+        if (sVar1 != 0)
+        {
+            param1.DAT_69 = (byte)(sVar1 - 1);
+
+            if (sVar1 == 1)
+                param1.DAT_3C++;
+        }
+
+        iVar2 = param1.FUN_606D8();
+
+        if (iVar2 == 1)
+            param1.DAT_3C++;
+    }
+
     //FUN_1AF8 (ST9)
     public static void FUN_1AF8(CriPlayer param1)
     {
@@ -7834,7 +8064,7 @@ public class ST9 : LevelManager
     //FUN_DD14 (ST9)
     public static void FUN_DD14(CriParticle param1)
     {
-
+        instance.PTR_FUN_16D5C[param1.DAT_3C](param1);
     }
 
     //FUN_DE1C (ST9)

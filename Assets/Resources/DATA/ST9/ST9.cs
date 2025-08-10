@@ -7768,12 +7768,6 @@ public class ST9 : LevelManager
             param1.DAT_3C++;
     }
 
-    //FUN_DE1C (ST9)
-    private void FUN_DE1C(CriParticle param1)
-    {
-        instance.PTR_FUN_16D80[param1.DAT_3C](param1);
-    }
-
     //FUN_DE58 (ST9)
     private void FUN_DE58(CriParticle param1)
     {
@@ -7820,12 +7814,6 @@ public class ST9 : LevelManager
             if (2 < bVar3)
                 param1.DAT_3C++;
         }
-    }
-
-    //FUN_DFD0 (ST9)
-    private void FUN_DFD0(CriParticle param1)
-    {
-        instance.PTR_FUN_16D8C[param1.DAT_3C](param1);
     }
 
     //FUN_E00C (ST9)
@@ -7889,12 +7877,6 @@ public class ST9 : LevelManager
             param1.DAT_3C++;
 
         param1.FUN_606D8();
-    }
-
-    //FUN_E1D8 (ST9)
-    private void FUN_E1D8(CriParticle param1)
-    {
-        instance.PTR_FUN_16DAC[param1.DAT_3C](param1);
     }
 
     //FUN_E214 (ST9)
@@ -8066,11 +8048,11 @@ public class ST9 : LevelManager
     {
         instance.PTR_FUN_16D5C[param1.DAT_3C](param1);
     }
-
+    
     //FUN_DE1C (ST9)
     public static void FUN_DE1C(CriParticle param1)
     {
-
+        instance.PTR_FUN_16D80[param1.DAT_3C](param1);
     }
 
     //FUN_C864 (ST9)
@@ -8088,13 +8070,13 @@ public class ST9 : LevelManager
     //FUN_DFD0 (ST9)
     public static void FUN_DFD0(CriParticle param1)
     {
-
+        instance.PTR_FUN_16D8C[param1.DAT_3C](param1);
     }
 
     //FUN_E1D8 (ST9)
     public static void FUN_E1D8(CriParticle param1)
     {
-
+        instance.PTR_FUN_16DAC[param1.DAT_3C](param1);
     }
 
     //FUN_E338 (ST9)

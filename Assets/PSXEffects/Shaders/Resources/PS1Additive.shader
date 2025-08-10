@@ -43,7 +43,7 @@ Shader "PSXEffects/PS1Additive"
 		Offset -2, -2
 		Blend One One // additive blending for a simple "glow" effect
 		Cull Off // render backfaces as well
-		ZWrite[_ZWrite] // don't write into the Z-buffer, this effect shouldn't block objects
+		ZWrite Off // don't write into the Z-buffer, this effect shouldn't block objects
 
 		Pass
 		{

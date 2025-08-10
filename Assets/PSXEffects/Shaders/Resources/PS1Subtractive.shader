@@ -44,7 +44,7 @@ Shader "PSXEffects/PS1Subtractive"
 		BlendOp RevSub
 		Blend One One // additive blending for a simple "glow" effect
 		Cull Off // render backfaces as well
-		ZWrite[_ZWrite] // don't write into the Z-buffer, this effect shouldn't block objects
+		ZWrite Off // don't write into the Z-buffer, this effect shouldn't block objects
 
 		Pass
 		{
@@ -103,7 +103,7 @@ Shader "PSXEffects/PS1Subtractive"
 				col = tex2D(_CLUT, float2(col.r + i.uv2_MainTex.x, i.uv2_MainTex.y));
 				i.color.a = 1;
 				col *= i.color;
-				col *= 1;
+				col *= 2;
 				col.rgb = saturate(col.rgb);
 
 #if !UNITY_COLORSPACE_GAMMA

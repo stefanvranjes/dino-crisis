@@ -4237,7 +4237,7 @@ public class GameManager : MonoBehaviour
 
                 if (bVar2 || (uVar9 & 0x20) != 0)
                 {
-                    wVar3 = (ushort)_spu_note2pitch(DAT_AA534[puVar11] >> 8, DAT_AA534[puVar11] & 0xff, arg.note >> 8, arg.note & 0xff);
+                    wVar3 = (ushort)_spu_note2pitch((uint)(DAT_AA534[puVar11] >> 8), DAT_AA534[puVar11] & 0xff, arg.note >> 8, arg.note & 0xff);
                     voices[uVar10].pitch = (float)wVar3 / 1024;
                 }
 
@@ -4356,6 +4356,7 @@ public class GameManager : MonoBehaviour
             }
 
             uVar10++;
+            puVar11++;
 
             if (23 < (int)uVar10)
                 return;

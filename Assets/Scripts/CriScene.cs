@@ -643,7 +643,7 @@ public class CriScene : MonoBehaviour
                         return;
                 }
             case 6:
-                oVar8 = SceneManager.instance.DAT_9EEC[param1 & 0xffff];
+                oVar8 = LevelManager.instance.DAT_9EEC[param1 & 0xffff];
 
                 switch (param2)
                 {
@@ -999,7 +999,7 @@ public class CriScene : MonoBehaviour
 
                 break;
             case 6:
-                oVar5 = SceneManager.instance.DAT_9EEC[(int)param1 & 0xffff];
+                oVar5 = LevelManager.instance.DAT_9EEC[(int)param1 & 0xffff];
 
                 switch (param2)
                 {
@@ -2563,9 +2563,7 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_590EC()
     {
-        byte bVar1;
         DataContainer19 mVar3;
-        Vector3Int local_248;
 
         mVar3 = (DataContainer19)PTR_58[0].CONTAINERS[DAT_58[0]];
         //...
@@ -2736,7 +2734,6 @@ public class CriScene : MonoBehaviour
         bool bVar1;
         CriTrigger puVar2;
         int iVar3;
-        uint uVar4;
         DataContainer25 mVar6;
         bool bVar6;
         int iVar6;
@@ -2835,7 +2832,7 @@ public class CriScene : MonoBehaviour
 
     private bool FUN_59D28()
     {
-        byte bVar1;
+        /*byte bVar1;
         bool bVar5;
         int iVar5;
         CriPlayer oVar5;
@@ -2844,7 +2841,7 @@ public class CriScene : MonoBehaviour
         DataContainer22 mVar10;
         uint uVar11;
 
-        /*oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
         mVar10 = (MovContainer22)PTR_58[0].CONTAINERS[DAT_58[0]];
         
         if ((oVar5.DAT_11E & 0x80) != 0)

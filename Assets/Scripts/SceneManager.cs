@@ -21,8 +21,6 @@ public class SceneManager : MonoBehaviour
     public ClutScriptableObject clut;
     public RamScriptableObject ram;
     public ushort DAT_A4; //gp+a4h
-    public byte[] DAT_AC; //gp+ach
-    public uint[] DAT_B0; //gp+b0h
     public CriCamera cCamera; //gp+b4h
     public WaypointScriptableObject waypoints; //gp+150h
     public SceneColliderScriptableObject sceneCollision; //gp+154h
@@ -42,7 +40,6 @@ public class SceneManager : MonoBehaviour
     public CriParticle[] DAT_5FCC; //gp+5fcch...gp+7cdch
     public CriStatic[] DAT_7CDC; //gp+7cdch...gp+8ffch
     public CriInteract[] DAT_8FFC; //gp+8ffch...gp+9164h
-    public CriTrigger[] DAT_9EEC; //gp+9eech...gp+9fdch
     public Trigger6[] DAT_9FE0; //gp+9fe0...gp+a09ch
     public CriCamera DAT_C3230;
     public short DAT_C3358;
@@ -149,7 +146,6 @@ public class SceneManager : MonoBehaviour
         DAT_5FCC = new CriParticle[60];
         DAT_7CDC = new CriStatic[40];
         DAT_8FFC = new CriInteract[10];
-        DAT_9EEC = new CriTrigger[10];
         DAT_9FE0 = new Trigger6[4];
         DAT_D7C0 = new CriScene[10];
 
@@ -186,13 +182,6 @@ public class SceneManager : MonoBehaviour
             GameObject obj = new GameObject();
             obj.name = "CriUnknown (Instance)";
             DAT_8FFC[i] = obj.AddComponent<CriInteract>();
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriTrigger (Instance)";
-            DAT_9EEC[i] = obj.AddComponent<CriTrigger>();
         }
 
         for (int i = 0; i < 4; i++)
@@ -702,7 +691,7 @@ public class SceneManager : MonoBehaviour
 
         do
         {
-            oVar4 = DAT_9EEC[uVar5];
+            oVar4 = LevelManager.instance.DAT_9EEC[uVar5];
 
             if (oVar4.DAT_01 == param1)
             {
@@ -755,7 +744,7 @@ public class SceneManager : MonoBehaviour
 
                 if ((psVar5.flags & 1) != 0 && -1 < psVar5.DAT_198)
                 {
-                    oVar4 = DAT_9EEC[psVar5.DAT_198];
+                    oVar4 = LevelManager.instance.DAT_9EEC[psVar5.DAT_198];
                     oVar4.DAT_01 = (byte)GameManager.instance.DAT_9AA0;
                     oVar4.DAT_04 = psVar5.screen;
                     oVar4.DAT_0A = psVar5.health;
@@ -797,11 +786,11 @@ public class SceneManager : MonoBehaviour
         iVar4 = 0;
         uVar3 = 0;
         
-        if (uVar3 < DAT_9EEC.Length)
+        if (uVar3 < LevelManager.instance.DAT_9EEC.Length)
         {
             do
             {
-                puVar2 = DAT_9EEC[uVar3];
+                puVar2 = LevelManager.instance.DAT_9EEC[uVar3];
 
                 if (puVar2.DAT_01 == param1)
                 {
@@ -812,7 +801,7 @@ public class SceneManager : MonoBehaviour
                 }
 
                 uVar3++;
-            } while (uVar3 < DAT_9EEC.Length);
+            } while (uVar3 < LevelManager.instance.DAT_9EEC.Length);
         }
 
         return iVar4;
@@ -1686,7 +1675,7 @@ public class SceneManager : MonoBehaviour
 
         uVar2 = 0;
 
-        while(DAT_AC[puVar3 + iVar4 + 1] == 0 || DAT_AC[puVar3 + iVar4 + 1] < (bVar1 & 0x1fU))
+        while(GameManager.instance.DAT_AC[puVar3 + iVar4 + 1] == 0 || GameManager.instance.DAT_AC[puVar3 + iVar4 + 1] < (bVar1 & 0x1fU))
         {
             uVar2++;
             puVar3 += 4;
@@ -1695,7 +1684,7 @@ public class SceneManager : MonoBehaviour
                 return 0;
         }
 
-        return DAT_AC[puVar3];
+        return GameManager.instance.DAT_AC[puVar3];
     }
 
     public void FUN_4A784(int param1, int param2, short param3, short param4, 

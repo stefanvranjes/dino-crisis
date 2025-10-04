@@ -1667,7 +1667,7 @@ public class CriInteract : MonoBehaviour
     {
         CriTrigger tVar1;
 
-        tVar1 = SceneManager.instance.DAT_9EEC[DAT_04];
+        tVar1 = LevelManager.instance.DAT_9EEC[DAT_04];
         tVar1.DAT_01 = DAT_05;
         tVar1.DAT_0E = 0;
         tVar1.DAT_10 = 0;

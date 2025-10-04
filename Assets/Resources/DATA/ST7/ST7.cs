@@ -322,13 +322,13 @@ public class ST7 : LevelManager
         PTR_FUN_B58C0 = DAT_118FC;
         PTR_FUN_C2570 = DAT_11924;
         PTR_FUN_C1CF8 = DAT_11944;
-        SceneManager.instance.DAT_AC = DAT_11874;
-        SceneManager.instance.DAT_B0 = DAT_11528;
+        GameManager.instance.DAT_AC = DAT_11874;
+        GameManager.instance.DAT_B0 = DAT_11528;
         GameManager.instance.DAT_46 = 7;
 
         for (int i = 0; i < DAT_11784.TRIGGERS.Length; i++)
         {
-            puVar4 = SceneManager.instance.DAT_9EEC[i];
+            puVar4 = LevelManager.instance.DAT_9EEC[i];
             puVar5 = DAT_11784.TRIGGERS[i];
             puVar4.DAT_00 = puVar5.DAT_00;
             puVar4.DAT_01 = puVar5.DAT_01;
@@ -456,9 +456,6 @@ public class ST7 : LevelManager
     //FUN_550 (ST7)
     private void FUN_550(CriParticle param1)
     {
-        uint uVar1;
-        byte bVar2;
-
         param1.DAT_3C++;
         //...
         GameManager.instance.FUN_5C94C(null, 148);
@@ -960,8 +957,8 @@ public class ST7 : LevelManager
         {
             GameManager.instance.FUN_5C94C(oVar4, 145);
 
-            if (oVar4.DAT_79 != 4)
-                ; //FUN_1D988
+            //if (oVar4.DAT_79 != 4)
+            //    ; //FUN_1D988
         }
 
         oVar3.vr.y = oVar3.vr.y + 0x40 & 0xfff;
@@ -1036,8 +1033,8 @@ public class ST7 : LevelManager
         {
             GameManager.instance.FUN_5C94C(oVar6, 145);
 
-            if (oVar6.DAT_79 != 4)
-                ; //FUN_1D988
+            //if (oVar6.DAT_79 != 4)
+            //    ; //FUN_1D988
         }
 
         sVar3 = (short)(oVar7.vr.z + 35);

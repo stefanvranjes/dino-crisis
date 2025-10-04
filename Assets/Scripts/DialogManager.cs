@@ -1753,8 +1753,8 @@ public class DialogManager : MonoBehaviour
                 }
             }
         }
-        else
-            ; //FUN_1F6B0
+        //else
+        //    ; //FUN_1F6B0
     }
 
     private void FUN_1E55C()
@@ -3219,8 +3219,6 @@ public class DialogManager : MonoBehaviour
     private void FUN_1B550(Trigger6 param1)
     {
         int iVar1;
-        CriObject oVar2;
-        byte bVar4;
 
         if (DAT_B138E < 0x10U)
             GameManager.instance.DAT_39 = 1;

@@ -340,7 +340,7 @@ public static class EXP_DAT
             if (bVar12)
             {
                 bVar12 = false;
-                LAB_2B204:
+                //LAB_2B204:
                 uVar3 = 0;
                 uVar1 = (uint)reader.ReadByte(pbVar4) >> 4;
                 pbVar2 = pbVar6 + -(int)((reader.ReadByte(pbVar4) & 0xfU) << 8 | uVar10);
@@ -396,7 +396,7 @@ public static class EXP_DAT
                     goto LAB_2B25C;
                 }
 
-                LAB_2B204:
+                //LAB_2B204:
                 uVar3 = 0;
                 uVar1 = (uint)reader.ReadByte(pbVar4) >> 4;
                 pbVar2 = pbVar6 + -(int)((reader.ReadByte(pbVar4) & 0xfU) << 8 | uVar10);
@@ -481,7 +481,7 @@ public static class EXP_DAT
             if (bVar12)
             {
                 bVar12 = false;
-                LAB_2B204:
+                //LAB_2B204:
                 uVar3 = 0;
                 uVar1 = (uint)reader.ReadByte(pbVar4) >> 4;
                 pbVar2 = pbVar6 + -(int)((reader.ReadByte(pbVar4) & 0xfU) << 8 | uVar10);
@@ -537,7 +537,7 @@ public static class EXP_DAT
                     goto LAB_2B25C;
                 }
 
-                LAB_2B204:
+                //LAB_2B204:
                 uVar3 = 0;
                 uVar1 = (uint)reader.ReadByte(pbVar4) >> 4;
                 pbVar2 = pbVar6 + -(int)((reader.ReadByte(pbVar4) & 0xfU) << 8 | uVar10);

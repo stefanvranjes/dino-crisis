@@ -337,8 +337,6 @@ public class CriStatic : CriObject
 
     private void FUN_7F734()
     {
-        uint uVar1;
-
         DAT_74 &= 0xffffff00;
         tags++;
     }

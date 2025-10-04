@@ -452,7 +452,7 @@ public class CriPlayer : CriSkinned
         new CapsuleCollider(), 
         new CapsuleCollider()
     };
-    private static byte DAT_9CDC6;
+    //private static byte DAT_9CDC6;
     private static CapsuleCollider[] DAT_9CDB0 = new CapsuleCollider[]
     {
         new CapsuleCollider()
@@ -1735,7 +1735,6 @@ public class CriPlayer : CriSkinned
     public void FUN_4CFDC()
     {
         byte bVar1;
-        short sVar2;
         byte bVar3;
         uint uVar4;
         bool bVar5;
@@ -2336,12 +2335,10 @@ public class CriPlayer : CriSkinned
 
     public void FUN_4FE90(uint param1)
     {
-        sbyte sVar1;
         CriBone oVar2;
         uint uVar3;
         uint uVar4;
         int iVar5;
-        CriObject oVar6;
         uint uVar8;
 
         uVar4 = param1 & 3;
@@ -2394,7 +2391,7 @@ public class CriPlayer : CriSkinned
         FUN_4FE30();
         return; //tmp
 
-        do
+        /*do
         {
             oVar6 = SceneManager.instance.DAT_5FCC[uVar4];
             sVar1 = oVar6.tags;
@@ -2403,7 +2400,7 @@ public class CriPlayer : CriSkinned
                 oVar6.FUN_60068();
 
             uVar4++;
-        } while (uVar4 < 60);
+        } while (uVar4 < 60);*/
     }
 
     public void FUN_4FE30()
@@ -3602,8 +3599,8 @@ public class CriPlayer : CriSkinned
                 if (bVar1)
                     DAT_3E++;
 
-                if (DAT_60 == 10)
-                    ; //FUN_5C94C
+                //if (DAT_60 == 10)
+                //    ; //FUN_5C94C
 
                 break;
             case 2:
@@ -10619,7 +10616,7 @@ public class CriPlayer : CriSkinned
         FUN_609C8(39, 1, 0);
         DAT_40.x = 0;
         DAT_40.z = 0;
-        DAT_9CDC6 = 0;
+        //DAT_9CDC6 = 0;
         FUN_65714();
         DAT_1C0 &= 0xfffffffe;
         GameManager.instance.FUN_5C94C(this, 3);
@@ -10717,7 +10714,7 @@ public class CriPlayer : CriSkinned
             DAT_3D = 0;
             DAT_3E = 0;
             DAT_3F = 0;
-            DAT_9CDC6 = 0;
+            //DAT_9CDC6 = 0;
             DAT_11E &= 0x7f;
             DAT_12C &= 0xfff7;
             DAT_1DC.FUN_2F800(this);
@@ -10750,7 +10747,7 @@ public class CriPlayer : CriSkinned
         FUN_609C8(41, 1, 0);
         DAT_40.x = 0;
         DAT_40.z = 0;
-        DAT_9CDC6 = 0;
+        //DAT_9CDC6 = 0;
         FUN_65714();
         DAT_1C0 &= 0xfffffffe;
         GameManager.instance.FUN_5C94C(this, 3);
@@ -10848,7 +10845,7 @@ public class CriPlayer : CriSkinned
             DAT_3D = 0;
             DAT_3E = 0;
             DAT_3F = 0;
-            DAT_9CDC6 = 0;
+            //DAT_9CDC6 = 0;
             DAT_11E &= 0x7f;
             DAT_12C &= 0xfff7;
             DAT_1DC.FUN_2F800(this);
@@ -11153,8 +11150,8 @@ public class CriPlayer : CriSkinned
 
         FUN_65714();
 
-        if (oVar2.DAT_1D4 == 0)
-            ; //FUN_2F9A0
+        //if (oVar2.DAT_1D4 == 0)
+        //    ; //FUN_2F9A0
     }
 
     private void FUN_2C784()
@@ -11175,8 +11172,8 @@ public class CriPlayer : CriSkinned
         {
             FUN_65714();
 
-            if (DAT_60 == 25)
-                ; //FUN_1D988
+            //if (DAT_60 == 25)
+            //    ; //FUN_1D988
         }
         else
         {
@@ -11246,8 +11243,8 @@ public class CriPlayer : CriSkinned
 
         FUN_65714();
 
-        if (DAT_1D4 == 0)
-            ; //FUN_2F9A0
+        //if (DAT_1D4 == 0)
+        //    ; //FUN_2F9A0
     }
 
     private void FUN_2CA40()
@@ -11268,8 +11265,8 @@ public class CriPlayer : CriSkinned
         {
             FUN_65714();
 
-            if (DAT_60 == 25)
-                ; //FUN_1D988
+            //if (DAT_60 == 25)
+            //    ; //FUN_1D988
         }
         else
         {
@@ -11500,8 +11497,8 @@ public class CriPlayer : CriSkinned
             oVar1.DAT_3E = 4;
         }
 
-        if (oVar1.DAT_60 == 1)
-            ; //FUN_1D988
+        //if (oVar1.DAT_60 == 1)
+        //    ; //FUN_1D988
     }
 
     private void FUN_2D1A4()
@@ -11543,8 +11540,8 @@ public class CriPlayer : CriSkinned
                 health = (short)((health - 175) - (iVar3 + (iVar3 / 50) * -50));
                 FUN_4FE30();
 
-                if (health < 1)
-                    ; //FUN_2ECAC
+                //if (health < 1)
+                //    ; //FUN_2ECAC
             }
         }
     }
@@ -11584,8 +11581,8 @@ public class CriPlayer : CriSkinned
                     health -= 75;
                     FUN_4FE30();
 
-                    if (health < 1)
-                        ; //FUN_2ECAC
+                    //if (health < 1)
+                    //    ; //FUN_2ECAC
                 }
             }
         }
@@ -12315,8 +12312,8 @@ public class CriPlayer : CriSkinned
         if (DAT_60 == 0x19)
             GameManager.instance.FUN_5C94C(this, 55);
 
-        if ((DAT_18E & 0x10) != 0)
-            ; //FUN_2F9A0
+        //if ((DAT_18E & 0x10) != 0)
+        //    ; //FUN_2F9A0
     }
 
     private void FUN_30984()
@@ -15804,7 +15801,6 @@ public class CriPlayer : CriSkinned
         int iVar5;
         bool bVar5;
         uint uVar6;
-        uint uVar7;
         CriPlayer oVar8;
 
         oVar8 = (CriPlayer)SceneManager.instance.DAT_27C[10];
@@ -15837,11 +15833,11 @@ public class CriPlayer : CriSkinned
                 if (uVar4 == 50)
                     DAT_5C &= 0xf7;
 
-                if (uVar4 == 10 || uVar4 == 24)
-                    ; //FUN_1D988
+                //if (uVar4 == 10 || uVar4 == 24)
+                //    ; //FUN_1D988
 
-                if (uVar4 == 45)
-                    ; //FUN_1D988
+                //if (uVar4 == 45)
+                //    ; //FUN_1D988
 
                 //FUN_2F9A0
 
@@ -15867,10 +15863,10 @@ public class CriPlayer : CriSkinned
 
                         if (oVar8.health < 1)
                         {
-                            if (oVar8.DAT_3C == 5 && oVar8.DAT_3D == 0)
-                                uVar7 = 0;
-                            else
-                                uVar7 = 0x800;
+                            //if (oVar8.DAT_3C == 5 && oVar8.DAT_3D == 0)
+                            //    uVar7 = 0;
+                            //else
+                            //    uVar7 = 0x800;
 
                             //FUN_2ECAC
                         }
@@ -16066,8 +16062,8 @@ public class CriPlayer : CriSkinned
                     oVar6.health = (short)(oVar6.health - ((iVar2 % 100 + 150) / 2));
                     oVar6.FUN_4FE30();
 
-                    if (oVar6.health < 1)
-                        ; //FUN_2ECAC
+                    //if (oVar6.health < 1)
+                    //    ; //FUN_2ECAC
                 }
             }
         }
@@ -17036,8 +17032,8 @@ public class CriPlayer : CriSkinned
             sVar2 = (short)Utilities.FUN_64838(vr.y, (uint)((iVar3 % 15 + 20) * 0x10000 >> 0x10), sVar1);
             vr.y = vr.y + sVar2 & 0xfff;
 
-            if (DAT_1C4 != 0)
-                ; //FUN_2F9A0
+            //if (DAT_1C4 != 0)
+            //    ; //FUN_2F9A0
         }
     }
 
@@ -17646,8 +17642,8 @@ public class CriPlayer : CriSkinned
             //FUN_1D988
         }
 
-        if (DAT_60 == 12)
-            ; //FUN_65D1C
+        //if (DAT_60 == 12)
+        //    ; //FUN_65D1C
     }
 
     private void FUN_38E58()
@@ -17728,8 +17724,8 @@ public class CriPlayer : CriSkinned
                 oVar4.health = (short)((oVar4.health - 40) - (iVar3 + (iVar3 / 20) * -20));
                 oVar4.FUN_4FE30();
 
-                if (oVar4.health < 1)
-                    ; //FUN_2ECAC
+                //if (oVar4.health < 1)
+                //    ; //FUN_2ECAC
             }
         }
     }
@@ -18601,8 +18597,8 @@ public class CriPlayer : CriSkinned
 
                             oVar6.FUN_4FE30();
 
-                            if (oVar6.health < 1)
-                                ; //FUN_2ECAC
+                            //if (oVar6.health < 1)
+                            //    ; //FUN_2ECAC
                         }
                     }
                 }
@@ -19573,13 +19569,13 @@ public class CriPlayer : CriSkinned
 
         if (DAT_1C3 == 0)
         {
-            if (DAT_1D5 == 1)
-                ; //FUN_2EA44
+            //if (DAT_1D5 == 1)
+            //    ; //FUN_2EA44
         }
         else
         {
-            if (DAT_1D5 == 1)
-                ; //FUN_2EA1C
+            //if (DAT_1D5 == 1)
+            //    ; //FUN_2EA1C
         }
     }
 
@@ -19673,8 +19669,8 @@ public class CriPlayer : CriSkinned
         screen.x += local_40.x;
         screen.z += local_40.z;
 
-        if (DAT_1D5 == 1)
-            ; //FUN_2EA1C
+        //if (DAT_1D5 == 1)
+        //    ; //FUN_2EA1C
     }
 
     private void FUN_3CED4()
@@ -20533,7 +20529,6 @@ public class CriPlayer : CriSkinned
         bool bVar6;
         int iVar6;
         uint uVar7;
-        uint uVar8;
         bool bVar9;
         int iVar9;
         CriPlayer oVar9;
@@ -20586,10 +20581,10 @@ public class CriPlayer : CriSkinned
 
                             if (oVar9.health < 1)
                             {
-                                uVar8 = 0x800;
+                                //uVar8 = 0x800;
 
-                                if (oVar9.DAT_3C == 5 && oVar9.DAT_3D == 0)
-                                    uVar8 = 0;
+                                //if (oVar9.DAT_3C == 5 && oVar9.DAT_3D == 0)
+                                //    uVar8 = 0;
 
                                 //FUN_2ECAC
                             }
@@ -21492,8 +21487,8 @@ public class CriPlayer : CriSkinned
             if (DAT_60 == 25)
                 GameManager.instance.FUN_5C94C(this, 55);
 
-            if (DAT_60 == 1)
-                ; //FUN_65D1C
+            //if (DAT_60 == 1)
+            //    ; //FUN_65D1C
         }
     }
 

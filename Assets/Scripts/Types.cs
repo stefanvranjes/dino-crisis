@@ -19,8 +19,8 @@ namespace Types
 
     public class TypesClass
     {
-        private static readonly sbyte INT8_MIN = 0x7f;
-        private static readonly short INT16_MAX = 0x7fff;
+        //private static readonly sbyte INT8_MIN = 0x7f;
+        //private static readonly short INT16_MAX = 0x7fff;
         private static readonly int INT32_MAX = 0x7fffffff;
         private static readonly long INT64_MAX = 0x7fffffffffffffff;
 

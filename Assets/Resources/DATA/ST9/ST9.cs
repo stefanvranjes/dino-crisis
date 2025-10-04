@@ -747,13 +747,13 @@ public class ST9 : LevelManager
         PTR_FUN_B58C0 = DAT_15ED0;
         PTR_FUN_C2570 = DAT_15EF4;
         PTR_FUN_C1CF8 = DAT_15F24;
-        SceneManager.instance.DAT_AC = DAT_15E30;
-        SceneManager.instance.DAT_B0 = DAT_159A0;
+        GameManager.instance.DAT_AC = DAT_15E30;
+        GameManager.instance.DAT_B0 = DAT_159A0;
         GameManager.instance.DAT_46 = 9;
 
         for (int i = 0; i < DAT_15D40.TRIGGERS.Length; i++)
         {
-            puVar4 = SceneManager.instance.DAT_9EEC[i];
+            puVar4 = LevelManager.instance.DAT_9EEC[i];
             puVar5 = DAT_15D40.TRIGGERS[i];
             puVar4.DAT_00 = puVar5.DAT_00;
             puVar4.DAT_01 = puVar5.DAT_01;
@@ -963,7 +963,6 @@ public class ST9 : LevelManager
     {
         byte bVar1;
         bool bVar2;
-        int iVar4;
         CriPlayer oVar5;
 
         oVar5 = (CriPlayer)param1.DAT_154;
@@ -1004,8 +1003,6 @@ public class ST9 : LevelManager
 
             goto LAB_944;
         }
-
-        iVar4 = 0;
 
         if (bVar1 != 3) goto LAB_944;
 
@@ -1942,7 +1939,6 @@ public class ST9 : LevelManager
         uint uVar1;
         ushort uVar2;
         ushort uVar3;
-        int iVar5;
 
         if ((param1.DAT_11E & 0x80) != 0)
         {
@@ -1957,7 +1953,7 @@ public class ST9 : LevelManager
                 {
                     uVar1 = GameManager.FUN_64650();
                     //...
-                    iVar5 = 1;
+                    //iVar5 = 1;
                 }
                 else if (uVar3 < 3)
                 {
@@ -1968,7 +1964,7 @@ public class ST9 : LevelManager
 
                         uVar1 = GameManager.FUN_64650();
                         //...
-                        iVar5 = 4;
+                        //iVar5 = 4;
                     }
                 }
                 else if (uVar3 == 3 && param1.DAT_3D == 1)
@@ -1977,7 +1973,7 @@ public class ST9 : LevelManager
                     param1.DAT_3D = 2;
                     param1.DAT_3E = 0;
                     ((CriPlayer)param1.DAT_154).DAT_1C0 &= 0xffffffbf;
-                    iVar5 = 8;
+                    //iVar5 = 8;
                     param1.DAT_11C++;
                 }
 
@@ -3994,8 +3990,8 @@ public class ST9 : LevelManager
         GameManager.instance.FUN_65CB0(param1);
         GameManager.instance.FUN_5C94C(param1, 0x38);
 
-        if ((param1.BDAT_1C0 & 4) == 0)
-            ; //FUN_BBFC
+        //if ((param1.BDAT_1C0 & 4) == 0)
+        //    ; //FUN_BBFC
 
         param1.BDAT_1C0 &= 0xdf;
         param1.DAT_3E++;
@@ -5475,7 +5471,7 @@ public class ST9 : LevelManager
     {
         PTR_FUN_1699C[(param1.DAT_1A1 & 0xf) != 6 ? 1 : 0](param1);
 
-        if (param1.DAT_1C5 == 0) ;
+        //if (param1.DAT_1C5 == 0) ;
             //FUN_BAAC
     }
 
@@ -7043,7 +7039,6 @@ public class ST9 : LevelManager
     {
         byte bVar1;
         CriCamera cVar2;
-        int iVar3;
         Vector3Int local_50;
         Vector3Int local_48;
         Vector3Int local_40;
@@ -7585,7 +7580,7 @@ public class ST9 : LevelManager
         {
             GameManager.instance.FUN_5C94C(oVar4, 145);
 
-            if (oVar4.DAT_79 != 4) ;
+            //if (oVar4.DAT_79 != 4) ;
                 //FUN_1D988
         }
 
@@ -7661,7 +7656,7 @@ public class ST9 : LevelManager
         {
             GameManager.instance.FUN_5C94C(oVar6, 145);
 
-            if (oVar6.DAT_79 != 4) ;
+            //if (oVar6.DAT_79 != 4) ;
                 //FUN_1D988
         }
 
@@ -7932,7 +7927,6 @@ public class ST9 : LevelManager
         short sVar1;
         sbyte sVar2;
         byte bVar3;
-        ushort uVar4;
         uint uVar5;
         bool bVar6;
         CriSkinned oVar6;

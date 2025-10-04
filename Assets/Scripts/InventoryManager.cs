@@ -1058,7 +1058,6 @@ public class InventoryManager : MonoBehaviour
         Color32 cVar4;
         int iVar6;
         int iVar7;
-        int iVar8;
         int iVar9;
         uint uVar10;
         uint local_30;
@@ -2292,10 +2291,8 @@ public class InventoryManager : MonoBehaviour
     private void FUN_6A9F4()
     {
         byte bVar1;
-        int iVar2;
         ushort[] aVar2;
         int iVar3;
-        int iVar4;
 
         iVar3 = DAT_C61FC * 6;
 
@@ -2338,13 +2335,13 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        iVar4 = 0;
-        iVar2 = 80;
+        //iVar4 = 0;
+        //iVar2 = 80;
 
         if (DAT_C6100 == 3)
         {
-            iVar4 = 30;
-            iVar2 = 110;
+            //iVar4 = 30;
+            //iVar2 = 110;
         }
 
         //FUN_679CC
@@ -4490,24 +4487,22 @@ public class InventoryManager : MonoBehaviour
 
     private void FUN_6FBE8(InventoryWindow param1, int param2)
     {
-        int iVar2;
         byte[] aVar2;
-        uint uVar4;
 
         //memset
 
         if (param2 == 0)
         {
             aVar2 = param1.ARRY_00;
-            iVar2 = 4;
+            //iVar2 = 4;
         }
         else
         {
             aVar2 = GameManager.instance.DAT_9EAC;
-            iVar2 = 0;
+            //iVar2 = 0;
         }
 
-        uVar4 = 0;
+        //uVar4 = 0;
         //...
     }
 
@@ -5058,7 +5053,6 @@ public class InventoryManager : MonoBehaviour
     private void FUN_70A5C(InventoryWindow[] param1, int param2)
     {
         int iVar1;
-        uint uVar1;
         byte[] auStack24 = new byte[8];
 
         //FUN_674DC
@@ -5070,10 +5064,10 @@ public class InventoryManager : MonoBehaviour
             //FUN_6750C
             FUN_71350(param1[param2].DAT_20);
             //FUN_6750C
-            uVar1 = 0x185;
+            //uVar1 = 0x185;
 
-            if (param1[param2].DAT_20.DAT_01 == 1)
-                uVar1 = 0x184;
+            //if (param1[param2].DAT_20.DAT_01 == 1)
+            //    uVar1 = 0x184;
 
             //FUN_67554
         }

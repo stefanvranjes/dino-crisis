@@ -230,11 +230,11 @@ public class ST6 : LevelManager
     private ushort DAT_173F0; //0x173F0 (ST6)
     private sbyte[] DAT_173F4 = new sbyte[20]; //0x173F4 (ST6)
     private byte[] DAT_17414 = new byte[16]; //0x17414 (ST6)
-    private ushort DAT_17470; //0x17470 (ST6)
-    private ushort DAT_17472; //0x17472 (ST6)
-    private ushort DAT_17474; //0x17474 (ST6)
-    private ushort DAT_17476; //0x17476 (ST6)
-    private byte DAT_17478; //0x17478 (ST6)
+    //private ushort DAT_17470; //0x17470 (ST6)
+    //private ushort DAT_17472; //0x17472 (ST6)
+    //private ushort DAT_17474; //0x17474 (ST6)
+    //private ushort DAT_17476; //0x17476 (ST6)
+    //private byte DAT_17478; //0x17478 (ST6)
     public short DAT_174E4; //0x174E4 (ST6)
 
     protected override void Awake()
@@ -754,8 +754,8 @@ public class ST6 : LevelManager
         if (GameManager.instance.DAT_9AA2 < 2)
             uVar3 = GameManager.instance.DAT_9AA2;
 
-        SceneManager.instance.DAT_AC = DAT_15FF8[uVar3];
-        SceneManager.instance.DAT_B0 = DAT_15A78;
+        GameManager.instance.DAT_AC = DAT_15FF8[uVar3];
+        GameManager.instance.DAT_B0 = DAT_15A78;
         GameManager.instance.DAT_46 = 6;
         bVar1 = InventoryManager.FUN_4A87C(0, 0xe2);
 
@@ -763,7 +763,7 @@ public class ST6 : LevelManager
         {
             for (int i = 0; i < DAT_15E18.TRIGGERS.Length; i++)
             {
-                puVar4 = SceneManager.instance.DAT_9EEC[i];
+                puVar4 = LevelManager.instance.DAT_9EEC[i];
                 puVar5 = DAT_15E18.TRIGGERS[i];
                 puVar4.DAT_00 = puVar5.DAT_00;
                 puVar4.DAT_01 = puVar5.DAT_01;
@@ -783,7 +783,7 @@ public class ST6 : LevelManager
         {
             for (int i = 0; i < DAT_15F08.TRIGGERS.Length; i++)
             {
-                puVar4 = SceneManager.instance.DAT_9EEC[i];
+                puVar4 = LevelManager.instance.DAT_9EEC[i];
                 puVar5 = DAT_15F08.TRIGGERS[i];
                 puVar4.DAT_00 = puVar5.DAT_00;
                 puVar4.DAT_01 = puVar5.DAT_01;
@@ -800,7 +800,7 @@ public class ST6 : LevelManager
             }
         }
 
-        GameManager.instance.FUN_7669C(SceneManager.instance.DAT_9EEC, 6);
+        GameManager.instance.FUN_7669C(LevelManager.instance.DAT_9EEC, 6);
     }
 
     //FUN_2AC (ST6)
@@ -984,11 +984,8 @@ public class ST6 : LevelManager
     private void FUN_3190(CriPlayer param1)
     {
         sbyte sVar1;
-        bool bVar2;
         CriBone oVar2;
         uint uVar3;
-        byte bVar4;
-        SceneColliderScriptableObject oVar5;
         Vector3Int local_18;
 
         Utilities.RotMatrix(ref param1.vr, ref param1.cTransform.rotation);
@@ -5645,11 +5642,9 @@ public class ST6 : LevelManager
     {
         short sVar1;
         uint uVar2;
-        int iVar3;
-        int iVar4;
 
         sVar1 = param1.FUN_64804(SceneManager.instance.DAT_27C[10].screen);
-        iVar4 = 9;
+        //iVar4 = 9;
 
         if ((ushort)(sVar1 - 0xa00) < 0x400)
         {
@@ -5657,7 +5652,7 @@ public class ST6 : LevelManager
         }
         else
         {
-            iVar4 = 7;
+            //iVar4 = 7;
 
             if ((ushort)(sVar1 - 0x200) < 0x400)
             {
@@ -5671,7 +5666,7 @@ public class ST6 : LevelManager
                 }
                 else
                 {
-                    iVar4 = 7;
+                    //iVar4 = 7;
                     uVar2 = param1.DAT_1CB;
                 }
             }
@@ -6476,7 +6471,6 @@ public class ST6 : LevelManager
     {
         short sVar1;
         byte bVar2;
-        int iVar3;
         CriStatic oVar3;
         CriStatic oVar4;
 
@@ -6489,8 +6483,8 @@ public class ST6 : LevelManager
         {
             GameManager.instance.FUN_5C94C(oVar4, 145);
 
-            if (oVar4.DAT_79 != 4)
-                ; //FUN_1D988
+            //if (oVar4.DAT_79 != 4)
+            //    ; //FUN_1D988
         }
 
         oVar3.vr.y = oVar3.vr.y + 0x40 & 0xfff;
@@ -6564,8 +6558,8 @@ public class ST6 : LevelManager
         {
             GameManager.instance.FUN_5C94C(oVar6, 145);
 
-            if (oVar6.DAT_79 != 4)
-                ; //FUN_1D988
+            //if (oVar6.DAT_79 != 4)
+            //    ; //FUN_1D988
         }
 
         sVar3 = (short)(oVar7.vr.z + 35);
@@ -8021,16 +8015,15 @@ public class ST6 : LevelManager
     {
         byte bVar1;
         ushort uVar3;
-        uint uVar4;
 
         param1.DAT_07 = 0x20;
         param1.DAT_03++;
         //...
-        DAT_17470 = 30;
-        DAT_17472 = 30;
-        DAT_17474 = 230;
-        DAT_17476 = 230;
-        DAT_17478 = 4;
+        //DAT_17470 = 30;
+        //DAT_17472 = 30;
+        //DAT_17474 = 230;
+        //DAT_17476 = 230;
+        //DAT_17478 = 4;
 
         if ((param1.DAT_02 & 1) == 0)
             bVar1 = param1.DAT_05;
@@ -8038,7 +8031,7 @@ public class ST6 : LevelManager
             bVar1 = param1.DAT_04;
 
         uVar3 = bVar1;
-        uVar4 = 0;
+        //uVar4 = 0;
         //...
     }
 

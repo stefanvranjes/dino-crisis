@@ -494,13 +494,13 @@ public class ST4 : LevelManager
         if (GameManager.instance.DAT_9AA2 < 2)
             uVar3 = GameManager.instance.DAT_9AA2;
 
-        SceneManager.instance.DAT_AC = DAT_1270C[uVar3];
-        SceneManager.instance.DAT_B0 = DAT_12520;
+        GameManager.instance.DAT_AC = DAT_1270C[uVar3];
+        GameManager.instance.DAT_B0 = DAT_12520;
         GameManager.instance.DAT_46 = 4;
 
         for (int i = 0; i < DAT_1261C.TRIGGERS.Length; i++)
         {
-            puVar4 = SceneManager.instance.DAT_9EEC[i];
+            puVar4 = LevelManager.instance.DAT_9EEC[i];
             puVar5 = DAT_1261C.TRIGGERS[i];
             puVar4.DAT_00 = puVar5.DAT_00;
             puVar4.DAT_01 = puVar5.DAT_01;
@@ -516,7 +516,7 @@ public class ST4 : LevelManager
             puVar4.DAT_16 = puVar5.DAT_16;
         }
 
-        GameManager.instance.FUN_7669C(SceneManager.instance.DAT_9EEC, 4);
+        GameManager.instance.FUN_7669C(LevelManager.instance.DAT_9EEC, 4);
     }
 
     //FUN_1B0 (ST4)
@@ -2449,8 +2449,8 @@ public class ST4 : LevelManager
             uVar2 = param1.DAT_60;
         }
 
-        if (uVar2 == 54)
-            ; //FUN_1D988
+        //if (uVar2 == 54)
+        //    ; //FUN_1D988
     }
 
     //FUN_53BC (ST4)
@@ -4868,7 +4868,6 @@ public class ST4 : LevelManager
         uVar1 = (ushort)(param1.DAT_1A0 >> 4 & 0xf);
         param1.DAT_11E &= 0x7f;
         //...
-        LAB_10E14:
         param1.DAT_3C = 3;
         param1.DAT_3D = 0;
         param1.DAT_3E = 0;

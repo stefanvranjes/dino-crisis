@@ -13,7 +13,7 @@ public class IMP_LZSS
 
         using (BinaryReader reader = new BinaryReader(File.Open(assetPath, FileMode.Open)))
         {
-            long startPosition = 0x0C;
+            //long startPosition = 0x0C;
             reader.BaseStream.Seek(0x0A, SeekOrigin.Begin);
             int quadCount = reader.ReadUInt16();
             Texture mainT = material.mainTexture;

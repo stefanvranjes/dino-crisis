@@ -190,6 +190,8 @@ public class GameManager : MonoBehaviour
     public byte DAT_6F; //gp+6fh
     public int DAT_78; //gp+78h
     public ushort DAT_7C; //gp+7ch
+    public byte[] DAT_AC; //gp+ach
+    public uint[] DAT_B0; //gp+b0h
     public FUN_148 PTR_FUN_148; //gp+148h
     public FUN_14C PTR_FUN_14C; //gp+14ch
     public byte DAT_922C; //gp+922ch
@@ -404,7 +406,7 @@ public class GameManager : MonoBehaviour
         PTR_DAT_9E708 = new GianScriptableObject[7];
         DAT_1FE900 = new SoundData[1024];
         trackers = new GntScriptableObject[3];
-        globalRam = new RamScriptableObject();
+        globalRam = (RamScriptableObject)ScriptableObject.CreateInstance("RamScriptableObject");
         globalRam.objects = new UIntObjectDictionary();
         cChannels = new CriChannel[24];
         cTrackers = new CriTracker[3];
@@ -593,15 +595,6 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < 40; i++)
             SceneManager.instance.DAT_7CDC[i].ResetValues();
 
-        for (int i = 0; i < 10; i++)
-            SceneManager.instance.DAT_8FFC[i].ResetValues();
-
-        for (int i = 0; i < 10; i++)
-            SceneManager.instance.DAT_9EEC[i].ResetValues();
-
-        for (int i = 0; i < 10; i++)
-            SceneManager.instance.DAT_D7C0[i].ResetValues();
-
         //FUN_601A4
         FUN_5DDD0();
         oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
@@ -628,14 +621,14 @@ public class GameManager : MonoBehaviour
         //...
         uVar5 = 0;
 
-        if (uVar5 < SceneManager.instance.DAT_9EEC.Length)
+        if (uVar5 < LevelManager.instance.DAT_9EEC.Length)
         {
             do
             {
-                pbVar4 = SceneManager.instance.DAT_9EEC[uVar5];
+                pbVar4 = LevelManager.instance.DAT_9EEC[uVar5];
                 uVar5++;
                 pbVar4.DAT_03 &= 2;
-            } while (uVar5 < SceneManager.instance.DAT_9EEC.Length);
+            } while (uVar5 < LevelManager.instance.DAT_9EEC.Length);
         }
 
         InventoryManager.DAT_B7A5C[0] = 0;
@@ -1308,7 +1301,6 @@ public class GameManager : MonoBehaviour
         CriChannel oVar4;
         BgmData[] puVar5;
         uint uVar6;
-        uint uVar7;
         SpuVoiceAttr vVar8;
         uint uVar9;
         SpuVoiceAttr2 local_90;
@@ -1414,12 +1406,12 @@ public class GameManager : MonoBehaviour
 
                 if (local_38.DAT_00 == 0 || (vVar8.FLAGS & 4) == 0)
                 {
-                    uVar7 = 0;
+                    //uVar7 = 0;
                     cSound.DAT_34 |= 1U << (int)(uVar6 & 31);
                 }
                 else
                 {
-                    uVar7 = 1;
+                    //uVar7 = 1;
                     cSound.DAT_2C |= 1U << (int)(uVar6 & 31);
                 }
 
@@ -1890,7 +1882,6 @@ public class GameManager : MonoBehaviour
     private void FUN_5E400()
     {
         byte bVar1;
-        byte bVar2;
         bool bVar3;
         ushort uVar4;
         int iVar5;
@@ -4237,7 +4228,7 @@ public class GameManager : MonoBehaviour
 
                 if (bVar2 || (uVar9 & 0x20) != 0)
                 {
-                    wVar3 = (ushort)_spu_note2pitch((uint)(DAT_AA534[puVar11] >> 8), DAT_AA534[puVar11] & 0xff, arg.note >> 8, arg.note & 0xff);
+                    wVar3 = (ushort)_spu_note2pitch((int)(DAT_AA534[puVar11] >> 8), DAT_AA534[puVar11] & 0xff, arg.note >> 8, arg.note & 0xff);
                     voices[uVar10].pitch = (float)wVar3 / 1024;
                 }
 
@@ -4395,9 +4386,9 @@ public class GameManager : MonoBehaviour
                 Utilities.DAT_AAA00[param4 + param2 & 0x7f]) >> 0x10) +
                 (1U << (int)(uVar2 - 1 & 0x1f))) >> (int)(uVar2 & 0x1f) & 0xffff;
 
-        uint S_N2P_OBJ_C8(uint param1)
+        uint S_N2P_OBJ_C8(uint param5)
         {
-            return param1 & 0xffff;
+            return param5 & 0xffff;
         }
     }
 
@@ -5400,7 +5391,6 @@ public class GameManager : MonoBehaviour
         int iVar2;
         ushort[] uVar3;
         uint uVar4;
-        CriPlayer oVar5;
 
         sVar1 = param1.DAT_02;
 
@@ -8328,7 +8318,6 @@ public class GameManager : MonoBehaviour
     {
         byte bVar1;
         byte bVar2;
-        uint uVar5;
         CriObject puVar9;
         int pbVar12;
         uint uVar13;
@@ -8472,10 +8461,10 @@ public class GameManager : MonoBehaviour
                 {
                     uVar13 = (uint)(pbVar20.DAT_50.a << 0x18 | pbVar20.DAT_50.b << 0x10 | pbVar20.DAT_50.g << 8 | pbVar20.DAT_50.r);
 
-                    if ((uVar13 & 0x2000000) == 0)
-                        uVar5 = 0x64000000;
-                    else
-                        uVar5 = 0x66000000;
+                    //if ((uVar13 & 0x2000000) == 0)
+                    //    uVar5 = 0x64000000;
+                    //else
+                    //    uVar5 = 0x66000000;
 
                     //...
                 }

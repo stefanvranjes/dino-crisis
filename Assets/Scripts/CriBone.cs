@@ -23,7 +23,7 @@ public class CriBone : CriObject
     private List<int> triangleList;
     public Material[] materials;
 
-    private void Awake()
+    protected override void Awake()
     {
         DAT_54 = new Vector3Int[3];
     }

@@ -440,7 +440,7 @@ public class IMP_SCN : ScriptedImporter
                 ctx.SetMainObject(scn);
 
                 //**********************************************************************************************************///
-                UnityEngine.Object GetAssetDatabaseObject(uint address, Type objectType, byte containerId)
+                /*UnityEngine.Object GetAssetDatabaseObject(uint address, Type objectType, byte containerId)
                 {
                     if (ram.objects.ContainsKey(address))
                     {
@@ -456,10 +456,10 @@ public class IMP_SCN : ScriptedImporter
                     //    return db.common.objects[address];
                     //else
                         return null;
-                }
+                }*/
                 //*****************************************************************************************************************//
 
-                RefScriptableObject GetTodArray(uint address, byte containerId)
+                /*RefScriptableObject GetTodArray(uint address, byte containerId)
                 {
                     if (ram.objects.ContainsKey(address))
                         return ram.objects[address] as RefScriptableObject;
@@ -467,7 +467,7 @@ public class IMP_SCN : ScriptedImporter
                     //    return db.common.objects[address] as RefScriptableObject;
                     else
                         return null;
-                }
+                }*/
 
                 Trigger GetTrigger(int type)
                 {

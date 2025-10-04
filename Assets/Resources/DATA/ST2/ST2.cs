@@ -110,13 +110,13 @@ public class ST2 : LevelManager
         if (GameManager.instance.DAT_9AA2 < 2)
             uVar3 = GameManager.instance.DAT_9AA2;
 
-        SceneManager.instance.DAT_AC = DAT_73E0[uVar3];
+        GameManager.instance.DAT_AC = DAT_73E0[uVar3];
         GameManager.instance.DAT_46 = 2;
-        SceneManager.instance.DAT_B0 = DAT_7250;
+        GameManager.instance.DAT_B0 = DAT_7250;
 
         for (int i = 0; i < DAT_72F0.TRIGGERS.Length; i++)
         {
-            puVar4 = SceneManager.instance.DAT_9EEC[i];
+            puVar4 = LevelManager.instance.DAT_9EEC[i];
             puVar5 = DAT_72F0.TRIGGERS[i];
             puVar4.DAT_00 = puVar5.DAT_00;
             puVar4.DAT_01 = puVar5.DAT_01;
@@ -132,7 +132,7 @@ public class ST2 : LevelManager
             puVar4.DAT_16 = puVar5.DAT_16;
         }
 
-        GameManager.instance.FUN_7669C(SceneManager.instance.DAT_9EEC, 2);
+        GameManager.instance.FUN_7669C(LevelManager.instance.DAT_9EEC, 2);
     }
 
     //FUN_10C (ST2)

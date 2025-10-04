@@ -180,10 +180,10 @@ public class PSXEffects : MonoBehaviour {
 	}
 
 	public void CheckForUpdates() {
-		StartCoroutine("CheckForUpdate");
+		//StartCoroutine("CheckForUpdate");
 	}
 
-	IEnumerator CheckForUpdate() {
+	/*IEnumerator CheckForUpdate() {
 		cfuStatus = "Checking for updates...";
 		UnityWebRequest www = UnityWebRequest.Get("https://tripleaxis.net/test/psfxversion/");
 		yield return www.SendWebRequest();
@@ -202,5 +202,5 @@ public class PSXEffects : MonoBehaviour {
 				cfuStatus = "PSXEffects v" + version.ToString() + " - update available (click to update).";
 			}
 		}
-	}
+	}*/
 }

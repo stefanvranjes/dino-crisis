@@ -160,8 +160,8 @@ public class ST5 : LevelManager
         if (GameManager.instance.DAT_9AA2 < 2)
             uVar3 = GameManager.instance.DAT_9AA2;
 
-        SceneManager.instance.DAT_AC = DAT_11FA4[uVar3];
-        SceneManager.instance.DAT_B0 = DAT_11A90;
+        GameManager.instance.DAT_AC = DAT_11FA4[uVar3];
+        GameManager.instance.DAT_B0 = DAT_11A90;
         GameManager.instance.DAT_46 = 5;
         bVar1 = InventoryManager.FUN_4A87C(0, 0xe1);
 
@@ -169,7 +169,7 @@ public class ST5 : LevelManager
         {
             for (int i = 0; i < DAT_11DC4.TRIGGERS.Length; i++)
             {
-                puVar4 = SceneManager.instance.DAT_9EEC[i];
+                puVar4 = LevelManager.instance.DAT_9EEC[i];
                 puVar5 = DAT_11EB4.TRIGGERS[i];
                 puVar4.DAT_00 = puVar5.DAT_00;
                 puVar4.DAT_01 = puVar5.DAT_01;
@@ -189,7 +189,7 @@ public class ST5 : LevelManager
         {
             for (int i = 0; i < DAT_11EB4.TRIGGERS.Length; i++)
             {
-                puVar4 = SceneManager.instance.DAT_9EEC[i];
+                puVar4 = LevelManager.instance.DAT_9EEC[i];
                 puVar5 = DAT_11EB4.TRIGGERS[i];
                 puVar4.DAT_00 = puVar5.DAT_00;
                 puVar4.DAT_01 = puVar5.DAT_01;
@@ -206,13 +206,13 @@ public class ST5 : LevelManager
             }
         }
 
-        GameManager.instance.FUN_7669C(SceneManager.instance.DAT_9EEC, 5);
+        GameManager.instance.FUN_7669C(LevelManager.instance.DAT_9EEC, 5);
         bVar1 = InventoryManager.FUN_4A87C(0, 0xf);
 
         if (!bVar1)
         {
-            SceneManager.instance.DAT_9EEC[3].DAT_03 |= 2;
-            SceneManager.instance.DAT_9EEC[4].DAT_03 |= 2;
+            LevelManager.instance.DAT_9EEC[3].DAT_03 |= 2;
+            LevelManager.instance.DAT_9EEC[4].DAT_03 |= 2;
         }
     }
 
@@ -725,7 +725,6 @@ public class ST5 : LevelManager
     //FUN_2F88 (ST5)
     private void FUN_2F88(CriInteract param1)
     {
-        short sVar1;
         CriSkinned oVar2;
 
         oVar2 = (CriSkinned)param1.PDAT_08;

@@ -3509,8 +3509,8 @@ public static class Utilities
 
         if (x != 0)
         {
-            if (x == 0)
-                ; //trap(0x1c00)
+            //if (x == 0)
+            //    ; //trap(0x1c00)
 
             x = x + a / x >> 1;
         }

@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     public RamScriptableObject ram;
     public GianScriptableObject[] gians;
     public IniScriptableObject[] inis;
+    public CriTrigger[] DAT_9EEC; //gp+9eech...gp+9fdch
     public delegate void FUN_B58BC(CriParticle p);
     public delegate void FUN_B58C0(CriPlayer p);
     public delegate void FUN_C1CF8(CriInteract i);
@@ -26,6 +27,16 @@ public class LevelManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+
+        DAT_9EEC = new CriTrigger[10];
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriTrigger (Instance)";
+            DAT_9EEC[i] = obj.AddComponent<CriTrigger>();
+            obj.transform.parent = transform;
         }
     }
 

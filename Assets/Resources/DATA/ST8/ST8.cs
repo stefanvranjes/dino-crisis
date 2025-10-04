@@ -102,25 +102,25 @@ public class ST8 : LevelManager
     private sbyte[] DAT_126A4 = new sbyte[10];
     private short[] DAT_128B0 = new short[0x100];
     private Tmd3ScriptableObject DAT_12AB0; //0x12AB0 (ST8)
-    private int DAT_12AB4; //0x12AB4 (ST8)
+    //private int DAT_12AB4; //0x12AB4 (ST8)
     private int DAT_12AB8; //0x12AB8 (ST8)
-    private int DAT_12ABC; //0x12ABC (ST8)
+    //private int DAT_12ABC; //0x12ABC (ST8)
     private int DAT_12AC0; //0x12AC0 (ST8)
     private byte DAT_12AC4; //0x12AC4 (ST8)
     private byte DAT_12AC5; //0x12AC5 (ST8)
     private byte DAT_12AC6; //0x12AC6 (ST8)
     private byte DAT_12AC7; //0x12AC7 (ST8)
-    private int DAT_12AC8; //0x12AC8 (ST8)
+    //private int DAT_12AC8; //0x12AC8 (ST8)
     private int DAT_12ACC; //0x12ACC (ST8)
-    private int DAT_12AD0; //0x12AD0 (ST8)
+    //private int DAT_12AD0; //0x12AD0 (ST8)
     private int DAT_12AD4; //0x12AD4 (ST8)
     private UNK_12B68[] PTR_DAT_12B68 = new UNK_12B68[3]; //0x12B68 (ST8)
     private sbyte[] DAT_12B8C = new sbyte[16];
     private sbyte[] DAT_12B9C = new sbyte[16];
     private sbyte[] DAT_12BAC = new sbyte[16];
-    private int DAT_12BB8; //0x12BB8 (ST8)
+    //private int DAT_12BB8; //0x12BB8 (ST8)
     private int DAT_12BBC; //0x12BBC (ST8)
-    private int DAT_12BC0; //0x12BC0 (ST8)
+    //private int DAT_12BC0; //0x12BC0 (ST8)
     private int DAT_12BC4; //0x12BC4 (ST8) 
     private CriStatic DAT_12BC8; //0x12BC8 (ST8)
     private CriStatic DAT_12BCC; //0x12BCC (ST8)
@@ -129,7 +129,7 @@ public class ST8 : LevelManager
     private CriStatic DAT_12BD8; //0x12BD8 (ST8)
     private CriStatic DAT_12BDC; //0x12BDC (ST8)
     private Vector3Int DAT_12BF0; //0x12BF0 (ST8)
-    private byte DAT_12BF8; //0x12BF8 (ST8)
+    //private byte DAT_12BF8; //0x12BF8 (ST8)
     private sbyte[] DAT_12C00 = new sbyte[12];
     private byte[] DAT_12C1C = new byte[20]; // unknown size?
     private byte[] DAT_12CAC = new byte[20]; // unknown size?
@@ -350,13 +350,13 @@ public class ST8 : LevelManager
         PTR_FUN_B58C0 = DAT_11E50;
         PTR_FUN_C2570 = DAT_11E74;
         PTR_FUN_C1CF8 = DAT_11E94;
-        SceneManager.instance.DAT_AC = DAT_11DC8;
-        SceneManager.instance.DAT_B0 = DAT_119A4;
+        GameManager.instance.DAT_AC = DAT_11DC8;
+        GameManager.instance.DAT_B0 = DAT_119A4;
         GameManager.instance.DAT_46 = 8;
 
         for (int i = 0; i < DAT_11CD8.TRIGGERS.Length; i++)
         {
-            puVar4 = SceneManager.instance.DAT_9EEC[i];
+            puVar4 = LevelManager.instance.DAT_9EEC[i];
             puVar5 = DAT_11CD8.TRIGGERS[i];
             puVar4.DAT_00 = puVar5.DAT_00;
             puVar4.DAT_01 = puVar5.DAT_01;
@@ -2059,9 +2059,9 @@ public class ST8 : LevelManager
             {
                 case 0:
                     GameManager.instance.FUN_5C94C(null, 152);
-                    DAT_12AB4 = 60;
+                    //DAT_12AB4 = 60;
                     DAT_12AB8 = 100;
-                    DAT_12ABC = 200;
+                    //DAT_12ABC = 200;
                     DAT_12AC0 = 1;
                     param1.DAT_17 = 0;
                     param1.BDAT_16 = 1;
@@ -3129,9 +3129,9 @@ public class ST8 : LevelManager
                 case 0:
                     param1.DAT_15 += 3;
                     DAT_12AD4 = 0;
-                    DAT_12AD0 = 0;
+                    //DAT_12AD0 = 0;
                     DAT_12ACC = 0;
-                    DAT_12AC8 = 0;
+                    //DAT_12AC8 = 0;
                     bVar1 = param1.BDAT_09;
                     param1.BDAT_09 = (byte)(bVar1 + 1);
 
@@ -3143,9 +3143,9 @@ public class ST8 : LevelManager
 
                     goto LAB_7070;
                 case 1:
-                    DAT_12AC8 = 60;
+                    //DAT_12AC8 = 60;
                     DAT_12ACC = 100;
-                    DAT_12AD0 = 200;
+                    //DAT_12AD0 = 200;
                     DAT_12AD4 = 1;
                     param1.BDAT_08++;
                     goto LAB_7070;
@@ -3646,7 +3646,6 @@ public class ST8 : LevelManager
     //FUN_93DC (ST8)
     private void FUN_93DC(CriInteract param1)
     {
-        CriStatic puVar1;
         byte bVar2;
         sbyte sVar3;
         sbyte sVar4;
@@ -3809,9 +3808,9 @@ public class ST8 : LevelManager
             {
                 if (bVar2 == 0)
                 {
-                    DAT_12BB8 = 60;
+                    //DAT_12BB8 = 60;
                     DAT_12BBC = 100;
-                    DAT_12BC0 = 200;
+                    //DAT_12BC0 = 200;
                     DAT_12BC4 = 1;
                     param1.BDAT_08 = 1;
                     param1.BDAT_09 = 0;
@@ -3880,9 +3879,9 @@ public class ST8 : LevelManager
             {
                 if (bVar2 == 0)
                 {
-                    DAT_12BB8 = 60;
+                    //DAT_12BB8 = 60;
                     DAT_12BBC = 100;
-                    DAT_12BC0 = 200;
+                    //DAT_12BC0 = 200;
                     DAT_12BC4 = 1;
                     param1.BDAT_08 = 1;
                     param1.BDAT_09 = 0;
@@ -3978,7 +3977,7 @@ public class ST8 : LevelManager
         InventoryManager.FUN_4A7E8(3, 0x2a, false);
         InventoryManager.FUN_4A7E8(3, 0x2b, false);
         InventoryManager.FUN_4A7E8(3, 0x2c, false);
-        DAT_12BF8 = 0;
+        //DAT_12BF8 = 0;
         DAT_12C00[8] = 0;
         DAT_12C00[9] = 0;
         DAT_12C00[10] = 0;

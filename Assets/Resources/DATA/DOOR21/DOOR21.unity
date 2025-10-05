@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -104,7 +103,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +116,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -176,6 +175,7 @@ MonoBehaviour:
     padding: 0
     position: {x: 0, y: 0, z: 0}
   screen: {x: 0, y: 0, z: 0}
+  DAT_26: 0
   tags: 0
   vr: {x: 0, y: 0, z: 0}
   DAT_2E: 0
@@ -188,13 +188,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474305120}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &824235139
 GameObject:
@@ -254,8 +254,12 @@ MonoBehaviour:
     position: {x: 0, y: 0, z: 0}
   screen: {x: 0, y: 0, z: 0}
   DAT_26: 0
+  tags: 0
   vr: {x: 0, y: 0, z: 0}
   DAT_2E: 0
+  DAT_2F: 0
+  flags: 0
+  SDAT_2E: 0
   DAT_30: {x: 0, y: 0, z: 0}
   DAT_36: 0
   DAT_38: 0
@@ -265,6 +269,7 @@ MonoBehaviour:
   DAT_40: {x: 0, y: 0, z: 0}
   DAT_46: 0
   DAT_48: {x: 0, y: 0, z: 0}
+  DAT_4E: 0
   DAT_50: 0
   DAT_52: 0
   DAT_54: 0
@@ -336,9 +341,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b416fbce5a38cc47a3a1e709f95f5e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cfuStatus: PSXEffects v1.15.5 - update available (click to update).
+  cfuStatus: PSXEffects v1.15.5
   sections: 01010100
-  customRes: {x: 772, y: 423}
+  customRes: {x: 808, y: 514}
   resolutionFactor: 1
   limitFramerate: -1
   skipFrames: 0
@@ -389,9 +394,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -425,13 +438,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 824235139}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.11001915, y: -0.78470534, z: 0.1457431, w: 0.5923616}
   m_LocalPosition: {x: 279, y: 200, z: 160}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 21.043, y: -105.903, z: 0}
 --- !u!1 &1826772713
 GameObject:
@@ -463,24 +476,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scn: {fileID: 0}
-  database: {fileID: 11400000, guid: 536651ecb139fdf4ba707b4c44b49643, type: 2}
+  vab: {fileID: 0}
+  grid: {fileID: 0}
+  clut: {fileID: 0}
+  ram: {fileID: 11400000, guid: d5bbccb8625b02d49a49a7a4e6a4a405, type: 2}
   DAT_A4: 0
-  DAT_AC: 
-  DAT_B0: 
   cCamera: {fileID: 824235140}
   waypoints: {fileID: 0}
   sceneCollision: {fileID: 0}
   lightSource: {fileID: 0}
   motions: {fileID: 0}
+  gian: {fileID: -5354861067182356112, guid: f86736156c24bf1499b4d91f73d98d01, type: 3}
+  ini: {fileID: -9147774878685956931, guid: f59b779677433304fbef1ac4ab44d04b, type: 3}
   triggers: []
+  renderQueue: {fileID: 0}
   DAT_270: 0
+  DAT_271: 0
   DAT_272: 0
+  DAT_274: {fileID: 0}
+  DAT_278: []
   DAT_27C: []
   DAT_1C9C: []
   DAT_5FCC: []
   DAT_7CDC: []
   DAT_8FFC: []
-  DAT_9EEC: []
   DAT_9FE0: []
   DAT_C3230: {fileID: 0}
   DAT_C3358: 0
@@ -502,11 +521,18 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826772713}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1660057539 &9223372036854775807
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 824235145}
+  - {fileID: 1826772715}
+  - {fileID: 474305122}

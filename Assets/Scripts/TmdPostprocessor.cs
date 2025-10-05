@@ -8,6 +8,8 @@ public class TmdPostprocessor : AssetPostprocessor
 {
     public static bool script;
     public static uint address;
+    public static GridScriptableObject grid;
+    public static ClutScriptableObject clut;
 
     private void OnPreprocessAsset()
     {
@@ -18,6 +20,12 @@ public class TmdPostprocessor : AssetPostprocessor
             if (tmdImporter != null && script)
             {
                 tmdImporter.ramAddress = address;
+
+                if (grid != null)
+                    tmdImporter.grid = grid;
+
+                if (clut != null)
+                    tmdImporter.clut = clut;
             }
         }
     }

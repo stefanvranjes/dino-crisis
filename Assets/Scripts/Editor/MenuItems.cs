@@ -77,4 +77,17 @@ public class MenuItems
         EXP_CMN.RAM = AssetDatabase.LoadAssetAtPath(ram, typeof(RamScriptableObject)) as RamScriptableObject;
         EXP_CMN.ExtractCOMMON(file1, file2, save);
     }
+
+    [MenuItem("Tools/Export DOOR")]
+    private static void ExportDOOR()
+    {
+        string file = EditorUtility.OpenFilePanel("Open file to read from", defaultOpenPath2, "");
+        defaultOpenPath2 = Path.GetDirectoryName(file);
+        string ram = EditorUtility.OpenFilePanel("Open .RAM file", defaultOpenPath2, "");
+        defaultSavePath = Path.GetDirectoryName(ram);
+        string save = EditorUtility.SaveFolderPanel("Save location", defaultSavePath, "");
+        defaultSavePath = Path.GetDirectoryName(save);
+
+        EXP_DOOR.ExtractDOOR(file, ram, save);
+    }
 }

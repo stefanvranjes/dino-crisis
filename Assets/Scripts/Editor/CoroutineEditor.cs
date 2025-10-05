@@ -33,7 +33,8 @@ public static class CoroutineEditor
                     gameManager.DAT_A89A0.Add(cont);
                 }
 
-                reader.BaseStream.Seek(8, SeekOrigin.Current);
+                uint firstAddress = reader.ReadUInt32();
+                uint secondAddress = reader.ReadUInt32();
                 cont.DAT_08 = new UnityEvent();
 
                 switch (reader.ReadUInt32())
@@ -141,6 +142,26 @@ public static class CoroutineEditor
                 cont.DAT_14 = new Vector3Int(reader.ReadInt16(), reader.ReadInt16(), reader.ReadInt16());
                 cont.DAT_1A = new Vector3Int(reader.ReadInt16(), reader.ReadInt16(), reader.ReadInt16());
                 cont.DAT_20 = new string(reader.ReadChars(8));
+
+                if (cont.DAT_20[0] == 'D')
+                {
+                    if (cont.DAT_20.Substring(1, 3) != "403")
+                    {
+                        RamScriptableObject ram = AssetDatabase.LoadAssetAtPath("Assets/Resources/DATA/DOOR" + cont.DAT_20.Substring(1, 2) + "/RAM.asset",
+                                                                                typeof(RamScriptableObject)) as RamScriptableObject;
+                        cont.ram = ram;
+
+                        if (firstAddress != 0)
+                            cont.DAT_00 = (TmdScriptableObject)ram.objects[firstAddress];
+                        else
+                            cont.DAT_00 = null;
+
+                        if (secondAddress != 0)
+                            cont.DAT_04 = (TmdScriptableObject)ram.objects[secondAddress];
+                        else
+                            cont.DAT_04 = null;
+                    }
+                }
             }
 
             EditorUtility.SetDirty(gameManager);

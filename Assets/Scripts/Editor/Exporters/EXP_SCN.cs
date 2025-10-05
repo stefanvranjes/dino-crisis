@@ -329,6 +329,8 @@ public class EXP_SCN
                         extension = ".tmd";
                         TmdPostprocessor.script = true;
                         TmdPostprocessor.address = addrPairs[i].ramAddress;
+                        TmdPostprocessor.grid = null;
+                        TmdPostprocessor.clut = null;
                     }
                     else if (addrPairs[i].refType == typeof(Tmd2ScriptableObject))
                     {
@@ -547,6 +549,8 @@ public class EXP_SCN
                 int size = reader.ReadUInt16() * 0x28 + reader.ReadUInt16() * 0x34 + 12;
                 reader.BaseStream.Seek(tmdPosition, SeekOrigin.Begin);
                 TmdPostprocessor.address = pointerList[i];
+                TmdPostprocessor.grid = null;
+                TmdPostprocessor.clut = null;
                 outFile = outDir + Path.DirectorySeparatorChar;
                 outFile += Path.GetFileNameWithoutExtension(inFile);
                 outFile += "_" + number.ToString("D2") + ".tmd";

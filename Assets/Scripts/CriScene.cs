@@ -1549,6 +1549,7 @@ public class CriScene : MonoBehaviour
         oVar1.DAT_4A = mVar2.DAT_04;
         oVar1.cMesh = (TmdScriptableObject)Utilities.GetRamObject(mVar2.DAT_08);
         oVar1.SetMaterials();
+        oVar1.MeshData();
         oVar1.screen = mVar2.DAT_0C;
         oVar1.vr = mVar2.DAT_12;
 

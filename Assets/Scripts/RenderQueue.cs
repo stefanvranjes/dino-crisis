@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
+using Unity.Collections;
 
 public class RenderQueue : MonoBehaviour
 {
@@ -27,7 +29,10 @@ public class RenderQueue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        for (int i = 0; i < SceneManager.instance.DAT_7CDC.Length; i++)
+        {
+            SceneManager.instance.DAT_7CDC[i].Draw();
+        }
     }
 
     private void OnRenderObject()

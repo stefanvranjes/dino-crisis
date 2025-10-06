@@ -230,7 +230,7 @@ public class CriBone : CriObject
             uvList.Add(param1.UVS[uv + 2]);
             uvList.Add(param1.UVS[uv + 3]);
             uv2List.Add(param1.UVS2[uv2]);
-            GameManager.DAT_1f80002a++;
+            //GameManager.DAT_1f80002a++;
             Coprocessor.vector0.vx0 = (short)param1.NRMLS[nrml].x;
             Coprocessor.vector0.vy0 = (short)param1.NRMLS[nrml].y;
             Coprocessor.vector0.vz0 = (short)param1.NRMLS[nrml].z;
@@ -282,7 +282,7 @@ public class CriBone : CriObject
             Coprocessor.vector0.vx0 = (short)GameManager.DAT_1f800380.x;
             Coprocessor.vector0.vy0 = (short)GameManager.DAT_1f800380.y;
             Coprocessor.vector0.vz0 = (short)GameManager.DAT_1f800380.z;
-            GameManager.DAT_1f800028++;
+            //GameManager.DAT_1f800028++;
             Coprocessor.ExecuteNCCS(12, true);
             colorList.Add(new Color32
                 (Coprocessor.colorFIFO.r2, Coprocessor.colorFIFO.g2, Coprocessor.colorFIFO.b2, Coprocessor.colorFIFO.cd2));

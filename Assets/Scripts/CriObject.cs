@@ -263,6 +263,11 @@ public class CriObject : MonoBehaviour
         transform.rotation = Quaternion.Euler((Vector3)vr / 4096f * 360f);
     }
 
+    public virtual void Draw()
+    {
+
+    }
+
     //FUN_601A4
     public virtual void ResetValues()
     {

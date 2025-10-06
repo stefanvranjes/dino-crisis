@@ -4,30 +4,14 @@ Shader "PSXEffects/PS1Billboard"
 {
 	Properties
 	{
-		[Toggle] _ColorOnly("Color Only", Float) = 0.0
-		[Toggle] _Unlit("Unlit", Float) = 0.0
-		[Toggle] _DrawDist("Affected by Polygonal Draw Distance", Float) = 1.0
-		_VertexInaccuracy("Vertex Inaccuracy Override", Float) = -1.0
 		_OffsetFactor("Offset factor", Float) = 1.0
 		_OffsetUnits("Offset units", Float) = 1.0
 		_Color("Color", Color) = (1,1,1,1)
-		[KeywordEnum(Vertex, Fragment)] _DiffModel("Diffuse Model", Float) = 0.0
 		_MainTex("Texture", 2D) = "white" {}
 		_Tex8("Texture 8", 2D) = "white" {}
 		_CLUT("CLUT Texture", 2D) = "white" {}
 		_LODTex("LOD Texture", 2D) = "white" {}
 		_LODAmt("LOD Amount", Float) = 0.0
-		_NormalMap("Normal Map", 2D) = "bump" {}
-		_NormalMapDepth("Normal Map Depth", Float) = 1
-		[KeywordEnum(Gouraud, Phong)] _SpecModel("Specular Model", Float) = 0.0
-		_SpecularMap("Specular Map", 2D) = "white" {}
-		_Specular("Specular Amount", Float) = 0.0
-		_MetalMap("Metal Map", 2D) = "white" {}
-		_Metallic("Metallic Amount", Range(0.0,1.0)) = 0.0
-		_Smoothness("Smoothness Amount", Range(0.0,1.0)) = 0.5
-		_Emission("Emission Map", 2D) = "white" {}
-		_EmissionAmt("Emission Amount", Float) = 0.0
-		_Cube("Cubemap", Cube) = "" {}
 
 		[HideInInspector] _SrcBlend("__src", Float) = 1.0
 		[HideInInspector] _DstBlend("__dst", Float) = 0.0
@@ -51,8 +35,6 @@ Shader "PSXEffects/PS1Billboard"
 
 		Pass
 		{
-			//Blend One One
-			//SetTexture[_MainTex]{ combine texture }
 			CGPROGRAM
 
             #pragma vertex vert

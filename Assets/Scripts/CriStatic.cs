@@ -1,6 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using Unity.Collections;
+using Unity.Mathematics;
+using Unity.Jobs;
+using Unity.Burst;
+
+public struct MyVertex
+{
+    public float3 vertex;
+    public float4 color;
+    public float2 uv;
+    public float3 uv2;
+
+    public MyVertex(float3 p, float4 c, float2 t, float3 t2)
+    {
+        vertex = p;
+        color = c;
+        uv = t;
+        uv2 = t2;
+    }
+}
 
 [System.Serializable]
 public class BoxCollider
@@ -35,13 +56,12 @@ public class CriStatic : CriObject
     private FUN_AA430[] PTR_FUN_AA430;
     private FUN_AA438[] PTR_FUN_AA438;
     private FUN_7B20[] PTR_FUN_7B20; //PTR_FUN_7B20 (ST1)
-
-    private List<byte> commandList;
-    private List<Vector3> vertexList;
-    private List<Vector2> uvList;
-    private List<Vector3> uv2List;
-    private List<Color> colorList;
-    private List<int> triangleList;
+    
+    private NativeArray<MyVertex> vertexBuffer;
+    private NativeArray<ushort> indexBuffer;
+    private NativeArray<int> indicies;
+    private Mesh mesh;
+    private int subMeshCount;
     public Material[] materials;
 
     protected override void Awake()
@@ -70,17 +90,32 @@ public class CriStatic : CriObject
     protected override void Start()
     {
         base.Start();
-        commandList = new List<byte>();
-        vertexList = new List<Vector3>();
-        uvList = new List<Vector2>();
-        uv2List = new List<Vector3>();
-        colorList = new List<Color>();
-        triangleList = new List<int>();
     }
 
     protected override void Update()
     {
         base.Update();
+
+        if (cMesh != null && (flags & 3) == 3)
+        {
+            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[0], gameObject.layer, Camera.main, 0);
+        }
+    }
+
+    public override void Draw()
+    {
+        base.Draw();
+        
+        if (cMesh != null && (flags & 3) == 3)
+        {
+            for (int i = 1; i < subMeshCount; i++)
+            {
+                if (indicies[i] > 0)
+                {
+                    Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[i], gameObject.layer, Camera.main, i);
+                }
+            }  
+        }
     }
 
     public override void ResetValues()
@@ -101,92 +136,6 @@ public class CriStatic : CriObject
         DAT_7D = 0;
         DAT_7E = 0;
         DAT_80 = Vector3Int.zero;
-    }
-
-    private void OnRenderObject()
-    {
-        if (cMesh != null && (flags & 3) == 3)
-        {
-            GL.PushMatrix();
-            GL.MultMatrix(transform.localToWorldMatrix);
-
-            for (int i = cMesh.TRI_COUNT - 1; i >= 0; i--)
-            {
-                if ((commandList[i] & 0xef) > 0)
-                {
-                    RenderQueue.AddMatrix(transform);
-                    RenderQueue.AddCommand(commandList[i]);
-                    RenderQueue.AddMaterial(materials[commandList[i] & 0xef]);
-                    int j = i * 3;
-
-                    for (int k = 0; k < 3; k++)
-                    {
-                        RenderQueue.AddColor(colorList[triangleList[j + k]]);
-                        RenderQueue.AddUV(uvList[triangleList[j + k]]);
-                        RenderQueue.AddUV2(uv2List[i]);
-                        RenderQueue.AddVertex(vertexList[triangleList[j + k]]);
-                    }
-                }
-                else
-                {
-                    materials[0].SetPass(0);
-                    GL.Begin(GL.TRIANGLES);
-                    int j = i * 3;
-
-                    for (int k = 0; k < 3; k++)
-                    {
-                        if (!GameManager.instance.disableColors && (commandList[i] & 0x10) != 0)
-                            GL.Color(colorList[triangleList[j + k]]);
-                        GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
-                        GL.MultiTexCoord(1, uv2List[i]);
-                        GL.Vertex(vertexList[triangleList[j + k]]);
-                    }
-
-                    GL.End();
-                }
-            }
-
-            for (int i = cMesh.QUAD_COUNT - 1; i >= 0; i--)
-            {
-                if ((commandList[cMesh.TRI_COUNT + i] & 0xef) > 0)
-                {
-                    RenderQueue.AddMatrix(transform);
-                    RenderQueue.AddCommand(commandList[cMesh.TRI_COUNT + i]);
-                    RenderQueue.AddMaterial(materials[commandList[cMesh.TRI_COUNT + i] & 0xef]);
-                    RenderQueue.AddMatrix(transform);
-                    RenderQueue.AddCommand(commandList[cMesh.TRI_COUNT + i]);
-                    RenderQueue.AddMaterial(materials[commandList[cMesh.TRI_COUNT + i] & 0xef]);
-                    int j = cMesh.TRI_COUNT * 3 + i * 6;
-
-                    for (int k = 0; k < 6; k++)
-                    {
-                        RenderQueue.AddColor(colorList[triangleList[j + k]]);
-                        RenderQueue.AddUV(uvList[triangleList[j + k]]);
-                        RenderQueue.AddUV2(uv2List[cMesh.TRI_COUNT + i]);
-                        RenderQueue.AddVertex(vertexList[triangleList[j + k]]);
-                    }
-                }
-                else
-                {
-                    materials[0].SetPass(0);
-                    GL.Begin(GL.TRIANGLES);
-                    int j = cMesh.TRI_COUNT * 3 + i * 6;
-
-                    for (int k = 0; k < 6; k++)
-                    {
-                        if (!GameManager.instance.disableColors && (commandList[cMesh.TRI_COUNT + i] & 0x10) != 0)
-                            GL.Color(colorList[triangleList[j + k]]);
-                        GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
-                        GL.MultiTexCoord(1, uv2List[cMesh.TRI_COUNT + i]);
-                        GL.Vertex(vertexList[triangleList[j + k]]);
-                    }
-
-                    GL.End();
-                }
-            }
-
-            GL.PopMatrix();
-        }
     }
 
     public void SetMaterials()
@@ -219,115 +168,94 @@ public class CriStatic : CriObject
         }
     }
 
-    public void FUN_75F10(TmdScriptableObject param1, int param2)
+    public void MeshData()
     {
-        uint uVar11;
-        uint uVar12;
+        subMeshCount = 6;
+        indexBuffer = new NativeArray<ushort>(
+            (cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 6) * subMeshCount, Allocator.Persistent
+        );
 
-        int begin = param1.TRI_COUNT;
-        int cmd = begin;
-        int vert = begin * 3;
-        int uv = begin * 3;
-        int uv2 = begin;
-        int clr = begin * 3;
-        int tri = 0;
-        uVar12 = GameManager.DAT_1f80002a;
-        uVar11 = GameManager.DAT_1f800028;
+        vertexBuffer = new NativeArray<MyVertex>(
+            cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 4, Allocator.Persistent
+        );
 
-        while (true)
+        indicies = new NativeArray<int>(
+            subMeshCount, Allocator.Persistent
+        );
+
+        mesh = new Mesh();
+        mesh.subMeshCount = subMeshCount;
+        mesh.SetVertexBufferParams(cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 4,
+                                                 new VertexAttributeDescriptor(VertexAttribute.Position, VertexAttributeFormat.Float32, 3),
+                                                 new VertexAttributeDescriptor(VertexAttribute.Color, VertexAttributeFormat.Float32, 4),
+                                                 new VertexAttributeDescriptor(VertexAttribute.TexCoord0, VertexAttributeFormat.Float32, 2), 
+                                                 new VertexAttributeDescriptor(VertexAttribute.TexCoord1, VertexAttributeFormat.Float32, 3));
+        mesh.SetIndexBufferParams(subMeshCount * (cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 6), IndexFormat.UInt16);
+        int f = cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 6;
+        
+        for (int i = cMesh.TRI_COUNT - 1; i >= 0; i--)
         {
-            param2--;
-            uVar12++;
+            int tri = i * 3;
 
-            if (param2 < 0) break;
+            if ((cMesh.CMDS[i] & 0x10) != 0)
+            {
+                vertexBuffer[tri] = new MyVertex(cMesh.VERTS[tri], cMesh.CLRS[tri].ToFloat(), cMesh.UVS[tri], cMesh.UVS2[i]);
+                vertexBuffer[tri + 1] = new MyVertex(cMesh.VERTS[tri + 1], cMesh.CLRS[tri + 1].ToFloat(), cMesh.UVS[tri + 1], cMesh.UVS2[i]);
+                vertexBuffer[tri + 2] = new MyVertex(cMesh.VERTS[tri + 2], cMesh.CLRS[tri + 2].ToFloat(), cMesh.UVS[tri + 2], cMesh.UVS2[i]);
+            }
+            else
+            {
+                vertexBuffer[tri] = new MyVertex(cMesh.VERTS[tri], new float4(1, 1, 1, 1), cMesh.UVS[tri], cMesh.UVS2[i]);
+                vertexBuffer[tri + 1] = new MyVertex(cMesh.VERTS[tri + 1], new float4(1, 1, 1, 1), cMesh.UVS[tri + 1], cMesh.UVS2[i]);
+                vertexBuffer[tri + 2] = new MyVertex(cMesh.VERTS[tri + 2], new float4(1, 1, 1, 1), cMesh.UVS[tri + 2], cMesh.UVS2[i]);
+            }
 
-            commandList.Add(param1.CMDS[cmd]);
-            vertexList.Add(param1.VERTS[vert]);
-            vertexList.Add(param1.VERTS[vert + 1]);
-            vertexList.Add(param1.VERTS[vert + 2]);
-            vertexList.Add(param1.VERTS[vert + 3]);
-            uvList.Add(param1.UVS[uv]);
-            uvList.Add(param1.UVS[uv + 1]);
-            uvList.Add(param1.UVS[uv + 2]);
-            uvList.Add(param1.UVS[uv + 3]);
-            uv2List.Add(param1.UVS2[uv2]);
-            colorList.Add(param1.CLRS[clr]);
-            colorList.Add(param1.CLRS[clr + 1]);
-            colorList.Add(param1.CLRS[clr + 2]);
-            colorList.Add(param1.CLRS[clr + 3]);
-            triangleList.Add(param1.QUADS[tri]);
-            triangleList.Add(param1.QUADS[tri + 1]);
-            triangleList.Add(param1.QUADS[tri + 2]);
-            triangleList.Add(param1.QUADS[tri + 3]);
-            triangleList.Add(param1.QUADS[tri + 4]);
-            triangleList.Add(param1.QUADS[tri + 5]);
-
-            cmd++;
-            vert += 4;
-            uv += 4;
-            uv2++;
-            clr += 4;
-            tri += 6;
-            uVar11++;
+            int cmd = cMesh.CMDS[i] & 0xef;
+            int sm = indicies[cmd] + cmd * f;
+            indexBuffer[sm] = (ushort)cMesh.TRIS[tri];
+            indexBuffer[sm + 1] = (ushort)cMesh.TRIS[tri + 1];
+            indexBuffer[sm + 2] = (ushort)cMesh.TRIS[tri + 2];
+            indicies[cmd] += 3;
         }
 
-        GameManager.DAT_1f800028 = (ushort)uVar11;
-        GameManager.DAT_1f80002a = (ushort)uVar12;
-    }
-
-    public void FUN_75BEC(TmdScriptableObject param1, int param2)
-    {
-        uint uVar7;
-        uint uVar8;
-
-        int cmd = 0;
-        int vert = 0;
-        int uv = 0;
-        int uv2 = 0;
-        int clr = 0;
-        int tri = 0;
-        uVar7 = GameManager.DAT_1f800024;
-        uVar8 = GameManager.DAT_1f800026;
-        commandList.Clear();
-        vertexList.Clear();
-        uvList.Clear();
-        uv2List.Clear();
-        colorList.Clear();
-        triangleList.Clear();
-
-        while (true)
+        for (int i = cMesh.QUAD_COUNT - 1, j = cMesh.TRI_COUNT; i >= 0; i--)
         {
-            param2--;
-            uVar8++;
+            int quad = j * 3 + i * 4;
+            int tri = i * 6;
 
-            if (param2 < 0) break;
+            if ((cMesh.CMDS[i + j] & 0x10) != 0)
+            {
+                vertexBuffer[quad] = new MyVertex(cMesh.VERTS[quad], cMesh.CLRS[quad].ToFloat(), cMesh.UVS[quad], cMesh.UVS2[i + j]);
+                vertexBuffer[quad + 1] = new MyVertex(cMesh.VERTS[quad + 1], cMesh.CLRS[quad + 1].ToFloat(), cMesh.UVS[quad + 1], cMesh.UVS2[i + j]);
+                vertexBuffer[quad + 2] = new MyVertex(cMesh.VERTS[quad + 2], cMesh.CLRS[quad + 2].ToFloat(), cMesh.UVS[quad + 2], cMesh.UVS2[i + j]);
+                vertexBuffer[quad + 3] = new MyVertex(cMesh.VERTS[quad + 3], cMesh.CLRS[quad + 3].ToFloat(), cMesh.UVS[quad + 3], cMesh.UVS2[i + j]);
+            }
+            else
+            {
+                vertexBuffer[quad] = new MyVertex(cMesh.VERTS[quad], new float4(1, 1, 1, 1), cMesh.UVS[quad], cMesh.UVS2[i + j]);
+                vertexBuffer[quad + 1] = new MyVertex(cMesh.VERTS[quad + 1], new float4(1, 1, 1, 1), cMesh.UVS[quad + 1], cMesh.UVS2[i + j]);
+                vertexBuffer[quad + 2] = new MyVertex(cMesh.VERTS[quad + 2], new float4(1, 1, 1, 1), cMesh.UVS[quad + 2], cMesh.UVS2[i + j]);
+                vertexBuffer[quad + 3] = new MyVertex(cMesh.VERTS[quad + 3], new float4(1, 1, 1, 1), cMesh.UVS[quad + 3], cMesh.UVS2[i + j]);
+            }
 
-            commandList.Add(param1.CMDS[cmd]);
-            vertexList.Add(param1.VERTS[vert]);
-            vertexList.Add(param1.VERTS[vert + 1]);
-            vertexList.Add(param1.VERTS[vert + 2]);
-            uvList.Add(param1.UVS[uv]);
-            uvList.Add(param1.UVS[uv + 1]);
-            uvList.Add(param1.UVS[uv + 2]);
-            uv2List.Add(param1.UVS2[uv2]);
-            colorList.Add(param1.CLRS[clr]);
-            colorList.Add(param1.CLRS[clr + 1]);
-            colorList.Add(param1.CLRS[clr + 2]);
-            triangleList.Add(param1.TRIS[tri]);
-            triangleList.Add(param1.TRIS[tri + 1]);
-            triangleList.Add(param1.TRIS[tri + 2]);
-
-            cmd++;
-            vert += 3;
-            uv += 3;
-            uv2++;
-            clr += 3;
-            tri += 3;
-            uVar7++;
+            int cmd = cMesh.CMDS[i + j] & 0xef;
+            int sm = indicies[cmd] + cmd * f;
+            indexBuffer[sm] = (ushort)cMesh.QUADS[tri];
+            indexBuffer[sm + 1] = (ushort)(cMesh.QUADS[tri + 1]);
+            indexBuffer[sm + 2] = (ushort)(cMesh.QUADS[tri + 2]);
+            indexBuffer[sm + 3] = (ushort)(cMesh.QUADS[tri + 3]);
+            indexBuffer[sm + 4] = (ushort)(cMesh.QUADS[tri + 4]);
+            indexBuffer[sm + 5] = (ushort)(cMesh.QUADS[tri + 5]);
+            indicies[cmd] += 6;
         }
 
-        GameManager.DAT_1f800024 = (ushort)uVar7;
-        GameManager.DAT_1f800026 = (ushort)uVar8;
+        mesh.SetVertexBufferData(vertexBuffer, 0, 0, cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 4);
+        mesh.SetIndexBufferData(indexBuffer, 0, 0, subMeshCount * (cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 6));
+
+        for (int i = 0; i < subMeshCount; i++)
+            mesh.SetSubMesh(i, new SubMeshDescriptor(i * f, indicies[i]));
+
+        mesh.RecalculateBounds();
     }
 
     public void FUN_7F6F8()
@@ -541,6 +469,18 @@ public class CriStatic : CriObject
 
     //FUN_6ED4 (ST1)
     private void FUN_6ED4()
+    {
+
+    }
+}
+
+public struct StaticMeshJob : IJob
+{
+    [WriteOnly] public NativeArray<MyVertex> vertexBuffer;
+    [WriteOnly] public NativeArray<ushort> indexBuffer;
+    [WriteOnly] public NativeArray<int> indicies;
+
+    public void Execute()
     {
 
     }

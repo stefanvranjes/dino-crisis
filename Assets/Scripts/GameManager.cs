@@ -137,8 +137,6 @@ public class GameManager : MonoBehaviour
     public static ushort DAT_1f80000a;
     public static ushort DAT_1f800024;
     public static ushort DAT_1f800026;
-    public static ushort DAT_1f800028;
-    public static ushort DAT_1f80002a;
     public static Vector3Int DAT_1f80002c;
     public static Vector3Int DAT_1f800034_2;
     public static Matrix3x3 DAT_1f800034;
@@ -5288,6 +5286,7 @@ public class GameManager : MonoBehaviour
                         oVar6.cCollider = null;
                         oVar6.cMesh = dVar7.DAT_00;
                         oVar6.SetMaterials();
+                        oVar6.MeshData();
                     }
 
                     SceneManager.instance.FUN_26EBC(2, 0);
@@ -5340,6 +5339,7 @@ public class GameManager : MonoBehaviour
                 oVar6.vr = new Vector3Int(0, 0, 0);
                 oVar6.screen = new Vector3Int(dVar7.DAT_0C, 0, 0);
                 oVar6.SetMaterials();
+                oVar6.MeshData();
                 return;
             }
 
@@ -8300,11 +8300,11 @@ public class GameManager : MonoBehaviour
                 Coprocessor.rotationMatrix.rt33 = puVar10.cTransform.rotation.V22;
                 bVar1 = puVar10.DAT_48;
                 puVar4 = puVar10.cMesh;
-                puVar10.FUN_75BEC(puVar4, puVar4.TRI_COUNT);
+                //puVar10.FUN_75BEC(puVar4, puVar4.TRI_COUNT);
 
                 //if (bVar1 == 1)
                 //{
-                    puVar10.FUN_75F10(puVar4, puVar4.QUAD_COUNT);
+                    //puVar10.FUN_75F10(puVar4, puVar4.QUAD_COUNT);
                 //}
                 //else
                 //{

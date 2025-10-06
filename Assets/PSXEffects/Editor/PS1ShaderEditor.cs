@@ -75,21 +75,6 @@ public class PS1ShaderEditor : ShaderGUI
 	MaterialProperty _Color = null;
 	MaterialProperty _RenderMode = null;
 	MaterialProperty _BlendOp = null;
-	MaterialProperty _Unlit = null;
-	MaterialProperty _DrawDist = null;
-	MaterialProperty _VertexInaccuracy = null;
-	MaterialProperty _DiffModel = null;
-	MaterialProperty _NormalMap = null;
-	MaterialProperty _NormalMapDepth = null;
-	MaterialProperty _SpecModel = null;
-	MaterialProperty _SpecularMap = null;
-	MaterialProperty _Specular = null;
-	MaterialProperty _MetalMap = null;
-	MaterialProperty _Metallic = null;
-	MaterialProperty _Smoothness = null;
-	MaterialProperty _Emission = null;
-	MaterialProperty _EmissionAmt = null;
-	MaterialProperty _Cube = null;
 	MaterialProperty _LODTex = null;
 	MaterialProperty _LODAmt = null;
 
@@ -100,21 +85,6 @@ public class PS1ShaderEditor : ShaderGUI
 		_Color = FindProperty("_Color", props);
 		_RenderMode = FindProperty("_RenderMode", props);
 		_BlendOp = FindProperty("_BlendOp", props);
-		_Unlit = FindProperty("_Unlit", props);
-		_DrawDist = FindProperty("_DrawDist", props);
-		_VertexInaccuracy = FindProperty("_VertexInaccuracy", props);
-		_DiffModel = FindProperty("_DiffModel", props);
-		_NormalMap = FindProperty("_NormalMap", props);
-		_NormalMapDepth = FindProperty("_NormalMapDepth", props);
-		_SpecModel = FindProperty("_SpecModel", props);
-		_SpecularMap = FindProperty("_SpecularMap", props);
-		_Specular = FindProperty("_Specular", props);
-		_MetalMap = FindProperty("_MetalMap", props);
-		_Metallic = FindProperty("_Metallic", props);
-		_Smoothness = FindProperty("_Smoothness", props);
-		_Emission = FindProperty("_Emission", props);
-		_EmissionAmt = FindProperty("_EmissionAmt", props);
-		_Cube = FindProperty("_Cube", props);
 		_LODTex = FindProperty("_LODTex", props);
 		_LODAmt = FindProperty("_LODAmt", props);
 	}
@@ -134,11 +104,8 @@ public class PS1ShaderEditor : ShaderGUI
 			depthWrite = EditorGUILayout.Toggle("Ignore Depth Buffer", depthWrite);
 		}
 		culling = EditorGUILayout.Toggle("Backface Culling", culling);
-		_Unlit.floatValue = EditorGUILayout.Toggle(Styles.unlitText, _Unlit.floatValue > 0.0f) ? 1.0f : 0.0f;
-		_DrawDist.floatValue = EditorGUILayout.Toggle(Styles.drawDistText, _DrawDist.floatValue > 0.0f) ? 1.0f : 0.0f;
 		EditorGUIUtility.labelWidth = Screen.width - 85;
 		EditorGUIUtility.fieldWidth = 1;
-		_VertexInaccuracy.floatValue = EditorGUILayout.FloatField(Styles.vertInnText, _VertexInaccuracy.floatValue);
 		EditorGUIUtility.labelWidth = 0;
 		EditorGUIUtility.fieldWidth = 0;
 		EditorGUILayout.Separator();
@@ -147,29 +114,12 @@ public class PS1ShaderEditor : ShaderGUI
 		materialEditor.TexturePropertySingleLine(Styles.mainTexText, _MainTex, _Color);
 		materialEditor.TexturePropertySingleLine(Styles.Tex8Text, _Tex8);
 		materialEditor.TexturePropertySingleLine(Styles.clutText, _Clut);
-		if (_NormalMap.textureValue == null)
-			_DiffModel.floatValue = EditorGUILayout.Popup(Styles.diffuseModeText, (int)_DiffModel.floatValue, Styles.diffuseNames);
-		materialEditor.TexturePropertySingleLine(Styles.normalMapText, _NormalMap, _NormalMapDepth);
-		materialEditor.TexturePropertySingleLine(Styles.specularMapText, _SpecularMap, _Specular);
-		_SpecModel.floatValue = EditorGUILayout.Popup(Styles.specularModeText, (int)_SpecModel.floatValue, Styles.specularNames);
-		materialEditor.TexturePropertySingleLine(Styles.metalMapText, _MetalMap, _Metallic);
-		if (_MetalMap.textureValue == null) {
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.PrefixLabel("Smoothness");
-			_Smoothness.floatValue = EditorGUILayout.Slider(_Smoothness.floatValue, 0.0f, 1.0f);
-			EditorGUILayout.EndHorizontal();
-		}
-		materialEditor.TexturePropertySingleLine(Styles.emissionMapText, _Emission, _EmissionAmt);
-		materialEditor.TexturePropertySingleLine(Styles.cubeMapText, _Cube);
 		materialEditor.TexturePropertySingleLine(Styles.lodTexText, _LODTex, _LODAmt);
 
 		EditorGUILayout.Separator();
 
 		EditorGUI.BeginChangeCheck();
 		materialEditor.TextureScaleOffsetProperty(_MainTex);
-		if (EditorGUI.EndChangeCheck()) {
-			_Emission.textureScaleAndOffset = _MainTex.textureScaleAndOffset;
-		}
 
 
 
@@ -213,8 +163,6 @@ public class PS1ShaderEditor : ShaderGUI
 			} else {
 				material.DisableKeyword("DEPTH_WRITE");
 			}
-			if (_NormalMap.textureValue != null)
-				_DiffModel.floatValue = 1.0f;
 		}
 	}
 }

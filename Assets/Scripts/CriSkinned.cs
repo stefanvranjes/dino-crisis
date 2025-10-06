@@ -1315,8 +1315,8 @@ public class CriSkinned : CriObject
             triangleList.Add(param1.QUADS[tri + 3]);
             triangleList.Add(param1.QUADS[tri + 4]);
             triangleList.Add(param1.QUADS[tri + 5]);
-            GameManager.DAT_1f80002a++;
-            GameManager.DAT_1f800028++;
+            //GameManager.DAT_1f80002a++;
+            //GameManager.DAT_1f800028++;
 
             uv += 4;
             uv2++;

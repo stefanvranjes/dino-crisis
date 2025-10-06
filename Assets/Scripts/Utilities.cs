@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Scripting;
+using Unity.Mathematics;
 
 public delegate int _SORTING_CMP(byte[] arry, int cmp1, int cmp2);
 
@@ -3610,6 +3611,11 @@ public static class Utilities
         else if (GameManager.instance.playerCore.objects.ContainsKey(ramAddress))
             return GameManager.instance.playerCore.objects[ramAddress];
         else return null;
+    }
+
+    public static float4 ToFloat(this Color color)
+    {
+        return new float4(color.r, color.g, color.b, color.a);
     }
 }
 

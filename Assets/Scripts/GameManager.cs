@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Unity.Mathematics;
 
 public enum _DIFFICULTY
 {
@@ -264,8 +265,6 @@ public class GameManager : MonoBehaviour
     public List<LoadScriptContainer> DAT_9E0A0;
     public List<ushort> DAT_AA2A0;
     public List<LoadDoorContainer> DAT_A89A0;
-    public List<Vector3> skinnedVertices; //0x800C6F90
-    public List<Color> skinnedColors; //0x800C75D0
     public List<CriSkinned> skinnedList; //0x800C7C10
     public bool DAT_C7CF0; //0x800C7CF0
     public Vector3Int DAT_C7CF8; //0x800C7CF8
@@ -438,8 +437,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        skinnedVertices = new List<Vector3>();
-        skinnedColors = new List<Color>();
         skinnedList = new List<CriSkinned>();
         todUncomp = new List<Vector3Int>();
         tmpSkinned = new List<CriSkinned>();
@@ -7993,21 +7990,10 @@ public class GameManager : MonoBehaviour
 
     private void FUN_73EB8()
     {
-        CriObject puVar6;
-        int iVar7;
-        int iVar8;
-        int iVar9;
-        CriBone puVar10;
-        int iVar12;
         uint uVar13;
-        Vector3Int[] puVar14;
-        Vector3[] puVar15;
         CriSkinned oVar18;
-        int iVar19;
-        int iVar20;
         uint local_48;
         uint local_44;
-        int local_2c;
 
         local_44 = FUN_73DDC();
         local_48 = 0;
@@ -8015,190 +8001,39 @@ public class GameManager : MonoBehaviour
 
         if (local_44 != 0)
         {
-            local_2c = -1;
-
             do
             {
                 oVar18 = skinnedList[(int)local_48];
-                skinnedVertices = new List<Vector3>();
-                skinnedColors = new List<Color>();
-                puVar10 = oVar18.skeleton;
-                puVar15 = oVar18.cSkin.VERTS;
-                puVar14 = oVar18.cSkin.NRMLS;
                 Coprocessor.colorCode.r = oVar18.tint.r;
                 Coprocessor.colorCode.g = oVar18.tint.g;
                 Coprocessor.colorCode.b = oVar18.tint.b;
                 Coprocessor.colorCode.code = oVar18.tint.a;
-                iVar12 = oVar18.boneCount - 1;
+                local_48++;
+                oVar18.MeshJob(oVar18.cSkin);
+            } while (local_48 < local_44);
+        }
 
-                if (iVar12 != local_2c)
+        JobManager.instance.CompleteAll();
+
+        if (local_44 != 0)
+        {
+            do
+            {
+                oVar18 = skinnedList[(int)local_48];
+                int index = oVar18.boneCount - 1;
+                CriBone b = oVar18.skeleton;
+
+                if (index != -1)
                 {
-                    iVar20 = 0;
-
                     do
                     {
-                        Coprocessor.lightMatrix.l11 = puVar10.lightMatrix.V00;
-                        Coprocessor.lightMatrix.l12 = puVar10.lightMatrix.V01;
-                        Coprocessor.lightMatrix.l13 = puVar10.lightMatrix.V02;
-                        Coprocessor.lightMatrix.l21 = puVar10.lightMatrix.V10;
-                        Coprocessor.lightMatrix.l22 = puVar10.lightMatrix.V11;
-                        Coprocessor.lightMatrix.l23 = puVar10.lightMatrix.V12;
-                        Coprocessor.lightMatrix.l31 = puVar10.lightMatrix.V20;
-                        Coprocessor.lightMatrix.l32 = puVar10.lightMatrix.V21;
-                        Coprocessor.lightMatrix.l33 = puVar10.lightMatrix.V22;
-                        Coprocessor.lightColorMatrix.lr1 = puVar10.colorMatrix.V00;
-                        Coprocessor.lightColorMatrix.lr2 = puVar10.colorMatrix.V01;
-                        Coprocessor.lightColorMatrix.lr3 = puVar10.colorMatrix.V02;
-                        Coprocessor.lightColorMatrix.lg1 = puVar10.colorMatrix.V10;
-                        Coprocessor.lightColorMatrix.lg2 = puVar10.colorMatrix.V11;
-                        Coprocessor.lightColorMatrix.lg3 = puVar10.colorMatrix.V12;
-                        Coprocessor.lightColorMatrix.lb1 = puVar10.colorMatrix.V20;
-                        Coprocessor.lightColorMatrix.lb2 = puVar10.colorMatrix.V21;
-                        Coprocessor.lightColorMatrix.lb3 = puVar10.colorMatrix.V22;
-                        puVar6 = puVar10.prev;
-                        Coprocessor.rotationMatrix.rt11 = puVar6.cTransform.rotation.V00;
-                        Coprocessor.rotationMatrix.rt12 = puVar6.cTransform.rotation.V01;
-                        Coprocessor.rotationMatrix.rt13 = puVar6.cTransform.rotation.V02;
-                        Coprocessor.rotationMatrix.rt21 = puVar6.cTransform.rotation.V10;
-                        Coprocessor.rotationMatrix.rt22 = puVar6.cTransform.rotation.V11;
-                        Coprocessor.rotationMatrix.rt23 = puVar6.cTransform.rotation.V12;
-                        Coprocessor.rotationMatrix.rt31 = puVar6.cTransform.rotation.V20;
-                        Coprocessor.rotationMatrix.rt32 = puVar6.cTransform.rotation.V21;
-                        Coprocessor.rotationMatrix.rt33 = puVar6.cTransform.rotation.V22;
-                        Coprocessor.vector0.vx0 = (short)puVar10.DAT_44.x;
-                        Coprocessor.vector0.vy0 = (short)puVar10.DAT_44.y;
-                        Coprocessor.vector0.vz0 = (short)puVar10.DAT_44.z;
-                        Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
-                        
-                        puVar10.cTransform.position.x = Coprocessor.mathsAccumulator.mac1;
-                        puVar10.cTransform.position.y = Coprocessor.mathsAccumulator.mac2;
-                        puVar10.cTransform.position.z = Coprocessor.mathsAccumulator.mac3;
-                        Coprocessor.accumulator.ir1 = puVar10.cTransform.rotation.V00;
-                        Coprocessor.accumulator.ir2 = puVar10.cTransform.rotation.V10;
-                        Coprocessor.accumulator.ir3 = puVar10.cTransform.rotation.V20;
-                        Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.IR, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
-                        puVar10.cTransform.position.x += puVar6.cTransform.position.x;
-                        iVar7 = Coprocessor.accumulator.ir1;
-                        iVar8 = Coprocessor.accumulator.ir2;
-                        iVar9 = Coprocessor.accumulator.ir3;
-                        puVar10.cTransform.rotation.V00 = (short)iVar7;
-                        puVar10.cTransform.rotation.V10 = (short)iVar8;
-                        puVar10.cTransform.rotation.V20 = (short)iVar9;
-                        Coprocessor.accumulator.ir1 = puVar10.cTransform.rotation.V01;
-                        Coprocessor.accumulator.ir2 = puVar10.cTransform.rotation.V11;
-                        Coprocessor.accumulator.ir3 = puVar10.cTransform.rotation.V21;
-                        Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.IR, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
-                        puVar10.cTransform.position.y += puVar6.cTransform.position.y;
-                        iVar7 = Coprocessor.accumulator.ir1;
-                        iVar8 = Coprocessor.accumulator.ir2;
-                        iVar9 = Coprocessor.accumulator.ir3;
-                        puVar10.cTransform.rotation.V01 = (short)iVar7;
-                        puVar10.cTransform.rotation.V11 = (short)iVar8;
-                        puVar10.cTransform.rotation.V21 = (short)iVar9;
-                        Coprocessor.accumulator.ir1 = puVar10.cTransform.rotation.V02;
-                        Coprocessor.accumulator.ir2 = puVar10.cTransform.rotation.V12;
-                        Coprocessor.accumulator.ir3 = puVar10.cTransform.rotation.V22;
-                        Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.IR, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
-                        puVar10.cTransform.position.z += puVar6.cTransform.position.z;
-                        iVar7 = Coprocessor.accumulator.ir1;
-                        iVar8 = Coprocessor.accumulator.ir2;
-                        iVar9 = Coprocessor.accumulator.ir3;
-                        puVar10.cTransform.rotation.V02 = (short)iVar7;
-                        puVar10.cTransform.rotation.V12 = (short)iVar8;
-                        puVar10.cTransform.rotation.V22 = (short)iVar9;
-                        Coprocessor.rotationMatrix.rt11 = puVar10.cTransform.rotation.V00;
-                        Coprocessor.rotationMatrix.rt12 = puVar10.cTransform.rotation.V01;
-                        Coprocessor.rotationMatrix.rt13 = puVar10.cTransform.rotation.V02;
-                        Coprocessor.rotationMatrix.rt21 = puVar10.cTransform.rotation.V10;
-                        Coprocessor.rotationMatrix.rt22 = puVar10.cTransform.rotation.V11;
-                        Coprocessor.rotationMatrix.rt23 = puVar10.cTransform.rotation.V12;
-                        Coprocessor.rotationMatrix.rt31 = puVar10.cTransform.rotation.V20;
-                        Coprocessor.rotationMatrix.rt32 = puVar10.cTransform.rotation.V21;
-                        Coprocessor.rotationMatrix.rt33 = puVar10.cTransform.rotation.V22;
-                        Coprocessor.translationVector._trx = puVar10.cTransform.position.x;
-                        Coprocessor.translationVector._try = puVar10.cTransform.position.y;
-                        Coprocessor.translationVector._trz = puVar10.cTransform.position.z;
-                        puVar10.BoneTransform();
-                        Matrix4x4 m = puVar10.transform.localToWorldMatrix;
-                        iVar19 = puVar10.DAT_42 - 1;
-
-                        if (iVar19 != local_2c)
-                        {
-                            do
-                            {
-                                /*Coprocessor.vector0.vx0 = (short)puVar15[iVar20].x;
-                                Coprocessor.vector0.vy0 = (short)puVar15[iVar20].y;
-                                Coprocessor.vector0.vz0 = (short)puVar15[iVar20].z;
-                                Coprocessor.vector1.vx1 = (short)puVar15[iVar20 + 1].x;
-                                Coprocessor.vector1.vy1 = (short)puVar15[iVar20 + 1].y;
-                                Coprocessor.vector1.vz1 = (short)puVar15[iVar20 + 1].z;
-                                Coprocessor.vector2.vx2 = (short)puVar15[iVar20 + 2].x;
-                                Coprocessor.vector2.vy2 = (short)puVar15[iVar20 + 2].y;
-                                Coprocessor.vector2.vz2 = (short)puVar15[iVar20 + 2].z;
-                                Coprocessor.ExecuteRTPT(12, false);*/
-                                //setting screen coords...
-                                skinnedVertices.Add(m.MultiplyPoint3x4(puVar15[iVar20]));
-                                skinnedVertices.Add(m.MultiplyPoint3x4(puVar15[iVar20 + 1]));
-                                skinnedVertices.Add(m.MultiplyPoint3x4(puVar15[iVar20 + 2]));
-                                Coprocessor.vector0.vx0 = (short)puVar14[iVar20].x;
-                                Coprocessor.vector0.vy0 = (short)puVar14[iVar20].y;
-                                Coprocessor.vector0.vz0 = (short)puVar14[iVar20].z;
-                                Coprocessor.vector1.vx1 = (short)puVar14[iVar20 + 1].x;
-                                Coprocessor.vector1.vy1 = (short)puVar14[iVar20 + 1].y;
-                                Coprocessor.vector1.vz1 = (short)puVar14[iVar20 + 1].z;
-                                Coprocessor.vector2.vx2 = (short)puVar14[iVar20 + 2].x;
-                                Coprocessor.vector2.vy2 = (short)puVar14[iVar20 + 2].y;
-                                Coprocessor.vector2.vz2 = (short)puVar14[iVar20 + 2].z;
-                                Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V0, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
-                                //modifying screen coords...
-                                iVar7 = Coprocessor.accumulator.ir1;
-                                iVar8 = Coprocessor.accumulator.ir2;
-                                iVar9 = Coprocessor.accumulator.ir3;
-                                DAT_1f800380 = new Vector3Int(iVar7, iVar8, iVar9);
-                                Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V1, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
-                                //modifying screen coords...
-                                iVar7 = Coprocessor.accumulator.ir1;
-                                iVar8 = Coprocessor.accumulator.ir2;
-                                iVar9 = Coprocessor.accumulator.ir3;
-                                DAT_1f800388 = new Vector3Int(iVar7, iVar8, iVar9);
-                                Coprocessor.ExecuteMVMVA(_MVMVA_MULTIPLY_MATRIX.Rotation, _MVMVA_MULTIPLY_VECTOR.V2, _MVMVA_TRANSLATION_VECTOR.None, 12, false);
-                                //modifying screen coords...
-                                iVar7 = Coprocessor.accumulator.ir1;
-                                iVar8 = Coprocessor.accumulator.ir2;
-                                iVar9 = Coprocessor.accumulator.ir3;
-                                DAT_1f800390 = new Vector3Int(iVar7, iVar8, iVar9);
-                                Coprocessor.vector0.vx0 = (short)DAT_1f800380.x;
-                                Coprocessor.vector0.vy0 = (short)DAT_1f800380.y;
-                                Coprocessor.vector0.vz0 = (short)DAT_1f800380.z;
-                                Coprocessor.vector1.vx1 = (short)DAT_1f800388.x;
-                                Coprocessor.vector1.vy1 = (short)DAT_1f800388.y;
-                                Coprocessor.vector1.vz1 = (short)DAT_1f800388.z;
-                                Coprocessor.vector2.vx2 = (short)DAT_1f800390.x;
-                                Coprocessor.vector2.vy2 = (short)DAT_1f800390.y;
-                                Coprocessor.vector2.vz2 = (short)DAT_1f800390.z;
-                                Coprocessor.ExecuteNCCT(12, true);
-                                //setting color rgb...
-                                skinnedColors.Add(new Color32
-                                    (Coprocessor.colorFIFO.r0, Coprocessor.colorFIFO.g0, Coprocessor.colorFIFO.b0, Coprocessor.colorFIFO.cd0));
-                                skinnedColors.Add(new Color32
-                                    (Coprocessor.colorFIFO.r1, Coprocessor.colorFIFO.g1, Coprocessor.colorFIFO.b1, Coprocessor.colorFIFO.cd1));
-                                skinnedColors.Add(new Color32
-                                    (Coprocessor.colorFIFO.r2, Coprocessor.colorFIFO.g2, Coprocessor.colorFIFO.b2, Coprocessor.colorFIFO.cd2));
-                                iVar19--;
-                                iVar20 += 3;
-                            } while (iVar19 != -1);
-                        }
-
-                        if (puVar10.cMesh != null)
-                            puVar10.FUN_7503C(puVar10.cMesh);
-
-                        puVar10 = (CriBone)puVar10.next;
-                        iVar12--;
-                    } while (iVar12 != local_2c);
+                        oVar18.SetBoneTransform(b);
+                        b = (CriBone)b.next;
+                        index--;
+                    } while (index != -1);
                 }
 
                 local_48++;
-                oVar18.FUN_7569C(oVar18.cSkin);
             } while (local_48 < local_44);
         }
     }

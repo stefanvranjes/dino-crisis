@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
 
 public class CriPlayer : CriSkinned
 {
@@ -7812,9 +7813,13 @@ public class CriPlayer : CriSkinned
 
             oVar1.DAT_44 = Utilities.LoadAverageShort12
                 (ref oVar1.DAT_44, ref local_18, 0x1000 - (int)uVar2, (int)uVar2);
+            bonesPosition[oVar1.boneId] = new int3(oVar1.DAT_44.x, oVar1.DAT_44.y, oVar1.DAT_44.z);
         }
         else
+        {
             oVar1.DAT_44 = psVar3.DAT_00;
+            bonesPosition[oVar1.boneId] = new int3(oVar1.DAT_44.x, oVar1.DAT_44.y, oVar1.DAT_44.z);
+        }  
 
         uVar2 = DAT_5D;
 

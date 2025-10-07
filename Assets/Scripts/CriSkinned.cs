@@ -1,6 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Jobs;
+using Unity.Mathematics;
+using Unity.Collections;
+using Unity.Jobs;
+using Unity.Burst;
+using static Types.TypesClass;
+
+public struct MyVertex2
+{
+    public float3 vertex;
+    public int3 normal;
+
+    public MyVertex2(float3 p, int3 n)
+    {
+        vertex = p;
+        normal = n;
+    }
+}
 
 public class CriSkinned : CriObject
 {
@@ -100,15 +119,19 @@ public class CriSkinned : CriObject
     public bool DAT_1A6; //0x1A6
     public byte DAT_1A7; //0x1A7
     public int[] REFS;
-
     public Transform shadow;
-    private List<byte> commandList;
-    private List<Vector3> vertexList;
-    private List<Vector2> uvList;
-    private List<Vector3> uv2List;
-    private List<Color> colorList;
-    private List<int> triangleList;
     public Material[] materials;
+
+    private Mesh mesh;
+    private int subMeshCount;
+    private NativeArray<CriTransform> bonesTransform;
+    protected NativeArray<int3> bonesPosition;
+    private NativeArray<CriBoneIndex> bonesIndex;
+    private NativeArray<CriBoneColor> bonesColor;
+    private NativeArray<MyVertex> vertexBuffer;
+    private NativeArray<ushort> indexBuffer;
+    private NativeArray<int> indicies;
+    private NativeArray<MyVertex2> vertexData;
 
     protected override void Awake()
     {
@@ -120,22 +143,33 @@ public class CriSkinned : CriObject
     protected override void Start()
     {
         base.Start();
-        commandList = new List<byte>();
-        vertexList = new List<Vector3>();
-        uvList = new List<Vector2>();
-        uv2List = new List<Vector3>();
-        colorList = new List<Color>();
-        triangleList = new List<int>();
     }
 
     protected override void Update()
     {
         base.Update();
+
+        if (cSkin != null && (flags & 2) != 0)
+        {
+            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[0], gameObject.layer, Camera.main, 0);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        bonesTransform.Dispose();
+        bonesPosition.Dispose();
+        bonesIndex.Dispose();
+        bonesColor.Dispose();
+        vertexBuffer.Dispose();
+        indexBuffer.Dispose();
+        indicies.Dispose();
+        vertexData.Dispose();
     }
 
     private void OnRenderObject()
     {
-        if (cSkin != null && (flags & 2) != 0)
+        /*if (cSkin != null && (flags & 2) != 0)
         {
             GL.PushMatrix();
             GL.MultMatrix(Matrix4x4.identity);
@@ -196,7 +230,7 @@ public class CriSkinned : CriObject
             }
 
             GL.PopMatrix();
-        }
+        }*/
     }
 
     public override void ResetValues()
@@ -301,6 +335,135 @@ public class CriSkinned : CriObject
         REFS = null;
     }
 
+    public void MeshData()
+    {
+        subMeshCount = 6;
+        indexBuffer = new NativeArray<ushort>(
+            (cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6) * subMeshCount, Allocator.Persistent
+        );
+
+        vertexBuffer = new NativeArray<MyVertex>(
+            cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 4, Allocator.Persistent
+        );
+
+        indicies = new NativeArray<int>(
+            subMeshCount, Allocator.Persistent
+        );
+
+        vertexData = new NativeArray<MyVertex2>(
+            cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 4, Allocator.Persistent
+        );
+
+        mesh = new Mesh();
+        mesh.subMeshCount = subMeshCount;
+        mesh.SetVertexBufferParams(cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 4,
+                                                 new VertexAttributeDescriptor(VertexAttribute.Position, VertexAttributeFormat.Float32, 3),
+                                                 new VertexAttributeDescriptor(VertexAttribute.Color, VertexAttributeFormat.Float32, 4),
+                                                 new VertexAttributeDescriptor(VertexAttribute.TexCoord0, VertexAttributeFormat.Float32, 2),
+                                                 new VertexAttributeDescriptor(VertexAttribute.TexCoord1, VertexAttributeFormat.Float32, 3));
+        mesh.SetIndexBufferParams(subMeshCount * (cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6), IndexFormat.UInt16);
+
+        for (int i = 0; i < cSkin.TRI_COUNT; i++)
+        {
+            int tri = i * 3;
+            vertexData[tri] = new MyVertex2(cSkin.VERTS[tri], new int3(cSkin.NRMLS[tri].x, cSkin.NRMLS[tri].y, cSkin.NRMLS[tri].z));
+            vertexData[tri + 1] = new MyVertex2(cSkin.VERTS[tri + 1], new int3(cSkin.NRMLS[tri + 1].x, cSkin.NRMLS[tri + 1].y, cSkin.NRMLS[tri + 1].z));
+            vertexData[tri + 2] = new MyVertex2(cSkin.VERTS[tri + 2], new int3(cSkin.NRMLS[tri + 2].x, cSkin.NRMLS[tri + 2].y, cSkin.NRMLS[tri + 2].z));
+            vertexBuffer[tri] = new MyVertex(cSkin.VERTS[tri], new float4(1, 1, 1, 1), cSkin.UVS[tri], cSkin.UVS2[i]);
+            vertexBuffer[tri + 1] = new MyVertex(cSkin.VERTS[tri + 1], new float4(1, 1, 1, 1), cSkin.UVS[tri + 1], cSkin.UVS2[i]);
+            vertexBuffer[tri + 2] = new MyVertex(cSkin.VERTS[tri + 2], new float4(1, 1, 1, 1), cSkin.UVS[tri + 2], cSkin.UVS2[i]);
+            int sm = indicies[0];
+            indexBuffer[sm] = (ushort)cSkin.TRIS[tri];
+            indexBuffer[sm + 1] = (ushort)cSkin.TRIS[tri + 1];
+            indexBuffer[sm + 2] = (ushort)cSkin.TRIS[tri + 2];
+            indicies[0] += 3;
+        }
+
+        for (int i = cSkin.QUAD_COUNT - 1, j = cSkin.TRI_COUNT; i >= 0; i--)
+        {
+            int quad = j * 3 + i * 4;
+            int tri = i * 6;
+            vertexData[quad] = new MyVertex2(cSkin.VERTS[quad], new int3(cSkin.NRMLS[quad].x, cSkin.NRMLS[quad].y, cSkin.NRMLS[quad].z));
+            vertexData[quad + 1] = new MyVertex2(cSkin.VERTS[quad + 1], new int3(cSkin.NRMLS[quad + 1].x, cSkin.NRMLS[quad + 1].y, cSkin.NRMLS[quad + 1].z));
+            vertexData[quad + 2] = new MyVertex2(cSkin.VERTS[quad + 2], new int3(cSkin.NRMLS[quad + 2].x, cSkin.NRMLS[quad + 2].y, cSkin.NRMLS[quad + 2].z));
+            vertexData[quad + 3] = new MyVertex2(cSkin.VERTS[quad + 3], new int3(cSkin.NRMLS[quad + 3].x, cSkin.NRMLS[quad + 3].y, cSkin.NRMLS[quad + 3].z));
+            vertexBuffer[quad] = new MyVertex(cSkin.VERTS[quad], new float4(1, 1, 1, 1), cSkin.UVS[quad], cSkin.UVS2[i + j]);
+            vertexBuffer[quad + 1] = new MyVertex(cSkin.VERTS[quad + 1], new float4(1, 1, 1, 1), cSkin.UVS[quad + 1], cSkin.UVS2[i + j]);
+            vertexBuffer[quad + 2] = new MyVertex(cSkin.VERTS[quad + 2], new float4(1, 1, 1, 1), cSkin.UVS[quad + 2], cSkin.UVS2[i + j]);
+            vertexBuffer[quad + 3] = new MyVertex(cSkin.VERTS[quad + 3], new float4(1, 1, 1, 1), cSkin.UVS[quad + 3], cSkin.UVS2[i + j]);
+            int sm = indicies[0];
+            indexBuffer[sm] = (ushort)cSkin.QUADS[tri];
+            indexBuffer[sm + 1] = (ushort)(cSkin.QUADS[tri + 1]);
+            indexBuffer[sm + 2] = (ushort)(cSkin.QUADS[tri + 2]);
+            indexBuffer[sm + 3] = (ushort)(cSkin.QUADS[tri + 3]);
+            indexBuffer[sm + 4] = (ushort)(cSkin.QUADS[tri + 4]);
+            indexBuffer[sm + 5] = (ushort)(cSkin.QUADS[tri + 5]);
+            indicies[0] += 6;
+        }
+
+        mesh.SetVertexBufferData(vertexBuffer, 0, 0, cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 4);
+        mesh.SetIndexBufferData(indexBuffer, 0, 0, cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6);
+        mesh.SetSubMesh(0, new SubMeshDescriptor(0, indicies[0]));
+        mesh.RecalculateBounds();
+    }
+
+    //FUN_7569C
+    public void MeshJob(Tmd2ScriptableObject param1)
+    {
+        int index = boneCount - 1;
+        CriBone b = skeleton;
+
+        if (index != -1)
+        {
+            do
+            {
+                if (b.cMesh != null)
+                    b.MeshJob(b.cMesh);
+
+                b = (CriBone)b.next;
+                index--;
+            } while (index != -1);
+        }
+
+        SkinnedMeshJob job = new SkinnedMeshJob
+        {
+            bonesTransform = bonesTransform,
+            bonesPosition = bonesPosition, 
+            bonesIndex = bonesIndex, 
+            bonesColor = bonesColor, 
+            vertexBuffer = vertexBuffer,
+            colorCode = Coprocessor.colorCode, 
+            backgroundColor = Coprocessor.backgroundColor,
+            skeleton = skeleton.boneId, 
+            boneCount = boneCount
+        };
+        JobHandle handle = job.Schedule();
+        JobManager.instance.AddJob(handle);
+    }
+
+    public void SetSkeletonPrevious(CriPlayer player)
+    {
+        skeleton.prev = player;
+        skeleton.prevId = -1;
+        bonesIndex[skeleton.boneId] = new CriBoneIndex
+        (
+            skeleton.nextId,
+            skeleton.prevId,
+            skeleton.DAT_42
+        );
+    }
+
+    public void SetBoneTransform(CriBone bone)
+    {
+        bone.cTransform = bonesTransform[bone.boneId];
+        bone.BoneTransform();
+    }
+
+    public void SetBoneColor(ref Matrix3x3 lm, ref Matrix3x3 cm, int index)
+    {
+        bonesColor[index] = new CriBoneColor(lm, cm);
+    }
+
     public void FUN_60278()
     {
         bool bVar1;
@@ -339,6 +502,7 @@ public class CriSkinned : CriObject
             {
                 puVar2 = cSkin.BONES[puVar5];
                 oVar4.DAT_44 = puVar2.DAT_00;
+                bonesPosition[oVar4.boneId] = new int3(puVar2.DAT_00.x, puVar2.DAT_00.y, puVar2.DAT_00.z);
                 iVar3--;
                 puVar5++;
             } while (iVar3 != -1);
@@ -369,13 +533,20 @@ public class CriSkinned : CriObject
                 oVar2.DAT_44 = puVar7.DAT_00;
 
                 if (puVar7.DAT_06 < 0)
+                {
                     oVar2.prev = this;
+                    oVar2.prevId = -1;
+                }
                 else
+                {
                     oVar2.prev = local_a0[puVar7.DAT_06];
+                    oVar2.prevId = puVar7.DAT_06;
+                }
 
                 bVar1 = puVar7.DAT_07;
                 uVar4++;
                 oVar2.DAT_42 = bVar1;
+                oVar2.boneId = (int)uVar4;
             } while (uVar4 < uVar8);
         }
 
@@ -387,10 +558,12 @@ public class CriSkinned : CriObject
             {
                 uVar4++;
                 local_a0[uVar4 - 1].next = local_a0[uVar4];
+                local_a0[uVar4 - 1].nextId = (int)uVar4;
             } while (uVar4 < uVar8 - 1);
         }
 
         local_a0[uVar4].next = null;
+        local_a0[uVar4].nextId = -1;
         skinSize = new Vector3Int(0x1000, 0x1000, 0x1000);
         shadowSize = new Vector2Int(0x1000, 0x1000);
         tint = new Color32(0x80, 0x80, 0x80, 0x00);
@@ -408,6 +581,19 @@ public class CriSkinned : CriObject
         {
             oVar2.DAT_4C = oVar2.screen;
             oVar2 = (CriBone)oVar2.next;
+        }
+
+        bonesTransform = new NativeArray<CriTransform>(boneCount, Allocator.Persistent);
+        bonesPosition = new NativeArray<int3>(boneCount, Allocator.Persistent);
+        bonesIndex = new NativeArray<CriBoneIndex>(boneCount, Allocator.Persistent);
+        bonesColor = new NativeArray<CriBoneColor>(boneCount, Allocator.Persistent);
+
+        for (int i = 0; i < boneCount; i++)
+        {
+            CriBone b = local_a0[i];
+            bonesTransform[i] = b.cTransform;
+            bonesPosition[i] = new int3(b.DAT_44.x, b.DAT_44.y, b.DAT_44.z);
+            bonesIndex[i] = new CriBoneIndex(b.nextId, b.prevId, b.DAT_42);
         }
     }
 
@@ -526,9 +712,13 @@ public class CriSkinned : CriObject
 
             oVar2.DAT_44 = Utilities.LoadAverageShort12
                 (ref oVar2.DAT_44, ref local_18, 0x1000 - 0x1000 / bVar1, 0x1000 / bVar1);
+            bonesPosition[oVar2.boneId] = new int3(oVar2.DAT_44.x, oVar2.DAT_44.y, oVar2.DAT_44.z);
         }
         else
+        {
             oVar2.DAT_44 = psVar3.DAT_00;
+            bonesPosition[oVar2.boneId] = new int3(oVar2.DAT_44.x, oVar2.DAT_44.y, oVar2.DAT_44.z);
+        } 
 
         if (DAT_5D == 0)
         {
@@ -993,6 +1183,7 @@ public class CriSkinned : CriObject
             }
 
             oVar3.DAT_44.y = sVar2 - (sVar4 - sVar1);
+            bonesPosition[oVar3.boneId] = new int3(oVar3.DAT_44.x, oVar3.DAT_44.y, oVar3.DAT_44.z);
         }
 
         return uVar6;
@@ -1255,78 +1446,9 @@ public class CriSkinned : CriObject
         maxHealth = sVar1;
     }
 
-    public void FUN_7569C(Tmd2ScriptableObject param1)
-    {
-        vertexList = GameManager.instance.skinnedVertices;
-        colorList = GameManager.instance.skinnedColors;
-        FUN_75718(param1, param1.TRI_COUNT);
-        FUN_75944(param1, param1.QUAD_COUNT);
-    }
-
-    private void FUN_75718(Tmd2ScriptableObject param1, int param2)
-    {
-        int uv = 0;
-        int uv2 = 0;
-        int tri = 0;
-        commandList.Clear();
-        uvList.Clear();
-        uv2List.Clear();
-        triangleList.Clear();
-
-        while (-1 < --param2)
-        {
-            commandList.Add(0x10); //0x34
-            uvList.Add(param1.UVS[uv]);
-            uvList.Add(param1.UVS[uv + 1]);
-            uvList.Add(param1.UVS[uv + 2]);
-            uv2List.Add(param1.UVS2[uv2]);
-            triangleList.Add(param1.TRIS[tri]);
-            triangleList.Add(param1.TRIS[tri + 1]);
-            triangleList.Add(param1.TRIS[tri + 2]);
-            GameManager.DAT_1f800026++;
-            GameManager.DAT_1f800024++;
-
-            uv += 3;
-            uv2++;
-            tri += 3;
-        }
-    }
-
-    private void FUN_75944(Tmd2ScriptableObject param1, int param2)
-    {
-        int begin = param1.TRI_COUNT;
-        int uv = begin * 3;
-        int uv2 = begin;
-        int tri = 0;
-
-        while (-1 < --param2)
-        {
-            commandList.Add(0x10); //0x3C
-            uvList.Add(param1.UVS[uv]);
-            uvList.Add(param1.UVS[uv + 1]);
-            uvList.Add(param1.UVS[uv + 2]);
-            uvList.Add(param1.UVS[uv + 3]);
-            uvList.Add(param1.UVS[uv + 2]);
-            uvList.Add(param1.UVS[uv + 1]);
-            uv2List.Add(param1.UVS2[uv2]);
-            triangleList.Add(param1.QUADS[tri]);
-            triangleList.Add(param1.QUADS[tri + 1]);
-            triangleList.Add(param1.QUADS[tri + 2]);
-            triangleList.Add(param1.QUADS[tri + 3]);
-            triangleList.Add(param1.QUADS[tri + 4]);
-            triangleList.Add(param1.QUADS[tri + 5]);
-            //GameManager.DAT_1f80002a++;
-            //GameManager.DAT_1f800028++;
-
-            uv += 4;
-            uv2++;
-            tri += 6;
-        }
-    }
-
     public void AddShadows()
     {
-        commandList.Add(0x13); //GameManager.DAT_1f800068.a
+        /*commandList.Add(0x13); //GameManager.DAT_1f800068.a
         float translateFactor = 16f;
         int tri = vertexList.Count;
         vertexList.Add(GameManager.DAT_1f80006c.InvertY() / translateFactor);
@@ -1374,6 +1496,419 @@ public class CriSkinned : CriObject
         triangleList.Add(tri + 2);
         triangleList.Add(tri + 3);
         triangleList.Add(tri + 2);
-        triangleList.Add(tri + 1);
+        triangleList.Add(tri + 1);*/
+    }
+}
+
+[BurstCompile]
+public struct SkinnedMeshJob : IJob
+{
+    public NativeArray<CriTransform> bonesTransform;
+    [ReadOnly] public NativeArray<int3> bonesPosition;
+    [ReadOnly] public NativeArray<CriBoneIndex> bonesIndex;
+    [ReadOnly] public NativeArray<CriBoneColor> bonesColor;
+    [WriteOnly] public NativeArray<MyVertex> vertexBuffer;
+    [ReadOnly] public NativeArray<MyVertex2> vertexData;
+    public Cop2ClrCode colorCode;
+    public Cop2BC backgroundColor;
+    public int skeleton;
+    public int boneCount;
+
+    public void Execute()
+    {
+        Cop2Vector0 vector0;
+        Cop2Vector1 vector1;
+        Cop2Vector2 vector2;
+        Cop2Accumulator accumulator = new Cop2Accumulator();
+        Cop2Maths mathsAccumulator = new Cop2Maths();
+        Cop2RT rotationMatrix;
+        Cop2TV translationVector;
+        Cop2LLM lightMatrix;
+        Cop2LCM lightColorMatrix;
+        Cop2ClrFIFO colorFIFO = new Cop2ClrFIFO();
+        CriTransform cTransform = new CriTransform();
+        Matrix4x4 m = new Matrix4x4();
+        int puVar6;
+        int iVar7;
+        int iVar8;
+        int iVar9;
+        int puVar10;
+        int iVar12;
+        int iVar19;
+        int iVar20;
+        int3 DAT_1f800380;
+        int3 DAT_1f800388;
+        int3 DAT_1f800390;
+
+        puVar10 = skeleton;
+        iVar12 = boneCount - 1;
+
+        if (iVar12 != -1)
+        {
+            iVar20 = 0;
+
+            do
+            {
+                lightMatrix.l11 = bonesColor[puVar10].lightMatrix.V00;
+                lightMatrix.l12 = bonesColor[puVar10].lightMatrix.V01;
+                lightMatrix.l13 = bonesColor[puVar10].lightMatrix.V02;
+                lightMatrix.l21 = bonesColor[puVar10].lightMatrix.V10;
+                lightMatrix.l22 = bonesColor[puVar10].lightMatrix.V11;
+                lightMatrix.l23 = bonesColor[puVar10].lightMatrix.V12;
+                lightMatrix.l31 = bonesColor[puVar10].lightMatrix.V20;
+                lightMatrix.l32 = bonesColor[puVar10].lightMatrix.V21;
+                lightMatrix.l33 = bonesColor[puVar10].lightMatrix.V22;
+                lightColorMatrix.lr1 = bonesColor[puVar10].colorMatrix.V00;
+                lightColorMatrix.lr2 = bonesColor[puVar10].colorMatrix.V01;
+                lightColorMatrix.lr3 = bonesColor[puVar10].colorMatrix.V02;
+                lightColorMatrix.lg1 = bonesColor[puVar10].colorMatrix.V10;
+                lightColorMatrix.lg2 = bonesColor[puVar10].colorMatrix.V11;
+                lightColorMatrix.lg3 = bonesColor[puVar10].colorMatrix.V12;
+                lightColorMatrix.lb1 = bonesColor[puVar10].colorMatrix.V20;
+                lightColorMatrix.lb2 = bonesColor[puVar10].colorMatrix.V21;
+                lightColorMatrix.lb3 = bonesColor[puVar10].colorMatrix.V22;
+                puVar6 = bonesIndex[puVar10].prev;
+                rotationMatrix.rt11 = bonesTransform[puVar6].rotation.V00;
+                rotationMatrix.rt12 = bonesTransform[puVar6].rotation.V01;
+                rotationMatrix.rt13 = bonesTransform[puVar6].rotation.V02;
+                rotationMatrix.rt21 = bonesTransform[puVar6].rotation.V10;
+                rotationMatrix.rt22 = bonesTransform[puVar6].rotation.V11;
+                rotationMatrix.rt23 = bonesTransform[puVar6].rotation.V12;
+                rotationMatrix.rt31 = bonesTransform[puVar6].rotation.V20;
+                rotationMatrix.rt32 = bonesTransform[puVar6].rotation.V21;
+                rotationMatrix.rt33 = bonesTransform[puVar6].rotation.V22;
+                vector0.vx0 = (short)bonesPosition[puVar10].x;
+                vector0.vy0 = (short)bonesPosition[puVar10].y;
+                vector0.vz0 = (short)bonesPosition[puVar10].z;
+                MVMVA_rotation_vector0_shift(ref rotationMatrix, ref mathsAccumulator, ref accumulator, ref vector0);
+                cTransform.position.x = mathsAccumulator.mac1;
+                cTransform.position.y = mathsAccumulator.mac2;
+                cTransform.position.z = mathsAccumulator.mac3;
+                accumulator.ir1 = bonesTransform[puVar10].rotation.V00;
+                accumulator.ir2 = bonesTransform[puVar10].rotation.V10;
+                accumulator.ir3 = bonesTransform[puVar10].rotation.V20;
+                MVMVA_rotation_accumulator_shift(ref rotationMatrix, ref mathsAccumulator, ref accumulator);
+                cTransform.position.x += bonesTransform[puVar6].position.x;
+                iVar7 = accumulator.ir1;
+                iVar8 = accumulator.ir2;
+                iVar9 = accumulator.ir3;
+                cTransform.rotation.V00 = (short)iVar7;
+                cTransform.rotation.V10 = (short)iVar8;
+                cTransform.rotation.V20 = (short)iVar9;
+                accumulator.ir1 = bonesTransform[puVar10].rotation.V01;
+                accumulator.ir2 = bonesTransform[puVar10].rotation.V11;
+                accumulator.ir3 = bonesTransform[puVar10].rotation.V21;
+                MVMVA_rotation_accumulator_shift(ref rotationMatrix, ref mathsAccumulator, ref accumulator);
+                cTransform.position.y += bonesTransform[puVar6].position.y;
+                iVar7 = accumulator.ir1;
+                iVar8 = accumulator.ir2;
+                iVar9 = accumulator.ir3;
+                cTransform.rotation.V01 = (short)iVar7;
+                cTransform.rotation.V11 = (short)iVar8;
+                cTransform.rotation.V21 = (short)iVar9;
+                accumulator.ir1 = bonesTransform[puVar10].rotation.V02;
+                accumulator.ir2 = bonesTransform[puVar10].rotation.V12;
+                accumulator.ir3 = bonesTransform[puVar10].rotation.V22;
+                MVMVA_rotation_accumulator_shift(ref rotationMatrix, ref mathsAccumulator, ref accumulator);
+                cTransform.position.z += bonesTransform[puVar6].position.z;
+                iVar7 = accumulator.ir1;
+                iVar8 = accumulator.ir2;
+                iVar9 = accumulator.ir3;
+                cTransform.rotation.V02 = (short)iVar7;
+                cTransform.rotation.V12 = (short)iVar8;
+                cTransform.rotation.V22 = (short)iVar9;
+                bonesTransform[puVar10] = cTransform;
+                rotationMatrix.rt11 = cTransform.rotation.V00;
+                rotationMatrix.rt12 = cTransform.rotation.V01;
+                rotationMatrix.rt13 = cTransform.rotation.V02;
+                rotationMatrix.rt21 = cTransform.rotation.V10;
+                rotationMatrix.rt22 = cTransform.rotation.V11;
+                rotationMatrix.rt23 = cTransform.rotation.V12;
+                rotationMatrix.rt31 = cTransform.rotation.V20;
+                rotationMatrix.rt32 = cTransform.rotation.V21;
+                rotationMatrix.rt33 = cTransform.rotation.V22;
+                translationVector._trx = cTransform.position.x;
+                translationVector._try = cTransform.position.y;
+                translationVector._trz = cTransform.position.z;
+                float3 position = new float3(cTransform.position.x / 16f, cTransform.position.y / -16f, cTransform.position.z / 16f);
+                Quaternion rotation = cTransform.rotation.Matrix2Quaternion;
+                float3 euler = rotation.eulerAngles;
+                rotation.eulerAngles = new float3(-euler.x, euler.y, -euler.z);
+                float3 scale = new float3(1, 1, 1);
+                m.SetTRS(position, rotation, scale);
+                iVar19 = bonesIndex[puVar10].DAT_42 - 1;
+
+                if (iVar19 != -1)
+                {
+                    do
+                    {
+                        /*vector0.vx0 = (short)puVar15[iVar20].x;
+                        vector0.vy0 = (short)puVar15[iVar20].y;
+                        vector0.vz0 = (short)puVar15[iVar20].z;
+                        vector1.vx1 = (short)puVar15[iVar20 + 1].x;
+                        vector1.vy1 = (short)puVar15[iVar20 + 1].y;
+                        vector1.vz1 = (short)puVar15[iVar20 + 1].z;
+                        vector2.vx2 = (short)puVar15[iVar20 + 2].x;
+                        vector2.vy2 = (short)puVar15[iVar20 + 2].y;
+                        vector2.vz2 = (short)puVar15[iVar20 + 2].z;
+                        ExecuteRTPT(12, false);*/
+                        //setting screen coords...
+                        float3 v1 = m.MultiplyPoint3x4(vertexData[iVar20].vertex);
+                        float3 v2 = m.MultiplyPoint3x4(vertexData[iVar20 + 1].vertex);
+                        float3 v3 = m.MultiplyPoint3x4(vertexData[iVar20 + 2].vertex);
+                        vector0.vx0 = (short)vertexData[iVar20].normal.x;
+                        vector0.vy0 = (short)vertexData[iVar20].normal.y;
+                        vector0.vz0 = (short)vertexData[iVar20].normal.z;
+                        vector1.vx1 = (short)vertexData[iVar20 + 1].normal.x;
+                        vector1.vy1 = (short)vertexData[iVar20 + 1].normal.y;
+                        vector1.vz1 = (short)vertexData[iVar20 + 1].normal.z;
+                        vector2.vx2 = (short)vertexData[iVar20 + 2].normal.x;
+                        vector2.vy2 = (short)vertexData[iVar20 + 2].normal.y;
+                        vector2.vz2 = (short)vertexData[iVar20 + 2].normal.z;
+                        MVMVA_rotation_vector0_shift(ref rotationMatrix, ref mathsAccumulator, ref accumulator, ref vector0);
+                        //modifying screen coords...
+                        iVar7 = accumulator.ir1;
+                        iVar8 = accumulator.ir2;
+                        iVar9 = accumulator.ir3;
+                        DAT_1f800380 = new int3(iVar7, iVar8, iVar9);
+                        MVMVA_rotation_vector1_shift(ref rotationMatrix, ref mathsAccumulator, ref accumulator, ref vector1);
+                        //modifying screen coords...
+                        iVar7 = accumulator.ir1;
+                        iVar8 = accumulator.ir2;
+                        iVar9 = accumulator.ir3;
+                        DAT_1f800388 = new int3(iVar7, iVar8, iVar9);
+                        MVMVA_rotation_vector2_shift(ref rotationMatrix, ref mathsAccumulator, ref accumulator, ref vector2);
+                        //modifying screen coords...
+                        iVar7 = accumulator.ir1;
+                        iVar8 = accumulator.ir2;
+                        iVar9 = accumulator.ir3;
+                        DAT_1f800390 = new int3(iVar7, iVar8, iVar9);
+                        vector0.vx0 = (short)DAT_1f800380.x;
+                        vector0.vy0 = (short)DAT_1f800380.y;
+                        vector0.vz0 = (short)DAT_1f800380.z;
+                        vector1.vx1 = (short)DAT_1f800388.x;
+                        vector1.vy1 = (short)DAT_1f800388.y;
+                        vector1.vz1 = (short)DAT_1f800388.z;
+                        vector2.vx2 = (short)DAT_1f800390.x;
+                        vector2.vy2 = (short)DAT_1f800390.y;
+                        vector2.vz2 = (short)DAT_1f800390.z;
+                        NCCT_shift_lm(ref mathsAccumulator, ref accumulator, ref lightMatrix, ref lightColorMatrix, ref vector0, ref vector1, ref vector2, ref colorFIFO);
+                        //setting color rgb...
+                        float4 c1 = new float4(colorFIFO.r0, colorFIFO.g0, colorFIFO.b0, colorFIFO.cd0) / 255;
+                        float4 c2 = new float4(colorFIFO.r1, colorFIFO.g1, colorFIFO.b1, colorFIFO.cd1) / 255;
+                        float4 c3 = new float4(colorFIFO.r2, colorFIFO.g2, colorFIFO.b2, colorFIFO.cd2) / 255;
+                        float2 t1 = vertexBuffer[iVar20].uv;
+                        float2 t2 = vertexBuffer[iVar20 + 1].uv;
+                        float2 t3 = vertexBuffer[iVar20 + 2].uv;
+                        float3 p1 = vertexBuffer[iVar20].uv2;
+                        float3 p2 = vertexBuffer[iVar20 + 1].uv2;
+                        float3 p3 = vertexBuffer[iVar20 + 2].uv2;
+                        vertexBuffer[iVar20] = new MyVertex(v1, c1, t1, p1);
+                        vertexBuffer[iVar20 + 1] = new MyVertex(v2, c2, t2, p2);
+                        vertexBuffer[iVar20 + 2] = new MyVertex(v3, c3, t3, p3);
+                        iVar19--;
+                        iVar20 += 3;
+                    } while (iVar19 != -1);
+                }
+
+                iVar12--;
+            } while (iVar12 != -1);
+        }
+    }
+
+    void MVMVA_rotation_accumulator_shift(ref Cop2RT rotationMatrix, ref Cop2Maths mathsAccumulator, ref Cop2Accumulator accumulator)
+    {
+        short Vx = 0;
+        short Vy = 0;
+        short Vz = 0;
+
+        Vx = accumulator.ir1;
+        Vy = accumulator.ir2;
+        Vz = accumulator.ir3;
+
+        MultMatVec_RT(ref mathsAccumulator, ref accumulator, ref rotationMatrix, Vx, Vy, Vz, 12, false);
+    }
+
+    void MVMVA_rotation_vector0_shift(ref Cop2RT rotationMatrix, ref Cop2Maths mathsAccumulator, ref Cop2Accumulator accumulator, ref Cop2Vector0 vector0)
+    {
+        short Vx = 0;
+        short Vy = 0;
+        short Vz = 0;
+
+        Vx = vector0.vx0;
+        Vy = vector0.vy0;
+        Vz = vector0.vz0;
+
+        MultMatVec_RT(ref mathsAccumulator, ref accumulator, ref rotationMatrix, Vx, Vy, Vz, 12, false);
+    }
+
+    void MVMVA_rotation_vector1_shift(ref Cop2RT rotationMatrix, ref Cop2Maths mathsAccumulator, ref Cop2Accumulator accumulator, ref Cop2Vector1 vector1)
+    {
+        short Vx = 0;
+        short Vy = 0;
+        short Vz = 0;
+
+        Vx = vector1.vx1;
+        Vy = vector1.vy1;
+        Vz = vector1.vz1;
+
+        MultMatVec_RT(ref mathsAccumulator, ref accumulator, ref rotationMatrix, Vx, Vy, Vz, 12, false);
+    }
+
+    void MVMVA_rotation_vector2_shift(ref Cop2RT rotationMatrix, ref Cop2Maths mathsAccumulator, ref Cop2Accumulator accumulator, ref Cop2Vector2 vector2)
+    {
+        short Vx = 0;
+        short Vy = 0;
+        short Vz = 0;
+
+        Vx = vector2.vx2;
+        Vy = vector2.vy2;
+        Vz = vector2.vz2;
+
+        MultMatVec_RT(ref mathsAccumulator, ref accumulator, ref rotationMatrix, Vx, Vy, Vz, 12, false);
+    }
+
+    void MultMatVec_RT(ref Cop2Maths mathsAccumulator, ref Cop2Accumulator accumulator, ref Cop2RT M, short Vx, short Vy, short Vz, byte shift, bool lm)
+    {
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator,
+            SignExtendMACResult(SignExtendMACResult((M.rt11 * Vx), 1) + (M.rt12 * Vy), 1) + (M.rt13 * Vz), 1, shift, lm);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator,
+            SignExtendMACResult(SignExtendMACResult((M.rt21 * Vx), 2) + (M.rt22 * Vy), 2) + (M.rt23 * Vz), 2, shift, lm);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator,
+            SignExtendMACResult(SignExtendMACResult((M.rt31 * Vx), 3) + (M.rt32 * Vy), 3) + (M.rt33 * Vz), 3, shift, lm);
+    }
+
+    void MultMatVec_LCM_BK(ref Cop2Maths mathsAccumulator, ref Cop2Accumulator accumulator, ref Cop2LCM M, ref Cop2BC T, short Vx, short Vy, short Vz, byte shift, bool lm)
+    {
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator,
+            SignExtendMACResult(SignExtendMACResult(((long)T._rbk << 12) + (M.lr1 * Vx), 1) +
+            (M.lr2 * Vy), 1) + (M.lr3 * Vz), 1, shift, lm);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator,
+            SignExtendMACResult(SignExtendMACResult(((long)T._gbk << 12) + (M.lg1 * Vx), 2) +
+            (M.lg2 * Vy), 2) + (M.lg3 * Vz), 2, shift, lm);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator,
+            SignExtendMACResult(SignExtendMACResult(((long)T._bbk << 12) + (M.lb1 * Vx), 3) +
+            (M.lb2 * Vy), 3) + (M.lb3 * Vz), 3, shift, lm);
+    }
+
+    void MultMatVec_LLM(ref Cop2Maths mathsAccumulator, ref Cop2Accumulator accumulator, ref Cop2LLM M, short Vx, short Vy, short Vz, byte shift, bool lm)
+    {
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator, SignExtendMACResult(((long)M.l11 * Vx) + ((long)M.l12 * Vy), 1) +
+                                    ((long)M.l13 * Vz), 1, shift, lm);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator, SignExtendMACResult(((long)M.l21 * Vx) + ((long)M.l22 * Vy), 2) +
+                                    ((long)M.l23 * Vz), 2, shift, lm);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator, SignExtendMACResult(((long)M.l31 * Vx) + ((long)M.l32 * Vy), 3) +
+                                    ((long)M.l33 * Vz), 3, shift, lm);
+    }
+
+    long SignExtendMACResult(long value, int index)
+    {
+        return SignExtend64(value, index == 0 ? 31 : 44);
+    }
+
+    void TruncateAndSetMACAndIR(ref Cop2Maths mathsAccumulator, ref Cop2Accumulator accumulator, long value, int index, byte shift, bool lm)
+    {
+        value >>= shift;
+
+        int value32 = (int)value;
+        if (index == 0)
+            mathsAccumulator.mac0 = value32;
+        else if (index == 1)
+            mathsAccumulator.mac1 = value32;
+        else if (index == 2)
+            mathsAccumulator.mac2 = value32;
+        else
+            mathsAccumulator.mac3 = value32;
+
+        TruncateAndSetIR(ref accumulator, value32, index, lm);
+    }
+
+    void TruncateAndSetIR(ref Cop2Accumulator accumulator, int value, int index, bool lm)
+    {
+        int IR0_MIN_VALUE = 0x0000;
+        int IR0_MAX_VALUE = 0x1000;
+        int IR123_MIN_VALUE = -(INT64_C(1) << 15);
+        int IR123_MAX_VALUE = (INT64_C(1) << 15) - 1;
+        int MIN_VALUE = (index == 0) ? IR0_MIN_VALUE : IR123_MIN_VALUE;
+        int MAX_VALUE = (index == 0) ? IR0_MAX_VALUE : IR123_MAX_VALUE;
+        int actualMinValue = lm ? 0 : MIN_VALUE;
+
+        if (value < actualMinValue)
+            value = actualMinValue;
+        else if (value > MAX_VALUE)
+            value = MAX_VALUE;
+
+        switch (index)
+        {
+            case 0:
+                accumulator.ir0 = (short)value;
+                break;
+            case 1:
+                accumulator.ir1 = (short)value;
+                break;
+            case 2:
+                accumulator.ir2 = (short)value;
+                break;
+            default:
+                accumulator.ir3 = (short)value;
+                break;
+        }
+    }
+
+    void NCCT_shift_lm(ref Cop2Maths mathsAccumulator, ref Cop2Accumulator accumulator, ref Cop2LLM lightMatrix, ref Cop2LCM lightColorMatrix, ref Cop2Vector0 vector0, ref Cop2Vector1 vector1, ref Cop2Vector2 vector2, ref Cop2ClrFIFO colorFIFO)
+    {
+        MultMatVec_LLM(ref mathsAccumulator, ref accumulator, ref lightMatrix, vector0.vx0, vector0.vy0, vector0.vz0, 12, true);
+        MultMatVec_LCM_BK(ref mathsAccumulator, ref accumulator, ref lightColorMatrix, ref backgroundColor, accumulator.ir1, accumulator.ir2, accumulator.ir3, 12, true);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator, (long)((int)(uint)colorCode.r * accumulator.ir1) << 4, 1, 12, true);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator, (long)((int)(uint)colorCode.g * accumulator.ir2) << 4, 2, 12, true);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator, (long)((int)(uint)colorCode.b * accumulator.ir3) << 4, 3, 12, true);
+        PushRGBFromMAC(ref mathsAccumulator, ref colorCode, ref colorFIFO);
+
+        MultMatVec_LLM(ref mathsAccumulator, ref accumulator, ref lightMatrix, vector1.vx1, vector1.vy1, vector1.vz1, 12, true);
+        MultMatVec_LCM_BK(ref mathsAccumulator, ref accumulator, ref lightColorMatrix, ref backgroundColor, accumulator.ir1, accumulator.ir2, accumulator.ir3, 12, true);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator, (long)((int)(uint)colorCode.r * accumulator.ir1) << 4, 1, 12, true);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator, (long)((int)(uint)colorCode.g * accumulator.ir2) << 4, 2, 12, true);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator, (long)((int)(uint)colorCode.b * accumulator.ir3) << 4, 3, 12, true);
+        PushRGBFromMAC(ref mathsAccumulator, ref colorCode, ref colorFIFO);
+
+        MultMatVec_LLM(ref mathsAccumulator, ref accumulator, ref lightMatrix, vector2.vx2, vector2.vy2, vector2.vz2, 12, true);
+        MultMatVec_LCM_BK(ref mathsAccumulator, ref accumulator, ref lightColorMatrix, ref backgroundColor, accumulator.ir1, accumulator.ir2, accumulator.ir3, 12, true);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator, (long)((int)(uint)colorCode.r * accumulator.ir1) << 4, 1, 12, true);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator, (long)((int)(uint)colorCode.g * accumulator.ir2) << 4, 2, 12, true);
+        TruncateAndSetMACAndIR(ref mathsAccumulator, ref accumulator, (long)((int)(uint)colorCode.b * accumulator.ir3) << 4, 3, 12, true);
+        PushRGBFromMAC(ref mathsAccumulator, ref colorCode, ref colorFIFO);
+    }
+
+    void PushRGBFromMAC(ref Cop2Maths mathsAccumulator, ref Cop2ClrCode colorCode, ref Cop2ClrFIFO colorFIFO)
+    {
+        uint r = TruncateRGB((int)(uint)(mathsAccumulator.mac1 >> 4), 0);
+        uint g = TruncateRGB((int)(uint)(mathsAccumulator.mac2 >> 4), 1);
+        uint b = TruncateRGB((int)(uint)(mathsAccumulator.mac3 >> 4), 2);
+        uint c = colorCode.code;
+
+        colorFIFO.r0 = colorFIFO.r1;
+        colorFIFO.g0 = colorFIFO.g1;
+        colorFIFO.b0 = colorFIFO.b1;
+        colorFIFO.cd0 = colorFIFO.cd1;
+
+        colorFIFO.r1 = colorFIFO.r2;
+        colorFIFO.g1 = colorFIFO.g2;
+        colorFIFO.b1 = colorFIFO.b2;
+        colorFIFO.cd1 = colorFIFO.cd2;
+
+        colorFIFO.r2 = (byte)r;
+        colorFIFO.g2 = (byte)g;
+        colorFIFO.b2 = (byte)b;
+        colorFIFO.cd2 = (byte)c;
+    }
+
+    uint TruncateRGB(int value, int index)
+    {
+        if (value < 0 || value > 0xFF)
+        {
+            return (value < 0) ? 0U : 0xFF;
+        }
+
+        return (uint)value;
     }
 }

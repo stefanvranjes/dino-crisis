@@ -1780,6 +1780,7 @@ public class SceneManager : MonoBehaviour
                         oVar4.lightMatrix.V20 = Coprocessor.accumulator.ir1;
                         oVar4.lightMatrix.V21 = Coprocessor.accumulator.ir2;
                         oVar4.lightMatrix.V22 = Coprocessor.accumulator.ir3;
+                        piVar6.SetBoneColor(ref oVar4.lightMatrix, ref oVar4.colorMatrix, oVar4.boneId);
                         oVar4 = (CriBone)oVar4.next;
                     }
                 }

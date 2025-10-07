@@ -4210,7 +4210,7 @@ public class ST4 : LevelManager
                 param1.DAT_3E = 0;
                 param1.DAT_3F = 0;
                 param1.DAT_12C &= 0xffef;
-                param1.skeleton.prev = param1;
+                param1.SetSkeletonPrevious(param1);
                 GameManager.instance.DAT_922C &= (byte)~(1 << param1.DAT_2E & 31);
                 bVar2 = (byte)(GameManager.instance.DAT_922D - 1);
                 GameManager.instance.DAT_922D = bVar2;

@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using Unity.Collections;
 using Unity.Mathematics;
-using Unity.Jobs;
-using Unity.Burst;
 
 public struct MyVertex
 {
@@ -14,12 +12,12 @@ public struct MyVertex
     public float2 uv;
     public float3 uv2;
 
-    public MyVertex(float3 p, float4 c, float2 t, float3 t2)
+    public MyVertex(float3 v, float4 c, float2 t, float3 p)
     {
-        vertex = p;
+        vertex = v;
         color = c;
         uv = t;
-        uv2 = t2;
+        uv2 = p;
     }
 }
 
@@ -56,13 +54,13 @@ public class CriStatic : CriObject
     private FUN_AA430[] PTR_FUN_AA430;
     private FUN_AA438[] PTR_FUN_AA438;
     private FUN_7B20[] PTR_FUN_7B20; //PTR_FUN_7B20 (ST1)
-    
+    public Material[] materials;
+
+    private Mesh mesh;
+    private int subMeshCount;
     private NativeArray<MyVertex> vertexBuffer;
     private NativeArray<ushort> indexBuffer;
     private NativeArray<int> indicies;
-    private Mesh mesh;
-    private int subMeshCount;
-    public Material[] materials;
 
     protected override void Awake()
     {
@@ -116,6 +114,13 @@ public class CriStatic : CriObject
                 }
             }  
         }
+    }
+
+    private void OnDestroy()
+    {
+        vertexBuffer.Dispose();
+        indexBuffer.Dispose();
+        indicies.Dispose();
     }
 
     public override void ResetValues()
@@ -469,18 +474,6 @@ public class CriStatic : CriObject
 
     //FUN_6ED4 (ST1)
     private void FUN_6ED4()
-    {
-
-    }
-}
-
-public struct StaticMeshJob : IJob
-{
-    [WriteOnly] public NativeArray<MyVertex> vertexBuffer;
-    [WriteOnly] public NativeArray<ushort> indexBuffer;
-    [WriteOnly] public NativeArray<int> indicies;
-
-    public void Execute()
     {
 
     }

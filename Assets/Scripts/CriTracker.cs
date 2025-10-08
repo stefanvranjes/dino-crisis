@@ -88,7 +88,7 @@ public class CriTracker : MonoBehaviour
         int iVar4;
         int iVar5;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         iVar4 = DAT_14;
         iVar3 = DAT_18 * 1000;
 

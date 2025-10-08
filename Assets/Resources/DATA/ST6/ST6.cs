@@ -1145,7 +1145,7 @@ public class ST6 : LevelManager
     //FUN_4108 (ST6)
     private void FUN_4108(CriPlayer param1)
     {
-        if (SceneManager.instance.DAT_27C[10].DAT_3C != 5)
+        if (SceneManager.instance.skinnedObjects[10].DAT_3C != 5)
         {
             param1.DAT_3C = 1;
             param1.DAT_3D = 2;
@@ -1190,7 +1190,7 @@ public class ST6 : LevelManager
         Vector3Int local_20;
 
         FUN_B1FC(param1);
-        oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         sVar5 = param1.FUN_64804(oVar6.screen);
         uVar8 = (uint)(oVar6.vr.y - param1.vr.y & 0xfff);
         bVar2 = SceneManager.instance.FUN_80D48(param1.screen, oVar6.screen, 4);
@@ -1488,7 +1488,7 @@ public class ST6 : LevelManager
         bool bVar5;
         CriBone oVar5;
 
-        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((param1.DAT_18E & 4) == 0)
         {
@@ -1561,11 +1561,11 @@ public class ST6 : LevelManager
         int iVar4;
 
         FUN_B1FC(param1);
-        sVar3 = param1.FUN_64804(SceneManager.instance.DAT_27C[10].screen);
-        bVar1 = SceneManager.instance.FUN_80D48(param1.screen, SceneManager.instance.DAT_27C[10].screen, 4);
+        sVar3 = param1.FUN_64804(SceneManager.instance.skinnedObjects[10].screen);
+        bVar1 = SceneManager.instance.FUN_80D48(param1.screen, SceneManager.instance.skinnedObjects[10].screen, 4);
 
         if ((GameManager.instance.DAT_922C & 2) == 0 && 
-            (SceneManager.instance.DAT_27C[10].DAT_11E & 0x80) == 0 && param1.DAT_1C8 != 0)
+            (SceneManager.instance.skinnedObjects[10].DAT_11E & 0x80) == 0 && param1.DAT_1C8 != 0)
         {
             if (!bVar1 && 0xd00 < (ushort)(sVar3 - 0x180) && param1.UDAT_1DC < 0xdac)
             {
@@ -1656,7 +1656,7 @@ public class ST6 : LevelManager
 
         if (bVar2)
         {
-            if ((param1.BDAT_1C0 & 0x40) == 0 || 0x7ff < param1.FUN_64804(SceneManager.instance.DAT_27C[10].screen) - 0x400)
+            if ((param1.BDAT_1C0 & 0x40) == 0 || 0x7ff < param1.FUN_64804(SceneManager.instance.skinnedObjects[10].screen) - 0x400)
             {
                 param1.DAT_3C = 1;
                 param1.DAT_3D = 2;
@@ -1714,11 +1714,11 @@ public class ST6 : LevelManager
         bool bVar2;
         int iVar2;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((oVar1.DAT_11E & 0x80) == 0)
         {
-            bVar2 = SceneManager.instance.FUN_81014(param1.screen, SceneManager.instance.DAT_27C[10].screen, (byte)(param1.DAT_48 << 4 | 0xf), false);
+            bVar2 = SceneManager.instance.FUN_81014(param1.screen, SceneManager.instance.skinnedObjects[10].screen, (byte)(param1.DAT_48 << 4 | 0xf), false);
 
             if (!bVar2 && (param1.DAT_162 & 1) != 0 && param1.DAT_1C1 == 0 && param1.DAT_60 - 28 < 6 && (param1.DAT_12B & 0x1e) != 0)
             {
@@ -1877,7 +1877,7 @@ public class ST6 : LevelManager
         uint uVar7;
         CriPlayer oVar8;
 
-        oVar8 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar8 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((oVar8.DAT_11E & 0x80) != 0)
             return;
@@ -2071,7 +2071,7 @@ public class ST6 : LevelManager
 
             if (uVar1 == 36 && param1.DAT_1C3 != 0)
             {
-                uVar1 = (ushort)param1.FUN_64804(SceneManager.instance.DAT_27C[10].screen);
+                uVar1 = (ushort)param1.FUN_64804(SceneManager.instance.skinnedObjects[10].screen);
 
                 if (0xc00 < (ushort)(uVar1 - 0x200) && param1.UDAT_1DC < 3500)
                 {
@@ -2125,7 +2125,7 @@ public class ST6 : LevelManager
         param1.DAT_40 = new Vector3Int(0, 0, 0);
         param1.FUN_656EC();
         param1.DAT_18D = false;
-        oVar2 = SceneManager.instance.DAT_27C[10];
+        oVar2 = SceneManager.instance.skinnedObjects[10];
         oVar2.DAT_18D = false;
         oVar2.DAT_11E |= 0x28;
         param1.FUN_65D0C(0, 30);
@@ -2142,7 +2142,7 @@ public class ST6 : LevelManager
         CriCamera cVar4;
         CriPlayer oVar5;
 
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar4 = param1.FUN_60AB4();
 
         if (bVar4)
@@ -2273,7 +2273,7 @@ public class ST6 : LevelManager
         CriPlayer oVar5;
         CriCamera cVar6;
 
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar4 = param1.FUN_60AB4();
 
         if (bVar4)
@@ -2323,7 +2323,7 @@ public class ST6 : LevelManager
         param1.DAT_40 = new Vector3Int(0, 0, 0);
         param1.FUN_65714();
         //...
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar1.DAT_1E6 = 160;
         oVar1.DAT_1E5 = 0;
         param1.DAT_3E++;
@@ -2337,7 +2337,7 @@ public class ST6 : LevelManager
         short sVar4;
         CriPlayer oVar5;
 
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar3 = param1.FUN_60AB4();
 
         if (bVar3 && oVar5.DAT_1E5 != 0)
@@ -2380,7 +2380,7 @@ public class ST6 : LevelManager
         param1.DAT_40 = new Vector3Int(0, 0, 0);
         param1.FUN_65714();
         param1.DAT_3E++;
-        SceneManager.instance.DAT_27C[10].DAT_3E++;
+        SceneManager.instance.skinnedObjects[10].DAT_3E++;
     }
 
     //FUN_642C (ST6)
@@ -2397,7 +2397,7 @@ public class ST6 : LevelManager
             param1.DAT_3E = 0;
             param1.DAT_3F = 0;
             param1.DAT_18D = true;
-            SceneManager.instance.DAT_27C[10].DAT_18D = true;
+            SceneManager.instance.skinnedObjects[10].DAT_18D = true;
             GameManager.instance.FUN_65CB0(param1);
             FUN_B2E0(param1);
         }
@@ -2423,7 +2423,7 @@ public class ST6 : LevelManager
         param1.DAT_40 = new Vector3Int(0, 0, 0);
         param1.FUN_656EC();
         param1.DAT_18D = false;
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar4.DAT_18D = false;
         oVar4.DAT_11E |= 8;
         param1.FUN_65D0C(0, 30);
@@ -2468,7 +2468,7 @@ public class ST6 : LevelManager
         param1.FUN_609C8(32, 1, 0);
         param1.DAT_40 = new Vector3Int(0, 0, 0);
         param1.FUN_65714();
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         //...
         oVar1.DAT_1E6 = 160;
         oVar1.DAT_1E5 = 0;
@@ -2489,7 +2489,7 @@ public class ST6 : LevelManager
         short sVar4;
         CriPlayer oVar5;
 
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar3 = param1.FUN_60AB4();
 
         if (bVar3 && oVar5.DAT_1E5 != 0)
@@ -2531,7 +2531,7 @@ public class ST6 : LevelManager
         param1.DAT_40 = new Vector3Int(0, 0, 0);
         param1.FUN_65714();
         param1.DAT_3E++;
-        SceneManager.instance.DAT_27C[10].DAT_3E++;
+        SceneManager.instance.skinnedObjects[10].DAT_3E++;
     }
 
     //FUN_6934 (ST6)
@@ -2548,7 +2548,7 @@ public class ST6 : LevelManager
             param1.DAT_3E = 0;
             param1.DAT_3F = 0;
             param1.DAT_18D = true;
-            SceneManager.instance.DAT_27C[10].DAT_18D = true;
+            SceneManager.instance.skinnedObjects[10].DAT_18D = true;
             GameManager.instance.FUN_65CB0(param1);
             FUN_B2E0(param1);
         }
@@ -2607,7 +2607,7 @@ public class ST6 : LevelManager
 
         iVar3 = (int)GameManager.FUN_64650();
         uVar4 = (uint)(iVar3 % 5);
-        sVar2 = param1.FUN_64804(SceneManager.instance.DAT_27C[10].screen);
+        sVar2 = param1.FUN_64804(SceneManager.instance.skinnedObjects[10].screen);
 
         if ((ushort)(sVar2 - 0x400) < 0x800)
         {
@@ -2669,7 +2669,7 @@ public class ST6 : LevelManager
         }
 
         param1.DAT_40.z = aVar4[uVar1];
-        sVar2 = (short)Utilities.FUN_615EC(param1.screen, SceneManager.instance.DAT_27C[10].screen);
+        sVar2 = (short)Utilities.FUN_615EC(param1.screen, SceneManager.instance.skinnedObjects[10].screen);
         iVar4 = (int)GameManager.FUN_64650();
         sVar3 = (short)Utilities.FUN_64838(param1.vr.y, (uint)((iVar4 % 15 + 10) * 0x10000 >> 0x10), sVar2);
         param1.vr.y = param1.vr.y + sVar3 & 0xfff;
@@ -2699,7 +2699,7 @@ public class ST6 : LevelManager
 
         iVar3 = (int)GameManager.FUN_64650();
         uVar4 = (uint)(iVar3 % 5);
-        sVar2 = param1.FUN_64804(SceneManager.instance.DAT_27C[10].screen);
+        sVar2 = param1.FUN_64804(SceneManager.instance.skinnedObjects[10].screen);
 
         if ((ushort)(sVar2 - 0x400) < 0x800)
         {
@@ -2778,7 +2778,7 @@ public class ST6 : LevelManager
         }
 
         param1.DAT_40.z = aVar4[uVar1];
-        sVar2 = (short)Utilities.FUN_615EC(param1.screen, SceneManager.instance.DAT_27C[10].screen);
+        sVar2 = (short)Utilities.FUN_615EC(param1.screen, SceneManager.instance.skinnedObjects[10].screen);
         iVar4 = (int)GameManager.FUN_64650();
         sVar3 = (short)Utilities.FUN_64838(param1.vr.y, (uint)((iVar4 % 15 + 10) * 0x10000 >> 0x10), sVar2);
         param1.vr.y = param1.vr.y + sVar3 & 0xfff;
@@ -3513,7 +3513,7 @@ public class ST6 : LevelManager
         CriCamera cVar4;
 
         GameManager.instance.FUN_46C0C(0, 20, 1);
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         DialogManager.instance.DAT_B1440 = 2;
         uVar1 = oVar2.DAT_140;
         oVar2.screen = new Vector3Int(0, 0, 0);
@@ -5325,8 +5325,8 @@ public class ST6 : LevelManager
                 uVar1 = (uint)param1.DAT_128 >> (int)(uVar2 & 31);
             } while ((byte)uVar2 < 10);
 
-            oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
-            uVar2 = Utilities.FUN_631AC(oVar3.screen, SceneManager.instance.DAT_27C[10].screen);
+            oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
+            uVar2 = Utilities.FUN_631AC(oVar3.screen, SceneManager.instance.skinnedObjects[10].screen);
 
             if (uVar2 < param1.UDAT_1DC)
             {
@@ -5451,7 +5451,7 @@ public class ST6 : LevelManager
         CriPlayer oVar1;
         CriPlayer oVar2;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar2 = oVar1.DAT_1DC;
         
         if (oVar1.DAT_3C == 5 && oVar1.DAT_3D == 8 && oVar2 == param1)
@@ -5483,7 +5483,7 @@ public class ST6 : LevelManager
         uint uVar7;
         int iVar8;
 
-        sVar3 = param1.FUN_64804(SceneManager.instance.DAT_27C[10].screen);
+        sVar3 = param1.FUN_64804(SceneManager.instance.skinnedObjects[10].screen);
 
         if ((ushort)(sVar3 - 0x200) < 0xc00)
         {
@@ -5585,7 +5585,7 @@ public class ST6 : LevelManager
         int iVar3;
         uint uVar4;
 
-        sVar1 = param1.FUN_64804(SceneManager.instance.DAT_27C[10].screen);
+        sVar1 = param1.FUN_64804(SceneManager.instance.skinnedObjects[10].screen);
 
         if ((ushort)(sVar1 - 0xa00) < 0x400)
         {
@@ -5643,7 +5643,7 @@ public class ST6 : LevelManager
         short sVar1;
         uint uVar2;
 
-        sVar1 = param1.FUN_64804(SceneManager.instance.DAT_27C[10].screen);
+        sVar1 = param1.FUN_64804(SceneManager.instance.skinnedObjects[10].screen);
         //iVar4 = 9;
 
         if ((ushort)(sVar1 - 0xa00) < 0x400)
@@ -5714,7 +5714,7 @@ public class ST6 : LevelManager
         DialogManager.instance.DAT_B1440 = 4;
         InventoryManager.DAT_B7A60[0] |= 4;
         param1.DAT_1C9 = 1;
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar1.DAT_11E |= 1;
         param1.DAT_11E |= 8;
         oVar1.DAT_12C |= 8;
@@ -5750,7 +5750,7 @@ public class ST6 : LevelManager
         Utilities.RotMatrix(ref param1.vr, ref auStack56);
         local_50 = Utilities.ApplyMatrixSV(ref auStack56, ref DAT_16EB4[bVar1]);
         local_40 = new Vector3Int(param1.screen.x + local_50.x, param1.screen.y + DAT_16EAC[bVar1], param1.screen.z + local_50.z);
-        Utilities.RotMatrix(ref SceneManager.instance.DAT_27C[10].vr, ref auStack56);
+        Utilities.RotMatrix(ref SceneManager.instance.skinnedObjects[10].vr, ref auStack56);
         local_50 = Utilities.ApplyMatrixSV(ref auStack56, ref DAT_16EB4[bVar1 + 2]);
         local_48 = new Vector3Int(param1.screen.x + local_50.x, param1.screen.y + DAT_16EAC[bVar1 + 2], param1.screen.z + local_50.z);
         SceneManager.instance.FUN_264C4(0, (short)local_48.x, (short)local_48.y, (short)local_48.z);
@@ -5785,7 +5785,7 @@ public class ST6 : LevelManager
         Matrix3x3 auStack56;
 
         uVar1 = param1.BDAT_1CA;
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         cVar3 = SceneManager.instance.cCamera;
         auStack56 = new Matrix3x3();
         local_48 = new Vector3Int();
@@ -6015,12 +6015,12 @@ public class ST6 : LevelManager
 
         do
         {
-            local_78[iVar4] = SceneManager.instance.DAT_7CDC[piVar2];
+            local_78[iVar4] = SceneManager.instance.staticObjects[piVar2];
             piVar2++;
             iVar4++;
         } while (iVar4 < 5);
 
-        oVar7 = SceneManager.instance.DAT_7CDC[5];
+        oVar7 = SceneManager.instance.staticObjects[5];
         bVar4 = InventoryManager.FUN_4A87C(3, 0x20);
 
         if (!bVar4)
@@ -6261,7 +6261,7 @@ public class ST6 : LevelManager
 
         do
         {
-            local_30[piVar6] = SceneManager.instance.DAT_7CDC[iVar7];
+            local_30[piVar6] = SceneManager.instance.staticObjects[iVar7];
             piVar6++;
             iVar7++;
         } while (iVar7 < 5);
@@ -6353,7 +6353,7 @@ public class ST6 : LevelManager
 
         do
         {
-            local_48[piVar3] = SceneManager.instance.DAT_7CDC[iVar4];
+            local_48[piVar3] = SceneManager.instance.staticObjects[iVar4];
             piVar3++;
             iVar4++;
         } while (iVar4 < 5);
@@ -6476,7 +6476,7 @@ public class ST6 : LevelManager
 
         bVar2 = (byte)(param1.DAT_7A + 1);
         oVar4 = param1.PTR_68[param1.DAT_78];
-        oVar3 = SceneManager.instance.DAT_7CDC[param1.DAT_78 + 5];
+        oVar3 = SceneManager.instance.staticObjects[param1.DAT_78 + 5];
         param1.DAT_7A = bVar2;
 
         if (bVar2 == 11)
@@ -6492,7 +6492,7 @@ public class ST6 : LevelManager
 
         if (-0x433 < sVar1)
         {
-            oVar3 = SceneManager.instance.DAT_7CDC[param1.DAT_78 + 9];
+            oVar3 = SceneManager.instance.staticObjects[param1.DAT_78 + 9];
             oVar3.flags |= 2;
             oVar4.screen.y = -1075;
             GameManager.instance.FUN_5C860(145);
@@ -6526,7 +6526,7 @@ public class ST6 : LevelManager
         CriStatic oVar7;
 
         oVar6 = param1.PTR_68[param1.DAT_78];
-        oVar7 = SceneManager.instance.DAT_7CDC[param1.DAT_78 + 5];
+        oVar7 = SceneManager.instance.staticObjects[param1.DAT_78 + 5];
         bVar4 = InventoryManager.FUN_4A87C(3, 0x2c);
 
         if (bVar4)
@@ -6583,7 +6583,7 @@ public class ST6 : LevelManager
 
         if (-1075 < sVar3)
         {
-            oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_78 + 9];
+            oVar4 = SceneManager.instance.staticObjects[param1.DAT_78 + 9];
             oVar6.flags |= 2;
             oVar6.screen.y = -1075;
             GameManager.instance.FUN_5C860(145);
@@ -7026,7 +7026,7 @@ public class ST6 : LevelManager
         short sVar5;
         uint uVar6;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         sVar1 = (sbyte)oVar2.DAT_1D7;
         param1.BDAT_08 = (byte)sVar1;
 
@@ -7096,7 +7096,7 @@ public class ST6 : LevelManager
         short sVar1;
         CriPlayer oVar2;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar2.DAT_3C = 1;
         oVar2.DAT_3D = 0;
         oVar2.DAT_3E = 0;
@@ -7122,7 +7122,7 @@ public class ST6 : LevelManager
         Vector3Int local_18;
         Matrix3x3 auStack56;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         auStack56 = new Matrix3x3();
         Utilities.RotMatrix(ref oVar2.vr, ref auStack56);
 
@@ -7157,7 +7157,7 @@ public class ST6 : LevelManager
         Vector3Int local_18;
         Matrix3x3 auStack56;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         auStack56 = new Matrix3x3();
         Utilities.RotMatrix(ref oVar2.vr, ref auStack56);
 
@@ -7204,7 +7204,7 @@ public class ST6 : LevelManager
         SceneManager.instance.FUN_26504(0, 0, -0x3f01, 9580);
         cVar6 = SceneManager.instance.cCamera;
         iVar3 = 1;
-        oVar4 = SceneManager.instance.DAT_7CDC[0];
+        oVar4 = SceneManager.instance.staticObjects[0];
         oVar4.DAT_48 = 0;
         cVar6.DAT_36 = 200;
         oVar4.screen.z = 2980;
@@ -7213,7 +7213,7 @@ public class ST6 : LevelManager
 
         do
         {
-            oVar2 = SceneManager.instance.DAT_7CDC[iVar3++];
+            oVar2 = SceneManager.instance.staticObjects[iVar3++];
             oVar2.DAT_48 = 0;
         } while (iVar3 < 8);
 
@@ -7229,7 +7229,7 @@ public class ST6 : LevelManager
                 DAT_173F4[puVar5] = -1;
             else
             {
-                oVar3 = SceneManager.instance.DAT_7CDC[iVar6 + 1];
+                oVar3 = SceneManager.instance.staticObjects[iVar6 + 1];
                 iVar2 = iVar4;
 
                 if (iVar4 < 0)
@@ -7271,7 +7271,7 @@ public class ST6 : LevelManager
 
         if (bVar4)
         {
-            oVar4 = SceneManager.instance.DAT_7CDC[iVar6 + 1];
+            oVar4 = SceneManager.instance.staticObjects[iVar6 + 1];
             oVar4.screen.y = 0xe782;
             oVar4.screen.z = 3000;
             oVar4.screen.x = 0;
@@ -7431,13 +7431,13 @@ public class ST6 : LevelManager
                         }
 
                         param1.DAT_03 = 4;
-                        SceneManager.instance.DAT_27C[10].flags |= 2;
+                        SceneManager.instance.skinnedObjects[10].flags |= 2;
                         InventoryManager.FUN_4A7E8(2, 0xb, true);
                         iVar5 = 1;
 
                         do
                         {
-                            oVar7 = SceneManager.instance.DAT_7CDC[iVar5++];
+                            oVar7 = SceneManager.instance.staticObjects[iVar5++];
                             oVar7.DAT_48 = 1;
                         } while (iVar5 < 8);
 
@@ -7453,13 +7453,13 @@ public class ST6 : LevelManager
                     if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) != 0)
                     {
                         param1.DAT_03 = 4;
-                        SceneManager.instance.DAT_27C[10].flags |= 2;
+                        SceneManager.instance.skinnedObjects[10].flags |= 2;
                         InventoryManager.FUN_4A7E8(2, 0xb, true);
                         iVar5 = 1;
 
                         do
                         {
-                            oVar7 = SceneManager.instance.DAT_7CDC[iVar5++];
+                            oVar7 = SceneManager.instance.staticObjects[iVar5++];
                             oVar7.DAT_48 = 1;
                         } while (iVar5 < 8);
 
@@ -7586,7 +7586,7 @@ public class ST6 : LevelManager
 
                             bVar1 = param1.DAT_1A;
                             bVar2 = param1.DAT_1B;
-                            oVar4 = SceneManager.instance.DAT_7CDC[bVar1];
+                            oVar4 = SceneManager.instance.staticObjects[bVar1];
                             oVar4.vr.x += DAT_17118[bVar2];
                             LAB_10F6C:
                             param1.DAT_1B++;
@@ -7628,7 +7628,7 @@ public class ST6 : LevelManager
 
                             bVar1 = param1.DAT_1A;
                             bVar2 = param1.DAT_1B;
-                            oVar4 = SceneManager.instance.DAT_7CDC[bVar1];
+                            oVar4 = SceneManager.instance.staticObjects[bVar1];
                             oVar4.vr.x += DAT_17118[bVar2];
                             LAB_10F6C:
                             param1.DAT_1B++;
@@ -7637,17 +7637,17 @@ public class ST6 : LevelManager
                     }
 
                     param1.DAT_0D = (byte)(bVar1 + 1);
-                    oVar4 = SceneManager.instance.DAT_7CDC[0];
+                    oVar4 = SceneManager.instance.staticObjects[0];
                     oVar4.screen.z += 100;
 
                     if (param1.DAT_19 != 0)
                     {
-                        oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                        oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                         oVar4.screen.z += 100;
                     }
 
                     LAB_10FA4:
-                    oVar4 = SceneManager.instance.DAT_7CDC[0];
+                    oVar4 = SceneManager.instance.staticObjects[0];
                     iVar6 = oVar4.screen.y;
 
                     if (oVar4.screen.z == 0xba4 && -0x16a8 < iVar6)
@@ -7679,7 +7679,7 @@ public class ST6 : LevelManager
                             {
                                 if (param1.DAT_19 != 0)
                                 {
-                                    oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                    oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                     oVar4.vr.z += DAT_17118[param1.DAT_1B];
                                 }
 
@@ -7730,7 +7730,7 @@ public class ST6 : LevelManager
                             {
                                 if (param1.DAT_19 != 0)
                                 {
-                                    oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                    oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                     oVar4.vr.z += DAT_17414[param1.DAT_1B];
                                 }
 
@@ -7750,7 +7750,7 @@ public class ST6 : LevelManager
                     }
 
                     param1.DAT_0D = (byte)(bVar1 + 1);
-                    oVar4 = SceneManager.instance.DAT_7CDC[0];
+                    oVar4 = SceneManager.instance.staticObjects[0];
                     oVar4.screen.x -= 60;
 
                     if (param1.DAT_19 != 0)
@@ -7758,7 +7758,7 @@ public class ST6 : LevelManager
                         oVar4.screen.x -= 60;
                     }
 
-                    oVar4 = SceneManager.instance.DAT_7CDC[0];
+                    oVar4 = SceneManager.instance.staticObjects[0];
                     iVar6 = oVar4.screen.y;
 
                     if (oVar4.screen.z == 0xba4 && -0x16a8 < iVar6)
@@ -7808,14 +7808,14 @@ public class ST6 : LevelManager
 
                         bVar1 = param1.DAT_1A;
                         bVar2 = param1.DAT_1B;
-                        oVar4 = SceneManager.instance.DAT_7CDC[bVar1];
+                        oVar4 = SceneManager.instance.staticObjects[bVar1];
                         oVar4.vr.x += DAT_17118[bVar2];
                         LAB_10F6C:
                         param1.DAT_1B++;
                         return;
                     }
 
-                    oVar4 = SceneManager.instance.DAT_7CDC[0];
+                    oVar4 = SceneManager.instance.staticObjects[0];
                     iVar6 = oVar4.screen.y;
 
                     if (oVar4.screen.z == 0xba4 && -0x16a8 < iVar6)
@@ -7827,7 +7827,7 @@ public class ST6 : LevelManager
             return;
         }
 
-        oVar2 = SceneManager.instance.DAT_7CDC[0];
+        oVar2 = SceneManager.instance.staticObjects[0];
         iVar1 = oVar2.screen.y;
 
         if (oVar2.screen.z == 0xba4 && -0x16a8 < iVar1)
@@ -7843,7 +7843,7 @@ public class ST6 : LevelManager
         CriBone oVar2;
         CriObject oVar3;
 
-        param1.PDAT_0C = (CriPlayer)SceneManager.instance.DAT_27C[param1.DAT_04];
+        param1.PDAT_0C = (CriPlayer)SceneManager.instance.skinnedObjects[param1.DAT_04];
         oVar1 = SceneManager.instance.FUN_5FE78();
 
         if (oVar1 != null)
@@ -8042,8 +8042,8 @@ public class ST6 : LevelManager
         sbyte sVar2;
         CriStatic oVar3;
 
-        oVar3 = SceneManager.instance.DAT_7CDC[3];
-        param1.PDAT_08 = SceneManager.instance.DAT_7CDC[0];
+        oVar3 = SceneManager.instance.staticObjects[3];
+        param1.PDAT_08 = SceneManager.instance.staticObjects[0];
         param1.PTR_10 = oVar3;
 
         if (param1.DAT_04 == 0)
@@ -8083,7 +8083,7 @@ public class ST6 : LevelManager
 
         if ((param1.DAT_06 & 2) == 0)
         {
-            param1.PTR_10 = SceneManager.instance.DAT_7CDC[4];
+            param1.PTR_10 = SceneManager.instance.staticObjects[4];
 
             if ((param1.DAT_07 & 1) != 0)
             {
@@ -8188,7 +8188,7 @@ public class ST6 : LevelManager
                     break;
                 case 2:
                     sVar2 = (short)FUN_13CE8(param1);
-                    oVar4 = SceneManager.instance.DAT_7CDC[4];
+                    oVar4 = SceneManager.instance.staticObjects[4];
 
                     if (param1.PDAT_08.screen.y == sVar2)
                     {
@@ -8302,7 +8302,7 @@ public class ST6 : LevelManager
 
                     if (param1.PDAT_08.screen.y == sVar2)
                     {
-                        param1.PTR_10 = SceneManager.instance.DAT_7CDC[4];
+                        param1.PTR_10 = SceneManager.instance.staticObjects[4];
                         param1.PTR_10.screen.y = sVar2;
                         param1.PTR_10.flags &= 0xfffffffd;
                         ((CriStatic)param1.PTR_10).DAT_4A = 1000;
@@ -8371,7 +8371,7 @@ public class ST6 : LevelManager
 
                     if (param1.PTR_10.screen.y == sVar2)
                     {
-                        oVar1 = SceneManager.instance.DAT_7CDC[3];
+                        oVar1 = SceneManager.instance.staticObjects[3];
                         param1.PTR_10 = oVar1;
                         oVar1.screen.y = sVar2;
                         param1.PTR_10.flags &= 0xfffffffd;
@@ -8454,7 +8454,7 @@ public class ST6 : LevelManager
                     break;
                 case 2:
                     sVar2 = (short)FUN_13B04(param1);
-                    oVar1 = SceneManager.instance.DAT_7CDC[3];
+                    oVar1 = SceneManager.instance.staticObjects[3];
 
                     if (param1.PTR_10.screen.y == sVar2)
                     {
@@ -8516,9 +8516,9 @@ public class ST6 : LevelManager
         sVar5 = (short)iVar8;
         param1.PDAT_08.screen.y += sVar5;
         param1.PTR_10.screen.y += sVar5;
-        iVar9 = System.Array.IndexOf(SceneManager.instance.DAT_7CDC, param1.PDAT_08);
-        oVar2 = SceneManager.instance.DAT_7CDC[iVar9 + 1];
-        oVar3 = SceneManager.instance.DAT_7CDC[iVar9 + 2];
+        iVar9 = System.Array.IndexOf(SceneManager.instance.staticObjects, param1.PDAT_08);
+        oVar2 = SceneManager.instance.staticObjects[iVar9 + 1];
+        oVar3 = SceneManager.instance.staticObjects[iVar9 + 2];
         uVar7 = 0;
         oVar2.screen.y += sVar5;
         oVar3.screen.y += sVar5;
@@ -8607,9 +8607,9 @@ public class ST6 : LevelManager
 
         param1.PDAT_08.screen.y += (sbyte)param1.BDAT_16;
         oVar5 = param1.PDAT_08;
-        iVar7 = System.Array.IndexOf(SceneManager.instance.DAT_7CDC, oVar5);
-        oVar2 = SceneManager.instance.DAT_7CDC[iVar7 + 1];
-        oVar3 = SceneManager.instance.DAT_7CDC[iVar7 + 2];
+        iVar7 = System.Array.IndexOf(SceneManager.instance.staticObjects, oVar5);
+        oVar2 = SceneManager.instance.staticObjects[iVar7 + 1];
+        oVar3 = SceneManager.instance.staticObjects[iVar7 + 2];
         sVar1 = 20000;
 
         if (5000 < oVar5.screen.y)
@@ -8684,9 +8684,9 @@ public class ST6 : LevelManager
 
         param1.PDAT_08.screen.y -= (sbyte)param1.BDAT_16;
         oVar5 = param1.PDAT_08;
-        iVar6 = System.Array.IndexOf(SceneManager.instance.DAT_7CDC, oVar5);
-        oVar2 = SceneManager.instance.DAT_7CDC[iVar6 + 1];
-        oVar3 = SceneManager.instance.DAT_7CDC[iVar6 + 2];
+        iVar6 = System.Array.IndexOf(SceneManager.instance.staticObjects, oVar5);
+        oVar2 = SceneManager.instance.staticObjects[iVar6 + 1];
+        oVar3 = SceneManager.instance.staticObjects[iVar6 + 2];
         sVar1 = 20000;
 
         if (oVar5.screen.y < -10000)
@@ -8747,10 +8747,10 @@ public class ST6 : LevelManager
         sVar3 = (short)iVar6;
         param1.PDAT_08.screen.y += sVar3;
         param1.PTR_10.screen.y += sVar3;
-        iVar7 = System.Array.IndexOf(SceneManager.instance.DAT_7CDC, param1.PDAT_08);
-        oVar1 = SceneManager.instance.DAT_7CDC[iVar7 + 1];
+        iVar7 = System.Array.IndexOf(SceneManager.instance.staticObjects, param1.PDAT_08);
+        oVar1 = SceneManager.instance.staticObjects[iVar7 + 1];
         uVar5 = 0;
-        oVar2 = SceneManager.instance.DAT_7CDC[iVar7 + 2];
+        oVar2 = SceneManager.instance.staticObjects[iVar7 + 2];
         oVar1.screen.y += sVar3;
         uVar5 = 0;
         oVar2.screen.y += sVar3;
@@ -8892,7 +8892,7 @@ public class ST6 : LevelManager
         {
             do
             {
-                oVar5 = SceneManager.instance.DAT_7CDC[pbVar3];
+                oVar5 = SceneManager.instance.staticObjects[pbVar3];
 
                 if ((oVar5.flags & 1) != 0 && oVar5.DAT_2F == 7 && 1 < oVar5.tags)
                 {
@@ -8983,7 +8983,7 @@ public class ST6 : LevelManager
 
         if (iVar4 < 36)
         {
-            oVar7 = SceneManager.instance.DAT_7CDC[iVar4];
+            oVar7 = SceneManager.instance.staticObjects[iVar4];
 
             do
             {
@@ -9084,7 +9084,7 @@ public class ST6 : LevelManager
         CriInteract oVar3;
         CriBone oVar4;
 
-        oVar2 = SceneManager.instance.DAT_27C[10];
+        oVar2 = SceneManager.instance.skinnedObjects[10];
 
         if (oVar2.screen.y == 0)
             return;
@@ -9311,7 +9311,7 @@ public class ST6 : LevelManager
         CriPlayer oVar5;
         Vector3Int vVar6;
 
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         Utilities.RotMatrix(ref param1.vr, ref param1.cTransform.rotation);
 
         if (param1.DAT_3C != 0)
@@ -9382,7 +9382,7 @@ public class ST6 : LevelManager
     //FUN_EB98 (ST6)
     public static void FUN_EB98(CriInteract param1)
     {
-        ((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_1C0 &= 0xfffffffe;
+        ((CriPlayer)SceneManager.instance.skinnedObjects[10]).DAT_1C0 &= 0xfffffffe;
         instance.PTR_FUN_170C4[param1.DAT_03](param1);
     }
 
@@ -9503,9 +9503,9 @@ public class ST6 : LevelManager
         Vector3Int local_28;
         Matrix3x3 auStack88;
 
-        oVar7 = SceneManager.instance.DAT_7CDC[2];
+        oVar7 = SceneManager.instance.staticObjects[2];
         sVar1 = param1.DAT_03;
-        oVar6 = SceneManager.instance.DAT_7CDC[1];
+        oVar6 = SceneManager.instance.staticObjects[1];
 
         if (sVar1 == 1)
         {
@@ -9575,7 +9575,7 @@ public class ST6 : LevelManager
             if (sVar1 != 2)
                 return;
 
-            oVar7 = SceneManager.instance.DAT_7CDC[param1.BDAT_16];
+            oVar7 = SceneManager.instance.staticObjects[param1.BDAT_16];
             sVar3 = (short)(oVar7.screen.y + 4);
             oVar7.screen.y = sVar3;
 

@@ -35,10 +35,10 @@ public class SceneManager : MonoBehaviour
     public bool DAT_272; //gp+272h
     public Tmd2ScriptableObject DAT_274; //gp+274h
     public TodScriptableObject[] DAT_278; //gp+278h
-    public CriSkinned[] DAT_27C; //gp+27ch...gp+1c9ch
+    public CriSkinned[] skinnedObjects; //gp+27ch...gp+1c9ch
     public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
     public CriParticle[] DAT_5FCC; //gp+5fcch...gp+7cdch
-    public CriStatic[] DAT_7CDC; //gp+7cdch...gp+8ffch
+    public CriStatic[] staticObjects; //gp+7cdch...gp+8ffch
     public CriInteract[] DAT_8FFC; //gp+8ffch...gp+9164h
     public Trigger6[] DAT_9FE0; //gp+9fe0...gp+a09ch
     public CriCamera DAT_C3230;
@@ -141,10 +141,10 @@ public class SceneManager : MonoBehaviour
         }
 
         triggers = new Trigger[32];
-        DAT_27C = new CriSkinned[11];
+        skinnedObjects = new CriSkinned[11];
         DAT_1C9C = new CriBone[100];
         DAT_5FCC = new CriParticle[60];
-        DAT_7CDC = new CriStatic[40];
+        staticObjects = new CriStatic[40];
         DAT_8FFC = new CriInteract[10];
         DAT_9FE0 = new Trigger6[4];
         DAT_D7C0 = new CriScene[10];
@@ -167,14 +167,14 @@ public class SceneManager : MonoBehaviour
         {
             GameObject obj = new GameObject();
             obj.name = "CriStatic (Instance)";
-            DAT_7CDC[i] = obj.AddComponent<CriStatic>();
+            staticObjects[i] = obj.AddComponent<CriStatic>();
         }
 
         for (int i = 0; i < 10; i++)
         {
             GameObject obj = new GameObject();
             obj.name = "CriSkinned (Instance)";
-            DAT_27C[i] = obj.AddComponent<CriPlayer>();
+            skinnedObjects[i] = obj.AddComponent<CriPlayer>();
         }
 
         for (int i = 0; i < 10; i++)
@@ -198,7 +198,7 @@ public class SceneManager : MonoBehaviour
 
         GameObject obj2 = new GameObject();
         obj2.name = "CriPlayer (Instance)";
-        DAT_27C[10] = obj2.AddComponent<CriPlayer>();
+        skinnedObjects[10] = obj2.AddComponent<CriPlayer>();
         GameObject obj3 = new GameObject("RenderQueue (Instance)");
         renderQueue = obj3.AddComponent<RenderQueue>();
         sceneLoaded = true;
@@ -284,7 +284,7 @@ public class SceneManager : MonoBehaviour
                     oVar2.DAT_2F = 2;
                     oVar2.screen.z = local_28.z;
                     //FUN_606A8
-                    psVar7.FUN_1A638(DAT_7CDC[uVar6 + 32], local_28);
+                    psVar7.FUN_1A638(staticObjects[uVar6 + 32], local_28);
                 }
             }
 
@@ -306,7 +306,7 @@ public class SceneManager : MonoBehaviour
         Vector3Int local_20;
 
         bVar3 = false;
-        oVar4 = (CriPlayer)DAT_27C[10];
+        oVar4 = (CriPlayer)skinnedObjects[10];
 
         if (!GameManager.instance.DAT_6D && 
             (InventoryManager.DAT_B7A60[0] & 0x20) == 0 && 
@@ -740,7 +740,7 @@ public class SceneManager : MonoBehaviour
         {
             do
             {
-                psVar5 = DAT_27C[uVar6];
+                psVar5 = skinnedObjects[uVar6];
 
                 if ((psVar5.flags & 1) != 0 && -1 < psVar5.DAT_198)
                 {
@@ -753,15 +753,15 @@ public class SceneManager : MonoBehaviour
                     oVar4.DAT_10 = psVar5.DAT_196;
                     oVar4.DAT_12 = psVar5.DAT_19A;
                     oVar4.DAT_14 = psVar5.DAT_1A6;
-                    iVar3 = DAT_27C[10].screen.x - psVar5.screen.x;
+                    iVar3 = skinnedObjects[10].screen.x - psVar5.screen.x;
 
                     if (iVar3 < 0)
-                        iVar3 = psVar5.screen.x - DAT_27C[10].screen.x;
+                        iVar3 = psVar5.screen.x - skinnedObjects[10].screen.x;
 
-                    iVar1 = DAT_27C[10].screen.z - psVar5.screen.z;
+                    iVar1 = skinnedObjects[10].screen.z - psVar5.screen.z;
 
                     if (iVar1 < 0)
-                        iVar1 = psVar5.screen.z - DAT_27C[10].screen.z;
+                        iVar1 = psVar5.screen.z - skinnedObjects[10].screen.z;
 
                     uVar2 = (uint)Utilities.SquareRoot0(iVar3 * iVar3 + iVar1 * iVar1);
 
@@ -818,7 +818,7 @@ public class SceneManager : MonoBehaviour
 
         do
         {
-            puVar2 = DAT_7CDC[iVar3];
+            puVar2 = staticObjects[iVar3];
             iVar1--;
 
             if ((puVar2.flags & 1) == 0)
@@ -918,7 +918,7 @@ public class SceneManager : MonoBehaviour
         int iVar6;
         byte[] puVar7;
 
-        sVar2 = param1.FUN_64804(DAT_27C[10].screen);
+        sVar2 = param1.FUN_64804(skinnedObjects[10].screen);
 
         if ((ushort)(sVar2 - 0x200) < 0xa00U)
         {
@@ -1172,7 +1172,7 @@ public class SceneManager : MonoBehaviour
         CriCamera oVar2;
         uint uVar3;
 
-        oVar1 = (CriPlayer)DAT_27C[10];
+        oVar1 = (CriPlayer)skinnedObjects[10];
         oVar2 = cCamera;
 
         if (cCamera.DAT_5B == 0)
@@ -1692,7 +1692,7 @@ public class SceneManager : MonoBehaviour
     {
         CriSkinned oVar1;
 
-        oVar1 = DAT_27C[param2];
+        oVar1 = skinnedObjects[param2];
 
         switch (param1)
         {
@@ -1739,7 +1739,7 @@ public class SceneManager : MonoBehaviour
         {
             do
             {
-                piVar6 = DAT_27C[uVar7];
+                piVar6 = skinnedObjects[uVar7];
 
                 if (piVar6 != null && (piVar6.flags & 2) != 0)
                 {
@@ -1845,7 +1845,7 @@ public class SceneManager : MonoBehaviour
 
             if (param1.DAT_1E != 0xff)
             {
-                oVar1 = DAT_7CDC[param1.DAT_1E];
+                oVar1 = staticObjects[param1.DAT_1E];
                 param1.FUN_1A638(oVar1, local_18);
 
                 if (param1.DAT_24 != 0)
@@ -2888,14 +2888,14 @@ public class SceneManager : MonoBehaviour
 
         iVar3 = 10;
         iVar2 = 0;
-        psVar1 = DAT_27C[iVar2];
+        psVar1 = skinnedObjects[iVar2];
 
         while((psVar1.flags & 1) == 0 || psVar1.tags != param1.tags || 
             param1 == psVar1 || psVar1.health < 1)
         {
             iVar3--;
             iVar2++;
-            psVar1 = DAT_27C[iVar2];
+            psVar1 = skinnedObjects[iVar2];
 
             if (iVar3 == -1)
                 return null;
@@ -2922,7 +2922,7 @@ public class SceneManager : MonoBehaviour
             {
                 local_18 = new Vector2Int[2];
                 local_18[0] = new Vector2Int(param1.screen.x, param1.screen.z);
-                local_18[1] = new Vector2Int(DAT_27C[10].screen.x, DAT_27C[10].screen.z);
+                local_18[1] = new Vector2Int(skinnedObjects[10].screen.x, skinnedObjects[10].screen.z);
                 local_10 = new Vector4Int(oVar2.screen.x, 0, oVar2.screen.z, 0x204);
                 bVar1 = GameManager.instance.FUN_84338(local_18, local_10);
             }
@@ -2956,7 +2956,7 @@ public class SceneManager : MonoBehaviour
 
         do
         {
-            if (DAT_27C[iVar1] == param1)
+            if (skinnedObjects[iVar1] == param1)
                 return 10 - (uint)iVar2 & 0xff;
 
             iVar2--;
@@ -2988,18 +2988,18 @@ public class SceneManager : MonoBehaviour
         {
             uVar6 = 10;
 
-            if (param1 == DAT_27C[uVar6])
+            if (param1 == skinnedObjects[uVar6])
             {
                 if ((param1.DAT_12C & 0x40) == 0)
                 {
                     uVar6 = 0;
                     bVar8 = bVar7;
 
-                    if (uVar6 < Array.IndexOf(DAT_27C, param1))
+                    if (uVar6 < Array.IndexOf(skinnedObjects, param1))
                     {
                         do
                         {
-                            pcVar4 = DAT_27C[uVar5];
+                            pcVar4 = skinnedObjects[uVar5];
 
                             if ((pcVar4.flags & 1) != 0 && (pcVar4.DAT_12C & 0x10) == 0 &&
                                 pcVar4.DAT_177 == 0)
@@ -3030,9 +3030,9 @@ public class SceneManager : MonoBehaviour
                     {
                         do
                         {
-                            pcVar4 = DAT_27C[uVar5];
+                            pcVar4 = skinnedObjects[uVar5];
 
-                            if ((pcVar4.flags & 1) != 0 && param1 != DAT_27C[uVar3] &&
+                            if ((pcVar4.flags & 1) != 0 && param1 != skinnedObjects[uVar3] &&
                                 (pcVar4.DAT_12C & 0x40) == 0 && pcVar4.DAT_177 == 0)
                             {
                                 bVar2 = GameManager.instance.FUN_7FB78(param1, pcVar4, param2, param3);
@@ -3052,10 +3052,10 @@ public class SceneManager : MonoBehaviour
 
                     bVar8 = bVar7;
 
-                    if ((param1.DAT_12C & 0x10) == 0 && (DAT_27C[10].DAT_12C & 0x40) == 0 && 
-                        DAT_27C[10].DAT_177 == 0)
+                    if ((param1.DAT_12C & 0x10) == 0 && (skinnedObjects[10].DAT_12C & 0x40) == 0 && 
+                        skinnedObjects[10].DAT_177 == 0)
                     {
-                        bVar2 = GameManager.instance.FUN_7FB78(param1, DAT_27C[uVar6], param2, param3);
+                        bVar2 = GameManager.instance.FUN_7FB78(param1, skinnedObjects[uVar6], param2, param3);
                         param1.DAT_12B = bVar2;
 
                         if (bVar2 != 0)
@@ -3076,7 +3076,7 @@ public class SceneManager : MonoBehaviour
         CriSkinned oVar1;
         byte bVar2;
 
-        oVar1 = DAT_27C[10];
+        oVar1 = skinnedObjects[10];
         param1.DAT_128 = 0;
         param1.DAT_12A = 0;
         param1.DAT_12B = 0;
@@ -3638,7 +3638,7 @@ public class SceneManager : MonoBehaviour
 
         do
         {
-            psVar4 = DAT_27C[uVar5];
+            psVar4 = skinnedObjects[uVar5];
 
             if ((psVar4.flags & 1) != 0 && psVar4.PTR_124 != null)
             {
@@ -3702,7 +3702,7 @@ public class SceneManager : MonoBehaviour
 
         do
         {
-            piVar4 = DAT_7CDC[uVar5];
+            piVar4 = staticObjects[uVar5];
 
             if ((piVar4.flags & 1) != 0 && piVar4.cCollider != null)
             {
@@ -3744,7 +3744,7 @@ public class SceneManager : MonoBehaviour
             }
 
             uVar5++;
-        } while (uVar5 < (uint)DAT_7CDC.Length);
+        } while (uVar5 < (uint)staticObjects.Length);
 
         return 0;
     }
@@ -3983,7 +3983,7 @@ public class SceneManager : MonoBehaviour
 
         do
         {
-            ppsVar7 = DAT_7CDC[uVar5];
+            ppsVar7 = staticObjects[uVar5];
 
             if ((ppsVar7.flags & 1) != 0 && param1 != ppsVar7)
             {
@@ -3999,13 +3999,13 @@ public class SceneManager : MonoBehaviour
             }
 
             uVar5++;
-        } while (uVar5 < (uint)DAT_7CDC.Length);
+        } while (uVar5 < (uint)staticObjects.Length);
 
         uVar5 = 0;
 
         do
         {
-            piVar6 = DAT_27C[uVar5];
+            piVar6 = skinnedObjects[uVar5];
 
             if ((piVar6.flags & 1) != 0 && piVar6.PTR_124 != null)
             {
@@ -4053,7 +4053,7 @@ public class SceneManager : MonoBehaviour
 
         do
         {
-            piVar3 = DAT_7CDC[uVar4];
+            piVar3 = staticObjects[uVar4];
 
             if ((piVar3.flags & 1) != 0 && piVar3.cCollider != null)
             {
@@ -4076,7 +4076,7 @@ public class SceneManager : MonoBehaviour
             }
 
             uVar4++;
-        } while (uVar4 < (uint)DAT_7CDC.Length);
+        } while (uVar4 < (uint)staticObjects.Length);
 
         return uVar1;
     }

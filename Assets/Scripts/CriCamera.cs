@@ -299,8 +299,8 @@ public class CriCamera : CriObject
         Vector3Int local_18;
         Vector3Int local_10;
 
-        puVar1 = SceneManager.instance.DAT_27C[0].skeleton;
-        SceneManager.instance.DAT_27C[0].flags &= 0xfffffffd;
+        puVar1 = SceneManager.instance.skinnedObjects[0].skeleton;
+        SceneManager.instance.skinnedObjects[0].flags &= 0xfffffffd;
         m = (CriBone)Utilities.FUN_601C8(puVar1, 3);
         local_10 = m.screen;
         local_18 = new Vector3Int(0, 0, 1000);
@@ -321,13 +321,13 @@ public class CriCamera : CriObject
         Vector3Int local_18;
         Vector3Int local_10;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_18 = new Vector3Int();
         local_18.x = oVar1.screen.x;
         local_18.y = oVar1.screen.y - 0x400;
         local_18.z = oVar1.screen.z;
-        puVar1 = SceneManager.instance.DAT_27C[0].skeleton;
-        SceneManager.instance.DAT_27C[0].flags &= 0xfffffffd;
+        puVar1 = SceneManager.instance.skinnedObjects[0].skeleton;
+        SceneManager.instance.skinnedObjects[0].flags &= 0xfffffffd;
         oVar2 = (CriBone)Utilities.FUN_601C8(puVar1, 3);
         local_10 = oVar2.screen;
         DAT_8A = 0;
@@ -342,7 +342,7 @@ public class CriCamera : CriObject
         Vector3Int local_20;
         Vector3Int local_18;
 
-        oVar1 = SceneManager.instance.DAT_7CDC[DAT_71];
+        oVar1 = SceneManager.instance.staticObjects[DAT_71];
         local_18 = oVar1.screen;
         local_20 = oVar1.vr;
         MStack64 = new Matrix3x3();
@@ -364,13 +364,13 @@ public class CriCamera : CriObject
         Vector3Int local_18;
         Vector3Int local_10;
 
-        oVar1 = SceneManager.instance.DAT_7CDC[0];
+        oVar1 = SceneManager.instance.staticObjects[0];
         local_10 = new Vector3Int();
         local_10.x = oVar1.screen.x;
         local_10.y = oVar1.screen.y - 0x400;
         local_10.z = oVar1.screen.z;
         oVar2 = (CriBone)Utilities.FUN_601C8
-            (SceneManager.instance.DAT_27C[0].skeleton, 3);
+            (SceneManager.instance.skinnedObjects[0].skeleton, 3);
         local_18 = oVar2.screen;
         DAT_8A = 0;
         DAT_8B = 0;
@@ -412,7 +412,7 @@ public class CriCamera : CriObject
         CameraMotion pbVar6;
         byte bVar7;
 
-        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar1 = DAT_83;
 
         if ((DAT_72 & 4) == 0)
@@ -533,7 +533,7 @@ public class CriCamera : CriObject
         CriPlayer oVar1;
         Vector3Int local_10;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_10 = new Vector3Int();
         local_10.x = oVar1.screen.x;
         local_10.y = oVar1.screen.y - param1.DAT_34.x;
@@ -548,7 +548,7 @@ public class CriCamera : CriObject
         Matrix3x3 MStack56;
         Vector3Int local_18;
 
-        local_40 = Utilities.FUN_263CC(param1.DAT_2C, SceneManager.instance.DAT_27C[10].screen);
+        local_40 = Utilities.FUN_263CC(param1.DAT_2C, SceneManager.instance.skinnedObjects[10].screen);
         lVar1 = Utilities.Ratan2(-param1.DAT_34.y, param1.DAT_34.x);
         local_40.x = (short)lVar1;
         local_40.z = 0;
@@ -569,7 +569,7 @@ public class CriCamera : CriObject
         Vector3Int local_40;
         Matrix3x3 MStack56;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_48 = new Vector3Int(0, oVar1.vr.y, 0);
         MStack56 = new Matrix3x3();
         Utilities.RotMatrix(ref local_48, ref MStack56);
@@ -593,7 +593,7 @@ public class CriCamera : CriObject
         Vector3Int local_38;
         Matrix3x3 MStack48;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_40 = new Vector3Int();
         local_40.x = param1.DAT_2C.x;
         local_40.y = oVar1.screen.y - param1.DAT_32;
@@ -616,7 +616,7 @@ public class CriCamera : CriObject
         Vector3Int local_38;
         Matrix3x3 MStack48;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_40 = new Vector3Int();
         local_40.x = oVar1.screen.x;
         local_40.y = oVar1.screen.y - param1.DAT_32;
@@ -638,7 +638,7 @@ public class CriCamera : CriObject
         Vector3Int local_18;
         Vector3Int local_10;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_18 = new Vector3Int();
         local_10 = new Vector3Int();
         local_18.x = DAT_40.x;
@@ -658,7 +658,7 @@ public class CriCamera : CriObject
         Vector3Int local_18;
         Vector3Int local_10;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_18 = new Vector3Int();
         local_10 = new Vector3Int();
         local_18.z = DAT_40.z;
@@ -679,7 +679,7 @@ public class CriCamera : CriObject
         Vector3Int local_18;
         Vector3Int local_10;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_18 = new Vector3Int();
         local_10 = new Vector3Int();
         local_18.x = oVar1.screen.x;
@@ -713,7 +713,7 @@ public class CriCamera : CriObject
         Vector3Int local_18;
         Vector3Int local_10;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_18 = new Vector3Int();
         local_10 = new Vector3Int();
         local_18.x = oVar1.screen.x;
@@ -745,7 +745,7 @@ public class CriCamera : CriObject
         Vector3Int local_18;
         Vector3Int local_10;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_18 = new Vector3Int();
         local_10 = new Vector3Int();
         local_10.x = DAT_48.x;
@@ -765,7 +765,7 @@ public class CriCamera : CriObject
         Vector3Int local_18;
         Vector3Int local_10;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_18 = new Vector3Int();
         local_10 = new Vector3Int();
         local_10.z = DAT_48.z;
@@ -797,7 +797,7 @@ public class CriCamera : CriObject
         CriPlayer oVar9;
         Vector3Int local_10;
 
-        oVar9 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar9 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         iVar8 = param1.DAT_34.x;
         iVar4 = param1.DAT_3C.x - iVar8;
         iVar6 = param1.DAT_2C.z - oVar9.screen.z;
@@ -880,7 +880,7 @@ public class CriCamera : CriObject
         Vector3Int local_28;
         Vector3Int local_20;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_20 = oVar1.screen;
         local_28 = Utilities.FUN_263CC(param1.DAT_2C, local_20);
         lVar1 = (int)Utilities.FUN_2630C(local_20, param1.DAT_2C);
@@ -904,7 +904,7 @@ public class CriCamera : CriObject
         CriPlayer oVar1;
         Vector3Int local_10;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_10 = new Vector3Int();
         local_10.x = DAT_40.x;
         local_10.z = DAT_40.z + (oVar1.screen.z - oVar1.DAT_34.z);
@@ -917,7 +917,7 @@ public class CriCamera : CriObject
         CriPlayer oVar1;
         Vector3Int local_10;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_10 = new Vector3Int();
         local_10.z = DAT_40.z;
         local_10.x = DAT_40.x + (oVar1.screen.x - oVar1.DAT_34.x);
@@ -951,7 +951,7 @@ public class CriCamera : CriObject
         int local_40;
         Matrix3x3 MStack56;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_60 = new Vector3Int();
         local_58 = new Vector3Int();
         sVar1 = DAT_58;
@@ -1108,7 +1108,7 @@ public class CriCamera : CriObject
         local_50 = Utilities.ApplyMatrixSV(ref MStack56, ref local_50);
         local_40 = new Vector3Int(oVar1.screen.x + local_50.x, oVar1.screen.y - 2000, oVar1.screen.z + local_50.z);
         local_50 = new Vector3Int(-1000, 0, 0);
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         Utilities.RotMatrix(ref oVar2.vr, ref MStack56);
         local_48 = new Vector3Int(oVar2.screen.x + local_50.x, oVar2.screen.y, oVar2.screen.z + local_50.z);
         SceneManager.instance.FUN_264C4(0, (short)local_48.x, (short)local_48.y, (short)local_48.z);
@@ -1213,8 +1213,8 @@ public class CriCamera : CriObject
         Vector3Int local_40;
         Matrix3x3 auStack_38;
 
-        oVar1 = SceneManager.instance.DAT_27C[0];
-        oVar3 = SceneManager.instance.DAT_27C[10];
+        oVar1 = SceneManager.instance.skinnedObjects[0];
+        oVar3 = SceneManager.instance.skinnedObjects[10];
         oVar2 = Utilities.FUN_601C8(oVar1.skeleton, 3) as CriBone;
         local_40 = new Vector3Int(0, Utilities.FUN_615EC(oVar3.screen, oVar1.screen), 0);
         auStack_38 = new Matrix3x3();
@@ -1234,7 +1234,7 @@ public class CriCamera : CriObject
         CriSkinned oVar3;
         Vector3Int local_18;
 
-        oVar3 = SceneManager.instance.DAT_27C[0];
+        oVar3 = SceneManager.instance.skinnedObjects[0];
         oVar2 = Utilities.FUN_601C8(oVar3.skeleton, 3) as CriBone;
         local_18 = ST9.instance.DAT_160D8[oVar3.DAT_2F - 2];
         local_18 = Utilities.ApplyMatrixSV(ref oVar3.cTransform.rotation, ref local_18);
@@ -1264,7 +1264,7 @@ public class CriCamera : CriObject
         CriObject oVar3;
         CriPlayer oVar4;
 
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[0];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[0];
         iVar1 = oVar4.DAT_1DB * 3;
         oVar3 = oVar4.PTR_1CC;
         DAT_8B = 2;
@@ -1283,9 +1283,9 @@ public class CriCamera : CriObject
         Vector3Int local_38;
         Matrix3x3 auStack_30;
 
-        oVar2 = SceneManager.instance.DAT_27C[10];
+        oVar2 = SceneManager.instance.skinnedObjects[10];
         local_40 = new Vector3Int(oVar2.screen.x, oVar2.screen.y - 0x400, oVar2.screen.z);
-        puVar1 = SceneManager.instance.DAT_27C[0];
+        puVar1 = SceneManager.instance.skinnedObjects[0];
         puVar1.flags &= 0xfffffffd;
         local_38 = new Vector3Int(); //tmp
         auStack_30 = new Matrix3x3();
@@ -1314,7 +1314,7 @@ public class CriCamera : CriObject
         local_48 = Utilities.ApplyMatrixSV(ref auStack_30, ref local_48);
         local_38 = new Vector3Int(oVar1.screen.x + local_48.x, oVar1.screen.y - 1500, oVar1.screen.z + local_48.z);
         local_48 = new Vector3Int(0, 0, 500);
-        Utilities.RotMatrix(ref SceneManager.instance.DAT_27C[10].vr, ref auStack_30);
+        Utilities.RotMatrix(ref SceneManager.instance.skinnedObjects[10].vr, ref auStack_30);
         local_48 = Utilities.ApplyMatrixSV(ref auStack_30, ref local_48);
         local_40 = new Vector3Int(oVar1.screen.x + local_48.x, oVar1.screen.y - 1500, oVar1.screen.z + local_48.z);
         SceneManager.instance.FUN_264C4(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
@@ -1338,7 +1338,7 @@ public class CriCamera : CriObject
         local_48 = Utilities.ApplyMatrixSV(ref auStack48, ref local_48);
         local_38 = new Vector3Int(oVar1.screen.x + local_48.x, oVar1.screen.y - 3500, oVar1.screen.z + local_48.z);
         local_48 = new Vector3Int(0, 0, 500);
-        Utilities.RotMatrix(ref SceneManager.instance.DAT_27C[10].vr, ref auStack48);
+        Utilities.RotMatrix(ref SceneManager.instance.skinnedObjects[10].vr, ref auStack48);
         local_48 = Utilities.ApplyMatrixSV(ref auStack48, ref local_48);
         local_40 = new Vector3Int(oVar1.screen.x + local_48.x, oVar1.screen.y - 1500, oVar1.screen.z + local_48.z);
         SceneManager.instance.FUN_264C4(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
@@ -1362,7 +1362,7 @@ public class CriCamera : CriObject
         local_48 = Utilities.ApplyMatrixSV(ref auStack_30, ref local_48);
         local_38 = new Vector3Int(oVar1.screen.x + local_48.x, oVar1.screen.y - 3000, oVar1.screen.z + local_48.z);
         local_48 = new Vector3Int(0, 0, 1000);
-        Utilities.RotMatrix(ref SceneManager.instance.DAT_27C[10].vr, ref auStack_30);
+        Utilities.RotMatrix(ref SceneManager.instance.skinnedObjects[10].vr, ref auStack_30);
         local_48 = Utilities.ApplyMatrixSV(ref auStack_30, ref local_48);
         local_40 = new Vector3Int(oVar1.screen.x + local_48.x, oVar1.screen.y - 1500, oVar1.screen.z + local_48.z);
         SceneManager.instance.FUN_264C4(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
@@ -1385,7 +1385,7 @@ public class CriCamera : CriObject
         Utilities.RotMatrix(ref oVar1.vr, ref auStack48);
         local_38 = new Vector3Int(oVar1.screen.x + local_48.x, oVar1.screen.y - 3000, oVar1.screen.z + local_48.z);
         local_48 = new Vector3Int(0, 0, 1000);
-        Utilities.RotMatrix(ref SceneManager.instance.DAT_27C[10].vr, ref auStack48);
+        Utilities.RotMatrix(ref SceneManager.instance.skinnedObjects[10].vr, ref auStack48);
         local_48 = Utilities.ApplyMatrixSV(ref auStack48, ref local_48);
         local_40 = new Vector3Int(oVar1.screen.x + local_48.x, oVar1.screen.y - 1500, oVar1.screen.z + local_48.z);
         SceneManager.instance.FUN_264C4(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
@@ -1414,7 +1414,7 @@ public class CriCamera : CriObject
         Matrix3x3 auStack_30;
 
         oVar1 = DAT_64;
-        local_40 = new Vector3Int(0, 0, SceneManager.instance.DAT_27C[10].screen.z - oVar1.screen.z >> 1);
+        local_40 = new Vector3Int(0, 0, SceneManager.instance.skinnedObjects[10].screen.z - oVar1.screen.z >> 1);
         auStack_30 = new Matrix3x3();
         Utilities.RotMatrix(ref oVar1.vr, ref auStack_30);
         local_40 = Utilities.ApplyMatrixSV(ref auStack_30, ref local_40);
@@ -1435,7 +1435,7 @@ public class CriCamera : CriObject
 
         oVar1 = DAT_64;
         auStack48 = new Matrix3x3();
-        local_40 = new Vector3Int(0, 0, SceneManager.instance.DAT_27C[10].screen.z - oVar1.screen.z >> 1);
+        local_40 = new Vector3Int(0, 0, SceneManager.instance.skinnedObjects[10].screen.z - oVar1.screen.z >> 1);
         Utilities.RotMatrix(ref oVar1.vr, ref auStack48);
         local_40 = Utilities.ApplyMatrixSV(ref auStack48, ref local_40);
         local_38 = new Vector3Int(oVar1.screen.x + local_40.x, oVar1.screen.y - 1500, oVar1.screen.z + local_40.z);

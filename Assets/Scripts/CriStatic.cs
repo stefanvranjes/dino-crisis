@@ -330,12 +330,12 @@ public class CriStatic : CriObject
         flags |= 2;
         DAT_7A = 0x14;
         tags = 1;
-        oVar3 = SceneManager.instance.DAT_27C[10];
+        oVar3 = SceneManager.instance.skinnedObjects[10];
         uVar2 = SceneManager.instance.FUN_83534(ref screen, oVar3.screen);
 
         if ((uVar2 & 0xff) == 8)
         {
-            oVar3 = SceneManager.instance.DAT_27C[(uVar2 & 0xffff) >> 8];
+            oVar3 = SceneManager.instance.skinnedObjects[(uVar2 & 0xffff) >> 8];
             oVar3.DAT_11E |= 0x80;
             oVar3.DAT_1A0 = DAT_7C;
             oVar3.DAT_1A1 = DAT_7D;
@@ -368,7 +368,7 @@ public class CriStatic : CriObject
 
         if (DAT_7E != -1)
         {
-            oVar4 = SceneManager.instance.DAT_27C[DAT_7E];
+            oVar4 = SceneManager.instance.skinnedObjects[DAT_7E];
             oVar5 = Utilities.FUN_601C8(oVar4.skeleton, oVar4.DAT_175 & 15);
             sVar2 = Utilities.FUN_51C8C(screen, oVar5.screen, DAT_80.y, 0x10);
             DAT_80.y += sVar2;
@@ -385,7 +385,7 @@ public class CriStatic : CriObject
 
         if ((uVar3 & 0xff) == 8)
         {
-            oVar4 = SceneManager.instance.DAT_27C[(uVar3 & 0xffff) >> 8];
+            oVar4 = SceneManager.instance.skinnedObjects[(uVar3 & 0xffff) >> 8];
             oVar4.DAT_11E |= 0x80;
             oVar4.DAT_1A0 = DAT_7C;
             oVar4.DAT_1A1 = DAT_7D;

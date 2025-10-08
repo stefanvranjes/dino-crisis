@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using Unity.Mathematics;
 
 public enum _DIFFICULTY
 {
@@ -579,7 +578,7 @@ public class GameManager : MonoBehaviour
         }
 
         for (int i = 0; i < 10; i++)
-            SceneManager.instance.DAT_27C[i].ResetValues();
+            SceneManager.instance.skinnedObjects[i].ResetValues();
 
         for (int i = 0; i < 100; i++)
             SceneManager.instance.DAT_1C9C[i].ResetValues();
@@ -588,11 +587,11 @@ public class GameManager : MonoBehaviour
             SceneManager.instance.DAT_5FCC[i].ResetValues();
 
         for (int i = 0; i < 40; i++)
-            SceneManager.instance.DAT_7CDC[i].ResetValues();
+            SceneManager.instance.staticObjects[i].ResetValues();
 
         //FUN_601A4
         FUN_5DDD0();
-        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar3.screen = playerSpawnPos;
         oVar3.DAT_34 = playerSpawnPos;
         oVar3.vr.y = playerSpawnRotY;
@@ -613,6 +612,7 @@ public class GameManager : MonoBehaviour
         oVar3.materials[3] = mat2;
         GameObject sdw = new GameObject("Shadow");
         oVar3.shadow = sdw.transform;
+        oVar3.MeshData();
         //...
         uVar5 = 0;
 
@@ -720,7 +720,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (SceneManager.instance.DAT_27C[10].DAT_3C == 7)
+        if (SceneManager.instance.skinnedObjects[10].DAT_3C == 7)
             DAT_28 = 4;
 
         //...
@@ -742,7 +742,7 @@ public class GameManager : MonoBehaviour
     {
         CriPlayer oVar1;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_2C == 0)
         {
@@ -780,7 +780,7 @@ public class GameManager : MonoBehaviour
 
         do
         {
-            pbVar1 = (CriPlayer)SceneManager.instance.DAT_27C[iVar2];
+            pbVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[iVar2];
 
             if ((pbVar1.flags & 1) != 0)
                 LevelManager.instance.PTR_FUN_B58C0[pbVar1.tags](pbVar1);
@@ -1382,9 +1382,9 @@ public class GameManager : MonoBehaviour
                 {
                     local_50 = new sbyte[10] { 0, -3, -2, -1, 1, 2, -1, 2, -3, 1 };
 
-                    if (param1.GetType() == typeof(CriSkinned) && param1 != SceneManager.instance.DAT_27C[10])
+                    if (param1.GetType() == typeof(CriSkinned) && param1 != SceneManager.instance.skinnedObjects[10])
                         local_90.note = (ushort)((short)local_90.note + 
-                            local_50[((ulong)(Array.IndexOf(SceneManager.instance.DAT_27C, param1) * 0x260 >> 5) * 0xd794360 >> 0x20) & 0xff]);
+                            local_50[((ulong)(Array.IndexOf(SceneManager.instance.skinnedObjects, param1) * 0x260 >> 5) * 0xd794360 >> 0x20) & 0xff]);
                 }
 
                 local_90.sample_note = (ushort)(vVar8.SAMPLE_NOTE << 8);
@@ -1505,7 +1505,7 @@ public class GameManager : MonoBehaviour
         CriChannel puVar12;
         sbyte[] acStack56 = new sbyte[24];
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((cSound.DAT_24 & 2) != 0)
         {
@@ -2565,7 +2565,7 @@ public class GameManager : MonoBehaviour
 
         if (cTrackers[param1.DAT_22].DAT_1C)
         {
-            bVar1 = ((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_1D7;
+            bVar1 = ((CriPlayer)SceneManager.instance.skinnedObjects[10]).DAT_1D7;
 
             if (bVar1 == 1)
                 local_48.pitch = (ushort)(uVar4 * 0x10f39 >> 0x10);
@@ -2707,7 +2707,7 @@ public class GameManager : MonoBehaviour
         CriPlayer oVar1;
         short sVar3;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         DAT_9AB4[0] = 2;
         DAT_9AB4[1] = 1;
         DAT_9AB4[2] = 3;
@@ -2744,7 +2744,7 @@ public class GameManager : MonoBehaviour
     {
         CriPlayer oVar1;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         DAT_A0E8 = (short)oVar1.screen.x;
         DAT_A0EC = (short)oVar1.screen.z;
         DAT_A0EE = (short)oVar1.vr.y;
@@ -3457,9 +3457,9 @@ public class GameManager : MonoBehaviour
                 local_e0 = new byte[40];
                 local_b8 = new CriStatic[36];
 
-                for (int i = 0; i < SceneManager.instance.DAT_7CDC.Length; i++)
+                for (int i = 0; i < SceneManager.instance.staticObjects.Length; i++)
                 {
-                    oVar10 = SceneManager.instance.DAT_7CDC[i];
+                    oVar10 = SceneManager.instance.staticObjects[i];
 
                     if ((oVar10.flags & 1) != 0)
                     {
@@ -3536,12 +3536,12 @@ public class GameManager : MonoBehaviour
 
         if ((param1.flags & 2) != 0)
         {
-            oVar3 = SceneManager.instance.DAT_27C[0];
+            oVar3 = SceneManager.instance.skinnedObjects[0];
             uVar4 = 0;
 
             do
             {
-                piVar2 = SceneManager.instance.DAT_27C[uVar4];
+                piVar2 = SceneManager.instance.skinnedObjects[uVar4];
 
                 if ((piVar2.flags & 1) != 0 && (piVar2.DAT_12C & 8) == 0 && piVar2.PTR_124 != null)
                 {
@@ -3552,7 +3552,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 uVar4++;
-                oVar3 = SceneManager.instance.DAT_27C[uVar4];
+                oVar3 = SceneManager.instance.skinnedObjects[uVar4];
             } while (uVar4 < 11);
         }
 
@@ -5225,8 +5225,8 @@ public class GameManager : MonoBehaviour
         LoadDoorContainer dVar7;
 
         uVar5 = DAT_47;
-        pVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
-        oVar6 = SceneManager.instance.DAT_7CDC[0];
+        pVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
+        oVar6 = SceneManager.instance.staticObjects[0];
         dVar7 = DAT_A89A0[(int)uVar5];
         sVar1 = param1.DAT_02;
 
@@ -5239,10 +5239,10 @@ public class GameManager : MonoBehaviour
                     if (DAT_6D)
                         return;
 
-                    Destroy(SceneManager.instance.DAT_27C[10].gameObject);
+                    Destroy(SceneManager.instance.skinnedObjects[10].gameObject);
                     UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(tmpSkinned[0].gameObject,
                         UnityEngine.SceneManagement.SceneManager.GetActiveScene());
-                    SceneManager.instance.DAT_27C[10] = tmpSkinned[0];
+                    SceneManager.instance.skinnedObjects[10] = tmpSkinned[0];
 
                     for (int i = 0; i < tmpBones.Count; i++)
                     {
@@ -5252,7 +5252,7 @@ public class GameManager : MonoBehaviour
                         SceneManager.instance.DAT_1C9C[i] = tmpBones[i];
                     }
 
-                    pVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+                    pVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
                     bVar6 = InventoryManager.FUN_4A87C(2, 0xd);
 
                     if (bVar6)
@@ -5326,7 +5326,7 @@ public class GameManager : MonoBehaviour
                 if (dVar7.DAT_04 == null)
                     return;
 
-                oVar6 = SceneManager.instance.DAT_7CDC[1];
+                oVar6 = SceneManager.instance.staticObjects[1];
                 oVar6.flags = 3;
                 oVar6.DAT_2E = 0;
                 oVar6.DAT_48 = 2;
@@ -5365,7 +5365,7 @@ public class GameManager : MonoBehaviour
             SceneManager.sceneLoaded = false;
             tmpSkinned.Clear();
             tmpBones.Clear();
-            tmpSkinned.Add(SceneManager.instance.DAT_27C[10]);
+            tmpSkinned.Add(SceneManager.instance.skinnedObjects[10]);
             DontDestroyOnLoad(tmpSkinned[0].gameObject);
 
             for (int i = 0; i < SceneManager.instance.DAT_1C9C.Length; i++)
@@ -5444,7 +5444,7 @@ public class GameManager : MonoBehaviour
     private void FUN_7A604(CoroutineLoader param1)
     {
         if (param1.DAT_08 == 3)
-            FUN_5C94C(SceneManager.instance.DAT_27C[10], 241);
+            FUN_5C94C(SceneManager.instance.skinnedObjects[10], 241);
 
         InventoryManager.DAT_B7A60[0] = 0;
         DAT_2A++;
@@ -5527,10 +5527,10 @@ public class GameManager : MonoBehaviour
         CriStatic oVar7;
 
         CoroutineLoader param1 = loader;
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         dVar4 = DAT_A89A0[DAT_47];
         sVar5 = param1.DAT_04;
-        oVar7 = SceneManager.instance.DAT_7CDC[1];
+        oVar7 = SceneManager.instance.staticObjects[1];
 
         if (sVar5 == 1)
         {
@@ -5556,9 +5556,9 @@ public class GameManager : MonoBehaviour
                     param1.DAT_08 = 1;
                     param1.DAT_04++;
                     FUN_46C0C(0, 20, 1);
-                    oVar6 = SceneManager.instance.DAT_7CDC[0];
+                    oVar6 = SceneManager.instance.staticObjects[0];
                     oVar6.vr.y = -0x400;
-                    oVar6 = SceneManager.instance.DAT_7CDC[1];
+                    oVar6 = SceneManager.instance.staticObjects[1];
                     oVar6.screen.x = oVar2.screen.x;
                     oVar6.screen.z = oVar2.screen.z;
                     oVar6.vr.y = 0x800;
@@ -5598,7 +5598,7 @@ public class GameManager : MonoBehaviour
         CriPlayer oVar5;
 
         CoroutineLoader param1 = loader;
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         dVar4 = DAT_A89A0[DAT_47];
 
         switch (param1.DAT_04)
@@ -5614,9 +5614,9 @@ public class GameManager : MonoBehaviour
                 param1.DAT_08 = 1;
                 param1.DAT_04++;
                 FUN_46C0C(0, 20, 1);
-                oVar1 = SceneManager.instance.DAT_7CDC[0];
+                oVar1 = SceneManager.instance.staticObjects[0];
                 oVar1.vr.y = -0x400;
-                oVar1 = SceneManager.instance.DAT_7CDC[1];
+                oVar1 = SceneManager.instance.staticObjects[1];
                 oVar1.screen.x = oVar5.screen.x;
                 oVar1.screen.z = oVar5.screen.z;
                 oVar1.vr.y = 0x800;
@@ -5660,7 +5660,7 @@ public class GameManager : MonoBehaviour
 
         param1.DAT_04++;
         LAB_7ADF0:
-        oVar1 = SceneManager.instance.DAT_7CDC[1];
+        oVar1 = SceneManager.instance.staticObjects[1];
         oVar1.screen.y = oVar5.screen.y;
         SceneManager.instance.FUN_264C4(0, (short)oVar5.screen.x, (short)(oVar5.screen.y - 0x400), (short)oVar5.screen.z);
     }
@@ -5673,8 +5673,8 @@ public class GameManager : MonoBehaviour
         CriPlayer oVar4;
         CriStatic oVar5;
 
-        oVar5 = SceneManager.instance.DAT_7CDC[0];
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = SceneManager.instance.staticObjects[0];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         switch (param1.DAT_04)
         {
@@ -5763,8 +5763,8 @@ public class GameManager : MonoBehaviour
         CriBone oVar7;
 
         CoroutineLoader param1 = loader;
-        oVar1 = SceneManager.instance.DAT_7CDC[0];
-        oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = SceneManager.instance.staticObjects[0];
+        oVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         switch (param1.DAT_04)
         {
@@ -5886,7 +5886,7 @@ public class GameManager : MonoBehaviour
         int[] local_20;
 
         CoroutineLoader param1 = loader;
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         local_20 = new int[4] { 9, 23, 14, 15 };
 
         switch (param1.DAT_04)
@@ -5906,7 +5906,7 @@ public class GameManager : MonoBehaviour
                 if (DAT_9AA0 >> 8 == DAT_9ADC >> 8)
                 {
                     param1.DAT_08 = 3;
-                    oVar2 = SceneManager.instance.DAT_7CDC[1];
+                    oVar2 = SceneManager.instance.staticObjects[1];
 
                     if (DAT_47 == 73)
                         oVar2.flags = 0;
@@ -5915,9 +5915,9 @@ public class GameManager : MonoBehaviour
                 {
                     param1.DAT_08 = 4;
                     SceneManager.instance.FUN_26504(0, -0x3b0, -0xbe0, -0x700);
-                    oVar2 = SceneManager.instance.DAT_7CDC[1];
+                    oVar2 = SceneManager.instance.staticObjects[1];
                     oVar2.flags = 0;
-                    oVar2 = SceneManager.instance.DAT_7CDC[0];
+                    oVar2 = SceneManager.instance.staticObjects[0];
                     oVar2.DAT_48 = 2;
                     oVar2.DAT_4A = 1000;
                 }
@@ -5940,7 +5940,7 @@ public class GameManager : MonoBehaviour
                 break;
             case 3:
                 oVar5.FUN_60AB4();
-                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                oVar2 = SceneManager.instance.staticObjects[0];
                 sVar3 = (short)(oVar2.vr.y + local_20[(DAT_C7D4C ? 1 : 0) * 2 + 1]);
                 oVar2.vr.y = sVar3;
 
@@ -5951,9 +5951,9 @@ public class GameManager : MonoBehaviour
 
                 break;
             case 4:
-                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                oVar2 = SceneManager.instance.staticObjects[0];
                 oVar2.flags = 3;
-                oVar2 = SceneManager.instance.DAT_7CDC[1];
+                oVar2 = SceneManager.instance.staticObjects[1];
                 oVar2.vr.y = 0xab2;
                 SceneManager.instance.FUN_26504(0, 0x900, -0x3e0, 0x780);
                 oVar5.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar5.DAT_220 + 4), 1, 0, oVar5.DAT_220 + 4);
@@ -5961,7 +5961,7 @@ public class GameManager : MonoBehaviour
                 goto case 5;
             case 5:
                 oVar5.FUN_60AB4();
-                oVar2 = SceneManager.instance.DAT_7CDC[1];
+                oVar2 = SceneManager.instance.staticObjects[1];
                 oVar2.vr.y += local_20[(DAT_C7D4C ? 1 : 0) * 2 + 1];
 
                 if (param1.DAT_0C == 0)
@@ -6012,7 +6012,7 @@ public class GameManager : MonoBehaviour
                 if (oVar5.screen.z < 500)
                     SceneManager.instance.FUN_264C4(0, (short)oVar5.screen.x, (short)(oVar5.screen.y - 0x5dc), (short)oVar5.screen.z);
 
-                oVar2 = SceneManager.instance.DAT_7CDC[1];
+                oVar2 = SceneManager.instance.staticObjects[1];
                 sVar3 = (short)(oVar2.vr.y - 0x2e);
                 oVar2.vr.y = sVar3;
 
@@ -6043,7 +6043,7 @@ public class GameManager : MonoBehaviour
 
         CoroutineLoader param1 = loader;
         local_28 = new int[4] { 9, 23, 14, 15 };
-        oVar7 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar7 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         switch (param1.DAT_04)
         {
@@ -6062,7 +6062,7 @@ public class GameManager : MonoBehaviour
                 if (DAT_9AA0 >> 8 == DAT_9ADC >> 8)
                 {
                     param1.DAT_08 = 3;
-                    oVar2 = SceneManager.instance.DAT_7CDC[1];
+                    oVar2 = SceneManager.instance.staticObjects[1];
 
                     if (DAT_47 == 72)
                         oVar2.flags = 0;
@@ -6072,9 +6072,9 @@ public class GameManager : MonoBehaviour
                     param1.DAT_08 = 4;
                     SceneManager.instance.FUN_264C4(0, -0x3c0, -0x400, -0x500);
                     SceneManager.instance.FUN_26504(0, 0x240, -0x6c0, 0xc00);
-                    oVar2 = SceneManager.instance.DAT_7CDC[0];
+                    oVar2 = SceneManager.instance.staticObjects[0];
                     oVar2.flags = 0;
-                    oVar2 = SceneManager.instance.DAT_7CDC[1];
+                    oVar2 = SceneManager.instance.staticObjects[1];
                     oVar2.vr.y = 0x800;
                     oVar2.DAT_4A = 10;
                 }
@@ -6108,7 +6108,7 @@ public class GameManager : MonoBehaviour
                 break;
             case 3:
                 oVar7.FUN_60AB4();
-                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                oVar2 = SceneManager.instance.staticObjects[0];
 
                 if (param1.DAT_08 == 3)
                 {
@@ -6121,15 +6121,15 @@ public class GameManager : MonoBehaviour
                     goto LAB_7BF48;
                 }
 
-                oVar2 = SceneManager.instance.DAT_7CDC[1];
+                oVar2 = SceneManager.instance.staticObjects[1];
                 sVar4 = (short)(oVar2.vr.y + local_28[(DAT_C7D4C ? 1 : 0) * 2 + 1]);
                 oVar2.vr.y = sVar4;
                 bVar1 = sVar4 < 0xab3;
                 goto LAB_7BE80;
             case 4:
-                oVar2 = SceneManager.instance.DAT_7CDC[1];
+                oVar2 = SceneManager.instance.staticObjects[1];
                 oVar2.flags = 0;
-                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                oVar2 = SceneManager.instance.staticObjects[0];
                 oVar2.flags = 0;
                 oVar2.vr.y = 0x2b2;
                 SceneManager.instance.FUN_264C4(0, -0x3c0, -0x600, 0);
@@ -6159,7 +6159,7 @@ public class GameManager : MonoBehaviour
                     oVar7.DAT_1C0 ^= 2;
                 }
 
-                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                oVar2 = SceneManager.instance.staticObjects[0];
                 sVar4 = (short)(oVar2.vr.y + local_28[(DAT_C7D4C ? 1 : 0) * 2 + 1]);
                 oVar2.vr.y = sVar4;
                 bVar1 = sVar4 < 0x401;
@@ -6193,7 +6193,7 @@ public class GameManager : MonoBehaviour
                     oVar7.DAT_1C0 ^= 2;
                 }
 
-                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                oVar2 = SceneManager.instance.staticObjects[0];
                 sVar5 = (short)(oVar2.vr.y - 46);
                 oVar2.vr.y = sVar5;
 
@@ -6218,10 +6218,10 @@ public class GameManager : MonoBehaviour
         int[] local_28;
 
         CoroutineLoader param1 = loader;
-        oVar3 = SceneManager.instance.DAT_7CDC[0];
+        oVar3 = SceneManager.instance.staticObjects[0];
         local_28 = new int[4] { 9, 23, 14, 15 };
         sVar2 = param1.DAT_04;
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (sVar2 == 1)
         {
@@ -6291,8 +6291,8 @@ public class GameManager : MonoBehaviour
         CriPlayer oVar4;
         CriStatic oVar5;
 
-        oVar5 = SceneManager.instance.DAT_7CDC[0];
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = SceneManager.instance.staticObjects[0];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         switch (param1.DAT_04)
         {
@@ -6335,7 +6335,7 @@ public class GameManager : MonoBehaviour
             case 4:
                 oVar4.FUN_60AB4();
                 oVar5.screen.x -= param2;
-                SceneManager.instance.DAT_7CDC[1].screen.x += param2;
+                SceneManager.instance.staticObjects[1].screen.x += param2;
 
                 if (-param3 < oVar5.screen.x)
                     return;
@@ -6349,7 +6349,7 @@ public class GameManager : MonoBehaviour
                 oVar4.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar4.DAT_220 + 4), 1, 10, oVar4.DAT_220 + 4);
                 param1.DAT_04++;
                 oVar5.DAT_4A = 10;
-                SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
+                SceneManager.instance.staticObjects[1].DAT_4A = 10;
                 break;
             case 6:
                 oVar4.FUN_60AB4();
@@ -6385,7 +6385,7 @@ public class GameManager : MonoBehaviour
 
                 oVar4.screen.z = sVar3;
                 oVar5.screen.x += param2;
-                SceneManager.instance.DAT_7CDC[1].screen.x -= param2;
+                SceneManager.instance.staticObjects[1].screen.x -= param2;
 
                 if (oVar5.screen.x < 0)
                     return;
@@ -6420,8 +6420,8 @@ public class GameManager : MonoBehaviour
         CriBone oVar6;
 
         CoroutineLoader param1 = loader;
-        oVar2 = SceneManager.instance.DAT_7CDC[0];
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = SceneManager.instance.staticObjects[0];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         switch (param1.DAT_04)
         {
@@ -6446,7 +6446,7 @@ public class GameManager : MonoBehaviour
             case 3:
                 oVar5.FUN_60AB4();
                 oVar2.screen.x -= 50;
-                SceneManager.instance.DAT_7CDC[1].screen.x += 50;
+                SceneManager.instance.staticObjects[1].screen.x += 50;
 
                 if (-910 < oVar2.screen.x) break;
 
@@ -6457,7 +6457,7 @@ public class GameManager : MonoBehaviour
                 oVar5.FUN_609C8((TodScriptableObject)playerCore.objects[0x80192664], 9, 10, 0);
                 param1.DAT_04++;
                 oVar2.DAT_4A = 10;
-                SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
+                SceneManager.instance.staticObjects[1].DAT_4A = 10;
                 break;
             case 5:
                 oVar5.FUN_60AB4();
@@ -6539,9 +6539,9 @@ public class GameManager : MonoBehaviour
         CriPlayer oVar3;
 
         CoroutineLoader param1 = loader;
-        oVar1 = SceneManager.instance.DAT_7CDC[0];
+        oVar1 = SceneManager.instance.staticObjects[0];
         sVar2 = param1.DAT_04;
-        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (sVar2 == 1)
         {
@@ -6550,7 +6550,7 @@ public class GameManager : MonoBehaviour
                 param1.DAT_04++;
                 oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 4);
                 oVar1.DAT_4A = 10;
-                SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
+                SceneManager.instance.staticObjects[1].DAT_4A = 10;
             }
         }
         else
@@ -6565,8 +6565,8 @@ public class GameManager : MonoBehaviour
                     param1.DAT_04++;
                     oVar1.screen.x = -910;
                     oVar1.DAT_4A = 10;
-                    SceneManager.instance.DAT_7CDC[1].screen.x = 910;
-                    SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
+                    SceneManager.instance.staticObjects[1].screen.x = 910;
+                    SceneManager.instance.staticObjects[1].DAT_4A = 10;
                     FUN_46C0C(0, 20, 1);
                 }
             }
@@ -6602,7 +6602,7 @@ public class GameManager : MonoBehaviour
 
                         oVar3.screen.z = sVar2;
                         oVar1.screen.x += 70;
-                        SceneManager.instance.DAT_7CDC[1].screen.x -= 70;
+                        SceneManager.instance.staticObjects[1].screen.x -= 70;
 
                         if (-1 < oVar1.screen.x)
                             param1.DAT_02++;
@@ -6620,8 +6620,8 @@ public class GameManager : MonoBehaviour
         CriStatic oVar4;
 
         CoroutineLoader param1 = loader;
-        oVar4 = SceneManager.instance.DAT_7CDC[0];
-        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = SceneManager.instance.staticObjects[0];
+        oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         switch (param1.DAT_04)
         {
@@ -6660,8 +6660,8 @@ public class GameManager : MonoBehaviour
                 oVar3.FUN_60AB4();
                 oVar4.screen.y -= 100;
 
-                if (SceneManager.instance.DAT_7CDC[1].screen.y < 1000)
-                    SceneManager.instance.DAT_7CDC[1].screen.y += 100;
+                if (SceneManager.instance.staticObjects[1].screen.y < 1000)
+                    SceneManager.instance.staticObjects[1].screen.y += 100;
 
                 if (-1501 < oVar4.screen.y)
                     return;
@@ -6675,7 +6675,7 @@ public class GameManager : MonoBehaviour
                 oVar3.FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(oVar3.DAT_220 + 4), 1, 10, oVar3.DAT_220 + 4);
                 param1.DAT_04++;
                 oVar4.DAT_4A = 10;
-                SceneManager.instance.DAT_7CDC[1].DAT_4A = 10;
+                SceneManager.instance.staticObjects[1].DAT_4A = 10;
                 break;
             case 6:
                 oVar3.FUN_60AB4();
@@ -6702,8 +6702,8 @@ public class GameManager : MonoBehaviour
         CriPlayer oVar3;
         CriStatic oVar4;
 
-        oVar4 = SceneManager.instance.DAT_7CDC[0];
-        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = SceneManager.instance.staticObjects[0];
+        oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         switch (param1.DAT_04)
         {
@@ -6808,9 +6808,9 @@ public class GameManager : MonoBehaviour
         CriPlayer oVar4;
 
         CoroutineLoader param1 = loader;
-        oVar1 = SceneManager.instance.DAT_7CDC[0];
+        oVar1 = SceneManager.instance.staticObjects[0];
         sVar2 = param1.DAT_04;
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (sVar2 == 1)
         {
@@ -6891,7 +6891,7 @@ public class GameManager : MonoBehaviour
             new Vector2Int(14, 19), 
             new Vector2Int(14, 19)
         };
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar4.FUN_60AB4();
 
         if (param1.DAT_0C != 0)
@@ -6948,8 +6948,8 @@ public class GameManager : MonoBehaviour
         Vector3Int local_40;
         Matrix3x3 MStack56;
 
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
-        oVar2 = SceneManager.instance.DAT_7CDC[0];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
+        oVar2 = SceneManager.instance.staticObjects[0];
 
         switch (param1.DAT_04)
         {
@@ -7118,7 +7118,7 @@ public class GameManager : MonoBehaviour
             new Vector2Int(15, 19)
         };
         sVar1 = param1.DAT_04;
-        oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (sVar1 == 1)
         {
@@ -7132,7 +7132,7 @@ public class GameManager : MonoBehaviour
                 if (sVar1 == 0)
                 {
                     param1.DAT_08 = 2;
-                    oVar2 = SceneManager.instance.DAT_7CDC[0];
+                    oVar2 = SceneManager.instance.staticObjects[0];
                     oVar2.DAT_48 = 1;
                     param1.DAT_04++;
 
@@ -7245,9 +7245,9 @@ public class GameManager : MonoBehaviour
         CriPlayer oVar5;
 
         CoroutineLoader param1 = loader;
-        oVar1 = SceneManager.instance.DAT_7CDC[0];
+        oVar1 = SceneManager.instance.staticObjects[0];
         dVar4 = DAT_A89A0[DAT_47];
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (param1.DAT_04 == 0)
         {
@@ -7326,9 +7326,9 @@ public class GameManager : MonoBehaviour
         CriPlayer oVar5;
 
         CoroutineLoader param1 = loader;
-        oVar1 = SceneManager.instance.DAT_7CDC[0];
+        oVar1 = SceneManager.instance.staticObjects[0];
         dVar4 = DAT_A89A0[DAT_47];
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (param1.DAT_04 == 0)
         {
@@ -7402,8 +7402,8 @@ public class GameManager : MonoBehaviour
         CriPlayer oVar3;
 
         sVar1 = param1.DAT_04;
-        oVar2 = SceneManager.instance.DAT_7CDC[0];
-        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = SceneManager.instance.staticObjects[0];
+        oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (sVar1 == 1)
         {
@@ -7477,13 +7477,13 @@ public class GameManager : MonoBehaviour
         sVar2 = param1.DAT_04;
         local_28 = new CriStatic[4]
         {
-            SceneManager.instance.DAT_7CDC[0],
-            SceneManager.instance.DAT_7CDC[1],
-            SceneManager.instance.DAT_7CDC[2],
-            SceneManager.instance.DAT_7CDC[3]
+            SceneManager.instance.staticObjects[0],
+            SceneManager.instance.staticObjects[1],
+            SceneManager.instance.staticObjects[2],
+            SceneManager.instance.staticObjects[3]
         };
-        oVar4 = SceneManager.instance.DAT_7CDC[0];
-        oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = SceneManager.instance.staticObjects[0];
+        oVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (sVar2 == 1)
         {
@@ -7586,10 +7586,10 @@ public class GameManager : MonoBehaviour
 
         CoroutineLoader param1 = loader;
         sVar2 = param1.DAT_04;
-        oVar3 = SceneManager.instance.DAT_7CDC[1];
-        oVar5 = SceneManager.instance.DAT_7CDC[2];
-        oVar6 = SceneManager.instance.DAT_7CDC[3];
-        oVar8 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar3 = SceneManager.instance.staticObjects[1];
+        oVar5 = SceneManager.instance.staticObjects[2];
+        oVar6 = SceneManager.instance.staticObjects[3];
+        oVar8 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (sVar2 == 1)
         {
@@ -7611,7 +7611,7 @@ public class GameManager : MonoBehaviour
             if (sVar2 != 0)
                 return;
 
-            SceneManager.instance.DAT_7CDC[0].flags = 0;
+            SceneManager.instance.staticObjects[0].flags = 0;
             oVar3.flags = 0;
             param1.DAT_14 = new Vector3Int(0, 0, 0);
             FUN_5C94C(oVar8, 240);
@@ -7659,8 +7659,8 @@ public class GameManager : MonoBehaviour
 
         CoroutineLoader param1 = loader;
         sVar2 = param1.DAT_04;
-        oVar1 = SceneManager.instance.DAT_7CDC[0];
-        oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = SceneManager.instance.staticObjects[0];
+        oVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (sVar2 == 1)
         {
@@ -7779,7 +7779,7 @@ public class GameManager : MonoBehaviour
         CriStatic[] local_58;
 
         CoroutineLoader param1 = loader;
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         iVar7 = 0;
         local_58 = new CriStatic[16];
         bVar1 = DAT_47;
@@ -7787,7 +7787,7 @@ public class GameManager : MonoBehaviour
 
         do
         {
-            local_58[iVar7] = SceneManager.instance.DAT_7CDC[iVar7];
+            local_58[iVar7] = SceneManager.instance.staticObjects[iVar7];
             iVar7++;
         } while (iVar7 < 15);
 
@@ -7888,7 +7888,7 @@ public class GameManager : MonoBehaviour
 
         CoroutineLoader param1 = loader;
         sVar1 = param1.DAT_04;
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (sVar1 == 1)
         {
@@ -7979,9 +7979,9 @@ public class GameManager : MonoBehaviour
 
         //...
         
-        for (int i = 0; i < SceneManager.instance.DAT_27C.Length; i++)
+        for (int i = 0; i < SceneManager.instance.skinnedObjects.Length; i++)
         {
-            oVar2 = SceneManager.instance.DAT_27C[i];
+            oVar2 = SceneManager.instance.skinnedObjects[i];
 
             if ((oVar2.flags & 1) != 0)
                 oVar2.FUN_66208();
@@ -8014,6 +8014,7 @@ public class GameManager : MonoBehaviour
         }
 
         JobManager.instance.CompleteAll();
+        local_48 = 0;
 
         if (local_44 != 0)
         {
@@ -8027,6 +8028,9 @@ public class GameManager : MonoBehaviour
                 {
                     do
                     {
+                        if (b.cMesh != null)
+                            b.UpdateMesh();
+
                         oVar18.SetBoneTransform(b);
                         b = (CriBone)b.next;
                         index--;
@@ -8077,7 +8081,7 @@ public class GameManager : MonoBehaviour
 
         do
         {
-            pbVar3 = SceneManager.instance.DAT_27C[uVar5];
+            pbVar3 = SceneManager.instance.skinnedObjects[uVar5];
 
             if (pbVar3 != null && (pbVar3.flags & 2) != 0)
             {
@@ -8104,7 +8108,7 @@ public class GameManager : MonoBehaviour
                 pbVar4 = piVar6 + 1;
                 piVar6 += 2;
                 uVar5++;
-                skinnedList.Add(SceneManager.instance.DAT_27C[local_20[pbVar4]]);
+                skinnedList.Add(SceneManager.instance.skinnedObjects[local_20[pbVar4]]);
             } while (uVar5 < uVar7);
         }
 
@@ -8117,9 +8121,9 @@ public class GameManager : MonoBehaviour
         TmdScriptableObject puVar4;
         CriStatic puVar10;
 
-        for (int i = 0; i < sceneManager.DAT_7CDC.Length; i++)
+        for (int i = 0; i < sceneManager.staticObjects.Length; i++)
         {
-            puVar10 = sceneManager.DAT_7CDC[i] as CriStatic;
+            puVar10 = sceneManager.staticObjects[i] as CriStatic;
 
             if (puVar10 != null && (puVar10.flags & 3) == 3)
             {
@@ -8337,7 +8341,7 @@ public class GameManager : MonoBehaviour
 
         do
         {
-            piVar13 = SceneManager.instance.DAT_27C[puVar14];
+            piVar13 = SceneManager.instance.skinnedObjects[puVar14];
 
             if ((piVar13.flags & 2) != 0 && (piVar13.DAT_174 & 0x80) != 0)
             {
@@ -8450,11 +8454,21 @@ public class GameManager : MonoBehaviour
                 DAT_1f80007a = 0x5e;
                 DAT_1f800068 = new Color32(0x20, 0x20, 0x20, 0x2e);
                 //...
-                piVar13.AddShadows();
+                piVar13.ShadowJob();
             }
 
             puVar14++;
-        } while (puVar14 < SceneManager.instance.DAT_27C.Length);
+        } while (puVar14 < SceneManager.instance.skinnedObjects.Length);
+
+        JobManager.instance.CompleteAll();
+        puVar14 = 0;
+
+        do
+        {
+            piVar13 = SceneManager.instance.skinnedObjects[puVar14];
+            piVar13.UpdateMesh();
+            puVar14++;
+        } while (puVar14 < SceneManager.instance.skinnedObjects.Length);
     }
 
     private void FUN_72C2C()
@@ -8484,9 +8498,9 @@ public class GameManager : MonoBehaviour
         Coprocessor.translationVector._trz = 0;
         DAT_1f80002c = new Vector3Int(0, 0, 0);
 
-        for (int i = 0; i < sceneManager.DAT_27C.Length; i++)
+        for (int i = 0; i < sceneManager.skinnedObjects.Length; i++)
         {
-            pMVar12 = sceneManager.DAT_27C[i];
+            pMVar12 = sceneManager.skinnedObjects[i];
 
             if ((pMVar12.flags & 2) != 0)
             {
@@ -8514,9 +8528,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < sceneManager.DAT_7CDC.Length; i++)
+        for (int i = 0; i < sceneManager.staticObjects.Length; i++)
         {
-            puVar8 = sceneManager.DAT_7CDC[i];
+            puVar8 = sceneManager.staticObjects[i];
 
             if (puVar8 != null && (puVar8.flags & 2) != 0)
             {

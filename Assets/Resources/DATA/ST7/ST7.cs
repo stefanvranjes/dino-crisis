@@ -493,12 +493,12 @@ public class ST7 : LevelManager
 
         do
         {
-            local_78[piVar2] = SceneManager.instance.DAT_7CDC[iVar4];
+            local_78[piVar2] = SceneManager.instance.staticObjects[iVar4];
             piVar2++;
             iVar4++;
         } while (iVar4 < 5);
 
-        oVar7 = SceneManager.instance.DAT_7CDC[5];
+        oVar7 = SceneManager.instance.staticObjects[5];
         bVar4 = InventoryManager.FUN_4A87C(3, 0x20);
 
         if (!bVar4)
@@ -739,7 +739,7 @@ public class ST7 : LevelManager
 
         do
         {
-            local_30[piVar6] = SceneManager.instance.DAT_7CDC[iVar7];
+            local_30[piVar6] = SceneManager.instance.staticObjects[iVar7];
             piVar6++;
             iVar7++;
         } while (iVar7 < 5);
@@ -829,7 +829,7 @@ public class ST7 : LevelManager
 
         do
         {
-            local_48[piVar3] = SceneManager.instance.DAT_7CDC[iVar4];
+            local_48[piVar3] = SceneManager.instance.staticObjects[iVar4];
             piVar3++;
             iVar4++;
         } while (iVar4 < 5);
@@ -950,7 +950,7 @@ public class ST7 : LevelManager
 
         sVar2 = (sbyte)(param1.DAT_7A + 1);
         oVar4 = param1.PTR_68[param1.SDAT_78];
-        oVar3 = SceneManager.instance.DAT_7CDC[param1.SDAT_78 + 5];
+        oVar3 = SceneManager.instance.staticObjects[param1.SDAT_78 + 5];
         param1.DAT_7A = (byte)sVar2;
 
         if (sVar2 == 11)
@@ -967,7 +967,7 @@ public class ST7 : LevelManager
 
         if (-0x433 < sVar1)
         {
-            oVar3 = SceneManager.instance.DAT_7CDC[param1.SDAT_78 + 9];
+            oVar3 = SceneManager.instance.staticObjects[param1.SDAT_78 + 9];
             oVar3.flags |= 2;
             oVar4.screen.y = -0x433;
             GameManager.instance.FUN_5C860(145);
@@ -1001,7 +1001,7 @@ public class ST7 : LevelManager
         CriStatic oVar7;
 
         oVar6 = param1.PTR_68[param1.SDAT_78];
-        oVar7 = SceneManager.instance.DAT_7CDC[param1.SDAT_78 + 5];
+        oVar7 = SceneManager.instance.staticObjects[param1.SDAT_78 + 5];
         bVar4 = InventoryManager.FUN_4A87C(3, 0x2c);
 
         if (bVar4)
@@ -1058,7 +1058,7 @@ public class ST7 : LevelManager
 
         if (-0x433 < sVar3)
         {
-            oVar4 = SceneManager.instance.DAT_7CDC[param1.SDAT_78 + 9];
+            oVar4 = SceneManager.instance.staticObjects[param1.SDAT_78 + 9];
             oVar4.flags |= 2;
             oVar6.screen.y = -0x433;
             GameManager.instance.FUN_5C860(145);
@@ -1430,7 +1430,7 @@ public class ST7 : LevelManager
                 bVar1 = DAT_11B0C[iVar6 + 7];
                 oVar7.DAT_62 = bVar1;
                 oVar7.DAT_60 = bVar1;
-                oVar7.DAT_4C = SceneManager.instance.DAT_7CDC[param1.DAT_04];
+                oVar7.DAT_4C = SceneManager.instance.staticObjects[param1.DAT_04];
                 oVar7.DAT_40.x = DAT_11B0C[iVar6 + 8] << 0x18 >> 0x17;
                 oVar7.DAT_40.y = DAT_11B0C[iVar6 + 9] << 0x18 >> 0x17;
                 bVar1 = DAT_11B0C[iVar6 + 10];
@@ -1769,7 +1769,7 @@ public class ST7 : LevelManager
         {
             param1.PTR_10 = DAT_11BE0;
             param1.BDAT_0E = 49;
-            param1.PDAT_14 = SceneManager.instance.DAT_27C[param1.DAT_04];
+            param1.PDAT_14 = SceneManager.instance.skinnedObjects[param1.DAT_04];
         }
         else
         {
@@ -1814,7 +1814,7 @@ public class ST7 : LevelManager
         param1.FUN_609C8(0, 0, 0);
         param1.FUN_66404(0, 0x800, 0xc00);
         param1.FUN_66460(true);
-        oVar1 = SceneManager.instance.DAT_27C[10];
+        oVar1 = SceneManager.instance.skinnedObjects[10];
         param1.DAT_3A = param1.DAT_2F;
         param1.DAT_154 = oVar1;
         param1.PDAT_1D4 = PTR_DAT_12130[param1.DAT_3A].DAT_00;
@@ -2649,7 +2649,7 @@ public class ST7 : LevelManager
         SceneManager.instance.FUN_264C4(0, 0, -38, -750);
         oVar6 = SceneManager.instance.cCamera;
         iVar4 = 1;
-        oVar2 = SceneManager.instance.DAT_7CDC[0];
+        oVar2 = SceneManager.instance.staticObjects[0];
         oVar2.DAT_48 = 0;
         oVar6.DAT_36 = 200;
         oVar2.screen.z = 0xba4;
@@ -2657,7 +2657,7 @@ public class ST7 : LevelManager
 
         do
         {
-            SceneManager.instance.DAT_7CDC[iVar4].DAT_48 = 0;
+            SceneManager.instance.staticObjects[iVar4].DAT_48 = 0;
             iVar4++;
         } while (iVar4 < 8);
 
@@ -2674,7 +2674,7 @@ public class ST7 : LevelManager
                 DAT_12870[puVar5] = -1;
             else
             {
-                oVar3 = SceneManager.instance.DAT_7CDC[iVar6 + 1];
+                oVar3 = SceneManager.instance.staticObjects[iVar6 + 1];
                 iVar2 = iVar4;
 
                 if (iVar4 < 0)
@@ -2716,7 +2716,7 @@ public class ST7 : LevelManager
 
         if (bVar4)
         {
-            oVar4 = SceneManager.instance.DAT_7CDC[iVar6 + 1];
+            oVar4 = SceneManager.instance.staticObjects[iVar6 + 1];
             oVar4.screen.y = -6270;
             oVar4.screen.z = 3000;
             oVar4.screen.x = 0;
@@ -2910,13 +2910,13 @@ public class ST7 : LevelManager
         void FUN_9B7C()
         {
             param1.DAT_03 = 4;
-            SceneManager.instance.DAT_27C[10].flags |= 2;
+            SceneManager.instance.skinnedObjects[10].flags |= 2;
             InventoryManager.FUN_4A7E8(2, 0xb, true);
             iVar5 = 1;
 
             do
             {
-                SceneManager.instance.DAT_7CDC[iVar5].DAT_48 = 1;
+                SceneManager.instance.staticObjects[iVar5].DAT_48 = 1;
                 iVar5++;
             } while (iVar5 < 8);
 
@@ -3024,7 +3024,7 @@ public class ST7 : LevelManager
 
                             bVar1 = param1.DAT_1A;
                             bVar2 = param1.DAT_1B;
-                            oVar4 = SceneManager.instance.DAT_7CDC[bVar1];
+                            oVar4 = SceneManager.instance.staticObjects[bVar1];
                             oVar4.vr.x += DAT_125C8[bVar2];
                             LAB_B2C0:
                             param1.DAT_1B++;
@@ -3070,7 +3070,7 @@ public class ST7 : LevelManager
 
                             bVar1 = param1.DAT_1A;
                             bVar2 = param1.DAT_1B;
-                            oVar4 = SceneManager.instance.DAT_7CDC[bVar1];
+                            oVar4 = SceneManager.instance.staticObjects[bVar1];
                             oVar4.vr.x += DAT_125C8[bVar2];
                             param1.DAT_1B++;
                             break;
@@ -3078,17 +3078,17 @@ public class ST7 : LevelManager
                     }
 
                     param1.DAT_0D = (byte)(bVar1 + 1);
-                    oVar4 = SceneManager.instance.DAT_7CDC[0];
+                    oVar4 = SceneManager.instance.staticObjects[0];
                     oVar4.screen.z += 100;
 
                     if (param1.DAT_19 != 0)
                     {
-                        oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                        oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                         oVar4.screen.z += 100;
                     }
 
                     LAB_B2F8:
-                    oVar4 = SceneManager.instance.DAT_7CDC[0];
+                    oVar4 = SceneManager.instance.staticObjects[0];
                     iVar4 = oVar4.screen.y;
 
                     if (oVar4.screen.z == 0xba4 && -0x16a8 < iVar4)
@@ -3120,7 +3120,7 @@ public class ST7 : LevelManager
                             {
                                 if (param1.DAT_19 != 0)
                                 {
-                                    oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                    oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                     oVar4.vr.z += DAT_125C8[param1.DAT_1B];
                                 }
 
@@ -3171,7 +3171,7 @@ public class ST7 : LevelManager
                             {
                                 if (param1.DAT_19 != 0)
                                 {
-                                    oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                    oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                     oVar4.vr.z += DAT_125C8[param1.DAT_1B];
                                 }
 
@@ -3192,13 +3192,13 @@ public class ST7 : LevelManager
 
                     LAB_B1CC:
                     param1.DAT_0D = (byte)(bVar1 + 1);
-                    oVar4 = SceneManager.instance.DAT_7CDC[0];
+                    oVar4 = SceneManager.instance.staticObjects[0];
                     oVar4.screen.x -= 60;
 
                     if (param1.DAT_19 != 0)
                     {
-                        iVar4 = System.Array.IndexOf(SceneManager.instance.DAT_7CDC, oVar4);
-                        oVar4 = SceneManager.instance.DAT_7CDC[iVar4 + param1.DAT_1A];
+                        iVar4 = System.Array.IndexOf(SceneManager.instance.staticObjects, oVar4);
+                        oVar4 = SceneManager.instance.staticObjects[iVar4 + param1.DAT_1A];
                         oVar4.screen.x -= 60;
                     }
 
@@ -3245,7 +3245,7 @@ public class ST7 : LevelManager
 
                         bVar1 = param1.DAT_1A;
                         bVar2 = param1.DAT_1B;
-                        oVar4 = SceneManager.instance.DAT_7CDC[bVar1];
+                        oVar4 = SceneManager.instance.staticObjects[bVar1];
                         oVar4.vr.x += DAT_125C8[bVar2];
                         LAB_B2C0:
                         param1.DAT_1B++;
@@ -3253,12 +3253,12 @@ public class ST7 : LevelManager
                     }
 
                     param1.DAT_0D = (byte)(bVar1 + 1);
-                    oVar4 = SceneManager.instance.DAT_7CDC[0];
+                    oVar4 = SceneManager.instance.staticObjects[0];
                     oVar4.screen.z += 100;
 
                     if (param1.DAT_19 != 0)
                     {
-                        oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                        oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                         oVar4.screen.z += 100;
                     }
 
@@ -3276,7 +3276,7 @@ public class ST7 : LevelManager
 
                                     bVar1 = param1.DAT_0D;
                                     param1.DAT_0D = (byte)(bVar1 + 1);
-                                    oVar1 = SceneManager.instance.DAT_7CDC[0];
+                                    oVar1 = SceneManager.instance.staticObjects[0];
 
                                     if (bVar1 < 30)
                                         oVar1.screen.y += 110;
@@ -3308,7 +3308,7 @@ public class ST7 : LevelManager
                             case 1:
                                 bVar1 = param1.DAT_0D;
                                 param1.DAT_0D = (byte)(bVar1 + 1);
-                                oVar1 = SceneManager.instance.DAT_7CDC[0];
+                                oVar1 = SceneManager.instance.staticObjects[0];
 
                                 if (bVar1 < 10)
                                     oVar1.screen.x -= 45;
@@ -3319,7 +3319,7 @@ public class ST7 : LevelManager
                                 }
 
                                 LAB_B2F8_2:
-                                oVar1 = SceneManager.instance.DAT_7CDC[0];
+                                oVar1 = SceneManager.instance.staticObjects[0];
                                 iVar2 = oVar1.screen.y;
 
                                 if (oVar1.screen.z == 0xba4 && -0x16a8 < iVar2)
@@ -3330,7 +3330,7 @@ public class ST7 : LevelManager
                             case 2:
                                 bVar1 = param1.DAT_0D;
                                 param1.DAT_0D = (byte)(bVar1 + 1);
-                                oVar1 = SceneManager.instance.DAT_7CDC[0];
+                                oVar1 = SceneManager.instance.staticObjects[0];
 
                                 if (bVar1 < 7)
                                     oVar1.screen.y += 110;
@@ -3342,7 +3342,7 @@ public class ST7 : LevelManager
 
                                 goto LAB_B2F8_2;
                             case 3:
-                                oVar1 = SceneManager.instance.DAT_7CDC[0];
+                                oVar1 = SceneManager.instance.staticObjects[0];
 
                                 if (param1.DAT_0D < 10)
                                 {
@@ -3368,10 +3368,10 @@ public class ST7 : LevelManager
                                 if (param1.DAT_0D < 37)
                                 {
                                     param1.DAT_0D++;
-                                    oVar1 = SceneManager.instance.DAT_7CDC[0];
+                                    oVar1 = SceneManager.instance.staticObjects[0];
                                     oVar1.screen.y -= 110;
-                                    iVar1 = System.Array.IndexOf(SceneManager.instance.DAT_7CDC, oVar1);
-                                    oVar1 = SceneManager.instance.DAT_7CDC[iVar1 + param1.DAT_1A];
+                                    iVar1 = System.Array.IndexOf(SceneManager.instance.staticObjects, oVar1);
+                                    oVar1 = SceneManager.instance.staticObjects[iVar1 + param1.DAT_1A];
                                     oVar1.screen.y -= 110;
                                 }
                                 else
@@ -3385,7 +3385,7 @@ public class ST7 : LevelManager
 
                                     if (param1.DAT_1B < 20)
                                     {
-                                        oVar1 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                        oVar1 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                         oVar1.vr.z += DAT_125B4[param1.DAT_1B] << 0x18 >> 0x19;
                                         param1.DAT_1B++;
                                         break;
@@ -3451,7 +3451,7 @@ public class ST7 : LevelManager
 
                             bVar1 = param1.DAT_1A;
                             bVar2 = param1.DAT_1B;
-                            oVar5 = SceneManager.instance.DAT_7CDC[bVar1];
+                            oVar5 = SceneManager.instance.staticObjects[bVar1];
                             oVar5.vr.z += DAT_125B4[bVar2];
                             LAB_B2C0:
                             param1.DAT_1B++;
@@ -3493,7 +3493,7 @@ public class ST7 : LevelManager
 
                             bVar1 = param1.DAT_1A;
                             bVar2 = param1.DAT_1B;
-                            oVar5 = SceneManager.instance.DAT_7CDC[bVar1];
+                            oVar5 = SceneManager.instance.staticObjects[bVar1];
                             oVar5.vr.z += DAT_125B4[bVar2];
                             LAB_B2C0:
                             param1.DAT_1B++;
@@ -3502,13 +3502,13 @@ public class ST7 : LevelManager
                     }
 
                     param1.DAT_0D = (byte)(bVar1 + 1);
-                    oVar5 = SceneManager.instance.DAT_7CDC[0];
+                    oVar5 = SceneManager.instance.staticObjects[0];
                     oVar5.screen.x += 60;
 
                     if (param1.DAT_19 != 0)
                     {
-                        iVar5 = System.Array.IndexOf(SceneManager.instance.DAT_7CDC, oVar5);
-                        oVar5 = SceneManager.instance.DAT_7CDC[iVar5 + param1.DAT_1A];
+                        iVar5 = System.Array.IndexOf(SceneManager.instance.staticObjects, oVar5);
+                        oVar5 = SceneManager.instance.staticObjects[iVar5 + param1.DAT_1A];
                         oVar5.screen.x += 60;
                     }
 
@@ -3555,7 +3555,7 @@ public class ST7 : LevelManager
 
                         bVar1 = param1.DAT_1A;
                         bVar2 = param1.DAT_1B;
-                        oVar5 = SceneManager.instance.DAT_7CDC[bVar1];
+                        oVar5 = SceneManager.instance.staticObjects[bVar1];
                         oVar5.vr.z += DAT_125B4[bVar2];
                         LAB_B2C0:
                         param1.DAT_1B++;
@@ -3563,13 +3563,13 @@ public class ST7 : LevelManager
                     }
 
                     param1.DAT_0D = (byte)(bVar1 + 1);
-                    oVar5 = SceneManager.instance.DAT_7CDC[0];
+                    oVar5 = SceneManager.instance.staticObjects[0];
                     oVar5.screen.x += 60;
 
                     if (param1.DAT_19 != 0)
                     {
-                        iVar5 = System.Array.IndexOf(SceneManager.instance.DAT_7CDC, oVar5);
-                        oVar5 = SceneManager.instance.DAT_7CDC[iVar5 + param1.DAT_1A];
+                        iVar5 = System.Array.IndexOf(SceneManager.instance.staticObjects, oVar5);
+                        oVar5 = SceneManager.instance.staticObjects[iVar5 + param1.DAT_1A];
                         oVar5.screen.x += 60;
                     }
 
@@ -3632,7 +3632,7 @@ public class ST7 : LevelManager
                             {
                                 if (param1.DAT_19 != 0)
                                 {
-                                    oVar3 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                    oVar3 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                     oVar3.vr.x += DAT_125B4[param1.DAT_1B];
                                 }
 
@@ -3657,13 +3657,13 @@ public class ST7 : LevelManager
                     }
 
                     param1.DAT_0D = (byte)(bVar1 + 1);
-                    oVar3 = SceneManager.instance.DAT_7CDC[0];
+                    oVar3 = SceneManager.instance.staticObjects[0];
                     oVar3.screen.z -= 100;
 
                     if (param1.DAT_19 != 0)
                     {
-                        iVar3 = System.Array.IndexOf(SceneManager.instance.DAT_7CDC, oVar3);
-                        oVar3 = SceneManager.instance.DAT_7CDC[iVar3 + param1.DAT_1A];
+                        iVar3 = System.Array.IndexOf(SceneManager.instance.staticObjects, oVar3);
+                        oVar3 = SceneManager.instance.staticObjects[iVar3 + param1.DAT_1A];
                         oVar3.screen.z -= 100;
                     }
 
@@ -3692,7 +3692,7 @@ public class ST7 : LevelManager
                             {
                                 if (param1.DAT_19 != 0)
                                 {
-                                    oVar3 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                    oVar3 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                     oVar3.vr.x += DAT_125B4[param1.DAT_1B];
                                 }
 
@@ -3711,18 +3711,18 @@ public class ST7 : LevelManager
                         }
 
                         param1.DAT_0D = (byte)(bVar1 + 1);
-                        oVar3 = SceneManager.instance.DAT_7CDC[0];
+                        oVar3 = SceneManager.instance.staticObjects[0];
                         oVar3.screen.z -= 100;
 
                         if (param1.DAT_19 != 0)
                         {
-                            iVar3 = System.Array.IndexOf(SceneManager.instance.DAT_7CDC, oVar3);
-                            oVar3 = SceneManager.instance.DAT_7CDC[iVar3 + param1.DAT_1A];
+                            iVar3 = System.Array.IndexOf(SceneManager.instance.staticObjects, oVar3);
+                            oVar3 = SceneManager.instance.staticObjects[iVar3 + param1.DAT_1A];
                             oVar3.screen.z -= 100;
                         }
 
                         LAB_B2F8_3:
-                        oVar3 = SceneManager.instance.DAT_7CDC[0];
+                        oVar3 = SceneManager.instance.staticObjects[0];
                         iVar3 = oVar3.screen.y;
 
                         if (oVar3.screen.z == 0xba4 && -0x16a8 < iVar3)
@@ -3751,10 +3751,10 @@ public class ST7 : LevelManager
                                     if (param1.DAT_0D < 37)
                                     {
                                         param1.DAT_0D++;
-                                        oVar2 = SceneManager.instance.DAT_7CDC[0];
+                                        oVar2 = SceneManager.instance.staticObjects[0];
                                         oVar2.screen.y += 110;
-                                        iVar2 = System.Array.IndexOf(SceneManager.instance.DAT_7CDC, oVar2);
-                                        oVar2 = SceneManager.instance.DAT_7CDC[iVar2 + param1.DAT_1A];
+                                        iVar2 = System.Array.IndexOf(SceneManager.instance.staticObjects, oVar2);
+                                        oVar2 = SceneManager.instance.staticObjects[iVar2 + param1.DAT_1A];
                                         oVar2.screen.y += 110;
                                     }
                                     else
@@ -3777,7 +3777,7 @@ public class ST7 : LevelManager
                                         param1.BDAT_0C++;
                                     }
 
-                                    oVar2 = SceneManager.instance.DAT_7CDC[0];
+                                    oVar2 = SceneManager.instance.staticObjects[0];
                                     iVar2 = oVar2.screen.y;
 
                                     if (oVar2.screen.z == 0xba4 && -0x16a8 < iVar2)
@@ -3790,7 +3790,7 @@ public class ST7 : LevelManager
                             case 1:
                                 bVar1 = param1.DAT_0D;
                                 param1.DAT_0D = (byte)(bVar1 + 1);
-                                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                                oVar2 = SceneManager.instance.staticObjects[0];
 
                                 if (bVar1 < 10)
                                     oVar2.screen.x -= 45;
@@ -3801,7 +3801,7 @@ public class ST7 : LevelManager
                                 }
 
                                 LAB_B2F8_3:
-                                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                                oVar2 = SceneManager.instance.staticObjects[0];
                                 iVar2 = oVar2.screen.y;
 
                                 if (oVar2.screen.z == 0xba4 && -0x16a8 < iVar2)
@@ -3812,7 +3812,7 @@ public class ST7 : LevelManager
                             case 2:
                                 bVar1 = param1.DAT_0D;
                                 param1.DAT_0D = (byte)(bVar1 + 1);
-                                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                                oVar2 = SceneManager.instance.staticObjects[0];
 
                                 if (bVar1 < 7)
                                     oVar2.screen.y -= 110;
@@ -3826,7 +3826,7 @@ public class ST7 : LevelManager
                             case 3:
                                 bVar1 = param1.DAT_0D;
                                 param1.DAT_0D = (byte)(bVar1 + 1);
-                                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                                oVar2 = SceneManager.instance.staticObjects[0];
 
                                 if (bVar1 < 10)
                                     oVar2.screen.x += 45;
@@ -3842,7 +3842,7 @@ public class ST7 : LevelManager
                                 if (param1.DAT_0D < 30)
                                 {
                                     param1.DAT_0D++;
-                                    SceneManager.instance.DAT_7CDC[0].screen.y -= 110;
+                                    SceneManager.instance.staticObjects[0].screen.y -= 110;
                                 }
                                 else
                                 {
@@ -3873,7 +3873,7 @@ public class ST7 : LevelManager
                         }
                     }
 
-                    oVar1 = SceneManager.instance.DAT_7CDC[0];
+                    oVar1 = SceneManager.instance.staticObjects[0];
                     iVar1 = oVar1.screen.y;
 
                     if (oVar1.screen.z == 0xba4 && -0x16a8 < iVar1)
@@ -3906,7 +3906,7 @@ public class ST7 : LevelManager
                             {
                                 if (param1.DAT_19 != 0)
                                 {
-                                    oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                    oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                     oVar4.vr.x += DAT_125B4[param1.DAT_1B];
                                 }
 
@@ -3994,7 +3994,7 @@ public class ST7 : LevelManager
                                     {
                                         if (param1.DAT_19 != 0)
                                         {
-                                            oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                            oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                             oVar4.vr.x += DAT_125B4[param1.DAT_1B];
                                         }
 
@@ -4042,7 +4042,7 @@ public class ST7 : LevelManager
                             {
                                 if (param1.DAT_19 != 0)
                                 {
-                                    oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                    oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                     oVar4.vr.x += DAT_125B4[param1.DAT_1B];
                                 }
 
@@ -4063,13 +4063,13 @@ public class ST7 : LevelManager
 
                     LAB_B054:
                     param1.DAT_0D = (byte)sVar2;
-                    oVar4 = SceneManager.instance.DAT_7CDC[0];
+                    oVar4 = SceneManager.instance.staticObjects[0];
                     oVar4.screen.z -= 100;
 
                     if (param1.DAT_19 != 0)
                     {
-                        iVar4 = System.Array.IndexOf(SceneManager.instance.DAT_7CDC, oVar4);
-                        oVar4 = SceneManager.instance.DAT_7CDC[iVar4 + param1.DAT_1A];
+                        iVar4 = System.Array.IndexOf(SceneManager.instance.staticObjects, oVar4);
+                        oVar4 = SceneManager.instance.staticObjects[iVar4 + param1.DAT_1A];
                         oVar4.screen.z -= 100;
                     }
 
@@ -4083,7 +4083,7 @@ public class ST7 : LevelManager
                         {
                             param1.BDAT_0C = 0x80;
                             GameManager.instance.FUN_5C94C(null, 151);
-                            oVar4 = SceneManager.instance.DAT_7CDC[0];
+                            oVar4 = SceneManager.instance.staticObjects[0];
 
                             if (oVar4.screen.x < 0)
                                 bVar1 = (byte)(param1.BDAT_0C | 2);
@@ -4107,7 +4107,7 @@ public class ST7 : LevelManager
                         }
                         else
                         {
-                            oVar4 = SceneManager.instance.DAT_7CDC[0];
+                            oVar4 = SceneManager.instance.staticObjects[0];
 
                             if ((param1.BDAT_0C & 1) != 0)
                             {
@@ -4118,12 +4118,12 @@ public class ST7 : LevelManager
 
                                 if (param1.DAT_19 != 0)
                                 {
-                                    oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                    oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                     oVar4.screen.x -= 60;
                                 }
                             }
 
-                            oVar4 = SceneManager.instance.DAT_7CDC[0];
+                            oVar4 = SceneManager.instance.staticObjects[0];
 
                             if ((param1.BDAT_0C & 2) != 0)
                             {
@@ -4134,7 +4134,7 @@ public class ST7 : LevelManager
                             }
 
                             if (param1.DAT_19 != 0)
-                                SceneManager.instance.DAT_7CDC[param1.DAT_1A].screen.x = oVar4.screen.x;
+                                SceneManager.instance.staticObjects[param1.DAT_1A].screen.x = oVar4.screen.x;
 
                             if ((param1.BDAT_0C & 4) != 0)
                             {
@@ -4157,7 +4157,7 @@ public class ST7 : LevelManager
                             }
 
                             if (param1.DAT_19 != 0)
-                                SceneManager.instance.DAT_7CDC[param1.DAT_1A].screen.z = oVar4.screen.z + 20;
+                                SceneManager.instance.staticObjects[param1.DAT_1A].screen.z = oVar4.screen.z + 20;
 
                             if (oVar4.screen.x == 0 && oVar4.screen.z == 0xba4)
                             {
@@ -4174,25 +4174,25 @@ public class ST7 : LevelManager
                                     {
                                         if ((param1.BDAT_0C & 1) != 0)
                                         {
-                                            oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                            oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                             oVar4.vr.z += DAT_125C8[param1.DAT_1B];
                                         }
 
                                         if ((param1.BDAT_0C & 2) != 0)
                                         {
-                                            oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                            oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                             oVar4.vr.z += DAT_125B4[param1.DAT_1B];
                                         }
 
                                         if ((param1.BDAT_0C & 4) != 0)
                                         {
-                                            oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                            oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                             oVar4.vr.x += DAT_125C8[param1.DAT_1B];
                                         }
 
                                         if ((param1.BDAT_0C & 8) != 0)
                                         {
-                                            oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                            oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                             oVar4.vr.x += DAT_125B4[param1.DAT_1B];
                                         }
                                     }
@@ -4313,7 +4313,7 @@ public class ST7 : LevelManager
                         {
                             if (param1.DAT_19 != 0)
                             {
-                                oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                 oVar4.vr.x += DAT_125B4[param1.DAT_1B];
                             }
 
@@ -4362,7 +4362,7 @@ public class ST7 : LevelManager
                         {
                             if (param1.DAT_19 != 0)
                             {
-                                oVar4 = SceneManager.instance.DAT_7CDC[param1.DAT_1A];
+                                oVar4 = SceneManager.instance.staticObjects[param1.DAT_1A];
                                 oVar4.vr.z += DAT_125C8[param1.DAT_1B];
                             }
 
@@ -4385,7 +4385,7 @@ public class ST7 : LevelManager
             return;
         }
 
-        oVar1 = SceneManager.instance.DAT_7CDC[0];
+        oVar1 = SceneManager.instance.staticObjects[0];
         iVar1 = oVar1.screen.y;
 
         if (oVar1.screen.z == 0xba4 && -0x16a8 < iVar1)
@@ -5113,19 +5113,19 @@ public class ST7 : LevelManager
 
         do
         {
-            puVar2 = SceneManager.instance.DAT_7CDC[iVar4];
+            puVar2 = SceneManager.instance.staticObjects[iVar4];
             iVar4++;
             puVar2.screen.z = 0;
             puVar2.vr.y = 0;
             puVar2.flags |= 2;
         } while (iVar4 < 6);
 
-        puVar2 = SceneManager.instance.DAT_7CDC[0];
-        puVar5 = SceneManager.instance.DAT_7CDC[1];
-        puVar6 = SceneManager.instance.DAT_7CDC[2];
-        puVar7 = SceneManager.instance.DAT_7CDC[3];
-        puVar8 = SceneManager.instance.DAT_7CDC[4];
-        puVar9 = SceneManager.instance.DAT_7CDC[5];
+        puVar2 = SceneManager.instance.staticObjects[0];
+        puVar5 = SceneManager.instance.staticObjects[1];
+        puVar6 = SceneManager.instance.staticObjects[2];
+        puVar7 = SceneManager.instance.staticObjects[3];
+        puVar8 = SceneManager.instance.staticObjects[4];
+        puVar9 = SceneManager.instance.staticObjects[5];
         puVar2.screen.y = -340;
         puVar5.screen.y = -340;
         puVar2.screen.x = 640;
@@ -5192,7 +5192,7 @@ public class ST7 : LevelManager
                             param1.DAT_11 = bVar5;
                             param1.BDAT_0C = (byte)uVar7;
                             DAT_12998[param1.DAT_0F] = (sbyte)(iVar1 % 6);
-                            SceneManager.instance.DAT_7CDC[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_127A8[iVar1 & 6]);
+                            SceneManager.instance.staticObjects[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_127A8[iVar1 & 6]);
 
                             do
                             {
@@ -5203,7 +5203,7 @@ public class ST7 : LevelManager
                             bVar6 = (byte)(param1.DAT_10 | (1 << (int)(uVar7 & 31)));
                             param1.DAT_10 = bVar6;
                             param1.DAT_11 = bVar6;
-                            SceneManager.instance.DAT_7CDC[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x801095e8);
+                            SceneManager.instance.staticObjects[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x801095e8);
                         }
                         else
                         {
@@ -5219,7 +5219,7 @@ public class ST7 : LevelManager
                                     param1.DAT_11 = bVar5;
                                     param1.BDAT_0C = (byte)uVar7;
                                     DAT_12998[param1.DAT_0F] = (sbyte)(iVar1 % 6);
-                                    SceneManager.instance.DAT_7CDC[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_127A8[iVar1 % 6]);
+                                    SceneManager.instance.staticObjects[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_127A8[iVar1 % 6]);
                                 }
                             }
                             else
@@ -5233,7 +5233,7 @@ public class ST7 : LevelManager
                                     do
                                     {
                                         iVar4 = (int)(uVar7 + (iVar2 % 6) * 6);
-                                        SceneManager.instance.DAT_7CDC[uVar7++].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_127A8[DAT_127C4[iVar4]]);
+                                        SceneManager.instance.staticObjects[uVar7++].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_127A8[DAT_127C4[iVar4]]);
                                     } while (uVar7 < 6);
 
                                     DAT_12998[param1.DAT_0F] = (sbyte)DAT_127C4[iVar3 % 6 + (iVar2 % 6) * 6];
@@ -5253,7 +5253,7 @@ public class ST7 : LevelManager
                                     param1.DAT_11 = bVar5;
                                     param1.BDAT_0C = (byte)uVar7;
                                     DAT_12998[param1.DAT_0F] = (sbyte)(iVar1 % 6);
-                                    SceneManager.instance.DAT_7CDC[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_127A8[iVar1 % 6]);
+                                    SceneManager.instance.staticObjects[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_127A8[iVar1 % 6]);
 
                                     do
                                     {
@@ -5282,7 +5282,7 @@ public class ST7 : LevelManager
                             do
                             {
                                 if ((param1.DAT_10 >> (int)(uVar2 & 31) & 1) != 0)
-                                    SceneManager.instance.DAT_7CDC[uVar2].vr.y += param1.DAT_0D;
+                                    SceneManager.instance.staticObjects[uVar2].vr.y += param1.DAT_0D;
 
                                 uVar2++;
                             } while (uVar2 < 6);
@@ -5318,7 +5318,7 @@ public class ST7 : LevelManager
                             do
                             {
                                 if ((param1.DAT_11 >> (int)(uVar3 & 31) & 1) != 0)
-                                    SceneManager.instance.DAT_7CDC[uVar3].vr.y -= param1.DAT_0D;
+                                    SceneManager.instance.staticObjects[uVar3].vr.y -= param1.DAT_0D;
 
                                 uVar3++;
                             } while (uVar3 < 6);
@@ -5353,7 +5353,7 @@ public class ST7 : LevelManager
                         param1.BDAT_09 = (byte)(bVar1 + 1);
 
                         if (bVar1 < 7)
-                            SceneManager.instance.DAT_7CDC[param1.DAT_12].vr.y += param1.DAT_0D;
+                            SceneManager.instance.staticObjects[param1.DAT_12].vr.y += param1.DAT_0D;
                         else
                         {
                             param1.BDAT_09 = 0;
@@ -5367,7 +5367,7 @@ public class ST7 : LevelManager
                         param1.BDAT_09 = (byte)(bVar1 + 1);
 
                         if (bVar1 < 7)
-                            SceneManager.instance.DAT_7CDC[param1.DAT_0D].vr.y -= param1.DAT_0D;
+                            SceneManager.instance.staticObjects[param1.DAT_0D].vr.y -= param1.DAT_0D;
                         else
                         {
                             param1.BDAT_08 = 1;
@@ -5397,37 +5397,37 @@ public class ST7 : LevelManager
             if (29 < bVar1)
             {
                 GameManager.instance.FUN_46C0C(0, 20, 1);
-                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                oVar2 = SceneManager.instance.staticObjects[0];
                 oVar2.screen.x = 430;
                 oVar2.screen.y = -40;
                 oVar2.screen.z = -1240;
                 oVar2.vr.y = 0x800;
                 oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x8010999c);
-                oVar2 = SceneManager.instance.DAT_7CDC[1];
+                oVar2 = SceneManager.instance.staticObjects[1];
                 oVar2.screen.x = -360;
                 oVar2.screen.y = -40;
                 oVar2.screen.z = -1240;
                 oVar2.vr.y = 0x800;
                 oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x80109d50);
-                oVar2 = SceneManager.instance.DAT_7CDC[2];
+                oVar2 = SceneManager.instance.staticObjects[2];
                 oVar2.screen.x = -1160;
                 oVar2.screen.y = -40;
                 oVar2.screen.z = -1240;
                 oVar2.vr.y = 0x800;
                 oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x8010a104);
-                oVar2 = SceneManager.instance.DAT_7CDC[3];
+                oVar2 = SceneManager.instance.staticObjects[3];
                 oVar2.screen.x = 430;
                 oVar2.screen.y = 728;
                 oVar2.screen.z = -1240;
                 oVar2.vr.y = 0x800;
                 oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x8010a4b8);
-                oVar2 = SceneManager.instance.DAT_7CDC[4];
+                oVar2 = SceneManager.instance.staticObjects[4];
                 oVar2.screen.x = -360;
                 oVar2.screen.y = 728;
                 oVar2.screen.z = -1240;
                 oVar2.vr.y = 0x800;
                 oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x8010a86c);
-                oVar2 = SceneManager.instance.DAT_7CDC[5];
+                oVar2 = SceneManager.instance.staticObjects[5];
                 oVar2.screen.x = -1160;
                 oVar2.screen.y = 728;
                 oVar2.screen.z = -1240;
@@ -5483,7 +5483,7 @@ public class ST7 : LevelManager
 
             if (bVar2 < 0x10)
             {
-                SceneManager.instance.DAT_7CDC[param1.DAT_13].vr.y += 0x100;
+                SceneManager.instance.staticObjects[param1.DAT_13].vr.y += 0x100;
                 return;
             }
 
@@ -5583,12 +5583,12 @@ public class ST7 : LevelManager
                     GameManager.instance.FUN_5C94C(null, 146);
                     bVar4 = (byte)FUN_FC2C();
                     param1.DAT_03 = (sbyte)bVar4;
-                    SceneManager.instance.DAT_7CDC[0].flags &= 0xfffffffd;
-                    SceneManager.instance.DAT_7CDC[1].flags &= 0xfffffffd;
-                    SceneManager.instance.DAT_7CDC[2].flags &= 0xfffffffd;
-                    SceneManager.instance.DAT_7CDC[3].flags &= 0xfffffffd;
-                    SceneManager.instance.DAT_7CDC[4].flags &= 0xfffffffd;
-                    SceneManager.instance.DAT_7CDC[5].flags &= 0xfffffffd;
+                    SceneManager.instance.staticObjects[0].flags &= 0xfffffffd;
+                    SceneManager.instance.staticObjects[1].flags &= 0xfffffffd;
+                    SceneManager.instance.staticObjects[2].flags &= 0xfffffffd;
+                    SceneManager.instance.staticObjects[3].flags &= 0xfffffffd;
+                    SceneManager.instance.staticObjects[4].flags &= 0xfffffffd;
+                    SceneManager.instance.staticObjects[5].flags &= 0xfffffffd;
                     param1.BDAT_08 = 0;
                     param1.BDAT_09 = 0;
                     return;
@@ -5748,7 +5748,7 @@ public class ST7 : LevelManager
         uint uVar3;
 
         Utilities.RotMatrix(ref param1.vr, ref param1.cTransform.rotation);
-        oVar1 = SceneManager.instance.DAT_27C[10];
+        oVar1 = SceneManager.instance.skinnedObjects[10];
 
         if ((InventoryManager.DAT_B7A60[0] & 2) == 0)
         {

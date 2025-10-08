@@ -2434,7 +2434,7 @@ public class DialogManager : MonoBehaviour
 
         InventoryManager.FUN_4A7E8(1, 11, true);
         tVar1 = (Trigger3)param1;
-        SceneManager.instance.DAT_27C[10].DAT_3C = 1;
+        SceneManager.instance.skinnedObjects[10].DAT_3C = 1;
         FUN_1E2D8(SceneManager.instance.scn.endBuffer,
             (tVar1.DAT_18 - SceneManager.instance.scn.bufferOffset) / 2, 0, (ushort)tVar1.DAT_1C);
         return false;
@@ -2486,7 +2486,7 @@ public class DialogManager : MonoBehaviour
             tVar5.DAT_1A = uVar2;
         }
 
-        if (tVar5.DAT_24 == 0 || (SceneManager.instance.DAT_7CDC[tVar5.DAT_1E].flags & 2) != 0)
+        if (tVar5.DAT_24 == 0 || (SceneManager.instance.staticObjects[tVar5.DAT_1E].flags & 2) != 0)
         {
             if (tVar5.DAT_1F == 0)
             {
@@ -2510,7 +2510,7 @@ public class DialogManager : MonoBehaviour
         tVar1 = (Trigger7)param1;
         InventoryManager.FUN_4A7E8(1, 0xb, true);
         param1.DAT_13 = false;
-        ((CriPlayer)SceneManager.instance.DAT_27C[10]).FUN_5397C(tVar1.DAT_18);
+        ((CriPlayer)SceneManager.instance.skinnedObjects[10]).FUN_5397C(tVar1.DAT_18);
         GameManager.instance.FUN_5C94C(null, tVar1.DAT_19);
         return false;
     }
@@ -2521,7 +2521,7 @@ public class DialogManager : MonoBehaviour
         CriPlayer oVar4;
 
         InventoryManager.FUN_4A7E8(1, 0xb, true);
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (oVar4.DAT_177 == 0)
         {
@@ -2727,7 +2727,7 @@ public class DialogManager : MonoBehaviour
         Trigger12 tVar2;
 
         tVar2 = (Trigger12)param1;
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         switch (DAT_B1390)
         {
             case 0:
@@ -2847,7 +2847,7 @@ public class DialogManager : MonoBehaviour
         Trigger6 tVar3;
 
         tVar3 = (Trigger6)param1;
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_B1390 == 1)
         {
@@ -3049,7 +3049,7 @@ public class DialogManager : MonoBehaviour
         Trigger6 tVar3;
 
         tVar3 = (Trigger6)param1;
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_B1390 == 1)
         {
@@ -3122,7 +3122,7 @@ public class DialogManager : MonoBehaviour
         Trigger6 tVar2;
 
         tVar2 = (Trigger6)param1;
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_B1390 == 1)
         {
@@ -3260,7 +3260,7 @@ public class DialogManager : MonoBehaviour
         InventoryManager.FUN_4A7E8(2, 0xf, true);
 
         if (param1.DAT_1E != 0xff)
-            SceneManager.instance.DAT_7CDC[param1.DAT_1E].ResetValues();
+            SceneManager.instance.staticObjects[param1.DAT_1E].ResetValues();
 
         //...
     }

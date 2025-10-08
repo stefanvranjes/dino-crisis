@@ -695,7 +695,7 @@ public class ST8 : LevelManager
         short sVar7;
         uint uVar8;
 
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         sVar1 = (sbyte)oVar4.DAT_1D7;
         param1.BDAT_08 = (byte)sVar1;
 
@@ -771,7 +771,7 @@ public class ST8 : LevelManager
         Matrix3x3 auStack56;
         Vector3Int local_18;
 
-        oVar2 = SceneManager.instance.DAT_27C[10];
+        oVar2 = SceneManager.instance.skinnedObjects[10];
         auStack56 = new Matrix3x3();
         Utilities.RotMatrix(ref oVar2.vr, ref auStack56);
 
@@ -806,7 +806,7 @@ public class ST8 : LevelManager
         Matrix3x3 auStack56;
         Vector3Int local_18;
 
-        oVar2 = SceneManager.instance.DAT_27C[10];
+        oVar2 = SceneManager.instance.skinnedObjects[10];
         auStack56 = new Matrix3x3();
         Utilities.RotMatrix(ref oVar2.vr, ref auStack56);
 
@@ -840,7 +840,7 @@ public class ST8 : LevelManager
         ushort uVar3;
         CriPlayer oVar4;
 
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar4.DAT_3C = 1;
         oVar4.DAT_3D = 0;
         oVar4.DAT_3E = 0;
@@ -1411,7 +1411,7 @@ public class ST8 : LevelManager
         CriBone oVar1;
         CriStatic oVar2;
 
-        oVar1 = Utilities.FUN_601C8(SceneManager.instance.DAT_27C[param1.DAT_04].skeleton, 3) as CriBone;
+        oVar1 = Utilities.FUN_601C8(SceneManager.instance.skinnedObjects[param1.DAT_04].skeleton, 3) as CriBone;
         oVar2 = SceneManager.instance.FUN_5FE78();
 
         if (oVar2 != null)
@@ -1442,7 +1442,7 @@ public class ST8 : LevelManager
         if (bVar1)
         {
             oVar2 = (CriStatic)param1.PDAT_08;
-            oVar3 = Utilities.FUN_601C8(SceneManager.instance.DAT_27C[param1.DAT_04].skeleton, 3) as CriBone;
+            oVar3 = Utilities.FUN_601C8(SceneManager.instance.skinnedObjects[param1.DAT_04].skeleton, 3) as CriBone;
             oVar2.DAT_40 = null;
             local_18 = Utilities.ApplyMatrixSV(ref oVar3.cTransform.rotation, ref oVar2.screen);
             oVar2.screen.x += local_18.x;
@@ -1517,7 +1517,7 @@ public class ST8 : LevelManager
         CriInteract puVar3;
 
         bVar1 = InventoryManager.FUN_4A87C(3, 0x38);
-        oVar2 = SceneManager.instance.DAT_27C[10];
+        oVar2 = SceneManager.instance.skinnedObjects[10];
 
         if (bVar1)
         {
@@ -1551,7 +1551,7 @@ public class ST8 : LevelManager
         CriPlayer oVar2;
         bool bVar3;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar1 = (CriBone)Utilities.FUN_601C8(oVar2.skeleton, 3);
 
         if (param1.BDAT_08 != oVar2.DAT_240 || oVar1.cMesh == DAT_12AB0)
@@ -1581,7 +1581,7 @@ public class ST8 : LevelManager
         CriBone oVar2;
         uint uVar3;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar2 = Utilities.FUN_601C8(oVar1.skeleton, 3) as CriBone;
 
         if (oVar1.DAT_240 >> 4 == 0)
@@ -3261,29 +3261,29 @@ public class ST8 : LevelManager
 
         do
         {
-            oVar1 = SceneManager.instance.DAT_7CDC[iVar4];
+            oVar1 = SceneManager.instance.staticObjects[iVar4];
             iVar4++;
             oVar1.screen.x = 0;
             oVar1.vr.y = 0;
             oVar1.flags |= 2;
         } while (iVar4 < 6);
 
-        oVar1 = SceneManager.instance.DAT_7CDC[0];
+        oVar1 = SceneManager.instance.staticObjects[0];
         oVar1.screen.y = -340;
         oVar1.screen.x = 640;
-        oVar1 = SceneManager.instance.DAT_7CDC[1];
+        oVar1 = SceneManager.instance.staticObjects[1];
         oVar1.screen.y = -340;
         oVar1.screen.x = 0;
-        oVar1 = SceneManager.instance.DAT_7CDC[2];
+        oVar1 = SceneManager.instance.staticObjects[2];
         oVar1.screen.y = -340;
         oVar1.screen.x = -640;
-        oVar1 = SceneManager.instance.DAT_7CDC[3];
+        oVar1 = SceneManager.instance.staticObjects[3];
         oVar1.screen.y = 410;
         oVar1.screen.x = 640;
-        oVar1 = SceneManager.instance.DAT_7CDC[4];
+        oVar1 = SceneManager.instance.staticObjects[4];
         oVar1.screen.y = 410;
         oVar1.screen.x = 0;
-        oVar1 = SceneManager.instance.DAT_7CDC[5];
+        oVar1 = SceneManager.instance.staticObjects[5];
         oVar1.screen.y = 410;
         oVar1.screen.x = -640;
         param1.DAT_03 = 1;
@@ -3342,7 +3342,7 @@ public class ST8 : LevelManager
                             param1.DAT_11 = bVar5;
                             param1.BDAT_0C = (byte)uVar7;
                             DAT_12B8C[param1.DAT_0F] = (sbyte)(iVar1 % 6);
-                            SceneManager.instance.DAT_7CDC[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_123F0[iVar1 % 6]);
+                            SceneManager.instance.staticObjects[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_123F0[iVar1 % 6]);
 
                             do
                             {
@@ -3353,7 +3353,7 @@ public class ST8 : LevelManager
                             bVar6 = (byte)(param1.DAT_10 | (1 << (int)(uVar7 & 0x1f)));
                             param1.DAT_10 = bVar6;
                             param1.DAT_11 = bVar6;
-                            SceneManager.instance.DAT_7CDC[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x8010001c);
+                            SceneManager.instance.staticObjects[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x8010001c);
                         }
                         else
                         {
@@ -3369,7 +3369,7 @@ public class ST8 : LevelManager
                                     param1.DAT_11 = bVar5;
                                     param1.BDAT_0C = (byte)uVar7;
                                     DAT_12B8C[param1.DAT_0F] = (sbyte)(iVar1 % 6);
-                                    SceneManager.instance.DAT_7CDC[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_123F0[iVar1 % 6]);
+                                    SceneManager.instance.staticObjects[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_123F0[iVar1 % 6]);
                                 }
                             }
                             else
@@ -3382,7 +3382,7 @@ public class ST8 : LevelManager
 
                                     do
                                     {
-                                        oVar1 = SceneManager.instance.DAT_7CDC[uVar7];
+                                        oVar1 = SceneManager.instance.staticObjects[uVar7];
                                         iVar4 = (int)uVar7 + (iVar2 % 6) * 6;
                                         uVar7++;
                                         oVar1.cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_123F0[DAT_1240C[iVar4]]);
@@ -3405,7 +3405,7 @@ public class ST8 : LevelManager
                                     param1.DAT_11 = bVar5;
                                     param1.BDAT_0C = (byte)uVar7;
                                     DAT_12B8C[param1.DAT_0F] = (sbyte)(iVar1 % 6);
-                                    SceneManager.instance.DAT_7CDC[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_123F0[iVar1 % 6]);
+                                    SceneManager.instance.staticObjects[uVar7].cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_123F0[iVar1 % 6]);
 
                                     do
                                     {
@@ -3431,7 +3431,7 @@ public class ST8 : LevelManager
 
                             do
                             {
-                                oVar3 = SceneManager.instance.DAT_7CDC[uVar2];
+                                oVar3 = SceneManager.instance.staticObjects[uVar2];
 
                                 if ((param1.DAT_10 >> (int)(uVar2 & 0x1f) & 1) != 0)
                                     oVar3.vr.y += param1.DAT_0D;
@@ -3470,7 +3470,7 @@ public class ST8 : LevelManager
 
                             do
                             {
-                                oVar4 = SceneManager.instance.DAT_7CDC[uVar3];
+                                oVar4 = SceneManager.instance.staticObjects[uVar3];
 
                                 if ((param1.DAT_11 >> (int)(uVar3 & 0x1f) & 1) != 0)
                                     oVar4.vr.y -= param1.DAT_0D;
@@ -3505,7 +3505,7 @@ public class ST8 : LevelManager
 
                             do
                             {
-                                oVar3 = SceneManager.instance.DAT_7CDC[uVar2];
+                                oVar3 = SceneManager.instance.staticObjects[uVar2];
 
                                 if ((param1.DAT_10 >> (int)(uVar2 & 0x1f) & 1) != 0)
                                     oVar3.vr.y += param1.DAT_0D;
@@ -3531,7 +3531,7 @@ public class ST8 : LevelManager
 
                             do
                             {
-                                oVar3 = SceneManager.instance.DAT_7CDC[uVar2];
+                                oVar3 = SceneManager.instance.staticObjects[uVar2];
 
                                 if ((param1.DAT_11 >> (int)(uVar2 & 0x1f) & 1) != 0)
                                     oVar3.vr.y -= param1.DAT_0D;
@@ -3554,7 +3554,7 @@ public class ST8 : LevelManager
 
                         if (bVar1 < 7)
                         {
-                            oVar2 = SceneManager.instance.DAT_7CDC[param1.DAT_12];
+                            oVar2 = SceneManager.instance.staticObjects[param1.DAT_12];
                             oVar2.vr.y += param1.DAT_0D;
                         }
                         else
@@ -3586,27 +3586,27 @@ public class ST8 : LevelManager
             if (29 < bVar1)
             {
                 GameManager.instance.FUN_46C0C(0, 20, 1);
-                oVar2 = SceneManager.instance.DAT_7CDC[0];
+                oVar2 = SceneManager.instance.staticObjects[0];
                 oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x801003d0);
                 oVar2.screen = new Vector3Int(430, -40, -1240);
                 oVar2.vr.y = 0x800;
-                oVar2 = SceneManager.instance.DAT_7CDC[1];
+                oVar2 = SceneManager.instance.staticObjects[1];
                 oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x80100784);
                 oVar2.screen = new Vector3Int(-360, -40, -1240);
                 oVar2.vr.y = 0x800;
-                oVar2 = SceneManager.instance.DAT_7CDC[2];
+                oVar2 = SceneManager.instance.staticObjects[2];
                 oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x80100b38);
                 oVar2.screen = new Vector3Int(-1160, -40, -1240);
                 oVar2.vr.y = 0x800;
-                oVar2 = SceneManager.instance.DAT_7CDC[3];
+                oVar2 = SceneManager.instance.staticObjects[3];
                 oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x80100eec);
                 oVar2.screen = new Vector3Int(430, 728, -1240);
                 oVar2.vr.y = 0x800;
-                oVar2 = SceneManager.instance.DAT_7CDC[4];
+                oVar2 = SceneManager.instance.staticObjects[4];
                 oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x801012a0);
                 oVar2.screen = new Vector3Int(-360, 728, -1240);
                 oVar2.vr.y = 0x800;
-                oVar2 = SceneManager.instance.DAT_7CDC[5];
+                oVar2 = SceneManager.instance.staticObjects[5];
                 oVar2.cMesh = (TmdScriptableObject)Utilities.GetRamObject(0x80101654);
                 oVar2.screen = new Vector3Int(-1160, 728, -1240);
                 oVar2.vr.y = 0x800;
@@ -3662,7 +3662,7 @@ public class ST8 : LevelManager
 
             if (bVar2 < 16)
             {
-                oVar5 = SceneManager.instance.DAT_7CDC[param1.DAT_13];
+                oVar5 = SceneManager.instance.staticObjects[param1.DAT_13];
                 oVar5.vr.y += 0x100;
                 return;
             }
@@ -3762,12 +3762,12 @@ public class ST8 : LevelManager
                 {
                     GameManager.instance.FUN_5C94C(null, 146);
                     sVar4 = (sbyte)FUN_9BA4();
-                    SceneManager.instance.DAT_7CDC[0].flags &= 0xfffffffd;
-                    SceneManager.instance.DAT_7CDC[1].flags &= 0xfffffffd;
-                    SceneManager.instance.DAT_7CDC[2].flags &= 0xfffffffd;
-                    SceneManager.instance.DAT_7CDC[3].flags &= 0xfffffffd;
-                    SceneManager.instance.DAT_7CDC[4].flags &= 0xfffffffd;
-                    SceneManager.instance.DAT_7CDC[5].flags &= 0xfffffffd;
+                    SceneManager.instance.staticObjects[0].flags &= 0xfffffffd;
+                    SceneManager.instance.staticObjects[1].flags &= 0xfffffffd;
+                    SceneManager.instance.staticObjects[2].flags &= 0xfffffffd;
+                    SceneManager.instance.staticObjects[3].flags &= 0xfffffffd;
+                    SceneManager.instance.staticObjects[4].flags &= 0xfffffffd;
+                    SceneManager.instance.staticObjects[5].flags &= 0xfffffffd;
                     param1.BDAT_08 = 0;
                     param1.BDAT_09 = 0;
                     return;
@@ -5695,7 +5695,7 @@ public class ST8 : LevelManager
     //FUN_A68 (ST8)
     public static void FUN_A68(CriInteract param1)
     {
-        ((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_1C0 &= 0xfffffffe;
+        ((CriPlayer)SceneManager.instance.skinnedObjects[10]).DAT_1C0 &= 0xfffffffe;
         instance.PTR_FUN_1208C[param1.DAT_03](param1);
     }
 

@@ -66,7 +66,7 @@ public class LevelManager : MonoBehaviour
 
         do
         {
-            pcVar1 = SceneManager.instance.DAT_7CDC[iVar2];
+            pcVar1 = SceneManager.instance.staticObjects[iVar2];
 
             if ((pcVar1.flags & 1) != 0)
                 PTR_FUN_C2570[pcVar1.DAT_2E](pcVar1);
@@ -104,7 +104,7 @@ public class LevelManager : MonoBehaviour
 
         do
         {
-            pbVar1 = (CriPlayer)SceneManager.instance.DAT_27C[iVar2];
+            pbVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[iVar2];
 
             if ((pbVar1.flags & 1) != 0)
                 PTR_FUN_B58C0[pbVar1.tags](pbVar1);
@@ -156,7 +156,7 @@ public class LevelManager : MonoBehaviour
 
         do
         {
-            puVar1 = (CriPlayer)SceneManager.instance.DAT_27C[iVar2];
+            puVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[iVar2];
             iVar3--;
 
             if ((puVar1.flags & 1) == 0)

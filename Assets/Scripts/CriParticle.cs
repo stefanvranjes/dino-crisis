@@ -575,7 +575,7 @@ public class CriParticle : CriObject
 
     private void FUN_45304()
     {
-        if ((SceneManager.instance.DAT_7CDC[DAT_68].flags & 1) == 0)
+        if ((SceneManager.instance.staticObjects[DAT_68].flags & 1) == 0)
             DAT_3C++;
     }
 
@@ -730,7 +730,7 @@ public class CriParticle : CriObject
 
         local_20 = new Vector3Int(60, -40, -30);
         DAT_56 = 62;
-        oVar1 = SceneManager.instance.DAT_27C[10];
+        oVar1 = SceneManager.instance.skinnedObjects[10];
         DAT_54 += 0x7df0;
         local_18 = new Vector3Int(0, oVar1.vr.y & 0xfff, 0);
         Utilities.RotMatrix(ref local_18, ref oVar1.cTransform.rotation);
@@ -983,7 +983,7 @@ public class CriParticle : CriObject
         CriSkinned oVar1;
         ushort uVar2;
 
-        oVar1 = SceneManager.instance.DAT_27C[10];
+        oVar1 = SceneManager.instance.skinnedObjects[10];
         FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(0x8019e5c8));
         DAT_56 = 0x7e;
         DAT_54 = 0x7df8;
@@ -1043,7 +1043,7 @@ public class CriParticle : CriObject
 
         if (DAT_78 != -1)
         {
-            oVar6 = SceneManager.instance.DAT_27C[DAT_78];
+            oVar6 = SceneManager.instance.skinnedObjects[DAT_78];
             oVar7 = Utilities.FUN_601C8(oVar6.skeleton, oVar6.DAT_175 & 15);
             sVar4 = Utilities.FUN_51C8C(screen, oVar7.screen, DAT_70.y, 0x10);
             DAT_70.y += sVar4;
@@ -1139,7 +1139,7 @@ public class CriParticle : CriObject
 
         if (param1 == 8)
         {
-            oVar1 = SceneManager.instance.DAT_27C[(param2 & 0xffff) >> 8];
+            oVar1 = SceneManager.instance.skinnedObjects[(param2 & 0xffff) >> 8];
 
             if ((oVar1.DAT_11E & 0x40) == 0)
             {
@@ -1169,7 +1169,7 @@ public class CriParticle : CriObject
 
         if (param1 == 8)
         {
-            oVar2 = SceneManager.instance.DAT_27C[(param2 & 0xffff) >> 8];
+            oVar2 = SceneManager.instance.skinnedObjects[(param2 & 0xffff) >> 8];
 
             if ((oVar2.DAT_11E & 0x40) == 0)
             {

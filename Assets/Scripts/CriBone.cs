@@ -51,11 +51,10 @@ public class CriBone : CriObject
     public Matrix3x3 colorMatrix; //0x8C
 
     private Mesh mesh;
-    private int subMeshCount;
     private NativeArray<MyVertex> vertexBuffer;
     private NativeArray<ushort> indexBuffer;
     private NativeArray<int> indicies;
-    private NativeArray<int3> vertexData;
+    private NativeArray<int3> normalData;
     public Material[] materials;
 
     protected override void Awake()
@@ -93,9 +92,8 @@ public class CriBone : CriObject
 
     public void MeshData()
     {
-        subMeshCount = 6;
         indexBuffer = new NativeArray<ushort>(
-            (cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 6) * subMeshCount, Allocator.Persistent
+            cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 6, Allocator.Persistent
         );
 
         vertexBuffer = new NativeArray<MyVertex>(
@@ -103,15 +101,27 @@ public class CriBone : CriObject
         );
 
         indicies = new NativeArray<int>(
-            subMeshCount, Allocator.Persistent
+            1, Allocator.Persistent
         );
+
+        normalData = new NativeArray<int3>(
+            cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 4, Allocator.Persistent
+        );
+
+        mesh = new Mesh();
+        mesh.SetVertexBufferParams(cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 4,
+                                                 new VertexAttributeDescriptor(VertexAttribute.Position, VertexAttributeFormat.Float32, 3),
+                                                 new VertexAttributeDescriptor(VertexAttribute.Color, VertexAttributeFormat.Float32, 4),
+                                                 new VertexAttributeDescriptor(VertexAttribute.TexCoord0, VertexAttributeFormat.Float32, 2),
+                                                 new VertexAttributeDescriptor(VertexAttribute.TexCoord1, VertexAttributeFormat.Float32, 3));
+        mesh.SetIndexBufferParams(cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 6, IndexFormat.UInt16);
 
         for (int i = 0; i < cMesh.TRI_COUNT; i++)
         {
             int tri = i * 3;
-            vertexData[tri] = new int3(cMesh.NRMLS[tri].x, cMesh.NRMLS[tri].y, cMesh.NRMLS[tri].z);
-            vertexData[tri + 1] = new int3(cMesh.NRMLS[tri + 1].x, cMesh.NRMLS[tri + 1].y, cMesh.NRMLS[tri + 1].z);
-            vertexData[tri + 2] = new int3(cMesh.NRMLS[tri + 2].x, cMesh.NRMLS[tri + 2].y, cMesh.NRMLS[tri + 2].z);
+            normalData[tri] = new int3(cMesh.NRMLS[tri].x, cMesh.NRMLS[tri].y, cMesh.NRMLS[tri].z);
+            normalData[tri + 1] = new int3(cMesh.NRMLS[tri + 1].x, cMesh.NRMLS[tri + 1].y, cMesh.NRMLS[tri + 1].z);
+            normalData[tri + 2] = new int3(cMesh.NRMLS[tri + 2].x, cMesh.NRMLS[tri + 2].y, cMesh.NRMLS[tri + 2].z);
             vertexBuffer[tri] = new MyVertex(cMesh.VERTS[tri], new float4(1, 1, 1, 1), cMesh.UVS[tri], cMesh.UVS2[i]);
             vertexBuffer[tri + 1] = new MyVertex(cMesh.VERTS[tri + 1], new float4(1, 1, 1, 1), cMesh.UVS[tri + 1], cMesh.UVS2[i]);
             vertexBuffer[tri + 2] = new MyVertex(cMesh.VERTS[tri + 2], new float4(1, 1, 1, 1), cMesh.UVS[tri + 2], cMesh.UVS2[i]);
@@ -126,10 +136,10 @@ public class CriBone : CriObject
         {
             int quad = j * 3 + i * 4;
             int tri = i * 6;
-            vertexData[quad] = new int3(cMesh.NRMLS[quad].x, cMesh.NRMLS[quad].y, cMesh.NRMLS[quad].z);
-            vertexData[quad + 1] = new int3(cMesh.NRMLS[quad + 1].x, cMesh.NRMLS[quad + 1].y, cMesh.NRMLS[quad + 1].z);
-            vertexData[quad + 2] = new int3(cMesh.NRMLS[quad + 2].x, cMesh.NRMLS[quad + 2].y, cMesh.NRMLS[quad + 2].z);
-            vertexData[quad + 3] = new int3(cMesh.NRMLS[quad + 3].x, cMesh.NRMLS[quad + 3].y, cMesh.NRMLS[quad + 3].z);
+            normalData[quad] = new int3(cMesh.NRMLS[quad].x, cMesh.NRMLS[quad].y, cMesh.NRMLS[quad].z);
+            normalData[quad + 1] = new int3(cMesh.NRMLS[quad + 1].x, cMesh.NRMLS[quad + 1].y, cMesh.NRMLS[quad + 1].z);
+            normalData[quad + 2] = new int3(cMesh.NRMLS[quad + 2].x, cMesh.NRMLS[quad + 2].y, cMesh.NRMLS[quad + 2].z);
+            normalData[quad + 3] = new int3(cMesh.NRMLS[quad + 3].x, cMesh.NRMLS[quad + 3].y, cMesh.NRMLS[quad + 3].z);
             vertexBuffer[quad] = new MyVertex(cMesh.VERTS[quad], new float4(1, 1, 1, 1), cMesh.UVS[quad], cMesh.UVS2[i + j]);
             vertexBuffer[quad + 1] = new MyVertex(cMesh.VERTS[quad + 1], new float4(1, 1, 1, 1), cMesh.UVS[quad + 1], cMesh.UVS2[i + j]);
             vertexBuffer[quad + 2] = new MyVertex(cMesh.VERTS[quad + 2], new float4(1, 1, 1, 1), cMesh.UVS[quad + 2], cMesh.UVS2[i + j]);
@@ -143,7 +153,7 @@ public class CriBone : CriObject
             indexBuffer[sm + 5] = (ushort)(cMesh.QUADS[tri + 5]);
             indicies[0] += 6;
         }
-
+        
         mesh.SetVertexBufferData(vertexBuffer, 0, 0, cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 4);
         mesh.SetIndexBufferData(indexBuffer, 0, 0, cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 6);
         mesh.SetSubMesh(0, new SubMeshDescriptor(0, indicies[0]));
@@ -156,7 +166,7 @@ public class CriBone : CriObject
         BoneMeshJob job = new BoneMeshJob
         {
             vertexBuffer = vertexBuffer,
-            vertexData = vertexData,
+            normalData = normalData,
             rotationMatrix = Coprocessor.rotationMatrix,
             colorCode = Coprocessor.colorCode,
             lightMatrix = Coprocessor.lightMatrix,
@@ -179,13 +189,18 @@ public class CriBone : CriObject
         transform.localEulerAngles = new Vector3
             (-transform.eulerAngles.x, transform.eulerAngles.y, -transform.eulerAngles.z);
     }
+
+    public void UpdateMesh()
+    {
+        mesh.SetVertexBufferData(vertexBuffer, 0, 0, cMesh.TRI_COUNT * 3 + cMesh.QUAD_COUNT * 4);
+    }
 }
 
 [BurstCompile]
-public struct BoneMeshJob : IJob
+struct BoneMeshJob : IJob
 {
-    [WriteOnly] public NativeArray<MyVertex> vertexBuffer;
-    [ReadOnly] public NativeArray<int3> vertexData;
+    public NativeArray<MyVertex> vertexBuffer;
+    [ReadOnly] public NativeArray<int3> normalData;
     public Cop2RT rotationMatrix;
     public Cop2ClrCode colorCode;
     public Cop2LLM lightMatrix;
@@ -206,11 +221,13 @@ public struct BoneMeshJob : IJob
         int iVar8;
         int iVar9;
         int iVar10;
+        int iVar11;
         int3 DAT_1f800380;
         int3 DAT_1f800388;
         int3 DAT_1f800390;
 
         iVar10 = 0;
+        iVar11 = triCount;
 
         while (-1 < --triCount)
         {
@@ -223,15 +240,15 @@ public struct BoneMeshJob : IJob
             float3 p1 = vertexBuffer[iVar10].uv2;
             float3 p2 = vertexBuffer[iVar10 + 1].uv2;
             float3 p3 = vertexBuffer[iVar10 + 2].uv2;
-            vector0.vx0 = (short)vertexData[iVar10].x;
-            vector0.vy0 = (short)vertexData[iVar10].y;
-            vector0.vz0 = (short)vertexData[iVar10].z;
-            vector1.vx1 = (short)vertexData[iVar10 + 1].x;
-            vector1.vy1 = (short)vertexData[iVar10 + 1].y;
-            vector1.vz1 = (short)vertexData[iVar10 + 1].z;
-            vector2.vx2 = (short)vertexData[iVar10 + 2].x;
-            vector2.vy2 = (short)vertexData[iVar10 + 2].y;
-            vector2.vz2 = (short)vertexData[iVar10 + 2].z;
+            vector0.vx0 = (short)normalData[iVar10].x;
+            vector0.vy0 = (short)normalData[iVar10].y;
+            vector0.vz0 = (short)normalData[iVar10].z;
+            vector1.vx1 = (short)normalData[iVar10 + 1].x;
+            vector1.vy1 = (short)normalData[iVar10 + 1].y;
+            vector1.vz1 = (short)normalData[iVar10 + 1].z;
+            vector2.vx2 = (short)normalData[iVar10 + 2].x;
+            vector2.vy2 = (short)normalData[iVar10 + 2].y;
+            vector2.vz2 = (short)normalData[iVar10 + 2].z;
             MVMVA_rotation_vector0_shift(ref rotationMatrix, ref mathsAccumulator, ref accumulator, ref vector0);
             iVar4 = accumulator.ir1;
             iVar8 = accumulator.ir2;
@@ -266,7 +283,7 @@ public struct BoneMeshJob : IJob
             iVar10 += 3;
         }
 
-        iVar10 = triCount;
+        iVar10 = iVar11;
 
         while (-1 < --quadCount)
         {
@@ -282,15 +299,15 @@ public struct BoneMeshJob : IJob
             float3 p2 = vertexBuffer[iVar10 + 1].uv2;
             float3 p3 = vertexBuffer[iVar10 + 2].uv2;
             float3 p4 = vertexBuffer[iVar10 + 3].uv2;
-            vector0.vx0 = (short)vertexData[iVar10].x;
-            vector0.vy0 = (short)vertexData[iVar10].y;
-            vector0.vz0 = (short)vertexData[iVar10].z;
-            vector1.vx1 = (short)vertexData[iVar10 + 1].x;
-            vector1.vy1 = (short)vertexData[iVar10 + 1].y;
-            vector1.vz1 = (short)vertexData[iVar10 + 1].z;
-            vector2.vx2 = (short)vertexData[iVar10 + 2].x;
-            vector2.vy2 = (short)vertexData[iVar10 + 2].y;
-            vector2.vz2 = (short)vertexData[iVar10 + 2].z;
+            vector0.vx0 = (short)normalData[iVar10].x;
+            vector0.vy0 = (short)normalData[iVar10].y;
+            vector0.vz0 = (short)normalData[iVar10].z;
+            vector1.vx1 = (short)normalData[iVar10 + 1].x;
+            vector1.vy1 = (short)normalData[iVar10 + 1].y;
+            vector1.vz1 = (short)normalData[iVar10 + 1].z;
+            vector2.vx2 = (short)normalData[iVar10 + 2].x;
+            vector2.vy2 = (short)normalData[iVar10 + 2].y;
+            vector2.vz2 = (short)normalData[iVar10 + 2].z;
             MVMVA_rotation_vector0_shift(ref rotationMatrix, ref mathsAccumulator, ref accumulator, ref vector0);
             iVar4 = accumulator.ir1;
             iVar8 = accumulator.ir2;
@@ -319,9 +336,9 @@ public struct BoneMeshJob : IJob
             float4 c1 = new float4(colorFIFO.r0, colorFIFO.g0, colorFIFO.b0, colorFIFO.cd0) / 255;
             float4 c2 = new float4(colorFIFO.r1, colorFIFO.g1, colorFIFO.b1, colorFIFO.cd1) / 255;
             float4 c3 = new float4(colorFIFO.r2, colorFIFO.g2, colorFIFO.b2, colorFIFO.cd2) / 255;
-            vector0.vx0 = (short)vertexData[iVar10 + 3].x;
-            vector0.vy0 = (short)vertexData[iVar10 + 3].y;
-            vector0.vz0 = (short)vertexData[iVar10 + 3].z;
+            vector0.vx0 = (short)normalData[iVar10 + 3].x;
+            vector0.vy0 = (short)normalData[iVar10 + 3].y;
+            vector0.vz0 = (short)normalData[iVar10 + 3].z;
             MVMVA_rotation_vector0_shift(ref rotationMatrix, ref mathsAccumulator, ref accumulator, ref vector0);
             iVar4 = accumulator.ir1;
             iVar8 = accumulator.ir2;
@@ -330,9 +347,12 @@ public struct BoneMeshJob : IJob
             vector0.vx0 = (short)DAT_1f800380.x;
             vector0.vy0 = (short)DAT_1f800380.y;
             vector0.vz0 = (short)DAT_1f800380.z;
-            //DAT_1f800028++;
             NCCS_shift_lm(ref mathsAccumulator, ref accumulator, ref vector0, ref colorFIFO);
             float4 c4 = new float4(colorFIFO.r2, colorFIFO.g2, colorFIFO.b2, colorFIFO.cd2) / 255;
+            vertexBuffer[iVar10] = new MyVertex(v1, c1, t1, p1);
+            vertexBuffer[iVar10 + 1] = new MyVertex(v2, c2, t2, p2);
+            vertexBuffer[iVar10 + 2] = new MyVertex(v3, c3, t3, p3);
+            vertexBuffer[iVar10 + 3] = new MyVertex(v4, c4, t4, p4);
             iVar10 += 4;
         }
     }

@@ -356,7 +356,7 @@ public class CriInteract : MonoBehaviour
         bool bVar1;
         CriStatic oVar2;
 
-        oVar2 = SceneManager.instance.DAT_7CDC[DAT_04];
+        oVar2 = SceneManager.instance.staticObjects[DAT_04];
         bVar1 = InventoryManager.FUN_4A87C(2, 2);
 
         if (!bVar1)
@@ -483,7 +483,7 @@ public class CriInteract : MonoBehaviour
         bool bVar2;
         CriStatic oVar3;
 
-        oVar3 = SceneManager.instance.DAT_7CDC[DAT_04];
+        oVar3 = SceneManager.instance.staticObjects[DAT_04];
 
         if (DAT_03 == 0)
         {
@@ -519,7 +519,7 @@ public class CriInteract : MonoBehaviour
         uint uVar2;
         CriStatic oVar3;
 
-        oVar3 = SceneManager.instance.DAT_7CDC[System.Array.IndexOf(SceneManager.instance.DAT_7CDC, param1) + 1];
+        oVar3 = SceneManager.instance.staticObjects[System.Array.IndexOf(SceneManager.instance.staticObjects, param1) + 1];
         SceneManager.instance.FUN_8133C(DAT_06, 0x8000, 0);
         SceneManager.instance.FUN_8133C(DAT_06, 0x2000, 1);
         bVar1 = (byte)(BDAT_08 + 1);
@@ -543,7 +543,7 @@ public class CriInteract : MonoBehaviour
     {
         CriStatic oVar1;
 
-        oVar1 = SceneManager.instance.DAT_7CDC[System.Array.IndexOf(SceneManager.instance.DAT_7CDC, param1) + 1];
+        oVar1 = SceneManager.instance.staticObjects[System.Array.IndexOf(SceneManager.instance.staticObjects, param1) + 1];
         SceneManager.instance.FUN_8133C(DAT_06, 0x8000, 1);
         SceneManager.instance.FUN_8133C(DAT_06, 0x2000, 0);
         param1.flags &= 0xfffffffd;
@@ -560,7 +560,7 @@ public class CriInteract : MonoBehaviour
         uint uVar8;
 
         uVar8 = 0;
-        oVar6 = SceneManager.instance.DAT_7CDC[DAT_04];
+        oVar6 = SceneManager.instance.staticObjects[DAT_04];
 
         do
         {
@@ -569,7 +569,7 @@ public class CriInteract : MonoBehaviour
 
             if ((uVar1 & 0xff) != 0xff)
             {
-                oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[uVar1 & 0xff];
+                oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[uVar1 & 0xff];
                 iVar4 = (int)uVar1 >> 0x10;
 
                 if (oVar5.tags == 0)
@@ -586,7 +586,7 @@ public class CriInteract : MonoBehaviour
 
             //...
             uVar8++;
-            oVar6 = SceneManager.instance.DAT_7CDC[DAT_04 + uVar8];
+            oVar6 = SceneManager.instance.staticObjects[DAT_04 + uVar8];
         } while (uVar8 < 2);
     }
 
@@ -602,9 +602,9 @@ public class CriInteract : MonoBehaviour
         CriStatic oVar3;
         TmdScriptableObject puVar4;
 
-        oVar2 = SceneManager.instance.DAT_27C[10];
+        oVar2 = SceneManager.instance.skinnedObjects[10];
         bVar1 = DAT_02;
-        oVar3 = SceneManager.instance.DAT_7CDC[DAT_04];
+        oVar3 = SceneManager.instance.staticObjects[DAT_04];
         oVar3.flags = 1;
         oVar3.DAT_40 = null;
         oVar3.screen = new Vector3Int(oVar2.screen.x, oVar2.screen.y - 0x640, oVar2.screen.z);
@@ -626,7 +626,7 @@ public class CriInteract : MonoBehaviour
         CriStatic oVar2;
         Vector3Int local_18;
 
-        oVar2 = SceneManager.instance.DAT_7CDC[DAT_04];
+        oVar2 = SceneManager.instance.staticObjects[DAT_04];
         local_18 = oVar2.screen;
         oVar2.vr.x += 0x200;
         DAT_0A += 0x20;
@@ -649,7 +649,7 @@ public class CriInteract : MonoBehaviour
         short sVar1;
         CriStatic oVar2;
 
-        oVar2 = SceneManager.instance.DAT_7CDC[DAT_04];
+        oVar2 = SceneManager.instance.staticObjects[DAT_04];
         oVar2.vr.y += DAT_0A;
         sVar1 = DAT_0A;
         DAT_0A = (short)(sVar1 - 0x20);
@@ -1630,7 +1630,7 @@ public class CriInteract : MonoBehaviour
                 {
                     oVar5.tags = 20;
                     oVar5.DAT_2F = (byte)(ST1.instance.DAT_7AA0[iVar4 + 7] | 0x80);
-                    oVar5.DAT_4C = SceneManager.instance.DAT_7CDC[DAT_04];
+                    oVar5.DAT_4C = SceneManager.instance.staticObjects[DAT_04];
                     oVar5.DAT_40.x = ST1.instance.DAT_7AA0[iVar4 + 8] << 0x18 >> 0x17;
                     oVar5.DAT_40.y = ST1.instance.DAT_7AA0[iVar4 + 9] << 0x18 >> 0x17;
                     oVar5.DAT_40.z = ST1.instance.DAT_7AA0[iVar4 + 10] << 0x18 >> 0x17;
@@ -1693,7 +1693,7 @@ public class CriInteract : MonoBehaviour
 
         do
         {
-            oVar1 = SceneManager.instance.DAT_27C[uVar2];
+            oVar1 = SceneManager.instance.skinnedObjects[uVar2];
 
             if (oVar1.tags == 2)
             {

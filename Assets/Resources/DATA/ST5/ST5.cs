@@ -228,7 +228,7 @@ public class ST5 : LevelManager
         short sVar7;
         uint uVar8;
 
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar1 = oVar4.DAT_1D7;
         param1.BDAT_08 = bVar1;
 
@@ -308,7 +308,7 @@ public class ST5 : LevelManager
         short sVar2;
         ushort uVar3;
 
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar4.DAT_3C = 1;
         oVar4.DAT_3D = 0;
         oVar4.DAT_3E = 0;
@@ -337,7 +337,7 @@ public class ST5 : LevelManager
         Vector3Int local_18;
 
         auStack56 = new Matrix3x3();
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         Utilities.RotMatrix(ref oVar2.vr, ref auStack56);
 
         if (param1.BDAT_08 == 0)
@@ -372,7 +372,7 @@ public class ST5 : LevelManager
         Vector3Int local_18;
 
         auStack56 = new Matrix3x3();
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         Utilities.RotMatrix(ref oVar2.vr, ref auStack56);
 
         if (param1.BDAT_08 == 0)
@@ -403,7 +403,7 @@ public class ST5 : LevelManager
         CriPlayer oVar1;
         int iVar2;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar1.screen.x += param1.VDAT_0E.x;
         oVar1.screen.y += param1.VDAT_0E.y;
         oVar1.screen.z += param1.VDAT_0E.z;
@@ -676,7 +676,7 @@ public class ST5 : LevelManager
         CriObject oVar1;
         CriStatic oVar2;
 
-        oVar1 = Utilities.FUN_601C8(SceneManager.instance.DAT_27C[param1.DAT_04].skeleton, 3);
+        oVar1 = Utilities.FUN_601C8(SceneManager.instance.skinnedObjects[param1.DAT_04].skeleton, 3);
         oVar2 = SceneManager.instance.FUN_5FE78();
 
         if (oVar2 != null)
@@ -707,7 +707,7 @@ public class ST5 : LevelManager
         if (bVar1)
         {
             oVar2 = (CriSkinned)param1.PDAT_08;
-            oVar3 = Utilities.FUN_601C8(SceneManager.instance.DAT_27C[param1.DAT_04].skeleton, 3);
+            oVar3 = Utilities.FUN_601C8(SceneManager.instance.skinnedObjects[param1.DAT_04].skeleton, 3);
             oVar2.DAT_40.x = 0;
             oVar2.DAT_40.y = 0;
             local_18 = Utilities.ApplyMatrixSV(ref oVar3.cTransform.rotation, ref oVar2.screen);
@@ -782,7 +782,7 @@ public class ST5 : LevelManager
         CriInteract puVar3;
 
         bVar1 = InventoryManager.FUN_4A87C(3, 0x38);
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (bVar1)
         {
@@ -816,7 +816,7 @@ public class ST5 : LevelManager
         CriBone oVar1;
         CriPlayer oVar2;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar1 = (CriBone)Utilities.FUN_601C8(oVar2.skeleton, 3);
 
         if (param1.BDAT_08 != oVar2.DAT_240 || oVar1.cMesh == DAT_12CEC[0])
@@ -846,7 +846,7 @@ public class ST5 : LevelManager
         CriBone oVar2;
         uint uVar3;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar2 = (CriBone)Utilities.FUN_601C8(oVar1.skeleton, 3);
 
         if (oVar1.DAT_240 >> 4 == 0)
@@ -1338,7 +1338,7 @@ public class ST5 : LevelManager
     //FUN_B54 (ST5)
     public static void FUN_B54(CriInteract param1)
     {
-        ((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_1C0 &= 0xfffffffe;
+        ((CriPlayer)SceneManager.instance.skinnedObjects[10]).DAT_1C0 &= 0xfffffffe;
         instance.PTR_FUN_122C8[param1.DAT_03](param1);
     }
 

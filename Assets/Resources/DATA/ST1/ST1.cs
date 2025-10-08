@@ -121,7 +121,7 @@ public class ST1 : LevelManager
 
         do
         {
-            puVar2 = (CriPlayer)SceneManager.instance.DAT_27C[uVar4];
+            puVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[uVar4];
 
             if ((puVar2.flags & 1) != 0 && puVar2.DAT_3C != 3 && puVar2.DAT_3C != 5)
             {

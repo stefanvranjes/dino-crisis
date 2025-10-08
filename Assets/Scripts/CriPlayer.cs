@@ -2389,6 +2389,7 @@ public class CriPlayer : CriSkinned
         mat1.SetTexture("_Tex8", tmd.TEX8_2D);
         mat1.SetTexture("_CLUT", tmd.CLUT_2D);
         oVar2.materials[0] = mat1;
+        oVar2.MeshData();
         FUN_4FE30();
         return; //tmp
 
@@ -3696,7 +3697,7 @@ public class CriPlayer : CriSkinned
         uint uVar3;
         Vector3Int local_20;
 
-        sVar1 = FUN_64804(SceneManager.instance.DAT_27C[10].screen);
+        sVar1 = FUN_64804(SceneManager.instance.skinnedObjects[10].screen);
 
         if (param2 - 2U < 3)
         {
@@ -3794,7 +3795,7 @@ public class CriPlayer : CriSkinned
         uint uVar6;
         uint uVar7;
 
-        sVar3 = FUN_64804(SceneManager.instance.DAT_27C[10].screen);
+        sVar3 = FUN_64804(SceneManager.instance.skinnedObjects[10].screen);
 
         if ((ushort)(sVar3 - 0x200) < 0xc00U)
         {
@@ -7129,7 +7130,7 @@ public class CriPlayer : CriSkinned
         }
         else
         {
-            oVar2 = SceneManager.instance.DAT_27C[DAT_24C[DAT_24C[0]]];
+            oVar2 = SceneManager.instance.skinnedObjects[DAT_24C[DAT_24C[0]]];
             oVar3 = Utilities.FUN_601C8(oVar2.skeleton, oVar2.DAT_175 & 15);
             oVar1 = Utilities.FUN_601C8(skeleton, 3);
             local_18 = new Vector2Int();
@@ -7176,7 +7177,7 @@ public class CriPlayer : CriSkinned
 
         do
         {
-            oVar9 = SceneManager.instance.DAT_27C[bVar6];
+            oVar9 = SceneManager.instance.skinnedObjects[bVar6];
 
             if ((oVar9.flags & 1) != 0 && (oVar9.DAT_11E & 0x40) == 0 && (oVar9.DAT_175 & 0x80) == 0)
             {
@@ -8011,7 +8012,7 @@ public class CriPlayer : CriSkinned
 
         do
         {
-            oVar7 = SceneManager.instance.DAT_27C[uVar5];
+            oVar7 = SceneManager.instance.skinnedObjects[uVar5];
             uVar2 = 0x80000000;
 
             if ((oVar7.flags & 1) != 0 && 0 < oVar7.health && (oVar7.DAT_175 & 0x80) == 0)
@@ -8078,7 +8079,7 @@ public class CriPlayer : CriSkinned
         while (true)
         {
             uVar4 = (uVar4 + 1) % 10;
-            oVar6 = SceneManager.instance.DAT_27C[DAT_230[uVar4]];
+            oVar6 = SceneManager.instance.skinnedObjects[DAT_230[uVar4]];
             oVar2 = Utilities.FUN_601C8(oVar6.skeleton, oVar6.DAT_175 & 15);
 
             if ((oVar6.flags & 1) != 0 && 0 < oVar6.health && (oVar6.DAT_175 & 0x80) == 0)
@@ -8115,7 +8116,7 @@ public class CriPlayer : CriSkinned
         if (bVar1 != 0)
         {
             DAT_24C[0] = (byte)(bVar1 - 1);
-            oVar2 = SceneManager.instance.DAT_27C[DAT_24C[bVar1]];
+            oVar2 = SceneManager.instance.skinnedObjects[DAT_24C[bVar1]];
 
             if ((oVar2.flags & 1) != 0 && (oVar2.DAT_11E & 0x40) == 0)
             {
@@ -8193,7 +8194,7 @@ public class CriPlayer : CriSkinned
         do
         {
             uVar2 = 0x80000000;
-            oVar6 = SceneManager.instance.DAT_27C[uVar5];
+            oVar6 = SceneManager.instance.skinnedObjects[uVar5];
 
             if (oVar6 != null && (oVar6.flags & 1) != 0 && 0 < oVar6.health && (oVar6.DAT_175 & 0x80) == 0)
             {
@@ -8882,7 +8883,7 @@ public class CriPlayer : CriSkinned
         if (param2 == -1)
         {
             FUN_66208();
-            SceneManager.instance.DAT_27C[param1].FUN_66208();
+            SceneManager.instance.skinnedObjects[param1].FUN_66208();
             FUN_52FD0();
             DAT_218 = true;
             DAT_20C.x = DAT_204.x;
@@ -9066,7 +9067,7 @@ public class CriPlayer : CriSkinned
         CriSkinned oVar1;
         CriBone oVar2;
 
-        oVar1 = SceneManager.instance.DAT_27C[DAT_224];
+        oVar1 = SceneManager.instance.skinnedObjects[DAT_224];
 
         if (oVar1 != null)
         {
@@ -9914,7 +9915,7 @@ public class CriPlayer : CriSkinned
         ushort[] local_20;
 
         bVar6 = 1;
-        sVar2 = (short)Utilities.FUN_615EC(screen, SceneManager.instance.DAT_27C[10].screen);
+        sVar2 = (short)Utilities.FUN_615EC(screen, SceneManager.instance.skinnedObjects[10].screen);
         local_20 = new ushort[4];
         local_20[0] = 0;
 
@@ -10280,7 +10281,7 @@ public class CriPlayer : CriSkinned
         uint uVar2;
         CriPlayer oVar3;
 
-        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (oVar3.DAT_3C != 5)
             return;
@@ -10367,7 +10368,7 @@ public class CriPlayer : CriSkinned
         if (DAT_3C == 1 && DAT_3D == 0x19)
             plVar11 = (Vector3Int)V4_21C;
         else
-            plVar11 = SceneManager.instance.DAT_27C[10].screen;
+            plVar11 = SceneManager.instance.skinnedObjects[10].screen;
 
         sVar4 = GameManager.instance.FUN_774CC(this, plVar11);
         DAT_1C7 = sVar4;
@@ -10380,7 +10381,7 @@ public class CriPlayer : CriSkinned
         }
 
         DAT_34 = screen;
-        uVar7 = Utilities.FUN_631AC(screen, SceneManager.instance.DAT_27C[10].screen);
+        uVar7 = Utilities.FUN_631AC(screen, SceneManager.instance.skinnedObjects[10].screen);
         bVar1 = DAT_177;
         UDAT_20C = uVar7;
 
@@ -11659,7 +11660,7 @@ public class CriPlayer : CriSkinned
         int iVar2;
         CriPlayer oVar3;
 
-        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         sVar1 = GameManager.instance.FUN_7732C((ushort)screen.x, (ushort)screen.z, (byte)DAT_48);
         BDAT_1C0 = (byte)sVar1;
         sVar1 = GameManager.instance.FUN_7732C((ushort)oVar3.screen.x, (ushort)oVar3.screen.z, (byte)oVar3.DAT_48);
@@ -12190,7 +12191,7 @@ public class CriPlayer : CriSkinned
             }
         }
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         sVar2 = GameManager.instance.FUN_7732C((ushort)screen.x, (ushort)screen.z, (byte)DAT_48);
         sVar3 = GameManager.instance.FUN_7732C((ushort)oVar1.screen.x, (ushort)oVar1.screen.z, (byte)oVar1.DAT_48);
 
@@ -12282,7 +12283,7 @@ public class CriPlayer : CriSkinned
             return;
         }
 
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         //...
     }
 
@@ -12339,7 +12340,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_20;
         Vector2Int auStack24;
 
-        oVar8 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar8 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         auStack24 = new Vector2Int();
         uVar3 = (ushort)FUN_64804(oVar8.screen);
         uVar4 = (ushort)(SDAT_1FC - 1);
@@ -12479,7 +12480,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_20;
         Vector2Int auStack24;
 
-        oVar8 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar8 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         uVar3 = (ushort)FUN_64804(oVar8.screen);
         uVar4 = (ushort)(SDAT_1FC - 1);
         uVar7 = 0; //not in the original code
@@ -12597,7 +12598,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_20;
         Vector2Int auStack24;
 
-        oVar7 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar7 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         uVar5 = (ushort)FUN_64804(oVar7.screen);
         uVar3 = (ushort)(SDAT_1FC - 1);
 
@@ -12716,7 +12717,7 @@ public class CriPlayer : CriSkinned
         Vector2Int auStack24;
         Vector3Int local_20;
 
-        oVar7 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar7 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         uVar3 = (ushort)FUN_64804(oVar7.screen);
         uVar4 = (ushort)(SDAT_1FC - 1);
 
@@ -12835,7 +12836,7 @@ public class CriPlayer : CriSkinned
         uint uVar4;
         Vector3Int local_18;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         uVar2 = (ushort)FUN_64804(oVar1.screen);
 
         if ((GameManager.instance.DAT_922C & 2) == 0 && (oVar1.DAT_11E & 0x80) == 0)
@@ -12890,7 +12891,7 @@ public class CriPlayer : CriSkinned
         ushort uVar2;
         int iVar3;
 
-        if ((SceneManager.instance.DAT_27C[10].DAT_11E & 0x80) == 0 && 
+        if ((SceneManager.instance.skinnedObjects[10].DAT_11E & 0x80) == 0 && 
             (DAT_208 & 0x80000) == 0)
         {
             bVar1 = (byte)(DAT_1C8 - 1);
@@ -12993,7 +12994,7 @@ public class CriPlayer : CriSkinned
         LAB_319AC:
         FUN_2B57C();
         uVar5 = DAT_60;
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (uVar5 < 6 || uVar5 - 26 < 24 || uVar5 - 66 < 18)
         {
@@ -13046,7 +13047,7 @@ public class CriPlayer : CriSkinned
         Vector2Int auStack24;
         Vector3Int local_20;
 
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_1C5 == 0)
         {
@@ -13180,7 +13181,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_20;
         Vector2Int auStack24;
 
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar3 = FUN_60AB4();
 
         if (bVar3)
@@ -13228,7 +13229,7 @@ public class CriPlayer : CriSkinned
         short sVar2;
         uint uVar3;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (UDAT_20C < 3500)
         {
@@ -13272,7 +13273,7 @@ public class CriPlayer : CriSkinned
         ushort uVar1;
         CriPlayer oVar2;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         uVar1 = (ushort)(oVar2.DAT_3C | oVar2.DAT_3D << 8);
 
         if (uVar1 == 0x905 || uVar1 == 0xa05 || uVar1 == 0xb05)
@@ -13357,7 +13358,7 @@ public class CriPlayer : CriSkinned
         Vector2Int auStack24;
 
         auStack24 = new Vector2Int();
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         sVar3 = SceneManager.instance.FUN_64D20(this, param1.screen, ref auStack24);
 
         if ((GameManager.instance.DAT_922C & 2) != 0 && GameManager.instance.DAT_9230 != this)
@@ -13473,7 +13474,7 @@ public class CriPlayer : CriSkinned
         uint uVar6;
         CriPlayer oVar11;
 
-        oVar11 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar11 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar3 = FUN_60AB4();
 
         if (bVar3)
@@ -13524,7 +13525,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_18;
 
         bVar3 = FUN_60AB4();
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (bVar3)
         {
@@ -13732,7 +13733,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_30;
         Vector3Int local_28;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_1C2 != 1)
             DAT_1C2 = 1;
@@ -13763,7 +13764,7 @@ public class CriPlayer : CriSkinned
                     uVar4 = (uint)(DAT_128 >> (int)(uVar7 & 0x1f));
                 } while (uVar7 < 10);
 
-                ((CriPlayer)SceneManager.instance.DAT_27C[uVar7]).DAT_1C5 = 1;
+                ((CriPlayer)SceneManager.instance.skinnedObjects[uVar7]).DAT_1C5 = 1;
                 DAT_3C = 1;
                 DAT_3D = 2;
                 DAT_3E = 0;
@@ -13897,7 +13898,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_30;
         Vector3Int local_28;
 
-        oVar7 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar7 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_1C2 != 1 && DAT_1C2 != 3)
         {
@@ -13968,7 +13969,7 @@ public class CriPlayer : CriSkinned
                 uVar4 = (uint)(DAT_128 >> (int)(uVar9 & 0x1f));
             } while (uVar9 < 10);
 
-            ((CriPlayer)SceneManager.instance.DAT_27C[uVar9]).DAT_1C5 = 1;
+            ((CriPlayer)SceneManager.instance.skinnedObjects[uVar9]).DAT_1C5 = 1;
             DAT_3C = 1;
             DAT_3D = 2;
             DAT_3E = 0;
@@ -14225,7 +14226,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_30;
         Vector3Int local_28;
 
-        oVar7 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar7 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_1C2 != 1 && DAT_1C2 != 3)
         {
@@ -14259,7 +14260,7 @@ public class CriPlayer : CriSkinned
                 uVar4 = (uint)(DAT_128 >> (int)(uVar8 & 0x1f));
             } while (uVar8 < 10);
 
-            ((CriPlayer)SceneManager.instance.DAT_27C[uVar8]).DAT_1C5 = 1;
+            ((CriPlayer)SceneManager.instance.skinnedObjects[uVar8]).DAT_1C5 = 1;
             DAT_3C = 1;
             DAT_3D = 2;
             DAT_3E = 0;
@@ -14517,7 +14518,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_30;
         Vector3Int local_28;
 
-        oVar7 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar7 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_1C2 != 1 && DAT_1C2 != 3)
         {
@@ -14588,7 +14589,7 @@ public class CriPlayer : CriSkinned
                 uVar4 = (uint)(DAT_128 >> (int)(uVar9 & 0x1f));
             } while (uVar9 < 10);
 
-            ((CriPlayer)SceneManager.instance.DAT_27C[uVar9]).DAT_1C5 = 1;
+            ((CriPlayer)SceneManager.instance.skinnedObjects[uVar9]).DAT_1C5 = 1;
             DAT_3C = 1;
             DAT_3D = 2;
             DAT_3E = 0;
@@ -14889,7 +14890,7 @@ public class CriPlayer : CriSkinned
         if (DAT_60 == 9)
             GameManager.instance.FUN_5C94C(this, 49);
 
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         DAT_40.z = Utilities.DAT_9B5A8[DAT_60];
         auStack24 = new Vector2Int();
 
@@ -14957,7 +14958,7 @@ public class CriPlayer : CriSkinned
             }
         }
 
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         sVar1 = FUN_64804(oVar4.screen);
 
         if ((ushort)(sVar1 - 0x301) < 0xa00U)
@@ -15015,7 +15016,7 @@ public class CriPlayer : CriSkinned
             return;
         }
 
-        oVar7 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar7 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((oVar7.DAT_11E & 0x80) != 0)
             return;
@@ -15319,7 +15320,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_20;
         Vector2Int auStack24;
 
-        oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar4 = FUN_60AB4();
 
         if (bVar4)
@@ -15370,7 +15371,7 @@ public class CriPlayer : CriSkinned
         CriPlayer oVar9;
         int iVar10;
 
-        oVar9 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar9 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((oVar9.DAT_11E & 0x80) != 0)
             return;
@@ -15656,7 +15657,7 @@ public class CriPlayer : CriSkinned
         if ((uint)DAT_1E6 < UDAT_1E4)
             UDAT_1E4 = DAT_1E6;
 
-        ((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_1CC = (byte)UDAT_1E4;
+        ((CriPlayer)SceneManager.instance.skinnedObjects[10]).DAT_1CC = (byte)UDAT_1E4;
         GameManager.instance.FUN_65C7C(this);
         DAT_12E = 2;
         GameManager.instance.FUN_5C94C(this, 51);
@@ -15675,7 +15676,7 @@ public class CriPlayer : CriSkinned
         uint uVar5;
         CriPlayer oVar6;
 
-        oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar3 = FUN_60AB4();
 
         if (bVar3)
@@ -15738,7 +15739,7 @@ public class CriPlayer : CriSkinned
     {
         CriPlayer oVar3;
 
-        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         FUN_609C8(24, 0, 0);
         DAT_40 = new Vector3Int(0, 0, 0);
         screen.y = oVar3.screen.y;
@@ -15790,7 +15791,7 @@ public class CriPlayer : CriSkinned
         FUN_609C8(25, 1, 0);
         DAT_40 = new Vector3Int(0, 0, 0);
         FUN_65714();
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar1.DAT_1CA = 88;
         oVar1.DAT_1C9 = 2;
         oVar1.DAT_1E5 = 0;
@@ -15808,7 +15809,7 @@ public class CriPlayer : CriSkinned
         uint uVar6;
         CriPlayer oVar8;
 
-        oVar8 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar8 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar5 = FUN_60AB4();
 
         if (!bVar5 || oVar8.DAT_1E5 != 1)
@@ -15932,7 +15933,7 @@ public class CriPlayer : CriSkinned
         if (bVar2)
         {
             DAT_18D = true;
-            oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+            oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
             oVar1.DAT_18D = true;
             oVar1.DAT_11E &= 0xf7;
             DAT_3C = 2;
@@ -16023,7 +16024,7 @@ public class CriPlayer : CriSkinned
 
         if ((GameManager.instance.DAT_922C & 2) == 0 || GameManager.instance.DAT_9230 == this)
         {
-            oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+            oVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
             if ((oVar6.DAT_11E & 0x80) == 0 && !SceneManager.instance.FUN_81014(screen, oVar6.screen, (byte)(DAT_48 << 4 | 0xf), false) && 
                 (DAT_162 & 1) != 0 && DAT_1C4 == 0 && (DAT_12B & 0x38) != 0)
@@ -16102,7 +16103,7 @@ public class CriPlayer : CriSkinned
         byte bVar5;
 
         bVar4 = FUN_60AB4();
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (!bVar4) goto LAB_36344;
 
@@ -16219,7 +16220,7 @@ public class CriPlayer : CriSkinned
             FUN_65CF8(0, 0, 30);
             GameManager.instance.FUN_65CB0(this);
             FUN_2D76C();
-            oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+            oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
             FUN_2E1B4();
 
             if (DAT_1C5 != 0 && DAT_2F / 3 != 0)
@@ -16282,7 +16283,7 @@ public class CriPlayer : CriSkinned
         uint uVar5;
         CriPlayer oVar6;
 
-        oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((oVar6.DAT_11E & 0x80) == 0)
         {
@@ -16381,7 +16382,7 @@ public class CriPlayer : CriSkinned
         int iVar3;
         CriPlayer oVar4;
 
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((oVar4.DAT_11E & 0x80) == 0 && !SceneManager.instance.FUN_81014(screen, oVar4.screen, (byte)(DAT_48 << 4 | 0xf), false) && 
             (DAT_162 & 1) != 0 && DAT_1C4 == 0 && (DAT_12B & 0x38) != 0)
@@ -16479,7 +16480,7 @@ public class CriPlayer : CriSkinned
     {
         CriPlayer oVar2;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         FUN_609C8(28, 0, 0);
         DAT_40 = new Vector3Int(0, 0, 0);
         FUN_65CF8(0, 0, 30);
@@ -16524,7 +16525,7 @@ public class CriPlayer : CriSkinned
         int iVar2;
         uint uVar3;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         iVar2 = (int)GameManager.FUN_64650();
         uVar3 = (uint)(iVar2 % 5 & 0xff);
         FUN_6103C(29, 1, (byte)uVar3, 5);
@@ -16544,7 +16545,7 @@ public class CriPlayer : CriSkinned
         uint uVar4;
         CriPlayer oVar5;
 
-        oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar3 = FUN_60AB4();
 
         if (bVar3)
@@ -16602,7 +16603,7 @@ public class CriPlayer : CriSkinned
         CriPlayer oVar1;
 
         FUN_609C8(30, 0, 0);
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar1.DAT_3C = 5;
         oVar1.DAT_3D = 8;
         oVar1.DAT_3E = 0;
@@ -16626,7 +16627,7 @@ public class CriPlayer : CriSkinned
             DAT_3E = 0;
             DAT_3F = 0;
             DAT_18D = true;
-            SceneManager.instance.DAT_27C[10].DAT_18D = true;
+            SceneManager.instance.skinnedObjects[10].DAT_18D = true;
             GameManager.instance.FUN_65CB0(this);
         }
     }
@@ -16657,7 +16658,7 @@ public class CriPlayer : CriSkinned
             return;
         }
 
-        oVar8 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar8 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((oVar8.DAT_11E & 0x80) != 0)
             return;
@@ -16873,7 +16874,7 @@ public class CriPlayer : CriSkinned
         short sVar2;
         uint uVar3;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         DAT_1C4 = 0;
         GameManager.instance.FUN_65CB0(this);
         FUN_2E07C();
@@ -16921,7 +16922,7 @@ public class CriPlayer : CriSkinned
         short sVar2;
         uint uVar3;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         GameManager.instance.FUN_65CB0(this);
 
         if ((oVar1.DAT_3C == 5 && oVar1.DAT_3D == 9) || (oVar1.DAT_3C == 5 && oVar1.DAT_3D == 10))
@@ -17032,7 +17033,7 @@ public class CriPlayer : CriSkinned
             else
                 DAT_40.z = 0;
 
-            sVar1 = (short)Utilities.FUN_615EC(screen, SceneManager.instance.DAT_27C[10].screen);
+            sVar1 = (short)Utilities.FUN_615EC(screen, SceneManager.instance.skinnedObjects[10].screen);
             iVar3 = (int)GameManager.FUN_64650();
             sVar2 = (short)Utilities.FUN_64838(vr.y, (uint)((iVar3 % 15 + 20) * 0x10000 >> 0x10), sVar1);
             vr.y = vr.y + sVar2 & 0xfff;
@@ -17081,7 +17082,7 @@ public class CriPlayer : CriSkinned
         Vector2Int auStack24;
 
         local_20 = new Vector3Int(V2_1F0.x, 0, V2_1F0.y);
-        uVar3 = Utilities.FUN_631AC(SceneManager.instance.DAT_27C[10].screen, local_20);
+        uVar3 = Utilities.FUN_631AC(SceneManager.instance.skinnedObjects[10].screen, local_20);
 
         if (uVar3 <= 300 && 1199 < UDAT_20C && (DAT_128 & 0x3ff) == 0)
         {
@@ -17150,7 +17151,7 @@ public class CriPlayer : CriSkinned
             DAT_208 &= 0xff7fffff;
 
         BDAT_1CA = 0;
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         DAT_208 &= 0xffffff7f;
         V2_1F0 = new Vector2Int(oVar2.screen.x, oVar2.screen.z);
         FUN_2DB80();
@@ -17416,7 +17417,7 @@ public class CriPlayer : CriSkinned
         FUN_609C8(34, 0, 0);
         DAT_40 = new Vector3Int(0, 0, 0);
         FUN_656EC();
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar2.DAT_152 = 1;
         DAT_152 = 1;
         oVar2.DAT_154 = this;
@@ -17444,7 +17445,7 @@ public class CriPlayer : CriSkinned
 
         FUN_609C8(32, 1, 0);
         FUN_65714();
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar1.DAT_1CA = 30;
         oVar1.DAT_1E6 = 174;
         oVar1.DAT_1E5 = 0;
@@ -17459,7 +17460,7 @@ public class CriPlayer : CriSkinned
         uint uVar4;
         CriPlayer oVar6;
 
-        oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar3 = FUN_60AB4();
         bVar1 = oVar6.DAT_1E5;
 
@@ -17547,7 +17548,7 @@ public class CriPlayer : CriSkinned
         else
             InventoryManager.FUN_4A7E8(0, 0xc9, false);
 
-        SceneManager.instance.DAT_27C[10].DAT_3E++;
+        SceneManager.instance.skinnedObjects[10].DAT_3E++;
         DAT_3E++;
     }
 
@@ -17558,7 +17559,7 @@ public class CriPlayer : CriSkinned
         short sVar3;
         uint uVar4;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar2 = FUN_60AB4();
 
         if (bVar2)
@@ -17608,7 +17609,7 @@ public class CriPlayer : CriSkinned
         DAT_40 = new Vector3Int(0, 0, 0);
         FUN_656EC();
         DAT_18D = true;
-        SceneManager.instance.DAT_27C[10].DAT_18D = true;
+        SceneManager.instance.skinnedObjects[10].DAT_18D = true;
         FUN_65CF8(0, 0, 30);
         DAT_3E++;
     }
@@ -17628,7 +17629,7 @@ public class CriPlayer : CriSkinned
         if (DAT_60 == 11)
         {
             GameManager.instance.FUN_5C94C(this, 64);
-            oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+            oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
             GameManager.instance.PTR_FUN_148 = GameManager.FUN_2B6F4;
             oVar3.DAT_3C = 5;
             oVar3.DAT_3D = 14;
@@ -17656,7 +17657,7 @@ public class CriPlayer : CriSkinned
         CriPlayer oVar1;
 
         FUN_609C8(61, 1, 0);
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar1.DAT_1CA = 82;
         oVar1.DAT_1C9 = 6;
         oVar1.DAT_1E5 = 0;
@@ -17673,7 +17674,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_38;
         Matrix3x3 MStack48;
 
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar3 = FUN_60AB4();
 
         if (bVar3)
@@ -17770,7 +17771,7 @@ public class CriPlayer : CriSkinned
         int iVar2;
 
         bVar2 = FUN_60AB4();
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (bVar2)
         {
@@ -17950,7 +17951,7 @@ public class CriPlayer : CriSkinned
             return;
         }
 
-        oVar7 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar7 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         sVar3 = FUN_64804(oVar7.screen);
         //...
     }
@@ -18017,7 +18018,7 @@ public class CriPlayer : CriSkinned
             }
             else
             {
-                if (DAT_48 == SceneManager.instance.DAT_27C[10].DAT_48)
+                if (DAT_48 == SceneManager.instance.skinnedObjects[10].DAT_48)
                 {
                     if ((DAT_208 & 8) == 0)
                     {
@@ -18148,7 +18149,7 @@ public class CriPlayer : CriSkinned
         CriPlayer oVar7;
         int iVar8;
 
-        oVar7 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar7 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((oVar7.DAT_11E & 0x80) != 0)
             return;
@@ -18479,7 +18480,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_20;
         Vector2Int auStack24;
 
-        oVar7 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar7 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar4 = FUN_60AB4();
 
         if (bVar4)
@@ -18529,7 +18530,7 @@ public class CriPlayer : CriSkinned
 
         if (1U < DAT_3E)
         {
-            oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+            oVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
             if (((oVar6.DAT_11E & 0x80) == 0 || DAT_1C4 != 0) && 
                 !SceneManager.instance.FUN_81014(screen, oVar6.screen, (byte)(DAT_48 << 4 | 0xf), false))
@@ -18659,7 +18660,7 @@ public class CriPlayer : CriSkinned
             DAT_3E++;
 
         DAT_40.z = sVar2 - DAT_64.z;
-        sVar1 = (short)Utilities.FUN_615EC(screen, SceneManager.instance.DAT_27C[10].screen);
+        sVar1 = (short)Utilities.FUN_615EC(screen, SceneManager.instance.skinnedObjects[10].screen);
         iVar3 = (int)GameManager.FUN_64650();
         sVar2 = (short)Utilities.FUN_64838(vr.y, (uint)((iVar3 % 15 + 30) * 0x10000 >> 0x10), sVar1);
         vr.y = vr.y + sVar2 & 0xfff;
@@ -18698,7 +18699,7 @@ public class CriPlayer : CriSkinned
 
         if (DAT_1C4 == 0)
         {
-            sVar1 = (short)Utilities.FUN_615EC(screen, SceneManager.instance.DAT_27C[10].screen);
+            sVar1 = (short)Utilities.FUN_615EC(screen, SceneManager.instance.skinnedObjects[10].screen);
             iVar3 = (int)GameManager.FUN_64650();
             sVar2 = (short)Utilities.FUN_64838(vr.y, (uint)((iVar3 % 15 + 30) * 0x10000 >> 0x10), sVar1);
             vr.y = vr.y + sVar2 & 0xfff;
@@ -18728,7 +18729,7 @@ public class CriPlayer : CriSkinned
             DAT_3E = 1;
             DAT_1C3 = 1;
             DAT_60 = 6;
-            sVar1 = (short)Utilities.FUN_615EC(SceneManager.instance.DAT_27C[10].screen, screen);
+            sVar1 = (short)Utilities.FUN_615EC(SceneManager.instance.skinnedObjects[10].screen, screen);
             DAT_1EC = sVar1;
             DAT_1C4 = 0;
         }
@@ -18745,7 +18746,7 @@ public class CriPlayer : CriSkinned
 
         FUN_609C8(57, 0, 0);
         DAT_40 = new Vector3Int(0, 0, 0);
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         SceneManager.instance.cCamera.DAT_72 &= 0xfb;
         oVar1.DAT_152 = 0;
         DAT_152 = 0;
@@ -18775,7 +18776,7 @@ public class CriPlayer : CriSkinned
             DAT_18D = true;
             GameManager.instance.FUN_65CB0(this);
             FUN_2D76C();
-            SceneManager.instance.DAT_27C[10].DAT_18D = true;
+            SceneManager.instance.skinnedObjects[10].DAT_18D = true;
         }
     }
 
@@ -18793,7 +18794,7 @@ public class CriPlayer : CriSkinned
         DAT_40 = new Vector3Int(0, 0, 0);
         SceneManager.instance.cCamera.DAT_72 &= 0xfb;
         //FUN_1D988
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar2.DAT_3C = 5;
         oVar2.DAT_3D = 18;
         oVar2.DAT_3E = 0;
@@ -18815,7 +18816,7 @@ public class CriPlayer : CriSkinned
             DAT_3D = 13;
             DAT_3E = 0;
             DAT_3F = 0;
-            oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+            oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
             oVar1.DAT_152 = 0;
             DAT_152 = 0;
             oVar1.DAT_11E &= 0xf7;
@@ -18838,7 +18839,7 @@ public class CriPlayer : CriSkinned
 
         FUN_609C8(14, 0, 0);
         DAT_40 = new Vector3Int(0, 0, 0);
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         V2_1F0 = new Vector2Int(oVar2.screen.x, oVar2.screen.z);
         DAT_1DB = DAT_48;
         FUN_66460(true);
@@ -18891,7 +18892,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_40;
         Matrix3x3 MStack48;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_48 < DAT_1DA)
         {
@@ -18917,7 +18918,7 @@ public class CriPlayer : CriSkinned
     private void FUN_3B9A8()
     {
         FUN_34098();
-        SceneManager.instance.DAT_27C[10].DAT_18D = false;
+        SceneManager.instance.skinnedObjects[10].DAT_18D = false;
         DAT_18D = false;
         DAT_1DB = DAT_48;
     }
@@ -18937,7 +18938,7 @@ public class CriPlayer : CriSkinned
             GameManager.instance.FUN_5C94C(this, 49);
 
         DAT_40.z = Utilities.DAT_9B5A8[DAT_60];
-        sVar1 = (short)Utilities.FUN_615EC(screen, SceneManager.instance.DAT_27C[10].screen);
+        sVar1 = (short)Utilities.FUN_615EC(screen, SceneManager.instance.skinnedObjects[10].screen);
         iVar3 = (int)GameManager.FUN_64650();
         sVar2 = (short)Utilities.FUN_64838(vr.y, (uint)((iVar3 % 15 + 60) * 0x10000 >> 0x10), sVar1);
         vr.y = vr.y + sVar2 & 0xfff;
@@ -18960,7 +18961,7 @@ public class CriPlayer : CriSkinned
         CriPlayer oVar9;
         int iVar10;
 
-        oVar9 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar9 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((oVar9.DAT_11E & 0x80) == 0)
         {
@@ -19135,7 +19136,7 @@ public class CriPlayer : CriSkinned
         if (60U < UDAT_1E4)
             UDAT_1E4 = 60;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         DAT_1E8 = (ushort)((((byte)DAT_48 - (byte)oVar1.DAT_48) - 2) * 50 + 100);
         GameManager.instance.FUN_65C7C(this);
         DAT_12E = 2;
@@ -19153,7 +19154,7 @@ public class CriPlayer : CriSkinned
         uint uVar5;
         CriPlayer oVar6;
 
-        oVar6 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar3 = FUN_60AB4();
 
         if (bVar3)
@@ -19222,7 +19223,7 @@ public class CriPlayer : CriSkinned
     {
         CriPlayer oVar2;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         FUN_609C8(24, 0, 0);
         DAT_40 = new Vector3Int(0, 0, 0);
         screen.y = oVar2.screen.y;
@@ -19344,7 +19345,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_38;
         Matrix3x3 MStack48;
 
-        oVar7 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar7 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_3E == 0)
         {
@@ -19592,7 +19593,7 @@ public class CriPlayer : CriSkinned
         Vector3Int local_38;
         Matrix3x3 MStack48;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         DAT_40 = new Vector3Int(0, 0, 0);
         uVar2 = (ushort)Utilities.FUN_615EC(oVar1.screen, screen);
         DAT_1EC = (short)uVar2;
@@ -19633,7 +19634,7 @@ public class CriPlayer : CriSkinned
             DAT_12C &= 0xfff7;
             DAT_140 &= 0xfffc;
 
-            if ((DAT_208 & 0x10) == 0 || DAT_48 != SceneManager.instance.DAT_27C[10].DAT_48)
+            if ((DAT_208 & 0x10) == 0 || DAT_48 != SceneManager.instance.skinnedObjects[10].DAT_48)
             {
                 if (health < 1)
                 {
@@ -19693,7 +19694,7 @@ public class CriPlayer : CriSkinned
         uint uVar4;
         short sVar5;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar1 = DAT_3E;
 
         if (bVar1 == 1)
@@ -19889,7 +19890,7 @@ public class CriPlayer : CriSkinned
 
                 GameManager.instance.FUN_65CB0(this);
                 DAT_12C &= 0xfff7;
-                oVar5 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+                oVar5 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
                 if (health < 1)
                 {
@@ -20179,7 +20180,7 @@ public class CriPlayer : CriSkinned
 
         if (bVar1)
         {
-            if ((DAT_208 & 0x10) == 0 || DAT_48 != SceneManager.instance.DAT_27C[10].DAT_48)
+            if ((DAT_208 & 0x10) == 0 || DAT_48 != SceneManager.instance.skinnedObjects[10].DAT_48)
             {
                 DAT_208 &= 0xffffffef;
                 InventoryManager.FUN_4A7E8(4, DAT_163, true);
@@ -20411,7 +20412,7 @@ public class CriPlayer : CriSkinned
         if (DAT_60 == 37)
             GameManager.instance.FUN_5C94C(this, 50);
 
-        sVar2 = FUN_64804(SceneManager.instance.DAT_27C[10].screen);
+        sVar2 = FUN_64804(SceneManager.instance.skinnedObjects[10].screen);
 
         if (DAT_60 - 32U < 19 || DAT_60 - 80U < 19)
         {
@@ -20492,7 +20493,7 @@ public class CriPlayer : CriSkinned
         short sVar3;
         CriPlayer oVar4;
 
-        oVar4 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar4 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_60 < 19U && (DAT_162 & 1) != 0 && DAT_1C4 == 0)
         {
@@ -20539,7 +20540,7 @@ public class CriPlayer : CriSkinned
         CriPlayer oVar9;
 
         bVar1 = DAT_3E;
-        oVar9 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar9 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (bVar1 != 1)
         {
@@ -21225,7 +21226,7 @@ public class CriPlayer : CriSkinned
         else
         {
             GameManager.instance.FUN_46C0C(0, 20, 1);
-            oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+            oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
             oVar3.screen = new Vector3Int(0, 0, 0);
             oVar3.vr.y = 0;
             oVar3.PTR_124 = null;
@@ -21309,7 +21310,7 @@ public class CriPlayer : CriSkinned
                 DAT_3E++;
                 oVar3 = SceneManager.instance.cCamera;
                 oVar3.DAT_70 = 1;
-                oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+                oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
                 oVar3.DAT_64 = oVar2;
                 oVar3.PTR_FUN_8C = oVar3.PTR_FUN_9C618[DAT_1D7];
                 oVar2.PTR_FUN_9C620[DAT_1D7]();
@@ -21412,7 +21413,7 @@ public class CriPlayer : CriSkinned
         else
         {
             GameManager.instance.FUN_46C0C(0, 20, 1);
-            oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+            oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
             oVar3.screen = new Vector3Int(0, 0, 0);
             oVar3.vr.y = 0;
             oVar3.PTR_124 = null;
@@ -21517,7 +21518,7 @@ public class CriPlayer : CriSkinned
 
         GameManager.instance.FUN_46C0C(0, 20, 1);
         DialogManager.instance.DAT_B1440 = 2;
-        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         oVar3.screen = new Vector3Int(0, 0, 0);
         oVar3.vr.y = 0;
         oVar3.PTR_124 = null;
@@ -21589,7 +21590,7 @@ public class CriPlayer : CriSkinned
         else
         {
             FUN_60AB4();
-            sVar2 = FUN_64804(SceneManager.instance.DAT_27C[10].screen);
+            sVar2 = FUN_64804(SceneManager.instance.skinnedObjects[10].screen);
 
             if (DAT_60 - 32U < 19 || DAT_60 - 80U < 19)
             {
@@ -21598,7 +21599,7 @@ public class CriPlayer : CriSkinned
                 if ((ushort)(sVar2 - 0x401) < 0x7ffU)
                     uVar5 = 80;
 
-                uVar3 = (ushort)Utilities.FUN_615EC(screen, SceneManager.instance.DAT_27C[10].screen);
+                uVar3 = (ushort)Utilities.FUN_615EC(screen, SceneManager.instance.skinnedObjects[10].screen);
                 sVar2 = (short)Utilities.FUN_64838(vr.y, uVar5, uVar3);
                 DAT_40.z = 45;
                 vr.y = vr.y + sVar2 & 0xfff;
@@ -21657,7 +21658,7 @@ public class CriPlayer : CriSkinned
         ushort uVar2;
         CriPlayer oVar3;
 
-        oVar3 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar3 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((oVar3.DAT_11E & 8) == 0 || oVar3.DAT_1DC != this && 0 < health)
         {
@@ -21690,7 +21691,7 @@ public class CriPlayer : CriSkinned
     {
         CriPlayer oVar1;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if ((DAT_11E & 8) == 0 || oVar1.DAT_1DC != this && 0 < health)
         {
@@ -21790,7 +21791,7 @@ public class CriPlayer : CriSkinned
         DAT_1C0 = 0;
         DAT_124 = 0;
         PTR_124 = ST2.instance.DAT_7558;
-        DAT_154 = SceneManager.instance.DAT_27C[10];
+        DAT_154 = SceneManager.instance.skinnedObjects[10];
     }
 
     //FUN_22D0 (ST2)
@@ -22047,7 +22048,7 @@ public class CriPlayer : CriSkinned
         DAT_1C5 = 0;
         DAT_1C6 = 0;
         DAT_1C7 = 0;
-        DAT_154 = SceneManager.instance.DAT_27C[10];
+        DAT_154 = SceneManager.instance.skinnedObjects[10];
         GameManager.instance.PTR_FUN_148 = ST2.FUN_530C;
         GameManager.instance.PTR_FUN_14C = ST2.FUN_5348;
         PTR_124 = ST2.instance.DAT_7CD0;
@@ -22562,7 +22563,7 @@ public class CriPlayer : CriSkinned
         bool bVar3;
         bool bVar4;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         Utilities.RotMatrix(ref vr, ref cTransform.rotation);
 
         if ((InventoryManager.DAT_B7A60[0] & 2) == 0)
@@ -22712,7 +22713,7 @@ public class CriPlayer : CriSkinned
         uint uVar3;
 
         Utilities.RotMatrix(ref vr, ref cTransform.rotation);
-        oVar1 = SceneManager.instance.DAT_27C[10];
+        oVar1 = SceneManager.instance.skinnedObjects[10];
 
         if ((InventoryManager.DAT_B7A60[0] & 2) == 0)
         {

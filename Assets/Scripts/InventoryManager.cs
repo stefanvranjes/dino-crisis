@@ -492,7 +492,7 @@ public class InventoryManager : MonoBehaviour
         DAT_C61F8 = DAT_B7A60[0];
         FUN_4A7E8(1, 2, false);
         //FUN_1CC7C
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar1 = oVar2.DAT_240;
         DAT_C6108 = bVar1;
         DAT_C6109 = bVar1;
@@ -660,7 +660,7 @@ public class InventoryManager : MonoBehaviour
         CriPlayer oVar2;
 
         //FUN_1CC7C
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
 
         if (DAT_C6109 != DAT_C6108)
             oVar2.DAT_240 = DAT_C6108;
@@ -1726,7 +1726,7 @@ public class InventoryManager : MonoBehaviour
             }
 
             FUN_6ACDC((RectTransform)ammoListRect.transform, new Vector2(iVar7, local_3c - 165));
-            local_38 = ((uint)((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_244[(DAT_C6108 >> 4) - 1] >> 8) + 0x10;
+            local_38 = ((uint)((CriPlayer)SceneManager.instance.skinnedObjects[10]).DAT_244[(DAT_C6108 >> 4) - 1] >> 8) + 0x10;
             uVar4 = 0;
 
             if (param1[param2].DAT_64 != 0)
@@ -1796,7 +1796,7 @@ public class InventoryManager : MonoBehaviour
         if (uVar1 != 0)
         {
             uVar4 = 0;
-            uVar5 = (uint)((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_244[uVar1 - 1] >> 8;
+            uVar5 = (uint)((CriPlayer)SceneManager.instance.skinnedObjects[10]).DAT_244[uVar1 - 1] >> 8;
             uVar1 = uVar5 + 0x10;
             iVar3 = (int)uVar1 * 6;
 
@@ -1828,7 +1828,7 @@ public class InventoryManager : MonoBehaviour
         int iVar2;
         uint uVar3;
 
-        oVar1 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         iVar2 = param1[param2].DAT_67 * 6;
         uVar3 = (byte)DialogManager.DAT_A593C[iVar2 + 1] & 0xfU;
 
@@ -1939,7 +1939,7 @@ public class InventoryManager : MonoBehaviour
                             uVar5 |= uVar1;
                             iVar4++;
 
-                            if (((uint)((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_244[uVar6 - 1] >> 8) + 0x10 == uVar2)
+                            if (((uint)((CriPlayer)SceneManager.instance.skinnedObjects[10]).DAT_244[uVar6 - 1] >> 8) + 0x10 == uVar2)
                             {
                                 param1[param2].DAT_63 = (byte)(4 < iVar4 ? 1 : 0);
                                 param1[param2].DAT_66 = (sbyte)(iVar4 + (iVar4 / 5) * -5);
@@ -1979,7 +1979,7 @@ public class InventoryManager : MonoBehaviour
 
         if (uVar5 != 0)
         {
-            uVar4 = ((uint)((CriPlayer)SceneManager.instance.DAT_27C[10]).DAT_244[uVar5 - 1] >> 8) + 0x10;
+            uVar4 = ((uint)((CriPlayer)SceneManager.instance.skinnedObjects[10]).DAT_244[uVar5 - 1] >> 8) + 0x10;
             bVar2 = FUN_6A00C(uVar4);
 
             if (bVar2)
@@ -2400,7 +2400,7 @@ public class InventoryManager : MonoBehaviour
             pbVar1 += 4;
         }
 
-        ((CriPlayer)SceneManager.instance.DAT_27C[10]).FUN_50CC8();
+        ((CriPlayer)SceneManager.instance.skinnedObjects[10]).FUN_50CC8();
     }
 
     private void FUN_6ACDC(RectTransform param1, Vector2 param2)
@@ -2923,7 +2923,7 @@ public class InventoryManager : MonoBehaviour
         uint uVar3;
         uint uVar4;
 
-        oVar2 = (CriPlayer)SceneManager.instance.DAT_27C[10];
+        oVar2 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
         bVar1 = (byte)param1[param2 + 1];
 
         if (bVar1 == 1)
@@ -4242,7 +4242,7 @@ public class InventoryManager : MonoBehaviour
         param1[param2].DAT_35 = 0;
         DAT_C6102 = 0;
         FUN_6AC20();
-        ((CriPlayer)SceneManager.instance.DAT_27C[10]).FUN_50CC8();
+        ((CriPlayer)SceneManager.instance.skinnedObjects[10]).FUN_50CC8();
     }
 
     private void FUN_6F12C(InventoryWindow[] param1, int param2)

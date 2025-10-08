@@ -29,9 +29,14 @@ public class RenderQueue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < SceneManager.instance.DAT_7CDC.Length; i++)
+        for (int i = 0; i < SceneManager.instance.skinnedObjects.Length; i++)
         {
-            SceneManager.instance.DAT_7CDC[i].Draw();
+            SceneManager.instance.skinnedObjects[i].Draw();
+        }
+
+        for (int i = 0; i < SceneManager.instance.staticObjects.Length; i++)
+        {
+            SceneManager.instance.staticObjects[i].Draw();
         }
     }
 

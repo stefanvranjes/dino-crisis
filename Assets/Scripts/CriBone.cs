@@ -75,6 +75,14 @@ public class CriBone : CriObject
         }
     }
 
+    private void OnDestroy()
+    {
+        vertexBuffer.Dispose();
+        indexBuffer.Dispose();
+        indicies.Dispose();
+        normalData.Dispose();
+    }
+
     public override void ResetValues()
     {
         base.ResetValues();
@@ -163,6 +171,33 @@ public class CriBone : CriObject
     //FUN_7503C
     public void MeshJob(Tmd3ScriptableObject param1)
     {
+        Coprocessor.rotationMatrix.rt11 = cTransform.rotation.V00;
+        Coprocessor.rotationMatrix.rt12 = cTransform.rotation.V01;
+        Coprocessor.rotationMatrix.rt13 = cTransform.rotation.V02;
+        Coprocessor.rotationMatrix.rt21 = cTransform.rotation.V10;
+        Coprocessor.rotationMatrix.rt22 = cTransform.rotation.V11;
+        Coprocessor.rotationMatrix.rt23 = cTransform.rotation.V12;
+        Coprocessor.rotationMatrix.rt31 = cTransform.rotation.V20;
+        Coprocessor.rotationMatrix.rt32 = cTransform.rotation.V21;
+        Coprocessor.rotationMatrix.rt33 = cTransform.rotation.V22;
+        Coprocessor.lightMatrix.l11 = lightMatrix.V00;
+        Coprocessor.lightMatrix.l12 = lightMatrix.V01;
+        Coprocessor.lightMatrix.l13 = lightMatrix.V02;
+        Coprocessor.lightMatrix.l21 = lightMatrix.V10;
+        Coprocessor.lightMatrix.l22 = lightMatrix.V11;
+        Coprocessor.lightMatrix.l23 = lightMatrix.V12;
+        Coprocessor.lightMatrix.l31 = lightMatrix.V20;
+        Coprocessor.lightMatrix.l32 = lightMatrix.V21;
+        Coprocessor.lightMatrix.l33 = lightMatrix.V22;
+        Coprocessor.lightColorMatrix.lr1 = colorMatrix.V00;
+        Coprocessor.lightColorMatrix.lr2 = colorMatrix.V01;
+        Coprocessor.lightColorMatrix.lr3 = colorMatrix.V02;
+        Coprocessor.lightColorMatrix.lg1 = colorMatrix.V10;
+        Coprocessor.lightColorMatrix.lg2 = colorMatrix.V11;
+        Coprocessor.lightColorMatrix.lg3 = colorMatrix.V12;
+        Coprocessor.lightColorMatrix.lb1 = colorMatrix.V20;
+        Coprocessor.lightColorMatrix.lb2 = colorMatrix.V21;
+        Coprocessor.lightColorMatrix.lb3 = colorMatrix.V22;
         BoneMeshJob job = new BoneMeshJob
         {
             vertexBuffer = vertexBuffer,

@@ -151,9 +151,9 @@ public class CriSkinned : CriObject
     {
         base.Update();
 
-        if (cSkin != null && (flags & 2) != 0)
+        if ((flags & 2) != 0)
         {
-            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[0], gameObject.layer, Camera.main, 0);
+            Graphics.DrawMesh(mesh, Matrix4x4.identity, materials[0], gameObject.layer, Camera.main, 0);
         }
     }
 
@@ -161,12 +161,9 @@ public class CriSkinned : CriObject
     {
         base.Draw();
 
-        if (cSkin != null && (flags & 2) != 0)
+        if ((flags & 2) != 0 && (DAT_174 & 0x80) != 0)
         {
-            if (shadow != null)
-            {
-                Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[3], gameObject.layer, Camera.main, 1);
-            }
+            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[3], gameObject.layer, Camera.main, 1);
         }
     }
 
@@ -180,72 +177,8 @@ public class CriSkinned : CriObject
         indexBuffer.Dispose();
         indicies.Dispose();
         vertexData.Dispose();
-    }
-
-    private void OnRenderObject()
-    {
-        /*if (cSkin != null && (flags & 2) != 0)
-        {
-            GL.PushMatrix();
-            GL.MultMatrix(Matrix4x4.identity);
-
-            for (int i = 0; i < cSkin.TRI_COUNT; i++)
-            {
-                materials[commandList[i] & 0xef].SetPass(0);
-                GL.Begin(GL.TRIANGLES);
-                int j = i * 3;
-
-                for (int k = 0; k < 3; k++)
-                {
-                    if (!GameManager.instance.disableColors && (commandList[i] & 0x10) != 0)
-                        GL.Color(colorList[triangleList[j + k]]);
-                    GL.MultiTexCoord(0, uvList[j + k]);
-                    GL.MultiTexCoord(1, uv2List[i]);
-                    GL.Vertex(vertexList[triangleList[j + k]]);
-                }
-
-                GL.End();
-            }
-
-            for (int i = 0; i < cSkin.QUAD_COUNT; i++)
-            {
-                materials[commandList[cSkin.TRI_COUNT + i] & 0xef].SetPass(0);
-                GL.Begin(GL.TRIANGLES);
-                int j = cSkin.TRI_COUNT * 3 + i * 6;
-
-                for (int k = 0; k < 6; k++)
-                {
-                    if (!GameManager.instance.disableColors && (commandList[cSkin.TRI_COUNT + i] & 0x10) != 0)
-                        GL.Color(colorList[triangleList[j + k]]);
-                    GL.MultiTexCoord(0, uvList[j + k]);
-                    GL.MultiTexCoord(1, uv2List[cSkin.TRI_COUNT + i]);
-                    GL.Vertex(vertexList[triangleList[j + k]]);
-                }
-
-                GL.End();
-            }
-
-            if (shadow != null)
-            {
-                RenderQueue.AddMatrix(shadow);
-                RenderQueue.AddCommand(commandList[cSkin.TRI_COUNT + cSkin.QUAD_COUNT]);
-                RenderQueue.AddMaterial(materials[commandList[cSkin.TRI_COUNT + cSkin.QUAD_COUNT] & 0xef]);
-                RenderQueue.AddMatrix(shadow);
-                RenderQueue.AddCommand(commandList[cSkin.TRI_COUNT + cSkin.QUAD_COUNT]);
-                RenderQueue.AddMaterial(materials[commandList[cSkin.TRI_COUNT + cSkin.QUAD_COUNT] & 0xef]);
-                int m = cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6;
-
-                for (int k = 0; k < 6; k++)
-                {
-                    RenderQueue.AddColor(colorList[triangleList[m + k]]);
-                    RenderQueue.AddUV(uvList[m + k]);
-                    RenderQueue.AddUV2(uv2List[cSkin.TRI_COUNT + cSkin.QUAD_COUNT]);
-                    RenderQueue.AddVertex(vertexList[triangleList[m + k]]);
-                }
-            }
-
-            GL.PopMatrix();
-        }*/
+        normalData.Dispose();
+        skinnedData.Dispose();
     }
 
     public override void ResetValues()
@@ -358,11 +291,11 @@ public class CriSkinned : CriObject
         );
 
         vertexBuffer = new NativeArray<MyVertex>(
-            cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 4 + 4, Allocator.Persistent
+            cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6 + 4, Allocator.Persistent
         );
 
         indicies = new NativeArray<int>(
-            1, Allocator.Persistent
+            2, Allocator.Persistent
         );
 
         vertexData = new NativeArray<float3>(
@@ -379,7 +312,7 @@ public class CriSkinned : CriObject
 
         mesh = new Mesh();
         mesh.subMeshCount = subMeshCount;
-        mesh.SetVertexBufferParams(cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 4 + 4,
+        mesh.SetVertexBufferParams(cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6 + 4,
                                                  new VertexAttributeDescriptor(VertexAttribute.Position, VertexAttributeFormat.Float32, 3),
                                                  new VertexAttributeDescriptor(VertexAttribute.Color, VertexAttributeFormat.Float32, 4),
                                                  new VertexAttributeDescriptor(VertexAttribute.TexCoord0, VertexAttributeFormat.Float32, 2),
@@ -399,14 +332,17 @@ public class CriSkinned : CriObject
             indicies[0] += 3;
         }
 
-        for (int i = cSkin.QUAD_COUNT - 1, j = cSkin.TRI_COUNT; i >= 0; i--)
+        for (int i = 0, j = cSkin.TRI_COUNT; i < cSkin.QUAD_COUNT; i++)
         {
-            int quad = j * 3 + i * 4;
+            int quad = j * 3 + i * 6;
+            int uv = j * 3 + i * 4;
             int tri = i * 6;
-            vertexBuffer[quad] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[quad], cSkin.UVS2[i + j]);
-            vertexBuffer[quad + 1] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[quad + 1], cSkin.UVS2[i + j]);
-            vertexBuffer[quad + 2] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[quad + 2], cSkin.UVS2[i + j]);
-            vertexBuffer[quad + 3] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[quad + 3], cSkin.UVS2[i + j]);
+            vertexBuffer[quad] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[uv], cSkin.UVS2[i + j]);
+            vertexBuffer[quad + 1] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[uv + 1], cSkin.UVS2[i + j]);
+            vertexBuffer[quad + 2] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[uv + 2], cSkin.UVS2[i + j]);
+            vertexBuffer[quad + 3] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[uv + 3], cSkin.UVS2[i + j]);
+            vertexBuffer[quad + 4] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[uv + 2], cSkin.UVS2[i + j]);
+            vertexBuffer[quad + 5] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[uv + 1], cSkin.UVS2[i + j]);
             int sm = indicies[0];
             indexBuffer[sm] = (ushort)cSkin.QUADS[tri];
             indexBuffer[sm + 1] = (ushort)cSkin.QUADS[tri + 1];
@@ -435,12 +371,12 @@ public class CriSkinned : CriObject
         indexBuffer[l + 3] = (ushort)(v + 3);
         indexBuffer[l + 4] = (ushort)(v + 2);
         indexBuffer[l + 5] = (ushort)(v + 1);
+        indicies[1] += 6;
 
-        mesh.SetVertexBufferData(vertexBuffer, 0, 0, cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 4 + 4);
+        mesh.SetVertexBufferData(vertexBuffer, 0, 0, cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6 + 4);
         mesh.SetIndexBufferData(indexBuffer, 0, 0, cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6 + 6);
         mesh.SetSubMesh(0, new SubMeshDescriptor(0, indicies[0]));
-        mesh.SetSubMesh(1, new SubMeshDescriptor(indicies[0], 6));
-        mesh.RecalculateBounds();
+        mesh.SetSubMesh(1, new SubMeshDescriptor(indicies[0], indicies[1]));
     }
 
     //FUN_7569C
@@ -456,6 +392,7 @@ public class CriSkinned : CriObject
                 if (b.cMesh != null)
                     b.MeshJob(b.cMesh);
 
+                bonesTransform[b.boneId] = b.cTransform;
                 b = (CriBone)b.next;
                 index--;
             } while (index != -1);
@@ -535,10 +472,19 @@ public class CriSkinned : CriObject
 
     public void UpdateMesh()
     {
-        if (shadow == null)
-            mesh.SetVertexBufferData(vertexBuffer, 0, 0, cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 4);
-        else
-            mesh.SetVertexBufferData(vertexBuffer, 0, 0, cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 4 + 4);
+        if ((flags & 2) != 0)
+        {
+            if ((DAT_174 & 0x80) != 0)
+            {
+                mesh.SetVertexBufferData(vertexBuffer, 0, 0, cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6 + 4);
+                mesh.RecalculateBounds();
+            }
+            else
+            {
+                mesh.SetVertexBufferData(vertexBuffer, 0, 0, cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6);
+                mesh.RecalculateBounds();
+            }
+        }
     }
 
     public void FUN_60278()
@@ -1722,6 +1668,7 @@ struct SkinnedMeshJob : IJob
                 float3 euler = rotation.eulerAngles;
                 rotation.eulerAngles = new float3(-euler.x, euler.y, -euler.z);
                 float3 scale = new float3(1, 1, 1);
+                m = new Matrix4x4();
                 m.SetTRS(position, rotation, scale);
                 iVar19 = bonesIndex[puVar10].DAT_42 - 1;
 
@@ -1797,7 +1744,7 @@ struct SkinnedMeshJob : IJob
             } while (iVar12 != -1);
         }
 
-        for (int i = triCount - 1; i >= 0; i--)
+        for (int i = 0; i < triCount; i++)
         {
             int tri = i * 3;
             vertexBuffer[tri] = new MyVertex(skinnedData[indexBuffer[tri]].vertex, skinnedData[indexBuffer[tri]].color, vertexBuffer[tri].uv, vertexBuffer[tri].uv2);
@@ -1805,13 +1752,15 @@ struct SkinnedMeshJob : IJob
             vertexBuffer[tri + 2] = new MyVertex(skinnedData[indexBuffer[tri + 2]].vertex, skinnedData[indexBuffer[tri + 2]].color, vertexBuffer[tri + 2].uv, vertexBuffer[tri + 2].uv2);
         }
 
-        for (int i = quadCount - 1, j = triCount; i >= 0; i--)
+        for (int i = 0, j = triCount; i < quadCount; i++)
         {
-            int quad = j * 3 + i * 4;
+            int quad = j * 3 + i * 6;
             vertexBuffer[quad] = new MyVertex(skinnedData[indexBuffer[quad]].vertex, skinnedData[indexBuffer[quad]].color, vertexBuffer[quad].uv, vertexBuffer[quad].uv2);
             vertexBuffer[quad + 1] = new MyVertex(skinnedData[indexBuffer[quad + 1]].vertex, skinnedData[indexBuffer[quad + 1]].color, vertexBuffer[quad + 1].uv, vertexBuffer[quad + 1].uv2);
             vertexBuffer[quad + 2] = new MyVertex(skinnedData[indexBuffer[quad + 2]].vertex, skinnedData[indexBuffer[quad + 2]].color, vertexBuffer[quad + 2].uv, vertexBuffer[quad + 2].uv2);
             vertexBuffer[quad + 3] = new MyVertex(skinnedData[indexBuffer[quad + 3]].vertex, skinnedData[indexBuffer[quad + 3]].color, vertexBuffer[quad + 3].uv, vertexBuffer[quad + 3].uv2);
+            vertexBuffer[quad + 4] = new MyVertex(skinnedData[indexBuffer[quad + 4]].vertex, skinnedData[indexBuffer[quad + 4]].color, vertexBuffer[quad + 4].uv, vertexBuffer[quad + 4].uv2);
+            vertexBuffer[quad + 5] = new MyVertex(skinnedData[indexBuffer[quad + 5]].vertex, skinnedData[indexBuffer[quad + 5]].color, vertexBuffer[quad + 5].uv, vertexBuffer[quad + 5].uv2);
         }
     }
 

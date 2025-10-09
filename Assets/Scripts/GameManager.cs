@@ -8161,7 +8161,9 @@ public class GameManager : MonoBehaviour
         int pbVar12;
         uint uVar13;
         int iVar14;
+        int iVar15;
         Frame2 pcVar16;
+        int iVar17;
         CriParticle pbVar20;
         int puVar21;
         Vector3Int local_48;
@@ -8180,7 +8182,6 @@ public class GameManager : MonoBehaviour
                 if ((pbVar20.DAT_65 & 0x80) == 0)
                 {
                     puVar9 = pbVar20.DAT_4C;
-                    pbVar20.ClearBuffer();
 
                     if (puVar9 != null)
                     {
@@ -8252,6 +8253,9 @@ public class GameManager : MonoBehaviour
 
                     if (iVar14 != -1)
                     {
+                        iVar15 = 0;
+                        iVar17 = 0;
+
                         do
                         {
                             pcVar16 = pbVar20.DAT_58.FRAMES[pbVar12];
@@ -8290,10 +8294,14 @@ public class GameManager : MonoBehaviour
                             DAT_1f800088 = DAT_1f800078;
                             DAT_1f800089 = DAT_1f800081;
                             //...
-                            pbVar20.AddBuffer();
+                            pbVar20.AddBuffer(iVar15);
                             pbVar12++;
+                            iVar15 += 4;
+                            iVar17 += 6;
                             iVar14--;
                         } while (iVar14 != -1);
+
+                        pbVar20.UpdateMesh(iVar15, iVar17);
                     }
                 }
                 else

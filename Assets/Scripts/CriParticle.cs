@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using Unity.Mathematics;
+using Unity.Collections;
 
 public struct UNK_9C7CC
 {
@@ -127,12 +130,9 @@ public class CriParticle : CriObject
 
     private GridScriptableObject grid;
     private ClutScriptableObject clut;
-    private List<byte> commandList;
-    private List<Vector3> vertexList;
-    private List<Vector2> uvList;
-    private List<Vector3> uv2List;
-    private List<Color> colorList;
-    private List<int> triangleList;
+    private Mesh mesh;
+    private NativeArray<MyVertex> vertexBuffer;
+    private NativeArray<ushort> indexBuffer;
     public Material[] materials;
 
     protected override void Awake()
@@ -267,17 +267,22 @@ public class CriParticle : CriObject
     protected override void Start()
     {
         base.Start();
-        commandList = new List<byte>();
-        vertexList = new List<Vector3>();
-        uvList = new List<Vector2>();
-        uv2List = new List<Vector3>();
-        colorList = new List<Color>();
-        triangleList = new List<int>();
     }
 
     protected override void Update()
     {
         base.Update();
+
+        if ((flags & 2) != 0 && (DAT_65 & 0x80) == 0)
+        {
+            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[5], gameObject.layer, Camera.main, 0);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        vertexBuffer.Dispose();
+        indexBuffer.Dispose();
     }
 
     public override void ResetValues()
@@ -321,35 +326,6 @@ public class CriParticle : CriObject
         DAT_7B = 0;
     }
 
-    private void OnRenderObject()
-    {
-        if (DAT_58 != null && (flags & 2) != 0)
-        {
-            GL.PushMatrix();
-            GL.MultMatrix(transform.localToWorldMatrix);
-
-            for (int i = 0; i < commandList.Count; i++)
-            {
-                materials[commandList[i] & 0xef].SetPass(0);
-                GL.Begin(GL.TRIANGLES);
-                int j = i * 6;
-
-                for (int k = 0; k < 6; k++)
-                {
-                    if (!GameManager.instance.disableColors && (commandList[i] & 0x10) != 0)
-                        GL.Color(colorList[triangleList[j + k]]);
-                    GL.MultiTexCoord(0, uvList[triangleList[j + k]]);
-                    GL.MultiTexCoord(1, uv2List[i]);
-                    GL.Vertex(vertexList[triangleList[j + k]]);
-                }
-
-                GL.End();
-            }
-
-            GL.PopMatrix();
-        }
-    }
-
     public void SetMaterials()
     {
         materials = new Material[16];
@@ -362,25 +338,65 @@ public class CriParticle : CriObject
         materials[5] = mat1;
     }
 
-    public void AddBuffer()
+    public void MeshData()
     {
-        commandList.Add(5); //GameManager.DAT_1f800068.a
+        int indexCount = 6 * 20;
+        int vertexCount = 4 * 20;
+        indexBuffer = new NativeArray<ushort>(
+            indexCount, Allocator.Persistent
+        );
+
+        vertexBuffer = new NativeArray<MyVertex>(
+            vertexCount, Allocator.Persistent
+        );
+
+        mesh = new Mesh();
+        mesh.SetVertexBufferParams(vertexCount, new VertexAttributeDescriptor(VertexAttribute.Position, VertexAttributeFormat.Float32, 3),
+                                                new VertexAttributeDescriptor(VertexAttribute.Color, VertexAttributeFormat.Float32, 4),
+                                                new VertexAttributeDescriptor(VertexAttribute.TexCoord0, VertexAttributeFormat.Float32, 2),
+                                                new VertexAttributeDescriptor(VertexAttribute.TexCoord1, VertexAttributeFormat.Float32, 3));
+        mesh.SetIndexBufferParams(indexCount, IndexFormat.UInt16);
+
+        for (int i = 0; i < vertexCount; i++)
+        {
+            vertexBuffer[i] = new MyVertex(float3.zero, float4.zero, float2.zero, float3.zero);
+        }
+
+        for (int i = 0, j = 0; i < indexCount; i += 6, j += 4)
+        {
+            indexBuffer[i] = (ushort)j;
+            indexBuffer[i + 1] = (ushort)(j + 1);
+            indexBuffer[i + 2] = (ushort)(j + 2);
+            indexBuffer[i + 3] = (ushort)(j + 3);
+            indexBuffer[i + 4] = (ushort)(j + 2);
+            indexBuffer[i + 5] = (ushort)(j + 1);
+        }
+
+        mesh.SetVertexBufferData(vertexBuffer, 0, 0, vertexCount);
+        mesh.SetIndexBufferData(indexBuffer, 0, 0, indexCount);
+    }
+
+    public void UpdateMesh(int vertexCount, int indexCount)
+    {
+        mesh.SetVertexBufferData(vertexBuffer, 0, 0, vertexCount);
+        mesh.SetSubMesh(0, new SubMeshDescriptor(0, indexCount));
+        mesh.RecalculateBounds();
+    }
+
+    public void AddBuffer(int tri)
+    {
         float translateFactor = 16f;
-        int tri = vertexList.Count;
-        vertexList.Add(GameManager.DAT_1f80006c.InvertY() / translateFactor);
-        vertexList.Add(GameManager.DAT_1f800074.InvertY() / translateFactor);
-        vertexList.Add(GameManager.DAT_1f80007c.InvertY() / translateFactor);
-        vertexList.Add(GameManager.DAT_1f800084.InvertY() / translateFactor);
-        colorList.Add(GameManager.DAT_1f800068.Opaque());
-        colorList.Add(GameManager.DAT_1f800068.Opaque());
-        colorList.Add(GameManager.DAT_1f800068.Opaque());
-        colorList.Add(GameManager.DAT_1f800068.Opaque());
+        float3 v1 = new float3(GameManager.DAT_1f80006c.x, -GameManager.DAT_1f80006c.y, GameManager.DAT_1f80006c.z) / translateFactor;
+        float3 v2 = new float3(GameManager.DAT_1f800074.x, -GameManager.DAT_1f800074.y, GameManager.DAT_1f800074.z) / translateFactor;
+        float3 v3 = new float3(GameManager.DAT_1f80007c.x, -GameManager.DAT_1f80007c.y, GameManager.DAT_1f80007c.z) / translateFactor;
+        float3 v4 = new float3(GameManager.DAT_1f800084.x, -GameManager.DAT_1f800084.y, GameManager.DAT_1f800084.z) / translateFactor;
+        float4 c = new float4(GameManager.DAT_1f800068.r, GameManager.DAT_1f800068.g, GameManager.DAT_1f800068.b, 255) / 255;
         ushort texpage = GameManager.DAT_1f80007a;
         ushort palette = GameManager.DAT_1f800072;
         bool lowColors = (texpage >> 7 & 3) == 0 ? true : false;
         int clutX = (palette & 0x3f) * 16;
         int clutY = palette >> 6;
-        uv2List.Add(new Vector3((float)(clutX - clut.VRAM_X) / clut.WIDTH, (float)(clutY - clut.VRAM_Y) / clut.HEIGHT, lowColors ? 0f : 1f));
+        float3 p = new float3((float)(clutX - clut.VRAM_X) / clut.WIDTH, (float)(clutY - clut.VRAM_Y) / clut.HEIGHT, lowColors ? 0f : 1f);
         int f = lowColors ? 4 : 2;
         int d = lowColors ? 1 : 1;
         int pageX = (texpage & 0xf) * 64 * f;
@@ -389,38 +405,26 @@ public class CriParticle : CriObject
         float height = grid.tex4.height;
         int vramX = grid.VRAM_X * f;
         int vramY = grid.VRAM_Y;
-        Vector2Int uv1 = new Vector2Int(GameManager.DAT_1f800070, GameManager.DAT_1f800071);
-        Vector2Int uv2 = new Vector2Int(GameManager.DAT_1f800078, GameManager.DAT_1f800079);
-        Vector2Int uv3 = new Vector2Int(GameManager.DAT_1f800080, GameManager.DAT_1f800081);
-        Vector2Int uv4 = new Vector2Int(GameManager.DAT_1f800088, GameManager.DAT_1f800089);
+        float2 uv1 = new float2(GameManager.DAT_1f800070, GameManager.DAT_1f800071);
+        float2 uv2 = new float2(GameManager.DAT_1f800078, GameManager.DAT_1f800079);
+        float2 uv3 = new float2(GameManager.DAT_1f800080, GameManager.DAT_1f800081);
+        float2 uv4 = new float2(GameManager.DAT_1f800088, GameManager.DAT_1f800089);
         uv1.x = pageX + (uv1.x / d) - vramX;
         uv1.y = pageY + uv1.y - vramY;
-        uvList.Add(new Vector2(uv1.x / width, 1f - uv1.y / height));
+        uv1 = new float2(uv1.x / width, 1f - uv1.y / height);
         uv2.x = pageX + (uv2.x / d) - vramX;
         uv2.y = pageY + uv2.y - vramY;
-        uvList.Add(new Vector2(uv2.x / width, 1f - uv2.y / height));
+        uv2 = new float2(uv2.x / width, 1f - uv2.y / height);
         uv3.x = pageX + (uv3.x / d) - vramX;
         uv3.y = pageY + uv3.y - vramY;
-        uvList.Add(new Vector2(uv3.x / width, 1f - uv3.y / height));
+        uv3 = new float2(uv3.x / width, 1f - uv3.y / height);
         uv4.x = pageX + (uv4.x / d) - vramX;
         uv4.y = pageY + uv4.y - vramY;
-        uvList.Add(new Vector2(uv4.x / width, 1f - uv4.y / height));
-        triangleList.Add(tri);
-        triangleList.Add(tri + 1);
-        triangleList.Add(tri + 2);
-        triangleList.Add(tri + 3);
-        triangleList.Add(tri + 2);
-        triangleList.Add(tri + 1);
-    }
-
-    public void ClearBuffer()
-    {
-        commandList.Clear();
-        vertexList.Clear();
-        uvList.Clear();
-        uv2List.Clear();
-        colorList.Clear();
-        triangleList.Clear();
+        uv4 = new float2(uv4.x / width, 1f - uv4.y / height);
+        vertexBuffer[tri] = new MyVertex(v1, c, uv1, p);
+        vertexBuffer[tri + 1] = new MyVertex(v2, c, uv2, p);
+        vertexBuffer[tri + 2] = new MyVertex(v3, c, uv3, p);
+        vertexBuffer[tri + 3] = new MyVertex(v4, c, uv4, p);
     }
 
     public void FUN_44EA8()
@@ -1723,6 +1727,7 @@ public class CriParticle : CriObject
         DAT_58 = param1;
         DAT_64 = param1.FRAMES[0].DAT_05;
         SetMaterials();
+        MeshData();
         return FUN_606D8();
     }
 

@@ -318,7 +318,7 @@ struct BoneMeshJob : IJob
             iVar10 += 3;
         }
 
-        iVar10 = iVar11;
+        iVar10 = iVar11 * 3;
 
         while (-1 < --quadCount)
         {

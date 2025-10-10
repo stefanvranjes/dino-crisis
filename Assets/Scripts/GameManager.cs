@@ -61,9 +61,10 @@ public class LoadScriptContainer
 [System.Serializable]
 public class LoadSceneContainer
 {
-    public byte nameIndex; //0x00
+    public ushort nameIndex; //0x00
     public ushort DAT_02; //0x02
     public byte DAT_08; //0x08
+    public string sceneName; //0x14
 }
 
 [System.Serializable]
@@ -2958,7 +2959,7 @@ public class GameManager : MonoBehaviour
 
     public int FUN_6E848(int param1, int param2)
     {
-        return DialogManager.instance.FUN_6752C(DAT_9E0A0[param1].scenes[param2].nameIndex + 279);
+        return DialogManager.instance.FUN_6752C((DAT_9E0A0[param1].scenes[param2].nameIndex >> 8) + 279);
     }
 
     public Vector2Int[] FUN_813F0(Vector2Int[] param1, WallCollider param2)

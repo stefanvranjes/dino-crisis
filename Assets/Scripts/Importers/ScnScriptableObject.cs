@@ -380,6 +380,7 @@ public class _SCENE_OBJ_DATA
                     break;
                 case 60:
                 case 63:
+                case 103:
                     offset -= 8;
                     break;
                 case 61:
@@ -407,6 +408,7 @@ public class _SCENE_OBJ_DATA
                 case 80:
                 case 81:
                 case 88:
+                case 98:
                     offset -= 8;
                     break;
                 case 66:

@@ -32,7 +32,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CLUT:
-        m_Texture: {fileID: 6192944022281365145, guid: 7773614e19f1c9448a9d556fa7b8dd9f, type: 3}
+        m_Texture: {fileID: 6192944022281365145, guid: 863735582ff3b9a4daac092b92787098, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cube:
@@ -64,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 7918236571912892529, guid: baadac00f00efbb4c929a01221799f8e, type: 3}
+        m_Texture: {fileID: 7918236571912892529, guid: 20cb837a2d1c7234697d1ccd810581f4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetalMap:
@@ -92,7 +92,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Tex8:
-        m_Texture: {fileID: -919273991426271617, guid: baadac00f00efbb4c929a01221799f8e, type: 3}
+        m_Texture: {fileID: -919273991426271617, guid: 20cb837a2d1c7234697d1ccd810581f4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []

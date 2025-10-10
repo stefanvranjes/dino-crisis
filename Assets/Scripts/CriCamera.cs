@@ -141,6 +141,7 @@ public class CriCamera : CriObject
     {
         base.Start();
         GetComponent<Camera>().fieldOfView = 42f;
+        RenderQueue.camera.fieldOfView = 42f;
     }
 
     protected override void Update()

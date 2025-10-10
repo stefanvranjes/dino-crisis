@@ -264,6 +264,7 @@ public class EXP_SCN
                                 break;
                             case 60:
                             case 63:
+                            case 103:
                                 reader.Seek(7, SeekOrigin.Current);
                                 break;
                             case 61:
@@ -291,6 +292,7 @@ public class EXP_SCN
                             case 80:
                             case 81:
                             case 88: //tmp
+                            case 98: //tmp
                                 reader.Seek(7, SeekOrigin.Current);
                                 break;
                             case 66:
@@ -305,7 +307,7 @@ public class EXP_SCN
                                 break;
                             default:
                                 Debug.Log("Unknown case: " + type);
-                                break;
+                                return;
                         }
                         j++;
                     }

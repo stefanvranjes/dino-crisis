@@ -302,6 +302,7 @@ public class IMP_SCN : ScriptedImporter
                                 break;
                             case 60:
                             case 63:
+                            case 103:
                                 DataContainer15 c15 = new DataContainer15();
                                 c15.DAT_00 = type;
                                 c15.DAT_01 = reader.ReadByte();
@@ -383,6 +384,7 @@ public class IMP_SCN : ScriptedImporter
                             case 80:
                             case 81:
                             case 88: //tmp
+                            case 98: //tmp
                                 DataContainer21 c21 = new DataContainer21();
                                 c21.DAT_00 = type;
                                 c21.DAT_01 = reader.ReadByte();

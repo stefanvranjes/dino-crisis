@@ -133,6 +133,7 @@ public class CriSkinned : CriObject
     private NativeArray<int> indicies;
     private NativeArray<float3> vertexData;
     private NativeArray<int3> normalData;
+    private NativeArray<ushort> indexData;
     private NativeArray<MyVertex2> skinnedData;
 
     protected override void Awake()
@@ -163,7 +164,7 @@ public class CriSkinned : CriObject
 
         if ((flags & 2) != 0 && (DAT_174 & 0x80) != 0)
         {
-            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[3], gameObject.layer, Camera.main, 1);
+            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[3], 6, RenderQueue.camera, 1);
         }
     }
 
@@ -306,6 +307,10 @@ public class CriSkinned : CriObject
             cSkin.NRMLS.Length, Allocator.Persistent
         );
 
+        indexData = new NativeArray<ushort>(
+            cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6, Allocator.Persistent
+        );
+
         skinnedData = new NativeArray<MyVertex2>(
             cSkin.VERTS.Length, Allocator.Persistent
         );
@@ -326,10 +331,13 @@ public class CriSkinned : CriObject
             vertexBuffer[tri + 1] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[tri + 1], cSkin.UVS2[i]);
             vertexBuffer[tri + 2] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[tri + 2], cSkin.UVS2[i]);
             int sm = indicies[0];
-            indexBuffer[sm] = (ushort)cSkin.TRIS[tri];
-            indexBuffer[sm + 1] = (ushort)cSkin.TRIS[tri + 1];
-            indexBuffer[sm + 2] = (ushort)cSkin.TRIS[tri + 2];
+            indexData[sm] = (ushort)cSkin.TRIS[tri];
+            indexData[sm + 1] = (ushort)cSkin.TRIS[tri + 1];
+            indexData[sm + 2] = (ushort)cSkin.TRIS[tri + 2];
             indicies[0] += 3;
+            indexBuffer[sm] = (ushort)sm;
+            indexBuffer[sm + 1] = (ushort)(sm + 1);
+            indexBuffer[sm + 2] = (ushort)(sm + 2);
         }
 
         for (int i = 0, j = cSkin.TRI_COUNT; i < cSkin.QUAD_COUNT; i++)
@@ -344,13 +352,19 @@ public class CriSkinned : CriObject
             vertexBuffer[quad + 4] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[uv + 2], cSkin.UVS2[i + j]);
             vertexBuffer[quad + 5] = new MyVertex(float3.zero, new float4(1, 1, 1, 1), cSkin.UVS[uv + 1], cSkin.UVS2[i + j]);
             int sm = indicies[0];
-            indexBuffer[sm] = (ushort)cSkin.QUADS[tri];
-            indexBuffer[sm + 1] = (ushort)cSkin.QUADS[tri + 1];
-            indexBuffer[sm + 2] = (ushort)cSkin.QUADS[tri + 2];
-            indexBuffer[sm + 3] = (ushort)cSkin.QUADS[tri + 3];
-            indexBuffer[sm + 4] = (ushort)cSkin.QUADS[tri + 4];
-            indexBuffer[sm + 5] = (ushort)cSkin.QUADS[tri + 5];
+            indexData[sm] = (ushort)cSkin.QUADS[tri];
+            indexData[sm + 1] = (ushort)cSkin.QUADS[tri + 1];
+            indexData[sm + 2] = (ushort)cSkin.QUADS[tri + 2];
+            indexData[sm + 3] = (ushort)cSkin.QUADS[tri + 3];
+            indexData[sm + 4] = (ushort)cSkin.QUADS[tri + 4];
+            indexData[sm + 5] = (ushort)cSkin.QUADS[tri + 5];
             indicies[0] += 6;
+            indexBuffer[sm] = (ushort)sm;
+            indexBuffer[sm + 1] = (ushort)(sm + 1);
+            indexBuffer[sm + 2] = (ushort)(sm + 2);
+            indexBuffer[sm + 3] = (ushort)(sm + 3);
+            indexBuffer[sm + 4] = (ushort)(sm + 4);
+            indexBuffer[sm + 5] = (ushort)(sm + 5);
         }
 
         for (int i = 0; i < cSkin.VERTS.Length; i++)
@@ -405,7 +419,7 @@ public class CriSkinned : CriObject
             bonesIndex = bonesIndex, 
             bonesColor = bonesColor, 
             vertexBuffer = vertexBuffer,
-            indexBuffer = indexBuffer, 
+            indexData = indexData, 
             vertexData = vertexData, 
             normalData = normalData, 
             skinnedData = skinnedData,
@@ -1478,7 +1492,7 @@ struct SkinnedMeshJob : IJob
     [ReadOnly] public NativeArray<CriBoneIndex> bonesIndex;
     [ReadOnly] public NativeArray<CriBoneColor> bonesColor;
     public NativeArray<MyVertex> vertexBuffer;
-    [ReadOnly] public NativeArray<ushort> indexBuffer;
+    [ReadOnly] public NativeArray<ushort> indexData;
     [ReadOnly] public NativeArray<float3> vertexData;
     [ReadOnly] public NativeArray<int3> normalData;
     public NativeArray<MyVertex2> skinnedData;
@@ -1747,20 +1761,20 @@ struct SkinnedMeshJob : IJob
         for (int i = 0; i < triCount; i++)
         {
             int tri = i * 3;
-            vertexBuffer[tri] = new MyVertex(skinnedData[indexBuffer[tri]].vertex, skinnedData[indexBuffer[tri]].color, vertexBuffer[tri].uv, vertexBuffer[tri].uv2);
-            vertexBuffer[tri + 1] = new MyVertex(skinnedData[indexBuffer[tri + 1]].vertex, skinnedData[indexBuffer[tri + 1]].color, vertexBuffer[tri + 1].uv, vertexBuffer[tri + 1].uv2);
-            vertexBuffer[tri + 2] = new MyVertex(skinnedData[indexBuffer[tri + 2]].vertex, skinnedData[indexBuffer[tri + 2]].color, vertexBuffer[tri + 2].uv, vertexBuffer[tri + 2].uv2);
+            vertexBuffer[tri] = new MyVertex(skinnedData[indexData[tri]].vertex, skinnedData[indexData[tri]].color, vertexBuffer[tri].uv, vertexBuffer[tri].uv2);
+            vertexBuffer[tri + 1] = new MyVertex(skinnedData[indexData[tri + 1]].vertex, skinnedData[indexData[tri + 1]].color, vertexBuffer[tri + 1].uv, vertexBuffer[tri + 1].uv2);
+            vertexBuffer[tri + 2] = new MyVertex(skinnedData[indexData[tri + 2]].vertex, skinnedData[indexData[tri + 2]].color, vertexBuffer[tri + 2].uv, vertexBuffer[tri + 2].uv2);
         }
 
         for (int i = 0, j = triCount; i < quadCount; i++)
         {
             int quad = j * 3 + i * 6;
-            vertexBuffer[quad] = new MyVertex(skinnedData[indexBuffer[quad]].vertex, skinnedData[indexBuffer[quad]].color, vertexBuffer[quad].uv, vertexBuffer[quad].uv2);
-            vertexBuffer[quad + 1] = new MyVertex(skinnedData[indexBuffer[quad + 1]].vertex, skinnedData[indexBuffer[quad + 1]].color, vertexBuffer[quad + 1].uv, vertexBuffer[quad + 1].uv2);
-            vertexBuffer[quad + 2] = new MyVertex(skinnedData[indexBuffer[quad + 2]].vertex, skinnedData[indexBuffer[quad + 2]].color, vertexBuffer[quad + 2].uv, vertexBuffer[quad + 2].uv2);
-            vertexBuffer[quad + 3] = new MyVertex(skinnedData[indexBuffer[quad + 3]].vertex, skinnedData[indexBuffer[quad + 3]].color, vertexBuffer[quad + 3].uv, vertexBuffer[quad + 3].uv2);
-            vertexBuffer[quad + 4] = new MyVertex(skinnedData[indexBuffer[quad + 4]].vertex, skinnedData[indexBuffer[quad + 4]].color, vertexBuffer[quad + 4].uv, vertexBuffer[quad + 4].uv2);
-            vertexBuffer[quad + 5] = new MyVertex(skinnedData[indexBuffer[quad + 5]].vertex, skinnedData[indexBuffer[quad + 5]].color, vertexBuffer[quad + 5].uv, vertexBuffer[quad + 5].uv2);
+            vertexBuffer[quad] = new MyVertex(skinnedData[indexData[quad]].vertex, skinnedData[indexData[quad]].color, vertexBuffer[quad].uv, vertexBuffer[quad].uv2);
+            vertexBuffer[quad + 1] = new MyVertex(skinnedData[indexData[quad + 1]].vertex, skinnedData[indexData[quad + 1]].color, vertexBuffer[quad + 1].uv, vertexBuffer[quad + 1].uv2);
+            vertexBuffer[quad + 2] = new MyVertex(skinnedData[indexData[quad + 2]].vertex, skinnedData[indexData[quad + 2]].color, vertexBuffer[quad + 2].uv, vertexBuffer[quad + 2].uv2);
+            vertexBuffer[quad + 3] = new MyVertex(skinnedData[indexData[quad + 3]].vertex, skinnedData[indexData[quad + 3]].color, vertexBuffer[quad + 3].uv, vertexBuffer[quad + 3].uv2);
+            vertexBuffer[quad + 4] = new MyVertex(skinnedData[indexData[quad + 4]].vertex, skinnedData[indexData[quad + 4]].color, vertexBuffer[quad + 4].uv, vertexBuffer[quad + 4].uv2);
+            vertexBuffer[quad + 5] = new MyVertex(skinnedData[indexData[quad + 5]].vertex, skinnedData[indexData[quad + 5]].color, vertexBuffer[quad + 5].uv, vertexBuffer[quad + 5].uv2);
         }
     }
 

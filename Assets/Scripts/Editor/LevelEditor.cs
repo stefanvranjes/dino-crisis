@@ -62,4 +62,47 @@ public static class LevelEditor
             EditorUtility.SetDirty(gameManager);
         }
     }
+
+    [MenuItem("CONTEXT/SceneManager/Create Objects")]
+    public static void CreateSceneObjects(MenuCommand menuCommand)
+    {
+        SceneManager sceneManager = menuCommand.context as SceneManager;
+        sceneManager.skinnedObjects = new CriSkinned[11];
+        sceneManager.boneObjects = new CriBone[100];
+        sceneManager.particleObjects = new CriParticle[60];
+        sceneManager.staticObjects = new CriStatic[40];
+
+        for (int i = 0; i < 100; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriBone (Instance)";
+            sceneManager.boneObjects[i] = obj.AddComponent<CriBone>();
+        }
+
+        for (int i = 0; i < 60; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriParticle (Instance)";
+            sceneManager.particleObjects[i] = obj.AddComponent<CriParticle>();
+        }
+
+        for (int i = 0; i < 40; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriStatic (Instance)";
+            sceneManager.staticObjects[i] = obj.AddComponent<CriStatic>();
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "CriSkinned (Instance)";
+            sceneManager.skinnedObjects[i] = obj.AddComponent<CriPlayer>();
+        }
+
+        GameObject obj2 = new GameObject();
+        obj2.name = "CriPlayer (Instance)";
+        sceneManager.skinnedObjects[10] = obj2.AddComponent<CriPlayer>();
+        EditorUtility.SetDirty(sceneManager);
+    }
 }

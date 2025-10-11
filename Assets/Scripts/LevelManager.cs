@@ -125,7 +125,7 @@ public class LevelManager : MonoBehaviour
 
         do
         {
-            pbVar1 = SceneManager.instance.DAT_5FCC[iVar2];
+            pbVar1 = SceneManager.instance.particleObjects[iVar2];
 
             if ((pbVar1.flags & 1) != 0)
                 PTR_FUN_B58BC[pbVar1.tags](pbVar1);

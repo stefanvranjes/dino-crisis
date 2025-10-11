@@ -94,25 +94,24 @@ public class CriStatic : CriObject
     {
         base.Update();
 
-        if (cMesh != null && (flags & 3) == 3)
+        if ((GameManager.instance.DAT_38 & 1) == 0 && cMesh != null && (flags & 3) == 3)
         {
-            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[0], gameObject.layer, Camera.main, 0);
-        }
-    }
+            if (gameObject.layer == 0)
+            {
+                Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[0], 0, Camera.main, 0);
+            }
+            else
+            {
+                Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[0], 2, RenderQueue.camera4, 0);
+            }
 
-    public override void Draw()
-    {
-        base.Draw();
-        
-        if (cMesh != null && (flags & 3) == 3)
-        {
             for (int i = 1; i < subMeshCount; i++)
             {
                 if (indicies[i] > 0)
                 {
-                    Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[i], gameObject.layer, Camera.main, i);
+                    Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[i], 1, RenderQueue.camera2, i);
                 }
-            }  
+            }
         }
     }
 

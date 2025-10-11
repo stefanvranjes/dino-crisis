@@ -8873,7 +8873,7 @@ public class ST6 : LevelManager
 
         do
         {
-            oVar4 = SceneManager.instance.DAT_5FCC[pbVar3];
+            oVar4 = SceneManager.instance.particleObjects[pbVar3];
 
             if ((oVar4.flags & 1) != 0 && oVar4.tags == 3 && oVar4.DAT_2F == 0)
             {
@@ -8966,7 +8966,7 @@ public class ST6 : LevelManager
 
         do
         {
-            psVar2 = SceneManager.instance.DAT_5FCC[pbVar5];
+            psVar2 = SceneManager.instance.particleObjects[pbVar5];
 
             if ((psVar2.flags & 1) != 0 && psVar2.tags == 3 && psVar2.DAT_2F == 0 && psVar2.DAT_69 != 0)
             {

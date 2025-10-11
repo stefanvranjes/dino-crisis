@@ -6,11 +6,15 @@ using Unity.Collections;
 
 public class RenderQueue : MonoBehaviour
 {
-    public static new Camera camera;
+    public static Camera camera2; //transparent
+    public static Camera camera3; //shadows
+    public static Camera camera4; //ignore
 
     void Awake()
     {
-        camera = Camera.main.transform.GetChild(0).GetComponent<Camera>();
+        camera3 = GameObject.Find("Camera3").GetComponent<Camera>();
+        camera2 = GameObject.Find("Camera2").GetComponent<Camera>();
+        camera4 = GameObject.Find("Camera4").GetComponent<Camera>();
     }
 
     // Start is called before the first frame update
@@ -19,17 +23,8 @@ public class RenderQueue : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < SceneManager.instance.skinnedObjects.Length; i++)
-        {
-            SceneManager.instance.skinnedObjects[i].Draw();
-        }
-
-        for (int i = 0; i < SceneManager.instance.staticObjects.Length; i++)
-        {
-            SceneManager.instance.staticObjects[i].Draw();
-        }
+        
     }
 }

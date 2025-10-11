@@ -1718,7 +1718,7 @@ public class ST9 : LevelManager
 
         do
         {
-            puVar1 = SceneManager.instance.DAT_5FCC[uVar2];
+            puVar1 = SceneManager.instance.particleObjects[uVar2];
 
             if (puVar1.tags == 12 || puVar1.tags == 3)
             {
@@ -1727,7 +1727,7 @@ public class ST9 : LevelManager
             }
 
             uVar2++;
-        } while (uVar2 < SceneManager.instance.DAT_5FCC.Length);
+        } while (uVar2 < SceneManager.instance.particleObjects.Length);
     }
 
     //FUN_1FF0 (ST9)

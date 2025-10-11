@@ -49,13 +49,13 @@ public class CriBone : CriObject
     public Vector3Int[] DAT_54; //0x54
     public Matrix3x3 lightMatrix; //0x6C
     public Matrix3x3 colorMatrix; //0x8C
+    public Material[] materials;
 
     private Mesh mesh;
     private NativeArray<MyVertex> vertexBuffer;
     private NativeArray<ushort> indexBuffer;
     private NativeArray<int> indicies;
     private NativeArray<int3> normalData;
-    public Material[] materials;
 
     protected override void Awake()
     {
@@ -69,9 +69,9 @@ public class CriBone : CriObject
 
     protected override void Update()
     {
-        if (cMesh != null)
+        if ((GameManager.instance.DAT_38 & 2) == 0 && cMesh != null)
         {
-            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[0], gameObject.layer, Camera.main, 0);
+            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[0], 0, Camera.main, 0);
         }
     }
 
@@ -96,6 +96,17 @@ public class CriBone : CriObject
         DAT_54 = new Vector3Int[3];
         lightMatrix = new Matrix3x3();
         colorMatrix = new Matrix3x3();
+    }
+
+    public void SetMaterials()
+    {
+        materials = new Material[16];
+        Tmd3ScriptableObject tmd = cMesh;
+        Material mat1 = new Material(GameManager.instance.materials[0]);
+        mat1.mainTexture = tmd.TEX_2D;
+        mat1.SetTexture("_Tex8", tmd.TEX8_2D);
+        mat1.SetTexture("_CLUT", tmd.CLUT_2D);
+        materials[0] = mat1;
     }
 
     public void MeshData()

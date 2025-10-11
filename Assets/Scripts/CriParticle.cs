@@ -273,9 +273,9 @@ public class CriParticle : CriObject
     {
         base.Update();
 
-        if ((flags & 2) != 0 && (DAT_65 & 0x80) == 0)
+        if ((GameManager.instance.DAT_38 & 4) == 0 && (flags & 2) != 0 && (DAT_65 & 0x80) == 0)
         {
-            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[5], gameObject.layer, Camera.main, 0);
+            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[5], 0, Camera.main, 0);
         }
     }
 
@@ -1726,8 +1726,8 @@ public class CriParticle : CriObject
         DAT_5C = 0;
         DAT_58 = param1;
         DAT_64 = param1.FRAMES[0].DAT_05;
-        SetMaterials();
         MeshData();
+        SetMaterials();
         return FUN_606D8();
     }
 

@@ -582,10 +582,10 @@ public class GameManager : MonoBehaviour
             SceneManager.instance.skinnedObjects[i].ResetValues();
 
         for (int i = 0; i < 100; i++)
-            SceneManager.instance.DAT_1C9C[i].ResetValues();
+            SceneManager.instance.boneObjects[i].ResetValues();
 
         for (int i = 0; i < 60; i++)
-            SceneManager.instance.DAT_5FCC[i].ResetValues();
+            SceneManager.instance.particleObjects[i].ResetValues();
 
         for (int i = 0; i < 40; i++)
             SceneManager.instance.staticObjects[i].ResetValues();
@@ -598,22 +598,10 @@ public class GameManager : MonoBehaviour
         oVar3.vr.y = playerSpawnRotY;
         oVar3.DAT_48 = (sbyte)-(oVar3.screen.y / 0x1a9);
         oVar3.FUN_4CFDC();
-        oVar3.materials = new Material[16];
-        Tmd2ScriptableObject tmd = oVar3.cSkin;
-        Material mat1 = new Material(materials[0]);
-        Material mat2 = new Material(materials[3]);
-        mat1.mainTexture = tmd.TEX_2D;
-        mat1.SetTexture("_Tex8", tmd.TEX8_2D);
-        mat1.SetTexture("_CLUT", tmd.CLUT_2D);
-        oVar3.materials[0] = mat1;
-        Tmd2ScriptableObject tmd2 = (Tmd2ScriptableObject)Utilities.GetRamObject(0x8018066c);
-        mat2.mainTexture = tmd2.TEX_2D;
-        mat2.SetTexture("_Tex8", tmd2.TEX8_2D);
-        mat2.SetTexture("_CLUT", tmd2.CLUT_2D);
-        oVar3.materials[3] = mat2;
         GameObject sdw = new GameObject("Shadow");
         oVar3.shadow = sdw.transform;
         oVar3.MeshData();
+        oVar3.SetMaterials();
         //...
         uVar5 = 0;
 
@@ -5247,10 +5235,10 @@ public class GameManager : MonoBehaviour
 
                     for (int i = 0; i < tmpBones.Count; i++)
                     {
-                        Destroy(SceneManager.instance.DAT_1C9C[i].gameObject);
+                        Destroy(SceneManager.instance.boneObjects[i].gameObject);
                         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(tmpBones[i].gameObject,
                             UnityEngine.SceneManagement.SceneManager.GetActiveScene());
-                        SceneManager.instance.DAT_1C9C[i] = tmpBones[i];
+                        SceneManager.instance.boneObjects[i] = tmpBones[i];
                     }
 
                     pVar6 = (CriPlayer)SceneManager.instance.skinnedObjects[10];
@@ -5283,8 +5271,8 @@ public class GameManager : MonoBehaviour
                         oVar6.screen = new Vector3Int(0, 0, 0);
                         oVar6.cCollider = null;
                         oVar6.cMesh = dVar7.DAT_00;
-                        oVar6.SetMaterials();
                         oVar6.MeshData();
+                        oVar6.SetMaterials();
                     }
 
                     SceneManager.instance.FUN_26EBC(2, 0);
@@ -5336,8 +5324,8 @@ public class GameManager : MonoBehaviour
                 oVar6.cCollider = null;
                 oVar6.vr = new Vector3Int(0, 0, 0);
                 oVar6.screen = new Vector3Int(dVar7.DAT_0C, 0, 0);
-                oVar6.SetMaterials();
                 oVar6.MeshData();
+                oVar6.SetMaterials();
                 return;
             }
 
@@ -5369,9 +5357,9 @@ public class GameManager : MonoBehaviour
             tmpSkinned.Add(SceneManager.instance.skinnedObjects[10]);
             DontDestroyOnLoad(tmpSkinned[0].gameObject);
 
-            for (int i = 0; i < SceneManager.instance.DAT_1C9C.Length; i++)
+            for (int i = 0; i < SceneManager.instance.boneObjects.Length; i++)
             {
-                tmpBones.Add(SceneManager.instance.DAT_1C9C[i]);
+                tmpBones.Add(SceneManager.instance.boneObjects[i]);
                 DontDestroyOnLoad(tmpBones[i].gameObject);
             }
 
@@ -8118,40 +8106,7 @@ public class GameManager : MonoBehaviour
 
     private void FUN_731E8()
     {
-        byte bVar1;
-        TmdScriptableObject puVar4;
-        CriStatic puVar10;
-
-        for (int i = 0; i < sceneManager.staticObjects.Length; i++)
-        {
-            puVar10 = sceneManager.staticObjects[i] as CriStatic;
-
-            if (puVar10 != null && (puVar10.flags & 3) == 3)
-            {
-                //if...
-                Coprocessor.rotationMatrix.rt11 = puVar10.cTransform.rotation.V00;
-                Coprocessor.rotationMatrix.rt12 = puVar10.cTransform.rotation.V01;
-                Coprocessor.rotationMatrix.rt13 = puVar10.cTransform.rotation.V02;
-                Coprocessor.rotationMatrix.rt21 = puVar10.cTransform.rotation.V10;
-                Coprocessor.rotationMatrix.rt22 = puVar10.cTransform.rotation.V11;
-                Coprocessor.rotationMatrix.rt23 = puVar10.cTransform.rotation.V12;
-                Coprocessor.rotationMatrix.rt31 = puVar10.cTransform.rotation.V20;
-                Coprocessor.rotationMatrix.rt32 = puVar10.cTransform.rotation.V21;
-                Coprocessor.rotationMatrix.rt33 = puVar10.cTransform.rotation.V22;
-                bVar1 = puVar10.DAT_48;
-                puVar4 = puVar10.cMesh;
-                //puVar10.FUN_75BEC(puVar4, puVar4.TRI_COUNT);
-
-                //if (bVar1 == 1)
-                //{
-                    //puVar10.FUN_75F10(puVar4, puVar4.QUAD_COUNT);
-                //}
-                //else
-                //{
-                //...
-                //}
-            }
-        }
+        return;
     }
 
     private void FUN_7357C()
@@ -8176,7 +8131,7 @@ public class GameManager : MonoBehaviour
 
         do
         {
-            pbVar20 = SceneManager.instance.DAT_5FCC[puVar21];
+            pbVar20 = SceneManager.instance.particleObjects[puVar21];
 
             if ((pbVar20.flags & 2) != 0)
             {
@@ -8320,7 +8275,7 @@ public class GameManager : MonoBehaviour
 
             LAB_73D6C:
             puVar21++;
-        } while (puVar21 < SceneManager.instance.DAT_5FCC.Length);
+        } while (puVar21 < SceneManager.instance.particleObjects.Length);
     }
 
     private void FUN_74384()
@@ -8550,9 +8505,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < sceneManager.DAT_5FCC.Length; i++)
+        for (int i = 0; i < sceneManager.particleObjects.Length; i++)
         {
-            pSVar13 = sceneManager.DAT_5FCC[i];
+            pSVar13 = sceneManager.particleObjects[i];
 
             if ((pSVar13.flags & 2) != 0)
             {

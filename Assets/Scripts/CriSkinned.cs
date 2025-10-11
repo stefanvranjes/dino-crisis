@@ -152,19 +152,14 @@ public class CriSkinned : CriObject
     {
         base.Update();
 
-        if ((flags & 2) != 0)
+        if ((GameManager.instance.DAT_38 & 2) == 0 && (flags & 2) != 0)
         {
-            Graphics.DrawMesh(mesh, Matrix4x4.identity, materials[0], gameObject.layer, Camera.main, 0);
+            Graphics.DrawMesh(mesh, Matrix4x4.identity, materials[0], 0, Camera.main, 0);
         }
-    }
 
-    public override void Draw()
-    {
-        base.Draw();
-
-        if ((flags & 2) != 0 && (DAT_174 & 0x80) != 0)
+        if ((GameManager.instance.DAT_38 & 0x20) == 0 && (flags & 2) != 0 && (DAT_174 & 0x80) != 0)
         {
-            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[3], 6, RenderQueue.camera, 1);
+            Graphics.DrawMesh(mesh, transform.localToWorldMatrix, materials[3], 6, RenderQueue.camera3, 1);
         }
     }
 
@@ -282,6 +277,23 @@ public class CriSkinned : CriObject
         DAT_1A6 = false;
         DAT_1A7 = 0;
         REFS = null;
+    }
+
+    public void SetMaterials()
+    {
+        materials = new Material[16];
+        Tmd2ScriptableObject tmd = cSkin;
+        Material mat1 = new Material(GameManager.instance.materials[0]);
+        Material mat2 = new Material(GameManager.instance.materials[3]);
+        mat1.mainTexture = tmd.TEX_2D;
+        mat1.SetTexture("_Tex8", tmd.TEX8_2D);
+        mat1.SetTexture("_CLUT", tmd.CLUT_2D);
+        Tmd2ScriptableObject tmd2 = (Tmd2ScriptableObject)Utilities.GetRamObject(0x8018066c);
+        mat2.mainTexture = tmd2.TEX_2D;
+        mat2.SetTexture("_Tex8", tmd2.TEX8_2D);
+        mat2.SetTexture("_CLUT", tmd2.CLUT_2D);
+        materials[0] = mat1;
+        materials[3] = mat2;
     }
 
     public void MeshData()
@@ -405,7 +417,7 @@ public class CriSkinned : CriObject
             {
                 if (b.cMesh != null)
                     b.MeshJob(b.cMesh);
-
+                
                 bonesTransform[b.boneId] = b.cTransform;
                 b = (CriBone)b.next;
                 index--;
@@ -1677,7 +1689,10 @@ struct SkinnedMeshJob : IJob
                 translationVector._trx = cTransform.position.x;
                 translationVector._try = cTransform.position.y;
                 translationVector._trz = cTransform.position.z;
-                float3 position = new float3(cTransform.position.x / 16f, cTransform.position.y / -16f, cTransform.position.z / 16f);
+                float3 position = new float3(
+                   cTransform.position.x / 16f, 
+                   cTransform.position.y / -16f, 
+                   cTransform.position.z / 16f);
                 Quaternion rotation = cTransform.rotation.Matrix2Quaternion;
                 float3 euler = rotation.eulerAngles;
                 rotation.eulerAngles = new float3(-euler.x, euler.y, -euler.z);

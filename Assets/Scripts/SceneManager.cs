@@ -36,8 +36,8 @@ public class SceneManager : MonoBehaviour
     public Tmd2ScriptableObject DAT_274; //gp+274h
     public TodScriptableObject[] DAT_278; //gp+278h
     public CriSkinned[] skinnedObjects; //gp+27ch...gp+1c9ch
-    public CriBone[] DAT_1C9C; //gp+1c9ch...gp+5fcch
-    public CriParticle[] DAT_5FCC; //gp+5fcch...gp+7cdch
+    public CriBone[] boneObjects; //gp+1c9ch...gp+5fcch
+    public CriParticle[] particleObjects; //gp+5fcch...gp+7cdch
     public CriStatic[] staticObjects; //gp+7cdch...gp+8ffch
     public CriInteract[] DAT_8FFC; //gp+8ffch...gp+9164h
     public Trigger6[] DAT_9FE0; //gp+9fe0...gp+a09ch
@@ -141,46 +141,14 @@ public class SceneManager : MonoBehaviour
         }
 
         triggers = new Trigger[32];
-        skinnedObjects = new CriSkinned[11];
-        DAT_1C9C = new CriBone[100];
-        DAT_5FCC = new CriParticle[60];
-        staticObjects = new CriStatic[40];
         DAT_8FFC = new CriInteract[10];
         DAT_9FE0 = new Trigger6[4];
         DAT_D7C0 = new CriScene[10];
 
-        for (int i = 0; i < 100; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriBone (Instance)";
-            DAT_1C9C[i] = obj.AddComponent<CriBone>();
-        }
-
-        for (int i = 0; i < 60; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriParticle (Instance)";
-            DAT_5FCC[i] = obj.AddComponent<CriParticle>();
-        }
-
-        for (int i = 0; i < 40; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriStatic (Instance)";
-            staticObjects[i] = obj.AddComponent<CriStatic>();
-        }
-
         for (int i = 0; i < 10; i++)
         {
             GameObject obj = new GameObject();
-            obj.name = "CriSkinned (Instance)";
-            skinnedObjects[i] = obj.AddComponent<CriPlayer>();
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "CriUnknown (Instance)";
+            obj.name = "CriInteract (Instance)";
             DAT_8FFC[i] = obj.AddComponent<CriInteract>();
         }
 
@@ -195,10 +163,7 @@ public class SceneManager : MonoBehaviour
             obj.name = "CriScene (Instance)";
             DAT_D7C0[i] = obj.AddComponent<CriScene>();
         }
-
-        GameObject obj2 = new GameObject();
-        obj2.name = "CriPlayer (Instance)";
-        skinnedObjects[10] = obj2.AddComponent<CriPlayer>();
+        
         GameObject obj3 = new GameObject("RenderQueue (Instance)");
         renderQueue = obj3.AddComponent<RenderQueue>();
         sceneLoaded = true;
@@ -868,13 +833,13 @@ public class SceneManager : MonoBehaviour
         int iVar3;
 
         iVar1 = ~GameManager.instance.DAT_9234 + 0x3c;
-        iVar3 = DAT_5FCC.Length - 1;
+        iVar3 = particleObjects.Length - 1;
 
         if (iVar1 != -1)
         {
             do
             {
-                puVar2 = DAT_5FCC[iVar3];
+                puVar2 = particleObjects[iVar3];
                 iVar1--;
 
                 if ((puVar2.flags & 1) == 0)
@@ -1902,7 +1867,7 @@ public class SceneManager : MonoBehaviour
         do
         {
             iVar1--;
-            puVar2 = DAT_1C9C[iVar3];
+            puVar2 = boneObjects[iVar3];
 
             if (puVar2 != null && (puVar2.flags & 1) == 0)
             {

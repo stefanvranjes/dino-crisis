@@ -510,7 +510,7 @@ public class CriScene : MonoBehaviour
                         return;
                 }
             case 4:
-                oVar7 = SceneManager.instance.DAT_5FCC[param1 & 0xffff];
+                oVar7 = SceneManager.instance.particleObjects[param1 & 0xffff];
 
                 switch (param2)
                 {
@@ -906,7 +906,7 @@ public class CriScene : MonoBehaviour
 
                 break;
             case 4:
-                oVar4 = SceneManager.instance.DAT_5FCC[param1 & 0xffff];
+                oVar4 = SceneManager.instance.particleObjects[param1 & 0xffff];
 
                 switch (param2)
                 {
@@ -1479,22 +1479,10 @@ public class CriScene : MonoBehaviour
             {
                 oVar3.cSkin = (Tmd2ScriptableObject)Utilities.GetRamObject(mVar4.DAT_10);
                 oVar3.FUN_604A4(oVar3.cSkin);
-                oVar3.materials = new Material[16];
-                Tmd2ScriptableObject tmd = oVar3.cSkin;
-                Material mat1 = new Material(GameManager.instance.materials[0]);
-                Material mat2 = new Material(GameManager.instance.materials[3]);
-                mat1.mainTexture = tmd.TEX_2D;
-                mat1.SetTexture("_Tex8", tmd.TEX8_2D);
-                mat1.SetTexture("_CLUT", tmd.CLUT_2D);
-                oVar3.materials[0] = mat1;
-                Tmd2ScriptableObject tmd2 = (Tmd2ScriptableObject)Utilities.GetRamObject(0x8018066c);
-                mat2.mainTexture = tmd2.TEX_2D;
-                mat2.SetTexture("_Tex8", tmd2.TEX8_2D);
-                mat2.SetTexture("_CLUT", tmd2.CLUT_2D);
-                oVar3.materials[3] = mat2;
                 GameObject sdw = new GameObject("Shadow");
                 oVar3.shadow = sdw.transform;
                 oVar3.MeshData();
+                oVar3.SetMaterials();
             }
 
             if (mVar4.DAT_14 != 0)
@@ -1549,8 +1537,8 @@ public class CriScene : MonoBehaviour
         oVar1.DAT_48 = mVar2.DAT_03;
         oVar1.DAT_4A = mVar2.DAT_04;
         oVar1.cMesh = (TmdScriptableObject)Utilities.GetRamObject(mVar2.DAT_08);
-        oVar1.SetMaterials();
         oVar1.MeshData();
+        oVar1.SetMaterials();
         oVar1.screen = mVar2.DAT_0C;
         oVar1.vr = mVar2.DAT_12;
 
@@ -1750,7 +1738,7 @@ public class CriScene : MonoBehaviour
                     oVar2 = null;
 
                     if (bVar1 == 4)
-                        oVar2 = SceneManager.instance.DAT_5FCC[DAT_0B];
+                        oVar2 = SceneManager.instance.particleObjects[DAT_0B];
                 }
             }
 
@@ -1814,7 +1802,7 @@ public class CriScene : MonoBehaviour
             else
             {
                 if (bVar1 == 4)
-                    oVar2 = SceneManager.instance.DAT_5FCC[mVar3.DAT_02];
+                    oVar2 = SceneManager.instance.particleObjects[mVar3.DAT_02];
                 else
                 {
                     if (bVar1 != 8) goto LAB_57FBC;
@@ -1872,7 +1860,7 @@ public class CriScene : MonoBehaviour
                     goto LAB_57B04;
                 }
 
-                oVar2 = SceneManager.instance.DAT_5FCC[DAT_0B];
+                oVar2 = SceneManager.instance.particleObjects[DAT_0B];
             }
         }
 
@@ -1914,7 +1902,7 @@ public class CriScene : MonoBehaviour
             {
                 if (bVar1 != 4) goto LAB_57C54;
 
-                oVar2 = SceneManager.instance.DAT_5FCC[DAT_0B];
+                oVar2 = SceneManager.instance.particleObjects[DAT_0B];
             }
         }
 
@@ -2150,7 +2138,7 @@ public class CriScene : MonoBehaviour
             if (oVar2 == null) goto LAB_58660;
         }
         else
-            oVar2 = SceneManager.instance.DAT_5FCC[mVar4.DAT_01];
+            oVar2 = SceneManager.instance.particleObjects[mVar4.DAT_01];
 
         oVar2.ResetValues();
         oVar2.flags = 1;
@@ -2337,7 +2325,7 @@ public class CriScene : MonoBehaviour
             {
                 if (bVar1 != 4) goto LAB_58A24;
 
-                oVar3 = SceneManager.instance.DAT_5FCC[mVar2.DAT_02];
+                oVar3 = SceneManager.instance.particleObjects[mVar2.DAT_02];
             }
         }
 
@@ -2529,11 +2517,11 @@ public class CriScene : MonoBehaviour
                 {
                     if (bVar1 != 4) goto LAB_590D4;
 
-                    oVar3 = SceneManager.instance.DAT_5FCC[mVar2.DAT_02];
+                    oVar3 = SceneManager.instance.particleObjects[mVar2.DAT_02];
                 }
             }
 
-            SceneManager.instance.DAT_5FCC[DAT_0B].DAT_4C = oVar3;
+            SceneManager.instance.particleObjects[DAT_0B].DAT_4C = oVar3;
             goto LAB_590D4;
         }
 
@@ -2553,7 +2541,7 @@ public class CriScene : MonoBehaviour
             {
                 if (bVar1 != 4) goto LAB_590D4;
 
-                oVar3 = SceneManager.instance.DAT_5FCC[mVar2.DAT_02];
+                oVar3 = SceneManager.instance.particleObjects[mVar2.DAT_02];
             }
         }
 
@@ -2590,7 +2578,7 @@ public class CriScene : MonoBehaviour
             if (oVar3 == null) goto LAB_593F8;
         }
         else
-            oVar3 = SceneManager.instance.DAT_5FCC[mVar5.DAT_01];
+            oVar3 = SceneManager.instance.particleObjects[mVar5.DAT_01];
 
         oVar3.ResetValues();
         oVar3.flags = 1;

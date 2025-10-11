@@ -70,8 +70,8 @@ public class Trigger6 : Trigger
         param1.DAT_2F = 0;
         param1.tags = 0;
         param1.cMesh = (TmdScriptableObject)Utilities.GetRamObject(DAT_20);
-        param1.SetMaterials();
         param1.MeshData();
+        param1.SetMaterials();
         param1.screen = param2;
         param1.vr.x = 0;
         param1.vr.y = 0;

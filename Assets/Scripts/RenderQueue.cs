@@ -27,4 +27,19 @@ public class RenderQueue : MonoBehaviour
     {
         
     }
+
+    public static Camera GetCamera(int index)
+    {
+        switch (index)
+        {
+            default:
+                return Camera.main;
+            case 1:
+                return camera2;
+            case 2:
+                return camera3;
+            case 3:
+                return camera4;
+        }
+    }
 }

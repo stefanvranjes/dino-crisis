@@ -481,6 +481,8 @@ public class EXP_SCN
                     } while (reader2.ReadUInt32(4) > 0x80100000 && reader2.ReadUInt32(4) != 0xffffffff);
                 }
             }
+
+            AssetDatabase.SaveAssetIfDirty(ram);
         }
     }
 

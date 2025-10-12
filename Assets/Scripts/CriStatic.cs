@@ -22,6 +22,16 @@ public struct MyVertex
 }
 
 [System.Serializable]
+public struct MeshDataStruct
+{
+    public int triStart;
+    public int triEnd;
+    public int layer;
+    public int materialID;
+    public int cameraID;
+}
+
+[System.Serializable]
 public class BoxCollider
 {
     public string prefabName;
@@ -55,9 +65,10 @@ public class CriStatic : CriObject
     private FUN_AA438[] PTR_FUN_AA438;
     private FUN_7B20[] PTR_FUN_7B20; //PTR_FUN_7B20 (ST1)
     public Material[] materials;
+    public int triCount;
 
-    private Mesh mesh;
-    private int subMeshCount;
+    protected Mesh mesh;
+    protected int subMeshCount;
     private NativeArray<MyVertex> vertexBuffer;
     private NativeArray<ushort> indexBuffer;
     private NativeArray<int> indicies;
@@ -153,6 +164,7 @@ public class CriStatic : CriObject
             Material mat2 = new Material(GameManager.instance.materials[1]);
             Material mat3 = new Material(GameManager.instance.materials[2]);
             Material mat4 = new Material(GameManager.instance.materials[3]);
+            Material mat5 = new Material(GameManager.instance.materials[4]);
             mat1.mainTexture = tmd.TEX_2D;
             mat1.SetTexture("_Tex8", tmd.TEX8_2D);
             mat1.SetTexture("_CLUT", tmd.CLUT_2D);
@@ -169,10 +181,14 @@ public class CriStatic : CriObject
             mat4.SetTexture("_Tex8", tmd.TEX8_2D);
             mat4.SetTexture("_CLUT", tmd.CLUT_2D);
             materials[3] = mat4;
+            mat5.mainTexture = tmd.TEX_2D;
+            mat5.SetTexture("_Tex8", tmd.TEX8_2D);
+            mat5.SetTexture("_CLUT", tmd.CLUT_2D);
+            materials[4] = mat5;
         }
     }
 
-    public void MeshData()
+    public virtual void MeshData()
     {
         subMeshCount = 6;
         indexBuffer = new NativeArray<ushort>(
@@ -260,6 +276,14 @@ public class CriStatic : CriObject
             mesh.SetSubMesh(i, new SubMeshDescriptor(i * f, indicies[i]));
 
         mesh.RecalculateBounds();
+    }
+
+    public virtual void UpdateMesh()
+    {
+        if (triCount != 0)
+        {
+            mesh.SetSubMesh(0, new SubMeshDescriptor(0, indicies[0] - triCount));
+        }
     }
 
     public void FUN_7F6F8()

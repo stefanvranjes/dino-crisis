@@ -8106,7 +8106,10 @@ public class GameManager : MonoBehaviour
 
     private void FUN_731E8()
     {
-        return;
+        for (int i = 0; i < SceneManager.instance.staticObjects.Length; i++)
+        {
+            SceneManager.instance.staticObjects[i].UpdateMesh();
+        }
     }
 
     private void FUN_7357C()

@@ -368,7 +368,7 @@ public class ST7 : LevelManager
         {
             if ((InputManager.controllers[0].DAT_B58B8 & 0x4000) != 0)
             {
-                if (param1.DAT_6A < 3)
+                if ((sbyte)param1.DAT_6A < 3)
                 {
                     GameManager.instance.FUN_5C94C(null, 145);
                     param1.DAT_6A++;

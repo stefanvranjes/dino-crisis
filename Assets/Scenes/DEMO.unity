@@ -3636,7 +3636,6 @@ GameObject:
   - component: {fileID: 381395048}
   - component: {fileID: 381395047}
   - component: {fileID: 381395046}
-  - component: {fileID: 381395050}
   - component: {fileID: 381395051}
   m_Layer: 0
   m_Name: Game Manager
@@ -8230,62 +8229,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &381395050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381395045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c2df452f2ebf4e4d87db60b4afaee17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameText: {fileID: 272393706}
-  gameTitle: {fileID: 875460713}
-  DAT_B12C0: 
-  DAT_B1388:
-    prefabName: 
-    DAT_00: []
-    DAT_10: 0
-    DAT_11: 0
-    DAT_12: 0
-    DAT_13: 0
-  DAT_B138C: 0
-  DAT_B138D: 0
-  DAT_B138E: 0
-  DAT_B138F: 0
-  DAT_B1390: 0
-  DAT_B1391: 0
-  DAT_B1392: 0
-  DAT_B1393: 0
-  DAT_B1440: 0
-  PTR_B146C: 
-  DAT_B146C: 0
-  PTR_B1470: 
-  DAT_B1470: 0
-  PTR_B1474: 
-  DAT_B1474: 0
-  DAT_B1478: 0
-  DAT_B147A: 0
-  DAT_B147C: 0
-  DAT_B147E: 0
-  DAT_B147F: 0
-  DAT_B1480: 0
-  DAT_B1481: 0
-  DAT_B1482: 0
-  DAT_B1483: 0
-  DAT_B1484: 0
-  DAT_B1485: 0
-  DAT_B1486: 0
-  DAT_B1487: 0
-  DAT_B1488: 0
-  DAT_B1489: 0
-  DAT_B148A: 0
-  DAT_B148B: 0
-  DAT_B148C: 0
-  DAT_B148E: 
 --- !u!114 &381395051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18060,6 +18003,7 @@ GameObject:
   - component: {fileID: 1430643276}
   - component: {fileID: 1430643275}
   - component: {fileID: 1430643274}
+  - component: {fileID: 1430643279}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -18180,6 +18124,62 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1430643279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430643273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c2df452f2ebf4e4d87db60b4afaee17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameText: {fileID: 272393706}
+  gameTitle: {fileID: 875460713}
+  DAT_B12C0: 
+  DAT_B1388:
+    prefabName: 
+    DAT_00: []
+    DAT_10: 0
+    DAT_11: 0
+    DAT_12: 0
+    DAT_13: 0
+  DAT_B138C: 0
+  DAT_B138D: 0
+  DAT_B138E: 0
+  DAT_B138F: 0
+  DAT_B1390: 0
+  DAT_B1391: 0
+  DAT_B1392: 0
+  DAT_B1393: 0
+  DAT_B1440: 0
+  PTR_B146C: 
+  DAT_B146C: 0
+  PTR_B1470: 
+  DAT_B1470: 0
+  PTR_B1474: 
+  DAT_B1474: 0
+  DAT_B1478: 0
+  DAT_B147A: 0
+  DAT_B147C: 0
+  DAT_B147E: 0
+  DAT_B147F: 0
+  DAT_B1480: 0
+  DAT_B1481: 0
+  DAT_B1482: 0
+  DAT_B1483: 0
+  DAT_B1484: 0
+  DAT_B1485: 0
+  DAT_B1486: 0
+  DAT_B1487: 0
+  DAT_B1488: 0
+  DAT_B1489: 0
+  DAT_B148A: 0
+  DAT_B148B: 0
+  DAT_B148C: 0
+  DAT_B148E: 
 --- !u!1 &1432090551
 GameObject:
   m_ObjectHideFlags: 0

@@ -7333,8 +7333,8 @@ public class ST9 : LevelManager
         Vector3Int local_28;
         Matrix3x3 auStack_58;
 
-        oVar4 = param1.PTR_68[0];
-        oVar5 = param1.PTR_68[1];
+        oVar4 = (CriStatic)param1.PTR_68[0];
+        oVar5 = (CriStatic)param1.PTR_68[1];
         bVar3 = InventoryManager.FUN_4A87C(3, 0x2c);
 
         if (bVar3 && 5 < param1.DAT_75++)
@@ -7572,7 +7572,7 @@ public class ST9 : LevelManager
         CriStatic oVar4;
 
         bVar2 = (byte)(param1.DAT_7A + 1);
-        oVar4 = param1.PTR_68[param1.SDAT_78];
+        oVar4 = (CriStatic)param1.PTR_68[param1.SDAT_78];
         oVar3 = SceneManager.instance.staticObjects[param1.SDAT_78 + 5];
         param1.DAT_7A = bVar2;
 
@@ -7623,7 +7623,7 @@ public class ST9 : LevelManager
         CriStatic oVar6;
         CriStatic oVar7;
 
-        oVar6 = param1.PTR_68[param1.SDAT_78];
+        oVar6 = (CriStatic)param1.PTR_68[param1.SDAT_78];
         oVar7 = SceneManager.instance.staticObjects[param1.SDAT_78 + 5];
         bVar4 = InventoryManager.FUN_4A87C(3, 0x2c);
 

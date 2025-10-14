@@ -6197,8 +6197,8 @@ public class ST6 : LevelManager
         Vector3Int local_38;
         Matrix3x3 auStack88;
 
-        oVar4 = param1.PTR_68[0];
-        oVar5 = param1.PTR_68[1];
+        oVar4 = (CriStatic)param1.PTR_68[0];
+        oVar5 = (CriStatic)param1.PTR_68[1];
         bVar3 = InventoryManager.FUN_4A87C(3, 0x2c);
 
         if (bVar3)
@@ -6389,7 +6389,7 @@ public class ST6 : LevelManager
                     else
                         iVar6 = 3;
 
-                    param1.DAT_78 = 0;
+                    param1.SDAT_78 = 0;
                 }
             }
             else
@@ -6398,7 +6398,7 @@ public class ST6 : LevelManager
         else
         {
             iVar6 = 0;
-            param1.DAT_78 = 3;
+            param1.SDAT_78 = 3;
         }
 
         bVar2 = InventoryManager.FUN_4A87C(3, 0x3f);
@@ -6475,8 +6475,8 @@ public class ST6 : LevelManager
         CriStatic oVar4;
 
         bVar2 = (byte)(param1.DAT_7A + 1);
-        oVar4 = param1.PTR_68[param1.DAT_78];
-        oVar3 = SceneManager.instance.staticObjects[param1.DAT_78 + 5];
+        oVar4 = (CriStatic)param1.PTR_68[param1.SDAT_78];
+        oVar3 = SceneManager.instance.staticObjects[param1.SDAT_78 + 5];
         param1.DAT_7A = bVar2;
 
         if (bVar2 == 11)
@@ -6492,7 +6492,7 @@ public class ST6 : LevelManager
 
         if (-0x433 < sVar1)
         {
-            oVar3 = SceneManager.instance.staticObjects[param1.DAT_78 + 9];
+            oVar3 = SceneManager.instance.staticObjects[param1.SDAT_78 + 9];
             oVar3.flags |= 2;
             oVar4.screen.y = -1075;
             GameManager.instance.FUN_5C860(145);
@@ -6502,10 +6502,10 @@ public class ST6 : LevelManager
 
             InventoryManager.FUN_4A7E8(3, 0x2c, true);
             InventoryManager.FUN_4A7E8(3, 0x2d, true);
-            param1.DAT_78++;
+            param1.SDAT_78++;
             param1.DAT_7A = 0;
 
-            if (3 < param1.DAT_78)
+            if (3 < param1.SDAT_78)
             {
                 param1.DAT_3C += 2;
                 InventoryManager.FUN_4A7E8(3, 0x3e, true);
@@ -6525,8 +6525,8 @@ public class ST6 : LevelManager
         CriStatic oVar6;
         CriStatic oVar7;
 
-        oVar6 = param1.PTR_68[param1.DAT_78];
-        oVar7 = SceneManager.instance.staticObjects[param1.DAT_78 + 5];
+        oVar6 = (CriStatic)param1.PTR_68[param1.SDAT_78];
+        oVar7 = SceneManager.instance.staticObjects[param1.SDAT_78 + 5];
         bVar4 = InventoryManager.FUN_4A87C(3, 0x2c);
 
         if (bVar4)
@@ -6543,9 +6543,9 @@ public class ST6 : LevelManager
                     oVar5 = SceneManager.instance.FUN_5FFA0();
                     oVar5.tags = 18;
                     oVar5.flags |= 2;
-                    oVar5.screen.x = DAT_16F48[param1.DAT_78 * 3];
-                    oVar5.screen.y = DAT_16F48[param1.DAT_78 * 3 + 1];
-                    oVar5.screen.z = DAT_16F48[param1.DAT_78 * 3 + 2];
+                    oVar5.screen.x = DAT_16F48[param1.SDAT_78 * 3];
+                    oVar5.screen.y = DAT_16F48[param1.SDAT_78 * 3 + 1];
+                    oVar5.screen.z = DAT_16F48[param1.SDAT_78 * 3 + 2];
                     oVar5.DAT_4C = null;
                 } while (iVar4 < 2);
             }
@@ -6583,7 +6583,7 @@ public class ST6 : LevelManager
 
         if (-1075 < sVar3)
         {
-            oVar4 = SceneManager.instance.staticObjects[param1.DAT_78 + 9];
+            oVar4 = SceneManager.instance.staticObjects[param1.SDAT_78 + 9];
             oVar6.flags |= 2;
             oVar6.screen.y = -1075;
             GameManager.instance.FUN_5C860(145);
@@ -6593,10 +6593,10 @@ public class ST6 : LevelManager
 
             InventoryManager.FUN_4A7E8(3, 0x2c, true);
             InventoryManager.FUN_4A7E8(3, 0x2d, true);
-            param1.DAT_78++;
+            param1.SDAT_78++;
             param1.DAT_7A = 0;
 
-            if (3 < param1.DAT_78)
+            if (3 < param1.SDAT_78)
             {
                 param1.DAT_3C++;
                 InventoryManager.FUN_4A7E8(3, 0x3e, true);

@@ -50,7 +50,7 @@ public class CriParticle : CriObject
     public byte DAT_64; //0x64
     public byte DAT_65; //0x65
     public int IDAT_68; //0x68
-    public CriStatic[] PTR_68; //0x68
+    public CriObject[] PTR_68; //0x68
     public byte DAT_68; //0x68
     public byte DAT_69; //0x69
     public short SDAT_6A; //0x6A
@@ -73,7 +73,6 @@ public class CriParticle : CriObject
     public byte DAT_75; //0x75
     public short DAT_76; //0x76
     public short SDAT_78; //0x78
-    public sbyte DAT_78; //0x78
     public byte DAT_7A; //0x7A
     public byte DAT_7B; //0x7B
     private delegate void FUN_9C790();
@@ -241,7 +240,7 @@ public class CriParticle : CriObject
         DAT_64 = 0;
         DAT_65 = 0;
         DAT_68 = 0;
-        PTR_68 = new CriStatic[2];
+        PTR_68 = new CriObject[2];
         IDAT_68 = 0;
         DAT_69 = 0;
         SDAT_6A = 0;
@@ -257,7 +256,6 @@ public class CriParticle : CriObject
         DAT_75 = 0;
         DAT_76 = 0;
         SDAT_78 = 0;
-        DAT_78 = 0;
         DAT_7A = 0;
         DAT_7B = 0;
     }
@@ -981,9 +979,9 @@ public class CriParticle : CriObject
         DAT_6A = bVar2;
         screen.y += bVar2 >> 4;
 
-        if (DAT_78 != -1)
+        if ((sbyte)SDAT_78 != -1)
         {
-            oVar6 = SceneManager.instance.skinnedObjects[DAT_78];
+            oVar6 = SceneManager.instance.skinnedObjects[(sbyte)SDAT_78];
             oVar7 = Utilities.FUN_601C8(oVar6.skeleton, oVar6.DAT_175 & 15);
             sVar4 = Utilities.FUN_51C8C(screen, oVar7.screen, DAT_70.y, 0x10);
             DAT_70.y += sVar4;
@@ -1289,11 +1287,11 @@ public class CriParticle : CriObject
             DAT_3C++;
     }
 
-    public int FUN_606A8(Tod2ScriptableObject param1)
+    public int FUN_606A8(Tod2ScriptableObject param1, int param2 = 0)
     {
-        DAT_5C = 0;
+        DAT_5C = param2;
         DAT_58 = param1;
-        DAT_64 = param1.FRAMES[0].DAT_05;
+        DAT_64 = param1.FRAMES[param2].DAT_05;
         MeshData();
         SetMaterials();
         return FUN_606D8();

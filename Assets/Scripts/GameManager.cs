@@ -172,6 +172,7 @@ public class GameManager : MonoBehaviour
     public short DAT_2A; //gp+2ah
     public short DAT_2C; //gp+2ch
     public short DAT_2E; //gp+2eh
+    public uint DAT_30; //gp+30h
     public byte DAT_38; //gp+38h
     public byte DAT_39; //gp+39h
     public byte DAT_3B; //gp+3bh

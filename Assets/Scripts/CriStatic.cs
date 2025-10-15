@@ -49,6 +49,14 @@ public class CriStatic : CriObject
     public byte DAT_48; //0x48
     public ushort DAT_4A; //0x4A
     public Vector3Int DAT_4C; //0x4C
+    public Vector3Int DAT_54; //0x54
+    public int DAT_5C;
+    public Packet[] PTR_60;
+    public byte[] DAT_68;
+    public byte DAT_6C;
+    public byte DAT_6D;
+    public byte DAT_6E;
+    public byte DAT_6F;
     public uint DAT_74;
     public Vector2Int VDAT_74;
     public byte DAT_78;
@@ -60,10 +68,8 @@ public class CriStatic : CriObject
     public Vector3Int DAT_80;
     private delegate void FUN_AA430();
     private delegate void FUN_AA438();
-    private delegate void FUN_7B20(); //FUN_7B20 (ST1)
     private FUN_AA430[] PTR_FUN_AA430;
     private FUN_AA438[] PTR_FUN_AA438;
-    private FUN_7B20[] PTR_FUN_7B20; //PTR_FUN_7B20 (ST1)
     public Material[] materials;
     public int triCount;
 
@@ -88,11 +94,6 @@ public class CriStatic : CriObject
             FUN_7FAE0,
             FUN_7FB4C,
             FUN_5FF00
-        };
-        PTR_FUN_7B20 = new FUN_7B20[2]
-        {
-            FUN_6CB0,
-            FUN_6CF4,
         };
     }
 
@@ -142,6 +143,15 @@ public class CriStatic : CriObject
         cCollider = null;
         DAT_48 = 0;
         DAT_4A = 0;
+        DAT_4C = Vector3Int.zero;
+        DAT_54 = Vector3Int.zero;
+        DAT_5C = 0;
+        PTR_60 = null;
+        DAT_68 = null;
+        DAT_6C = 0;
+        DAT_6D = 0;
+        DAT_6E = 0;
+        DAT_6F = 0;
         DAT_74 = 0;
         VDAT_74 = Vector2Int.zero;
         DAT_78 = 0;
@@ -468,36 +478,5 @@ public class CriStatic : CriObject
     public void FUN_4A26C()
     {
         return;
-    }
-
-    //FUN_6C74 (ST1)
-    public void FUN_6C74()
-    {
-        PTR_FUN_7B20[tags]();
-    }
-
-    //FUN_6CB0 (ST1)
-    private void FUN_6CB0()
-    {
-        tags++;
-        DAT_4C = new Vector3Int(0, 0, 0);
-        //FUN_6D14
-    }
-
-    private void FUN_6CF4()
-    {
-        //FUN_6ED4
-    }
-
-    //FUN_6D14 (ST1)
-    private void FUN_6D14()
-    {
-
-    }
-
-    //FUN_6ED4 (ST1)
-    private void FUN_6ED4()
-    {
-
     }
 }

@@ -930,7 +930,7 @@ public class SceneManager : MonoBehaviour
             uVar1 = Utilities.DAT_9B084[iVar6].DAT_0A;
             oVar3.DAT_60 = uVar1;
             oVar3.DAT_62 = uVar1;
-            oVar3.PTR_6C[0] = (byte)Utilities.DAT_9B084[iVar6].DAT_0C; //0x6c should be int?
+            oVar3.DAT_6C[0] = (byte)Utilities.DAT_9B084[iVar6].DAT_0C; //0x6c should be int?
         }
     }
 

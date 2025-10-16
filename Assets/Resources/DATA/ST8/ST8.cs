@@ -4767,7 +4767,7 @@ public class ST8 : LevelManager
 
         do
         {
-            param1.PTR_6C[uVar2] = 0;
+            param1.DAT_6C[uVar2] = 0;
             uVar2++;
         } while (uVar2 < 8);
 
@@ -4843,7 +4843,7 @@ public class ST8 : LevelManager
         if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) != 0)
         {
             GameManager.instance.FUN_5C94C(null, 145);
-            param1.PTR_6C[param1.DAT_68] = DAT_124E4[param1.DAT_6A * 3 + param1.DAT_69];
+            param1.DAT_6C[param1.DAT_68] = DAT_124E4[param1.DAT_6A * 3 + param1.DAT_69];
             param1.DAT_68++;
 
             if (3 < (sbyte)param1.DAT_68)
@@ -4862,7 +4862,7 @@ public class ST8 : LevelManager
             else
                 param1.DAT_68--;
 
-            param1.PTR_6C[param1.DAT_68] = 0;
+            param1.DAT_6C[param1.DAT_68] = 0;
         }
     }
 
@@ -4878,7 +4878,7 @@ public class ST8 : LevelManager
 
         do
         {
-            if (param1.PTR_6C[uVar1] != DAT_124F0[param1.DAT_2F * 4 + uVar1])
+            if (param1.DAT_6C[uVar1] != DAT_124F0[param1.DAT_2F * 4 + uVar1])
             {
                 InventoryManager.FUN_4A7E8(2, 10, true);
                 GameManager.instance.FUN_5C94C(null, 148);

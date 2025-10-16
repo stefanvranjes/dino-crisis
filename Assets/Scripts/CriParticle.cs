@@ -20,6 +20,14 @@ public struct UNK_9CB94
     public ushort DAT_04;
 }
 
+public struct UNK_9CAFC
+{
+    public uint DAT_00;
+    public Vector3Int DAT_04;
+    public Vector3Int DAT_0A;
+    public ushort DAT_10;
+}
+
 public struct UNK_771C
 {
     public byte DAT_00;
@@ -56,18 +64,11 @@ public class CriParticle : CriObject
     public short SDAT_6A; //0x6A
     public byte DAT_6A; //0x6A
     public byte DAT_6B; //0x6B
-    public byte[] PTR_6C; //0x6C
+    public byte[] DAT_6C; //0x6C
     public int IDAT_6C; //0x6C
     public Vector3Int VDAT_6C; //0x6C
-    public byte DAT_6D; //0x6D
-    public byte BDAT_6E; //0x6E
     public short DAT_6E; //0x6E
-    public byte DAT_6F; //0x6F
     public Vector3Int DAT_70; //0x70
-    public byte BDAT_70; //0x70
-    public byte DAT_71; //0x71
-    public byte DAT_72; //0x72
-    public byte DAT_73; //0x73
     public Vector3Int VDAT_74; //0x74
     public byte DAT_74; //0x74
     public byte DAT_75; //0x75
@@ -85,6 +86,59 @@ public class CriParticle : CriObject
     private delegate void FUN_9C8A4();
     private delegate void FUN_9CAD0();
     private delegate void FUN_9CAF0();
+    private static UNK_9CAFC[] PTR_DAT_9CAFC = new UNK_9CAFC[]
+    {
+        new UNK_9CAFC
+        {
+            DAT_00=0x80132504,
+            DAT_04=new Vector3Int(-160, -180, 130),
+            DAT_0A=new Vector3Int(-5, 10, -5),
+            DAT_10=20
+        },
+        new UNK_9CAFC
+        {
+            DAT_00=0x8013250c,
+            DAT_04=new Vector3Int(120, -170, 180),
+            DAT_0A=new Vector3Int(-5, 10, -5),
+            DAT_10=20
+        },
+        new UNK_9CAFC
+        {
+            DAT_00=0x80132514,
+            DAT_04=new Vector3Int(-170, -130, 110),
+            DAT_0A=new Vector3Int(-5, 10, -5),
+            DAT_10=20
+        },
+        new UNK_9CAFC
+        {
+            DAT_00=0x80132504,
+            DAT_04=new Vector3Int(130, -170, -190),
+            DAT_0A=new Vector3Int(-5, 10, -5),
+            DAT_10=20
+        },
+        new UNK_9CAFC
+        {
+            DAT_00=0x8013250c,
+            DAT_04=new Vector3Int(-160, -150, -120),
+            DAT_0A=new Vector3Int(-5, 10, -5),
+            DAT_10=20
+        },
+        new UNK_9CAFC
+        {
+            DAT_00=0x80132514,
+            DAT_04=new Vector3Int(110, -180, -160),
+            DAT_0A=new Vector3Int(-5, 10, -5),
+            DAT_10=20
+        },
+        new UNK_9CAFC
+        {
+            DAT_00=0x80132504,
+            DAT_04=new Vector3Int(-180, -130, -130),
+            DAT_0A=new Vector3Int(-5, 10, -5),
+            DAT_10=20
+        }
+    };
+    private delegate void FUN_9CB88();
     private delegate void FUN_9CBBC();
     private delegate void FUN_9CBD4();
     private static uint[] DAT_9C774 = new uint[7]
@@ -106,6 +160,7 @@ public class CriParticle : CriObject
     private static uint[] DAT_9CAE4 = new uint[3] { 0x8019e700, 0x8019e708, 0x8019e710 };
     private FUN_9CAF0[] PTR_FUN_9CAF0;
     private static uint DAT_9CAE0 = 0;
+    private FUN_9CB88[] PTR_FUN_9CB88;
     private static UNK_9CB94[] PTR_DAT_9CB94;
     private FUN_9CBBC[] PTR_FUN_9CBBC;
     private FUN_9CBD4[] PTR_FUN_9CBD4;
@@ -185,6 +240,12 @@ public class CriParticle : CriObject
             FUN_46598,
             FUN_60068
         };
+        PTR_FUN_9CB88 = new FUN_9CB88[3]
+        {
+            FUN_466AC,
+            FUN_46784,
+            FUN_60068
+        };
         PTR_FUN_9CBBC = new FUN_9CBBC[3]
         {
             FUN_46850,
@@ -246,7 +307,7 @@ public class CriParticle : CriObject
         SDAT_6A = 0;
         DAT_6A = 0;
         DAT_6B = 0;
-        PTR_6C = new byte[8];
+        DAT_6C = new byte[8];
         IDAT_6C = 0;
         VDAT_6C = Vector3Int.zero;
         DAT_6E = 0;
@@ -603,7 +664,7 @@ public class CriParticle : CriObject
         }
 
         if (DAT_6B != 0)
-            PTR_6C[0] = DAT_6B;
+            DAT_6C[0] = DAT_6B;
 
         bVar1 = 2;
 
@@ -1163,6 +1224,43 @@ public class CriParticle : CriObject
 
         if (iVar1 == 0)
             DAT_3C = 2;
+    }
+
+    public void FUN_46670()
+    {
+        PTR_FUN_9CB88[DAT_3C]();
+    }
+
+    private void FUN_466AC()
+    {
+        ushort uVar1;
+        int iVar2;
+
+        DAT_56 = 0x25;
+        DAT_54 = 0x7ebb;
+        flags |= 2;
+        iVar2 = DAT_2F;
+        FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(PTR_DAT_9CAFC[DAT_2F].DAT_00));
+        DAT_40 = PTR_DAT_9CAFC[iVar2].DAT_04;
+        DAT_70 = PTR_DAT_9CAFC[iVar2].DAT_0A;
+        uVar1 = PTR_DAT_9CAFC[iVar2].DAT_10;
+        DAT_76 = 20;
+        DAT_3C++;
+        DAT_62 = uVar1;
+        DAT_60 = uVar1;
+    }
+
+    private void FUN_46784()
+    {
+        short sVar1;
+
+        DAT_40 += DAT_70;
+        sVar1 = DAT_76;
+        DAT_76 = (short)(sVar1 - 1);
+        screen += DAT_40;
+
+        if (sVar1 == 1)
+            DAT_3C++;
     }
 
     public void FUN_46814()

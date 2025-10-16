@@ -1634,7 +1634,7 @@ public class CriInteract : MonoBehaviour
                     oVar5.DAT_40.x = ST1.instance.DAT_7AA0[iVar4 + 8] << 0x18 >> 0x17;
                     oVar5.DAT_40.y = ST1.instance.DAT_7AA0[iVar4 + 9] << 0x18 >> 0x17;
                     oVar5.DAT_40.z = ST1.instance.DAT_7AA0[iVar4 + 10] << 0x18 >> 0x17;
-                    oVar5.PTR_6C[0] = 0x80;
+                    oVar5.DAT_6C[0] = 0x80;
                 }
 
                 uVar6 = (ushort)DAT_0A + 1U;

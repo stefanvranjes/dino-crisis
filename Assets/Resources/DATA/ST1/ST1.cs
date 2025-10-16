@@ -76,7 +76,7 @@ public class ST1 : LevelManager
     private uint[] DAT_78EC = new uint[] { 0x8010f8cc, 0x8010f8f4, 0x8010f914 };
     private ushort[] DAT_78F8 = new ushort[] { 0x101, 3 };
     private FUN_78FC[] PTR_FUN_78FC; //0x78FC (ST1)
-    private UNK_7908[] DAT_7908 = new UNK_7908[]
+    private UNK_7908[] PTR_DAT_7908 = new UNK_7908[]
     {
         new UNK_7908
         {
@@ -440,7 +440,7 @@ public class ST1 : LevelManager
 
         do
         {
-            param1.PTR_6C[uVar2] = 0;
+            param1.DAT_6C[uVar2] = 0;
             uVar2++;
         } while (uVar2 < 8);
 
@@ -527,7 +527,7 @@ public class ST1 : LevelManager
             else
                 param1.DAT_68--;
 
-            param1.PTR_6C[param1.DAT_68] = 0;
+            param1.DAT_6C[param1.DAT_68] = 0;
         }
     }
 
@@ -543,7 +543,7 @@ public class ST1 : LevelManager
 
         do
         {
-            if (param1.PTR_6C[uVar1] != DAT_7828[param1.DAT_2F * 4 + uVar1])
+            if (param1.DAT_6C[uVar1] != DAT_7828[param1.DAT_2F * 4 + uVar1])
             {
                 InventoryManager.FUN_4A7E8(2, 10, true);
                 GameManager.instance.FUN_5C94C(null, 149);
@@ -611,7 +611,7 @@ public class ST1 : LevelManager
 
         bVar1 = param1.DAT_2F;
         param1.DAT_2F = 0;
-        param1.DAT_72 = 0;
+        param1.DAT_70.y = 0;
         uVar2 = (ushort)(bVar1 & 0x7f);
         param1.DAT_62 = uVar2;
         param1.DAT_60 = uVar2;
@@ -1452,10 +1452,10 @@ public class ST1 : LevelManager
         param1.DAT_62 = 10;
         param1.DAT_60 = 10;
         iVar2 = param1.DAT_2F * 0x10;
-        param1.DAT_40 = DAT_7908[iVar2].DAT_04;
-        param1.DAT_70 = DAT_7908[iVar2].DAT_0A;
+        param1.DAT_40 = PTR_DAT_7908[iVar2].DAT_04;
+        param1.DAT_70 = PTR_DAT_7908[iVar2].DAT_0A;
         param1.DAT_76 = 20;
-        param1.FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(DAT_7908[iVar2].DAT_00));
+        param1.FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(PTR_DAT_7908[iVar2].DAT_00));
         param1.DAT_3C++;
     }
 

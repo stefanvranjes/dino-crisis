@@ -73,7 +73,7 @@ public class CriParticle : CriObject
     public byte DAT_74; //0x74
     public byte DAT_75; //0x75
     public short DAT_76; //0x76
-    public short SDAT_78; //0x78
+    public short DAT_78; //0x78
     public byte DAT_7A; //0x7A
     public byte DAT_7B; //0x7B
     private delegate void FUN_9C790();
@@ -316,7 +316,7 @@ public class CriParticle : CriObject
         DAT_74 = 0;
         DAT_75 = 0;
         DAT_76 = 0;
-        SDAT_78 = 0;
+        DAT_78 = 0;
         DAT_7A = 0;
         DAT_7B = 0;
     }
@@ -1040,9 +1040,9 @@ public class CriParticle : CriObject
         DAT_6A = bVar2;
         screen.y += bVar2 >> 4;
 
-        if ((sbyte)SDAT_78 != -1)
+        if ((sbyte)DAT_78 != -1)
         {
-            oVar6 = SceneManager.instance.skinnedObjects[(sbyte)SDAT_78];
+            oVar6 = SceneManager.instance.skinnedObjects[(sbyte)DAT_78];
             oVar7 = Utilities.FUN_601C8(oVar6.skeleton, oVar6.DAT_175 & 15);
             sVar4 = Utilities.FUN_51C8C(screen, oVar7.screen, DAT_70.y, 0x10);
             DAT_70.y += sVar4;

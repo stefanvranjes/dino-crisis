@@ -59,6 +59,8 @@ public class CriStatic : CriObject
     public byte DAT_6F;
     public uint DAT_74;
     public Vector2Int VDAT_74;
+    public byte DAT_75;
+    public short SDAT_78;
     public byte DAT_78;
     public byte DAT_79;
     public ushort DAT_7A;
@@ -154,6 +156,8 @@ public class CriStatic : CriObject
         DAT_6F = 0;
         DAT_74 = 0;
         VDAT_74 = Vector2Int.zero;
+        DAT_75 = 0;
+        SDAT_78 = 0;
         DAT_78 = 0;
         DAT_79 = 0;
         DAT_7A = 0;

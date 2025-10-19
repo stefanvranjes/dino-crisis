@@ -841,7 +841,7 @@ public class ST4 : LevelManager
         if (GameManager.instance.DAT_A2D2 == 0)
             uVar2 = 0x41a;
 
-        param1.DAT_1D0 = uVar2;
+        param1.DAT_1D0 = (param1.DAT_1D0 & 0xffff0000) | uVar2;
         param1.DAT_1C0 = 0;
         param1.DAT_1DF = 0;
         oVar3 = Utilities.FUN_601C8(param1.skeleton, 4);
@@ -4866,7 +4866,7 @@ public class ST4 : LevelManager
         param1.vr.y += sVar1;
 
         if (param1.DAT_142 == 0 && param1.DAT_12A == 0)
-            param1.DAT_1D0 &= 0xfffe;
+            param1.DAT_1D0 &= 0xfffffffe;
         else
         {
             if ((param1.DAT_1D0 & 1) == 0)

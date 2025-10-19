@@ -2943,7 +2943,7 @@ public class ST9 : LevelManager
                 {
                     param1.DAT_1CE = 1;
                     sVar2 = (short)param1.FUN_6615C();
-                    param1.DAT_1D0 = (ushort)sVar2;
+                    param1.DAT_1D0 = (param1.DAT_1D0 & 0xffff0000) | (ushort)sVar2;
                     param1.DAT_1CF = 52;
                     param1.DAT_1CC = 0;
                 }

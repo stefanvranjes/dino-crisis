@@ -1398,7 +1398,7 @@ public class ST6 : LevelManager
                 {
                     param1.DAT_1CE = 1;
                     uVar2 = (ushort)param1.FUN_6615C();
-                    param1.DAT_1D0 = uVar2;
+                    param1.DAT_1D0 = (param1.DAT_1D0 & 0xffff0000) | uVar2;
                     param1.DAT_1CF = 52;
                     param1.DAT_1CC = 0;
                 }

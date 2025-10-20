@@ -26,6 +26,7 @@ public class CriPlayer : CriSkinned
     public short SDAT_1CC; //0x1CC
     public byte DAT_1CC; //0x1CC
     public byte DAT_1CD; //0x1CD
+    public short SDAT_1CE; //0x1CE
     public byte DAT_1CE; //0x1CE
     public byte DAT_1CF; //0x1CF
     public uint DAT_1D0; //0x1D0
@@ -1552,6 +1553,7 @@ public class CriPlayer : CriSkinned
         SDAT_1CC = 0;
         DAT_1CC = 0;
         DAT_1CD = 0;
+        SDAT_1CE = 0;
         DAT_1CE = 0;
         DAT_1CF = 0;
         DAT_1D0 = 0;

@@ -2,6 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct UNK_PARTICLE_10
+{
+    public Vector3Int DAT_00; //0x00
+    public byte DAT_06; //0x06
+    public byte DAT_07; //0x07
+    public Vector3Int DAT_08; //0x08
+    public sbyte DAT_0E; //0x0E
+    public byte DAT_0F; //0x0F
+    public short DAT_10; //0x10
+    public byte DAT_12; //0x12
+    public byte DAT_13; //0x13
+    public byte DAT_14; //0x14
+    public byte DAT_15; //0x15
+}
+
 public class CriInteract : MonoBehaviour
 {
     public byte DAT_00;
@@ -15,7 +30,6 @@ public class CriInteract : MonoBehaviour
     public short DAT_08;
     public byte BDAT_08;
     public CriObject PDAT_08;
-    public byte[] PTR_08;
     public bool DAT_09;
     public byte BDAT_09;
     public short DAT_0A;
@@ -40,6 +54,7 @@ public class CriInteract : MonoBehaviour
     public TodScriptableObject[] TDAT_10;
     public short SDAT_10;
     public ushort UDAT_10;
+    public UNK_PARTICLE_10[] DAT_10_2;
     public byte DAT_10;
     public byte DAT_11;
     public short SDAT_12;
@@ -164,7 +179,6 @@ public class CriInteract : MonoBehaviour
         DAT_08 = 0;
         BDAT_08 = 0;
         PDAT_08 = null;
-        PTR_08 = null;
         DAT_09 = false;
         DAT_0A = 0;
         BDAT_0A = 0;
@@ -187,6 +201,7 @@ public class CriInteract : MonoBehaviour
         TDAT_10 = null;
         SDAT_10 = 0;
         UDAT_10 = 0;
+        DAT_10_2 = null;
         DAT_10 = 0;
         DAT_11 = 0;
         SDAT_12 = 0;
@@ -212,7 +227,7 @@ public class CriInteract : MonoBehaviour
         DAT_20 = null;
     }
 
-    public void SET_08(int i, byte value)
+    public void SET_OFFSET_08(int i, byte value)
     {
         switch (i)
         {
@@ -255,7 +270,7 @@ public class CriInteract : MonoBehaviour
         }
     }
 
-    public byte GET_08(int i)
+    public byte GET_OFFSET_08(int i)
     {
         switch (i)
         {

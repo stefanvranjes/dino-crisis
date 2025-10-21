@@ -875,14 +875,14 @@ public class ST8 : LevelManager
 
         do
         {
-            param1.SET_08(puVar1 + 4, 0xff);
+            param1.SET_OFFSET_08(puVar1 + 4, 0xff);
             uVar2++;
             puVar1 = puVar3 + (int)uVar2;
         } while (uVar2 < 4);
 
         param1.BDAT_0A = 0;
         param1.BDAT_09 = 0;
-        param1.SET_08(puVar3, 0);
+        param1.SET_OFFSET_08(puVar3, 0);
         param1.DAT_03 = 1;
     }
 
@@ -905,12 +905,12 @@ public class ST8 : LevelManager
 
         if ((InputManager.controllers[0].DAT_B58B8 & 0x8000) != 0)
         {
-            sVar1 = (sbyte)(param1.GET_08(0) - 1);
+            sVar1 = (sbyte)(param1.GET_OFFSET_08(0) - 1);
 
-            if (param1.GET_08(0) == 0)
+            if (param1.GET_OFFSET_08(0) == 0)
                 sVar1 = 4;
 
-            param1.SET_08(0, (byte)sVar1);
+            param1.SET_OFFSET_08(0, (byte)sVar1);
             GameManager.instance.FUN_5C94C(null, 145);
         }
 
@@ -938,7 +938,7 @@ public class ST8 : LevelManager
         if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) != 0)
         {
             GameManager.instance.FUN_5C94C(null, 146);
-            param1.SET_08(param1.BDAT_0A + 4, (byte)(param1.GET_08(0) + param1.BDAT_09 * 5));
+            param1.SET_OFFSET_08(param1.BDAT_0A + 4, (byte)(param1.GET_OFFSET_08(0) + param1.BDAT_09 * 5));
 
             if (param1.BDAT_0A == 3)
                 param1.DAT_03 = 2;
@@ -955,7 +955,7 @@ public class ST8 : LevelManager
             }
             else
             {
-                param1.SET_08(param1.BDAT_0A + 3, 0xff);
+                param1.SET_OFFSET_08(param1.BDAT_0A + 3, 0xff);
                 param1.BDAT_0A--;
             }
 
@@ -984,7 +984,7 @@ public class ST8 : LevelManager
             pcVar3 = (int)uVar4;
             uVar4++;
 
-            if (param1.GET_08(iVar2 + 4) != DAT_120A8[pcVar3])
+            if (param1.GET_OFFSET_08(iVar2 + 4) != DAT_120A8[pcVar3])
             {
                 bVar1 = true;
                 break;
@@ -2781,7 +2781,7 @@ public class ST8 : LevelManager
 
                 sVar2 = (sbyte)(param1.DAT_10 - 1);
                 param1.DAT_10 = (byte)sVar2;
-                bVar1 = param1.GET_08(sVar2 + 9);
+                bVar1 = param1.GET_OFFSET_08(sVar2 + 9);
                 param1.BDAT_0C = bVar1;
                 PTR_DAT_12B68[bVar1].DAT_0A = false;
                 param1.BDAT_08 = 6;
@@ -3017,7 +3017,7 @@ public class ST8 : LevelManager
                         PTR_DAT_12B68[param1.BDAT_0C].DAT_0A = true;
                         sVar2 = (sbyte)param1.DAT_10;
                         param1.DAT_10 = (byte)(sVar2 + 1);
-                        param1.SET_08(sVar2 + 9, param1.BDAT_0C);
+                        param1.SET_OFFSET_08(sVar2 + 9, param1.BDAT_0C);
                         param1.BDAT_08 = 0;
                         param1.BDAT_09 = 0;
                         param1.BDAT_0A = 0;
@@ -4191,13 +4191,13 @@ public class ST8 : LevelManager
         uint uVar4;
         uint uVar5;
 
-        param1.SET_08(1, 0);
-        param1.SET_08(5, 0);
-        param1.SET_08(4, 0);
-        param1.SET_08(6, 0);
-        param1.SET_08(0, 0);
-        param1.SET_08(2, 0);
-        param1.SET_08(7, 0);
+        param1.SET_OFFSET_08(1, 0);
+        param1.SET_OFFSET_08(5, 0);
+        param1.SET_OFFSET_08(4, 0);
+        param1.SET_OFFSET_08(6, 0);
+        param1.SET_OFFSET_08(0, 0);
+        param1.SET_OFFSET_08(2, 0);
+        param1.SET_OFFSET_08(7, 0);
         //FUN_1802C
         DAT_12BC8.flags |= 2;
         DAT_12BD4.flags |= 2;
@@ -4315,12 +4315,12 @@ public class ST8 : LevelManager
         //FUN_C280
         FUN_CB7C();
 
-        if (param1.GET_08(1) < 20)
-            param1.SET_08(1, (byte)(param1.GET_08(1) + 1));
+        if (param1.GET_OFFSET_08(1) < 20)
+            param1.SET_OFFSET_08(1, (byte)(param1.GET_OFFSET_08(1) + 1));
         else
         {
-            param1.SET_08(1, 0);
-            param1.SET_08(0, 2);
+            param1.SET_OFFSET_08(1, 0);
+            param1.SET_OFFSET_08(0, 2);
         }
     }
 
@@ -4345,8 +4345,8 @@ public class ST8 : LevelManager
         if (bVar1)
             bVar6 = 0x50;
 
-        if (param1.GET_08(1) < bVar6)
-            param1.SET_08(1, (byte)(param1.GET_08(1) + 1));
+        if (param1.GET_OFFSET_08(1) < bVar6)
+            param1.SET_OFFSET_08(1, (byte)(param1.GET_OFFSET_08(1) + 1));
         else
         {
             DAT_12BDC.screen.x += param1.SDAT_18;
@@ -4371,8 +4371,8 @@ public class ST8 : LevelManager
                 if (iVar3 < (int)(uVar5 - 0x80 & 0xfff) || 
                    (int)(uVar5 + 0x80 & 0xfff) < iVar3)
                 {
-                    param1.SET_08(0, 0);
-                    param1.SET_08(1, 0);
+                    param1.SET_OFFSET_08(0, 0);
+                    param1.SET_OFFSET_08(1, 0);
                     param1.SDAT_14 = (short)-param1.SDAT_14;
                     param1.SDAT_16 = (short)-param1.SDAT_16;
                     param1.DAT_03 = 4;
@@ -4380,23 +4380,23 @@ public class ST8 : LevelManager
                     return;
                 }
 
-                param1.SET_08(0, 3);
+                param1.SET_OFFSET_08(0, 3);
                 DAT_12BD8.DAT_40 = DAT_12BD4;
                 DAT_12BD8.screen = new Vector3Int(0, 100, 0);
                 DAT_12BD8.vr.z = 0x800;
-                param1.SET_08(2, 1);
+                param1.SET_OFFSET_08(2, 1);
             }
             else
             {
-                param1.SET_08(0, 3);
+                param1.SET_OFFSET_08(0, 3);
                 DAT_12BD8.DAT_40 = DAT_12BD4;
                 DAT_12BD8.screen = new Vector3Int(0, -100, 0);
                 DAT_12BD8.vr.z = 0;
-                param1.SET_08(2, 0);
+                param1.SET_OFFSET_08(2, 0);
             }
 
             GameManager.instance.FUN_5C94C(null, 150);
-            param1.SET_08(3, (byte)(param1.GET_08(3) >> 1));
+            param1.SET_OFFSET_08(3, (byte)(param1.GET_OFFSET_08(3) >> 1));
         }
     }
 
@@ -4436,7 +4436,7 @@ public class ST8 : LevelManager
 
             if (iVar1 - 201 < 200)
             {
-                if (param1.GET_08(2) == 0)
+                if (param1.GET_OFFSET_08(2) == 0)
                 {
                     iVar2 = Utilities.FUN_615EC(local_48, local_40);
                     iVar1 = 0x1800;
@@ -4458,7 +4458,7 @@ public class ST8 : LevelManager
             }
             else
             {
-                if (param1.GET_08(2) == 0)
+                if (param1.GET_OFFSET_08(2) == 0)
                 {
                     iVar2 = Utilities.FUN_615EC(local_48, local_40);
                     iVar1 = 0;
@@ -4478,7 +4478,7 @@ public class ST8 : LevelManager
                     DAT_12BDC.screen.x = 0;
                     DAT_12BDC.screen.z = 0;
 
-                    if (param1.GET_08(2) == 0)
+                    if (param1.GET_OFFSET_08(2) == 0)
                     {
                         DAT_12BDC.screen.y = 200;
                         DAT_12BDC.vr.z = 0;
@@ -4489,18 +4489,18 @@ public class ST8 : LevelManager
                         DAT_12BDC.vr.z = 0x800;
                     }
 
-                    param1.SET_08(0, 4);
-                    param1.SET_08(1, 0);
+                    param1.SET_OFFSET_08(0, 4);
+                    param1.SET_OFFSET_08(1, 0);
                     GameManager.instance.FUN_5C94C(null, 150);
-                    param1.SET_08(3, (byte)(param1.GET_08(3) >> 1));
+                    param1.SET_OFFSET_08(3, (byte)(param1.GET_OFFSET_08(3) >> 1));
                     return;
                 }
             }
 
             param1.SDAT_16 = 0;
             param1.SDAT_14 = 0;
-            param1.SET_08(0, 0);
-            param1.SET_08(1, 0);
+            param1.SET_OFFSET_08(0, 0);
+            param1.SET_OFFSET_08(1, 0);
             param1.SDAT_18 = (short)-param1.SDAT_18;
             param1.SDAT_1A = (short)-param1.SDAT_1A;
             param1.DAT_03 = 4;
@@ -4515,7 +4515,7 @@ public class ST8 : LevelManager
         byte bVar2;
         CriStatic oVar3;
 
-        if (9 < param1.GET_08(1))
+        if (9 < param1.GET_OFFSET_08(1))
         {
             oVar3 = DAT_12BD4;
 
@@ -4544,9 +4544,9 @@ public class ST8 : LevelManager
         }
 
         LAB_BDCC:
-        if (param1.GET_08(1) < 100)
+        if (param1.GET_OFFSET_08(1) < 100)
         {
-            param1.SET_08(1, (byte)(param1.GET_08(1) + 1));
+            param1.SET_OFFSET_08(1, (byte)(param1.GET_OFFSET_08(1) + 1));
             return;
         }
 
@@ -4555,8 +4555,8 @@ public class ST8 : LevelManager
         if (DAT_12BC8.cMesh == (TmdScriptableObject)Utilities.GetRamObject(0x801182e4))
             bVar2 = 6;
 
-        param1.SET_08(0, bVar2);
-        param1.SET_08(1, 0);
+        param1.SET_OFFSET_08(0, bVar2);
+        param1.SET_OFFSET_08(1, 0);
     }
 
     //FUN_BE14 (ST8)
@@ -4567,7 +4567,7 @@ public class ST8 : LevelManager
         bool bVar4;
         CriStatic oVar4;
 
-        if (param1.GET_08(2) == 0)
+        if (param1.GET_OFFSET_08(2) == 0)
         {
             oVar4 = DAT_12BD4;
             uVar1 = (ushort)oVar4.vr.z;
@@ -4587,22 +4587,22 @@ public class ST8 : LevelManager
         bVar4 = InventoryManager.FUN_4A87C(3, 0x2b);
         //...
 
-        if (param1.GET_08(1) == 10)
+        if (param1.GET_OFFSET_08(1) == 10)
             GameManager.instance.FUN_5C94C(null, 152);
 
         //...
 
-        sVar3 = (sbyte)param1.GET_08(1);
+        sVar3 = (sbyte)param1.GET_OFFSET_08(1);
 
         if (sVar3 == 60)
         {
             InventoryManager.FUN_4A7E8(3, 0x2b, true);
-            sVar3 = (sbyte)param1.GET_08(1);
+            sVar3 = (sbyte)param1.GET_OFFSET_08(1);
         }
 
         //...
 
-        if (param1.GET_08(1) == 120)
+        if (param1.GET_OFFSET_08(1) == 120)
         {
             DAT_12C00[5] = 1;
             InventoryManager.FUN_4A7E8(3, 0x2a, true);
@@ -4624,10 +4624,10 @@ public class ST8 : LevelManager
             oVar4 = DAT_12BDC;
             oVar4.screen.y = 1500;
             oVar4.screen.x = 1500;
-            param1.SET_08(0, 0);
+            param1.SET_OFFSET_08(0, 0);
         }
 
-        param1.SET_08(1, (byte)(param1.GET_08(1) + 1));
+        param1.SET_OFFSET_08(1, (byte)(param1.GET_OFFSET_08(1) + 1));
     }
 
     //FUN_C034 (ST8)
@@ -4636,7 +4636,7 @@ public class ST8 : LevelManager
         ushort uVar1;
         CriStatic oVar2;
 
-        if (param1.GET_08(2) == 0)
+        if (param1.GET_OFFSET_08(2) == 0)
         {
             oVar2 = DAT_12BD4;
             uVar1 = (ushort)oVar2.vr.z;
@@ -4656,19 +4656,19 @@ public class ST8 : LevelManager
         LAB_C0AC:
         //...
 
-        if (param1.GET_08(1) == 10)
+        if (param1.GET_OFFSET_08(1) == 10)
             GameManager.instance.FUN_5C94C(null, 152);
 
         //...
 
-        if (param1.GET_08(1) == 60)
+        if (param1.GET_OFFSET_08(1) == 60)
         {
             InventoryManager.FUN_4A7E8(3, 0x2b, true);
-            param1.SET_08(0, 0);
+            param1.SET_OFFSET_08(0, 0);
             param1.DAT_03 = 3;
         }
 
-        param1.SET_08(1, (byte)(param1.GET_08(1) + 1));
+        param1.SET_OFFSET_08(1, (byte)(param1.GET_OFFSET_08(1) + 1));
     }
 
     //FUN_C154 (ST8)
@@ -4687,45 +4687,45 @@ public class ST8 : LevelManager
 
         if ((InputManager.controllers[0].DAT_B5898 & 0x2000) != 0)
         {
-            sVar2 = (sbyte)(param1.GET_08(4) - 2);
-            param1.SET_08(4, (byte)sVar2);
+            sVar2 = (sbyte)(param1.GET_OFFSET_08(4) - 2);
+            param1.SET_OFFSET_08(4, (byte)sVar2);
 
             if ((uint)(int)sVar2 <= (uint)-(iVar3 + 2))
             {
-                param1.SET_08(4, (byte)-iVar3);
+                param1.SET_OFFSET_08(4, (byte)-iVar3);
                 bVar1 = true;
             }
         }
 
         if ((InputManager.controllers[0].DAT_B5898 & 0x8000) != 0)
         {
-            sVar2 = (sbyte)(param1.GET_08(4) + 2);
-            param1.SET_08(4, (byte)sVar2);
+            sVar2 = (sbyte)(param1.GET_OFFSET_08(4) + 2);
+            param1.SET_OFFSET_08(4, (byte)sVar2);
 
             if (iVar3 + 2 <= (uint)(int)sVar2)
             {
-                param1.SET_08(4, (byte)iVar3);
+                param1.SET_OFFSET_08(4, (byte)iVar3);
                 bVar1 = true;
             }
         }
 
-        param1.SET_08(5, (byte)(param1.DAT_06 << 1));
-        iVar3 = ((sbyte)param1.GET_08(6) << 0x19) >> 0x18;
+        param1.SET_OFFSET_08(5, (byte)(param1.DAT_06 << 1));
+        iVar3 = ((sbyte)param1.GET_OFFSET_08(6) << 0x19) >> 0x18;
 
         if (iVar3 < (sbyte)param1.DAT_04)
-            param1.SET_08(6, (byte)(param1.GET_08(6) + 1));
+            param1.SET_OFFSET_08(6, (byte)(param1.GET_OFFSET_08(6) + 1));
         else
         {
             if (param1.DAT_04 < iVar3)
-                param1.SET_08(6, (byte)(param1.GET_08(6) - 1));
+                param1.SET_OFFSET_08(6, (byte)(param1.GET_OFFSET_08(6) - 1));
             else
             {
                 if (!bVar1)
-                    param1.SET_08(4, 0);
+                    param1.SET_OFFSET_08(4, 0);
             }
         }
 
-        DAT_12BD4.vr.z = DAT_12BD4.vr.z + param1.GET_08(5) & 0xfff;
+        DAT_12BD4.vr.z = DAT_12BD4.vr.z + param1.GET_OFFSET_08(5) & 0xfff;
     }
 
     //FUN_CB7C (ST8)
@@ -5650,7 +5650,7 @@ public class ST8 : LevelManager
     //FUN_11884 (ST8)
     private void FUN_11884(CriInteract param1)
     {
-        LevelManager.instance.FUN_60100(param1.PTR_08, 4);
+        LevelManager.instance.FUN_60100(param1, 4);
         param1.DAT_03 = 3;
     }
 

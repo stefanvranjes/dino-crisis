@@ -1615,7 +1615,7 @@ public class ST7 : LevelManager
         if ((InputManager.controllers[0].DAT_B58B8 & 0xa0) != 0)
         {
             GameManager.instance.FUN_5C94C(null, 146);
-            param1.SET_08(param1.BDAT_0A + 4, (byte)(param1.BDAT_08 + param1.BDAT_09 * 5));
+            param1.SET_OFFSET_08(param1.BDAT_0A + 4, (byte)(param1.BDAT_08 + param1.BDAT_09 * 5));
 
             if (param1.BDAT_0A == 3)
                 param1.DAT_03 = 2;
@@ -1632,7 +1632,7 @@ public class ST7 : LevelManager
             }
             else
             {
-                param1.SET_08(param1.BDAT_0A + 3, 0xff);
+                param1.SET_OFFSET_08(param1.BDAT_0A + 3, 0xff);
                 param1.BDAT_0A--;
             }
 
@@ -1653,7 +1653,7 @@ public class ST7 : LevelManager
 
         do
         {
-            if (param1.GET_08(iVar4 + 4) != DAT_11BBC[iVar4])
+            if (param1.GET_OFFSET_08(iVar4 + 4) != DAT_11BBC[iVar4])
             {
                 bVar1 = true;
                 break;
@@ -1702,23 +1702,21 @@ public class ST7 : LevelManager
         byte bVar1;
         sbyte sVar2;
         bool bVar3;
-        byte[] aVar4;
-
-        aVar4 = param1.PTR_08;
-        bVar1 = (byte)(aVar4[10] + 1);
-        aVar4[10] = bVar1;
+        
+        bVar1 = (byte)(param1.GET_OFFSET_08(10) + 1);
+        param1.SET_OFFSET_08(10, bVar1);
 
         if ((bVar1 & 1) != 0)
         {
-            bVar1 = aVar4[9];
+            bVar1 = param1.GET_OFFSET_08(9);
 
             if (bVar1 == 1)
             {
-                sVar2 = (sbyte)(aVar4[8] - 1);
-                aVar4[8] = (byte)sVar2;
+                sVar2 = (sbyte)(param1.GET_OFFSET_08(8) - 1);
+                param1.SET_OFFSET_08(8, (byte)sVar2);
 
                 if (sVar2 == 0)
-                    aVar4[9]--;
+                    param1.SET_OFFSET_08(9, (byte)(param1.GET_OFFSET_08(9) - 1));
             }
             else
             {
@@ -1726,21 +1724,21 @@ public class ST7 : LevelManager
                 {
                     if (bVar1 == 0)
                     {
-                        bVar1 = (byte)(aVar4[8] + 1);
-                        aVar4[9] = bVar1;
+                        bVar1 = (byte)(param1.GET_OFFSET_08(8) + 1);
+                        param1.SET_OFFSET_08(9, bVar1);
 
                         if (7 < bVar1)
-                            aVar4[9]++;
+                            param1.SET_OFFSET_08(9, (byte)(param1.GET_OFFSET_08(9) + 1));
                     }
                 }
                 else
                 {
                     if (bVar1 == 2)
                     {
-                        if (aVar4[8] == 0)
+                        if (param1.GET_OFFSET_08(8) == 0)
                             param1.DAT_03++;
                         else
-                            aVar4[8]--;
+                            param1.SET_OFFSET_08(8, (byte)(param1.GET_OFFSET_08(8) - 1));
                     }
                 }
             }
@@ -1751,14 +1749,14 @@ public class ST7 : LevelManager
         if (bVar3)
         {
             InventoryManager.FUN_4A7E8(2, 0x1a, false);
-            aVar4[9] = 2;
+            param1.SET_OFFSET_08(9, 2);
         }
     }
 
     //FUN_3BD8 (ST7)
     private void FUN_3BD8(CriInteract param1)
     {
-        FUN_60100(param1.PTR_08);
+        FUN_60100(param1);
         param1.FUN_5FF98();
     }
 
@@ -4569,7 +4567,7 @@ public class ST7 : LevelManager
 
                 sVar2 = (sbyte)(param1.DAT_10 - 1);
                 param1.DAT_10 = (byte)sVar2;
-                bVar1 = param1.GET_08(sVar2 + 9);
+                bVar1 = param1.GET_OFFSET_08(sVar2 + 9);
                 param1.BDAT_0C = bVar1;
                 PTR_DAT_12974[bVar1].DAT_0A = 0;
                 param1.BDAT_08 = 6;
@@ -4796,7 +4794,7 @@ public class ST7 : LevelManager
                         PTR_DAT_12974[param1.BDAT_0C].DAT_0A = 1;
                         sVar2 = (sbyte)param1.DAT_10;
                         param1.DAT_10 = (byte)(sVar2 + 1);
-                        param1.SET_08(sVar2 + 9, param1.BDAT_0C);
+                        param1.SET_OFFSET_08(sVar2 + 9, param1.BDAT_0C);
                         param1.PDAT_08 = null;
                         param1.DAT_0F = 1;
                         param1.DAT_03 = 2;

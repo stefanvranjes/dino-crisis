@@ -267,6 +267,43 @@ public class CriInteract : MonoBehaviour
             case 11:
                 DAT_13 = (sbyte)value;
                 break;
+            case 12:
+                DAT_14 = (sbyte)value;
+                break;
+            case 13:
+                DAT_15 = (sbyte)value;
+                break;
+            case 14:
+                BDAT_16 = value;
+                break;
+            case 15:
+                DAT_17 = (sbyte)value;
+                break;
+        }
+    }
+
+    public void SET_OFFSET_08_2(int i, short value)
+    {
+        switch (i)
+        {
+            case 0:
+                DAT_08 = value;
+                break;
+            case 1:
+                DAT_0A = value;
+                break;
+            case 2:
+                DAT_0C = value;
+                break;
+            case 3:
+                DAT_0E = value;
+                break;
+            case 4:
+                SDAT_10 = value;
+                break;
+            case 5:
+                SDAT_12 = value;
+                break;
         }
     }
 
@@ -298,6 +335,35 @@ public class CriInteract : MonoBehaviour
                 return (byte)DAT_12;
             case 11:
                 return (byte)DAT_13;
+            case 12:
+                return (byte)DAT_14;
+            case 13:
+                return (byte)DAT_15;
+            case 14:
+                return BDAT_16;
+            case 15:
+                return (byte)DAT_17;
+            default:
+                return 0;
+        }
+    }
+
+    public short GET_OFFSET_08_2(int i)
+    {
+        switch (i)
+        {
+            case 0:
+                return DAT_08;
+            case 1:
+                return DAT_0A;
+            case 2:
+                return DAT_0C;
+            case 3:
+                return DAT_0E;
+            case 4:
+                return SDAT_10;
+            case 5:
+                return SDAT_12;
             default:
                 return 0;
         }

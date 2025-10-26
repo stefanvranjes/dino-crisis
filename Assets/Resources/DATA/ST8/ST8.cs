@@ -792,7 +792,7 @@ public class ST8 : LevelManager
             sVar3 = -13;
         }
 
-        param1.UDAT_10 = (ushort)sVar3;
+        param1.SDAT_10 = sVar3;
         param1.DAT_0A = (short)(sVar1 * 0x1a9);
         param1.DAT_03 += 4;
     }
@@ -827,7 +827,7 @@ public class ST8 : LevelManager
             sVar3 = 13;
         }
 
-        param1.UDAT_10 = (ushort)sVar3;
+        param1.SDAT_10 = sVar3;
         param1.DAT_0A = (short)(sVar1 * 0x1a9);
         param1.DAT_03 += 4;
     }

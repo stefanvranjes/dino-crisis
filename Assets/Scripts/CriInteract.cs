@@ -200,7 +200,6 @@ public class CriInteract : MonoBehaviour
         VDAT_10 = Vector3Int.zero;
         TDAT_10 = null;
         SDAT_10 = 0;
-        UDAT_10 = 0;
         DAT_10_2 = null;
         DAT_10 = 0;
         DAT_11 = 0;

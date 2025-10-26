@@ -4322,8 +4322,7 @@ public class ST3 : LevelManager
         param1.DAT_0D = 0;
         param1.BDAT_0E = 0;
         param1.DAT_0F = 0;
-        param1.UDAT_10 = 0;
-        param1.DAT_11 = 0;
+        param1.SDAT_10 = 0;
         param1.DAT_12 = 0;
         param1.DAT_13 = 0;
         param1.DAT_14 = 0;
@@ -4400,7 +4399,7 @@ public class ST3 : LevelManager
                         {
                             do
                             {
-                                if ((param1.UDAT_10 >> (int)(uVar4 & 0x1f) & 1) == 0)
+                                if (((ushort)param1.SDAT_10 >> (int)(uVar4 & 0x1f) & 1) == 0)
                                 {
                                     iVar7 = 147;
                                     param1.DAT_0B = (sbyte)iVar7;
@@ -4424,7 +4423,7 @@ public class ST3 : LevelManager
                     {
                         do
                         {
-                            if ((param1.UDAT_10 >> (int)(uVar5 & 0x1f) & 1) == 0)
+                            if (((short)param1.SDAT_10 >> (int)(uVar5 & 0x1f) & 1) == 0)
                             {
                                 iVar7 = 147;
                                 param1.DAT_0B = (sbyte)uVar5;
@@ -4451,7 +4450,7 @@ public class ST3 : LevelManager
                     param1.DAT_15 = 0;
                     param1.DAT_14 = 0;
                     param1.BDAT_09++;
-                    param1.UDAT_10 |= (ushort)(1 << ((byte)param1.DAT_0B & 15));
+                    param1.SDAT_10 |= (short)(1 << ((byte)param1.DAT_0B & 15));
                     DAT_12B2C[param1.BDAT_09 * 4] = 9;
 
                     if ((byte)param1.BDAT_0A <= param1.BDAT_09)
@@ -4462,7 +4461,7 @@ public class ST3 : LevelManager
 
                     if (param1.BDAT_0A != 0)
                     {
-                        uVar4 = param1.UDAT_10;
+                        uVar4 = (ushort)param1.SDAT_10;
 
                         do
                         {
@@ -4473,7 +4472,7 @@ public class ST3 : LevelManager
                             }
 
                             uVar5++;
-                            uVar4 = (uint)(param1.UDAT_10 >> (int)(uVar5 & 0x1f));
+                            uVar4 = (uint)((ushort)param1.SDAT_10 >> (int)(uVar5 & 0x1f));
                         } while ((int)uVar5 < (byte)param1.BDAT_0A);
                     }
                 }
@@ -4486,7 +4485,7 @@ public class ST3 : LevelManager
                     {
                         param1.BDAT_09 = bVar1;
                         iVar7 = 148;
-                        param1.UDAT_10 &= (ushort)~(1 << (DAT_12B2C[bVar1 * 4 + 1] & 15));
+                        param1.SDAT_10 &= (short)~(1 << (DAT_12B2C[bVar1 * 4 + 1] & 15));
                         DAT_12B2C[param1.BDAT_09 * 4] = 9;
                         goto LAB_9DF8;
                     }
@@ -4535,8 +4534,7 @@ public class ST3 : LevelManager
             param1.DAT_0D = 0;
             param1.BDAT_0E = 0;
             param1.DAT_0F = 0;
-            param1.UDAT_10 = 0;
-            param1.DAT_11 = 0;
+            param1.SDAT_10 = 0;
             param1.DAT_12 = 0;
             param1.DAT_13 = 0;
             param1.DAT_14 = 0;

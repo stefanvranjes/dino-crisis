@@ -30,6 +30,7 @@ public class CriInteract : MonoBehaviour
     public short DAT_08;
     public byte BDAT_08;
     public CriObject PDAT_08;
+    public byte[] PTR_08;
     public bool DAT_09;
     public byte BDAT_09;
     public short DAT_0A;
@@ -41,6 +42,7 @@ public class CriInteract : MonoBehaviour
     public uint UDAT_0C;
     public CriPlayer PDAT_0C;
     public Tmd2ScriptableObject TDAT_0C;
+    public byte[] PTR_0C;
     public FUN_0C PTR_FUN_0C;
     public byte DAT_0D;
     public short DAT_0E;
@@ -179,6 +181,7 @@ public class CriInteract : MonoBehaviour
         DAT_08 = 0;
         BDAT_08 = 0;
         PDAT_08 = null;
+        PTR_08 = null;
         DAT_09 = false;
         DAT_0A = 0;
         BDAT_0A = 0;
@@ -188,6 +191,7 @@ public class CriInteract : MonoBehaviour
         VDAT_0C = Vector3Int.zero;
         PDAT_0C = null;
         TDAT_0C = null;
+        PTR_0C = null;
         UDAT_0C = 0;
         DAT_0D = 0;
         DAT_0E = 0;

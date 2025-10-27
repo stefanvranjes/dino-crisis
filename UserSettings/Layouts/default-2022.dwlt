@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 37
+  controlID: 62
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -699,7 +699,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: da650000
+      m_SelectedIDs: 5a640000
       m_LastClickedID: 0
       m_ExpandedIDs: 2cfbffff
       m_RenameOverlay:
@@ -868,7 +868,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/DATA/ST5
+    - Assets/Resources/DATA/ST8
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -876,15 +876,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/DATA/ST5
+  - Assets/Resources/DATA/ST8
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Stefan\Documents\GitHub\dino-crisis
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 4183}
-    m_SelectedIDs: 54b30000
-    m_LastClickedID: 45908
+    m_SelectedIDs: 5ab30000
+    m_LastClickedID: 45914
     m_ExpandedIDs: 000000009463000010b1000046b1000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0

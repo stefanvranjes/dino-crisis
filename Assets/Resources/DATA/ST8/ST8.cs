@@ -5650,7 +5650,7 @@ public class ST8 : LevelManager
     //FUN_11884 (ST8)
     private void FUN_11884(CriInteract param1)
     {
-        LevelManager.instance.FUN_60100(param1, 4);
+        LevelManager.instance.FUN_60100(param1.PTR_0C);
         param1.DAT_03 = 3;
     }
 

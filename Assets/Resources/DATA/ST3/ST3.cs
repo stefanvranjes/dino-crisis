@@ -1716,7 +1716,7 @@ public class ST3 : LevelManager
     //FUN_3D00 (ST3)
     private void FUN_3D00(CriInteract param1)
     {
-        LevelManager.instance.FUN_60100(param1);
+        LevelManager.instance.FUN_60100(param1.PTR_08);
         param1.FUN_5FF98();
     }
 
@@ -6116,7 +6116,7 @@ public class ST3 : LevelManager
     private void FUN_10EA4(CriInteract param1)
     {
         param1.FUN_5FF98();
-        LevelManager.instance.FUN_60100(param1);
+        LevelManager.instance.FUN_60100(param1.PTR_08);
     }
 
     //FUN_10ED4 (ST3)

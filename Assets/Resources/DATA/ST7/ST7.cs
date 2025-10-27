@@ -1756,7 +1756,7 @@ public class ST7 : LevelManager
     //FUN_3BD8 (ST7)
     private void FUN_3BD8(CriInteract param1)
     {
-        FUN_60100(param1);
+        FUN_60100(param1.PTR_08);
         param1.FUN_5FF98();
     }
 

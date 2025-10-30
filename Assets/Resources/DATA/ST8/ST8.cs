@@ -3239,7 +3239,7 @@ public class ST8 : LevelManager
         param1.DAT_13 = 0;
         param1.DAT_14 = 0;
         param1.DAT_15 = 0;
-        param1.DAT_16 = 0;
+        param1.BDAT_16 = 0;
         param1.DAT_17 = 0;
         iVar3 = 0;
 
@@ -4117,7 +4117,7 @@ public class ST8 : LevelManager
         sbyte sVar3;
 
         DAT_12BD8.screen.x += param1.SDAT_14;
-        DAT_12BD8.screen.y += param1.SDAT_16;
+        DAT_12BD8.screen.y += param1.DAT_16;
         DAT_12BDC.screen.x += param1.SDAT_18;
         DAT_12BDC.screen.y += param1.SDAT_1A;
         bVar1 = param1.BDAT_09;
@@ -4217,7 +4217,7 @@ public class ST8 : LevelManager
         uVar3 = (uint)Utilities.Rand();
         iVar2 = (int)(uVar3 % 9) * 5;
         param1.SDAT_14 = (short)(DAT_1245C[iVar2 + 1] * DAT_1245C[iVar2 + 4]);
-        param1.SDAT_16 = (short)(DAT_1245C[iVar2] * DAT_1245C[iVar2 + 4]);
+        param1.DAT_16 = (short)(DAT_1245C[iVar2] * DAT_1245C[iVar2 + 4]);
         param1.SDAT_10 = (short)(DAT_1245C[iVar2 + 2] * 10);
         param1.SDAT_12 = (short)(DAT_1245C[iVar2 + 3] * 10);
 
@@ -4226,7 +4226,7 @@ public class ST8 : LevelManager
             if ((uVar3 & 1) == 0)
             {
                 param1.SDAT_14 = (short)-param1.SDAT_14;
-                param1.SDAT_16 = (short)-param1.SDAT_16;
+                param1.DAT_16 = (short)-param1.DAT_16;
             }
             else
             {
@@ -4244,7 +4244,7 @@ public class ST8 : LevelManager
             else
             {
                 param1.SDAT_10 = (short)-param1.SDAT_10;
-                param1.SDAT_16 = (short)-param1.SDAT_16;
+                param1.DAT_16 = (short)-param1.DAT_16;
             }
         }
 
@@ -4340,7 +4340,7 @@ public class ST8 : LevelManager
         bVar6 = 100;
         DAT_12BD8.screen.x += param1.SDAT_14;
         bVar1 = DAT_12C00[5] != 0;
-        DAT_12BD8.screen.y += param1.SDAT_16;
+        DAT_12BD8.screen.y += param1.DAT_16;
 
         if (bVar1)
             bVar6 = 0x50;
@@ -4374,7 +4374,7 @@ public class ST8 : LevelManager
                     param1.SET_OFFSET_08(0, 0);
                     param1.SET_OFFSET_08(1, 0);
                     param1.SDAT_14 = (short)-param1.SDAT_14;
-                    param1.SDAT_16 = (short)-param1.SDAT_16;
+                    param1.DAT_16 = (short)-param1.DAT_16;
                     param1.DAT_03 = 4;
                     GameManager.instance.FUN_5C94C(null, 151);
                     return;
@@ -4497,7 +4497,7 @@ public class ST8 : LevelManager
                 }
             }
 
-            param1.SDAT_16 = 0;
+            param1.DAT_16 = 0;
             param1.SDAT_14 = 0;
             param1.SET_OFFSET_08(0, 0);
             param1.SET_OFFSET_08(1, 0);
@@ -4955,7 +4955,7 @@ public class ST8 : LevelManager
 
         FUN_DDA8(param1);
 
-        if (param1.DAT_16 == 0)
+        if (param1.BDAT_16 == 0)
         {
             param1.ADAT_10 = DAT_12D3C;
             param1.IDAT_10 = param1.DAT_14;

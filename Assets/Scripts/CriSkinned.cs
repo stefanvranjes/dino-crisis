@@ -1292,7 +1292,7 @@ public class CriSkinned : CriObject
                 oVar4.DAT_20 = this;
                 oVar4.DAT_18 = param2;
                 oVar4.DAT_19 = param3;
-                oVar4.DAT_16 = param1.bone;
+                oVar4.DAT_16 = (short)param1.bone;
             }
         }
 

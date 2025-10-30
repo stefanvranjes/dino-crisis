@@ -1765,13 +1765,13 @@ public class ST7 : LevelManager
     {
         if (param1.DAT_02 == 0)
         {
-            param1.PTR_10 = DAT_11BE0;
+            param1.PDAT_10 = DAT_11BE0;
             param1.BDAT_0E = 49;
             param1.PDAT_14 = SceneManager.instance.skinnedObjects[param1.DAT_04];
         }
         else
         {
-            param1.PTR_10 = DAT_12018;
+            param1.PDAT_10 = DAT_12018;
             param1.BDAT_0E = 10;
         }
 
@@ -2196,7 +2196,7 @@ public class ST7 : LevelManager
         param1.DAT_0F = 0xff;
         param1.BDAT_0C = 0;
         param1.BDAT_0E = 0;
-        param1.PTR_10 = null;
+        param1.PDAT_10 = null;
         param1.PDAT_14 = null;
         param1.SDAT_18 = 0x102;
         param1.DAT_04 = 0;
@@ -2705,7 +2705,7 @@ public class ST7 : LevelManager
         param1.BDAT_08 = 0;
         param1.BDAT_09 = 0;
         param1.PDAT_0C = null;
-        param1.PTR_10 = null;
+        param1.PDAT_10 = null;
         param1.PDAT_14 = null;
         param1.DAT_19 = 0;
         param1.DAT_1A = 0xff;
@@ -2882,7 +2882,7 @@ public class ST7 : LevelManager
                         param1.BDAT_08 = 0;
                         param1.BDAT_09 = 0;
                         param1.PDAT_0C = null;
-                        param1.PTR_10 = null;
+                        param1.PDAT_10 = null;
                         param1.PDAT_14 = null;
                         DAT_12890[0] = 9;
                         GameManager.instance.FUN_5C94C(null, 148);
@@ -4215,7 +4215,7 @@ public class ST7 : LevelManager
                         param1.BDAT_09 = 0;
                         param1.DAT_1B = 0;
                         param1.PDAT_0C = null;
-                        param1.PTR_10 = null;
+                        param1.PDAT_10 = null;
                         param1.PDAT_14 = null;
                         DAT_12890[0] = 9;
                         param1.DAT_18 = 8;
@@ -5089,7 +5089,7 @@ public class ST7 : LevelManager
 
         param1.PDAT_08 = null;
         param1.PDAT_0C = null;
-        param1.PTR_10 = null;
+        param1.PDAT_10 = null;
         param1.PDAT_14 = null;
         iVar3 = 0;
 

@@ -2907,7 +2907,7 @@ public class SceneManager : MonoBehaviour
             oVar1.DAT_01 = 10;
             oVar1.BDAT_0A = param3;
             oVar1.PTR_FUN_0C = param2;
-            oVar1.PTR_10 = param1;
+            oVar1.PDAT_10 = param1;
         }
     }
 

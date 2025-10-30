@@ -17,6 +17,21 @@ public struct UNK_PARTICLE_10
     public byte DAT_15; //0x15
 }
 
+public struct UNK_PARTICLE_10_2
+{
+    public byte DAT_00; //0x00
+    public byte DAT_01; //0x01
+    public byte DAT_02; //0x02
+    public Vector3Int DAT_04; //0x04
+    public byte DAT_0A; //0x0A
+    public Vector3Int DAT_0C; //0x0C
+    public byte DAT_12; //0x12
+    public byte DAT_13; //0x13
+    public byte DAT_14; //0x14
+    public byte DAT_15; //0x15
+    public byte DAT_16; //0x16
+}
+
 public class CriInteract : MonoBehaviour
 {
     public byte DAT_00;
@@ -40,7 +55,7 @@ public class CriInteract : MonoBehaviour
     public byte BDAT_0C;
     public Vector3Int VDAT_0C;
     public uint UDAT_0C;
-    public CriPlayer PDAT_0C;
+    public CriObject PDAT_0C;
     public Tmd2ScriptableObject TDAT_0C;
     public byte[] PTR_0C;
     public FUN_0C PTR_FUN_0C;
@@ -51,12 +66,13 @@ public class CriInteract : MonoBehaviour
     public byte DAT_0F;
     public byte[] ADAT_10;
     public int IDAT_10;
-    public CriObject PTR_10;
+    public CriObject PDAT_10;
     public Vector3Int VDAT_10;
     public TodScriptableObject[] TDAT_10;
     public short SDAT_10;
     public ushort UDAT_10;
     public UNK_PARTICLE_10[] DAT_10_2;
+    public UNK_PARTICLE_10_2[] DAT_10_3;
     public byte DAT_10;
     public byte DAT_11;
     public short SDAT_12;
@@ -64,11 +80,11 @@ public class CriInteract : MonoBehaviour
     public sbyte DAT_13;
     public CriObject PDAT_14;
     public Vector4Int[] VDAT_14;
+    public int IDAT_14;
     public sbyte DAT_14;
     public short SDAT_14;
     public sbyte DAT_15;
-    public ushort DAT_16;
-    public short SDAT_16;
+    public short DAT_16;
     public byte BDAT_16;
     public sbyte DAT_17;
     public CriBone PTR_18;
@@ -200,11 +216,12 @@ public class CriInteract : MonoBehaviour
         DAT_0F = 0;
         ADAT_10 = null;
         IDAT_10 = 0;
-        PTR_10 = null;
+        PDAT_10 = null;
         VDAT_10 = Vector3Int.zero;
         TDAT_10 = null;
         SDAT_10 = 0;
         DAT_10_2 = null;
+        DAT_10_3 = null;
         DAT_10 = 0;
         DAT_11 = 0;
         SDAT_12 = 0;
@@ -213,10 +230,10 @@ public class CriInteract : MonoBehaviour
         DAT_14 = 0;
         PDAT_14 = null;
         VDAT_14 = null;
+        IDAT_14 = 0;
         SDAT_14 = 0;
         DAT_15 = 0;
         DAT_16 = 0;
-        SDAT_16 = 0;
         BDAT_16 = 0;
         DAT_17 = 0;
         PTR_18 = null;
@@ -809,7 +826,7 @@ public class CriInteract : MonoBehaviour
             LevelManager.instance.DAT_C2598.y = LevelManager.instance.DAT_C2598.y + oVar4.vr.y & 0xfff;
             LevelManager.instance.DAT_C2598.z = LevelManager.instance.DAT_C2598.z + oVar4.vr.z & 0xfff;
             LevelManager.instance.DAT_C2594++;
-        } while (LevelManager.instance.DAT_C2594 <= DAT_16);
+        } while (LevelManager.instance.DAT_C2594 <= (ushort)DAT_16);
 
         oVar2.DAT_40 = null;
         oVar2.vr.x = LevelManager.instance.DAT_C2598.x + oVar2.vr.x & 0xfff;

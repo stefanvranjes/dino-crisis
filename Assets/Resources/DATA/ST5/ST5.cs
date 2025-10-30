@@ -786,7 +786,7 @@ public class ST5 : LevelManager
         if (uVar8 == 0)
             return; // trap(0x1c00)
 
-        param1.DAT_16 = (ushort)(uVar6 / uVar8);
+        param1.DAT_16 = (short)(uVar6 / uVar8);
         LAB_C98:
         uVar2 = oVar4.DAT_140;
         oVar4.DAT_3C = 4;
@@ -3317,7 +3317,6 @@ public class ST5 : LevelManager
     private void FUN_930C(CriInteract param1)
     {
         byte bVar1;
-        CriStatic oVar2;
 
         bVar1 = param1.BDAT_08;
 
@@ -3948,7 +3947,7 @@ public class ST5 : LevelManager
         byte bVar3;
 
         DAT_12E14.screen.x += param1.SDAT_14;
-        DAT_12E14.screen.y += param1.SDAT_16;
+        DAT_12E14.screen.y += param1.DAT_16;
         DAT_12E18.screen.x += param1.SDAT_18;
         DAT_12E18.screen.y += param1.SDAT_1A;
         bVar1 = param1.BDAT_09;
@@ -4296,7 +4295,7 @@ public class ST5 : LevelManager
         param1.DAT_19 = 0;
         param1.DAT_18 = 0;
         param1.DAT_17 = 0;
-        param1.DAT_16 = 0;
+        param1.BDAT_16 = 0;
         param1.DAT_1A = 0x20;
         GameManager.instance.DAT_38 = 0x73;
 
@@ -4984,21 +4983,21 @@ public class ST5 : LevelManager
         {
             if (param1.DAT_17 == 0)
             {
-                bVar1 = (byte)(param1.DAT_16 + 6);
+                bVar1 = (byte)(param1.BDAT_16 + 6);
                 param1.BDAT_16 = bVar1;
 
                 if (bVar1 < 129) goto LAB_102B4;
 
-                param1.DAT_16 = 0x80;
+                param1.BDAT_16 = 0x80;
             }
             else
             {
                 bVar1 = (byte)(param1.DAT_16 - 6);
-                param1.DAT_16 = bVar1;
+                param1.BDAT_16 = bVar1;
 
                 if (31 < bVar1) goto LAB_102B4;
 
-                param1.DAT_16 = 0x20;
+                param1.BDAT_16 = 0x20;
             }
 
             param1.DAT_17 ^= 1;

@@ -1299,6 +1299,21 @@ public class CriSkinned : CriObject
         return bVar2;
     }
 
+    public void FUN_65EDC()
+    {
+        int iVar1;
+        CriBone oVar2;
+
+        iVar1 = boneCount;
+        oVar2 = skeleton;
+
+        while (--iVar1 != -1)
+        {
+            oVar2.flags &= 0xfffffffd;
+            oVar2 = (CriBone)oVar2.next;
+        }
+    }
+
     public int FUN_6615C()
     {
         short sVar1;

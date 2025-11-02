@@ -103,6 +103,7 @@ public class CriSkinned : CriObject
     public byte DAT_18F; //0x18F
     public int DAT_190; //0x190
     public Vector3Int[] PTR_190; //0x190
+    public CriObject PDAT_190; //0x190
     public short DAT_194; //0x194
     public short DAT_196; //0x196
     public sbyte DAT_198; //0x198
@@ -261,6 +262,7 @@ public class CriSkinned : CriObject
         DAT_18F = 0;
         DAT_190 = 0;
         PTR_190 = null;
+        PDAT_190 = null;
         DAT_194 = 0;
         DAT_196 = 0;
         DAT_198 = 0;
@@ -509,6 +511,52 @@ public class CriSkinned : CriObject
             {
                 mesh.SetVertexBufferData(vertexBuffer, 0, 0, cSkin.TRI_COUNT * 3 + cSkin.QUAD_COUNT * 6);
                 mesh.RecalculateBounds();
+            }
+        }
+    }
+
+    public Vector3Int GET_OFFSET_190()
+    {
+        if (PTR_190 != null)
+        {
+            return PTR_190[DAT_190];
+        }
+        else if (PDAT_190 != null)
+        {
+            if (DAT_190 == 0)
+            {
+                return PDAT_190.screen;
+            }
+            else if (DAT_190 == 1)
+            {
+                return PDAT_190.vr;
+            }
+        }
+
+        return Vector3Int.zero;
+    }
+
+    public void SET_OFFSET_190(int i, short value)
+    {
+        if (PTR_190 != null)
+        {
+            if (i == 0) PTR_190[DAT_190].x = value;
+            else if (i == 1) PTR_190[DAT_190].y = value;
+            else if (i == 2) PTR_190[DAT_190].z = value;
+        }
+        else if (PDAT_190 != null)
+        {
+            if (DAT_190 == 0)
+            {
+                if (i == 0) PDAT_190.screen.x = value;
+                else if (i == 1) PDAT_190.screen.y = value;
+                else if (i == 2) PDAT_190.screen.z = value;
+            }
+            else if (DAT_190 == 1)
+            {
+                if (i == 0) PDAT_190.vr.x = value;
+                else if (i == 1) PDAT_190.vr.y = value;
+                else if (i == 2) PDAT_190.vr.z = value;
             }
         }
     }

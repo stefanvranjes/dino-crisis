@@ -9110,10 +9110,10 @@ public class CriPlayer : CriSkinned
         DAT_40 = new Vector3Int(0, 0, 0);
         FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 8), 1, 5, DAT_21C + 8);
 
-        if (PTR_190[DAT_190].y == 0)
+        if (GET_OFFSET_190().y == 0)
             DAT_1F4 = 90;
         else
-            DAT_1F4 = (byte)PTR_190[DAT_190].y;
+            DAT_1F4 = (byte)GET_OFFSET_190().y;
 
         DAT_3E++;
     }
@@ -9122,7 +9122,7 @@ public class CriPlayer : CriSkinned
     {
         short sVar1;
 
-        sVar1 = Utilities.FUN_51C8C(screen, PTR_190[DAT_190], vr.y, DAT_1F4);
+        sVar1 = Utilities.FUN_51C8C(screen, GET_OFFSET_190(), vr.y, DAT_1F4);
 
         if (sVar1 == 0)
         {
@@ -9141,9 +9141,9 @@ public class CriPlayer : CriSkinned
         short sVar2;
         uint uVar3;
 
-        sVar2 = Utilities.FUN_51C8C(screen, PTR_190[DAT_190], vr.y, 0x20);
+        sVar2 = Utilities.FUN_51C8C(screen, GET_OFFSET_190(), vr.y, 0x20);
         vr.y += sVar2;
-        uVar3 = Utilities.FUN_63160(screen, PTR_190[DAT_190]);
+        uVar3 = Utilities.FUN_63160(screen, GET_OFFSET_190());
 
         if (uVar3 < 250000 && DAT_1D0 < uVar3)
         {
@@ -9153,7 +9153,7 @@ public class CriPlayer : CriSkinned
             if (bVar1 == 0)
             {
                 DAT_40 = new Vector3Int(0, 0, 0);
-                screen = PTR_190[DAT_190];
+                screen = GET_OFFSET_190();
                 InventoryManager.FUN_4A7E8(3, DAT_176, true);
                 DAT_3E++;
             }
@@ -9195,7 +9195,7 @@ public class CriPlayer : CriSkinned
     {
         short sVar1;
 
-        sVar1 = Utilities.FUN_51C8C(screen, PTR_190[DAT_190], vr.y, 90);
+        sVar1 = Utilities.FUN_51C8C(screen, GET_OFFSET_190(), vr.y, 90);
 
         if (sVar1 == 0)
         {
@@ -9216,9 +9216,9 @@ public class CriPlayer : CriSkinned
         short sVar2;
         uint uVar3;
 
-        sVar2 = Utilities.FUN_51C8C(screen, PTR_190[DAT_190], vr.y, 90);
+        sVar2 = Utilities.FUN_51C8C(screen, GET_OFFSET_190(), vr.y, 90);
         vr.y += sVar2;
-        uVar3 = Utilities.FUN_63160(screen, PTR_190[DAT_190]);
+        uVar3 = Utilities.FUN_63160(screen, GET_OFFSET_190());
 
         if (uVar3 < 490000 && DAT_1D0 < uVar3)
         {
@@ -9228,7 +9228,7 @@ public class CriPlayer : CriSkinned
             if (bVar1 == 0)
             {
                 DAT_40 = new Vector3Int(0, 0, 0);
-                screen = PTR_190[DAT_190];
+                screen = GET_OFFSET_190();
                 InventoryManager.FUN_4A7E8(3, DAT_176, true);
                 DAT_3E++;
             }
@@ -9262,7 +9262,7 @@ public class CriPlayer : CriSkinned
     {
         short sVar1;
 
-        sVar1 = Utilities.FUN_51C8C(PTR_190[DAT_190], screen, vr.y, 90);
+        sVar1 = Utilities.FUN_51C8C(GET_OFFSET_190(), screen, vr.y, 90);
 
         if (sVar1 == 0)
         {
@@ -9281,9 +9281,9 @@ public class CriPlayer : CriSkinned
         short sVar2;
         uint uVar3;
 
-        sVar2 = Utilities.FUN_51C8C(PTR_190[DAT_190], screen, vr.y, 0x20);
+        sVar2 = Utilities.FUN_51C8C(GET_OFFSET_190(), screen, vr.y, 0x20);
         vr.y += sVar2;
-        uVar3 = Utilities.FUN_63160(screen, PTR_190[DAT_190]);
+        uVar3 = Utilities.FUN_63160(screen, GET_OFFSET_190());
 
         if (uVar3 < 250000 && DAT_1D0 < uVar3)
         {
@@ -9293,7 +9293,7 @@ public class CriPlayer : CriSkinned
             if (bVar1 == 0)
             {
                 DAT_40 = new Vector3Int(0, 0, 0);
-                screen = PTR_190[DAT_190];
+                screen = GET_OFFSET_190();
                 InventoryManager.FUN_4A7E8(3, DAT_176, true);
                 DAT_3E++;
             }
@@ -9320,7 +9320,7 @@ public class CriPlayer : CriSkinned
         oVar1 = (TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 8);
         DAT_1C0 &= 0xfffffffe;
         FUN_609C8(oVar1, 1, 5, DAT_21C + 8);
-        PTR_190[DAT_190].y = vr.y + PTR_190[DAT_190].y & 0xfff;
+        SET_OFFSET_190(1, (short)(vr.y + GET_OFFSET_190().y & 0xfff));
         DAT_3E++;
     }
 
@@ -9328,7 +9328,7 @@ public class CriPlayer : CriSkinned
     {
         short sVar1;
 
-        sVar1 = Utilities.FUN_51D40(PTR_190[DAT_190].y, vr.y, 90);
+        sVar1 = Utilities.FUN_51D40(GET_OFFSET_190().y, vr.y, 90);
 
         if (sVar1 == 0)
         {
@@ -9352,10 +9352,10 @@ public class CriPlayer : CriSkinned
         DAT_40 = new Vector3Int(0, 0, 0);
         FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 8), 1, 5, DAT_21C + 8);
 
-        if (PTR_190[DAT_190].y == 0)
+        if (GET_OFFSET_190().y == 0)
             DAT_1F4 = 90;
         else
-            DAT_1F4 = (byte)PTR_190[DAT_190].y;
+            DAT_1F4 = (byte)GET_OFFSET_190().y;
 
         DAT_3E++;
     }
@@ -9364,7 +9364,7 @@ public class CriPlayer : CriSkinned
     {
         short sVar1;
 
-        sVar1 = Utilities.FUN_51C8C(screen, PTR_190[DAT_190], vr.y, DAT_1F4);
+        sVar1 = Utilities.FUN_51C8C(screen, GET_OFFSET_190(), vr.y, DAT_1F4);
 
         if (sVar1 == 0)
         {
@@ -9395,7 +9395,7 @@ public class CriPlayer : CriSkinned
     {
         short sVar1;
 
-        sVar1 = Utilities.FUN_51C8C(screen, PTR_190[DAT_190], vr.y, 90);
+        sVar1 = Utilities.FUN_51C8C(screen, GET_OFFSET_190(), vr.y, 90);
 
         if (sVar1 == 0)
         {
@@ -9510,9 +9510,9 @@ public class CriPlayer : CriSkinned
         short sVar2;
         uint uVar3;
 
-        sVar2 = Utilities.FUN_51C8C(PTR_190[DAT_190], screen, vr.y, 0x20);
+        sVar2 = Utilities.FUN_51C8C(GET_OFFSET_190(), screen, vr.y, 0x20);
         vr.y += sVar2;
-        uVar3 = Utilities.FUN_63160(screen, PTR_190[DAT_190]);
+        uVar3 = Utilities.FUN_63160(screen, GET_OFFSET_190());
 
         if (uVar3 < 250000 && DAT_1D0 < uVar3)
         {
@@ -9522,7 +9522,7 @@ public class CriPlayer : CriSkinned
             if (bVar1 == 0)
             {
                 DAT_40 = new Vector3Int(0, 0, 0);
-                screen = PTR_190[DAT_190];
+                screen = GET_OFFSET_190();
                 InventoryManager.FUN_4A7E8(3, DAT_176, true);
                 DAT_3E++;
             }
@@ -9545,9 +9545,9 @@ public class CriPlayer : CriSkinned
     private void FUN_54B68()
     {
         DAT_40.z = 0;
-        DAT_226 = (sbyte)PTR_190[DAT_190].y;
-        DAT_1F4 = (byte)((uint)(ushort)PTR_190[DAT_190].y >> 8);
-        PTR_190[DAT_190].y = 0;
+        DAT_226 = (sbyte)GET_OFFSET_190().y;
+        DAT_1F4 = (byte)((uint)(ushort)GET_OFFSET_190().y >> 8);
+        SET_OFFSET_190(1, 0);
         DAT_1FB = -96;
         FUN_50FE4((TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 0x58), 
             (TodScriptableObject)Utilities.GetSharedObject(DAT_21C + 0x5c), 
@@ -9560,7 +9560,7 @@ public class CriPlayer : CriSkinned
         bool bVar1;
         short sVar2;
 
-        sVar2 = Utilities.FUN_51C8C(screen, PTR_190[DAT_190], vr.y, DAT_1F4);
+        sVar2 = Utilities.FUN_51C8C(screen, GET_OFFSET_190(), vr.y, DAT_1F4);
 
         if (sVar2 != 0)
             vr.y += sVar2;
@@ -9594,10 +9594,10 @@ public class CriPlayer : CriSkinned
         DAT_40 = new Vector3Int(0, 0, 0);
         FUN_609C8((TodScriptableObject)Utilities.GetSharedObject(DAT_220 + 4), 1, 5, DAT_220 + 4);
 
-        if (PTR_190[DAT_190].y == 0)
+        if (GET_OFFSET_190().y == 0)
             DAT_1F4 = 90;
         else
-            DAT_1F4 = (byte)PTR_190[DAT_190].y;
+            DAT_1F4 = (byte)GET_OFFSET_190().y;
 
         DAT_3E++;
     }
@@ -9607,7 +9607,7 @@ public class CriPlayer : CriSkinned
         short sVar1;
         short sVar2;
 
-        sVar2 = Utilities.FUN_51C8C(screen, PTR_190[DAT_190], vr.y, DAT_1F4);
+        sVar2 = Utilities.FUN_51C8C(screen, GET_OFFSET_190(), vr.y, DAT_1F4);
 
         if (sVar2 == 0)
         {
@@ -20168,7 +20168,7 @@ public class CriPlayer : CriSkinned
         FUN_609C8(5, 1, 10);
         DAT_40 = new Vector3Int(0, 0, 0);
         V2_1F4 = new Vector2Int(screen.x, screen.z);
-        UDAT_210 = Utilities.FUN_631AC(screen, PTR_190[DAT_190]);
+        UDAT_210 = Utilities.FUN_631AC(screen, GET_OFFSET_190());
         DAT_3E++;
     }
 
@@ -20200,7 +20200,7 @@ public class CriPlayer : CriSkinned
 
             DAT_190++;
             V2_1F4 = new Vector2Int(screen.x, screen.z);
-            UDAT_210 = Utilities.FUN_631AC(screen, PTR_190[DAT_190]);
+            UDAT_210 = Utilities.FUN_631AC(screen, GET_OFFSET_190());
         }
 
         FUN_60AB4();
@@ -20215,7 +20215,7 @@ public class CriPlayer : CriSkinned
                 GameManager.instance.FUN_5C94C(this, 49);
         }
 
-        sVar2 = FUN_64804(PTR_190[DAT_190]);
+        sVar2 = FUN_64804(GET_OFFSET_190());
 
         if (DAT_60 - 32U < 19 || DAT_60 - 80U < 19)
         {
@@ -20224,7 +20224,7 @@ public class CriPlayer : CriSkinned
             if ((ushort)(sVar2 - 0x401) < 0x7ffU)
                 uVar6 = 80;
 
-            uVar3 = (ushort)Utilities.FUN_615EC(screen, PTR_190[DAT_190]);
+            uVar3 = (ushort)Utilities.FUN_615EC(screen, GET_OFFSET_190());
             sVar2 = (short)Utilities.FUN_64838(vr.y, uVar6, uVar3);
             DAT_40.z = 45;
             vr.y = vr.y + sVar2 & 0xfff;
@@ -20243,7 +20243,7 @@ public class CriPlayer : CriSkinned
         FUN_609C8(23, 1, 10);
         DAT_40 = new Vector3Int(0, 0, 170);
         V2_1F4 = new Vector2Int(screen.x, screen.z);
-        UDAT_210 = Utilities.FUN_631AC(screen, PTR_190[DAT_190]);
+        UDAT_210 = Utilities.FUN_631AC(screen, GET_OFFSET_190());
         DAT_3E++;
     }
 
@@ -20274,7 +20274,7 @@ public class CriPlayer : CriSkinned
 
             DAT_190++;
             V2_1F4 = new Vector2Int(screen.x, screen.z);
-            UDAT_210 = Utilities.FUN_631AC(screen, PTR_190[DAT_190]);
+            UDAT_210 = Utilities.FUN_631AC(screen, GET_OFFSET_190());
         }
 
         FUN_60AB4();
@@ -20289,7 +20289,7 @@ public class CriPlayer : CriSkinned
                 GameManager.instance.FUN_5C94C(this, 49);
         }
 
-        uVar2 = (ushort)Utilities.FUN_615EC(screen, PTR_190[DAT_190]);
+        uVar2 = (ushort)Utilities.FUN_615EC(screen, GET_OFFSET_190());
         sVar3 = (short)Utilities.FUN_64838(vr.y, 60, uVar2);
         vr.y = vr.y + sVar3 & 0xfff;
     }
@@ -20304,7 +20304,7 @@ public class CriPlayer : CriSkinned
         FUN_609C8(10, 1, 10);
         DAT_40 = new Vector3Int(0, 0, 0);
         V2_1F4 = new Vector2Int(screen.x, screen.z);
-        UDAT_210 = Utilities.FUN_631AC(screen, PTR_190[DAT_190]);
+        UDAT_210 = Utilities.FUN_631AC(screen, GET_OFFSET_190());
         DAT_3E++;
     }
 
@@ -20336,7 +20336,7 @@ public class CriPlayer : CriSkinned
             DAT_190++;
             local_18 = new Vector3Int(screen.x, 0, screen.z);
             V2_1F4 = new Vector2Int(local_18.x, local_18.z);
-            UDAT_210 = Utilities.FUN_631AC(screen, PTR_190[DAT_190]);
+            UDAT_210 = Utilities.FUN_631AC(screen, GET_OFFSET_190());
         }
 
         FUN_60AB4();
@@ -20353,7 +20353,7 @@ public class CriPlayer : CriSkinned
             if ((ushort)(sVar2 - 0x401) < 0x7ffU)
                 uVar5 = 80;
 
-            uVar3 = (ushort)Utilities.FUN_615EC(screen, PTR_190[DAT_190]);
+            uVar3 = (ushort)Utilities.FUN_615EC(screen, GET_OFFSET_190());
             sVar2 = (short)Utilities.FUN_64838(vr.y, uVar5, uVar3);
             DAT_40.z = 45;
             vr.y = vr.y + sVar2 & 0xfff;
@@ -20391,7 +20391,7 @@ public class CriPlayer : CriSkinned
             if (DAT_60 == 26)
                 GameManager.instance.FUN_5C94C(this, 62);
 
-            uVar3 = (ushort)Utilities.FUN_615EC(screen, PTR_190[DAT_190]);
+            uVar3 = (ushort)Utilities.FUN_615EC(screen, GET_OFFSET_190());
             sVar2 = (short)Utilities.FUN_64838(vr.y, 40, uVar3);
         }
         else
@@ -20400,13 +20400,13 @@ public class CriPlayer : CriSkinned
             {
                 FUN_609C8(14, 0, 0);
                 DAT_40 = new Vector3Int(0, 0, 0);
-                uVar4 = Utilities.FUN_631AC(screen, PTR_190[DAT_190]);
+                uVar4 = Utilities.FUN_631AC(screen, GET_OFFSET_190());
                 UDAT_1E4 = (ushort)(uVar4 / 22);
 
                 if ((uVar4 / 22 & 0xffff) < 50)
                     UDAT_1E4 = 50;
 
-                iVar5 = ((PTR_190[DAT_190].y - screen.y) / 425) * -0x10000;
+                iVar5 = ((GET_OFFSET_190().y - screen.y) / 425) * -0x10000;
                 sVar2 = 100;
 
                 if (1 < iVar5 >> 0x10)
@@ -20486,7 +20486,7 @@ public class CriPlayer : CriSkinned
                 UDAT_1E4 = (ushort)((UDAT_20C + 0x800) / 40);
                 DAT_40 = new Vector3Int(0, 0, 0);
                 oVar9.DAT_1CC = (byte)UDAT_1E4;
-                iVar5 = ((screen.y - PTR_190[DAT_190].y) / 425) * -0x10000;
+                iVar5 = ((screen.y - GET_OFFSET_190().y) / 425) * -0x10000;
                 sVar3 = 100;
 
                 if (1 < iVar5 >> 0x10)
@@ -20760,7 +20760,7 @@ public class CriPlayer : CriSkinned
     {
         short sVar1;
 
-        sVar1 = FUN_64804(PTR_190[DAT_190]);
+        sVar1 = FUN_64804(GET_OFFSET_190());
 
         if ((ushort)(sVar1 - 0x600) < 0x401)
         {
@@ -20787,7 +20787,7 @@ public class CriPlayer : CriSkinned
         local_10 = Utilities.ApplyMatrixSV(ref cTransform.rotation, ref local_10);
         screen.x -= local_10.x;
         screen.z -= local_10.z;
-        sVar2 = FUN_64804(PTR_190[DAT_190]);
+        sVar2 = FUN_64804(GET_OFFSET_190());
         iVar4 = sVar2 - 0x800;
         DAT_1EC = sVar2;
 
@@ -20842,7 +20842,7 @@ public class CriPlayer : CriSkinned
 
         FUN_609C8(13, 1, 10);
         DAT_40 = new Vector3Int(0, 0, 0);
-        sVar1 = FUN_64804(PTR_190[DAT_190]);
+        sVar1 = FUN_64804(GET_OFFSET_190());
 
         if ((sVar1 & 0x800) == 0)
             sVar2 = (short)(sVar1 / 30);
@@ -20894,7 +20894,7 @@ public class CriPlayer : CriSkinned
         FUN_609C8(6, 1, 10);
         DAT_40 = new Vector3Int(0, 0, 100);
         V2_1F4 = new Vector2Int(screen.x, screen.z);
-        UDAT_210 = Utilities.FUN_631AC(screen, PTR_190[DAT_190]);
+        UDAT_210 = Utilities.FUN_631AC(screen, GET_OFFSET_190());
         DAT_3E++;
     }
 
@@ -20925,7 +20925,7 @@ public class CriPlayer : CriSkinned
             local_18 = new Vector3Int(screen.x, 0, screen.z);
             DAT_190++;
             V2_1F4 = new Vector2Int(local_18.x, local_18.z);
-            UDAT_210 = Utilities.FUN_631AC(screen, PTR_190[DAT_190]);
+            UDAT_210 = Utilities.FUN_631AC(screen, GET_OFFSET_190());
         }
 
         FUN_60AB4();
@@ -20937,7 +20937,7 @@ public class CriPlayer : CriSkinned
             GameManager.instance.FUN_5C94C(this, 49);
 
         DAT_40.z = Utilities.DAT_9B5A8[DAT_60];
-        uVar2 = (ushort)Utilities.FUN_615EC(screen, PTR_190[DAT_190]);
+        uVar2 = (ushort)Utilities.FUN_615EC(screen, GET_OFFSET_190());
         sVar3 = (short)Utilities.FUN_64838(vr.y, 60, uVar2);
         vr.y = vr.y + sVar3 & 0xfff;
     }

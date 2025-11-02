@@ -55,6 +55,7 @@ public class CriCamera : CriObject
     public FUN_8C[] PTR_FUN_168A4; //0x168A4 (ST9)
     public FUN_8C[] PTR_FUN_16ACC; //0x16ACC (ST6)
     public FUN_8C[] PTR_FUN_16AD4; //0x16AD4 (ST6)
+    public FUN_8C[] PTR_FUN_13974; //0x13974 (ST4)
     public static CameraMotion DAT_99498;
 
     protected override void Awake()
@@ -134,6 +135,11 @@ public class CriCamera : CriObject
         {
             FUN_C674,
             FUN_C79C
+        };
+        PTR_FUN_13974 = new FUN_8C[2]
+        {
+            FUN_E880,
+            FUN_E974
         };
     }
 
@@ -1577,5 +1583,91 @@ public class CriCamera : CriObject
         local_10 = new Vector3Int(ST6.instance.DAT_1721C[iVar1 * 3], ST6.instance.DAT_1721C[iVar1 * 3 + 1],
                                   ST6.instance.DAT_1721C[iVar1 * 3 + 2]);
         SceneManager.instance.FUN_269C8(local_18, local_10);
+    }
+
+    //FUN_E84C (ST4)
+    public void FUN_E84C()
+    {
+        DAT_8B = 0;
+        DAT_8A = 0;
+        DAT_92 = 0;
+        DAT_52 = 0;
+        DAT_50 = 0;
+        DAT_3E = 0;
+        DAT_36 = 0;
+        DAT_90 = 0;
+        DAT_56 = 0;
+        DAT_54 = 0;
+        SDAT_2E = 0;
+        DAT_26 = 0;
+    }
+
+    //FUN_E880 (ST4)
+    private void FUN_E880()
+    {
+        CriObject oVar1;
+        Vector3Int local_50;
+        Vector3Int local_48;
+        Vector3Int local_40;
+        Vector3Int local_38;
+        Matrix3x3 auStack_30;
+
+        oVar1 = DAT_64;
+        local_50 = new Vector3Int(8000, 0, 0);
+        local_48 = Vector3Int.zero;
+        auStack_30 = new Matrix3x3();
+        Utilities.RotMatrix(ref local_48, ref auStack_30);
+        local_50 = Utilities.ApplyMatrixSV(ref auStack_30, ref local_50);
+        local_40 = new Vector3Int();
+        local_40.x = oVar1.screen.x + local_50.x;
+        local_40.y = oVar1.screen.y - 4000;
+        local_40.z = oVar1.screen.z + local_50.z;
+        local_38 = new Vector3Int();
+        local_38.x = oVar1.screen.x;
+        local_38.y = oVar1.screen.y - 1000;
+        local_38.z = oVar1.screen.z;
+        SceneManager.instance.FUN_264C4(0, (short)local_38.x, (short)local_38.y, (short)local_38.z);
+        SceneManager.instance.FUN_26504(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
+        SceneManager.instance.FUN_269C8(local_38, local_40);
+    }
+
+    //FUN_E974 (ST4)
+    private void FUN_E974()
+    {
+        CriObject oVar1;
+        Vector3Int local_50;
+        Vector3Int local_48;
+        Vector3Int local_40;
+        Vector3Int local_38;
+        Matrix3x3 auStack_30;
+
+        oVar1 = DAT_64;
+        local_50 = new Vector3Int(4000, 0, 0);
+        local_48 = new Vector3Int(0, SceneManager.instance.cCamera.DAT_69 << 9, 0);
+        auStack_30 = new Matrix3x3();
+        Utilities.RotMatrix(ref local_48, ref auStack_30);
+        local_50 = Utilities.ApplyMatrixSV(ref auStack_30, ref local_50);
+        local_40 = new Vector3Int();
+        local_40.x = oVar1.screen.x + local_50.x;
+        local_40.y = oVar1.screen.y - 3000;
+        local_40.z = oVar1.screen.z + local_50.z;
+        local_38 = new Vector3Int();
+        local_38.x = oVar1.screen.x;
+        local_38.y = oVar1.screen.y - 1000;
+        local_38.z = oVar1.screen.z;
+        SceneManager.instance.FUN_264C4(0, (short)local_38.x, (short)local_38.y, (short)local_38.z);
+        SceneManager.instance.FUN_26504(0, (short)local_40.x, (short)local_40.y, (short)local_40.z);
+        SceneManager.instance.FUN_269C8(local_38, local_40);
+    }
+
+    //FUN_EA78 (ST4)
+    public void FUN_EA78()
+    {
+        CriObject oVar1;
+        Vector3Int local_10;
+
+        oVar1 = DAT_64;
+        local_10 = new Vector3Int(oVar1.screen.x, oVar1.screen.y - 1000, oVar1.screen.z);
+        SceneManager.instance.FUN_269C8(local_10, DAT_48);
     }
 }

@@ -1992,6 +1992,7 @@ public class CriScene : MonoBehaviour
         oVar1 = SceneManager.instance.skinnedObjects[DAT_0B];
         oVar1.PTR_190 = mVar2.DAT_04;
         oVar1.DAT_190 = 0;
+        oVar1.PDAT_190 = null;
         oVar1.DAT_18F = 1;
         oVar1.DAT_176 = mVar2.DAT_03;
         uVar3 = (uint)mVar2.DAT_02 << 8 | 4;
@@ -2814,6 +2815,7 @@ public class CriScene : MonoBehaviour
         oVar2.DAT_3F = (byte)(uVar1 >> 0x18);
         oVar2.PTR_190 = mVar3.DAT_04;
         oVar2.DAT_190 = 0;
+        oVar2.PDAT_190 = null;
         oVar2.DAT_176 = mVar3.DAT_02;
         oVar2.DAT_18F = mVar3.DAT_03;
         DAT_58[0]++;

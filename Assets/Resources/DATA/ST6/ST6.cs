@@ -3119,7 +3119,7 @@ public class ST6 : LevelManager
         param1.DAT_40 = new Vector3Int(0, 0, 0);
         param1.SDAT_1D4 = (short)param1.screen.x;
         param1.SDAT_1D6 = (short)param1.screen.z;
-        param1.UDAT_1E0 = (ushort)Utilities.FUN_631AC(param1.screen, param1.PTR_190[param1.DAT_190]);
+        param1.UDAT_1E0 = (ushort)Utilities.FUN_631AC(param1.screen, param1.GET_OFFSET_190());
         param1.DAT_3E++;
     }
 
@@ -3154,12 +3154,12 @@ public class ST6 : LevelManager
             param1.DAT_190 = iVar5;
             param1.SDAT_1D6 = (short)param1.screen.z;
             param1.SDAT_1D4 = (short)param1.screen.x;
-            uVar6 = Utilities.FUN_631AC(param1.screen, param1.PTR_190[param1.DAT_190]);
+            uVar6 = Utilities.FUN_631AC(param1.screen, param1.GET_OFFSET_190());
             param1.UDAT_1E0 = (ushort)uVar6;
         }
 
         param1.FUN_60AB4();
-        uVar2 = (ushort)Utilities.FUN_615EC(param1.screen, param1.PTR_190[param1.DAT_190]);
+        uVar2 = (ushort)Utilities.FUN_615EC(param1.screen, param1.GET_OFFSET_190());
         sVar3 = (short)Utilities.FUN_64838(param1.vr.y, 60, uVar2);
         param1.vr.y = param1.vr.y + sVar3 & 0xfff;
         param1.FUN_65890();

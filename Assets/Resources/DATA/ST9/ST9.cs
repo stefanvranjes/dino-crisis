@@ -4481,7 +4481,7 @@ public class ST9 : LevelManager
         param1.DAT_40 = new Vector3Int(0, 0, 0);
         param1.SDAT_1D4 = (short)param1.screen.x;
         param1.SDAT_1D6 = (short)param1.screen.z;
-        iVar1 = (int)Utilities.FUN_631AC(param1.screen, param1.PTR_190[param1.DAT_190]);
+        iVar1 = (int)Utilities.FUN_631AC(param1.screen, param1.GET_OFFSET_190());
         param1.UDAT_1E0 = (ushort)iVar1;
         param1.DAT_3E++;
     }
@@ -4522,7 +4522,7 @@ public class ST9 : LevelManager
         }
 
         param1.FUN_60AB4();
-        sVar2 = (short)Utilities.FUN_615EC(param1.screen, param1.PTR_190[param1.DAT_190]);
+        sVar2 = (short)Utilities.FUN_615EC(param1.screen, param1.GET_OFFSET_190());
         sVar3 = (short)Utilities.FUN_64838(param1.vr.y, 60, sVar2);
         param1.vr.y = param1.vr.y + sVar3 & 0xfff;
         param1.FUN_65890();

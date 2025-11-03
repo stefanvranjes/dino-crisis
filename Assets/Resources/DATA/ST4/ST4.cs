@@ -124,6 +124,8 @@ public class ST4 : LevelManager
     private delegate void FUN_139BC(CriPlayer p); //0x139BC (ST4)
     private delegate void FUN_139C4(CriPlayer p); //0x139C4 (ST4)
     private delegate void FUN_13A2C(CriPlayer p); //0x13A2C (ST4)
+    private delegate void FUN_13A34(CriPlayer p); //0x13A34 (ST4)
+    private delegate void FUN_13A40(CriPlayer p); //0x13A40 (ST4)
     private delegate void FUN_13B50(CriPlayer p); //0x13B50 (ST4)
     private delegate bool FUN_13B70(CriPlayer p); //0x13B70 (ST4)
     private delegate bool FUN_13B7C(CriPlayer p); //0x13B7C (ST4)
@@ -212,6 +214,8 @@ public class ST4 : LevelManager
     private FUN_139BC[] PTR_FUN_139BC; //0x139BC (ST4)
     private FUN_139C4[] PTR_FUN_139C4; //0x139C4 (ST4)
     private FUN_13A2C[] PTR_FUN_13A2C; //0x13A2C (ST4)
+    private FUN_13A34[] PTR_FUN_13A34; //0x13A34 (ST4)
+    private FUN_13A40[] PTR_FUN_13A40; //0x13A40 (ST4)
     private FUN_13B50[] PTR_FUN_13B50; //0x13B50 (ST4)
     private FUN_13B70[] PTR_FUN_13B70; //0x13B70 (ST4)
     private FUN_13B7C[] PTR_FUN_13B7C; //0x13B7C (ST4)
@@ -621,9 +625,23 @@ public class ST4 : LevelManager
                 FUN_A088,
                 FUN_A0D8
             };
-            PTR_FUN_13A2C = new FUN_13A2C[]
+            PTR_FUN_13A2C = new FUN_13A2C[2]
             {
-
+                FUN_AD40, 
+                FUN_AEB8
+            };
+            PTR_FUN_13A34 = new FUN_13A34[3]
+            {
+                FUN_ACA4,
+                FUN_AD00,
+                FUN_4028
+            };
+            PTR_FUN_13A40 = new FUN_13A40[4]
+            {
+                FUN_AD7C,
+                FUN_ADF0,
+                FUN_AE38,
+                FUN_AE88
             };
             PTR_FUN_13B50 = new FUN_13B50[4]
             {
@@ -4927,10 +4945,80 @@ public class ST4 : LevelManager
         instance.PTR_FUN_139C4[param1.DAT_3E](param1);
     }
 
+    //FUN_ACA4 (ST4)
+    private void FUN_ACA4(CriPlayer param1)
+    {
+        GameManager.instance.FUN_5C94C(param1, 4);
+        param1.FUN_609C8(25, 0, 0);
+        param1.DAT_40 = Vector3Int.zero;
+        param1.DAT_11E |= 0x81;
+        param1.DAT_3E++;
+    }
+
+    //FUN_AD00 (ST4)
+    private void FUN_AD00(CriPlayer param1)
+    {
+        bool bVar1;
+
+        bVar1 = param1.FUN_60AB4();
+
+        if (bVar1)
+            param1.DAT_3E++;
+    }
+
     //FUN_AD40 (ST4)
     private void FUN_AD40(CriPlayer param1)
     {
+        PTR_FUN_13A34[param1.DAT_3E](param1);
+    }
 
+    //FUN_AD7C (ST4)
+    private void FUN_AD7C(CriPlayer param1)
+    {
+        CriPlayer oVar1;
+
+        oVar1 = param1.DAT_1DC;
+        param1.FUN_609C8(27, 1, 0);
+        param1.DAT_40 = Vector3Int.zero;
+        oVar1.vr.y = param1.vr.y;
+        param1.FUN_65714();
+        param1.FUN_66460(true);
+        param1.DAT_3E++;
+    }
+
+    //FUN_ADF0 (ST4)
+    private void FUN_ADF0(CriPlayer param1)
+    {
+        bool bVar1;
+
+        bVar1 = param1.FUN_60AB4();
+
+        if (bVar1)
+            param1.DAT_3E++;
+
+        param1.FUN_65714();
+    }
+
+    //FUN_AE38 (ST4)
+    private void FUN_AE38(CriPlayer param1)
+    {
+        param1.FUN_609C8(28, 1, 0);
+        param1.FUN_65714();
+        param1.DAT_40 = Vector3Int.zero;
+        param1.DAT_3E++;
+    }
+
+    //FUN_AE88 (ST4)
+    private void FUN_AE88(CriPlayer param1)
+    {
+        param1.FUN_60AB4();
+        param1.FUN_65714();
+    }
+
+    //FUN_AEB8 (ST4)
+    private void FUN_AEB8(CriPlayer param1)
+    {
+        PTR_FUN_13A40[param1.DAT_3E](param1);
     }
 
     //FUN_AEF4 (ST4)
@@ -7761,7 +7849,7 @@ public class ST4 : LevelManager
     //FUN_AC68 (ST4)
     public static void FUN_AC68(CriPlayer param1)
     {
-        //todo
+        instance.PTR_FUN_13A2C[param1.DAT_3D](param1);
     }
 
     //FUN_10E38 (ST4)
@@ -7805,7 +7893,9 @@ public class ST4 : LevelManager
                 param1.FUN_6449C(0);
                 SceneManager.instance.FUN_80030(param1, true, 1);
                 SceneManager.instance.FUN_80A14(param1);
-                //...
+
+                if (param1.DAT_2F == 1 && param1.DAT_1DD < (byte)param1.PDAT_1C8.DAT_0B && param1.PDAT_1C8.BDAT_09 < 3)
+                    param1.DAT_1C0 |= 1;
             }
 
             if (param1.DAT_3C == 4)

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1680
     height: 967
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -699,7 +699,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 26080000
       m_LastClickedID: 0
       m_ExpandedIDs: 2cfbffff
       m_RenameOverlay:
@@ -868,7 +868,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/DATA/ST4
+    - Assets/Resources/DATA/ST2
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -876,15 +876,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/DATA/ST4
+  - Assets/Resources/DATA/ST2
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Stefan\Documents\GitHub\dino-crisis
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 4307}
-    m_SelectedIDs: 44b10000
-    m_LastClickedID: 45380
+    scrollPos: {x: 0, y: 4247}
+    m_SelectedIDs: 50b30000
+    m_LastClickedID: 45904
     m_ExpandedIDs: 000000009463000010b1000046b1000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0

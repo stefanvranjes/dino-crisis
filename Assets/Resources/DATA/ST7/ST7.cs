@@ -22,10 +22,7 @@ public struct UNK_12974
 public class ST7 : LevelManager
 {
     public static new ST7 instance;
-
-    private uint[] DAT_04 = new uint[] { 4, 5, 6, 7 };
-    private byte[] DAT_14 = new byte[] { 0, 3, 2, 1, 4, 4, 2, 1, 0, 3, 3, 2, 1, 0, 4, 1, 0, 3, 4, 2 };
-    private byte[] DAT_28 = new byte[] { 0, 1, 2, 3, 4, 0, 3, 2, 1, 4, 4, 2, 1, 0, 3, 3, 2, 1, 0, 4, 1, 0, 3, 4, 2 };
+    
     public uint[] DAT_11528 = new uint[151] { 0, 0xa, 0x11, 0x22, 0x31, 0x36, 0x80000046, 0x0, 0x16, 0x3a, 0x80000060, 0x0, 0x8, 0x17, 0x36, 0x8000005b, 0x0, 0xa, 0x18, 0x26, 0x2e, 0x36, 0x80000044, 0x0, 0x16, 0x80000046, 0x0, 0xc, 0x10, 0x1d, 0x21, 0x32, 0x3b, 0x80000044, 0x0, 0x6, 0x9, 0x22, 0x2e, 0x33, 0x80000047, 0x0, 0x1f, 0x24, 0x39, 0x8000004e, 0x0, 0x15, 0x1b, 0x20, 0x29, 0x36, 0x80000060, 0x0, 0x8, 0x16, 0x36, 0x80000047, 0x0, 0xe, 0x2f, 0x33, 0x80000040, 0x0, 0xd, 0x24, 0x32, 0x38, 0x80000045, 0x0, 0x7, 0xc, 0x12, 0x21, 0x27, 0x30, 0x39, 0x80000041, 0x0, 0x7, 0xf, 0x30, 0x80000042, 0x0, 0x12, 0x1a, 0x25, 0x39, 0x80000052, 0x0, 0x8, 0xb, 0x12, 0x18, 0x24, 0x30, 0x80000048, 0x0, 0x6, 0x17, 0x2b, 0x80000040, 0x0, 0x6, 0x2a, 0x31, 0x80000040, 0x0, 0xf, 0x24, 0x36, 0x8000003e, 0x0, 0x13, 0x2b, 0x8000004c, 0x0, 0x26, 0x37, 0x80000046, 0x0, 0x12, 0x26, 0x35, 0x8000004e, 0x0, 0x20, 0x27, 0x3b, 0x8000004a, 0x0, 0x10, 0x30, 0x3c, 0x80000050, 0x0, 0x8, 0x18, 0x29, 0x35, 0x3b, 0x80000047, 0x0, 0x12, 0x34, 0x80000044, 0x0, 0x1b, 0x25, 0x34, 0x80000043 };
     public TrgScriptableObject DAT_11784; //0x11784 (ST6)
     public byte[] DAT_11874 = new byte[48] { 29, 7, 10, 10, 27, 15, 13, 0, 32, 25, 20, 18, 33, 30, 27, 24, 34, 31, 0, 25, 35, 0, 0, 0, 22, 0, 28, 26, 23, 0, 29, 27, 16, 0, 30, 29, 17, 0, 31, 31, 24, 0, 0, 0, 25, 0, 0, 0 };
@@ -129,6 +126,10 @@ public class ST7 : LevelManager
     private short DAT_129F0; //0x129F0 (ST7)
     private short DAT_129F2; //0x129F2 (ST7)
     private byte DAT_129F4; //0x129F4 (ST7)
+    private short[] DAT_12A04 = new short[9]; //0x12A04 (ST7)
+    private short[] DAT_12A24 = new short[9]; //0x12A24 (ST7)
+    private byte[] DAT_12A44 = new byte[9]; //0x12A44 (ST7)
+    private byte[] DAT_12A54 = new byte[9]; //0x12A54 (ST7)
 
     protected override void Awake()
     {
@@ -291,9 +292,11 @@ public class ST7 : LevelManager
                 FUN_FA18, 
                 FUN_5FF98
             };
-            PTR_FUN_12850 = new FUN_12850[]
+            PTR_FUN_12850 = new FUN_12850[3]
             {
-
+                FUN_10880, 
+                FUN_109B0, 
+                FUN_10D58
             };
         }
     }
@@ -477,8 +480,8 @@ public class ST7 : LevelManager
         CriStatic oVar8;
         CriStatic[] local_78;
         CriStatic[] local_60;
-        uint[] local_48;
-        byte[] local_38;
+        uint[] local_48 = new uint[4] { 4, 5, 6, 7 };
+        byte[] local_38 = new byte[20] { 0, 3, 2, 1, 4, 4, 2, 1, 0, 3, 3, 2, 1, 0, 4, 1, 0, 3, 4, 2 };
 
         iVar5 = 0;
         oVar8 = null;
@@ -486,10 +489,6 @@ public class ST7 : LevelManager
         piVar2 = 0;
         local_78 = new CriStatic[5];
         local_60 = new CriStatic[5];
-        local_48 = new uint[4];
-        local_38 = new byte[20];
-        System.Array.Copy(DAT_04, local_48, 4);
-        System.Array.Copy(DAT_14, local_38, 20);
 
         do
         {
@@ -809,15 +808,13 @@ public class ST7 : LevelManager
         int iVar6;
         int piVar7;
         CriStatic[] local_48;
-        byte[] local_30;
+        byte[] local_30 = new byte[25] { 0, 1, 2, 3, 4, 0, 3, 2, 1, 4, 4, 2, 1, 0, 3, 3, 2, 1, 0, 4, 1, 0, 3, 4, 2 };
 
         iVar6 = 0;
         piVar7 = 0;
         iVar4 = 0;
         piVar3 = 0;
         local_48 = new CriStatic[5];
-        local_30 = new byte[25];
-        System.Array.Copy(DAT_28, local_30, 25);
         param1.DAT_56 = 0x68;
         param1.DAT_54 = 0x7f3e;
         param1.DAT_60 = 5;
@@ -5637,6 +5634,260 @@ public class ST7 : LevelManager
         return 5;
     }
 
+    //FUN_10880 (ST7)
+    private void FUN_10880(CriInteract param1)
+    {
+        byte bVar1;
+        ushort uVar3;
+        uint uVar4;
+
+        param1.DAT_07 = 0x20;
+        param1.DAT_03++;
+        //...
+        DAT_129EC = 30;
+        DAT_129EE = 30;
+        DAT_129F0 = 230;
+        DAT_129F2 = 230;
+        DAT_129F4 = 4;
+
+        if ((param1.DAT_02 & 1) == 0)
+            bVar1 = param1.DAT_05;
+        else
+            bVar1 = param1.DAT_04;
+
+        uVar3 = bVar1;
+        uVar4 = 0;
+
+        do
+        {
+            param1.SET_OFFSET_08_2((int)uVar4 + 2, (short)uVar3);
+
+            if ((uVar4 & 1) == 0)
+                param1.SET_OFFSET_08((int)uVar4 + 12, 0xff);
+            else
+                param1.SET_OFFSET_08((int)uVar4 + 12, 1);
+
+            bVar1 = (byte)GameManager.FUN_64650();
+            param1.SET_OFFSET_08((int)uVar4 + 16, (byte)(bVar1 & 0x7f));
+            uVar4++;
+        } while (uVar4 < DAT_129F4);
+    }
+
+    //FUN_109B0 (ST7)
+    private void FUN_109B0(CriInteract param1)
+    {
+        sbyte sVar1;
+        byte bVar1;
+        byte bVar2;
+        short sVar3;
+        ushort uVar3;
+        int iVar4;
+        int iVar6;
+        uint uVar8;
+        uint uVar9;
+        int iVar10;
+
+        uVar9 = 0;
+        iVar10 = 0;
+
+        do
+        {
+            uVar8 = 0;
+
+            do
+            {
+                iVar4 = (int)uVar8 + iVar10;
+                iVar6 = (int)uVar8 << 5;
+                uVar8++;
+                DAT_12A44[iVar4] = (byte)iVar6;
+                DAT_12A54[iVar4] = (byte)(uVar9 << 5);
+            } while (uVar8 < 3);
+
+            uVar9++;
+            iVar10 += 3;
+        } while (uVar9 < 3);
+
+        uVar9 = 0;
+        iVar10 = 0;
+
+        do
+        {
+            uVar8 = 0;
+            iVar4 = iVar10;
+
+            do
+            {
+                iVar4++;
+                iVar6 = (int)uVar8 << 5;
+                uVar8++;
+                DAT_12A04[iVar4] = (short)iVar6;
+                DAT_12A24[iVar4] = (short)(uVar9 << 5);
+            } while (uVar8 < 3);
+
+            uVar9++;
+            iVar10 += 3;
+        } while (uVar9 < 3);
+
+        uVar9 = 0;
+
+        if (DAT_129F4 != 0)
+        {
+            do
+            {
+                param1.SET_OFFSET_08((int)uVar9 + 16, (byte)(param1.GET_OFFSET_08((int)uVar9 + 16) + 1 & 0x7f));
+                uVar9++;
+            } while (uVar9 < DAT_129F4);
+        }
+
+        uVar9 = 0;
+
+        if (DAT_129F4 != 0)
+        {
+            do
+            {
+                if ((param1.DAT_02 & 1) == 0)
+                {
+                    sVar3 = (short)(param1.GET_OFFSET_08_2((int)uVar9 + 2) + param1.GET_OFFSET_08((int)uVar9 + 12));
+                    param1.SET_OFFSET_08_2((int)uVar9 + 2, sVar3);
+                    iVar6 = DAT_129EE;
+
+                    if (sVar3 < iVar6)
+                    {
+                        sVar1 = (sbyte)param1.GET_OFFSET_08((int)uVar9 + 12);
+                        param1.SET_OFFSET_08((int)uVar9 + 12, (byte)-sVar1);
+                        param1.SET_OFFSET_08_2((int)uVar9 + 2, (short)(sVar3 - sVar1));
+                        iVar6 = DAT_129EE;
+                    }
+
+                    if (iVar6 + DAT_129F2 <= param1.GET_OFFSET_08_2((int)uVar9 + 2))
+                    {
+                        sVar1 = (sbyte)-param1.GET_OFFSET_08((int)uVar9 + 12);
+                        param1.SET_OFFSET_08((int)uVar9 + 12, (byte)sVar1);
+                        sVar3 = param1.GET_OFFSET_08_2((int)uVar9 + 2);
+                        param1.SET_OFFSET_08_2((int)uVar9 + 2, (short)(sVar3 + sVar1));
+                    }
+                }
+                else
+                {
+                    sVar3 = (short)(param1.GET_OFFSET_08_2((int)uVar9 + 2) + param1.GET_OFFSET_08((int)uVar9 + 12));
+                    param1.SET_OFFSET_08_2((int)uVar9 + 2, sVar3);
+                    iVar6 = (int)FUN_10D88(param1, uVar9);
+
+                    if (iVar6 != 0)
+                    {
+                        sVar3 = (short)(param1.GET_OFFSET_08_2((int)uVar9 + 2) - param1.GET_OFFSET_08((int)uVar9 + 12));
+                        param1.SET_OFFSET_08_2((int)uVar9 + 2, sVar3);
+                        param1.SET_OFFSET_08((int)uVar9 + 12, (byte)-param1.GET_OFFSET_08((int)uVar9 + 12));
+                    }
+
+                    if (param1.GET_OFFSET_08_2((int)uVar9 + 2) < DAT_129EC)
+                    {
+                        if ((sbyte)param1.GET_OFFSET_08((int)uVar9 + 12) < 0)
+                            param1.SET_OFFSET_08((int)uVar9 + 12, (byte)-param1.GET_OFFSET_08((int)uVar9 + 12));
+
+                        sVar3 = (short)(param1.GET_OFFSET_08_2((int)uVar9 + 2) + param1.GET_OFFSET_08((int)uVar9 + 12));
+                        param1.SET_OFFSET_08_2((int)uVar9 + 2, sVar3);
+                    }
+
+                    if (DAT_129EC + DAT_129F0 - 0x40 <= param1.GET_OFFSET_08_2((int)uVar9 + 2))
+                    {
+                        if (-1 < (sbyte)param1.GET_OFFSET_08((int)uVar9 + 12))
+                            param1.SET_OFFSET_08((int)uVar9 + 12, (byte)-param1.GET_OFFSET_08((int)uVar9 + 12));
+
+                        bVar1 = param1.GET_OFFSET_08((int)uVar9 + 12);
+                        uVar3 = (ushort)param1.GET_OFFSET_08_2((int)uVar9 + 2);
+                        param1.SET_OFFSET_08_2((int)uVar9 + 2, (short)(uVar3 + bVar1));
+                    }
+                }
+
+                uVar9++;
+            } while (uVar9 < DAT_129F4);
+        }
+
+        bVar2 = param1.DAT_02;
+
+        if ((bVar2 & 2) == 0)
+            return;
+
+        uVar9 = ((uint)bVar2 >> 4) + 1;
+
+        if (2 < uVar9)
+        {
+            if ((bVar2 & 4) == 0)
+            {
+                bVar2 = (byte)(param1.DAT_07 + 1);
+                param1.DAT_07 = bVar2;
+                uVar9 = 0;
+
+                if (bVar2 < 0x20) goto LAB_10D1C;
+            }
+            else
+            {
+                sVar1 = (sbyte)(param1.DAT_07 - 1);
+                param1.DAT_07 = (byte)sVar1;
+                uVar9 = 0;
+
+                if (sVar1 != 0) goto LAB_10D1C;
+            }
+
+            param1.DAT_03++;
+            uVar9 = 0;
+        }
+
+        LAB_10D1C:
+        param1.DAT_02 = (byte)(param1.DAT_02 & 0xf | (byte)(uVar9 << 4));
+    }
+
+    //FUN_10D58 (ST7)
+    private void FUN_10D58(CriInteract param1)
+    {
+        param1.FUN_5FF98();
+        LevelManager.instance.FUN_60100(param1.PTR_08);
+    }
+
+    //FUN_10D88 (ST7)
+    private uint FUN_10D88(CriInteract param1, uint param2)
+    {
+        uint uVar1;
+        uint uVar2;
+        int iVar4;
+        int iVar5;
+
+        iVar5 = 0;
+        iVar4 = 0;
+
+        if ((param1.DAT_02 & 1) == 0)
+            iVar5 = param1.GET_OFFSET_08((int)param2 + 2) + 0x20;
+        else
+            iVar4 = param1.GET_OFFSET_08((int)param2 + 2) + 0x20;
+
+        uVar1 = 0;
+
+        if (DAT_129F4 != 0)
+        {
+            do
+            {
+                if (uVar1 != param2)
+                {
+                    if ((param1.DAT_02 & 1) == 0)
+                        uVar2 = (uint)(iVar5 - param1.GET_OFFSET_08_2((int)uVar1 + 2) + 0x20);
+                    else
+                        uVar2 = (uint)(iVar4 - param1.GET_OFFSET_08_2((int)uVar1 + 2) + 0x20);
+
+                    if (uVar2 < 0x21)
+                    {
+                        param1.SET_OFFSET_08((int)uVar1 + 12, (byte)-param1.GET_OFFSET_08((int)uVar1 + 12));
+                        return uVar2;
+                    }
+                }
+
+                uVar1++;
+            } while (uVar1 < DAT_129F4);
+        }
+
+        return 0;
+    }
+
     //FUN_27C (ST7)
     public static void FUN_27C(CriParticle param1)
     {
@@ -5863,6 +6114,6 @@ public class ST7 : LevelManager
     //FUN_10844 (ST7)
     public static void FUN_10844(CriInteract param1)
     {
-        //...
+        instance.PTR_FUN_12850[param1.DAT_03](param1);
     }
 }

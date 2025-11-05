@@ -299,6 +299,18 @@ public class CriInteract : MonoBehaviour
             case 15:
                 DAT_17 = (sbyte)value;
                 break;
+            case 16:
+                DAT_18 = value;
+                break;
+            case 17:
+                DAT_19 = value;
+                break;
+            case 18:
+                DAT_1A = value;
+                break;
+            case 19:
+                DAT_1B = value;
+                break;
         }
     }
 
@@ -323,6 +335,18 @@ public class CriInteract : MonoBehaviour
                 break;
             case 5:
                 SDAT_12 = value;
+                break;
+            case 6:
+                SDAT_14 = value;
+                break;
+            case 7:
+                DAT_16 = value;
+                break;
+            case 8:
+                SDAT_18 = value;
+                break;
+            case 9:
+                SDAT_1A = value;
                 break;
         }
     }
@@ -363,6 +387,14 @@ public class CriInteract : MonoBehaviour
                 return BDAT_16;
             case 15:
                 return (byte)DAT_17;
+            case 16:
+                return DAT_18;
+            case 17:
+                return DAT_19;
+            case 18:
+                return DAT_1A;
+            case 19:
+                return DAT_1B;
             default:
                 return 0;
         }
@@ -384,6 +416,14 @@ public class CriInteract : MonoBehaviour
                 return SDAT_10;
             case 5:
                 return SDAT_12;
+            case 6:
+                return SDAT_14;
+            case 7:
+                return DAT_16;
+            case 8:
+                return SDAT_18;
+            case 9:
+                return SDAT_1A;
             default:
                 return 0;
         }

@@ -26,8 +26,7 @@ struct UNK_123CC
 public class ST3 : LevelManager
 {
     public static new ST3 instance;
-
-    private byte[] DAT_28 = new byte[] { 0, 1, 2, 3, 4, 0, 3, 2, 1, 4, 4, 2, 1, 0, 3, 3, 2, 1, 0, 4, 1, 0, 3, 4 };
+    
     public FUN_B58BC[] DAT_11B40 = new FUN_B58BC[22] { FUN_44EA8, FUN_45224, FUN_45350, FUN_45480, FUN_45758, FUN_45B08,
                                                        null, FUN_46A1C, null, null, null, FUN_45D38, FUN_45E70, FUN_464F8,
                                                        FUN_3A4, FUN_CF0, FUN_14E4, FUN_1D80, FUN_1E88, FUN_2308, FUN_203C,
@@ -797,11 +796,10 @@ public class ST3 : LevelManager
         int iVar8;
         int piVar9;
         CriStatic[] local_48 = new CriStatic[5];
-        byte[] local_34 = new byte[24];
+        byte[] local_34 = new byte[24] { 0, 1, 2, 3, 4, 0, 3, 2, 1, 4, 4, 2, 1, 0, 3, 3, 2, 1, 0, 4, 1, 0, 3, 4 };
 
         iVar8 = 0;
         piVar9 = 0;
-        System.Array.Copy(DAT_28, local_34, 24);
         System.Array.Copy(SceneManager.instance.staticObjects, local_48, 5);
         param1.DAT_56 = 0x68;
         param1.DAT_54 = 0x7f3e;

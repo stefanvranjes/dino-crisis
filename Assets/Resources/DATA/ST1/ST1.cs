@@ -19,10 +19,6 @@ struct UNK_7908
 public class ST1 : LevelManager
 {
     public static new ST1 instance;
-    private uint[] DAT_04 = new uint[4] { 0x80132b5c, 0x80132bfc, 0x80132ca4, 0x80132d6c };
-    private uint[] DAT_14 = new uint[] { 4, 5, 6, 7 };
-    private byte[] DAT_18 = new byte[] { 0, 3, 2, 1, 4, 4, 2, 1, 0, 3, 3, 2, 1, 0, 4, 1, 0, 3, 4, 2 };
-    private byte[] DAT_38 = new byte[] { 0, 1, 2, 3, 4, 0, 3, 2, 1, 4, 4, 2, 1, 0, 3, 3, 2, 1, 0, 4, 1, 0, 3, 4 };
     public FUN_B58BC[] DAT_7624 = new FUN_B58BC[23] { FUN_44EA8, FUN_45224, FUN_45350, FUN_45480, FUN_45758, 
                                                       FUN_45B08, FUN_270, FUN_46A1C, FUN_35C, FUN_468, null,
                                                       FUN_45D38, FUN_45E70, FUN_464F8, FUN_7CC, FUN_1324,
@@ -69,7 +65,7 @@ public class ST1 : LevelManager
     private byte[] DAT_7AA0 = new byte[108] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1d, 0x0, 0x5f, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x16, 0xf0, 0x59, 0x1b, 0x0, 0x0, 0x0, 0xe8, 0x3, 0x0, 0x0, 0x1, 0x1b, 0xf7, 0x33, 0xf, 0x0, 0x0, 0x0, 0x0, 0x0, 0x3d, 0xff, 0x2, 0x9, 0x0, 0x7, 0xf9, 0x0, 0x0, 0x0, 0x78, 0x0, 0xfa, 0x0, 0x2, 0x7, 0xff, 0x5, 0x4, 0x0, 0x0, 0x0, 0x27, 0x1, 0xc3, 0x0, 0x3, 0x13, 0x0, 0x3f, 0xe, 0x0, 0x0, 0x0, 0xda, 0x2, 0xed, 0xfe, 0x3, 0x1b, 0x0, 0x30, 0xf4, 0x0, 0x0, 0x0, 0x36, 0x6, 0x42, 0xff, 0x4, 0x1d, 0xf8, 0x29, 0xea, 0x0, 0x5, 0x0, 0x0, 0x0, 0x0, 0x0, 0x4, 0x1b, 0x0, 0x5c, 0xe9, 0x0 };
     private FUN_7B14[] PTR_FUN_7B14; //0x7B14 (ST1)
     private FUN_7B28[] PTR_FUN_7B28; //0x7B28 (ST1)
-    private sbyte[] DAT_7B44 = new sbyte[4];
+    private sbyte[] DAT_7B44 = new sbyte[5];
     private byte DAT_7B49;
     private byte DAT_7B4A;
     private byte DAT_7B4B;
@@ -394,13 +390,8 @@ public class ST1 : LevelManager
     {
         byte bVar1;
         ushort uVar2;
-        uint[] local_20;
-
-        local_20 = new uint[4];
-        local_20[0] = ST1.instance.DAT_04[0];
-        local_20[1] = ST1.instance.DAT_04[1];
-        local_20[2] = ST1.instance.DAT_04[2];
-        local_20[3] = ST1.instance.DAT_04[3];
+        uint[] local_20 = new uint[4] { 0x80132b5c, 0x80132bfc, 0x80132ca4, 0x80132d6c };
+        
         bVar1 = param1.DAT_2F;
         param1.FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(local_20[bVar1]));
         param1.DAT_56 = 37;
@@ -708,15 +699,13 @@ public class ST1 : LevelManager
         int puVar8;
         CriStatic oVar9;
         CriStatic oVar10;
-        byte[] local_38 = new byte[20];
-        uint[] local_48 = new uint[4];
+        byte[] local_38 = new byte[20] { 0, 3, 2, 1, 4, 4, 2, 1, 0, 3, 3, 2, 1, 0, 4, 1, 0, 3, 4, 2 };
+        uint[] local_48 = new uint[4] { 4, 5, 6, 7 };
         CriStatic[] local_60 = new CriStatic[5];
         CriStatic[] local_78 = new CriStatic[5];
 
         iVar7 = 0;
         oVar10 = null;
-        System.Array.Copy(DAT_14, local_48, 4);
-        System.Array.Copy(DAT_18, local_38, 20);
         System.Array.Copy(SceneManager.instance.staticObjects, local_78, 5);
         oVar9 = SceneManager.instance.staticObjects[5];
         bVar6 = InventoryManager.FUN_4A87C(3, 0x20);
@@ -1038,11 +1027,10 @@ public class ST1 : LevelManager
         int iVar8;
         int piVar9;
         CriStatic[] local_48 = new CriStatic[5];
-        byte[] local_30 = new byte[24];
+        byte[] local_30 = new byte[24] { 0, 1, 2, 3, 4, 0, 3, 2, 1, 4, 4, 2, 1, 0, 3, 3, 2, 1, 0, 4, 1, 0, 3, 4 };
 
         iVar8 = 0;
         piVar9 = 0;
-        System.Array.Copy(DAT_38, local_30, 24);
         System.Array.Copy(SceneManager.instance.staticObjects, local_48, 5);
         param1.DAT_56 = 0x68;
         param1.DAT_54 = 0x7f3e;
@@ -2070,32 +2058,30 @@ public class ST1 : LevelManager
     {
         bool bVar1;
 
-        if (30 < DAT_7B4A) goto LAB_5598;
-
-        if (DAT_7B4A == 0)
+        if (DAT_7B4A < 31)
         {
-            InventoryManager.FUN_4A7E8(3, 0x22, false);
-            InventoryManager.FUN_4A7E8(3, 0x23, false);
-            InventoryManager.FUN_4A7E8(3, 0x24, false);
-
-            if (param1.DAT_02 == 0)
+            if (DAT_7B4A == 0)
             {
-                //...
-            }
-            else
-            {
-                if (param1.DAT_02 != 1) goto LAB_557C;
+                InventoryManager.FUN_4A7E8(3, 0x22, false);
+                InventoryManager.FUN_4A7E8(3, 0x23, false);
+                InventoryManager.FUN_4A7E8(3, 0x24, false);
 
-                //...
+                if (param1.DAT_02 == 0)
+                {
+                    FUN_5DC8();
+                    FUN_5EE8();
+                }
+                else if (param1.DAT_02 == 1)
+                {
+                    FUN_5F98();
+                    FUN_6044();
+                }
             }
 
-            //...
+            //FUN_5718
+            DAT_7B4A++;
         }
-
-        LAB_557C:
-        //...
-        DAT_7B4A++;
-        LAB_5598:
+        
         bVar1 = InventoryManager.FUN_4A87C(3, 0x21);
 
         if (bVar1)
@@ -2128,7 +2114,7 @@ public class ST1 : LevelManager
             }
         }
 
-        //...
+        //FUN_5AC8
         sVar2 = (short)(param1.DAT_0C + 1);
         param1.DAT_0C = sVar2;
 
@@ -2159,7 +2145,7 @@ public class ST1 : LevelManager
     //FUN_56B4 (ST1)
     private void FUN_56B4(CriInteract param1)
     {
-        //...
+        //FUN_5AC8
 
         if (29 < DAT_7B4A)
         {
@@ -2174,6 +2160,163 @@ public class ST1 : LevelManager
     private void FUN_570C(CriInteract param1)
     {
         param1.DAT_03 = 5;
+    }
+
+    //FUN_5DC8 (ST1)
+    private void FUN_5DC8()
+    {
+        uint uVar3;
+        uint uVar4;
+        uint uVar5;
+        bool bVar6;
+        byte[] local_18 = new byte[5] { 5, 7, 0, 3, 6 };
+        byte[] local_10 = new byte[5] { 5, 8, 1, 0, 4 };
+
+        bVar6 = false;
+        uVar5 = 0;
+
+        do
+        {
+            uVar3 = uVar5 + 1;
+
+            if (DAT_7B44[uVar5] != local_18[uVar5])
+            {
+                bVar6 = true;
+                break;
+            }
+
+            uVar5 = uVar3;
+        } while (uVar3 < 5);
+
+        if (bVar6)
+        {
+            uVar5 = 0;
+
+            do
+            {
+                if (DAT_7B44[uVar5] != local_10[uVar5])
+                {
+                    InventoryManager.FUN_4A7E8(2, 10, true);
+                    uVar4 = 0x95;
+                    goto LAB_5ED0;
+                }
+
+                uVar3 = uVar5 + 1;
+                uVar5 = uVar3;
+            } while (uVar3 < 5);
+
+            uVar4 = 0x12;
+        }
+        else
+            uVar4 = 9;
+
+        InventoryManager.FUN_4A7E8(2, uVar4, true);
+        uVar4 = 0x94;
+        LAB_5ED0:
+        GameManager.instance.FUN_5C94C(null, (int)uVar4);
+    }
+
+    //FUN_5EE8 (ST1)
+    private void FUN_5EE8()
+    {
+        byte bVar1;
+        bool bVar2;
+        uint uVar3;
+
+        bVar1 = GameManager.instance.DAT_9ADF;
+
+        if (bVar1 == 1)
+        {
+            bVar2 = InventoryManager.FUN_4A87C(2, 9);
+
+            if (bVar2)
+            {
+                uVar3 = 0x22;
+                goto LAB_5F80;
+            }
+        }
+        else
+        {
+            if (bVar1 < 2)
+            {
+                if (bVar1 == 0)
+                    uVar3 = 0x24;
+                else
+                    uVar3 = 0x23;
+
+                goto LAB_5F80;
+            }
+
+            if (bVar1 != 2)
+            {
+                uVar3 = 0x23;
+                goto LAB_5F80;
+            }
+
+            bVar2 = InventoryManager.FUN_4A87C(2, 0x12);
+
+            if (bVar2)
+            {
+                uVar3 = 0x22;
+                goto LAB_5F80;
+            }
+        }
+
+        uVar3 = 0x23;
+        LAB_5F80:
+        InventoryManager.FUN_4A7E8(3, uVar3, true);
+    }
+
+    //FUN_5F98 (ST1)
+    private void FUN_5F98()
+    {
+        uint uVar3;
+        uint uVar4;
+        uint uVar5;
+        byte[] local_10 = new byte[5] { 3, 1, 4, 1, 5 };
+
+        uVar3 = 0;
+
+        do
+        {
+            if (DAT_7B44[uVar3] != local_10[uVar3])
+            {
+                InventoryManager.FUN_4A7E8(2, 10, true);
+                uVar4 = 0x95;
+                goto LAB_602C;
+            }
+
+            uVar5 = uVar3 + 1;
+            uVar3 = uVar5;
+        } while (uVar5 < 5);
+
+        InventoryManager.FUN_4A7E8(2, 9, true);
+        uVar4 = 0x94;
+        LAB_602C:
+        GameManager.instance.FUN_5C94C(null, (int)uVar4);
+    }
+
+    //FUN_6044 (ST1)
+    private void FUN_6044()
+    {
+        bool bVar1;
+        uint uVar2;
+
+        if (GameManager.instance.DAT_9ADF == 0)
+            uVar2 = 0x24;
+        else if (GameManager.instance.DAT_9ADF == 3)
+        {
+            bVar1 = InventoryManager.FUN_4A87C(2, 9);
+
+            if (bVar1)
+                uVar2 = 0x22;
+            else
+                uVar2 = 0x23;
+        }
+        else
+            uVar2 = 0x23;
+
+        InventoryManager.FUN_4A7E8(3, uVar2, true);
     }
 
     //FUN_6700 (ST1)

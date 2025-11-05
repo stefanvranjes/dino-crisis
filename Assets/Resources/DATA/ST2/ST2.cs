@@ -308,23 +308,23 @@ public class ST2 : LevelManager
                 FUN_4124,
                 FUN_418C
             };
-            PTR_FUN_7E3C = new FUN_7E3C[]
+            PTR_FUN_7E3C = new FUN_7E3C[9]
             {
                 FUN_3EC0, 
                 FUN_3E84, 
                 FUN_3E84, 
                 FUN_40E8, 
                 FUN_3674, 
-                FUN_41F8,
+                FUN_41F8, 
                 FUN_329C, 
                 FUN_3944, 
                 FUN_2DEC
             };
-            PTR_FUN_7E60 = new FUN_7E60[]
+            PTR_FUN_7E60 = new FUN_7E60[1]
             {
                 FUN_4298
             };
-            PTR_FUN_8114 = new FUN_8114[]
+            PTR_FUN_8114 = new FUN_8114[1]
             {
                 FUN_2D98
             };
@@ -347,7 +347,7 @@ public class ST2 : LevelManager
                 FUN_51D0, 
                 FUN_5260
             };
-            PTR_FUN_8164 = new FUN_8164[]
+            PTR_FUN_8164 = new FUN_8164[1]
             {
                 FUN_5130
             };
@@ -1556,6 +1556,7 @@ public class ST2 : LevelManager
     //FUN_4FD8 (ST2)
     private void FUN_4FD8(CriPlayer param1)
     {
+        uint uVar1;
         CriPlayer oVar2;
 
         oVar2 = (CriPlayer)param1.DAT_154;
@@ -1568,7 +1569,12 @@ public class ST2 : LevelManager
         param1.DAT_1C0 &= 0xfffffffe;
         SceneManager.instance.cCamera.DAT_70 = 1;
         SceneManager.instance.cCamera.PTR_FUN_8C = SceneManager.instance.cCamera.FUN_2D20;
-        //...
+        SceneManager.instance.staticObjects[9].flags &= 0xfffffffd;
+        SceneManager.instance.staticObjects[9].flags &= 0xfffffffd;
+        uVar1 = SceneManager.instance.staticObjects[13].flags;
+
+        if (uVar1 != 0)
+            SceneManager.instance.staticObjects[13].flags = uVar1 & 0xfffffffd;
     }
 
     //FUN_50B8 (ST2)
@@ -2296,7 +2302,7 @@ public class ST2 : LevelManager
         oVar7 = param1.DAT_154;
         param1.DAT_34 = param1.screen;
         instance.FUN_2EFC(param1);
-        bVar5 = GameManager.instance.FUN_768C8(oVar7.screen, ST2.instance.DAT_7DC0[0]);
+        bVar5 = GameManager.instance.FUN_768C8(oVar7.screen, DAT_7DC0[0]);
 
         if (!bVar5)
             uVar6 = param1.DAT_1C0 & 0xffffefff;

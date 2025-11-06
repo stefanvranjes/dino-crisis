@@ -2302,7 +2302,7 @@ public class ST2 : LevelManager
         oVar7 = param1.DAT_154;
         param1.DAT_34 = param1.screen;
         instance.FUN_2EFC(param1);
-        bVar5 = GameManager.instance.FUN_768C8(oVar7.screen, DAT_7DC0[0]);
+        bVar5 = GameManager.instance.FUN_768C8(oVar7.screen, instance.DAT_7DC0[0]);
 
         if (!bVar5)
             uVar6 = param1.DAT_1C0 & 0xffffefff;

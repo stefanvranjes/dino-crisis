@@ -1774,13 +1774,56 @@ public class ST7 : LevelManager
 
         param1.DAT_0C = 0;
         param1.DAT_03++;
-        //FUN_3E2C
+        FUN_3E2C(param1);
     }
 
     //FUN_3E2C (ST7)
     private void FUN_3E2C(CriInteract param1)
     {
-        //...
+        byte bVar1;
+        CriParticle pVar2;
+        CriObject oVar3;
+        sbyte sVar4;
+
+        do
+        {
+            if (param1.DAT_10_2[param1.IDAT_10].DAT_06 != param1.DAT_0C)
+            {
+                param1.DAT_0C++;
+                return;
+            }
+
+            pVar2 = SceneManager.instance.FUN_5FFA0();
+
+            if (pVar2 != null)
+            {
+                pVar2.tags = 21;
+                pVar2.DAT_2F = param1.DAT_10_2[param1.IDAT_10].DAT_12;
+                pVar2.screen = param1.DAT_10_2[param1.IDAT_10].DAT_00;
+                bVar1 = param1.DAT_10_2[param1.IDAT_10].DAT_07;
+                pVar2.DAT_62 = bVar1;
+                pVar2.DAT_60 = bVar1;
+                pVar2.DAT_40 = param1.DAT_10_2[param1.IDAT_10].DAT_08;
+
+                if (param1.DAT_10_2[param1.IDAT_10].DAT_0E != -1)
+                {
+                    oVar3 = Utilities.FUN_601C8(((CriSkinned)param1.PDAT_14).skeleton, param1.DAT_10_2[param1.IDAT_10].DAT_0E);
+                    pVar2.DAT_4C = oVar3;
+                }
+
+                pVar2.IDAT_6C = param1.DAT_10_2[param1.IDAT_10].DAT_0F;
+                pVar2.vr.z = param1.DAT_10_2[param1.IDAT_10].DAT_10;
+                pVar2.DAT_50.r = param1.DAT_10_2[param1.IDAT_10].DAT_13;
+                pVar2.DAT_50.g = param1.DAT_10_2[param1.IDAT_10].DAT_14;
+                pVar2.DAT_50.b = param1.DAT_10_2[param1.IDAT_10].DAT_15;
+            }
+
+            sVar4 = (sbyte)(param1.BDAT_0E - 1);
+            param1.BDAT_0E = (byte)sVar4;
+            param1.IDAT_10++;
+        } while (sVar4 != 0);
+
+        param1.DAT_03++;
     }
 
     //FUN_3FA8 (ST7)

@@ -70,7 +70,6 @@ public class CriInteract : MonoBehaviour
     public Vector3Int VDAT_10;
     public TodScriptableObject[] TDAT_10;
     public short SDAT_10;
-    public ushort UDAT_10;
     public UNK_PARTICLE_10[] DAT_10_2;
     public UNK_PARTICLE_10_2[] DAT_10_3;
     public byte DAT_10;

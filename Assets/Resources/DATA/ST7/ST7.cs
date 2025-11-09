@@ -3011,7 +3011,7 @@ public class ST7 : LevelManager
             switch (DAT_12890[param1.DAT_17 * 4])
             {
                 case 0:
-                    iVar6 = param1.DAT_18;
+                    iVar6 = (sbyte)param1.DAT_18;
                     iVar4 = iVar6;
 
                     if (iVar6 < 0)
@@ -3180,7 +3180,7 @@ public class ST7 : LevelManager
                     {
                         DAT_12890[param1.DAT_17 * 4] = 11;
 
-                        if (15 < param1.DAT_18)
+                        if (15 < (sbyte)param1.DAT_18)
                         {
                             param1.BDAT_0C = 0;
                             param1.DAT_0D = 0;
@@ -3307,7 +3307,7 @@ public class ST7 : LevelManager
                         switch (param1.BDAT_0C)
                         {
                             case 0:
-                                if (param1.DAT_19 == 0 && DAT_12870[param1.DAT_18] != -1)
+                                if (param1.DAT_19 == 0 && DAT_12870[(sbyte)param1.DAT_18] != -1)
                                 {
                                     if (param1.DAT_0D == 0)
                                         GameManager.instance.FUN_5C94C(null, 153);
@@ -3320,7 +3320,7 @@ public class ST7 : LevelManager
                                         oVar1.screen.y += 110;
                                     else
                                     {
-                                        sVar2 = DAT_12870[param1.DAT_18];
+                                        sVar2 = DAT_12870[(sbyte)param1.DAT_18];
                                         param1.DAT_0D = 0;
                                         param1.BDAT_0C++;
                                         param1.DAT_1A = (byte)(sVar2 + 1);
@@ -3434,8 +3434,8 @@ public class ST7 : LevelManager
                                     param1.DAT_17++;
                                     InventoryManager.FUN_4A7E8(3, 0x2b, true);
                                     param1.DAT_19 = 1;
-                                    DAT_12870[param1.DAT_18] = -1;
-                                    InventoryManager.FUN_4A7E8(3, (uint)(int)(sbyte)param1.DAT_18 + 0x2c, false);
+                                    DAT_12870[(sbyte)param1.DAT_18] = -1;
+                                    InventoryManager.FUN_4A7E8(3, (uint)(sbyte)param1.DAT_18 + 0x2c, false);
                                 }
 
                                 goto LAB_B2F8_2;
@@ -3444,11 +3444,11 @@ public class ST7 : LevelManager
 
                     break;
                 case 4:
-                    if (param1.DAT_18 < 8)
+                    if ((sbyte)param1.DAT_18 < 8)
                     {
                         DAT_12890[param1.DAT_17 * 4] = 5;
 
-                        if (param1.DAT_18 < 4)
+                        if ((sbyte)param1.DAT_18 < 4)
                         {
                             param1.BDAT_0C = 0;
                             param1.DAT_0D = 0;
@@ -3552,7 +3552,7 @@ public class ST7 : LevelManager
 
                     goto LAB_B2F8;
                 case 5:
-                    if (param1.DAT_18 < 4)
+                    if ((sbyte)param1.DAT_18 < 4)
                     {
                         param1.BDAT_0C = 0;
                         param1.DAT_0D = 0;
@@ -3634,7 +3634,7 @@ public class ST7 : LevelManager
 
                         if (param1.DAT_02 == 0)
                         {
-                            iVar5 = param1.DAT_18;
+                            iVar5 = (sbyte)param1.DAT_18;
                             iVar3 = iVar5;
 
                             if (iVar5 < 0)
@@ -3775,7 +3775,7 @@ public class ST7 : LevelManager
                         switch (param1.BDAT_0C)
                         {
                             case 0:
-                                if (param1.DAT_19 == 0 || DAT_12870[param1.DAT_18] != -1)
+                                if (param1.DAT_19 == 0 || DAT_12870[(sbyte)param1.DAT_18] != -1)
                                 {
                                     param1.BDAT_0C = 0;
                                     param1.DAT_0D = 0;
@@ -3902,8 +3902,8 @@ public class ST7 : LevelManager
                                     param1.DAT_17++;
                                     InventoryManager.FUN_4A7E8(3, 0x2b, false);
                                     param1.DAT_19 = 0;
-                                    DAT_12870[param1.DAT_18] = (sbyte)(param1.DAT_1A - 1);
-                                    InventoryManager.FUN_4A7E8(3, param1.DAT_18 + 0x2cU, true);
+                                    DAT_12870[(sbyte)param1.DAT_18] = (sbyte)(param1.DAT_1A - 1);
+                                    InventoryManager.FUN_4A7E8(3, (uint)(sbyte)param1.DAT_18 + 0x2cU, true);
                                     param1.DAT_1A = 0xff;
                                 }
 
@@ -4371,7 +4371,7 @@ public class ST7 : LevelManager
 
                     goto LAB_B054;
                 case 11:
-                    if (15 < param1.DAT_18)
+                    if (15 < (sbyte)param1.DAT_18)
                     {
                         param1.BDAT_0C = 0;
                         param1.DAT_0D = 0;

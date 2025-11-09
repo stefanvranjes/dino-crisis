@@ -7526,7 +7526,7 @@ public class ST6 : LevelManager
             switch (DAT_17414[param1.DAT_17 * 4])
             {
                 case 0:
-                    iVar6 = param1.DAT_18;
+                    iVar6 = (sbyte)param1.DAT_18;
                     iVar4 = iVar6;
 
                     if (iVar6 < 0)
@@ -7647,7 +7647,7 @@ public class ST6 : LevelManager
                     SceneManager.instance.FUN_264C4(50, (short)oVar4.screen.x, (short)iVar6, (short)oVar4.screen.z);
                     return;
                 case 1:
-                    if (param1.DAT_18 < 13)
+                    if ((sbyte)param1.DAT_18 < 13)
                     {
                         if (param1.BDAT_0C == 0)
                         {
@@ -7692,7 +7692,7 @@ public class ST6 : LevelManager
                     {
                         DAT_17414[param1.DAT_17 * 4] = 11;
 
-                        if (15 < param1.DAT_18)
+                        if (15 < (sbyte)param1.DAT_18)
                         {
                             param1.BDAT_0C = 0;
                             param1.DAT_0D = 0;

@@ -8848,11 +8848,14 @@ public class ST9 : LevelManager
     {
         byte bVar1;
         byte bVar2;
+        int iVar2;
         sbyte sVar2;
         sbyte sVar3;
+        int iVar3;
         int iVar4;
         sbyte sVar4;
         sbyte sVar5;
+        int iVar5;
         int iVar6;
 
         if (DAT_171EC[param1.DAT_17 * 4] < 12)
@@ -8958,8 +8961,7 @@ public class ST9 : LevelManager
                             return;
                         }
                     }
-
-                    LAB_10DA0:
+                    
                     param1.DAT_0D = (byte)(bVar1 + 1);
                     SceneManager.instance.staticObjects[0].screen.z += 100;
 
@@ -9055,7 +9057,13 @@ public class ST9 : LevelManager
                         }
                     }
 
-                    goto LAB_10DA0;
+                    param1.DAT_0D = (byte)(bVar1 + 1);
+                    SceneManager.instance.staticObjects[0].screen.x -= 60;
+
+                    if (param1.DAT_19 != 0)
+                        SceneManager.instance.staticObjects[param1.DAT_1A].screen.x -= 60;
+
+                    break;
                 case 2: //FUN_FB48 (ST9)
                     if ((param1.DAT_18 & 3) == 0)
                     {
@@ -9116,7 +9124,7 @@ public class ST9 : LevelManager
                         switch (param1.BDAT_0C) //0x8C (ST9)
                         {
                             case 0: //FUN_FCB8 (ST9)
-                                if (param1.DAT_19 == 0 && DAT_171EC[param1.DAT_18] != -1)
+                                if (param1.DAT_19 == 0 && DAT_171EC[(sbyte)param1.DAT_18] != -1)
                                 {
                                     if (param1.DAT_0D == 0)
                                         GameManager.instance.FUN_5C94C(null, 153);
@@ -9128,7 +9136,7 @@ public class ST9 : LevelManager
                                         SceneManager.instance.staticObjects[0].screen.y += 110;
                                     else
                                     {
-                                        sVar2 = DAT_171EC[param1.DAT_18];
+                                        sVar2 = DAT_171EC[(sbyte)param1.DAT_18];
                                         param1.DAT_0D = 0;
                                         param1.BDAT_0C++;
                                         param1.DAT_1A = (byte)(sVar2 + 1);
@@ -9327,7 +9335,498 @@ public class ST9 : LevelManager
                         }
                     }
 
-                    goto LAB_10DA0;
+                    param1.DAT_0D = (byte)(bVar1 + 1);
+                    SceneManager.instance.staticObjects[0].screen.x += 60;
+
+                    if (param1.DAT_19 != 0)
+                        SceneManager.instance.staticObjects[param1.DAT_1A].screen.x += 60;
+
+                    break;
+                case 5: //FUN_10040 (ST9)
+                    if ((sbyte)param1.DAT_18 < 4)
+                    {
+                        param1.BDAT_0C = 0;
+                        param1.DAT_0D = 0;
+                        param1.DAT_17++;
+                    }
+                    else
+                    {
+                        if (param1.BDAT_0C == 0)
+                        {
+                            param1.BDAT_0C++;
+                            GameManager.instance.FUN_5C94C(null, 151);
+                        }
+
+                        bVar1 = param1.DAT_0D;
+
+                        if (bVar1 < 40)
+                        {
+                            param1.DAT_0D = (byte)(bVar1 + 1);
+                            SceneManager.instance.staticObjects[0].screen.x += 60;
+
+                            if (param1.DAT_19 != 0)
+                                SceneManager.instance.staticObjects[param1.DAT_1A].screen.x += 60;
+                        }
+                        else
+                        {
+                            if (bVar1 == 40)
+                            {
+                                GameManager.instance.FUN_5C860(151);
+                                GameManager.instance.FUN_5C94C(null, 152);
+                                param1.DAT_0D++;
+                            }
+
+                            if (param1.DAT_1B < 20)
+                            {
+                                if (param1.DAT_19 != 0)
+                                    SceneManager.instance.staticObjects[param1.DAT_1A].vr.z += DAT_16EDC[param1.DAT_1B];
+
+                                param1.DAT_1B++;
+                                return;
+                            }
+
+                            param1.BDAT_0C = 0;
+                            param1.DAT_0D = 0;
+                            param1.DAT_1B = 0;
+                            param1.DAT_18 -= 4;
+                            param1.DAT_17++;
+                        }
+
+                        break;
+                    }
+
+                    return;
+                case 6: //FUN_10164 (ST9)
+                    iVar5 = (sbyte)param1.DAT_18;
+                    iVar3 = iVar5;
+
+                    if (iVar5 < 0)
+                        iVar3 = iVar5 + 3;
+
+                    if ((iVar5 + (iVar3 >> 2) * -4) * 0x1000000 >> 0x18 == 2)
+                    {
+                        if (param1.DAT_02 == 0)
+                        {
+                            param1.BDAT_0C = 0;
+                            param1.DAT_0D = 0;
+                            param1.DAT_17++;
+                            goto LAB_101D8;
+                        }
+
+                        DAT_171EC[param1.DAT_17 * 4] = 10;
+
+                        if (param1.DAT_02 == 0)
+                        {
+                            iVar5 = (sbyte)param1.DAT_18;
+                            iVar3 = iVar5;
+
+                            if (iVar5 < 0)
+                                iVar3 = iVar5 + 3;
+
+                            if ((iVar5 + (iVar3 >> 2) * -4) * 0x1000000 >> 0x18 == 2)
+                            {
+                                param1.BDAT_0C = 0;
+                                param1.DAT_0D = 0;
+                                param1.DAT_17++;
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            iVar5 = (sbyte)param1.DAT_18;
+                            iVar3 = iVar5;
+
+                            if (iVar5 < 0)
+                                iVar3 = iVar5 + 3;
+
+                            if ((iVar5 + (iVar3 >> 2) * -4) * 0x1000000 >> 0x18 == 3)
+                            {
+                                param1.BDAT_0C = 0;
+                                param1.DAT_0D = 0;
+                                param1.DAT_17++;
+                                return;
+                            }
+                        }
+
+                        if (param1.BDAT_0C == 0)
+                        {
+                            param1.BDAT_0C++;
+                            GameManager.instance.FUN_5C94C(null, 151);
+                        }
+
+                        bVar1 = param1.DAT_0D;
+
+                        if (39 < bVar1)
+                        {
+                            if (bVar1 == 40)
+                            {
+                                GameManager.instance.FUN_5C94C(null, 152);
+                                GameManager.instance.FUN_5C860(151);
+                                param1.DAT_0D++;
+                            }
+
+                            if (param1.DAT_1B < 20)
+                            {
+                                if (param1.DAT_19 != 0)
+                                    SceneManager.instance.staticObjects[param1.DAT_1A].vr.x += DAT_16EDC[param1.DAT_1B];
+
+                                param1.DAT_1B++;
+                                return;
+                            }
+
+                            sVar4 = param1.DAT_17;
+                            param1.BDAT_0C = 0;
+                            param1.DAT_0D = 0;
+                            param1.DAT_1B = 0;
+                            sVar2 = (sbyte)(param1.DAT_18 + 1);
+                            param1.DAT_18 = (byte)sVar2;
+                            param1.DAT_17 = (sbyte)(sVar4 + 1);
+                            break;
+                        }
+
+                        goto LAB_10C28;
+                    }
+
+                    LAB_101D8:
+                    if (param1.BDAT_0C == 0)
+                    {
+                        param1.BDAT_0C++;
+                        GameManager.instance.FUN_5C94C(null, 151);
+                    }
+
+                    bVar1 = param1.DAT_0D;
+
+                    if (79 < bVar1)
+                    {
+                        if (bVar1 == 80)
+                        {
+                            GameManager.instance.FUN_5C860(151);
+                            GameManager.instance.FUN_5C94C(null, 152);
+                            param1.DAT_0D++;
+                        }
+
+                        if (param1.DAT_1B < 20)
+                        {
+                            if (param1.DAT_19 != 0)
+                                SceneManager.instance.staticObjects[param1.DAT_1A].vr.x += DAT_16EDC[param1.DAT_1B];
+
+                            param1.DAT_1B++;
+                            return;
+                        }
+
+                        sVar4 = param1.DAT_17;
+                        param1.BDAT_0C = 0;
+                        param1.DAT_0D = 0;
+                        param1.DAT_1B = 0;
+                        sVar2 = (sbyte)(param1.DAT_18 + 2);
+                        param1.DAT_18 = (byte)sVar2;
+                        param1.DAT_17 = (sbyte)(sVar4 + 1);
+                        break;
+                    }
+
+                    LAB_10C28:
+                    param1.DAT_0D = (byte)(bVar1 + 1);
+                    SceneManager.instance.staticObjects[0].screen.z -= 100;
+                    
+                    if (param1.DAT_19 != 0)
+                        SceneManager.instance.staticObjects[param1.DAT_1A].screen.z -= 100;
+
+                    break;
+                case 7: //FUN_10270 (ST9)
+                    if (param1.BDAT_0C < 5)
+                    {
+                        switch (param1.BDAT_0C) //0xA4 (ST9)
+                        {
+                            case 0: //FUN_102A0 (ST9)
+                                if (param1.DAT_19 == 0 || DAT_171EC[param1.DAT_18] != -1)
+                                {
+                                    param1.BDAT_0C = 0;
+                                    param1.DAT_0D = 0;
+                                    param1.DAT_17++;
+                                }
+                                else
+                                {
+                                    if (param1.DAT_0D == 0)
+                                        GameManager.instance.FUN_5C94C(null, 153);
+
+                                    if (param1.DAT_0D < 37)
+                                    {
+                                        param1.DAT_0D++;
+                                        SceneManager.instance.staticObjects[0].screen.y += 110;
+                                        SceneManager.instance.staticObjects[param1.DAT_1A].screen.y += 110;
+                                    }
+                                    else
+                                    {
+                                        if (param1.DAT_1B == 0)
+                                        {
+                                            GameManager.instance.FUN_5C860(153);
+                                            GameManager.instance.FUN_5C94C(null, 155);
+                                        }
+
+                                        bVar1 = param1.DAT_1B;
+                                        param1.DAT_1B = (byte)(bVar1 + 1);
+
+                                        if (bVar1 < 20)
+                                            return;
+
+                                        GameManager.instance.FUN_5C94C(null, 154);
+                                        param1.DAT_1B = 0;
+                                        param1.DAT_0D = 0;
+                                        param1.BDAT_0C++;
+                                    }
+
+                                    break;
+                                }
+
+                                return;
+                            case 1: //FUN_1039C (ST9)
+                                bVar1 = param1.DAT_0D;
+                                param1.DAT_0D = (byte)(bVar1 + 1);
+
+                                if (bVar1 < 10)
+                                    SceneManager.instance.staticObjects[0].screen.x -= 45;
+                                else
+                                {
+                                    param1.DAT_0D = 0;
+                                    param1.BDAT_0C++;
+                                }
+
+                                break;
+                            case 2: //FUN_103D8 (ST9)
+                                bVar1 = param1.DAT_0D;
+                                param1.DAT_0D = (byte)(bVar1 + 1);
+
+                                if (bVar1 < 7)
+                                    SceneManager.instance.staticObjects[0].screen.y -= 110;
+                                else
+                                {
+                                    param1.DAT_0D = 0;
+                                    param1.BDAT_0C++;
+                                }
+
+                                break;
+                            case 3: //FUN_10408 (ST9)
+                                bVar1 = param1.DAT_0D;
+                                param1.DAT_0D = (byte)(bVar1 + 1);
+
+                                if (bVar1 < 10)
+                                    SceneManager.instance.staticObjects[0].screen.x += 45;
+                                else
+                                {
+                                    param1.DAT_0D = 0;
+                                    param1.BDAT_0C++;
+                                    GameManager.instance.FUN_5C94C(null, 153);
+                                }
+
+                                break;
+                            case 4: //FUN_10468 (ST9)
+                                if (param1.DAT_0D < 30)
+                                {
+                                    param1.DAT_0D++;
+                                    SceneManager.instance.staticObjects[0].screen.y -= 110;
+                                }
+                                else
+                                {
+                                    if (param1.DAT_0F == 0)
+                                    {
+                                        param1.DAT_0F++;
+                                        GameManager.instance.FUN_5C860(153);
+                                        GameManager.instance.FUN_5C94C(null, 152);
+                                    }
+
+                                    bVar1 = param1.DAT_1B;
+                                    param1.DAT_1B = (byte)(bVar1 + 1);
+
+                                    if (bVar1 < 20)
+                                        return;
+
+                                    param1.DAT_1B = 0;
+                                    param1.BDAT_0C = 0;
+                                    param1.DAT_17++;
+                                    InventoryManager.FUN_4A7E8(3, 0x2b, false);
+                                    param1.DAT_19 = 0;
+                                    DAT_171EC[param1.DAT_18] = (sbyte)(param1.DAT_1A - 1);
+                                    InventoryManager.FUN_4A7E8(3, (uint)(sbyte)param1.DAT_18 + 0x2c, true);
+                                    param1.DAT_1A = 0xff;
+                                }
+
+                                break;
+                        }
+                    }
+
+                    break;
+                case 8: //FUN_10548 (ST9)
+                    if ((param1.DAT_18 & 3) == 0)
+                    {
+                        if (param1.BDAT_0C == 0)
+                        {
+                            param1.BDAT_0C++;
+                            GameManager.instance.FUN_5C94C(null, 151);
+                        }
+
+                        bVar1 = param1.DAT_0D;
+                        sVar2 = (sbyte)(bVar1 + 1);
+
+                        if (119 < bVar1)
+                        {
+                            if (bVar1 == 120)
+                            {
+                                GameManager.instance.FUN_5C860(151);
+                                GameManager.instance.FUN_5C94C(null, 152);
+                                param1.DAT_0D++;
+                            }
+
+                            if (param1.DAT_1B < 20)
+                            {
+                                if (param1.DAT_19 != 0)
+                                    SceneManager.instance.staticObjects[param1.DAT_1A].vr.x += DAT_16EDC[param1.DAT_1B];
+
+                                param1.DAT_1B++;
+                                return;
+                            }
+
+                            sVar2 = param1.DAT_17;
+                            param1.BDAT_0C = 0;
+                            param1.DAT_0D = 0;
+                            param1.DAT_1B = 0;
+                            sVar3 = (sbyte)(param1.DAT_18 + 3);
+                            param1.DAT_18 = (byte)sVar3;
+                            param1.DAT_17 = (sbyte)(sVar2 + 1);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        DAT_171EC[param1.DAT_17 * 4] = 6;
+                        iVar5 = param1.DAT_18;
+                        iVar4 = iVar5;
+
+                        if (iVar5 < 0)
+                            iVar4 = iVar5 + 3;
+
+                        if ((iVar5 + (iVar4 >> 2) * -4) * 0x1000000 >> 0x18 == 2)
+                        {
+                            if (param1.DAT_02 != 0)
+                            {
+                                DAT_171EC[param1.DAT_17 * 4] = 10;
+
+                                if (param1.DAT_02 == 0)
+                                {
+                                    iVar5 = (sbyte)param1.DAT_18;
+                                    iVar4 = iVar5;
+
+                                    if (iVar5 < 0)
+                                        iVar4 = iVar5 + 3;
+
+                                    if ((iVar5 + (iVar4 >> 2) * -4) * 0x1000000 >> 0x18 == 2)
+                                    {
+                                        param1.BDAT_0C = 0;
+                                        param1.DAT_0D = 0;
+                                        param1.DAT_17++;
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    iVar5 = (sbyte)param1.DAT_18;
+                                    iVar4 = iVar5;
+
+                                    if (iVar5 < 0)
+                                        iVar4 = iVar5 + 3;
+
+                                    if ((iVar5 + (iVar4 >> 2) * -4) * 0x1000000 >> 0x18 == 3)
+                                    {
+                                        param1.BDAT_0C = 0;
+                                        param1.DAT_0D = 0;
+                                        param1.DAT_17++;
+                                        return;
+                                    }
+                                }
+
+                                if (param1.BDAT_0C == 0)
+                                {
+                                    param1.BDAT_0C++;
+                                    GameManager.instance.FUN_5C94C(null, 151);
+                                }
+
+                                bVar1 = param1.DAT_0D;
+                                sVar2 = (sbyte)(bVar1 + 1);
+
+                                if (39 < bVar1)
+                                {
+                                    if (bVar1 == 40)
+                                    {
+                                        GameManager.instance.FUN_5C94C(null, 152);
+                                        GameManager.instance.FUN_5C860(151);
+                                        param1.DAT_0D++;
+                                    }
+
+                                    if (param1.DAT_1B < 20)
+                                    {
+                                        if (param1.DAT_19 != 0)
+                                            SceneManager.instance.staticObjects[param1.DAT_1A].vr.x += DAT_16EDC[param1.DAT_1B];
+
+                                        param1.DAT_1B++;
+                                        return;
+                                    }
+
+                                    sVar2 = param1.DAT_17;
+                                    param1.BDAT_0C = 0;
+                                    param1.DAT_0D = 0;
+                                    param1.DAT_1B = 0;
+                                    sVar3 = (sbyte)(param1.DAT_18 + 1);
+                                    param1.DAT_18 = (byte)sVar3;
+                                    param1.DAT_17 = (sbyte)(sVar2 + 1);
+                                    break;
+                                }
+
+                                goto LAB_10C28;
+                            }
+
+                            param1.BDAT_0C = 0;
+                            param1.DAT_0D = 0;
+                            param1.DAT_17++;
+                        }
+
+                        if (param1.BDAT_0C == 0)
+                        {
+                            param1.BDAT_0C++;
+                            GameManager.instance.FUN_5C94C(null, 151);
+                        }
+
+                        bVar1 = param1.DAT_0D;
+                        sVar2 = (sbyte)(bVar1 + 1);
+
+                        if (79 < bVar1)
+                        {
+                            if (bVar1 == 80)
+                            {
+                                GameManager.instance.FUN_5C860(151);
+                                GameManager.instance.FUN_5C94C(null, 152);
+                                param1.DAT_0D++;
+                            }
+
+                            if (param1.DAT_1B < 20)
+                            {
+                                if (param1.DAT_19 != 0)
+                                    SceneManager.instance.staticObjects[param1.DAT_1A].vr.x += DAT_16EDC[param1.DAT_1B];
+
+                                param1.DAT_1B++;
+                                return;
+                            }
+
+                            sVar2 = param1.DAT_17;
+                            param1.BDAT_0C = 0;
+                            param1.DAT_0D = 0;
+                            param1.DAT_1B = 0;
+                            sVar3 = (sbyte)(param1.DAT_18 + 2);
+                            param1.DAT_18 = (byte)sVar3;
+                            param1.DAT_17 = (sbyte)(sVar2 + 1);
+                            break;
+                        }
+                    }
+
+                    goto LAB_10C28;
             }
         }
 

@@ -5132,7 +5132,7 @@ public class ST3 : LevelManager
 
                     goto LAB_A5E0;
                 case 6: //FUN_A6B8 (ST3)
-                    iVar5 = param1.DAT_18;
+                    iVar5 = (sbyte)param1.DAT_18;
                     iVar3 = iVar5;
 
                     if (iVar5 < 0)
@@ -5152,7 +5152,7 @@ public class ST3 : LevelManager
 
                         if (param1.DAT_02 == 0)
                         {
-                            iVar5 = param1.DAT_18;
+                            iVar5 = (sbyte)param1.DAT_18;
                             iVar3 = iVar5;
 
                             if (iVar5 < 0)
@@ -5168,7 +5168,7 @@ public class ST3 : LevelManager
                         }
                         else
                         {
-                            iVar5 = param1.DAT_18;
+                            iVar5 = (sbyte)param1.DAT_18;
                             iVar3 = iVar5;
 
                             if (iVar5 < 0)
@@ -5433,7 +5433,7 @@ public class ST3 : LevelManager
                     else
                     {
                         DAT_12B2C[param1.DAT_17 * 4] = 6;
-                        iVar5 = param1.DAT_18;
+                        iVar5 = (sbyte)param1.DAT_18;
                         iVar4 = iVar5;
 
                         if (iVar5 < 0)
@@ -5447,7 +5447,7 @@ public class ST3 : LevelManager
 
                                 if (param1.DAT_02 == 0)
                                 {
-                                    iVar5 = param1.DAT_18;
+                                    iVar5 = (sbyte)param1.DAT_18;
                                     iVar4 = iVar5;
 
                                     if (iVar5 < 0)
@@ -5463,7 +5463,7 @@ public class ST3 : LevelManager
                                 }
                                 else
                                 {
-                                    iVar5 = param1.DAT_18;
+                                    iVar5 = (sbyte)param1.DAT_18;
                                     iVar4 = iVar5;
 
                                     if (iVar5 < 0)
@@ -5735,7 +5735,7 @@ public class ST3 : LevelManager
                 case 10: //FUN_B0C4 (ST3)
                     if (param1.DAT_02 == 0)
                     {
-                        iVar3 = param1.DAT_18;
+                        iVar3 = (sbyte)param1.DAT_18;
                         iVar2 = iVar3;
 
                         if (iVar3 < 0)
@@ -5751,7 +5751,7 @@ public class ST3 : LevelManager
                     }
                     else
                     {
-                        iVar3 = param1.DAT_18;
+                        iVar3 = (sbyte)param1.DAT_18;
                         iVar2 = iVar3;
 
                         if (iVar3 < 0)
@@ -5809,7 +5809,7 @@ public class ST3 : LevelManager
 
                     break;
                 case 11: //FUN_B290 (ST3)
-                    if (param1.DAT_18 < 16)
+                    if ((sbyte)param1.DAT_18 < 16)
                     {
                         if (param1.BDAT_0C == 0)
                         {

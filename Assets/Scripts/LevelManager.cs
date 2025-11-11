@@ -140,7 +140,7 @@ public class LevelManager : MonoBehaviour
         //...
     }
 
-    public void FUN_60100(byte[] param1, int param2 = 0)
+    public void FUN_60100(byte[] param1)
     {
         param1[param2] = 0;
     }

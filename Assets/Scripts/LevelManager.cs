@@ -142,7 +142,7 @@ public class LevelManager : MonoBehaviour
 
     public void FUN_60100(byte[] param1)
     {
-        param1[param2] = 0;
+        param1[0] = 0;
     }
 
     public CriPlayer FUN_60108()

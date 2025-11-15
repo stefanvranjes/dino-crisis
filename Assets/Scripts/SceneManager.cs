@@ -608,6 +608,9 @@ public class SceneManager : MonoBehaviour
                     {
                         do
                         {
+                            if (psVar5.debug)
+                                Debug.Log(psVar5.PTR_58[0].CONTAINERS[psVar5.DAT_58[0]].DAT_00);
+
                             bVar3 = psVar5.PTR_FUN_9E540[psVar5.PTR_58[0].CONTAINERS[psVar5.DAT_58[0]].DAT_00]();
                         } while (!bVar3);
                     }

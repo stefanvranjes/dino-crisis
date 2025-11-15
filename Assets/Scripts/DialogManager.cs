@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public struct UNK_B1398
+{
+    public uint DAT_00; //0x00
+    public uint DAT_08; //0x08
+}
+
 public class DialogManager : MonoBehaviour
 {
     public Text gameText;
@@ -19,6 +25,7 @@ public class DialogManager : MonoBehaviour
     public byte DAT_B1391;
     public byte DAT_B1392;
     public byte DAT_B1393;
+    public UNK_B1398[] PTR_DAT_B1398 = new UNK_B1398[10];
     public int DAT_B1440;
     public ushort[] PTR_B146C;
     public int DAT_B146C;
@@ -1608,6 +1615,49 @@ public class DialogManager : MonoBehaviour
     public int FUN_1CC54(int param1)
     {
         return DAT_98594[param1];
+    }
+
+    private int FUN_1D82C()
+    {
+        bool bVar1;
+        int puVar2;
+
+        if (GameManager.instance.DAT_A2D1)
+        {
+            bVar1 = InventoryManager.FUN_4A87C(2, 0x1c);
+
+            if (!bVar1 && !GameManager.instance.DAT_C2574.DAT_02)
+            {
+                puVar2 = 0;
+
+                do
+                {
+                    if ((PTR_DAT_B1398[puVar2].DAT_00 & 1) == 0)
+                    {
+                        PTR_DAT_B1398[puVar2].DAT_00 |= 1;
+                        PTR_DAT_B1398[puVar2].DAT_00 &= 0xff00ffff;
+                        return puVar2;
+                    }
+
+                    puVar2++;
+                } while (puVar2 < 10);
+            }
+        }
+
+        return -1; // null
+    }
+
+    public void FUN_1D988(uint param1)
+    {
+        int puVar1;
+
+        puVar1 = FUN_1D82C();
+
+        if (puVar1 != -1)
+        {
+            PTR_DAT_B1398[puVar1].DAT_08 = param1;
+            PTR_DAT_B1398[puVar1].DAT_00 &= 0xfffffffd;
+        }
     }
 
     public void FUN_1DE48()

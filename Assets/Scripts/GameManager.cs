@@ -38,6 +38,11 @@ public struct UNK_9B314
     public Vector3Int vr; //0x08
 }
 
+public class UNK_C2574
+{
+    public bool DAT_02; //0x02
+}
+
 public class Hit
 {
     public Vector2Int[] DAT_00; //0x00
@@ -241,6 +246,7 @@ public class GameManager : MonoBehaviour
     public byte DAT_A2D2; //gp+a2d2h
     public byte DAT_A2D3; //gp+a2d3h
     public bool DAT_A2D4; //gp+a2d4h
+    public UNK_C2574 DAT_C2574;
     public Packet[] DAT_C3380;
     public Frame[] DAT_C3384;
     public Packet DAT_C3388;
@@ -284,12 +290,14 @@ public class GameManager : MonoBehaviour
     private List<CriSkinned> tmpSkinned;
     private List<CriBone> tmpBones;
 
+    private delegate void FUN_9CBE0();
     private delegate void FUN_9CBF0();
     private delegate void FUN_9CC28();
     private delegate void FUN_9E74C(CriSound s, CriTracker t, ref TrackerData d, ref uint r);
     private delegate sbyte FUN_AA4D0(CriPlayer p, CriStatic o);
     private delegate void FUN_AA3E0(CoroutineLoader c);
 
+    private FUN_9CBE0[] PTR_FUN_9CBE0;
     private FUN_9CBF0[] PTR_FUN_9CBF0;
     private FUN_9CC28[] PTR_FUN_9CC28;
     private FUN_AA4D0[] PTR_FUN_AA4D0;
@@ -355,6 +363,13 @@ public class GameManager : MonoBehaviour
         DAT_9AB4 = new byte[8];
         DAT_A090 = new byte[256];
         DAT_A0F8 = new ushort[4];
+        PTR_FUN_9CBE0 = new FUN_9CBE0[4]
+        {
+            FUN_46CBC,
+            FUN_46CC4,
+            FUN_46CC4,
+            FUN_46CC4
+        };
         PTR_FUN_9CBF0 = new FUN_9CBF0[14]
         {
             FUN_47950,
@@ -442,6 +457,8 @@ public class GameManager : MonoBehaviour
         todUncomp = new List<Vector3Int>();
         tmpSkinned = new List<CriSkinned>();
         tmpBones = new List<CriBone>();
+
+        DAT_C2574 = new UNK_C2574(); // main
     }
 
     private void Update()
@@ -471,6 +488,7 @@ public class GameManager : MonoBehaviour
             if (SceneManager.sceneLoaded)
             {
                 FUN_5D798();
+                FUN_46C78();
 
                 for (int i = 0; i < 16; i++)
                     FUN_5E400();
@@ -482,6 +500,52 @@ public class GameManager : MonoBehaviour
     {
         voices[24].clip = speechLines[(DAT_9AA0 >> 8) - 1].objects[param1] as AudioClip;
         voices[24].Play();
+    }
+
+    private void FUN_46CC4()
+    {
+        byte bVar1;
+        sbyte sVar4;
+        uint uVar8;
+
+        bVar1 = DAT_6F;
+        sVar4 = (sbyte)(DAT_6E - 1);
+        DAT_6E = (byte)sVar4;
+
+        if (sVar4 == -1)
+            DAT_6D = false;
+
+        if ((DAT_6C & 1) == 0)
+        {
+            DAT_68 -= DAT_64;
+
+            if (!DAT_6D)
+            {
+                DAT_6F = 0;
+                DAT_68 = 0;
+            }
+        }
+        else if ((DAT_6C & 1) == 1)
+        {
+            if (!DAT_6D)
+                uVar8 = 0xff0000;
+            else
+                uVar8 = DAT_68 + DAT_64;
+
+            DAT_68 = uVar8;
+        }
+
+        // Draw Fade In and Out
+    }
+
+    private void FUN_46CBC()
+    {
+        return;
+    }
+
+    public void FUN_46C78()
+    {
+        PTR_FUN_9CBE0[DAT_6F]();
     }
 
     public void FUN_46C0C(int param1, uint param2, byte param3)

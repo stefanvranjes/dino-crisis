@@ -922,6 +922,10 @@ public class ST1 : LevelManager
         local_30 = Utilities.ApplyMatrixSV(ref auStack_58, ref local_38);
         oVar4.screen.x = local_30.x + param1.DAT_70.x;
         oVar4.screen.z = local_30.z + param1.DAT_70.y;
+        local_38 = new Vector3Int(oVar5.VDAT_74.x, oVar5.screen.y, oVar5.VDAT_74.y);
+        local_30 = Utilities.ApplyMatrixSV(ref auStack_58, ref local_38);
+        oVar5.screen.x = local_30.x + param1.DAT_70.x;
+        oVar5.screen.z = local_30.z + param1.DAT_70.y;
         sVar2 = (sbyte)(param1.DAT_74 + 1);
         param1.DAT_74 = (byte)sVar2;
 

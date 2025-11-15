@@ -301,7 +301,7 @@ public class CriParticle : CriObject
         DAT_64 = 0;
         DAT_65 = 0;
         DAT_68 = 0;
-        PTR_68 = new CriObject[2];
+        PTR_68 = new CriObject[4];
         IDAT_68 = 0;
         DAT_69 = 0;
         SDAT_6A = 0;

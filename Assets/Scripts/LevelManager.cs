@@ -20,6 +20,10 @@ public class LevelManager : MonoBehaviour
     public CriObject DAT_C2590;
     public int DAT_C2594;
     public Vector3Int DAT_C2598;
+    public bool disablePartices;
+    public bool disablePlayers;
+    public bool disableInteractibles;
+    public bool disableStatics;
 
     protected virtual void Awake()
     {
@@ -62,17 +66,20 @@ public class LevelManager : MonoBehaviour
         CriStatic pcVar1;
         int iVar2;
 
-        iVar2 = 0;
-
-        do
+        if (!disableStatics)
         {
-            pcVar1 = SceneManager.instance.staticObjects[iVar2];
+            iVar2 = 0;
 
-            if ((pcVar1.flags & 1) != 0)
-                PTR_FUN_C2570[pcVar1.DAT_2E](pcVar1);
+            do
+            {
+                pcVar1 = SceneManager.instance.staticObjects[iVar2];
 
-            iVar2++;
-        } while (iVar2 < 36);
+                if ((pcVar1.flags & 1) != 0)
+                    PTR_FUN_C2570[pcVar1.DAT_2E](pcVar1);
+
+                iVar2++;
+            } while (iVar2 < 36);
+        }
     }
 
     public void FUN_4A320()
@@ -80,17 +87,20 @@ public class LevelManager : MonoBehaviour
         CriInteract pbVar1;
         int iVar2;
 
-        iVar2 = 0;
-
-        do
+        if (!disableInteractibles)
         {
-            pbVar1 = SceneManager.instance.DAT_8FFC[iVar2];
+            iVar2 = 0;
 
-            if ((pbVar1.DAT_00 & 1) != 0)
-                PTR_FUN_C1CF8[pbVar1.DAT_01](pbVar1);
+            do
+            {
+                pbVar1 = SceneManager.instance.DAT_8FFC[iVar2];
 
-            iVar2++;
-        } while (iVar2 < SceneManager.instance.DAT_8FFC.Length);
+                if ((pbVar1.DAT_00 & 1) != 0)
+                    PTR_FUN_C1CF8[pbVar1.DAT_01](pbVar1);
+
+                iVar2++;
+            } while (iVar2 < SceneManager.instance.DAT_8FFC.Length);
+        }
     }
 
     public void FUN_4A3C4()
@@ -99,19 +109,22 @@ public class LevelManager : MonoBehaviour
         int iVar2;
         int iVar3;
 
-        iVar3 = 10;
-        iVar2 = 0;
-
-        do
+        if (!disablePlayers)
         {
-            pbVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[iVar2];
+            iVar3 = 10;
+            iVar2 = 0;
 
-            if ((pbVar1.flags & 1) != 0)
-                PTR_FUN_B58C0[pbVar1.tags](pbVar1);
+            do
+            {
+                pbVar1 = (CriPlayer)SceneManager.instance.skinnedObjects[iVar2];
 
-            iVar3--;
-            iVar2++;
-        } while (iVar3 != -1);
+                if ((pbVar1.flags & 1) != 0)
+                    PTR_FUN_B58C0[pbVar1.tags](pbVar1);
+
+                iVar3--;
+                iVar2++;
+            } while (iVar3 != -1);
+        }
     }
 
     public void FUN_4A460()
@@ -120,19 +133,22 @@ public class LevelManager : MonoBehaviour
         int iVar2;
         int iVar3;
 
-        iVar3 = 59;
-        iVar2 = 0;
-
-        do
+        if (!disablePartices)
         {
-            pbVar1 = SceneManager.instance.particleObjects[iVar2];
+            iVar3 = 59;
+            iVar2 = 0;
 
-            if ((pbVar1.flags & 1) != 0)
-                PTR_FUN_B58BC[pbVar1.tags](pbVar1);
+            do
+            {
+                pbVar1 = SceneManager.instance.particleObjects[iVar2];
 
-            iVar3--;
-            iVar2++;
-        } while (iVar3 != -1);
+                if ((pbVar1.flags & 1) != 0)
+                    PTR_FUN_B58BC[pbVar1.tags](pbVar1);
+
+                iVar3--;
+                iVar2++;
+            } while (iVar3 != -1);
+        }
     }
 
     public void FUN_60070()

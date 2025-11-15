@@ -30,6 +30,7 @@ public class CriScene : MonoBehaviour
     public int[] DAT_58; //0x58
     public _SCENE_OBJ_DATA[] PTR_58; //0x58
     public int DAT_AC; //0xAC
+    public bool debug;
     public delegate bool FUN_9E540();
     public FUN_9E540[] PTR_FUN_9E540;
 

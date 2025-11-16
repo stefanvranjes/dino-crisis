@@ -3879,6 +3879,12 @@ public class BufferedBinaryReader : IDisposable
             buffer[bufferOffset++] = array[i];
     }
 
+    public void Write(byte[] array, int length)
+    {
+        for (int i = 0; i < length; i++)
+            buffer[bufferOffset++] = array[i];
+    }
+
     public void Write(sbyte value)
     {
         buffer[bufferOffset] = (byte)value;

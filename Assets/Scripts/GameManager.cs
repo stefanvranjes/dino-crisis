@@ -598,12 +598,12 @@ public class GameManager : MonoBehaviour
         {
             //FUN_1802C
             DAT_28++;
+            DAT_56 = 1;
+            //...
             playerSpawnPos.x = DAT_A0E8;
             playerSpawnPos.y = DAT_A0EA * -0x1a9;
             playerSpawnPos.z = DAT_A0EC;
             playerSpawnRotY = DAT_A0EE;
-            DAT_56 = 1;
-            //...
             FUN_61240();
             FUN_66F00(0); //tmp
             InventoryManager.FUN_4A7E8(4, 0, true);

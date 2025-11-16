@@ -370,7 +370,7 @@ public class SaveManager : MonoBehaviour
         param1.ReadUInt32Array(InventoryManager.DAT_C15C8);
         param1.ReadUInt32Array(InventoryManager.DAT_C15D0);
         param1.ReadBytes(0x2a0); //padding
-        GameManager.instance.DAT_9EAC = param1.ReadBytes(GameManager.instance.DAT_9EAC.Length);
+        GameManager.instance.DAT_9EAC = param1.ReadBytes(8);
         //param1.ReadBytes(0x3c - GameManager.instance.DAT_9EAC.Length); //padding
         GameManager.instance.DAT_9EE8 = param1.ReadByte();
         GameManager.instance.DAT_9EE9 = param1.ReadByte();
@@ -386,6 +386,7 @@ public class SaveManager : MonoBehaviour
         param1.ReadBytes(4); //padding
         GameManager.instance.DAT_A0E8 = param1.ReadInt16();
         GameManager.instance.DAT_A0EA = param1.ReadSByte();
+        param1.ReadByte(); //padding
         GameManager.instance.DAT_A0EC = param1.ReadInt16();
         GameManager.instance.DAT_A0EE = param1.ReadInt16();
         GameManager.instance.playerHealth = param1.ReadInt16();
@@ -430,9 +431,11 @@ public class SaveManager : MonoBehaviour
     private void FUN_23D40(ref BufferedBinaryReader param1)
     {
         ushort uVar1;
+        CriSkinned oVar2;
 
+        oVar2 = SceneManager.instance.skinnedObjects[10];
         uVar1 = GameManager.instance.DAT_9AA0;
-        GameManager.instance.DAT_9AA0 = GameManager.instance.DAT_9ADC;
+        //GameManager.instance.DAT_9AA0 = GameManager.instance.DAT_9ADC; //original code
         GameManager.instance.DAT_9AAC = 0x990517;
         byte[] buffer = new byte[0x1000];
         param1 = new BufferedBinaryReader(buffer);
@@ -462,7 +465,7 @@ public class SaveManager : MonoBehaviour
         param1.Write(InventoryManager.DAT_C15C8);
         param1.Write(InventoryManager.DAT_C15D0);
         param1.Write(new byte[0x2a0]); //padding
-        param1.Write(GameManager.instance.DAT_9EAC);
+        param1.Write(GameManager.instance.DAT_9EAC, 8);
         //param1.Write(new byte[0x3c - GameManager.instance.DAT_9EAC.Length]); //padding
         param1.Write(GameManager.instance.DAT_9EE8);
         param1.Write(GameManager.instance.DAT_9EE9);
@@ -476,10 +479,15 @@ public class SaveManager : MonoBehaviour
         param1.Write(GameManager.instance.DAT_A0E0);
         param1.Write(GameManager.instance.DAT_A0E2);
         param1.Write(new byte[4]); //padding
-        param1.Write(GameManager.instance.DAT_A0E8);
-        param1.Write(GameManager.instance.DAT_A0EA);
-        param1.Write(GameManager.instance.DAT_A0EC);
-        param1.Write(GameManager.instance.DAT_A0EE);
+        //param1.Write(GameManager.instance.DAT_A0E8);
+        //param1.Write(GameManager.instance.DAT_A0EA);
+        //param1.Write(GameManager.instance.DAT_A0EC);
+        //param1.Write(GameManager.instance.DAT_A0EE);
+        param1.Write((short)oVar2.screen.x);
+        param1.Write((sbyte)0);
+        param1.Write((byte)0); //padding
+        param1.Write((short)oVar2.screen.z);
+        param1.Write((short)oVar2.vr.y);
         param1.Write(GameManager.instance.playerHealth);
         param1.Write(GameManager.instance.DAT_A0F2);
         param1.Write(GameManager.instance.DAT_A0F4);

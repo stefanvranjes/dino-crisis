@@ -1208,7 +1208,7 @@ public class ST1 : LevelManager
         CriStatic oVar7;
 
         oVar6 = (CriStatic)param1.PTR_68[param1.DAT_78];
-        oVar7 = SceneManager.instance.staticObjects[param1.DAT_78];
+        oVar7 = SceneManager.instance.staticObjects[param1.DAT_78 + 5];
         bVar4 = InventoryManager.FUN_4A87C(3, 0x2c);
 
         if (bVar4)
@@ -1265,7 +1265,7 @@ public class ST1 : LevelManager
 
         if (-0x433 < sVar3)
         {
-            oVar4 = SceneManager.instance.staticObjects[param1.DAT_78];
+            oVar4 = SceneManager.instance.staticObjects[param1.DAT_78 + 9];
             oVar4.flags |= 2;
             oVar6.screen.y = -0x433;
             GameManager.instance.FUN_5C860(145);
@@ -1461,7 +1461,7 @@ public class ST1 : LevelManager
             else
             {
                 param1.flags |= 2;
-                param1.FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(DAT_78C8[param1.DAT_69].DAT_00), param1.DAT_69);
+                param1.FUN_606A8((Tod2ScriptableObject)Utilities.GetRamObject(DAT_78C8[param1.DAT_69].DAT_00));
             }
 
             bVar1 = DAT_78C8[param1.DAT_69].DAT_04;
